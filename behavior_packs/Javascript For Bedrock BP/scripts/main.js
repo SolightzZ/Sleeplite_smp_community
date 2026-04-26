@@ -13,12 +13,12 @@ import "./plugins/Welcome.js";
 import "./plugins/Report.js";
 
 // New Addons
-import "./plugins/afkcinematics.js";
-import "./plugins/index.js";
+import "./plugins/AFK_Cinematic.js";
+import "./plugins/Flashlight.js";
+import "./plugins/Take_A_Seat.js";
 
-// API TEST
+// API
 // import "./API.js";
-import "./MLChatbot.js";
 
 import { handlePlayerDimensionChange } from "./BiomeType/system.js";
 import { LlightentityHitBlock } from "./light/main.js";
