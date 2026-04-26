@@ -1,6 +1,5 @@
 import { system } from "@minecraft/server";
 
-import { updatePlayerItems } from "../foodDatalist/functions.js";
 import { dy } from "./help_Durability.js";
 
 const help = `§8--------- §eHelper §8---------
@@ -33,9 +32,5 @@ export function help_main(event) {
   if (command === "!d") {
     event.cancel = true;
     system.runTimeout(() => dy(player), 20);
-  }
-  if (command === "!f") {
-    event.cancel = true;
-    system.runTimeout(() => updatePlayerItems(player), 20);
   }
 }
