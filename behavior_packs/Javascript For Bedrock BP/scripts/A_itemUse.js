@@ -10,13 +10,11 @@ import { bankingSystem } from "./economy/system.js";
 import { ZoneProtection_OnItemUse } from "./Protection/system.js";
 import { LligitemUse } from "./light/main.js";
 import { RUNREPORT } from "./plugins/Report.js";
-import { chatrankssitemUse } from "./plugins/chatrankss.js";
-import { OpenGuiPlayers } from "./DailyFoodLimit/player_manager.js";
+import { chatrankssitemUse } from "./plugins/NameTagRank.js";
 
 const EXACT_ACTIONS = {
   "minecraft:light_block_13": LligitemUse,
   "minecraft:compass": setting_main,
-  "minecraft:book": OpenGuiPlayers,
   "addon:protection": ZoneProtection_OnItemUse,
   "addon:trade": RewarditemUse,
   "addon:bank": bankingSystem,

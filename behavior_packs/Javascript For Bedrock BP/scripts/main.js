@@ -8,7 +8,7 @@ import "./tools/hammer/index.js";
 import "./Inventory_Sorter/commands.js";
 
 // Plugins
-import "./plugins/chatrankss.js";
+import "./plugins/NameTagRank.js";
 import "./plugins/Welcome.js";
 import "./plugins/Report.js";
 
