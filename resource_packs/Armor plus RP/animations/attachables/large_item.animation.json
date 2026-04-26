@@ -1,0 +1,25 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.large_item.first_person_hold": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "rotation": ["(c.is_first_person ? -10.0+30 : -2.0)", "(c.is_first_person ? 7.0+67.1118 : 0.9)", "(c.is_first_person ? 0+-19.7656 : 8.0)"],
+          "position": ["-3+(c.is_first_person ? -4.0 : -1.5)", "-1-(c.is_first_person ? 28.0+-22 : 5.0)", "(c.is_first_person ? 9-12 : -13.0)"],
+          "scale": "(c.is_first_person ? 1.1 : 1.2)"
+        }
+      }
+    },
+    "animation.large_item.third_person_hold": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "rotation": ["(c.is_first_person ? -10.0 : -2.0)", "(c.is_first_person ? 7.0 : 0.9)", "(c.is_first_person ? 0 : 8.0)"],
+          "position": ["(c.is_first_person ? -10.0 : -2.5)", "-(c.is_first_person ? 70.0 : 5.0)", "(c.is_first_person ? 0 : -13.0)"],
+          "scale": "(c.is_first_person ? 1.0 : 1.2)"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "potato_soup_930bba43"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABA",
+      "BCD"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:potato",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:brown_mushroom",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:potato_soup",
+      "count": 1
+    }
+  }
+}

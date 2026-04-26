@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "chocolate_bread_12e23525"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A",
+      "B"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:chocolate",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:bread",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:chocolate_bread",
+      "count": 1
+    }
+  }
+}

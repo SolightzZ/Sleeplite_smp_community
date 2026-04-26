@@ -1,0 +1,150 @@
+{
+  "format_version": "1.21.130",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "ph:roach",
+      "is_summonable": true,
+      "is_spawnable": true
+    },
+    "component_groups": {
+      "break": {
+        "minecraft:instant_despawn": {
+          "remove_child_entities": true
+        },
+        "minecraft:despawn": {}
+      }
+    },
+    "components": {
+      "minecraft:damage_sensor": {
+        "triggers": [
+          {
+            "cause": "fall",
+            "deals_damage": "no"
+          },
+          {
+            "cause": "contact",
+            "deals_damage": "no"
+          },
+          {
+            "cause": "fly_into_wall",
+            "deals_damage": "no"
+          },
+          {
+            "cause": "piston",
+            "deals_damage": "no"
+          },
+          {
+            "cause": "starve",
+            "deals_damage": "no"
+          },
+          {
+            "cause": "stalagmite",
+            "deals_damage": "no"
+          }
+        ]
+      },
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:renders_when_invisible": {},
+      "minecraft:nameable": {},
+      "minecraft:health": {
+        "max": 1,
+        "value": 1
+      },
+      "minecraft:collision_box": {
+        "height": 0.25,
+        "width": 0.25
+      },
+      "minecraft:scale": {
+        "value": 0.5
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/entities/animals/roach.json"
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
+            "cause": "lava",
+            "damage_per_tick": 4
+          }
+        ]
+      },
+      "minecraft:movement": {
+        "max": 3,
+        "value": 3
+      },
+      "minecraft:jump.static": {
+        "jump_power": 1
+      },
+      "minecraft:behavior.float": {},
+      "minecraft:can_climb": {},
+      "minecraft:navigation.climb": {
+        "can_path_over_water": true
+      },
+      "minecraft:movement.fly": {},
+      "minecraft:can_fly": {},
+      "minecraft:flying_speed": {
+        "value": 2
+      },
+      "minecraft:type_family": {
+        "family": ["animal", "insect"]
+      },
+      "minecraft:block_climber": {},
+      "minecraft:behavior.avoid_mob_type": {
+        "priority": 6,
+        "max_dist": 3,
+        "walk_speed_multiplier": 0.8,
+        "sprint_speed_multiplier": 1.5,
+        "entity_types": [
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "test": "is_family",
+                  "operator": "==",
+                  "value": "player"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "minecraft:behavior.mount_pathing": {
+        "priority": 3,
+        "speed_multiplier": 1.25,
+        "target_dist": 0,
+        "track_target": true
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 6,
+        "speed_multiplier": 0.8
+      },
+      "minecraft:behavior.look_at_player": {
+        "priority": 5,
+        "look_distance": 6,
+        "probability": 0.02
+      },
+      "minecraft:behavior.random_look_around": {
+        "priority": 6
+      },
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:conditional_bandwidth_optimization": {}
+    },
+    "events": {
+      "break": {
+        "add": {
+          "component_groups": ["break"]
+        }
+      }
+    }
+  }
+}

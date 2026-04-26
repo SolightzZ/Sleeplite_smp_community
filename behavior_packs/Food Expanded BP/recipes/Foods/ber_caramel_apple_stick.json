@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "caramel_apple_stick_04da5f4e"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A",
+      "BC"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:apple",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:stick",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:caramel",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:caramel_apple_stick",
+      "count": 1
+    }
+  }
+}

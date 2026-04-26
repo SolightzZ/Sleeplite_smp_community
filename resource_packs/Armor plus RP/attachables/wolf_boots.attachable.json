@@ -1,0 +1,22 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "addon:wolf_boots",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "armor_enchanted"
+            },
+            "textures": {
+                "default": "textures/models/wolf_boots",
+                "enchanted": "textures/misc/enchanted_actor_glint"
+            },
+            "geometry": {
+                "default": "geometry.humanoid.armor.boots"
+            },
+            "render_controllers": [
+                "controller.render.armor"
+            ]
+        }
+    }
+}

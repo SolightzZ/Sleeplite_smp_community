@@ -1,0 +1,24 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "honey_mutton_3346d9f0"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["A ", "BA"],
+    "key": {
+      "A": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:cooked_mutton",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:honey_mutton",
+      "count": 1
+    }
+  }
+}

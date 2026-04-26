@@ -1,0 +1,15 @@
+export const LOOT_MAP = Object.freeze({
+  "minecraft:stone": "minecraft:cobblestone",
+  "minecraft:deepslate": "minecraft:cobbled_deepslate",
+  "minecraft:grass_block": "minecraft:dirt",
+  "minecraft:iron_ore": "minecraft:raw_iron",
+  "minecraft:gold_ore": "minecraft:raw_gold",
+  "minecraft:copper_ore": "minecraft:raw_copper",
+  "minecraft:coal_ore": "minecraft:coal",
+  "minecraft:diamond_ore": "minecraft:diamond",
+  "minecraft:emerald_ore": "minecraft:emerald",
+  "minecraft:lapis_ore": "minecraft:lapis_lazuli",
+  "minecraft:redstone_ore": "minecraft:redstone",
+  "minecraft:nether_quartz_ore": "minecraft:quartz",
+  "minecraft:nether_gold_ore": "minecraft:gold_nugget",
+});

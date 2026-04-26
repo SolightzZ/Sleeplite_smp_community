@@ -1,0 +1,21 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:game2"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "CC", "CC"],
+    "key": {
+      "#": {
+        "item": "minecraft:white_wool"
+      },
+      "C": {
+        "item": "minecraft:cyan_wool"
+      }
+    },
+    "result": {
+      "item": "addon:game2"
+    }
+  }
+}

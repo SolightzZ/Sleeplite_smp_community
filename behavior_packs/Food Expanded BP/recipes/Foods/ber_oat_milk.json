@@ -1,0 +1,30 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "oat_milk_92cd7d4e"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AAA",
+      "ABA",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:oat",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:bucket",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:oat_milk",
+      "count": 1
+    }
+  }
+}

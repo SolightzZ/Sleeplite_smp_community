@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_shroomlight_x_warped_fungus"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "AAA",
+      "BBB",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:warped_fungus"
+      },
+      "B": {
+        "item": "minecraft:glowstone_dust"
+      }
+    },
+    "result": {
+      "item": "minecraft:shroomlight",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:warped_fungus"
+      },
+      {
+        "item": "minecraft:glowstone_dust"
+      }
+    ]
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:glowingobsidian"
+    },
+    "tags": ["avanced"],
+    "pattern": [" # ", "#O#", " # "],
+    "key": {
+      "#": {
+        "item": "minecraft:glowstone_dust"
+      },
+      "O": {
+        "item": "minecraft:obsidian"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:obsidian"
+      }
+    ],
+    "result": {
+      "item": "minecraft:glowingobsidian"
+    }
+  }
+}

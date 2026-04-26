@@ -1,0 +1,24 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "[Craft and Recipes BP",
+    "description": "Behavior Pack Sleeplite SMP 2026",
+    "uuid": "cbfeb865-0f0a-4108-8c9b-b9e4ed69d30a",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 60]
+  },
+  "metadata": {
+    "authors": ["SleepliteSMP"],
+    "license": "MIT",
+    "url": "https://discord.gg/gtqfbmvTJK",
+    "product_type": "addon"
+  },
+  "modules": [
+    {
+      "description": "Behavior",
+      "type": "data",
+      "uuid": "60d3600e-0cd3-4c46-a521-39efaa5c2d50",
+      "version": [1, 0, 2]
+    }
+  ]
+}

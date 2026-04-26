@@ -1,0 +1,20 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "addon:dr",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:fire_resistant": {
+        "value": true
+      },
+
+      "minecraft:icon": "dr",
+      "minecraft:liquid_clipped": true,
+      "minecraft:max_stack_size": 64
+    }
+  }
+}

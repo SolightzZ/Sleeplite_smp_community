@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_andesite_x_slabs"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "A ",
+      " A"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:andesite_slab"
+      }
+    },
+    "result": {
+      "item": "minecraft:andesite",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:andesite_slab"
+      }
+    ]
+  }
+}

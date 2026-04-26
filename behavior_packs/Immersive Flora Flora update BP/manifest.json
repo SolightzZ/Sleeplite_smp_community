@@ -1,0 +1,31 @@
+{
+  "format_version": 2,
+
+  "header": {
+    "name": "Immersive Flora RP",
+    "description": "Tired of the little flora in Minecraft? Immersive flora is an addon that brings new vegetation for Minecraft, there will be constant updates with new content from different biomes, enjoy it.",
+    "uuid": "5c0d3241-74e0-423b-8514-0fc5fc2dfdbf",
+    "pack_scope": "world",
+    "version": [1, 2, 0],
+    "min_engine_version": [1, 21, 120]
+  },
+  "metadata": {
+    "authors": ["SleepliteSMP"],
+    "license": "MIT",
+    "url": "https://discord.gg/gtqfbmvTJK",
+    "product_type": "addon"
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "e712e3a5-a563-474d-9076-46033d967873",
+      "version": [1, 2, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "e7bd895c-7231-4cc8-8359-61763c95838e",
+      "version": [1, 2, 0]
+    }
+  ]
+}

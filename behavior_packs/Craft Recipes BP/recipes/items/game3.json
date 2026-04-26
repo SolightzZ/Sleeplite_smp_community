@@ -1,0 +1,21 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:game3"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "LL", "LL"],
+    "key": {
+      "#": {
+        "item": "minecraft:white_wool"
+      },
+      "L": {
+        "item": "minecraft:lime_wool"
+      }
+    },
+    "result": {
+      "item": "addon:game3"
+    }
+  }
+}

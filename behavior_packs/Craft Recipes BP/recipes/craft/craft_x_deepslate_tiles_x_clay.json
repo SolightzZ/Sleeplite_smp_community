@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_deepslate_tiles_x_clay"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "SC"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:cracked_deepslate_tiles"
+      },
+      "C": {
+        "item": "minecraft:clay_ball"
+      }
+    },
+    "result": {
+      "item": "minecraft:deepslate_tiles",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cracked_deepslate_tiles"
+      },
+      {
+        "item": "minecraft:clay_ball"
+      }
+    ]
+  }
+}

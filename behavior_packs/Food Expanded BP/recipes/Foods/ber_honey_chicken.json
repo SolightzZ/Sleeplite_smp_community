@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "honey_chicken_9767433e"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A ",
+      "BA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:cooked_chicken",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:honey_chicken",
+      "count": 1
+    }
+  }
+}

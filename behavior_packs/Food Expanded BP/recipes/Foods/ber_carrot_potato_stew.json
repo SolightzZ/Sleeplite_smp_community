@@ -1,0 +1,38 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "carrot_potato_stew_68dca0db"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AB ",
+      "CDC",
+      " BA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:brown_mushroom",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:potato",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:carrot_potato_stew",
+      "count": 1
+    }
+  }
+}

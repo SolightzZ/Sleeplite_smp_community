@@ -1,0 +1,37 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "healty_drink_e88c6e3e"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABC",
+      "BDB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:oat",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:wheat",
+        "data": 0
+      },
+      "D": {
+        "item": "ber:cup",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:healty_drink",
+      "count": 1
+    }
+  }
+}

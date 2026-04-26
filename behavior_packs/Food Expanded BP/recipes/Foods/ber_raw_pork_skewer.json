@@ -1,0 +1,30 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "raw_pork_skewer_5b3e9753"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " AA",
+      "B  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:porkchop",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:skewer_stick",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:raw_pork_skewer",
+      "count": 1
+    }
+  }
+}

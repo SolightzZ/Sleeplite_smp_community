@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_crimson_hyphae_x_crimson_roots"
+    },
+    "priority": 2,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "AAA",
+      "ABA",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:crimson_roots"
+      },
+      "B": {
+        "item": "minecraft:stripped_crimson_hyphae"
+      }
+    },
+    "result": {
+      "item": "minecraft:crimson_hyphae",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:crimson_roots"
+      },
+      {
+        "item": "minecraft:stripped_crimson_hyphae"
+      }
+    ]
+  }
+}

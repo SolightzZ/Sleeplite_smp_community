@@ -1,0 +1,18 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:emote"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "##"],
+    "key": {
+      "#": {
+        "item": "minecraft:amethyst_shard"
+      }
+    },
+    "result": {
+      "item": "addon:emote"
+    }
+  }
+}

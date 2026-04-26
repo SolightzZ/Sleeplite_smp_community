@@ -1,0 +1,22 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "addon:demon_helmet",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "armor_enchanted"
+            },
+            "textures": {
+                "default": "textures/models/demon_helmet",
+                "enchanted": "textures/misc/enchanted_actor_glint"
+            },
+            "geometry": {
+                "default": "geometry.demon_helmet"
+            },
+            "render_controllers": [
+                "controller.render.armor"
+            ]
+        }
+    }
+}

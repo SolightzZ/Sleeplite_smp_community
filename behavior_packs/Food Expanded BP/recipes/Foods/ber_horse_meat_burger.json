@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "horse_meat_burger_9a852a59"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BC"
+    ],
+    "key": {
+      "B": {
+        "item": "ber:burger_bun",
+        "data": 0
+      },
+      "C": {
+        "item": "fd:cooked_horse_meat",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:horse_meat_burger",
+      "count": 1
+    }
+  }
+}

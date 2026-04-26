@@ -1,0 +1,42 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "veggie_stew_322c53de"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCD",
+      " E "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:beetroot",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:potato",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "E": {
+        "item": "minecraft:brown_mushroom",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:veggie_stew",
+      "count": 1
+    }
+  }
+}

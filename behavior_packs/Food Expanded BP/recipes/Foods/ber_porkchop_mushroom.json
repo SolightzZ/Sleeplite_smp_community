@@ -1,0 +1,30 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "porkchop_mushroom_61c221d6"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "ABA",
+      " A "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:brown_mushroom",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:cooked_porkchop",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:porkchop_mushroom",
+      "count": 1
+    }
+  }
+}

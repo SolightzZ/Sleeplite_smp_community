@@ -1,0 +1,20 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "tags": [
+      "campfire",
+      "soul_campfire"
+    ],
+    "output": {
+      "item": "ber:scramble_egg",
+      "data": 0
+    },
+    "input": {
+      "item": "ber:mixed_egg",
+      "data": 0
+    },
+    "description": {
+      "identifier": "recipes_c1a8c327"
+    }
+  }
+}

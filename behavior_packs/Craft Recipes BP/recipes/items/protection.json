@@ -1,0 +1,21 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:protection"
+    },
+    "tags": ["avanced"],
+    "pattern": ["C", "W"],
+    "key": {
+      "C": {
+        "item": "minecraft:chest"
+      },
+      "W": {
+        "item": "minecraft:compass"
+      }
+    },
+    "result": {
+      "item": "addon:protection"
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "chicken_apple_dish_a1458e8b"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cooked_chicken",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:apple",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:plate",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:chicken_apple_dish",
+      "count": 1
+    }
+  }
+}

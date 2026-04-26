@@ -1,0 +1,38 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "tayi:seta_escarlata",
+      "places_feature": "tayi:seta_escarlata_tres"
+    },
+    "conditions": {
+      "placement_pass": "after_surface_pass",
+      "minecraft:biome_filter": [
+        {
+          "all_of": [
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "crimson_forest"
+            }
+          ]
+        }
+      ]
+    },
+    "distribution": {
+      "iterations": 999,
+      "x": {
+        "distribution": "uniform",
+        "extent": [0, 16]
+      },
+      "y": {
+        "extent": [0, 128],
+        "distribution": "uniform"
+      },
+      "z": {
+        "distribution": "uniform",
+        "extent": [0, 16]
+      }
+    }
+  }
+}

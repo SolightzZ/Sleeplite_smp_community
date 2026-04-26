@@ -1,0 +1,14 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:structure_template_feature": {
+		"description": {
+			"identifier": "tayi:caladium_lima_cuatro"
+		},
+		"structure_name": "mystructure:caladium_lima_c",
+		"adjustment_radius": 2,
+		"facing_direction": "random",
+		"constraints": {
+			"grounded": {}
+		}
+	}
+}

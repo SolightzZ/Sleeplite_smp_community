@@ -1,0 +1,19 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "tags": [
+      "furnace"
+    ],
+    "output": {
+      "item": "fd:cooked_frog_legs",
+      "data": 0
+    },
+    "input": {
+      "item": "fd:frog_legs",
+      "data": 0
+    },
+    "description": {
+      "identifier": "recipes_fc59b4b9"
+    }
+  }
+}

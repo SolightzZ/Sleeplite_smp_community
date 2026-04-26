@@ -1,0 +1,21 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:game1"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "RR", "RR"],
+    "key": {
+      "#": {
+        "item": "minecraft:white_wool"
+      },
+      "R": {
+        "item": "minecraft:red_wool"
+      }
+    },
+    "result": {
+      "item": "addon:game1"
+    }
+  }
+}

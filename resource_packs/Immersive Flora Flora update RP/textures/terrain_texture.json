@@ -1,0 +1,179 @@
+{
+  "resource_pack_name": "Immersive Flora",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "planta_serpiente": {
+      "textures": "textures/blocks/planta_serpiente.png"
+    },
+    "flor_morada_de_la_jungla": {
+      "textures": "textures/blocks/flor_morada_de_la_jungla.png"
+    },
+    "hierba_rizada": {
+      "textures": "textures/blocks/hierba_rizada.png"
+    },
+    "flor_roja_de_la_jungla": {
+      "textures": "textures/blocks/flor_roja_de_la_jungla.png"
+    },
+    "helecho_abundante": {
+      "textures": "textures/blocks/helecho_abundante.png"
+    },
+    "seta_deformada_tres": {
+      "textures": "textures/blocks/seta_deformada_tres.png"
+    },
+    "seta_escarlata_tres": {
+      "textures": "textures/blocks/seta_escarlata_tres.png"
+    },
+    "seta_escarlata": {
+      "textures": "textures/blocks/seta_escarlata.png"
+    },
+    "seta_deformada": {
+      "textures": "textures/blocks/seta_deformada.png"
+    },
+    "hongo_marron": {
+      "textures": "textures/blocks/hongo_marron.png"
+    },
+    "hongo_rojo": {
+      "textures": "textures/blocks/hongo_rojo.png"
+    },
+    "moras_azules_infernales": {
+      "textures": "textures/blocks/moras_azules_infernales.png"
+    },
+    "verruga_colgante_escarlata": {
+      "textures": "textures/blocks/verruga_colgante_escarlata.png"
+    },
+    "verruga_colgante_deformada": {
+      "textures": "textures/blocks/verruga_colgante_deformada.png"
+    },
+    "seta_peluda_escarlata_pequea": {
+      "textures": "textures/blocks/seta_peluda_escarlata_pequea.png"
+    },
+    "seta_peluda_distorcioanda_pequea": {
+      "textures": "textures/blocks/seta_peluda_distorcioanda_pequea.png"
+    },
+    "seta_peluda_escarlata": {
+      "textures": "textures/blocks/seta_peluda_escarlata.png"
+    },
+    "seta_peluda_distorcioanda": {
+      "textures": "textures/blocks/seta_peluda_distorcioanda.png"
+    },
+    "alocasia_azlanii_grande": {
+      "textures": "textures/blocks/alocasia_azlanii_grande.png"
+    },
+    "alocasia_zebrina_grande": {
+      "textures": "textures/blocks/alocasia_zebrina_grande.png"
+    },
+    "alocasia_frydek_grande": {
+      "textures": "textures/blocks/alocasia_frydek_grande.png"
+    },
+    "alocasia_azlanii": {
+      "textures": "textures/blocks/alocasia_azlanii.png"
+    },
+    "alocacia_zebrina": {
+      "textures": "textures/blocks/alocacia_zebrina.png"
+    },
+    "caladium_lima_grande": {
+      "textures": "textures/blocks/caladium_lima_grande.png"
+    },
+    "caladium_blanco_grande": {
+      "textures": "textures/blocks/caladium_blanco_grande.png"
+    },
+    "caladium_grande": {
+      "textures": "textures/blocks/caladium_grande.png"
+    },
+    "caladium_rojo_grande": {
+      "textures": "textures/blocks/caladium_rojo_grande.png"
+    },
+    "caladium_lima": {
+      "textures": "textures/blocks/caladium_lima.png"
+    },
+    "caladium_blanco": {
+      "textures": "textures/blocks/caladium_blanco.png"
+    },
+    "caladium_rojo": {
+      "textures": "textures/blocks/caladium_rojo.png"
+    },
+    "caladium": {
+      "textures": "textures/blocks/caladium.png"
+    },
+    "caladium_rosa_grande": {
+      "textures": "textures/blocks/caladium_rosa_grande.png"
+    },
+    "caladium_rosa": {
+      "textures": "textures/blocks/caladium_rosa.png"
+    },
+    "alocasia_frydek": {
+      "textures": "textures/blocks/alocasia_frydek.png"
+    },
+    "follage_de_roble": {
+      "textures": "textures/blocks/follage_de_roble.png"
+    },
+    "hongo_rojo_oeste": {
+      "textures": "textures/blocks/hongo_rojo_oeste.png"
+    },
+    "hongo_rojo_este": {
+      "textures": "textures/blocks/hongo_rojo_este.png"
+    },
+    "hongo_rojo_sur": {
+      "textures": "textures/blocks/hongo_rojo_sur.png"
+    },
+    "hongo_rojo_norte": {
+      "textures": "textures/blocks/hongo_rojo_norte.png"
+    },
+    "hongo_marron_oeste": {
+      "textures": "textures/blocks/hongo_marron_oeste.png"
+    },
+    "hongo_marron_este": {
+      "textures": "textures/blocks/hongo_marron_este.png"
+    },
+    "hongo_marron_sur": {
+      "textures": "textures/blocks/hongo_marron_sur.png"
+    },
+    "hongo_marron_norte": {
+      "textures": "textures/blocks/hongo_marron_norte.png"
+    },
+    "hongo_rojo_lateral": {
+      "textures": "textures/blocks/hongo_rojo_lateral.png"
+    },
+    "hongo_marron_lateral": {
+      "textures": "textures/blocks/hongo_marron_lateral.png"
+    },
+    "seta_deformada_oeste": {
+      "textures": "textures/blocks/seta_deformada_oeste.png"
+    },
+    "seta_deformada_este": {
+      "textures": "textures/blocks/seta_deformada_este.png"
+    },
+    "seta_deformada_sur": {
+      "textures": "textures/blocks/seta_deformada_sur.png"
+    },
+    "seta_deformada_norte": {
+      "textures": "textures/blocks/seta_deformada_norte.png"
+    },
+    "seta_deformada_lateral": {
+      "textures": "textures/blocks/seta_deformada_lateral.png"
+    },
+    "hongo_carmesi_oeste": {
+      "textures": "textures/blocks/hongo_carmesi_oeste.png"
+    },
+    "hongo_carmesi_este": {
+      "textures": "textures/blocks/hongo_carmesi_este.png"
+    },
+    "hongo_carmesi_lateral": {
+      "textures": "textures/blocks/hongo_carmesi_lateral.png"
+    },
+    "palito_de_brasil": {
+      "textures": "textures/blocks/palito_de_brasil.png"
+    },
+    "ave_de_paraiso": {
+      "textures": "textures/blocks/ave_de_paraiso.png"
+    },
+    "arbusto_de_helecho": {
+      "textures": "textures/blocks/arbusto_de_helecho.png"
+    },
+    "flor_test": {
+      "textures": "textures/blocks/flor_test.png"
+    }
+  }
+}

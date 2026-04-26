@@ -1,0 +1,10 @@
+{
+  "texture_name": "atlas.items",
+  "resource_pack_name": "Bedrock Essentials+",
+
+  "texture_data": {
+    "gao:flashlight": {
+      "textures": "textures/items/flashlight"
+    }
+  }
+}

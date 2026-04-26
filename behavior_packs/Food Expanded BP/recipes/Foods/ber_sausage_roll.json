@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "sausage_roll_b343b174"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BC"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bread",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:cooked_sausage",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:sausage_roll",
+      "count": 1
+    }
+  }
+}

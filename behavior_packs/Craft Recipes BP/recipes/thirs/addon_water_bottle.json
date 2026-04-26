@@ -1,0 +1,10 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_furnace": {
+    "description": { "identifier": "minecraft:furnace_water_bottle" },
+    "tags": ["furnace", "campfire", "soul_campfire"],
+    "unlock": [{ "item": "minecraft:potion" }],
+    "input": "minecraft:potion",
+    "output": "addon:water_bottle"
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nicothekid:stonecut_x_stone_slab_x_stone_brick_slab"
+    },
+    "priority": 4,
+    "tags": [ "stonecutter" ],
+    "ingredients": [
+      {
+        "item": "minecraft:normal_stone_slab"
+      }
+    ],
+    "result": {
+      "item": "minecraft:stone_brick_slab",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:normal_stone_slab"
+      }
+    ]
+  }
+}

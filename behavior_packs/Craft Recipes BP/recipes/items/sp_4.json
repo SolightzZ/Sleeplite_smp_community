@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:sp_4"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#PE", "DRD", "RRR"],
+    "key": {
+      "#": {
+        "item": "minecraft:breeze_rod"
+      },
+      "P": {
+        "item": "minecraft:phantom_membrane"
+      },
+      "E": {
+        "item": "minecraft:echo_shard"
+      },
+      "D": {
+        "item": "minecraft:diamond"
+      },
+      "R": {
+        "item": "minecraft:resin_brick"
+      }
+    },
+    "result": {
+      "item": "addon:sp_4"
+    },
+    "unlock": [
+      {
+        "item": "addon:sp_4"
+      }
+    ]
+  }
+}

@@ -1,0 +1,22 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:attachable": {
+        "description": {
+            "identifier": "addon:wolf_helmet",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "armor_enchanted"
+            },
+            "textures": {
+                "default": "textures/models/wolf_helmet",
+                "enchanted": "textures/misc/enchanted_actor_glint"
+            },
+            "geometry": {
+                "default": "geometry.wolf_helmet"
+            },
+            "render_controllers": [
+                "controller.render.armor"
+            ]
+        }
+    }
+}

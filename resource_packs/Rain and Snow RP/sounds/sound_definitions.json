@@ -1,0 +1,11 @@
+{
+  "format_version": "1.14.0",
+  "sound_definitions": {
+    "ambient.weather.rain": {
+      "category": "weather",
+      "sounds": [
+        { "name": "sounds/ambient/weather/rain", "volume": 0.5 }
+      ]
+    }
+  }
+}

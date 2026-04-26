@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nicothekid:stonecut_x_nether_brick_stairs_x_nether_brick_slab"
+    },
+    "priority": 4,
+    "tags": [ "stonecutter" ],
+    "ingredients": [
+      {
+        "item": "minecraft:nether_brick_stairs"
+      }
+    ],
+    "result": {
+      "item": "minecraft:nether_brick_slab",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:nether_brick_stairs"
+      }
+    ]
+  }
+}

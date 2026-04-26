@@ -1,0 +1,24 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "recipes_43270f2d"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:chicken",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "fd:raw_chicken_nuggets",
+      "count": 3
+    }
+  }
+}

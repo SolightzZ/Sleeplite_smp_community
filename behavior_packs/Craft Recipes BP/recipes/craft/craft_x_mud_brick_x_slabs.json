@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_mud_brick_x_slabs"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "B ",
+      " B"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:mud_brick_slab"
+      }
+    },
+    "result": {
+      "item": "minecraft:mud_bricks",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:mud_brick_slab"
+      }
+    ]
+  }
+}

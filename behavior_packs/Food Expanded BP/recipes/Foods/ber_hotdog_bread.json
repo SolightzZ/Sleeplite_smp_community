@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "hotdog_bread_fe88443c"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:wheat",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:bread",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:hotdog_bread",
+      "count": 1
+    }
+  }
+}

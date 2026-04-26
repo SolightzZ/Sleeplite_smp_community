@@ -1,0 +1,31 @@
+{
+  "format_version": "1.21.10",
+  "minecraft:item": {
+    "description": {
+      "identifier": "ber:carrot_stew",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:hand_equipped": false,
+      "minecraft:max_stack_size": 64,
+      "minecraft:glint": false,
+      "minecraft:food": {
+        "saturation_modifier": 1.2,
+        "nutrition": 7,
+        "can_always_eat": false,
+        "using_converts_to": "minecraft:bowl"
+      },
+      "minecraft:use_modifiers": {
+        "use_duration": 1.6,
+        "movement_modifier": 0.35
+      },
+
+      "minecraft:allow_off_hand": false,
+      "tag:minecraft:is_food": {},
+      "minecraft:use_animation": "eat",
+      "minecraft:icon": "ber:carrot_stew"
+    }
+  }
+}

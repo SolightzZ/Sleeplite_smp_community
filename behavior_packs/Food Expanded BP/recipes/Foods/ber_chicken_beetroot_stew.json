@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "chicken_beetroot_stew_a7532560"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCB"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cooked_chicken",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:beetroot",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:chicken_beetroot_stew",
+      "count": 1
+    }
+  }
+}

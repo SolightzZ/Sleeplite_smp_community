@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "chocolate_cupcake_230d6b84"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABC",
+      " A "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:wheat",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:egg",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:chocolate",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:chocolate_cupcake",
+      "count": 1
+    }
+  }
+}

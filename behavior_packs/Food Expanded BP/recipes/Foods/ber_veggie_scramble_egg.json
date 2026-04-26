@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "veggie_scramble_egg_330f666c"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A B",
+      " C "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:beetroot",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:scramble_egg",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:veggie_scramble_egg",
+      "count": 1
+    }
+  }
+}

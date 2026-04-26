@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_horse_armor_iron"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "A A",
+      "ABA",
+      "A A"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:iron_ingot"
+      },
+      "B": {
+        "item": "minecraft:leather_horse_armor"
+      }
+    },
+    "result": {
+      "item": "minecraft:iron_horse_armor",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      },
+      {
+        "item": "minecraft:leather_horse_armor"
+      }
+    ]
+  }
+}

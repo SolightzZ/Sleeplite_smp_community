@@ -1,0 +1,27 @@
+{
+	"format_version": "1.16.0",
+	"minecraft:structure_template_feature": {
+		"description": {
+			"identifier": "ale:8_feature"
+		},
+		"structure_name": "mystructure:8",
+		"adjustment_radius": 16,
+		"facing_direction": "random",
+		"constraints": {
+			"grounded": {},
+			"block_intersection": {
+				"block_whitelist": [
+					{
+						"name": "minecraft:grass"
+					},
+					{
+						"name": "minecraft:dirt"
+					},
+					{
+						"name": "minecraft:air"
+					}
+				]
+			}
+		}
+	}
+}

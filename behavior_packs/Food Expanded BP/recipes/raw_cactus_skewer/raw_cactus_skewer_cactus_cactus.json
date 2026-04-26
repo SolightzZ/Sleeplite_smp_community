@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_cactus_skewer_cactus_cactus"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cactus"
+      },
+      "B": {
+        "item": "minecraft:cactus"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cactus"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_cactus_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

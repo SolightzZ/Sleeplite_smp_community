@@ -1,0 +1,20 @@
+{
+   "format_version":"1.20.80",
+   "minecraft:client_entity":{
+      "description":{
+         "identifier":"true:gravestone_storage",
+         "materials":{
+            "default":"entity_alphatest"
+         },
+         "textures":{
+            "default":"textures/entity/gravestone_storage"
+         },
+         "geometry":{
+            "default":"geometry.gravestone_storage"
+         },
+         "render_controllers":[
+            "controller.render.default"
+         ]
+      }
+   }
+}

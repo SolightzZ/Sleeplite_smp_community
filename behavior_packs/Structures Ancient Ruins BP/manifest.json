@@ -1,0 +1,23 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Ancient Structures BP",
+    "description": "Studio 38 Structures Behavior Pack",
+    "uuid": "b61229b8-1c89-4a37-ab81-010122b58d51",
+    "version": [1, 1, 0],
+    "min_engine_version": [1, 26, 10]
+  },
+  "metadata": {
+    "authors": ["SleepliteSMP"],
+    "license": "MIT",
+    "url": "https://discord.gg/gtqfbmvTJK",
+    "product_type": "addon"
+  },
+  "modules": [
+    {
+      "type": "data",
+      "uuid": "f997c19e-d78c-4ab1-a574-201d83152d79",
+      "version": [1, 0, 1]
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_fruity_skewer_apple_melon_slice"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:apple"
+      },
+      "B": {
+        "item": "minecraft:melon_slice"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:apple"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_fruity_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,35 @@
+import * as Minecraft from "@minecraft/server";
+
+function getPreciseRotation(playerYRotation) {
+  if (playerYRotation < 0) playerYRotation += 360;
+  const rotation = Math.round(playerYRotation / 22.5);
+
+  return rotation !== 16 ? rotation : 0;
+}
+
+const RotationBlockComponent = {
+  beforeOnPlayerPlace(event) {
+    const { player } = event;
+    if (!player) return;
+
+    const blockFace = event.permutationToPlace.getState("minecraft:block_face");
+    if (blockFace !== "up") return;
+
+    const playerYRotation = player.getRotation().y;
+    const rotation = getPreciseRotation(playerYRotation);
+
+    event.permutationToPlace = event.permutationToPlace.withState(
+      "bluefirefroggy:head_rotation",
+      rotation,
+    );
+  },
+};
+
+Minecraft.system.beforeEvents.startup.subscribe((initEvent) => {
+  initEvent.blockComponentRegistry.registerCustomComponent(
+    "bluefirefroggy:rotation_comp",
+    RotationBlockComponent,
+  );
+});
+
+console.log("[BlueFireFroggy's Player Heads] Head rotation component loaded");

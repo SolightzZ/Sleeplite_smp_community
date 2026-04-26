@@ -1,0 +1,2 @@
+summon creeper
+setblock ~ ~ ~ air

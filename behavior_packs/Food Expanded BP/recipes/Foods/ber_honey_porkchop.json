@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "honey_porkchop_e9a9a6bd"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A ",
+      "BA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:cooked_porkchop",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:honey_porkchop",
+      "count": 1
+    }
+  }
+}

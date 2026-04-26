@@ -1,0 +1,18 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "raw_donut_f2969c4c"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [" S ", "SWS", " S "],
+    "key": {
+      "W": { "item": "minecraft:wheat" },
+      "S": { "item": "minecraft:sugar" }
+    },
+    "result": {
+      "item": "ber:raw_donut",
+      "count": 1
+    }
+  }
+}

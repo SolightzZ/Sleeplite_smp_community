@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "honey_cookies_f2f96a00"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:wheat",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:honey_cookies",
+      "count": 1
+    }
+  }
+}

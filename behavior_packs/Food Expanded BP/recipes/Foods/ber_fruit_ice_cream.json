@@ -1,0 +1,41 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "fruit_ice_cream_43351f93"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABC",
+      "DED"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:cactus_chunk",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:pumpkin_chunk",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:sweet_berries",
+        "data": 0
+      },
+      "E": {
+        "item": "ber:ice_cream",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:fruit_ice_cream",
+      "count": 1
+    }
+  }
+}

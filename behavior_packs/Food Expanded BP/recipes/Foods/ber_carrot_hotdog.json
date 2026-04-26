@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "carrot_hotdog_43544cf9"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AB",
+      "BC"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:cooked_sausage",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:hotdog_bread",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:carrot_hotdog",
+      "count": 1
+    }
+  }
+}

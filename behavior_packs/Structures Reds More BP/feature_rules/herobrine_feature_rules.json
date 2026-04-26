@@ -1,0 +1,36 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "minecraft:herobrine_feature_rules",
+      "places_feature": "minecraft:herobrine_mcstructure"
+    },
+    "conditions": {
+      "placement_pass": "first_pass",
+      "minecraft:biome_filter": [
+        {
+          "any_of": [
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "overworld"
+            }
+          ]
+        }
+      ]
+    },
+    "distribution": {
+      "iterations": 1,
+      "scatter_chance": 0.1,
+      "x": {
+        "distribution": "uniform",
+        "extent": [0, 32]
+      },
+      "y": "query.heightmap(variable.worldx, variable.worldz) + -1",
+      "z": {
+        "distribution": "uniform",
+        "extent": [0, 32]
+      }
+    }
+  }
+}

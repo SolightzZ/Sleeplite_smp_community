@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "caramel_ice_cream_cup_3189e38f"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A",
+      "B"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:caramel",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:ice_cream_cup",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:caramel_ice_cream_cup",
+      "count": 1
+    }
+  }
+}

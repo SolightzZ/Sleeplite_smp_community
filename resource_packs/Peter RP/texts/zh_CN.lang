@@ -1,0 +1,5 @@
+pack.name=飞天小蟑螂 资源包
+pack.description=飞天双马尾
+
+entity.ph:roach.name=蟑螂
+item.ph:roach=蟑螂生物蛋

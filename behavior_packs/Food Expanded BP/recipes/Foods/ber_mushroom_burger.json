@@ -1,0 +1,37 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "mushroom_burger_777f9ee2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCD"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cooked_beef",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:brown_mushroom",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:burger_bun",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:red_mushroom",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:mushroom_burger",
+      "count": 1
+    }
+  }
+}

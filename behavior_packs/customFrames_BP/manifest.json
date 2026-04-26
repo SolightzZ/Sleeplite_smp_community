@@ -1,0 +1,45 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Custom Paintings BP",
+    "description": "Custom Frames Behavior Pack",
+    "uuid": "af7eb96a-9cbc-4eab-845e-d2f7bbeb4d94",
+    "version": [1, 6, 0],
+    "min_engine_version": [1, 21, 0]
+  },
+  "metadata": {
+    "authors": ["SleepliteSMP"],
+    "license": "MIT",
+    "url": "https://discord.gg/gtqfbmvTJK",
+    "product_type": "addon"
+  },
+  "modules": [
+    {
+      "description": "Script API",
+      "type": "script",
+      "language": "javascript",
+      "uuid": "5a76dff2-1da1-44f7-adf0-746c6a4479c2",
+      "entry": "scripts/CustomFrames.js",
+      "version": [1, 6, 0]
+    },
+    {
+      "type": "data",
+      "uuid": "a0f00a38-f167-4a34-8e69-d3409e3acae1",
+      "version": [1, 6, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "136da2dc-6a0e-4472-8f8c-5f1b2841a5fe",
+      "version": [1, 6, 0]
+    },
+    {
+      "module_name": "@minecraft/server",
+      "version": "1.12.0"
+    },
+    {
+      "module_name": "@minecraft/server-ui",
+      "version": "1.3.0"
+    }
+  ]
+}

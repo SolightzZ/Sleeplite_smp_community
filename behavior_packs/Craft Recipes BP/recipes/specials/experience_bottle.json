@@ -1,0 +1,24 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "minecraft:experience_bottle"
+    },
+    "tags": ["crafting_table"],
+    "pattern": [" A ", "#G#", "###"],
+    "key": {
+      "A": {
+        "item": "minecraft:netherbrick"
+      },
+      "#": {
+        "item": "minecraft:lapis_lazuli"
+      },
+      "G": {
+        "item": "minecraft:copper_ingot"
+      }
+    },
+    "result": {
+      "item": "minecraft:experience_bottle"
+    }
+  }
+}

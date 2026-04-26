@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nicothekid:craft_x_lily_pad_x_big_dripleaf"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "ingredients": [
+      {
+        "item": "minecraft:big_dripleaf"
+      }
+    ],
+    "result": {
+      "item": "minecraft:waterlily",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:big_dripleaf"
+      }
+    ]
+  }
+}

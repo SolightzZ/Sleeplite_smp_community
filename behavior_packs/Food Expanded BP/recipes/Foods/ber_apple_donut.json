@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "apple_donut_d0fdf03d"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:apple",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:sugar",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:plain_donut",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:apple_donut",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_smooth_sandstone_x_slabs"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "S ",
+      " S"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:smooth_sandstone_slab"
+      }
+    },
+    "result": {
+      "item": "minecraft:smooth_sandstone",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:smooth_sandstone_slab"
+      }
+    ]
+  }
+}

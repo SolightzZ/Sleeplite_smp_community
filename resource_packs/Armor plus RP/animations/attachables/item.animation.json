@@ -1,0 +1,48 @@
+{
+  "format_version": "1.10.0",
+  "animations": {
+    "animation.item.first_person_main_hand": {
+      "loop": true,
+      "bones": {
+        "item": {
+          "rotation": ["-39.9322 - 20", "-135.3349 + 140", "81.0599 + 123"],
+          "position": ["-2.225-0.7", "23.375 - 3.7", "-2.65+1.25"]
+        }
+      }
+    },
+    "animation.item.first_person_off_hand": {
+      "loop": true,
+      "animation_length": 2.5,
+      "bones": {
+        "item": {
+          "rotation": ["198 - 120 - 60 + 10 + 180", "-324 + 80 - 190 + 10", "-60 + 123 + 4"],
+          "position": [-19.6, 32.6, 12.5]
+        }
+      }
+    },
+    "animation.item.first_person_eating": {
+      "loop": true,
+      "blend_weight": "variable.eating_amount = q.main_hand_item_use_duration <= 0 ? 0 : math.lerp((variable.eating_amount ?? 0),((32-q.main_hand_item_use_duration)/32),0.2); variable.eating_set = q.main_hand_item_use_duration <= 0 ? 0 : math.lerp((variable.eating_set ?? 0),((32-math.max(q.main_hand_item_use_duration,30))/2),0.2); variable.eating_set_smooth = math.lerp((variable.eating_set_smooth ?? 0),variable.eating_set > 0.9 ? 1 : 0,0.3);v.eating_wave = math.lerp((v.eating_wave ?? 0),variable.eating_set_smooth * math.pow(math.cos(variable.eating_amount * 2400),3) * 1.3,0.5); return 1;",
+      "bones": {
+        "item": {
+          "rotation": ["variable.eating_set * 77.5", "variable.eating_set * -50", "variable.eating_set * -60"],
+          "position": [
+            "variable.eating_set * 5 + v.eating_wave * 0.7",
+            "variable.eating_set * 8 + v.eating_wave * 0.9",
+            "variable.eating_set * -13 + v.eating_wave * 0.6"
+          ]
+        }
+      }
+    },
+    "animation.item.third_person": {
+      "loop": true,
+      "bones": {
+        "item": {
+          "position": ["c.item_slot == 'main_hand' ? 1.0 : 0.0", 22.5, -7],
+          "rotation": [0, 0, 180],
+          "scale": 0.55
+        }
+      }
+    }
+  }
+}

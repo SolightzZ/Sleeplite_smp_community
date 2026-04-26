@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vension_dish_5a48d032"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A B",
+      " C "
+    ],
+    "key": {
+      "A": {
+        "item": "fd:fried_egg",
+        "data": 0
+      },
+      "B": {
+        "item": "fd:raw_vension",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:plate",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:vension_dish",
+      "count": 1
+    }
+  }
+}

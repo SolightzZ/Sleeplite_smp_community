@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_tuff_x_slabs"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "T ",
+      " T"
+    ],
+    "key": {
+      "T": {
+        "item": "minecraft:tuff_slab"
+      }
+    },
+    "result": {
+      "item": "minecraft:tuff",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:tuff_slab"
+      }
+    ]
+  }
+}

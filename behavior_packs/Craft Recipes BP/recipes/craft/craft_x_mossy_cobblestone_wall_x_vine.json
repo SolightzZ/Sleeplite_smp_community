@@ -1,0 +1,36 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_mossy_cobblestone_wall_x_vine"
+    },
+    "priority": 2,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "AV"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cobblestone_wall",
+        "data": 0
+      },
+      "V": {
+        "item": "minecraft:vine"
+      }
+    },
+    "result": {
+      "item": "minecraft:cobblestone_wall",
+      "data": 1,
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cobblestone_wall",
+        "data": 0
+      },
+      {
+        "item": "minecraft:vine"
+      }
+    ]
+  }
+}

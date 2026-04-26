@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addons:sp_3"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#PE", "DAD", "AAA"],
+    "key": {
+      "#": {
+        "item": "minecraft:breeze_rod"
+      },
+      "P": {
+        "item": "minecraft:phantom_membrane"
+      },
+      "E": {
+        "item": "minecraft:echo_shard"
+      },
+      "D": {
+        "item": "minecraft:diamond"
+      },
+      "A": {
+        "item": "minecraft:amethyst_shard"
+      }
+    },
+    "result": {
+      "item": "addon:sp_3"
+    },
+    "unlock": [
+      {
+        "item": "addon:sp_3"
+      }
+    ]
+  }
+}

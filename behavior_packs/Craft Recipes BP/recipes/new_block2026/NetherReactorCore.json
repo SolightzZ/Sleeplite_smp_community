@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:netherreactor"
+    },
+    "tags": ["avanced"],
+    "pattern": ["###", "ooo", "###"],
+    "key": {
+      "#": {
+        "item": "minecraft:iron_ingot"
+      },
+      "o": {
+        "item": "minecraft:diamond"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:iron_ingot"
+      }
+    ],
+    "result": {
+      "item": "minecraft:netherreactor"
+    }
+  }
+}

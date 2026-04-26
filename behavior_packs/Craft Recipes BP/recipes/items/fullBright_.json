@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:fullBright_"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#", "H", "H"],
+    "key": {
+      "#": {
+        "item": "minecraft:nether_star"
+      },
+      "H": {
+        "item": "minecraft:heavy_core"
+      }
+    },
+    "result": {
+      "item": "addon:fullBright_"
+    },
+    "unlock": [
+      {
+        "item": "addon:fullBright_"
+      }
+    ]
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "nicothekid:campfire_x_poisonous_potato"
+    },
+    "tags": [ "campfire", "soul_campfire" ],
+    "input": {
+      "item": "minecraft:poisonous_potato"
+    },
+    "output": {
+      "item": "minecraft:potato",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:poisonous_potato"
+      }
+    ]
+  }
+}

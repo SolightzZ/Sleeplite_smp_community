@@ -1,0 +1,25 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "recipes_758fc87c"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A A",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cherry_planks",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:plate",
+      "count": 1
+    }
+  }
+}

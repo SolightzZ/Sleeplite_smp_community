@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "honey_llama_meat_e8ec5fb6"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A ",
+      "BA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:honeycomb",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:cooked_llama",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:honey_llama_meat",
+      "count": 1
+    }
+  }
+}

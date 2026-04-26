@@ -1,0 +1,23 @@
+tile.custom:paintings.name=自定义画框
+item.custom:brush.name=画框刷
+custom.message.need_brush=你需要一个画框刷
+custom.menu.website_info=你可以在此处自定义插件：§ahttps://www.trmc-addons.com/cp
+custom.menu.get_link=获取网站链接
+
+custom.menu.change_size=更改尺寸
+custom.menu.change_texture=更改贴图
+custom.menu.search=搜索贴图
+custom.menu.select_size=选择尺寸
+custom.menu.size_desc=选择预设或输入自定义尺寸。
+custom.menu.custom_size=自定义尺寸输入
+custom.menu.width=宽度 (方块)
+custom.menu.height=高度 (方块)
+custom.menu.search_input=按名称搜索贴图：
+custom.menu.search_placeholder=例如：墙、木头...
+custom.menu.search_filter=搜索 / 过滤
+custom.menu.search_filter_desc=输入名称进行搜索...
+custom.menu.filter_active=过滤：
+custom.menu.reset_filter=重置过滤
+custom.menu.reset_filter_desc=显示所有贴图
+custom.message.not_found=未找到匹配贴图：
+custom.message.applied=贴图已应用：

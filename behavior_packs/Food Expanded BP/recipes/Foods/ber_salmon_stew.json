@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "salmon_stew_2e44ace7"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:red_mushroom",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:salmon",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:salmon_stew",
+      "count": 1
+    }
+  }
+}

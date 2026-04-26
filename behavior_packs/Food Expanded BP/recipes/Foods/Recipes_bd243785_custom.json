@@ -1,0 +1,19 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "tags": [
+      "furnace"
+    ],
+    "output": {
+      "item": "ber:caramel",
+      "data": 0
+    },
+    "input": {
+      "item": "ber:brown_sugar_cube",
+      "data": 0
+    },
+    "description": {
+      "identifier": "recipes_d98fb28e"
+    }
+  }
+}

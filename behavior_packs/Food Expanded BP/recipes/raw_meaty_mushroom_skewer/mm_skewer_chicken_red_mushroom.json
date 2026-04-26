@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_meaty_mushroom_skewer_chicken_red_mushroom"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:chicken"
+      },
+      "B": {
+        "item": "minecraft:red_mushroom"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:chicken"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_meaty_mushroom_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

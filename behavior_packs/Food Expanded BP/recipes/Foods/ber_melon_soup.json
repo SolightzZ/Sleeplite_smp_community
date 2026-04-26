@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "melon_soup_b5f92f12"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AAA",
+      "ABA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:melon_slice",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:melon_soup",
+      "count": 1
+    }
+  }
+}

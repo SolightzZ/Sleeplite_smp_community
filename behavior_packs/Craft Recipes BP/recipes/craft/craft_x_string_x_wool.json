@@ -1,0 +1,24 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nicothekid:craft_x_string_x_wool"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "ingredients": [
+      {
+        "item": "minecraft:white_wool"
+      }
+    ],
+    "result": {
+      "item": "minecraft:string",
+      "count": 4
+    },
+    "unlock": [
+      {
+        "item": "minecraft:white_wool"
+      }
+    ]
+  }
+}

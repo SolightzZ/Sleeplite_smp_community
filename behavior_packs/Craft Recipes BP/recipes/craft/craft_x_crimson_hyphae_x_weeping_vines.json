@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_crimson_hyphae_x_weeping_vines"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "AAA",
+      "ABA",
+      "AAA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:weeping_vines"
+      },
+      "B": {
+        "item": "minecraft:nether_wart_block"
+      }
+    },
+    "result": {
+      "item": "minecraft:crimson_hyphae",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:weeping_vines"
+      },
+      {
+        "item": "minecraft:nether_wart_block"
+      }
+    ]
+  }
+}

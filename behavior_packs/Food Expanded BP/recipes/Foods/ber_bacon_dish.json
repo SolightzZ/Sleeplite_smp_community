@@ -1,0 +1,32 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bacon_dish_cbdfb42a"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABC"
+    ],
+    "key": {
+      "A": {
+        "item": "fd:fried_egg",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:plate",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:cooked_bacon",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:bacon_dish",
+      "count": 1
+    }
+  }
+}

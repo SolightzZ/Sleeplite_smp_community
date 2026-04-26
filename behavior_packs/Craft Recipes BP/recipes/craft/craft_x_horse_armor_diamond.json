@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_horse_armor_diamond"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "A A",
+      "ABA",
+      "A A"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:diamond"
+      },
+      "B": {
+        "item": "minecraft:golden_horse_armor"
+      }
+    },
+    "result": {
+      "item": "minecraft:diamond_horse_armor",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:diamond"
+      },
+      {
+        "item": "minecraft:golden_horse_armor"
+      }
+    ]
+  }
+}

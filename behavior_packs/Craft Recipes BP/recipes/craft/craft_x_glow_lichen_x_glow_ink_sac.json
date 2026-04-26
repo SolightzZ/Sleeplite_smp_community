@@ -1,0 +1,34 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_glow_lichen_x_glow_ink_sac"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "BA",
+      "AA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:vine"
+      },
+      "B": {
+        "item": "minecraft:glow_ink_sac"
+      }
+    },
+    "result": {
+      "item": "minecraft:glow_lichen",
+      "count": 3
+    },
+    "unlock": [
+      {
+        "item": "minecraft:vine"
+      },
+      {
+        "item": "minecraft:glow_ink_sac"
+      }
+    ]
+  }
+}

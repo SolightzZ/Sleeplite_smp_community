@@ -1,0 +1,26 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.play13": {
+			"loop": true,
+			"animation_length": 120,
+			"bones": {
+				"head": {
+					"rotation": [0, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [-17.69527, 3.17305, 23.14465],
+					"position": [0, -1, -1]
+				},
+				"rightArm": {
+					"rotation": [-17.29273, 1.13939, -24.57945],
+					"position": [1, -1, -1]
+				},
+				"body": {
+					"rotation": [12.39237, -0.84361, -0.0856],
+					"position": [0, 0, -2]
+				}
+			}
+		}
+	}
+}

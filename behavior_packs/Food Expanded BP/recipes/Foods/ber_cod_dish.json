@@ -1,0 +1,37 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "cod_dish_b06aa285"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCD"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:cooked_fish",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:beetroot",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:plate",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:carrot",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:cod_dish",
+      "count": 1
+    }
+  }
+}

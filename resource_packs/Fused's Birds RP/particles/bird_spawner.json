@@ -1,0 +1,151 @@
+{
+  "format_version": "1.21.60",
+  "particle_effect": {
+    "description": {
+      "identifier": "fused:bird_spawner",
+      "basic_render_parameters": {
+        "material": "particles_blend",
+        "texture": "textures/particle/none"
+      }
+    },
+    "events": {
+      "bird_event": {
+        "randomize": [
+          {
+            "weight": 0.8,
+            "particle_effect": {
+              "effect": "fused:bird_grey_e",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.8,
+            "particle_effect": {
+              "effect": "fused:bird_grey_w",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.8,
+            "particle_effect": {
+              "effect": "fused:bird_grey_n",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.8,
+            "particle_effect": {
+              "effect": "fused:bird_grey_s",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.7,
+            "particle_effect": {
+              "effect": "fused:bird_black_e",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.7,
+            "particle_effect": {
+              "effect": "fused:bird_blackW",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.7,
+            "particle_effect": {
+              "effect": "fused:bird_black_n",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 0.7,
+            "particle_effect": {
+              "effect": "fused:bird_black_s",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1,
+            "particle_effect": {
+              "effect": "fused:bird_pink_e",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1,
+            "particle_effect": {
+              "effect": "fused:bird_pink_w",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1,
+            "particle_effect": {
+              "effect": "fused:bird_pink_n",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1,
+            "particle_effect": {
+              "effect": "fused:bird_pink_s",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1.1,
+            "particle_effect": {
+              "effect": "fused:bird_blue_e",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1.1,
+            "particle_effect": {
+              "effect": "fused:bird_blue_w",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1.1,
+            "particle_effect": {
+              "effect": "fused:bird_blue_n",
+              "type": "particle"
+            }
+          },
+          {
+            "weight": 1.1,
+            "particle_effect": {
+              "effect": "fused:bird_blue_s",
+              "type": "particle"
+            }
+          }
+        ]
+      }
+    },
+    "components": {
+      "minecraft:emitter_lifetime_expression": {
+        "activation_expression": 1,
+        "expiration_expression": 0
+      },
+      "minecraft:emitter_rate_manual": {
+        "max_particles": 3
+      },
+      "minecraft:particle_lifetime_expression": {
+        "max_lifetime": "math.random(0,1)"
+      },
+      "minecraft:particle_motion_collision": {
+        "collision_radius": 0.075,
+        "expire_on_contact": true
+      },
+      "minecraft:particle_lifetime_events": {
+        "timeline": {
+          "0.8": "bird_event"
+        }
+      }
+    }
+  }
+}

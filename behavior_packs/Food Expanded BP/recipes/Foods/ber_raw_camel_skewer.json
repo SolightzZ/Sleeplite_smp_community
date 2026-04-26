@@ -1,0 +1,30 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "raw_camel_skewer_adb9181a"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " AA",
+      "B  "
+    ],
+    "key": {
+      "A": {
+        "item": "fd:raw_camel_meat",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:skewer_stick",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:raw_camel_skewer",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "identifier": "bluefirefroggy:player_head_28",
+      "materials": {
+        "default": "armor",
+        "layer_2": "entity_alphatest",
+        "enchanted": "armor_enchanted"
+      },
+      "textures": {
+        "default": "textures/heads/player28",
+        "layer_2": "textures/heads/player28",
+        "enchanted": "textures/misc/enchanted_item_glint"
+      },
+      "geometry": {
+        "default": "geometry.player_head_attachable",
+        "layer_2": "geometry.player_head_overlay"
+      },
+      "render_controllers": [
+        "controller.render.head_layer2",
+        "controller.render.head_layer1"
+      ]
+    }
+  }
+}

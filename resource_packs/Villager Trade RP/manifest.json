@@ -1,0 +1,25 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Villager Trade Previewer RP",
+    "description": "Resource Pack Sleeplite SMP 2026",
+    "uuid": "d511ebb5-c94c-4b94-928a-a4144819ebd8",
+    "version": [1, 2, 4],
+    "min_engine_version": [1, 21, 120],
+    "pack_scope": "world"
+  },
+  "capabilities": ["pbr"],
+  "metadata": {
+    "authors": ["SleepliteSMP"],
+    "license": "MIT",
+    "url": "https://discord.gg/gtqfbmvTJK",
+    "product_type": "addon"
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "2219bb94-b882-4214-887f-61619de8975c",
+      "version": [1, 2, 4]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_saddle"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "LLL",
+      "LRL",
+      "LTL"
+    ],
+    "key": {
+      "L": {
+        "item": "minecraft:leather"
+      },
+      "R": {
+        "item": "minecraft:rabbit_hide"
+      },
+      "T": {
+        "item": "minecraft:tripwire_hook"
+      }
+    },
+    "result": {
+      "item": "minecraft:saddle",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:leather"
+      },
+      {
+        "item": "minecraft:rabbit_hide"
+      },
+      {
+        "item": "minecraft:tripwire_hook"
+      }
+    ]
+  }
+}

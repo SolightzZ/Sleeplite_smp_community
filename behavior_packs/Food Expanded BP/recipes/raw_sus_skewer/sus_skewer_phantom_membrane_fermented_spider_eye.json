@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_suspicious_skewer_phantom_membrane_fermented_spider_eye"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:phantom_membrane"
+      },
+      "B": {
+        "item": "minecraft:fermented_spider_eye"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:phantom_membrane"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_suspicious_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

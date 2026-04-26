@@ -1,0 +1,21 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:m1"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#", "G"],
+    "key": {
+      "#": {
+        "item": "minecraft:glow_berries"
+      },
+      "G": {
+        "item": "minecraft:glass_pane"
+      }
+    },
+    "result": {
+      "item": "addon:m1"
+    }
+  }
+}

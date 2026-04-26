@@ -1,0 +1,38 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "recipes_f0143a5f"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A B",
+      " C ",
+      " D "
+    ],
+    "key": {
+      "A": {
+        "item": "ber:cooked_carrot",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:cookey_beetroot",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:baked_potato",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:corp_salad",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "mix_fruit_ice_cream_cup_2967edeb"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCD"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:apple",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:pumpkin_slice",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:ice_cream_cup",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:melon_slice",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:mix_fruit_ice_cream_cup",
+      "count": 1
+    }
+  }
+}

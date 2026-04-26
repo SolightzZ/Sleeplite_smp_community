@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "porkchop_burger_d6a037c8"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BC"
+    ],
+    "key": {
+      "B": {
+        "item": "ber:burger_bun",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:cooked_porkchop",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:porkchop_burger",
+      "count": 1
+    }
+  }
+}

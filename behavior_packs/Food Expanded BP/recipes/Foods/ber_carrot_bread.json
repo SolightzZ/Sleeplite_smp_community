@@ -1,0 +1,30 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "carrot_bread_dad2d4d2"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " AB",
+      "AB ",
+      "B  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:wheat",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:carrot_bread",
+      "count": 1
+    }
+  }
+}

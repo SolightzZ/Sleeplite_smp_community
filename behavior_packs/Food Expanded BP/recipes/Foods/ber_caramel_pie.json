@@ -1,0 +1,32 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "caramel_pie_e38ecf8e"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABC"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:egg",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:caramel",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:brown_sugar",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:caramel_pie",
+      "count": 1
+    }
+  }
+}

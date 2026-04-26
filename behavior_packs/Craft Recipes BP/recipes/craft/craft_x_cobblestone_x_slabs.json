@@ -1,0 +1,28 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_cobblestone_x_slabs"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "D ",
+      " D"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:cobblestone_slab"
+      }
+    },
+    "result": {
+      "item": "minecraft:cobblestone",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cobblestone_slab"
+      }
+    ]
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_vegetable_skewer_carrot_pumpkin"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:carrot"
+      },
+      "B": {
+        "item": "minecraft:pumpkin"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:carrot"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_vegetable_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

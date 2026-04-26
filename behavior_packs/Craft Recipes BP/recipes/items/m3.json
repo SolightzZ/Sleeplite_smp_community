@@ -1,0 +1,21 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:m3"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#", "G"],
+    "key": {
+      "#": {
+        "item": "minecraft:nether_wart"
+      },
+      "G": {
+        "item": "minecraft:glass_pane"
+      }
+    },
+    "result": {
+      "item": "addon:m3"
+    }
+  }
+}

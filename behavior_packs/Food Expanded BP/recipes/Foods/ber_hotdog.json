@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "hotdog_a2215c75"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A ",
+      " B"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:cooked_sausage",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:hotdog_bread",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:hotdog",
+      "count": 1
+    }
+  }
+}

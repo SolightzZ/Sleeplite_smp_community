@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "meatball_bowl_27446e32"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "ABA"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:cooked_meatball",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:meatball_bowl",
+      "count": 1
+    }
+  }
+}

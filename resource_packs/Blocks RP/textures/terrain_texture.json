@@ -1,0 +1,35 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "dustydecorations_apple_barrel": {
+      "textures": "textures/blocks/apple_barrel"
+    },
+    "dustydecorations_beetroot_barrel": {
+      "textures": "textures/blocks/beetroot_barrel"
+    },
+    "dustydecorations_carrot_barrel": {
+      "textures": "textures/blocks/carrot_barrel"
+    },
+    "dustydecorations_cod_barrel": {
+      "textures": "textures/blocks/cod_barrel"
+    },
+    "dustydecorations_empty_barrel": {
+      "textures": "textures/blocks/empty_barrel"
+    },
+    "dustydecorations_potato_barrel": {
+      "textures": "textures/blocks/potato_barrel"
+    },
+    "dustydecorations_salmon_barrel": {
+      "textures": "textures/blocks/salmon_barrel"
+    },
+    "dustydecorations_sweet_berries_barrel": {
+      "textures": "textures/blocks/sweet_berries_barrel"
+    },
+    "avanced_crafting": {
+      "textures": "textures/blocks/avanced_crafting"
+    }
+  }
+}

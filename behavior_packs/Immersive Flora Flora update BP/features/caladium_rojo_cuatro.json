@@ -1,0 +1,14 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:structure_template_feature": {
+		"description": {
+			"identifier": "tayi:caladium_rojo_cuatro"
+		},
+		"structure_name": "mystructure:caladium_rojo_c",
+		"adjustment_radius": 4,
+		"facing_direction": "random",
+		"constraints": {
+			"grounded": {}
+		}
+	}
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "apple_ice_cream_e5251ac5"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AB",
+      "C "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:apple",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:caramel",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:ice_cream",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:apple_ice_cream",
+      "count": 1
+    }
+  }
+}

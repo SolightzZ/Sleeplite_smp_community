@@ -1,0 +1,12 @@
+{
+  "format_version": "1.17",
+  "minecraft:recipe_furnace": {
+    "description": {
+      "identifier": "vf_campfire_creations:cooked_meaty_skewer"
+    },
+    "tags": ["campfire", "soul_campfire"],
+    "input": "vf_campfire_creations:raw_meaty_skewer",
+
+    "output": "vf_campfire_creations:cooked_meaty_skewer"
+  }
+}

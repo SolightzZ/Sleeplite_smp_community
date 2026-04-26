@@ -1,0 +1,41 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "addon:sp_3",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "sp_3",
+      "minecraft:max_stack_size": 16,
+      "minecraft:food": {
+        "nutrition": 1,
+        "saturation_modifier": 0,
+        "can_always_eat": true,
+        "using_converts_to": "glass_bottle"
+      },
+      "minecraft:use_animation": "drink",
+      "minecraft:use_modifiers": {
+        "movement_modifier": 0.35,
+        "use_duration": 1.6,
+        "effects": [
+          {
+            "name": "resistance",
+            "chance": 1,
+            "duration": 1080,
+            "amplifier": 2
+          },
+          {
+            "name": "regeneration",
+            "chance": 1,
+            "duration": 10,
+            "amplifier": 0
+          }
+        ],
+        "remove_effects": []
+      }
+    }
+  }
+}

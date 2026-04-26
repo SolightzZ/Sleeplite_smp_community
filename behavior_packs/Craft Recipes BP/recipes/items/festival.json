@@ -1,0 +1,18 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:festival"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "##"],
+    "key": {
+      "#": {
+        "item": "minecraft:bamboo"
+      }
+    },
+    "result": {
+      "item": "addon:festival"
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "Fused Birds RP",
+    "description": "This texture pack adds bird particles which spawn near trees. Made by Fused Bolt 2026",
+    "uuid": "825fb5c6-914d-4db2-bf67-b72709f6bfff",
+    "version": [1, 0, 0],
+    "min_engine_version": [1, 21, 120],
+    "pack_scope": "world"
+  },
+  "capabilities": ["pbr"],
+  "metadata": {
+    "authors": ["SleepliteSMP"],
+    "license": "MIT",
+    "url": "https://discord.gg/gtqfbmvTJK",
+    "product_type": "addon"
+  },
+  "modules": [
+    {
+      "description": "This texture pack adds bird particles which spawn near trees. Made by Fused Bolt",
+      "type": "resources",
+      "uuid": "cd777357-aa82-48dc-ba64-12ca23743836",
+      "version": [1, 0, 0]
+    }
+  ]
+}

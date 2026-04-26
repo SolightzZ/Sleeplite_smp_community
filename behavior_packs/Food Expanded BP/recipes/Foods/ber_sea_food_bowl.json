@@ -1,0 +1,41 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "sea_food_bowl_7eeb0eae"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " AB",
+      "CDE"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:salmon",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:fish",
+        "data": 0
+      },
+      "D": {
+        "item": "minecraft:bowl",
+        "data": 0
+      },
+      "E": {
+        "item": "minecraft:brown_mushroom",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:sea_food_bowl",
+      "count": 1
+    }
+  }
+}

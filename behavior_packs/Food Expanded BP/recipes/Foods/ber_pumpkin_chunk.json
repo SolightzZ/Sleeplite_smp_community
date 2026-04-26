@@ -1,0 +1,24 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "pumpkin_chunk_8e044a96"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B"
+    ],
+    "key": {
+      "B": {
+        "item": "ber:pumpkin_slice",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:pumpkin_chunk",
+      "count": 2
+    }
+  }
+}

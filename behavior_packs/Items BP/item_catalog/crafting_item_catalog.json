@@ -1,0 +1,163 @@
+{
+  "format_version": "1.21.70",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "items",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "bluefirefroggy:player_head_1",
+              "name": "bluefirefroggy:itemGroup.name.player_head"
+            },
+            "items": [
+              "bluefirefroggy:player_head_1",
+              "bluefirefroggy:player_head_2",
+              "bluefirefroggy:player_head_3",
+              "bluefirefroggy:player_head_4",
+              "bluefirefroggy:player_head_5",
+              "bluefirefroggy:player_head_6",
+              "bluefirefroggy:player_head_7",
+              "bluefirefroggy:player_head_8",
+              "bluefirefroggy:player_head_9",
+              "bluefirefroggy:player_head_10",
+              "bluefirefroggy:player_head_11",
+              "bluefirefroggy:player_head_12",
+              "bluefirefroggy:player_head_13",
+              "bluefirefroggy:player_head_14",
+              "bluefirefroggy:player_head_15",
+              "bluefirefroggy:player_head_16",
+              "bluefirefroggy:player_head_17",
+              "bluefirefroggy:player_head_18",
+              "bluefirefroggy:player_head_19",
+              "bluefirefroggy:player_head_20",
+              "bluefirefroggy:player_head_21",
+              "bluefirefroggy:player_head_22",
+              "bluefirefroggy:player_head_23",
+              "bluefirefroggy:player_head_24",
+              "bluefirefroggy:player_head_25",
+
+              "bluefirefroggy:player_head_26",
+              "bluefirefroggy:player_head_27",
+
+              "bluefirefroggy:player_head_28",
+              "bluefirefroggy:player_head_29",
+              "bluefirefroggy:player_head_30"
+            ]
+          }
+        ]
+      },
+
+      {
+        "category_name": "items",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "minecraft:command_block",
+              "name": "mys:itemGroup.name.secretblocks"
+            },
+            "items": [
+              "minecraft:command_block",
+              "minecraft:chain_command_block",
+              "minecraft:repeating_command_block",
+              "minecraft:command_block_minecart",
+              "minecraft:barrier",
+              "minecraft:border_block",
+              "minecraft:jigsaw",
+              "minecraft:structure_void",
+              "minecraft:allow",
+              "minecraft:deny",
+              "minecraft:lit_furnace",
+              "minecraft:lit_blast_furnace",
+              "minecraft:lit_smoker",
+              "minecraft:lit_redstone_ore",
+              "minecraft:lit_deepslate_redstone_ore",
+              "minecraft:lit_redstone_lamp",
+              "minecraft:unlit_redstone_torch",
+              "minecraft:daylight_detector_inverted",
+              "minecraft:wither_spawn_egg",
+              "minecraft:ender_dragon_spawn_egg",
+              "minecraft:spawn_egg",
+              "minecraft:camera",
+              "minecraft:netherreactor",
+              "minecraft:glowingobsidian",
+              "minecraft:stonecutter",
+              "minecraft:unknown",
+              "minecraft:reserved6",
+              "minecraft:info_update",
+              "minecraft:info_update2",
+              "minecraft:client_request_placeholder_block",
+              "minecraft:moving_block",
+              "minecraft:chalkboard",
+              "minecraft:end_gateway",
+              "minecraft:end_portal",
+              "minecraft:end_portal_frame:4",
+              "minecraft:portal",
+              "minecraft:fire",
+              "minecraft:soul_fire",
+              "minecraft:lava",
+              "minecraft:water",
+              "minecraft:flowing_lava",
+              "minecraft:flowing_water",
+              "minecraft:frosted_ice",
+              "minecraft:board",
+              "minecraft:board:1",
+              "minecraft:board:2",
+              "minecraft:item.camera",
+              "minecraft:invisiblebedrock",
+              "minecraft:bubble_column",
+              "minecraft:lodestone_compass",
+              "minecraft:snow_layer:1",
+              "minecraft:snow_layer:2",
+              "minecraft:snow_layer:3",
+              "minecraft:snow_layer:4",
+              "minecraft:snow_layer:5",
+              "minecraft:snow_layer:6",
+              "minecraft:snow_layer:7",
+              "minecraft:powder_snow",
+              "minecraft:respawn_anchor:1",
+              "minecraft:respawn_anchor:2",
+              "minecraft:respawn_anchor:3",
+              "minecraft:respawn_anchor:4",
+              "minecraft:written_book",
+              "minecraft:enchanted_book",
+              "minecraft:trip_wire",
+              "minecraft:item.bed"
+            ]
+          }
+        ]
+      },
+
+      {
+        "category_name": "nature",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "minecraft:fire_coral",
+              "name": "minecraft:itemGroup.name.coral_decorations"
+            },
+            "items": [
+              "minecraft:fire_coral_wall_fan",
+              "minecraft:brain_coral_wall_fan",
+              "minecraft:bubble_coral_wall_fan",
+              "minecraft:tube_coral_wall_fan",
+              "minecraft:horn_coral_wall_fan",
+              "minecraft:dead_fire_coral_wall_fan",
+              "minecraft:dead_brain_coral_wall_fan",
+              "minecraft:dead_bubble_coral_wall_fan",
+              "minecraft:dead_tube_coral_wall_fan",
+              "minecraft:dead_horn_coral_wall_fan"
+            ]
+          },
+          {
+            "group_identifier": {
+              "icon": "minecraft:brown_mushroom",
+              "name": "minecraft:itemGroup.name.mushroom"
+            },
+            "items": ["minecraft:red_mushroom_block"]
+          }
+        ]
+      }
+    ]
+  }
+}

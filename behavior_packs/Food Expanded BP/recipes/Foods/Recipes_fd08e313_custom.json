@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "recipes_e32b3b0c"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A ",
+      " B"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:honey_sausage",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:hotdog_bread",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:honey_hotdog",
+      "count": 1
+    }
+  }
+}

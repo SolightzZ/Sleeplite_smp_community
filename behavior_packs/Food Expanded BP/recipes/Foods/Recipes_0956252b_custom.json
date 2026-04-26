@@ -1,0 +1,19 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_furnace": {
+    "tags": [
+      "smoker"
+    ],
+    "output": {
+      "item": "fd:cooked_frog_legs",
+      "data": 0
+    },
+    "input": {
+      "item": "fd:frog_legs",
+      "data": 0
+    },
+    "description": {
+      "identifier": "recipes_e2b4baaa"
+    }
+  }
+}

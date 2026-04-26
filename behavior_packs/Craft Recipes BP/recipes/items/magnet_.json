@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:magnet_"
+    },
+    "tags": ["avanced"],
+    "pattern": ["# N", "IH ", "IIR"],
+    "key": {
+      "#": {
+        "item": "minecraft:lapis_block"
+      },
+      "N": {
+        "item": "minecraft:nether_star"
+      },
+      "I": {
+        "item": "minecraft:iron_block"
+      },
+      "H": {
+        "item": "minecraft:heavy_core"
+      },
+      "R": {
+        "item": "minecraft:redstone_block"
+      }
+    },
+    "result": {
+      "item": "addon:magnet_"
+    },
+    "unlock": [
+      {
+        "item": "addon:magnet_"
+      }
+    ]
+  }
+}

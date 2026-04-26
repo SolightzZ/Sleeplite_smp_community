@@ -1,0 +1,33 @@
+{
+	"format_version": "1.20.10",
+	"minecraft:recipe_shaped": {
+		"description": {
+			"identifier": "custom:frame_recipe"
+		},
+		"tags": [
+			"crafting_table"
+		],
+		"pattern": [
+			"SSS",
+			"SPS",
+			"SSS"
+		],
+		"key": {
+			"S": {
+				"item": "minecraft:stick"
+			},
+			"P": {
+				"item": "minecraft:paper"
+			}
+		},
+		"result": {
+			"item": "custom:paintings",
+			"count": 1
+		},
+		"unlock": [
+			{
+				"item": "minecraft:stick"
+			}
+		]
+	}
+}

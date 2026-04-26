@@ -1,0 +1,29 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bamboo_tea_652bf960"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A A",
+      "ABA"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:bamboo_sheet",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:cup",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:bamboo_tea",
+      "count": 1
+    }
+  }
+}

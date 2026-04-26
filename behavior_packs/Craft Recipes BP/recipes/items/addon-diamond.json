@@ -1,0 +1,18 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:diamond"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#"],
+    "key": {
+      "#": {
+        "item": "addon:dr"
+      }
+    },
+    "result": {
+      "item": "minecraft:diamond"
+    }
+  }
+}

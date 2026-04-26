@@ -1,0 +1,34 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_mossy_cobblestone_stairs_x_seagrass"
+    },
+    "priority": 4,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "DS",
+      "S "
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:stone_stairs"
+      },
+      "S": {
+        "item": "minecraft:seagrass"
+      }
+    },
+    "result": {
+      "item": "minecraft:mossy_cobblestone_stairs",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stone_stairs"
+      },
+      {
+        "item": "minecraft:seagrass"
+      }
+    ]
+  }
+}

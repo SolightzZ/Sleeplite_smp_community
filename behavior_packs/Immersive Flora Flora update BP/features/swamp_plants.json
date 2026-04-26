@@ -1,0 +1,18 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:weighted_random_feature": {
+		"description": {
+			"identifier": "tayi:swamp_plants"
+		},
+		"features": [
+			[
+				"tayi:alocacia_mur",
+				5
+			],
+			[
+				"tayi:alocasia_mur_cuatro",
+				1
+			]
+		]
+	}
+}

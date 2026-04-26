@@ -1,0 +1,23 @@
+tile.custom:paintings.name=Tableau personnalisé
+item.custom:brush.name=Pinceau pour cadres
+custom.message.need_brush=Vous avez besoin d'un pinceau pour cadres
+custom.menu.website_info=Vous pouvez personnaliser l'addon sur : §ahttps://www.trmc-addons.com/cp
+custom.menu.get_link=Obtenir le lien du site web
+
+custom.menu.change_size=Modifier la taille
+custom.menu.change_texture=Modifier la texture
+custom.menu.search=Rechercher une texture
+custom.menu.select_size=Sélectionner la taille
+custom.menu.size_desc=Choisissez un préréglage ou saisissez une taille personnalisée.
+custom.menu.custom_size=Taille personnalisée
+custom.menu.width=Largeur (Blocs)
+custom.menu.height=Hauteur (Blocs)
+custom.menu.search_input=Rechercher une texture par nom :
+custom.menu.search_placeholder=ex : mur, bois...
+custom.menu.search_filter=Rechercher / Filtrer
+custom.menu.search_filter_desc=Tapez un nom pour rechercher...
+custom.menu.filter_active=Filtre :
+custom.menu.reset_filter=Réinitialiser le filtre
+custom.menu.reset_filter_desc=Afficher toutes les textures
+custom.message.not_found=Aucune texture trouvée correspondant à :
+custom.message.applied=Texture appliquée :

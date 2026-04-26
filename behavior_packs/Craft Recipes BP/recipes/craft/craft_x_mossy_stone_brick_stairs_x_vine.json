@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_mossy_stone_brick_stairs_x_vine"
+    },
+    "priority": 2,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "DV"
+    ],
+    "key": {
+      "D": {
+        "item": "minecraft:stone_brick_stairs"
+      },
+      "V": {
+        "item": "minecraft:vine"
+      }
+    },
+    "result": {
+      "item": "minecraft:mossy_stone_brick_stairs",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:stone_brick_stairs"
+      },
+      {
+        "item": "minecraft:vine"
+      }
+    ]
+  }
+}

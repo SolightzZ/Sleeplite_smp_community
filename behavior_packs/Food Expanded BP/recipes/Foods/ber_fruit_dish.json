@@ -1,0 +1,33 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "fruit_dish_bd80f69f"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "A A",
+      "BCB"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:pumpkin_chunk",
+        "data": 0
+      },
+      "B": {
+        "item": "ber:cactus_chunk",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:fruit_dish",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "ale:6_rule",
+      "places_feature": "ale:6_feature"
+    },
+    "conditions": {
+      "minecraft:biome_filter": [
+        {
+          "any_of": [
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "overworld"
+            }
+          ]
+        }
+      ],
+      "placement_pass": "final_pass"
+    },
+    "distribution": {
+      "iterations": 1,
+      "scatter_chance": {
+        "numerator": 1,
+        "denominator": 1250
+      },
+      "x": {
+        "extent": [-16, -15],
+        "distribution": "uniform"
+      },
+      "y": "query.heightmap(variable.worldx, variable.worldz) + -1",
+      "z": {
+        "extent": [-16, -15],
+        "distribution": "uniform"
+      }
+    }
+  }
+}

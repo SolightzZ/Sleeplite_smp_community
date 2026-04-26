@@ -1,0 +1,34 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bamboo_stew_8f662271"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      " A ",
+      "BCB",
+      " B "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:sugar",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:bamboo",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:bowl",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:bamboo_stew",
+      "count": 1
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_stone_bricks_x_clay"
+    },
+    "priority": 3,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "SC"
+    ],
+    "key": {
+      "S": {
+        "item": "minecraft:cracked_stone_bricks"
+      },
+      "C": {
+        "item": "minecraft:clay_ball"
+      }
+    },
+    "result": {
+      "item": "minecraft:stone_bricks",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cracked_stone_bricks"
+      },
+      {
+        "item": "minecraft:clay_ball"
+      }
+    ]
+  }
+}

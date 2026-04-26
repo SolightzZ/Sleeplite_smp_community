@@ -1,0 +1,65 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.solight2": {
+			"loop": true,
+			"animation_length": 120,
+			"bones": {
+				"root": {
+					"scale": 0.1
+				},
+				"head": {
+					"scale": 0.1
+				}
+			}
+		},
+		"animation.solight3": {
+			"loop": true,
+			"animation_length": 120,
+			"bones": {
+				"root": {
+					"scale": [0.5, 1.5, 0.5]
+				},
+				"head": {
+					"scale": [1, 1.5, 1]
+				}
+			}
+		},
+		"animation.solight4": {
+			"loop": true,
+			"animation_length": 120,
+			"bones": {
+				"root": {
+					"scale": [2.5, 1, 1]
+				},
+				"head": {
+					"scale": [2.5, 1, 1]
+				}
+			}
+		},
+		"animation.solight5": {
+			"loop": true,
+			"animation_length": 120,
+			"bones": {
+				"root": {
+					"scale": [1, 1, 0]
+				},
+				"head": {
+					"scale": [1, 1, 0]
+				}
+			}
+		},
+		"animation.solight6": {
+			"loop": true,
+			"animation_length": 120,
+			"bones": {
+				"root": {
+					"scale": 4
+				},
+				"head": {
+					"scale": 4
+				}
+			}
+		}
+	}
+}

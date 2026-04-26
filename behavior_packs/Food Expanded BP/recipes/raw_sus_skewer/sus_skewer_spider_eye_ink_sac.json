@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_suspicious_skewer_spider_eye_ink_sac"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:spider_eye"
+      },
+      "B": {
+        "item": "minecraft:ink_sac"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:spider_eye"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_suspicious_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

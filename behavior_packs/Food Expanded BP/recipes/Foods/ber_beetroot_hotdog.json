@@ -1,0 +1,37 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "beetroot_hotdog_ca84df31"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AB",
+      "CD"
+    ],
+    "key": {
+      "A": {
+        "item": "ber:cooked_sausage",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:beetroot",
+        "data": 0
+      },
+      "C": {
+        "item": "minecraft:carrot",
+        "data": 0
+      },
+      "D": {
+        "item": "ber:hotdog_bread",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:beetroot_hotdog",
+      "count": 1
+    }
+  }
+}

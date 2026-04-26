@@ -1,0 +1,98 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "player1": {
+      "textures": "textures/heads/player1"
+    },
+    "player2": {
+      "textures": "textures/heads/player2"
+    },
+    "player3": {
+      "textures": "textures/heads/player3"
+    },
+    "player4": {
+      "textures": "textures/heads/player4"
+    },
+    "player5": {
+      "textures": "textures/heads/player5"
+    },
+    "player6": {
+      "textures": "textures/heads/player6"
+    },
+    "player7": {
+      "textures": "textures/heads/player7"
+    },
+    "player8": {
+      "textures": "textures/heads/player8"
+    },
+    "player9": {
+      "textures": "textures/heads/player9"
+    },
+    "player10": {
+      "textures": "textures/heads/player10"
+    },
+    "player11": {
+      "textures": "textures/heads/player11"
+    },
+    "player12": {
+      "textures": "textures/heads/player12"
+    },
+    "player13": {
+      "textures": "textures/heads/player13"
+    },
+    "player14": {
+      "textures": "textures/heads/player14"
+    },
+    "player15": {
+      "textures": "textures/heads/player15"
+    },
+    "player16": {
+      "textures": "textures/heads/player16"
+    },
+    "player17": {
+      "textures": "textures/heads/player17"
+    },
+    "player18": {
+      "textures": "textures/heads/player18"
+    },
+    "player19": {
+      "textures": "textures/heads/player19"
+    },
+    "player20": {
+      "textures": "textures/heads/player20"
+    },
+    "player21": {
+      "textures": "textures/heads/player21"
+    },
+    "player22": {
+      "textures": "textures/heads/player22"
+    },
+    "player23": {
+      "textures": "textures/heads/player23"
+    },
+    "player24": {
+      "textures": "textures/heads/player24"
+    },
+    "player25": {
+      "textures": "textures/heads/player25"
+    },
+    "player26": {
+      "textures": "textures/heads/player26"
+    },
+    "player27": {
+      "textures": "textures/heads/player27"
+    },
+    "player28": {
+      "textures": "textures/heads/player28"
+    },
+    "player29": {
+      "textures": "textures/heads/player29"
+    },
+    "player30": {
+      "textures": "textures/heads/player30"
+    }
+  }
+}

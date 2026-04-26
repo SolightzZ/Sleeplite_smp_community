@@ -1,0 +1,24 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "raw_beacon_b8448b41"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:porkchop",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:raw_beacon",
+      "count": 2
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:block": {
+    "description": {
+      "identifier": "addon:avanced_crafting",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:collision_box": true,
+      "minecraft:selection_box": true,
+
+      "minecraft:destructible_by_mining": {
+        "seconds_to_destroy": 0.9
+      },
+
+      "minecraft:destructible_by_explosion": {
+        "explosion_resistance": 0
+      },
+
+      "minecraft:flammable": {
+        "destroy_chance_modifier": 20,
+        "catch_chance_modifier": 5
+      },
+
+      "minecraft:crafting_table": {
+        "crafting_tags": ["avanced"],
+        "table_name": "container.crafting"
+      },
+
+      "minecraft:geometry": "geometry.avanced_crafting",
+
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "avanced_crafting",
+          "render_method": "alpha_test"
+        }
+      },
+
+      "minecraft:map_color": "#8c722a"
+    }
+  }
+}

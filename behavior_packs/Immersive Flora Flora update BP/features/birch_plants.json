@@ -1,0 +1,26 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:weighted_random_feature": {
+		"description": {
+			"identifier": "tayi:birch_plants"
+		},
+		"features": [
+			[
+				"tayi:caladium_blanco",
+				5
+			],
+			[
+				"tayi:caladium_blanco_cuatro",
+				2
+			],
+			[
+				"tayi:caladium_lima_cuatro",
+				1
+			],
+			[
+				"tayi:caladium_lima",
+				4
+			]
+		]
+	}
+}

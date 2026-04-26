@@ -1,0 +1,24 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "bamboo_sheet_170c63be"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "B"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bamboo",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:bamboo_sheet",
+      "count": 2
+    }
+  }
+}

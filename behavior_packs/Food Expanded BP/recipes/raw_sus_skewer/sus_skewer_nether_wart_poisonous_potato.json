@@ -1,0 +1,38 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_suspicious_skewer_nether_wart_poisonous_potato"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "  A",
+      " B ",
+      "C  "
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:nether_wart"
+      },
+      "B": {
+        "item": "minecraft:poisonous_potato"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:nether_wart"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_suspicious_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:bank"
+    },
+    "tags": ["avanced"],
+    "pattern": ["", " #", ""],
+    "key": {
+      "#": {
+        "item": "minecraft:emerald"
+      }
+    },
+    "result": {
+      "item": "addon:bank"
+    }
+  }
+}

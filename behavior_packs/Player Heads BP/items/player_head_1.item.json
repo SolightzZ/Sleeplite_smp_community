@@ -1,0 +1,24 @@
+{
+  "format_version": "1.21.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "bluefirefroggy:player_head_1",
+      "menu_category": {
+        "category": "items"
+      }
+    },
+    "components": {
+      "minecraft:icon": "bluefirefroggy:player_head_1_block",
+      "minecraft:block_placer": {
+        "block": "bluefirefroggy:player_head_1_block"
+      },
+      "minecraft:max_stack_size": {
+        "value": 1
+      },
+      "minecraft:wearable": {
+        "slot": "slot.armor.head"
+      },
+      "minecraft:rarity": "uncommon"
+    }
+  }
+}

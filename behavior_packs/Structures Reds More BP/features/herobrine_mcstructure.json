@@ -1,0 +1,33 @@
+{
+    "format_version": "1.13.0",
+    "minecraft:structure_template_feature": {
+        "description": {
+            "identifier": "minecraft:herobrine_mcstructure"
+        },
+        "structure_name": "mystructure:herobrine",
+        "adjustment_radius": 16,
+        "facing_direction": "random",
+        "constraints": {
+            "grounded": {},
+            "unburied": {},
+            "block_intersection": {
+                "block_allowlist": [
+                    "minecraft:air",
+                    "minecraft:grass",
+                    "minecraft:tallgrass",
+                    "minecraft:snow",
+                    "minecraft:snow_layer",
+                    "minecraft:powder_snow",
+                    "minecraft:gravel",
+                    "minecraft:packed_ice",
+                    "minecraft:ice",
+                    "minecraft:leaves",
+                    "minecraft:leaves2",
+                    "minecraft:log",
+                    "minecraft:log2"
+                ]
+            }
+            
+        }
+    }
+}

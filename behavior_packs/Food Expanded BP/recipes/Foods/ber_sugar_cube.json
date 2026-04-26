@@ -1,0 +1,25 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "sugar_cube_bf11ed22"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "AA",
+      "AA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:sugar",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:sugar_cube",
+      "count": 2
+    }
+  }
+}

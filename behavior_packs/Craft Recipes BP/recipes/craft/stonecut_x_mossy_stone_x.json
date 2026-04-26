@@ -1,0 +1,25 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "nicothekid:stonecut_x_mossy_stone_x"
+    },
+    "tags": [
+       "stonecutter"
+    ],
+    "ingredients":[
+      {
+        "item":"minecraft:mossy_stone_brick_stairs"
+      }
+    ],
+    "result":{
+      "item": "minecraft:mossy_cobblestone",
+      "data": 1
+    },
+    "unlock":[
+      {
+        "item": "minecraft:stone"
+      }
+    ]
+  }
+}

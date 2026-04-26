@@ -1,0 +1,15 @@
+{
+  "format_version": "1.20.50",
+  "minecraft:item": {
+    "description": {
+      "identifier": "addon:fullBright_",
+      "menu_category": {
+        "category": "equipment"
+      }
+    },
+    "components": {
+      "minecraft:icon": "fullbright",
+      "minecraft:max_stack_size": 1
+    }
+  }
+}

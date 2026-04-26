@@ -1,0 +1,32 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "vf_campfire_creations:raw_honey_chicken_skewer_honey_bottle_chicken"
+    },
+    "tags": ["crafting_table"],
+    "pattern": ["  A", " B ", "C  "],
+    "key": {
+      "A": {
+        "item": "minecraft:honey_bottle"
+      },
+      "B": {
+        "item": "minecraft:chicken"
+      },
+      "C": {
+        "item": "minecraft:stick"
+      }
+    },
+    "unlock": [
+      {
+        "item": "minecraft:honey_bottle"
+      }
+    ],
+    "result": [
+      {
+        "item": "vf_campfire_creations:raw_honey_chicken_skewer",
+        "count": 1
+      }
+    ]
+  }
+}

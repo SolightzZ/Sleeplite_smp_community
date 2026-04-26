@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "brown_sugar_d7d2ed70"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "ABA"
+    ],
+    "key": {
+      "A": {
+        "item": "minecraft:sugar",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:brown_dye",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:brown_sugar",
+      "count": 2
+    }
+  }
+}

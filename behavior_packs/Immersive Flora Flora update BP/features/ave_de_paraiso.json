@@ -1,0 +1,27 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:single_block_feature": {
+		"description": {
+			"identifier": "tayi:ave_de_paraiso"
+		},
+		"places_block": {
+			"name": "tayi:ave_de_paraiso"
+		},
+		"enforce_survivability_rules": true,
+		"enforce_placement_rules": false,
+		"may_replace": [
+			{
+				"name": "minecraft:short_grass"
+			},
+			{
+				"name": "minecraft:tall_grass"
+			},
+			{
+				"name": "minecraft:fern"
+			},
+			{
+				"name": "minecraft:large_fern"
+			}
+		]
+	}
+}

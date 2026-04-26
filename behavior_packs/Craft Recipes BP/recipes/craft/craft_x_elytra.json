@@ -1,0 +1,35 @@
+{
+  "format_version": "1.20.80",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "nicothekid:craft_x_elytra"
+    },
+    "priority": 1,
+    "tags": [ "crafting_table" ],
+    "pattern": [
+      "PPP",
+      "PPP",
+      "PPP"
+    ],
+    "key": {
+      "P": {
+        "item": "minecraft:barrier"
+      }
+    },
+    "result": {
+      "item": "minecraft:elytra",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:phantom_membrane"
+      },
+      {
+        "item": "minecraft:netherite_scrap"
+      },
+      {
+        "item": "minecraft:netherite_ingot"
+      }
+    ]
+  }
+}

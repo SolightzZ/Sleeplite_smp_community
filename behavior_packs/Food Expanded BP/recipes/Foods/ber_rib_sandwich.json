@@ -1,0 +1,28 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "rib_sandwich_f0515d6c"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "pattern": [
+      "BC"
+    ],
+    "key": {
+      "B": {
+        "item": "minecraft:bread",
+        "data": 0
+      },
+      "C": {
+        "item": "ber:roasted_ribs",
+        "data": 0
+      }
+    },
+    "result": {
+      "item": "ber:rib_sandwich",
+      "count": 1
+    }
+  }
+}
