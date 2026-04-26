@@ -1,7 +1,6 @@
 import { world } from "@minecraft/server";
 
 import "./economy/system.js";
-import "./DailyFoodLimit/main.js";
 import "./Protection/system.js";
 import "./CustomCommand/system.js";
 import "./tools/crops/index.js";
@@ -17,10 +16,9 @@ import "./plugins/Report.js";
 import "./plugins/afkcinematics.js";
 import "./plugins/index.js";
 
-
 // API TEST
 // import "./API.js";
-import "./MLChatbot.js"
+import "./MLChatbot.js";
 
 import { handlePlayerDimensionChange } from "./BiomeType/system.js";
 import { LlightentityHitBlock } from "./light/main.js";
