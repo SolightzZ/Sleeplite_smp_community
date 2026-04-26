@@ -2,9 +2,9 @@ const text = `
                                 .                                         ----------------------------------------------------------------------
                                   ...                                     Sleeplite SMP Server Pack * 2026 SolightzZ | All Rights Reserved
                                   ....                                    ----------------------------------------------------------------------
-                                    ....                                  Game:         Minecraft Bedrock Edition | Version: 1.26.131
+                                    ....                                  Game:         Minecraft Bedrock Edition | Version: 1.26.13
                               ..   .....   .............                  Modules:      server, server-ui, server-admin
-                              ...... ......................               Build:        19.04.2026  | Patch: v2
+                              ...... ......................               Build:        25.04.2026  | Patch: v2
                             ......  ............       .....              Server Type:  Minecraft Server (Vanilla)
                           .   .....  .........          .....             Developer:    SolightzZ
                         ....        .........          ......             Docs:         https://github.com/SolightzZ/Sleeplite_2026

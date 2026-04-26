@@ -929,7 +929,6 @@ system.runInterval(() => {
   }
 }, 1);
 
-// ล้าง state + interval ทั้งหมดของ player ที่ออกจากเกม
 world.afterEvents.playerLeave.subscribe((event) => {
   stopWarning(event.playerId);
   clearTrackedRun(actionBarIntervals, event.playerId);
