@@ -1,16 +1,16 @@
 import { system } from "@minecraft/server";
 import { inventorys } from "./rules.js";
 
-export function see(player, thing) {
+export const see = (player, thing) => {
   const bag = player.getComponent(inventorys).container;
   for (let i = 0; i < bag.size; i++) {
     const item = bag.getItem(i);
     if (item && item.typeId === thing) return true;
   }
   return false;
-}
+};
 
-export function eat(player, thing) {
+export const eat = (player, thing) => {
   system.run(() => {
     const bag = player.getComponent(inventorys).container;
     for (let i = 0; i < bag.size; i++) {
@@ -26,17 +26,17 @@ export function eat(player, thing) {
       }
     }
   });
-}
+};
 
-export function hit(player, pain) {
+export const hit = (player, pain) => {
   if (pain <= 0) return;
   system.run(() => {
     player.applyDamage(pain);
   });
-}
+};
 
-export function say(player, msg) {
+export const say = (player, msg) => {
   system.run(() => {
     player.onScreenDisplay.setActionBar(msg);
   });
-}
+};

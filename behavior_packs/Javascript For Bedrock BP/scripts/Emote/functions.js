@@ -41,7 +41,9 @@ function stopEmote(player, animName) {
 }
 
 function openSubMenu(player, group) {
-  const menu = new ActionFormData().title(group.title || "Emotes").body("§7เลือกท่าทาง:");
+  const menu = new ActionFormData()
+    .title(group.title || "Emotes")
+    .body("§7เลือกท่าทาง:");
   try {
     const items = group.items;
     for (const item of items) {

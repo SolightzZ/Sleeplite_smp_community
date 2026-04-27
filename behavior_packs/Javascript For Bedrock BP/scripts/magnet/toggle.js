@@ -14,7 +14,7 @@ export function toggle(player, turnOn) {
       return;
     }
 
-    addUser(id);
+    addUser(player);
     player.onScreenDisplay.setActionBar(`§a${setting.text.on}`);
     player.playSound("random.orb", { pitch: 1.0 });
     startLoop();

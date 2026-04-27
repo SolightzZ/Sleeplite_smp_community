@@ -1,36 +1,30 @@
 import { tag, effect, time, level, particle } from "./const.js";
 
-export const hasBright = (p) => p?.isValid() && p.hasTag(tag);
+export const hasBright = (p) => p.hasTag(tag);
 
 const addBright = (p) => {
-  try {
-    p.addTag(tag);
-    p.addEffect(effect, time, {
-      amplifier: level,
-      showParticles: particle,
-    });
-  } catch (error) {
-    console.log("addBright error:", error.message);
-  }
+  p.addTag(tag);
+  p.addEffect(effect, time, {
+    amplifier: level,
+    showParticles: particle,
+  });
 };
 
 const clearBright = (p) => {
-  try {
-    p.removeTag(tag);
+  p.removeTag(tag);
+  if (p.getEffect(effect)) {
     p.removeEffect(effect);
-  } catch (error) {
-    console.log("clearBright error:", error.message);
   }
 };
 
 export const setBright = (p, on) => {
-  if (!p?.isValid() || on === hasBright(p)) return;
+  if (on === hasBright(p)) return;
 
   on ? addBright(p) : clearBright(p);
   return on;
 };
 
 export const resetBright = (p) => {
-  if (!p?.isValid()) return;
+  if (!p) return;
   clearBright(p);
 };

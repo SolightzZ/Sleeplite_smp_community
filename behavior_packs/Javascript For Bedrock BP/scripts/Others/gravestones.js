@@ -77,4 +77,3 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
     }
   }
 }
-console.warn("Gravestone loaded successfully");

@@ -13,22 +13,18 @@ const CONFIG = {
 };
 
 // RankSystem functions
-function isValidPlayer(player) {
-  return player && player.isValid && player.typeId === "minecraft:player";
-}
+const isValidPlayer = (player) => player?.typeId === "minecraft:player" && player.isValid;
 
-function getOwnedRanks(player, tags = player.getTags()) {
-  return tags
-    .filter((t) => t.startsWith(CONFIG.PREFIX_RANK))
-    .map((t) => t.slice(CONFIG.PREFIX_RANK.length));
-}
+const getOwnedRanks = (player, tags = player.getTags()) =>
+  tags.reduce((acc, t) => {
+    if (t.startsWith(CONFIG.PREFIX_RANK)) acc.push(t.slice(CONFIG.PREFIX_RANK.length));
+    return acc;
+  }, []);
 
-function getActiveRank(player, tags = player.getTags()) {
-  const tag = tags.find((t) => t.startsWith(CONFIG.PREFIX_ACTIVE));
-  return tag ? tag.slice(CONFIG.PREFIX_ACTIVE.length) : null;
-}
+const getActiveRank = (player, tags = player.getTags()) =>
+  tags.find((t) => t.startsWith(CONFIG.PREFIX_ACTIVE))?.slice(CONFIG.PREFIX_ACTIVE.length) ?? null;
 
-function getAllServerRanks() {
+const getAllServerRanks = () => {
   const ranks = new Set();
   for (const p of world.getAllPlayers()) {
     for (const tag of p.getTags()) {
@@ -38,9 +34,9 @@ function getAllServerRanks() {
     }
   }
   return [...ranks].sort();
-}
+};
 
-function refreshNameTag(player) {
+const refreshNameTag = (player) => {
   if (!isValidPlayer(player)) return;
 
   const tags = player.getTags();
@@ -49,9 +45,9 @@ function refreshNameTag(player) {
 
   const display = active || (owned.length === 0 ? CONFIG.DEFAULT_RANK : "");
   player.nameTag = display ? `${display} ${player.name}` : player.name;
-}
+};
 
-function setActiveRank(player, rankName) {
+const setActiveRank = (player, rankName) => {
   const tags = player.getTags();
 
   for (const tag of tags) {
@@ -62,9 +58,9 @@ function setActiveRank(player, rankName) {
 
   if (rankName) player.addTag(CONFIG.PREFIX_ACTIVE + rankName);
   refreshNameTag(player);
-}
+};
 
-function addRank(player, rankName) {
+const addRank = (player, rankName) => {
   if (!rankName) return;
 
   const tags = player.getTags();
@@ -73,9 +69,9 @@ function addRank(player, rankName) {
 
   player.addTag(full);
   setActiveRank(player, rankName);
-}
+};
 
-function renameRank(player, oldName, newName) {
+const renameRank = (player, oldName, newName) => {
   if (!oldName || !newName || oldName === newName) return;
 
   const tags = player.getTags();
@@ -85,9 +81,9 @@ function renameRank(player, oldName, newName) {
   if (getActiveRank(player, tags) === oldName) {
     setActiveRank(player, newName);
   }
-}
+};
 
-function removeRanks(player, ranks) {
+const removeRanks = (player, ranks) => {
   const tags = player.getTags();
   const active = getActiveRank(player, tags);
 
@@ -105,46 +101,11 @@ function removeRanks(player, ranks) {
     }
     refreshNameTag(player);
   }
-}
+};
 
 // RankGUI functions
-function showMainMenu(admin) {
-  const players = world.getAllPlayers();
-  const form = new ActionFormData()
-    .title("ระบบจัดการยศ")
-    .body("เลือกผู้เล่นที่ต้องการจัดการ:");
 
-  for (const p of players) form.button(p.nameTag);
-
-  form.show(admin).then((res) => {
-    if (!res.canceled) {
-      const target = players[res.selection];
-      if (target) showActions(admin, target);
-    }
-  });
-}
-
-function showActions(admin, target) {
-  const tags = target.getTags();
-  const current = getActiveRank(target, tags) || "(ไม่มี)";
-  const count = getOwnedRanks(target, tags).length;
-
-  const form = new ActionFormData()
-    .title(`จัดการ: ${target.name}`)
-    .body(`ยศที่ใช้อยู่: ${current}\nจำนวนยศที่มี: ${count}`)
-    .button("เพิ่ม / เปลี่ยนยศ")
-    .button("แก้ไขชื่อยศ")
-    .button("ลบยศ");
-
-  form.show(admin).then((res) => {
-    if (res.canceled) return;
-    if (res.selection === 0) menuAdd(admin, target);
-    if (res.selection === 1) menuEdit(admin, target);
-    if (res.selection === 2) menuRemove(admin, target);
-  });
-}
-
-function menuAdd(admin, target) {
+const menuAdd = (admin, target) => {
   const ranks = getAllServerRanks();
   const list = ranks.length ? ranks : ["(ไม่มี)"];
 
@@ -165,9 +126,9 @@ function menuAdd(admin, target) {
       admin.sendMessage(`§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
     }
   });
-}
+};
 
-function menuEdit(admin, target) {
+const menuEdit = (admin, target) => {
   const owned = getOwnedRanks(target);
   if (!owned.length) return admin.sendMessage("§c[RANK] ไม่มียศ");
 
@@ -193,9 +154,23 @@ function menuEdit(admin, target) {
       }
     });
   });
-}
+};
 
-function menuRemove(admin, target) {
+const confirmDelete = (admin, target, ranks) => {
+  const form = new MessageFormData()
+    .title("ยืนยัน")
+    .body(ranks.join("\n"))
+    .button1("ลบ")
+    .button2("ยกเลิก");
+
+  form.show(admin).then((res) => {
+    if (res.selection === 0) {
+      removeRanks(target, ranks);
+    }
+  });
+};
+
+const menuRemove = (admin, target) => {
   const owned = getOwnedRanks(target);
   if (!owned.length) return;
 
@@ -208,21 +183,43 @@ function menuRemove(admin, target) {
     const del = owned.filter((_, i) => res.formValues[i]);
     if (del.length) confirmDelete(admin, target, del);
   });
-}
+};
 
-function confirmDelete(admin, target, ranks) {
-  const form = new MessageFormData()
-    .title("ยืนยัน")
-    .body(ranks.join("\n"))
-    .button1("ลบ")
-    .button2("ยกเลิก");
+const showActions = (admin, target) => {
+  const tags = target.getTags();
+  const current = getActiveRank(target, tags) || "(ไม่มี)";
+  const count = getOwnedRanks(target, tags).length;
+
+  const form = new ActionFormData()
+    .title(`จัดการ: ${target.name}`)
+    .body(`ยศที่ใช้อยู่: ${current}\nจำนวนยศที่มี: ${count}`)
+    .button("เพิ่ม / เปลี่ยนยศ")
+    .button("แก้ไขชื่อยศ")
+    .button("ลบยศ");
 
   form.show(admin).then((res) => {
-    if (res.selection === 0) {
-      removeRanks(target, ranks);
+    if (res.canceled) return;
+    if (res.selection === 0) menuAdd(admin, target);
+    if (res.selection === 1) menuEdit(admin, target);
+    if (res.selection === 2) menuRemove(admin, target);
+  });
+};
+
+const showMainMenu = (admin) => {
+  const players = world.getAllPlayers();
+  const form = new ActionFormData()
+    .title("ระบบจัดการยศ")
+    .body("เลือกผู้เล่นที่ต้องการจัดการ:");
+
+  for (const p of players) form.button(p.nameTag);
+
+  form.show(admin).then((res) => {
+    if (!res.canceled) {
+      const target = players[res.selection];
+      if (target) showActions(admin, target);
     }
   });
-}
+};
 
 world.afterEvents.playerJoin.subscribe((e) => {
   const p = world.getEntity(e.playerId);
@@ -231,8 +228,6 @@ world.afterEvents.playerJoin.subscribe((e) => {
   }
 });
 
-export function chatrankssitemUse({ source }) {
+export const chatrankssitemUse = ({ source }) => {
   showMainMenu(source);
-}
-
-console.warn("Chat Rank loaded successfully");
+};

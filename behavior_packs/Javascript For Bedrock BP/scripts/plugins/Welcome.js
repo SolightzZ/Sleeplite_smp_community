@@ -41,5 +41,3 @@ world.afterEvents.playerSpawn.subscribe((evt) => {
     showWelcome(boy);
   }, wait);
 });
-
-console.warn("Welcome loaded successfully");

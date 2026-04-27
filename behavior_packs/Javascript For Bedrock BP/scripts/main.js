@@ -1,6 +1,5 @@
 import { world } from "@minecraft/server";
 
-// import "./economy/system.js";
 import "./Protection/system.js";
 import "./CustomCommand/system.js";
 import "./tools/crops/index.js";
@@ -16,6 +15,7 @@ import "./plugins/Report.js";
 import "./plugins/AFK_Cinematic.js";
 import "./plugins/Flashlight.js";
 import "./plugins/Take_A_Seat.js";
+import "./plugins/Flashlight.js"
 
 // API
 // import "./API.js";

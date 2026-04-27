@@ -34,5 +34,3 @@ export function onItemUse(e) {
     return;
   }
 }
-
-console.warn("[world afterEvents itemUse] loaded successfully");

@@ -703,4 +703,4 @@ export function RUNREPORT({ source }) {
   menu(source);
 }
 
-console.warn("Report and Patch Note loaded successfully");
+

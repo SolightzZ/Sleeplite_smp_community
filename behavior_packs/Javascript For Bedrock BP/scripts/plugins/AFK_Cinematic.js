@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { system, world, CommandPermissionLevel, CustomCommandStatus, Player } from "@minecraft/server";
 
 const CONFIG = {
   defaultIdleSeconds: 120, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
@@ -383,21 +383,21 @@ function clearTrackedRun(store, key) {
 function safeActionBar(player, message) {
   try {
     player.onScreenDisplay.setActionBar(message);
-  } catch {}
+  } catch { }
 }
 
 // รัน command บน player โดยไม่ throw ถ้า player ออกไปแล้ว
 function safeCommand(player, command) {
   try {
     player.runCommand(command);
-  } catch {}
+  } catch { }
 }
 
 // ส่งข้อความ chat โดยไม่ throw ถ้า player ออกไปแล้ว
 function safeChat(player, message) {
   try {
     player.sendMessage(message);
-  } catch {}
+  } catch { }
 }
 
 // ยกเลิก interval ที่ค้างอยู่แล้ว clear action bar ทันที 1 ครั้ง
@@ -594,15 +594,23 @@ function faceTarget(from, target) {
   };
 }
 
-// Query typeId ของ block ที่ตำแหน่งนั้น — คืน undefined ถ้าออกนอก chunk หรือ error
+const blockCache = new Map();
+
 function getBlockTypeId(dimension, position) {
+  const x = Math.floor(position.x);
+  const y = Math.floor(position.y);
+  const z = Math.floor(position.z);
+  const key = `${dimension.id}:${x},${y},${z}`;
+
+  const cached = blockCache.get(key);
+  if (cached !== undefined) return cached === "null" ? undefined : cached;
+
   try {
-    return dimension.getBlock({
-      x: Math.floor(position.x),
-      y: Math.floor(position.y),
-      z: Math.floor(position.z),
-    })?.typeId;
+    const typeId = dimension.getBlock({ x, y, z })?.typeId;
+    blockCache.set(key, typeId ?? "null");
+    return typeId;
   } catch {
+    blockCache.set(key, "null");
     return undefined;
   }
 }
@@ -747,18 +755,21 @@ function stopAfk(player, state) {
   clearActionBar(player);
 }
 
-// นับ idle tick ทุก tick — ใช้ cache เพื่อ trigger warning / AFK โดยไม่คำนวณซ้ำ
-function updateIdlePlayer(player, state) {
-  state.idleTicks++;
-  const idleTicks = state.idleTicksCache ?? getIdleTicks(state);
-  const warningTicks = state.warningTicksCache ?? getWarningTicks(state);
+// นับ idle tick — ใช้ cache เพื่อ trigger warning / AFK โดยไม่คำนวณซ้ำ
+function updateIdlePlayer(player, state, ticksToAdd = 1) {
+  for (let i = 0; i < ticksToAdd; i++) {
+    state.idleTicks++;
+    const idleTicks = state.idleTicksCache ?? getIdleTicks(state);
+    const warningTicks = state.warningTicksCache ?? getWarningTicks(state);
 
-  if (state.idleTicks === idleTicks - warningTicks) {
-    startWarning(player, state);
-  }
+    if (state.idleTicks === idleTicks - warningTicks) {
+      startWarning(player, state);
+    }
 
-  if (state.idleTicks >= idleTicks) {
-    startAfk(player, state);
+    if (state.idleTicks >= idleTicks) {
+      startAfk(player, state);
+      break;
+    }
   }
 }
 
@@ -814,120 +825,77 @@ function startCinematicNow(player) {
   startAfk(player, state);
 }
 
-// ส่งข้อความ help แสดง command ที่ใช้ได้
-function sendCommandHelp(player) {
-  safeChat(
-    player,
-    "§7[AFK] Commands: §eafkc start§7, §eafkc time <seconds>§7.",
+system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
+  customCommandRegistry.registerCommand(
+    {
+      name: "addon:afk",
+      description: "Enter AFK Cinematic mode immediately.",
+      permissionLevel: CommandPermissionLevel.Any,
+      cheatsRequired: false,
+    },
+    (origin) => {
+      const source = origin.initiator ?? origin.sourceEntity;
+
+      if (!(source instanceof Player)) {
+        return {
+          status: CustomCommandStatus.Failure,
+          message: "This command can only be executed by players.",
+        };
+      }
+
+      system.run(() => {
+        startCinematicNow(source);
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    }
   );
-}
+});
 
-// Parse และ dispatch คำสั่ง "afkc" จาก chat → start | time <n> | help
-function handleChatCommand(player, message) {
-  const trimmed = message.trim();
-  const normalized = trimmed.replace(/^[!/]/, "");
-  const parts = normalized.split(/\s+/);
-
-  if (parts.length === 0 || parts[0].toLowerCase() !== "afkc") {
-    return false;
-  }
-
-  const subcommand = (parts[1] ?? "").toLowerCase();
-  if (!subcommand) {
-    sendCommandHelp(player);
-    return true;
-  }
-
-  if (subcommand === "start") {
-    startCinematicNow(player);
-    return true;
-  }
-
-  if (subcommand === "time") {
-    const rawSeconds = Number(parts[2]);
-    if (!Number.isFinite(rawSeconds)) {
-      safeChat(
-        player,
-        `§7[AFK] Usage: §eafkc time <${CONFIG.minIdleSeconds}-${CONFIG.maxIdleSeconds}>`,
-      );
-      return true;
-    }
-    setPlayerIdleTime(player, rawSeconds);
-    return true;
-  }
-
-  sendCommandHelp(player);
-  return true;
-}
-
-// Subscribe chat event ครั้งเดียวตอน init — ลอง beforeEvents ก่อน ถ้าไม่มีใช้ afterEvents
-function registerCommandListeners() {
-  try {
-    const beforeChat = world.beforeEvents?.chatSend;
-    if (beforeChat && typeof beforeChat.subscribe === "function") {
-      beforeChat.subscribe((event) => {
-        const message = event.message.trim();
-        if (!/^[/!]?(afkc)(\s|$)/i.test(message)) {
-          return;
-        }
-        event.cancel = true;
-        system.run(() => handleChatCommand(event.sender, message));
-      });
-      return;
-    }
-  } catch {}
-
-  try {
-    const afterChat = world.afterEvents?.chatSend;
-    if (afterChat && typeof afterChat.subscribe === "function") {
-      afterChat.subscribe((event) => {
-        const message = event.message.trim();
-        if (!/^[/!]?(afkc)(\s|$)/i.test(message)) {
-          return;
-        }
-        system.run(() => handleChatCommand(event.sender, message));
-      });
-    }
-  } catch {}
-}
-
-registerCommandListeners();
-
-// Main loop ทุก 1 tick — แยก AFK/idle ก่อน cache loc/rot ต่อ player เพื่อลด native bridge call
+// Fast Loop (1 Tick): คุมกล้อง Cinematic ให้ลื่นไหล และให้ผู้เล่นหลุด AFK ทันทีที่ขยับตัว
 system.runInterval(() => {
-  const afkPlayers = [];
-  const idlePlayers = [];
+  blockCache.clear();
 
-  for (const player of world.getPlayers()) {
+  for (const player of world.getAllPlayers()) {
     const state = ensureState(player);
-    (state.isAfk ? afkPlayers : idlePlayers).push([player, state]);
-  }
+    if (!state.isAfk) continue;
 
-  for (const [player, state] of afkPlayers) {
-    const loc = player.location; // cache ครั้งเดียว ใช้ใน hasMoved + updateAfkCamera
-    const rot = player.getRotation(); // cache ครั้งเดียว ใช้ใน hasMoved
+    const loc = player.location;
+    const rot = player.getRotation();
+
     if (hasMoved(player, state, loc, rot)) {
       stopAfk(player, state);
       state.anchor = clonePosition(loc);
-      continue;
+    } else {
+      updateAfkCamera(player, state, loc);
     }
-    updateAfkCamera(player, state, loc);
   }
+}, 1);
 
-  for (const [player, state] of idlePlayers) {
-    const loc = player.location; // cache ครั้งเดียว ใช้ใน hasMoved + refreshBaseline
-    const rot = player.getRotation(); // cache ครั้งเดียว ใช้ใน hasMoved + refreshBaseline
+// Slow Loop (20 Ticks = 1 วินาที): เช็คคนปกติว่ายืนนิ่งหรือไม่ ลดภาระเซิร์ฟเวอร์ลง 20 เท่าสำหรับคนที่ยังไม่ AFK
+system.runInterval(() => {
+  for (const player of world.getAllPlayers()) {
+    const state = ensureState(player);
+    if (state.isAfk) continue;
+
+    const loc = player.location;
+    const rot = player.getRotation();
+
     if (hasMoved(player, state, loc, rot)) {
       refreshBaseline(player, state, loc, rot);
       state.idleTicks = 0;
-      stopWarning(player.id);
-      clearActionBar(player);
+      if (warningIntervals.has(player.id)) {
+        stopWarning(player.id);
+        clearActionBar(player);
+      }
       state.anchor = clonePosition(loc);
-      continue;
+    } else {
+      updateIdlePlayer(player, state, 20);
     }
-    updateIdlePlayer(player, state);
   }
-}, 1);
+}, 20);
 
 world.afterEvents.playerLeave.subscribe((event) => {
   stopWarning(event.playerId);

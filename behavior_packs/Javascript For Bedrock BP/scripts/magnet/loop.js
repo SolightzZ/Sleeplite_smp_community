@@ -1,6 +1,6 @@
-import { system, world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 import { setting } from "./config.js";
-import { countUser, hasTimer, setTimer, getTimer, clearTimer, hasUser } from "./state.js";
+import { countUser, hasTimer, setTimer, getTimer, clearTimer, getUserEntries, removeUser } from "./state.js";
 import { pullItem } from "./puller.js";
 
 export function stopLoop() {
@@ -20,9 +20,11 @@ export function startLoop() {
         return;
       }
 
-      for (const player of world.getAllPlayers()) {
-        if (hasUser(player.id)) {
+      for (const [id, player] of getUserEntries()) {
+        if (player && player.isValid) {
           pullItem(player);
+        } else {
+          removeUser(id);
         }
       }
     } catch (err) {

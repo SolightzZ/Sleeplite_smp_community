@@ -17,11 +17,13 @@ const onHammerBreak = (event) => {
   const rotation = player.getRotation();
   const enchantData = getEnchantData(itemStack, player);
 
-  const targets = generateGrid(center, rotation, CONFIG.RADIUS).sort(sortByDistance(center));
+  const targets = generateGrid(center, rotation, CONFIG.RADIUS).sort(
+    sortByDistance(center),
+  );
 
-  system.runJob(miningJobExecutor(block.dimension, targets, enchantData, player));
+  system.runJob(
+    miningJobExecutor(block.dimension, targets, enchantData, player),
+  );
 };
 
 world.beforeEvents.playerBreakBlock.subscribe(onHammerBreak);
-
-console.warn("Hammer Module Loaded successfully");

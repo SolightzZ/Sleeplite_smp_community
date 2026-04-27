@@ -1,46 +1,44 @@
 import { system, ItemStack } from "@minecraft/server";
 
-export function isTree(block) {
+export const isTree = (block) => {
   if (!logTypes.includes(block.typeId)) return false;
 
-  const dimension = block.dimension;
-  let { x, y, z } = block.location;
-
-  while (true) {
-    y++;
-    const location = { x: x, y: y, z: z };
-    const nextBlock = dimension.getBlock(location);
-    if (!nextBlock) return false;
-
-    const id = nextBlock.typeId;
-
+  let current = block.above();
+  while (current) {
+    const id = current.typeId;
     if (logTypes.includes(id)) {
+      current = current.above();
       continue;
     }
-
     if (leafTypes.includes(id)) {
       return true;
     }
-
     return false;
   }
-}
+  return false;
+};
 
-export function breakTree(startBlock) {
+export const breakTree = (startBlock) => {
   const dimension = startBlock.dimension;
   const targetId = startBlock.typeId;
 
-  const queue = [
-    startBlock.above(),
-    startBlock.below(),
-    startBlock.north(),
-    startBlock.south(),
-    startBlock.east(),
-    startBlock.west(),
-  ].filter((b) => b && b.typeId === targetId);
+  const queue = [];
+  const pushIfValid = (b) => {
+    if (b && b.typeId === targetId) queue.push(b);
+  };
 
-  system.runInterval(() => {
-    if (queue.length === 0) return;
+  pushIfValid(startBlock.above());
+  pushIfValid(startBlock.below());
+  pushIfValid(startBlock.north());
+  pushIfValid(startBlock.south());
+  pushIfValid(startBlock.east());
+  pushIfValid(startBlock.west());
+
+  const handle = system.runInterval(() => {
+    if (queue.length === 0) {
+      system.clearRun(handle);
+      return;
+    }
 
     const currentBatch = queue.splice(0, queue.length);
 
@@ -50,23 +48,15 @@ export function breakTree(startBlock) {
       block.setType("minecraft:air");
       dimension.spawnItem(new ItemStack(targetId, 1), block.location);
 
-      const neighbors = [
-        block.above(),
-        block.below(),
-        block.north(),
-        block.south(),
-        block.east(),
-        block.west(),
-      ];
-
-      for (const next of neighbors) {
-        if (next && next.typeId === targetId) {
-          queue.push(next);
-        }
-      }
+      pushIfValid(block.above());
+      pushIfValid(block.below());
+      pushIfValid(block.north());
+      pushIfValid(block.south());
+      pushIfValid(block.east());
+      pushIfValid(block.west());
     }
   }, 1);
-}
+};
 
 const logTypes = [
   "minecraft:oak_log",

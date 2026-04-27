@@ -1,4 +1,6 @@
-export const list = Array.from({ length: 16 }, (v, i) => "minecraft:light_block_" + i);
+export const list = new Set(
+  Array.from({ length: 16 }, (_, i) => `minecraft:light_block_${i}`)
+);
 export const max = 3;
 export const range = 16;
 export const limit = 64;

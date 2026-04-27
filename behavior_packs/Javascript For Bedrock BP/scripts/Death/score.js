@@ -1,19 +1,23 @@
 import { world } from "@minecraft/server";
 import { boardA, boardB } from "./data.js";
 
-function board(name) {
-  return world.scoreboard.getObjective(name) ?? world.scoreboard.addObjective(name, name);
-}
+let objA, objB;
 
-export function add(player) {
-  const IfPlayer = player?.scoreboardIdentity;
-  if (!IfPlayer) return;
+const board = (name) => {
+  return (
+    world.scoreboard.getObjective(name) ??
+    world.scoreboard.addObjective(name, name)
+  );
+};
 
-  board(boardA).addScore(player.scoreboardIdentity, 1);
-  board(boardB).addScore(`*${player.name}`, 1);
-}
+export const add = (player) => {
+  if (!player || !player.isValid || !player.scoreboardIdentity) return;
 
-export function init() {
-  board(boardA);
-  board(boardB);
-}
+  objA.addScore(player.scoreboardIdentity, 1);
+  objB.addScore(`*${player.name}`, 1);
+};
+
+export const init = () => {
+  objA = board(boardA);
+  objB = board(boardB);
+};

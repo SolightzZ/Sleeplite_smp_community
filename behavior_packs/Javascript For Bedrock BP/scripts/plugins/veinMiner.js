@@ -1,90 +1,77 @@
 import { system, ItemStack, world } from "@minecraft/server";
 
-export function isOreVein(block) {
-  let oreCount = 1;
+export const isOreVein = (block) => {
+  const typeId = block.typeId;
+  if (block.above()?.typeId === typeId) return true;
+  if (block.below()?.typeId === typeId) return true;
+  if (block.north()?.typeId === typeId) return true;
+  if (block.south()?.typeId === typeId) return true;
+  if (block.east()?.typeId === typeId) return true;
+  if (block.west()?.typeId === typeId) return true;
+  return false;
+};
 
-  const neighbors = [
-    block.above(),
-    block.below(),
-    block.north(),
-    block.south(),
-    block.east(),
-    block.west(),
-  ];
-
-  for (const ore of neighbors) {
-    if (ore.typeId === block.typeId) {
-      oreCount++;
-    }
-  }
-
-  if (oreCount > 1) return true;
-  else return false;
-}
-
-export function breakOreVein(block, item) {
+export const breakOreVein = (block, item) => {
   const validOres = pickaxeBreaks[item.typeId];
   const dimension = block.dimension;
   const targetId = block.typeId;
 
-  if (!validOres.includes(targetId)) return;
+  if (!validOres?.includes(targetId)) return;
 
-  const queue = [
-    block.above(),
-    block.below(),
-    block.north(),
-    block.south(),
-    block.east(),
-    block.west(),
-  ].filter((b) => b && b.typeId === targetId);
+  const queue = [];
+  const pushIfValid = (b) => {
+    if (b && b.typeId === targetId) queue.push(b);
+  };
 
-  system.runInterval(() => {
-    if (queue.length === 0) return;
+  pushIfValid(block.above());
+  pushIfValid(block.below());
+  pushIfValid(block.north());
+  pushIfValid(block.south());
+  pushIfValid(block.east());
+  pushIfValid(block.west());
+
+  const handle = system.runInterval(() => {
+    if (queue.length === 0) {
+      system.clearRun(handle);
+      return;
+    }
 
     const currentBatch = queue.splice(0, queue.length);
 
-    for (const block of currentBatch) {
-      if (!block || block.typeId !== targetId) continue;
+    for (const b of currentBatch) {
+      if (!b || b.typeId !== targetId) continue;
 
       let level = 0;
       let itemDrop = oreDrop[targetId];
       const enchant = item.getComponent("enchantable");
-      if (enchant.hasEnchantment("fortune")) {
+      
+      const hasFortune = enchant?.hasEnchantment("fortune");
+      if (hasFortune) {
         level = enchant.getEnchantment("fortune").level;
-      } else if (enchant.hasEnchantment("silk_touch")) {
+      } else if (enchant?.hasEnchantment("silk_touch")) {
         itemDrop = targetId;
       }
-      const count = enchant.hasEnchantment("fortune")
-        ? Math.random() * level + 2
-        : 1;
-      const xpCount =
-        oreXP[targetId] == 0
-          ? 0
-          : oreXP[targetId][Math.floor(Math.random() * oreXP[targetId].length)];
+      
+      const count = hasFortune ? Math.random() * level + 2 : 1;
+      
+      const xpArr = oreXP[targetId];
+      const xpCount = (!xpArr || xpArr === 0) ? 0 : xpArr[Math.floor(Math.random() * xpArr.length)];
 
-      block.setType("minecraft:air");
-      dimension.spawnItem(new ItemStack(itemDrop, count), block.location);
+      b.setType("minecraft:air");
+      dimension.spawnItem(new ItemStack(itemDrop, count), b.location);
       for (let i = 0; i < xpCount; i++) {
-        dimension.spawnEntity("minecraft:xp_orb", block.location);
+        dimension.spawnEntity("minecraft:xp_orb", b.location);
       }
 
-      const neighbors = [
-        block.above(),
-        block.below(),
-        block.north(),
-        block.south(),
-        block.east(),
-        block.west(),
-      ];
-
-      for (const next of neighbors) {
-        if (next && next.typeId === targetId) {
-          queue.push(next);
-        }
-      }
+      pushIfValid(b.above());
+      pushIfValid(b.below());
+      pushIfValid(b.north());
+      pushIfValid(b.south());
+      pushIfValid(b.east());
+      pushIfValid(b.west());
     }
   }, 2);
-}
+};
 
 export const pickaxeBreaks = {
   "minecraft:wooden_pickaxe": [

@@ -2,18 +2,14 @@ import { ItemStack } from "@minecraft/server";
 import { list, limit, range } from "./vals.js";
 
 export function check(tool) {
-  return tool && tool.typeId === "minecraft:light_block_13";
+  return tool?.typeId === "minecraft:light_block_13";
 }
 
 export function dig(boy, spot) {
   try {
     const drop = "minecraft:light_block_13";
-
-    const pos = {
-      x: spot.location.x + 0.5,
-      y: spot.location.y + 0.5,
-      z: spot.location.z + 0.5,
-    };
+    const { x, y, z } = spot.location;
+    const pos = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
 
     boy.dimension.spawnItem(new ItemStack(drop, 1), pos);
     spot.setType("minecraft:air");
@@ -29,18 +25,26 @@ export function shine(boy) {
   const low = Math.max(Math.floor(py - range), dim.heightRange.min);
   const high = Math.min(Math.floor(py + range), dim.heightRange.max);
 
+  const fpx = Math.floor(px);
+  const fpz = Math.floor(pz);
+
   let count = 0;
 
-  for (let x = Math.floor(px) - range; x <= px + range && count < limit; x++) {
-    for (let z = Math.floor(pz) - range; z <= pz + range && count < limit; z++) {
-      if (Math.abs(x - px) + Math.abs(z - pz) > range) continue;
-      for (let y = low; y <= high && count < limit; y++) {
+  for (let x = fpx - range; x <= fpx + range; x++) {
+    for (let z = fpz - range; z <= fpz + range; z++) {
+      if (Math.abs(x - fpx) + Math.abs(z - fpz) > range) continue;
+
+      for (let y = low; y <= high; y++) {
         const block = dim.getBlock({ x, y, z });
-        if (!block || !list.includes(block.typeId)) continue;
+        if (!block || !list.has(block.typeId)) continue;
+
         const level = block.permutation.getState("block_light_level") ?? 0;
         if (level <= 0) continue;
+
         boy.spawnParticle("light", { x: x + 0.5, y: y + 0.65, z: z + 0.5 });
         count++;
+
+        if (count >= limit) return count;
       }
     }
   }

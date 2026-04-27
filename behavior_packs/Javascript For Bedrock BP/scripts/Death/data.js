@@ -35,6 +35,6 @@ export const map = {
   red2535a: "addon:red2535a",
 };
 
-export function item(name) {
+export const item = (name) => {
   return map[name] ?? null;
-}
+};

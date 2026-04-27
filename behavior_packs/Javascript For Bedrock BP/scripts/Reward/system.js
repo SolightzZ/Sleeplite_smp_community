@@ -29,4 +29,3 @@ export function RewardchatSend(event) {
     p.sendMessage(text);
   }
 }
-console.warn("Reward loaded successfully");

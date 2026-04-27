@@ -3,10 +3,8 @@ import { ask, forget } from "./brain.js";
 import { count, fix } from "./tools.js";
 import { see, eat, hit, say } from "./hand.js";
 
-export function touch(event) {
-  const player = event.player;
-  const block = event.block;
-  const item = event.itemStack;
+export const touch = (event) => {
+  const { player, block, itemStack: item } = event;
 
   if (!player || !block) return;
   if (block.typeId !== door) return;
@@ -16,13 +14,14 @@ export function touch(event) {
   const friends = count(block);
   if (friends < team) {
     event.cancel = true;
-    say(player, `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`);
+    say(
+      player,
+      `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`,
+    );
     return;
   }
 
-  const quest = ask(block);
-  const want = quest.id;
-  const pain = quest.hp;
+  const { id: want, hp: pain } = ask(block);
   const name = fix(want);
 
   if (!see(player, want)) {
@@ -36,6 +35,4 @@ export function touch(event) {
   forget(block);
 
   player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${pain}`);
-}
-
-console.warn("[Simple Portal] loaded successfully!");
+};

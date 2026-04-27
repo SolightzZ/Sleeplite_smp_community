@@ -81,5 +81,3 @@ system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
     sortContainerCommand,
   );
 });
-
-console.warn("Inventory Sorter loaded successfully");

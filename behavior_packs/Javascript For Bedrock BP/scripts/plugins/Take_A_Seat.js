@@ -3,12 +3,14 @@ import {
   system,
   Direction,
   CommandPermissionLevel,
-  CustomCommandParamType,
   CustomCommandStatus,
 } from "@minecraft/server";
 
 // Global interval ID สำหรับ seat check
 let globalSeatCheckInterval = null;
+const COMMAND_NAMESPACE = "addon";
+const SIT_COMMAND_NAME = `${COMMAND_NAMESPACE}:sit`;
+const SEAT_ENTITY_ID = "xassassin:sit";
 
 const interactableBlockTypes = [
   "stairs",
@@ -244,7 +246,7 @@ function handleSitCommand(player) {
   }
 
   const nearbySeatEntities = dimension.getEntities({
-    type: "xassassin:sit",
+    type: SEAT_ENTITY_ID,
     location: player.location,
     maxDistance: 0.5,
   });
@@ -261,7 +263,10 @@ function handleSitCommand(player) {
       ? specialRotation
       : { x: 0, y: player.getRotation().y };
 
-    const seat = dimension.spawnEntity("xassassin:sit", seatSpawnLocation);
+    const seat = dimension.spawnEntity(
+      /** @type {any} */ (SEAT_ENTITY_ID),
+      seatSpawnLocation,
+    );
     seat.setRotation(seatRotation);
     seat.getComponent("rideable").addRider(player);
     // เก็บข้อมูล seat สำหรับ check ใน global interval
@@ -278,7 +283,7 @@ function registerCustomCommand() {
   system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
     customCommandRegistry.registerCommand(
       {
-        name: "tas:sit",
+        name: SIT_COMMAND_NAME,
         description:
           "Sit down anywhere you are standing (if conditions are met)",
         permissionLevel: CommandPermissionLevel.Any,
@@ -309,6 +314,18 @@ function registerCustomCommand() {
   });
 }
 
+/**
+ * @param {"overworld" | "nether" | "the_end"} dimensionName
+ */
+function clearSeatsInDimension(dimensionName) {
+  const dimension = world.getDimension(dimensionName);
+  const sitEntities = dimension.getEntities({ type: SEAT_ENTITY_ID });
+
+  for (const entity of sitEntities) {
+    entity.remove();
+  }
+}
+
 // Register custom command
 registerCustomCommand();
 
@@ -326,14 +343,9 @@ world.beforeEvents.chatSend.subscribe((event) => {
 const initializeScript = () => {
   console.warn("§g§lTake a Seat§r§a loaded§r - Author:§c xAssassin");
   system.runTimeout(() => {
-    const dimensions = ["overworld", "nether", "the_end"];
-    dimensions.forEach((dimensionName) => {
-      const dimension = world.getDimension(dimensionName);
-      const sitEntities = dimension.getEntities({ type: "xassassin:sit" });
-      for (const entity of sitEntities) {
-        entity.remove();
-      }
-    });
+    clearSeatsInDimension("overworld");
+    clearSeatsInDimension("nether");
+    clearSeatsInDimension("the_end");
   }, 1);
 };
 
@@ -366,7 +378,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((eventData) => {
     block.typeId.includes("creaking_heart") ||
     block.typeId.includes("warped_stem");
   const seatEntities = dimension.getEntities({
-    type: "xassassin:sit",
+    type: SEAT_ENTITY_ID,
     location: {
       x: blockLocation.x + 0.5,
       y: blockLocation.y,
@@ -562,7 +574,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((eventData) => {
   }
   if (!player.isOnGround) return;
   const nearbySeatEntities = dimension.getEntities({
-    type: "xassassin:sit",
+    type: SEAT_ENTITY_ID,
     location: player.location,
     maxDistance: 0.5,
   });
@@ -595,7 +607,10 @@ world.beforeEvents.playerInteractWithBlock.subscribe((eventData) => {
           : blockLocation.y,
       z: blockLocation.z + 0.5,
     };
-    const seat = dimension.spawnEntity("xassassin:sit", seatSpawnLocation);
+    const seat = dimension.spawnEntity(
+      /** @type {any} */ (SEAT_ENTITY_ID),
+      seatSpawnLocation,
+    );
     seat.setRotation(seatRotation);
     seat.getComponent("rideable").addRider(player);
     // เก็บข้อมูล seat สำหรับ check ใน global interval

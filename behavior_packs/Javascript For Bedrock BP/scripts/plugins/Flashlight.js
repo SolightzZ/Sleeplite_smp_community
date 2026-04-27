@@ -4,53 +4,11 @@ import {
   EquipmentSlot,
   ItemStack,
   BlockPermutation,
-  CommandPermissionLevel,
-  CustomCommandParamType,
 } from "@minecraft/server";
 
 import { isTree, breakTree } from "./treeCapitator.js";
 import { isOreVein, breakOreVein, pickaxeBreaks } from "./veinMiner.js";
 
-system.beforeEvents.startup.subscribe((event) => {
-  event.customCommandRegistry.registerEnum("addon:enum", ["enable", "disable"]);
-
-  event.customCommandRegistry.registerCommand(
-    {
-      name: "addon:pickup",
-      description: "Enable or Disable Auto-Pickup",
-      permissionLevel: CommandPermissionLevel.Any,
-      mandatoryParameters: [
-        { name: "addon:enum", type: CustomCommandParamType.Enum },
-      ],
-    },
-    (origin, ans) => {
-      const player = origin.sourceEntity;
-      if (player.typeId !== "minecraft:player") return { success: false };
-      const playerObj = /** @type {import("@minecraft/server").Player} */ (
-        player
-      );
-      switch (ans) {
-        case "enable":
-          playerObj.sendMessage("§aAuto Pickup has now been enabled");
-          system.run(() => {
-            playerObj.addTag("gao:pickup");
-          });
-          break;
-
-        case "disable":
-          playerObj.sendMessage("§cAuto Pickup has now been disabled");
-          system.run(() => {
-            playerObj.removeTag("gao:pickup");
-          });
-          break;
-
-        default:
-          break;
-      }
-      return { success: true };
-    },
-  );
-});
 
 world.beforeEvents.playerBreakBlock.subscribe((event) => {
   const { player, block, itemStack } = event;
@@ -79,24 +37,7 @@ world.afterEvents.playerBreakBlock.subscribe((event) => {
   const { brokenBlockPermutation, block, player } = event;
   const blockId = brokenBlockPermutation.type.id;
 
-  if (player.hasTag("gao:pickup")) {
-    const items = block.dimension.getEntitiesAtBlockLocation(block.location);
-    let itemStack = [];
-    for (const item of items) {
-      if (item.typeId == "minecraft:item") {
-        itemStack.push(item);
-      }
-    }
-    if (!itemStack) return;
-    const inv = player.getComponent("inventory").container;
-    if (inv.emptySlotsCount < 1) return;
 
-    for (const item of itemStack) {
-      const realItem = item.getComponent("item").itemStack;
-      inv.addItem(realItem);
-      item.kill();
-    }
-  }
 
   // Auto Replant
   if (blockId in cropConfigs) {
@@ -151,18 +92,18 @@ world.afterEvents.playerInteractWithBlock.subscribe((event) => {
 world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
   const { block, blockFace, itemStack, player } = event;
 
-  // const direction = block.permutation.getState("facing_direction");
+  const direction = block.permutation.getState("facing_direction");
 
-  // if (!itemStack && direction>=0 && player.isSneaking) {
-  //     event.cancel = true;
-  //     const newDir = directionNumber(blockFace)
-  //     system.run(() => {
-  //         const perm = block.permutation.withState("facing_direction", newDir);
-  //         block.setPermutation(perm)
-  //     })
-  // }
+  if (!itemStack && direction >= 0 && player.isSneaking) {
+    event.cancel = true;
+    const newDir = directionNumber(blockFace)
+    system.run(() => {
+      const perm = block.permutation.withState("facing_direction", newDir);
+      block.setPermutation(perm)
+    })
+  }
 
-  // Anvil Repair
+
   if (
     block.typeId.includes("anvil") &&
     block.typeId !== "minecraft:anvil" &&
@@ -204,29 +145,28 @@ world.afterEvents.entityDie.subscribe((event) => {
   deadEntity.addTag(`gao:loc:::${JSON.stringify(deadEntity.location)}`);
 });
 
+world.afterEvents.playerSpawn.subscribe((event) => {
+  if (event.initialSpawn) return;
+  const player = event.player;
+  const tag = player.getTags().find((tag) => tag.startsWith("gao:loc:::"));
+  if (tag) {
+    const location = JSON.parse(tag.slice(10));
+    player.sendMessage(
+      `You died at ${Math.floor(location.x)} ${Math.floor(location.y)} ${Math.floor(location.z)}`,
+    );
+    player.removeTag(tag);
+  }
+});
+
 const previousLights = new Map();
-const water = new Map();
 
 system.runInterval(() => {
   for (const player of world.getAllPlayers()) {
-    const tag =
-      player.getTags().find((tag) => tag.startsWith("gao:loc:::")) ?? 0;
+    const equippable = player.getComponent("equippable");
+    if (!equippable) continue;
 
-    if (player.getComponent("health").currentValue > 0 && tag != 0) {
-      const location = JSON.parse(tag.slice(10));
-      player.sendMessage(
-        `You died at ${Math.floor(location.x)} ${Math.floor(location.y)} ${Math.floor(location.z)}`,
-      );
-      player.removeTag(tag);
-    }
-    //Flashlight
-
-    const heldItem = player
-      .getComponent("inventory")
-      .container.getItem(player.selectedSlotIndex);
-    const offhandItem = player
-      .getComponent("equippable")
-      .getEquipment(EquipmentSlot.Offhand);
+    const heldItem = equippable.getEquipment(EquipmentSlot.Mainhand);
+    const offhandItem = equippable.getEquipment(EquipmentSlot.Offhand);
 
     const oldBlocks = previousLights.get(player.id);
     if (oldBlocks) {
@@ -245,31 +185,30 @@ system.runInterval(() => {
       const headLoc = player.getHeadLocation();
       const viewDir = player.getViewDirection();
       const newLightPositions = [];
+      let lastX, lastY, lastZ;
 
       for (let i = 1; i <= 24; i++) {
-        const block = getBlockFromView(player, headLoc, viewDir, i);
+        const x = Math.floor(headLoc.x + viewDir.x * i);
+        const y = Math.floor(headLoc.y + viewDir.y * i);
+        const z = Math.floor(headLoc.z + viewDir.z * i);
+
+        if (x === lastX && y === lastY && z === lastZ) continue;
+        lastX = x; lastY = y; lastZ = z;
+
+        const loc = { x, y, z };
+        const block = player.dimension.getBlock(loc);
         if (
-          (block && block.typeId === "minecraft:air") ||
-          (block && block.typeId === "minecraft:light_block_7")
+          block &&
+          (block.typeId === "minecraft:air" || block.typeId === "minecraft:light_block_7")
         ) {
           block.setType("minecraft:light_block_7");
-          newLightPositions.push(block.location);
+          newLightPositions.push(loc);
         }
       }
 
       previousLights.set(player.id, newLightPositions);
     } else {
       previousLights.delete(player.id);
-    }
-
-    // Easy Sponge
-
-    if (heldItem?.typeId === "minecraft:sponge") {
-      const headLoc = player.getHeadLocation();
-      const viewDir = player.getViewDirection();
-      const block = getBlockFromView(player, headLoc, viewDir, 5);
-      const blockLoc = block.location;
-      water.set(player.id, blockLoc);
     }
   }
 }, 1);
@@ -294,49 +233,26 @@ world.afterEvents.itemUse.subscribe((event) => {
   const { source, itemStack } = event;
 
   if (itemStack.typeId == "minecraft:sponge") {
-    const loc = water.get(source.id);
-    const blockAtLoc = source.dimension.getBlock(loc);
+    const headLoc = source.getHeadLocation();
+    const viewDir = source.getViewDirection();
+    const blockAtLoc = getBlockFromView(source, headLoc, viewDir, 5);
 
-    if (blockAtLoc.typeId === "minecraft:water") {
+    if (blockAtLoc?.typeId === "minecraft:water") {
       blockAtLoc.setType(itemStack.typeId);
     }
   }
 });
 
-export function getBlockFromView(player, location, view, distance) {
-  const viewDistance = {
-    x: view.x * distance,
-    y: view.y * distance,
-    z: view.z * distance,
-  };
+export const getBlockFromView = (player, location, view, distance) => {
+  return player.dimension.getBlock({
+    x: Math.floor((view.x * distance) + location.x),
+    y: Math.floor((view.y * distance) + location.y),
+    z: Math.floor((view.z * distance) + location.z),
+  });
+};
 
-  const blockLocation = {
-    x: Math.floor(viewDistance.x + location.x),
-    y: Math.floor(viewDistance.y + location.y),
-    z: Math.floor(viewDistance.z + location.z),
-  };
-
-  return player.dimension.getBlock(blockLocation);
-}
-
-function directionNumber(direction) {
-  switch (direction) {
-    case "Down":
-      return 0;
-    case "Up":
-      return 1;
-    case "North":
-      return 2;
-    case "South":
-      return 3;
-    case "West":
-      return 4;
-    case "East":
-      return 5;
-    default:
-      return -1;
-  }
-}
+const DIRS = { Down: 0, Up: 1, North: 2, South: 3, West: 4, East: 5 };
+const directionNumber = (direction) => DIRS[direction] ?? -1;
 
 const cropConfigs = {
   "minecraft:wheat": {

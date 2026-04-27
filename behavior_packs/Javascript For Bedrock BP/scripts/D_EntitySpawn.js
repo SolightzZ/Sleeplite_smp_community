@@ -20,5 +20,3 @@ export function onEntitySpawn(event) {
     }
   });
 }
-
-console.warn("[System] EntitySpawn loaded successfully");

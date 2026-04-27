@@ -9,4 +9,3 @@ export function onGravestoneInteract(event) {
     target.kill();
   });
 }
-console.warn("Gravestone Interact loaded successfully");

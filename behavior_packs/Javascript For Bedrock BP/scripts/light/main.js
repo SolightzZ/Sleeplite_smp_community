@@ -14,8 +14,8 @@ function clean() {
 }
 
 function run(boy) {
-  system
-    .runTimeout(() => {
+  system.runTimeout(() => {
+    try {
       clean();
 
       if (gang.size >= max && !gang.has(boy.id)) {
@@ -41,18 +41,21 @@ function run(boy) {
       }
 
       boy.startItemCooldown("light_search", wait);
-    }, 2)
-    .catch((err) => {
+    } catch (err) {
       boy.sendMessage("§cSystem Glitch!");
       console.warn(err);
-    });
+    }
+  }, 2);
 }
 
 export function LlightentityHitBlock(evt) {
   const boy = evt.damagingEntity;
   const spot = evt.hitBlock;
 
-  if (boy?.typeId === "minecraft:player" && spot?.typeId.includes("light_block")) {
+  if (
+    boy?.typeId === "minecraft:player" &&
+    spot?.typeId.includes("light_block")
+  ) {
     dig(boy, spot);
   }
 }
@@ -66,5 +69,3 @@ export function LligitemUse(evt) {
   evt.cancel = true;
   run(boy);
 }
-
-console.warn("Light System loaded successfully");
