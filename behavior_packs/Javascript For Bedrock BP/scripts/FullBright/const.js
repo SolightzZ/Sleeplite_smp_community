@@ -2,7 +2,7 @@ export const tag = "bright";
 export const item = "addon:fullbright_toggle";
 export const effect = "night_vision";
 
-export const time = 20 * 60 * 20; // 20 นาที
+export const time = 20000000;
 export const level = 0;
 export const particle = false;
 

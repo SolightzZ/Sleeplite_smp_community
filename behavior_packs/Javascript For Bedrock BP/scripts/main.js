@@ -1,6 +1,6 @@
 import { world } from "@minecraft/server";
 
-import "./economy/system.js";
+// import "./economy/system.js";
 import "./Protection/system.js";
 import "./CustomCommand/system.js";
 import "./tools/crops/index.js";

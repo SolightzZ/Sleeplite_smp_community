@@ -1,6 +1,5 @@
 import { Player } from "@minecraft/server";
 
-import { showCameraMenu } from "./Camera/system.js";
 import { startEmote } from "./Emote/system.js";
 import { FullBrightUseItem } from "./FullBright/events.js";
 import { MagnetonUseItem } from "./magnet/events.js";
@@ -18,7 +17,6 @@ const EXACT_ACTIONS = {
   "addon:protection": ZoneProtection_OnItemUse,
   "addon:trade": RewarditemUse,
   "addon:bank": bankingSystem,
-  "addon:cam": showCameraMenu,
   "addon:emote": startEmote,
   "minecraft:paper": RUNREPORT,
   "minecraft:command_block": chatrankssitemUse,
