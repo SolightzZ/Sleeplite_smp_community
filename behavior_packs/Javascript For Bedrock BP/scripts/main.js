@@ -15,7 +15,7 @@ import "./plugins/Report.js";
 import "./plugins/AFK_Cinematic.js";
 import "./plugins/Flashlight.js";
 import "./plugins/Take_A_Seat.js";
-import "./plugins/Flashlight.js"
+import "./plugins/Flashlight.js";
 
 // API
 // import "./API.js";
