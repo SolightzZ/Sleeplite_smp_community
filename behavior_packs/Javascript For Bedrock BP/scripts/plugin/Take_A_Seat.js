@@ -332,7 +332,7 @@ function chatMessage(event) {
 export { chatMessage };
 
 const initializeScript = () => {
-  console.warn("§g§lTake a Seat§r§a loaded§r - Author:§c xAssassin");
+  console.warn("Take a Seat loaded§r - Author: xAssassin");
   system.runTimeout(() => {
     clearSeatsInDimension("overworld");
     clearSeatsInDimension("nether");

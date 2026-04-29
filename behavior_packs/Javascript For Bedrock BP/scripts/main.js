@@ -1,7 +1,6 @@
 import { world } from "@minecraft/server";
 
 // Modules
-import "./module/protection/system.js";
 
 // Plugins
 import "./plugin/NameTagRank.js";
