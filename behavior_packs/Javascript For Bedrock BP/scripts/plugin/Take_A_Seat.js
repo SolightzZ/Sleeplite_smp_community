@@ -278,45 +278,38 @@ function handleSitCommand(player) {
   }, 5);
 }
 
-// Register custom command ด้วย API ที่ถูกต้องตาม customCommandRegistry.md
-function registerCustomCommand() {
-  system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
-    customCommandRegistry.registerCommand(
-      {
-        name: SIT_COMMAND_NAME,
-        description:
-          "Sit down anywhere you are standing (if conditions are met)",
-        permissionLevel: CommandPermissionLevel.Any,
-        mandatoryParameters: [],
-        cheatsRequired: false,
-      },
-      (origin) => {
-        const player = origin.sourceEntity;
+function registerCustomCommandTakeASeat(init) {
+  init.customCommandRegistry.registerCommand(
+    {
+      name: SIT_COMMAND_NAME,
+      description: "Sit down anywhere you are standing (if conditions are met)",
+      permissionLevel: CommandPermissionLevel.Any,
+      mandatoryParameters: [],
+      cheatsRequired: false,
+    },
+    (origin) => {
+      const player = origin.sourceEntity;
 
-        // Only allow players to use this command
-        if (!player || player.typeId !== "minecraft:player") {
-          return {
-            status: CustomCommandStatus.Failure,
-            message: "§cThis command can only be used by players!",
-          };
-        }
-
-        // Escape read-only mode to run the command
-        system.run(() => {
-          handleSitCommand(player);
-        });
-
+      if (!player || player.typeId !== "minecraft:player") {
         return {
-          status: CustomCommandStatus.Success,
+          status: CustomCommandStatus.Failure,
+          message: "§cThis command can only be used by players!",
         };
-      },
-    );
-  });
+      }
+
+      system.run(() => {
+        handleSitCommand(player);
+      });
+
+      return {
+        status: CustomCommandStatus.Success,
+      };
+    },
+  );
 }
 
-/**
- * @param {"overworld" | "nether" | "the_end"} dimensionName
- */
+export { registerCustomCommandTakeASeat };
+
 function clearSeatsInDimension(dimensionName) {
   const dimension = world.getDimension(dimensionName);
   const sitEntities = dimension.getEntities({ type: SEAT_ENTITY_ID });
@@ -326,11 +319,7 @@ function clearSeatsInDimension(dimensionName) {
   }
 }
 
-// Register custom command
-registerCustomCommand();
-
-// Fallback: ใช้ chat command ถ้า custom command ไม่ทำงาน
-world.beforeEvents.chatSend.subscribe((event) => {
+function chatMessage(event) {
   const message = event.message.trim().toLowerCase();
   if (message === "/sit" || message === "!sit" || message === "#sit") {
     event.cancel = true;
@@ -338,7 +327,9 @@ world.beforeEvents.chatSend.subscribe((event) => {
       handleSitCommand(event.sender);
     });
   }
-});
+}
+
+export { chatMessage };
 
 const initializeScript = () => {
   console.warn("§g§lTake a Seat§r§a loaded§r - Author:§c xAssassin");

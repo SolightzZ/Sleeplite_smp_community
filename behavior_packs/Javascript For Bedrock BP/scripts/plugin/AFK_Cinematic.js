@@ -1,4 +1,10 @@
-import { system, world, CommandPermissionLevel, CustomCommandStatus, Player } from "@minecraft/server";
+import {
+  system,
+  world,
+  CommandPermissionLevel,
+  CustomCommandStatus,
+  Player,
+} from "@minecraft/server";
 
 const CONFIG = {
   defaultIdleSeconds: 120, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
@@ -383,21 +389,21 @@ function clearTrackedRun(store, key) {
 function safeActionBar(player, message) {
   try {
     player.onScreenDisplay.setActionBar(message);
-  } catch { }
+  } catch {}
 }
 
 // รัน command บน player โดยไม่ throw ถ้า player ออกไปแล้ว
 function safeCommand(player, command) {
   try {
     player.runCommand(command);
-  } catch { }
+  } catch {}
 }
 
 // ส่งข้อความ chat โดยไม่ throw ถ้า player ออกไปแล้ว
 function safeChat(player, message) {
   try {
     player.sendMessage(message);
-  } catch { }
+  } catch {}
 }
 
 // ยกเลิก interval ที่ค้างอยู่แล้ว clear action bar ทันที 1 ครั้ง
@@ -825,34 +831,34 @@ function startCinematicNow(player) {
   startAfk(player, state);
 }
 
-system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
-  customCommandRegistry.registerCommand(
-    {
-      name: "addon:afk",
-      description: "Enter AFK Cinematic mode immediately.",
-      permissionLevel: CommandPermissionLevel.Any,
-      cheatsRequired: false,
-    },
-    (origin) => {
-      const source = origin.initiator ?? origin.sourceEntity;
+const quckCommandAFK = (origin) => {
+  const player = origin.sourceEntity;
 
-      if (!(source instanceof Player)) {
-        return {
-          status: CustomCommandStatus.Failure,
-          message: "This command can only be executed by players.",
-        };
-      }
+  if (!player || !player.isValid) {
+    return { status: CustomCommandStatus.Failure };
+  }
 
-      system.run(() => {
-        startCinematicNow(source);
-      });
+  system.run(() => {
+    startCinematicNow(player);
+  });
+};
 
-      return {
-        status: CustomCommandStatus.Success,
-      };
-    }
-  );
-});
+function registerCommandAFK(init) {
+  const commandData = {
+    name: "addon:afk",
+    description: "Enter AFK Cinematic mode immediately.",
+    permissionLevel: CommandPermissionLevel.Any,
+    cheatsRequired: false,
+  };
+
+  init.customCommandRegistry.registerCommand(commandData, quckCommandAFK);
+}
+
+export { registerCommandAFK };
+
+// =====================================================================
+//                         Main Loop
+// ======================================================================
 
 // Fast Loop (1 Tick): คุมกล้อง Cinematic ให้ลื่นไหล และให้ผู้เล่นหลุด AFK ทันทีที่ขยับตัว
 system.runInterval(() => {
@@ -897,8 +903,11 @@ system.runInterval(() => {
   }
 }, 20);
 
-world.afterEvents.playerLeave.subscribe((event) => {
-  stopWarning(event.playerId);
-  clearTrackedRun(actionBarIntervals, event.playerId);
-  playerStates.delete(event.playerId);
-});
+function playerLeaveAfk(playerId) {
+  if (!playerId) return;
+
+  stopWarning(playerId);
+  clearTrackedRun(actionBarIntervals, playerId);
+  playerStates.delete(playerId);
+}
+export { playerLeaveAfk };

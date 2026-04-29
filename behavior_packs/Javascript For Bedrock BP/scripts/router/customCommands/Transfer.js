@@ -1,37 +1,40 @@
+import { Player } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { transferPlayer } from "@minecraft/server-admin";
-import { SERVER_LIST, MESSAGES } from "./constants.js";
+import { SERVER_LIST, MESSAGES } from "./Source.js";
 
 export function showServerMenu(player) {
   try {
     const form = new ActionFormData().title("เลือกเซิร์ฟเวอร์");
-    SERVER_LIST.forEach((s) =>
-      form.button(s.displayName, s.iconTexture || "textures/items/xbox4"),
-    );
+
+    for (let i = 0; i < SERVER_LIST.length; i++) {
+      const s = SERVER_LIST[i];
+      form.button(s.displayName, s.iconTexture || "textures/items/xbox4");
+    }
+
     form.button("กรอก IP ด้วยตัวเอง");
-
     form.show(player).then((response) => {
-      if (response.canceled) return;
-
+      if (!response || response.canceled) return;
       const idx = response.selection;
-      if (idx < SERVER_LIST.length) {
-        const server = SERVER_LIST[idx];
-        showConfirmationMenu(
-          player,
-          server.displayName,
-          server.ipAddress,
-          server.portNumber,
-        );
-      } else {
+      if (idx === undefined) return;
+      if (idx >= SERVER_LIST.length) {
         showCustomServerInput(player);
+        return;
       }
+      const server = SERVER_LIST[idx];
+      showConfirmationMenu(
+        player,
+        server.displayName,
+        server.ipAddress,
+        server.portNumber,
+      );
     });
   } catch (error) {
-    console.warn("showServerMenu", error);
+    console.warn("showServerMenu", error.message);
   }
 }
 
-export function showCustomServerInput(player) {
+function showCustomServerInput(player) {
   try {
     const form = new ModalFormData()
       .title("กรอกเซิร์ฟเวอร์")
@@ -39,11 +42,12 @@ export function showCustomServerInput(player) {
       .textField("Port Number:", "เช่น 19132");
 
     form.show(player).then((response) => {
-      if (response.canceled) return;
-
-      const [ipAddress, portString] = response.formValues;
-      const portNumber = parseInt(String(portString));
-      if (!ipAddress || isNaN(portNumber)) {
+      if (!response || response.canceled) return;
+      const values = response.formValues;
+      if (!values) return;
+      const ipAddress = values[0];
+      const portNumber = Number(values[1]);
+      if (!ipAddress || !Number.isInteger(portNumber)) {
         player.sendMessage(MESSAGES.INVALID_IP);
         return;
       }
@@ -56,16 +60,11 @@ export function showCustomServerInput(player) {
       );
     });
   } catch (error) {
-    console.warn("showCustomServerInput", error);
+    console.warn("showCustomServerInput", error.message);
   }
 }
 
-export function showConfirmationMenu(
-  player,
-  serverName,
-  ipAddress,
-  portNumber,
-) {
+function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
   try {
     const form = new ActionFormData()
       .title("ยืนยันการเชื่อมต่อ")
@@ -76,20 +75,21 @@ export function showConfirmationMenu(
       .button("กลับ");
 
     form.show(player).then((response) => {
-      if (response.canceled) return;
+      if (!response || response.canceled) return;
 
-      if (response.selection === 0) {
-        transferPlayerToServer(player, ipAddress, portNumber);
-      } else {
+      if (response.selection !== 0) {
         showServerMenu(player);
+        return;
       }
+
+      transferPlayerToServer(player, ipAddress, portNumber);
     });
   } catch (error) {
-    console.warn("showConfirmationMenu", error);
+    console.warn("showConfirmationMenu", error.message);
   }
 }
 
-export function transferPlayerToServer(player, ipAddress, portNumber) {
+function transferPlayerToServer(player, ipAddress, portNumber) {
   try {
     transferPlayer(player, { hostname: ipAddress, port: portNumber });
     player.sendMessage(MESSAGES.TRANSFER_START(ipAddress, portNumber));
@@ -98,6 +98,6 @@ export function transferPlayerToServer(player, ipAddress, portNumber) {
     );
   } catch (error) {
     player.sendMessage(MESSAGES.TRANSFER_FAIL);
-    console.warn("Player transfer error:", error);
+    console.warn("Player transfer error:", error.message);
   }
 }

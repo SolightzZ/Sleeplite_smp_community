@@ -13,16 +13,20 @@ const CONFIG = {
 };
 
 // RankSystem functions
-const isValidPlayer = (player) => player?.typeId === "minecraft:player" && player.isValid;
+const isValidPlayer = (player) =>
+  player?.typeId === "minecraft:player" && player.isValid;
 
 const getOwnedRanks = (player, tags = player.getTags()) =>
   tags.reduce((acc, t) => {
-    if (t.startsWith(CONFIG.PREFIX_RANK)) acc.push(t.slice(CONFIG.PREFIX_RANK.length));
+    if (t.startsWith(CONFIG.PREFIX_RANK))
+      acc.push(t.slice(CONFIG.PREFIX_RANK.length));
     return acc;
   }, []);
 
 const getActiveRank = (player, tags = player.getTags()) =>
-  tags.find((t) => t.startsWith(CONFIG.PREFIX_ACTIVE))?.slice(CONFIG.PREFIX_ACTIVE.length) ?? null;
+  tags
+    .find((t) => t.startsWith(CONFIG.PREFIX_ACTIVE))
+    ?.slice(CONFIG.PREFIX_ACTIVE.length) ?? null;
 
 const getAllServerRanks = () => {
   const ranks = new Set();
@@ -221,12 +225,14 @@ const showMainMenu = (admin) => {
   });
 };
 
-world.afterEvents.playerJoin.subscribe((e) => {
-  const p = world.getEntity(e.playerId);
-  if (isValidPlayer(p)) {
-    refreshNameTag(p);
+function playerJoinNameTag(event) {
+  const player = world.getEntity(event.playerId);
+  if (isValidPlayer(player)) {
+    refreshNameTag(player);
   }
-});
+}
+
+export { playerJoinNameTag };
 
 export const chatrankssitemUse = ({ source }) => {
   showMainMenu(source);

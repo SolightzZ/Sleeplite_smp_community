@@ -1,6 +1,5 @@
 import { ActionFormData } from "@minecraft/server-ui";
-import { setting } from "./constants.js";
-import { emoteList } from "./database.js";
+import { emoteList, setting } from "./database.js";
 
 function playEmote(player, animName, emoteName) {
   if (!player) return;

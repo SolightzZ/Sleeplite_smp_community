@@ -9,35 +9,35 @@ const DIMENSION_HEIGHT_RULE = {
   "minecraft:the_end": { minY: 0, baseY: 50 },
 };
 
-function floorPosition(location) {
+const floorPosition = (location) => {
   return {
     x: Math.floor(location.x),
     y: Math.floor(location.y),
     z: Math.floor(location.z),
   };
-}
+};
 
-function getGraveY(dimensionId, y) {
+const getGraveY = (dimensionId, y) => {
   const rule = DIMENSION_HEIGHT_RULE[dimensionId];
   return rule ? (y < rule.minY ? rule.baseY : y + 1) : y + 1;
-}
+};
 
-function findNearbyItems(dimension, location) {
+const findNearbyItems = (dimension, location) => {
   return dimension.getEntities({
     location,
     type: ITEM_ENTITY,
     maxDistance: MAX_ITEM_RADIUS,
   });
-}
+};
 
-function safeAddItem(container, itemStack) {
+const safeAddItem = (container, itemStack) => {
   try {
     container.addItem(itemStack);
     return true;
   } catch {
     return false;
   }
-}
+};
 
 export function gravestone_main({ deadEntity: deadPlayer }) {
   if (!deadPlayer || !deadPlayer.dimension || !deadPlayer.location) return;

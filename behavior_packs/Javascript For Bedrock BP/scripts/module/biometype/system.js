@@ -6,9 +6,9 @@ import {
 } from "./functions.js";
 import { Colors } from "./constants.js";
 
-export const handlePlayerDimensionChange = ({ player }) => {
+export function handlePlayerDimensionChange({ player }) {
   if (player?.typeId !== "minecraft:player" || !player.isValid) return;
-  
+
   const dimensionId = player.dimension.id;
   const dimensionName = getDimensionName(dimensionId);
   const biomeId = getBiomeIdAtLocation(player);
@@ -27,4 +27,4 @@ export const handlePlayerDimensionChange = ({ player }) => {
     }
     player.onScreenDisplay.setTitle(title, options);
   }, 60);
-};
+}

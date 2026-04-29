@@ -4,7 +4,7 @@ import { generateGrid, sortByDistance } from "./math.js";
 import { isValidTool, getEnchantData, isMineableBlock } from "./logic.js";
 import { miningJobExecutor } from "./job.js";
 
-const onHammerBreak = (event) => {
+function onHammerBreak(event) {
   const { player, itemStack, block } = event;
 
   if (!itemStack || !isValidTool(itemStack.typeId)) return;
@@ -24,6 +24,6 @@ const onHammerBreak = (event) => {
   system.runJob(
     miningJobExecutor(block.dimension, targets, enchantData, player),
   );
-};
+}
 
-world.beforeEvents.playerBreakBlock.subscribe(onHammerBreak);
+export { onHammerBreak };

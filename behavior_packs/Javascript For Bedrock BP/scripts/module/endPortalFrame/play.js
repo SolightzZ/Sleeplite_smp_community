@@ -3,7 +3,7 @@ import { ask, forget } from "./brain.js";
 import { count, fix } from "./tools.js";
 import { see, eat, hit, say } from "./hand.js";
 
-export const touch = (event) => {
+export function touch(event) {
   const { player, block, itemStack: item } = event;
 
   if (!player || !block) return;
@@ -35,4 +35,4 @@ export const touch = (event) => {
   forget(block);
 
   player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${pain}`);
-};
+}

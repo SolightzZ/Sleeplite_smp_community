@@ -21,7 +21,7 @@ const formatName = (entityId) => {
     .join(" ");
 };
 
-function getNearbyPlayers(entity) {
+const getNearbyPlayers = (entity) => {
   const { x, y, z } = entity.location;
   const dimId = entity.dimension.id;
 
@@ -34,9 +34,9 @@ function getNearbyPlayers(entity) {
 
     return dx * dx + dy * dy + dz * dz <= DISPLAY_RADIUS_SQ;
   });
-}
+};
 
-function displayBossTitle(entity, name, subtitle, isDeathEvent) {
+const displayBossTitle = (entity, name, subtitle, isDeathEvent) => {
   let charIndex = 0;
 
   const finalSound = isDeathEvent ? modwarden : weatherthunder;
@@ -48,7 +48,7 @@ function displayBossTitle(entity, name, subtitle, isDeathEvent) {
     subtitle,
   };
 
-  function animate() {
+  const animate = () => {
     if (!entity || !entity.dimension) return;
 
     const players = getNearbyPlayers(entity);
@@ -59,7 +59,12 @@ function displayBossTitle(entity, name, subtitle, isDeathEvent) {
 
     if (charIndex > name.length) return;
 
-    const currentTitle = charIndex === name.length ? (isDeathEvent ? `§c- ${name} -` : `§e- ${name} -`) : name.slice(0, charIndex + 1);
+    const currentTitle =
+      charIndex === name.length
+        ? isDeathEvent
+          ? `§c- ${name} -`
+          : `§e- ${name} -`
+        : name.slice(0, charIndex + 1);
 
     for (const player of players) {
       player.onScreenDisplay.setTitle(currentTitle, titleOptions);
@@ -72,10 +77,10 @@ function displayBossTitle(entity, name, subtitle, isDeathEvent) {
 
     charIndex++;
     system.runTimeout(animate, TICK_DELAY);
-  }
+  };
 
   animate();
-}
+};
 
 export function itile_main(event) {
   const entity = event.entity;

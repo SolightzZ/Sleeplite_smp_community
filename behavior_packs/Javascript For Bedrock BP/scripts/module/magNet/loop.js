@@ -1,14 +1,22 @@
 import { system } from "@minecraft/server";
 import { setting } from "./config.js";
-import { countUser, hasTimer, setTimer, getTimer, clearTimer, getUserEntries, removeUser } from "./state.js";
+import {
+  countUser,
+  hasTimer,
+  setTimer,
+  getTimer,
+  clearTimer,
+  getUserEntries,
+  removeUser,
+} from "./state.js";
 import { pullItem } from "./puller.js";
 
-export function stopLoop() {
+const stopLoop = () => {
   if (hasTimer()) {
     system.clearRun(getTimer());
     clearTimer();
   }
-}
+};
 
 export function startLoop() {
   if (hasTimer()) return;

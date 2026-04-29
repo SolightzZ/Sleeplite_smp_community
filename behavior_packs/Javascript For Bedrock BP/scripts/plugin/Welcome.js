@@ -4,7 +4,7 @@ const stat = "Deaths";
 const head = "§e[!] Welcome to Sleeplite SMP Season 1";
 const wait = 150;
 
-function read(boy) {
+const read = (boy) => {
   const board = world.scoreboard.getObjective(stat);
   if (!board) return 0;
   const id = boy.scoreboardIdentity;
@@ -13,11 +13,10 @@ function read(boy) {
   if (!board.hasParticipant(id)) {
     board.setScore(id, 0);
   }
-
   return nums;
-}
+};
 
-function showWelcome(boy) {
+const showWelcome = (boy) => {
   const dead = read(boy);
 
   boy.sendMessage(`${head}\n§7 Name: ${boy.name}\n Deaths: ${dead}`);
@@ -29,15 +28,17 @@ function showWelcome(boy) {
     subtitle: `Deaths: ${dead}`,
   });
   boy.playSound("random.toast", { pitch: 1, volume: 1.5 });
-}
+};
 
-world.afterEvents.playerSpawn.subscribe((evt) => {
-  const boy = evt.player;
-  const isNew = evt.initialSpawn;
+function playerSpawnWelcome(event) {
+  const boy = event.player;
+  const isNew = event.initialSpawn;
 
   if (!isNew) return;
 
   system.runTimeout(() => {
     showWelcome(boy);
   }, wait);
-});
+}
+
+export { playerSpawnWelcome };

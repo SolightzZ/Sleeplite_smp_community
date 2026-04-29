@@ -134,7 +134,7 @@ const openMainMenuForPlayer = async (player) => {
   }
 };
 
-const handleBlockEditPreEvent = (event) => {
+function handleBlockEditPreEvent(event) {
   const { player, block } = event;
   const zone = zoneDatabase.findZoneByLocation(block.location);
   if (
@@ -143,9 +143,11 @@ const handleBlockEditPreEvent = (event) => {
   ) {
     event.cancel = true;
   }
-};
+}
 
-const handleEntityInteractPreEvent = (event) => {
+export { handleBlockEditPreEvent };
+
+function handleEntityInteractPreEvent(event) {
   const { player, target } = event;
   if (!target?.typeId?.startsWith("minecraft:player")) return;
 
@@ -156,9 +158,11 @@ const handleEntityInteractPreEvent = (event) => {
   ) {
     event.cancel = true;
   }
-};
+}
 
-const handleExplosionPreEvent = (event) => {
+export { handleEntityInteractPreEvent };
+
+function handleExplosionPreEvent(event) {
   if (
     event
       .getImpactedBlocks()
@@ -166,7 +170,8 @@ const handleExplosionPreEvent = (event) => {
   ) {
     event.cancel = true;
   }
-};
+}
+export { handleExplosionPreEvent };
 
 export const ZoneProtection_OnItemUse = ({ source }) => {
   openMainMenuForPlayer(source);
@@ -205,13 +210,5 @@ export function clearVisualStateForPlayers(event) {
   clearVisualStateForPlayer(playerName);
   userInterfaceLockByPlayer.delete(playerName);
 }
-
-world.beforeEvents.playerBreakBlock.subscribe(handleBlockEditPreEvent);
-world.beforeEvents.playerPlaceBlock.subscribe(handleBlockEditPreEvent);
-world.beforeEvents.playerInteractWithBlock.subscribe(handleBlockEditPreEvent);
-world.beforeEvents.playerInteractWithEntity.subscribe(
-  handleEntityInteractPreEvent,
-);
-world.beforeEvents.explosion.subscribe(handleExplosionPreEvent);
 
 system.run(() => zoneDatabase.loadAllZonesFromStorage());

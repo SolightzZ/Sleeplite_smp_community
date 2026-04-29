@@ -6,7 +6,7 @@ import {
 } from "@minecraft/server";
 import { sortPlayerInventory, sortBlockContainer } from "./logic.js";
 
-function sortInventoryCommand(origin, mode) {
+const sortInventoryCommand = (origin, mode) => {
   const player = origin.sourceEntity;
   if (!player) {
     return { status: CustomCommandStatus.Failure };
@@ -17,9 +17,9 @@ function sortInventoryCommand(origin, mode) {
   });
 
   return { status: CustomCommandStatus.Success };
-}
+};
 
-function sortContainerCommand(origin, mode) {
+const sortContainerCommand = (origin, mode) => {
   const player = origin.sourceEntity;
   if (!player) {
     return { status: CustomCommandStatus.Failure };
@@ -28,12 +28,11 @@ function sortContainerCommand(origin, mode) {
     const res = sortBlockContainer(player, mode);
     if (res?.msg) player.sendMessage(res.msg);
   });
-
   return { status: CustomCommandStatus.Success };
-}
+};
 
-system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
-  customCommandRegistry.registerEnum("addon:SortingMode", [
+function registerCustomCommandIventory(init) {
+  init.customCommandRegistry.registerEnum("addon:SortingMode", [
     "type",
     "low",
     "max",
@@ -47,7 +46,7 @@ system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
     "column",
   ]);
 
-  customCommandRegistry.registerCommand(
+  init.customCommandRegistry.registerCommand(
     {
       name: "addon:r",
       description: "Sort player inventory - จัดเรียงไอเทมของผู้เล่น",
@@ -64,7 +63,7 @@ system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
     sortInventoryCommand,
   );
 
-  customCommandRegistry.registerCommand(
+  init.customCommandRegistry.registerCommand(
     {
       name: "addon:c",
       description: "Sort container inventory - จัดเรียงไอเทมในกล่อง",
@@ -80,4 +79,6 @@ system.beforeEvents.startup.subscribe(({ customCommandRegistry }) => {
     },
     sortContainerCommand,
   );
-});
+}
+
+export { registerCustomCommandIventory };

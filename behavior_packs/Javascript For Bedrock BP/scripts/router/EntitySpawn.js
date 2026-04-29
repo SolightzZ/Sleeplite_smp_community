@@ -9,14 +9,16 @@ const SPAWN_ACTIONS = {
 export function onEntitySpawn(event) {
   const entity = event.entity;
   if (!entity) return;
+
   const actions = SPAWN_ACTIONS[entity.typeId];
-  if (!actions) return;
+  if (!actions || actions.length === 0) return;
 
   system.run(() => {
-    for (const action of actions) {
-      if (typeof action === "function") {
-        action(event);
-      }
+    for (let i = 0; i < actions.length; i++) {
+      const fn = actions[i];
+      if (fn) fn(event);
     }
   });
 }
+
+world.afterEvents.entitySpawn.subscribe(onEntitySpawn);

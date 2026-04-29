@@ -1,44 +1,17 @@
 import { world } from "@minecraft/server";
 
-import "./Protection/system.js";
-import "./CustomCommand/system.js";
-import "./tools/crops/index.js";
-import "./tools/hammer/index.js";
-import "./Inventory_Sorter/commands.js";
+// Modules
+import "./module/protection/system.js";
 
 // Plugins
-import "./plugins/NameTagRank.js";
-import "./plugins/Welcome.js";
-import "./plugins/Report.js";
+import "./plugin/NameTagRank.js";
+import "./plugin/Welcome.js";
+import "./plugin/Report.js";
 
 // New Addons
-import "./plugins/AFK_Cinematic.js";
-import "./plugins/Flashlight.js";
-import "./plugins/Take_A_Seat.js";
-import "./plugins/Flashlight.js";
+import "./plugin/AFK_Cinematic.js";
+import "./plugin/Flashlight.js";
+import "./plugin/Take_A_Seat.js";
 
-// API
-// import "./API.js";
-
-import { handlePlayerDimensionChange } from "./BiomeType/system.js";
-import { LlightentityHitBlock } from "./light/main.js";
-import { onGravestoneInteract } from "./Others/gravestones_entity.js";
-import { touch } from "./EndPortalFrame/play.js";
-
-import { onItemUse } from "./A_itemUse.js";
-import { onEntityDeath } from "./B_entityDie.js";
-import { onChatMessage } from "./C_chatSend.js";
-import { onEntitySpawn } from "./D_EntitySpawn.js";
-import { onPlayerLeave } from "./F_playerLeave.js";
-
-world.afterEvents.itemUse.subscribe(onItemUse);
-world.afterEvents.entityDie.subscribe(onEntityDeath);
-world.beforeEvents.chatSend.subscribe(onChatMessage);
-world.afterEvents.entitySpawn.subscribe(onEntitySpawn);
-world.afterEvents.playerLeave.subscribe(onPlayerLeave);
-world.beforeEvents.playerInteractWithBlock.subscribe(touch);
-world.afterEvents.playerDimensionChange.subscribe(handlePlayerDimensionChange);
-world.afterEvents.entityHitBlock.subscribe(LlightentityHitBlock);
-world.beforeEvents.playerInteractWithEntity.subscribe(onGravestoneInteract);
-
-import "./Others/RuntimeInfo.js";
+// System
+import "./plugin/RuntimeInfo.js";
