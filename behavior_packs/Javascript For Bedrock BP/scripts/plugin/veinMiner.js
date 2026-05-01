@@ -197,15 +197,17 @@ const ORE_XP = {
 
   "minecraft:nether_gold_ore": [0, 1],
 };
-
+// สร้างคีย์ตำแหน่ง: แปลงพิกัด x,y,z เป็น string สำหรับใช้เป็น key
 const locationKey = ({ x, y, z }) => `${x},${y},${z}`;
 
+// คำนวณตำแหน่งใหม่: บวก offset กับตำแหน่งเดิมเพื่อหา location ใหม่
 const offsetLocation = (location, offset) => ({
   x: location.x + offset.x,
   y: location.y + offset.y,
   z: location.z + offset.z,
 });
 
+// ดึงบล็อกแบบปลอดภัย: เรียก getBlock และป้องกัน error หากตำแหน่งไม่ถูกต้อง
 const getBlockSafe = (dimension, location) => {
   try {
     return dimension.getBlock(location);
@@ -214,6 +216,7 @@ const getBlockSafe = (dimension, location) => {
   }
 };
 
+// หาแร่ชนิดเดียวกันรอบบล็อก: คืนค่าบล็อกเพื่อนบ้านที่มี typeId ตรงกับเป้าหมาย
 const getSameOreNeighbors = (block, targetId) => {
   const { dimension, location } = block;
   const neighbors = [];
@@ -231,6 +234,7 @@ const getSameOreNeighbors = (block, targetId) => {
   return neighbors;
 };
 
+// ดึงข้อมูลเอนชานต์: อ่านค่า fortune, silk touch และ unbreaking จากไอเทม
 const getEnchantData = (item) => {
   const enchantable = item?.getComponent(ItemComponentTypes.Enchantable);
 
@@ -249,8 +253,10 @@ const getEnchantData = (item) => {
   };
 };
 
+// จำกัดระดับ Unbreaking: บังคับค่าให้อยู่ในช่วง 0 ถึง 3
 const clampUnbreakingLevel = (level) => Math.max(0, Math.min(3, level || 0));
 
+// ตรวจสอบการลดความทนทาน: คำนวณโอกาสที่ไอเทมจะเสีย durability ตามระดับ Unbreaking
 const shouldDamageDurability = (durability, unbreakingLevel) => {
   const damageChance = durability.getDamageChance(
     clampUnbreakingLevel(unbreakingLevel),
@@ -262,6 +268,7 @@ const shouldDamageDurability = (durability, unbreakingLevel) => {
   return Math.random() * maxRoll < damageChance;
 };
 
+// ปรับลดความทนทานไอเทม: ตรวจสอบและเพิ่มค่า damage ตามโอกาส พร้อมคืนค่า item หรือสถานะ "break" หากพัง
 const applyDurabilityDamage = (item, unbreakingLevel = 0) => {
   if (!item) return item;
 
@@ -290,41 +297,44 @@ const applyDurabilityDamage = (item, unbreakingLevel = 0) => {
   return item;
 };
 
-const getDropTypeId = (targetId, hasSilkTouch) =>
+// เลือกประเภทไอเทมดรอป: คืนค่า typeId ของไอเทมตาม Silk Touch หรือดรอปปกติของแร่
+const getDropTypeId = (targetId, hasSilkTouch) => {
   hasSilkTouch ? targetId : ORE_DROP[targetId];
+};
 
+// คำนวณจำนวนไอเทมดรอป: กำหนดจำนวนดรอปตามระดับ Fortune หรือคืนค่า 1 หากมี Silk Touch
 const getDropAmount = (fortuneLevel, hasSilkTouch) => {
   if (hasSilkTouch || fortuneLevel <= 0) return 1;
-
   return Math.floor(Math.random() * fortuneLevel) + 2;
 };
 
+// คำนวณค่า XP ที่ได้รับ: สุ่มค่าประสบการณ์จากตาราง ORE_XP ตามชนิดแร่
 const getXpAmount = (targetId) => {
   const xpValues = ORE_XP[targetId];
   if (!xpValues?.length) return 0;
-
   return xpValues[Math.floor(Math.random() * xpValues.length)];
 };
 
+// หาจุดกึ่งกลางบล็อก: คืนค่าพิกัดตรงกลางของบล็อกสำหรับใช้ spawn ไอเทมหรือเอฟเฟกต์
 const getBlockCenter = (block) => {
   if (block.center) {
     return block.center();
   }
-
   const { x, y, z } = block.location;
   return { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
 };
 
+// สร้างของดรอปและ XP: ดรอปไอเทมและสร้างลูกแก้วประสบการณ์ตามจำนวนที่กำหนด
 const spawnDrops = (dimension, location, dropTypeId, amount, xpAmount) => {
   if (dropTypeId && amount > 0) {
     dimension.spawnItem(new ItemStack(dropTypeId, amount), location);
   }
-
   for (let i = 0; i < xpAmount; i++) {
     dimension.spawnEntity("minecraft:xp_orb", location);
   }
 };
 
+// เล่นเสียงให้ผู้เล่น: เล่นเสียงที่กำหนด ณ ตำแหน่ง พร้อมตั้งค่า volume และ options เพิ่มเติม
 const playPlayerSound = (player, soundId, location, options = {}) => {
   try {
     player?.playSound(soundId, {
@@ -337,13 +347,14 @@ const playPlayerSound = (player, soundId, location, options = {}) => {
   }
 };
 
+// ตรวจสอบสายแร่: เช็คว่าบล็อกมีแร่ชนิดเดียวกันเชื่อมต่ออยู่รอบ ๆ หรือไม่
 export const isOreVein = (block) => {
   if (!block) return false;
-
   const targetId = block.typeId;
   return getSameOreNeighbors(block, targetId).length > 0;
 };
 
+// ตัดสายแร่ทั้งชุด: ขุดแร่ที่เชื่อมต่อกันทั้งหมดแบบทีละส่วน พร้อมคำนวณดรอป, XP, durability และเสียงเอฟเฟกต์
 export const breakOreVein = (block, item, player) => {
   const validOres = PICKAXE_BREAKS[item?.typeId];
   const targetId = block?.typeId;
@@ -428,6 +439,7 @@ export const breakOreVein = (block, item, player) => {
   }, 2);
 };
 
+// จัดการ VeinMiner: ตรวจสอบเงื่อนไขและเรียกขุดสายแร่เมื่อผู้เล่นย่อและใช้ pickaxe ที่รองรับ
 function VeinMiner(event) {
   const { player, block, itemStack } = event;
   if (
