@@ -1,15 +1,15 @@
 import { system } from "@minecraft/server";
 import { setting } from "./config.js";
-import {
-  countUser,
-  hasTimer,
-  setTimer,
-  getTimer,
-  clearTimer,
-  getUserEntries,
-  removeUser,
-} from "./state.js";
 import { pullItem } from "./puller.js";
+import {
+  clearTimer,
+  countUser,
+  getTimer,
+  getUserEntries,
+  hasTimer,
+  removeUser,
+  setTimer,
+} from "./state.js";
 
 const stopLoop = () => {
   if (hasTimer()) {

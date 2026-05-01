@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { world } from "@minecraft/server";
 import { resetBright } from "./state.js";
 import { showMenu } from "./ui.js";
 

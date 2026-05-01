@@ -4,7 +4,9 @@ import { getDamageReduction } from "./help_function";
 
 const buildLore = (item, playerTag, stats, enchants, damage) => {
   const durability = item.getComponent(ItemComponentTypes.Durability);
-  const currentDurability = durability ? durability.maxDurability - durability.damage : null;
+  const currentDurability = durability
+    ? durability.maxDurability - durability.damage
+    : null;
   const maxDurability = durability ? durability.maxDurability : null;
 
   const lore = [`§8[${playerTag}§8]`];
@@ -18,13 +20,21 @@ const buildLore = (item, playerTag, stats, enchants, damage) => {
       lore.push(`§r§7Armor Toughness: §a+${stats.toughness}`);
     }
 
-    const { total: damageReduction, protectionBonus, breachReduction } = getDamageReduction(stats.armor, stats.toughness, enchants, damage);
+    const {
+      total: damageReduction,
+      protectionBonus,
+      breachReduction,
+    } = getDamageReduction(stats.armor, stats.toughness, enchants, damage);
 
     let reductionText = `§r§7Damage Reduction: §a+${damageReduction.toFixed(1)}%`;
     if (protectionBonus > 0 || breachReduction > 0) {
-      const bonusText = protectionBonus > 0 ? `+${protectionBonus.toFixed(1)}%` : "";
-      const breachText = breachReduction > 0 ? `-${breachReduction.toFixed(1)}%` : "";
-      const combinedText = [bonusText, breachText].filter((text) => text).join(", ");
+      const bonusText =
+        protectionBonus > 0 ? `+${protectionBonus.toFixed(1)}%` : "";
+      const breachText =
+        breachReduction > 0 ? `-${breachReduction.toFixed(1)}%` : "";
+      const combinedText = [bonusText, breachText]
+        .filter((text) => text)
+        .join(", ");
       if (combinedText) {
         reductionText += ` §8(${combinedText})`;
       }

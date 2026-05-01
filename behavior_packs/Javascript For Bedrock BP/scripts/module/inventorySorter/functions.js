@@ -1,5 +1,5 @@
 import { ItemStack } from "@minecraft/server";
-import { SORTING_MODES, RARITY_ORDER, ITEM_CATEGORIES } from "./constants.js";
+import { ITEM_CATEGORIES, RARITY_ORDER, SORTING_MODES } from "./constants.js";
 
 export function countTotalItems(items) {
   if (!items) return 0;
@@ -27,15 +27,33 @@ function getItemCategory(item) {
 
   const id = item.typeId.toLowerCase();
 
-  if (id.includes("sword") || id.includes("bow") || id.includes("crossbow") || id.includes("trident") || id.includes("axe")) {
+  if (
+    id.includes("sword") ||
+    id.includes("bow") ||
+    id.includes("crossbow") ||
+    id.includes("trident") ||
+    id.includes("axe")
+  ) {
     return ITEM_CATEGORIES.weapon;
   }
 
-  if (id.includes("pickaxe") || id.includes("shovel") || id.includes("hoe") || id.includes("shears") || id.includes("flint_and_steel")) {
+  if (
+    id.includes("pickaxe") ||
+    id.includes("shovel") ||
+    id.includes("hoe") ||
+    id.includes("shears") ||
+    id.includes("flint_and_steel")
+  ) {
     return ITEM_CATEGORIES.tool;
   }
 
-  if (id.includes("helmet") || id.includes("chestplate") || id.includes("leggings") || id.includes("boots") || id.includes("elytra")) {
+  if (
+    id.includes("helmet") ||
+    id.includes("chestplate") ||
+    id.includes("leggings") ||
+    id.includes("boots") ||
+    id.includes("elytra")
+  ) {
     return ITEM_CATEGORIES.armor;
   }
 
@@ -61,7 +79,13 @@ function getItemCategory(item) {
     return ITEM_CATEGORIES.block;
   }
 
-  if (id.includes("ingot") || id.includes("gem") || id.includes("dust") || id.includes("nugget") || id.includes("shard")) {
+  if (
+    id.includes("ingot") ||
+    id.includes("gem") ||
+    id.includes("dust") ||
+    id.includes("nugget") ||
+    id.includes("shard")
+  ) {
     return ITEM_CATEGORIES.material;
   }
 
@@ -102,7 +126,13 @@ export function compareItemsByMode(a, b, mode) {
     if (a.amount === b.amount) {
       return a.typeId < b.typeId ? -1 : 1;
     }
-    return mode === "desc" ? (a.amount < b.amount ? 1 : -1) : a.amount > b.amount ? 1 : -1;
+    return mode === "desc"
+      ? a.amount < b.amount
+        ? 1
+        : -1
+      : a.amount > b.amount
+        ? 1
+        : -1;
   }
 
   if (mode === "rarity") {
@@ -352,7 +382,12 @@ export function isInventorySortedAndMerged(items, maxSize, mode = "type") {
         return false;
       }
 
-      if (prev && prev.typeId === cur.typeId && prev.amount < (prev.maxAmount ?? 64) && cur.isStackableWith?.(prev)) {
+      if (
+        prev &&
+        prev.typeId === cur.typeId &&
+        prev.amount < (prev.maxAmount ?? 64) &&
+        cur.isStackableWith?.(prev)
+      ) {
         return false;
       }
 
@@ -384,7 +419,12 @@ export function isContainerSorted(container, mode = "type") {
         return false;
       }
 
-      if (prev && prev.typeId === cur.typeId && prev.amount < (prev.maxAmount ?? 64) && cur.isStackableWith?.(prev)) {
+      if (
+        prev &&
+        prev.typeId === cur.typeId &&
+        prev.amount < (prev.maxAmount ?? 64) &&
+        cur.isStackableWith?.(prev)
+      ) {
         return false;
       }
 
@@ -404,7 +444,9 @@ export function writeContainerDiff(container, newItems) {
     const cur = container.getItem(i);
     const nxt = newItems[i];
 
-    const same = (!cur && !nxt) || (cur && nxt && cur.typeId === nxt.typeId && cur.amount === nxt.amount);
+    const same =
+      (!cur && !nxt) ||
+      (cur && nxt && cur.typeId === nxt.typeId && cur.amount === nxt.amount);
 
     if (!same) {
       container.setItem(i, nxt);

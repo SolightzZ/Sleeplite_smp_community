@@ -49,4 +49,4 @@ const MESSAGES = {
   TRANSFER_FAIL: "§cไม่สามารถย้ายผู้เล่นได้",
 };
 
-export { SERVER_LIST, MESSAGES };
+export { MESSAGES, SERVER_LIST };

@@ -1,14 +1,14 @@
-import { Player } from "@minecraft/server";
+import { Player, world } from "@minecraft/server";
 
-import { LligitemUse } from "../module/light/main.js";
-import { setting_main } from "./plugins/setting.js";
-import { ZoneProtection_OnItemUse } from "./Protection/system.js";
-import { RewarditemUse } from "../module/rewards/system.js";
 import { startEmote } from "../module/emotes/system.js";
-import { RUNREPORT } from "./plugins/Report.js";
-import { chatrankssitemUse } from "./plugins/NameTagRank.js";
-import { MagnetonUseItem } from "./module/magNet/events.js";
-import { FullBrightUseItem } from "./module/fullBright/events.js";
+import { LligitemUse } from "../module/light/main.js";
+import { RewarditemUse } from "../module/rewards/system.js";
+import { FullBrightUseItem } from "../module/fullBright/events.js";
+import { MagnetonUseItem } from "../module/magNet/events.js";
+import { chatrankssitemUse } from "../plugin/NameTagRank.js";
+import { RUNREPORT } from "../plugin/Report.js";
+import { setting_main } from "../plugin/setting.js";
+import { ZoneProtection_OnItemUse } from "../module/protection/system.js";
 
 export function onItemUse(event) {
   const { source, itemStack } = event;
@@ -34,6 +34,8 @@ export function onItemUse(event) {
     return MagnetonUseItem(event);
   } else if (Items === "addon:fullbright_") {
     return FullBrightUseItem(event);
+  } else if (Items === "minecraft:sponge") {
+    return handleSpongeAbsorption(event);
   }
 }
 

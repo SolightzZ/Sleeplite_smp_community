@@ -35,15 +35,19 @@ export const UserMessages = {
   FriendListFull: `[x] คุณมีเพื่อนครบ ${Configuration.MaximumFriendsPerZone} คนแล้ว!`,
   FriendAlreadyAdded: `[x] ผู้เล่นนี้เป็นเพื่อนคุณอยู่แล้ว!`,
   FriendNotInList: `[x] ผู้เล่นนี้ไม่ได้เป็นเพื่อนคุณ!`,
-  FriendAdded: (name) => `${TextColorCodes.Success}[/] เพิ่ม ${name} ในโซนเรียบร้อยแล้ว!`,
-  FriendRemoved: (name) => `${TextColorCodes.Warning}[/] ลบ ${name} ออกจากโซนเรียบร้อยแล้ว!`,
+  FriendAdded: (name) =>
+    `${TextColorCodes.Success}[/] เพิ่ม ${name} ในโซนเรียบร้อยแล้ว!`,
+  FriendRemoved: (name) =>
+    `${TextColorCodes.Warning}[/] ลบ ${name} ออกจากโซนเรียบร้อยแล้ว!`,
   AdministratorOnly: `[x] เฉพาะผู้ดูแลระบบเท่านั้น!`,
   NoZonesInServer: `[x] ไม่มีโซนในระบบ!`,
   InvalidZoneSelection: `[x] เลือกโซนไม่ถูกต้อง!`,
   ZoneNotFound: `[x] ไม่พบโซนนี้!`,
-  ZoneDeletedByAdministrator: (owner) => `${TextColorCodes.Warning}[/] ลบโซนของ ${owner} เรียบร้อยแล้ว!`,
+  ZoneDeletedByAdministrator: (owner) =>
+    `${TextColorCodes.Warning}[/] ลบโซนของ ${owner} เรียบร้อยแล้ว!`,
   YourZoneDeletedByAdministrator: `โซนของคุณถูกลบโดยผู้ดูแลระบบ!`,
-  TeleportSuccess: (owner) => `${TextColorCodes.Success}[/] เทเลพอร์ตไปโซน ${owner}`,
+  TeleportSuccess: (owner) =>
+    `${TextColorCodes.Success}[/] เทเลพอร์ตไปโซน ${owner}`,
 };
 
 export const buildEdgeOffsets = (size) => {
@@ -51,9 +55,12 @@ export const buildEdgeOffsets = (size) => {
   const zero = 0,
     z = size;
 
-  for (const y of [zero, z]) for (const k of [zero, z]) offsets.push(["x", zero, y, k]);
-  for (const x of [zero, z]) for (const k of [zero, z]) offsets.push(["y", x, zero, k]);
-  for (const x of [zero, z]) for (const y of [zero, z]) offsets.push(["z", x, y, zero]);
+  for (const y of [zero, z])
+    for (const k of [zero, z]) offsets.push(["x", zero, y, k]);
+  for (const x of [zero, z])
+    for (const k of [zero, z]) offsets.push(["y", x, zero, k]);
+  for (const x of [zero, z])
+    for (const y of [zero, z]) offsets.push(["z", x, y, zero]);
 
   return offsets;
 };

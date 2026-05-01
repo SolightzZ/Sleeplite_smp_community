@@ -60,7 +60,9 @@ export function xz_main(event) {
     x = parsedX;
     z = parsedZ;
   } else {
-    player.sendMessage("§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ตัวอย่าง: !xz 200 200");
+    player.sendMessage(
+      "§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ตัวอย่าง: !xz 200 200",
+    );
     return;
   }
 

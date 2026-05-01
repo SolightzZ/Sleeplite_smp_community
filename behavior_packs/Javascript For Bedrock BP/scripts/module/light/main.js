@@ -1,6 +1,6 @@
-import { world, system } from "@minecraft/server";
-import { gang, max, wait, limit } from "./vals.js";
+import { system, world } from "@minecraft/server";
 import { check, dig, shine } from "./act.js";
+import { gang, limit, max, wait } from "./vals.js";
 
 function clean() {
   const all = new Map(world.getAllPlayers().map((p) => [p.id, p]));
@@ -43,7 +43,7 @@ function run(boy) {
       boy.startItemCooldown("light_search", wait);
     } catch (err) {
       boy.sendMessage("§cSystem Glitch!");
-      console.warn(err);
+      console.log(err);
     }
   }, 2);
 }

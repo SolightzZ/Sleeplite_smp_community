@@ -1,10 +1,10 @@
 import {
-  system,
   CommandPermissionLevel,
-  CustomCommandStatus,
   CustomCommandParamType,
+  CustomCommandStatus,
+  system,
 } from "@minecraft/server";
-import { sortPlayerInventory, sortBlockContainer } from "./logic.js";
+import { sortBlockContainer, sortPlayerInventory } from "./logic.js";
 
 const sortInventoryCommand = (origin, mode) => {
   const player = origin.sourceEntity;

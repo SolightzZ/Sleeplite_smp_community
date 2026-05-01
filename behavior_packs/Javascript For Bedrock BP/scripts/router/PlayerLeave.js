@@ -1,15 +1,17 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 
 import { onLeaveFullBright } from "../module/fullBright/events.js";
 import { onLeave } from "../module/magNet/events.js";
 import { clearVisualStateForPlayers } from "../module/protection/system.js";
 import { playerLeaveAfk } from "../plugin/AFK_Cinematic.js";
+import { handlerFlashlight } from "../plugin/Flashlight.js";
 
 const PLAYER_LEAVE = [
   onLeaveFullBright,
   onLeave,
   clearVisualStateForPlayers,
   playerLeaveAfk,
+  handlerFlashlight,
 ];
 
 export function onPlayerLeave(event) {

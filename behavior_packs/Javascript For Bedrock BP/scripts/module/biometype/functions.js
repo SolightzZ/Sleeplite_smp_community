@@ -1,5 +1,4 @@
-import biomeIdList from "./database.js";
-import { EXCLUDED_BIOMES } from "./constants.js";
+import { biomeIdList, EXCLUDED_BIOMES } from "./database.js";
 
 export const getBiomeIdAtLocation = (player) => {
   if (!player?.location || !player?.dimension) return null;
@@ -13,7 +12,9 @@ export const getBiomeIdAtLocation = (player) => {
 
 export const getBiomeName = (biomeId) => {
   if (!biomeId) return null;
-  return EXCLUDED_BIOMES.includes(biomeId) ? null : biomeIdList[biomeId] || biomeId;
+  return EXCLUDED_BIOMES.includes(biomeId)
+    ? null
+    : biomeIdList[biomeId] || biomeId;
 };
 
 export const getDimensionName = (dimensionId) => {

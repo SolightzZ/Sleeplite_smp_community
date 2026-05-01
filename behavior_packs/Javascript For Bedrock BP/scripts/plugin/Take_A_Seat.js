@@ -1,9 +1,9 @@
 import {
-  world,
-  system,
-  Direction,
   CommandPermissionLevel,
   CustomCommandStatus,
+  Direction,
+  system,
+  world,
 } from "@minecraft/server";
 
 // Global interval ID สำหรับ seat check
@@ -332,7 +332,6 @@ function chatMessage(event) {
 export { chatMessage };
 
 const initializeScript = () => {
-  console.warn("Take a Seat loaded§r - Author: xAssassin");
   system.runTimeout(() => {
     clearSeatsInDimension("overworld");
     clearSeatsInDimension("nether");

@@ -1,4 +1,4 @@
-import { ItemStack, Player } from "@minecraft/server";
+import { ItemStack } from "@minecraft/server";
 import { item } from "./data.js";
 import { posInt, worldName } from "./util.js";
 

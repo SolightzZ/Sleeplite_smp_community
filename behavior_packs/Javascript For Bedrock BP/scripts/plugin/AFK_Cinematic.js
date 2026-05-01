@@ -1,9 +1,8 @@
 import {
-  system,
-  world,
   CommandPermissionLevel,
   CustomCommandStatus,
-  Player,
+  system,
+  world,
 } from "@minecraft/server";
 
 const CONFIG = {

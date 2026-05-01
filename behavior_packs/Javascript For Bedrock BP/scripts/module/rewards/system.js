@@ -1,7 +1,7 @@
-import { world, system } from "@minecraft/server";
-import { menu } from "./logic.js";
-import { reset, load } from "./database.js";
+import { world } from "@minecraft/server";
 import { config } from "./constants.js";
+import { load, reset } from "./database.js";
+import { menu } from "./logic.js";
 
 export function RewarditemUse({ source }) {
   menu(source);

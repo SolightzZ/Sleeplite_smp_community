@@ -1,4 +1,4 @@
-import { world, Player } from "@minecraft/server";
+import { Player, world } from "@minecraft/server";
 import { CONFIG, DEFAULTS } from "./constants.js";
 
 let cachedObjective = null;
@@ -18,7 +18,10 @@ export function getBankObjective() {
 export function initializeObjective() {
   try {
     if (!world.scoreboard.getObjective(CONFIG.BANK_DB_NAME)) {
-      world.scoreboard.addObjective(CONFIG.BANK_DB_NAME, CONFIG.BANK_DISPLAY_NAME);
+      world.scoreboard.addObjective(
+        CONFIG.BANK_DB_NAME,
+        CONFIG.BANK_DISPLAY_NAME,
+      );
     }
     cachedObjective = world.scoreboard.getObjective(CONFIG.BANK_DB_NAME);
   } catch (e) {
@@ -107,7 +110,9 @@ export function getAllBankPlayers() {
   try {
     return [...objective.getScores()]
       .map((s) => s.participant.displayName)
-      .filter((name, i, arr) => !name.startsWith("+") && arr.indexOf(name) === i)
+      .filter(
+        (name, i, arr) => !name.startsWith("+") && arr.indexOf(name) === i,
+      )
       .sort();
   } catch (e) {
     console.warn("[DB] getAllBankPlayers:", e);

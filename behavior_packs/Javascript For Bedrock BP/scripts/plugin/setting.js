@@ -1,5 +1,5 @@
-import { world, system, DisplaySlotId, ObjectiveSortOrder, Player } from "@minecraft/server";
-import { ModalFormData, ActionFormData } from "@minecraft/server-ui";
+import { DisplaySlotId, ObjectiveSortOrder, world } from "@minecraft/server";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 
 const config = {
   xyz: false,
@@ -54,13 +54,16 @@ const Settings = async (player) => {
     form.toggle("Show XYZ", { defaultValue: config.xyz });
     form.toggle("Show Day", { defaultValue: config.day });
     form.toggle("Sidebar Death Count", { defaultValue: config.sidebarDeath });
-    form.toggle("Belowname Death Count", { defaultValue: config.belowNameDeath });
+    form.toggle("Belowname Death Count", {
+      defaultValue: config.belowNameDeath,
+    });
     form.toggle("Locator Bar", { defaultValue: config.locatorbar });
 
     const response = await form.show(player);
     if (response.canceled) return;
 
-    const [xyz, day, sidebarDeath, belowNameDeath, locatorbar] = response.formValues;
+    const [xyz, day, sidebarDeath, belowNameDeath, locatorbar] =
+      response.formValues;
 
     config.xyz = xyz;
     config.day = day;
@@ -101,14 +104,19 @@ const Hud = async (player) => {
     form.title("HUD Setting");
 
     form.toggle("Item Text", { defaultValue: getTagState("item_text") });
-    form.toggle("Status Effects", { defaultValue: getTagState("status_effects") });
+    form.toggle("Status Effects", {
+      defaultValue: getTagState("status_effects"),
+    });
     form.toggle("ToolTips", { defaultValue: getTagState("tooltips") });
-    form.toggle("Touch Controls", { defaultValue: getTagState("touch_controls") });
+    form.toggle("Touch Controls", {
+      defaultValue: getTagState("touch_controls"),
+    });
 
     const response = await form.show(player);
     if (response.canceled) return;
 
-    const [item_text, statusEffects, toolTips, touchControls] = response.formValues;
+    const [item_text, statusEffects, toolTips, touchControls] =
+      response.formValues;
 
     const toggleHud = async (element, enabled) => {
       const action = enabled ? "hide" : "reset";

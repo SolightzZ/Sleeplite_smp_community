@@ -91,4 +91,11 @@ const biomeIdList = {
   "minecraft:basalt_deltas": "Basalt Deltas",
 };
 
-export default biomeIdList;
+const EXCLUDED_BIOMES = ["minecraft:the_end"];
+const Colors = {
+  gold: "§6",
+  white: "§f",
+  gray: "§7",
+};
+
+export { biomeIdList, EXCLUDED_BIOMES, Colors };

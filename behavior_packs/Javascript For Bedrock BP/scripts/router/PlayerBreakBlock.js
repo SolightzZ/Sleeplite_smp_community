@@ -1,17 +1,34 @@
 import { world } from "@minecraft/server";
 import { onCropBreak } from "../module/crops/event";
-import { onHammerBreak } from "../module/hammer";
+import { onHammerBreak } from "../module/hammer/index";
 import { handleBlockEditPreEvent } from "../module/protection/system";
+import { handleAutoReplant } from "../plugin/AutoReplant";
+import { VeinMiner } from "../plugin/veinMiner";
 
-const handlers = [onCropBreak, onHammerBreak, handleBlockEditPreEvent];
+const handlerAfterEvents = [
+  onCropBreak,
+  onHammerBreak,
+  handleBlockEditPreEvent,
+  handleAutoReplant,
+];
 
-function playerBreakRouter(event) {
+const handlerBeforeEvents = [VeinMiner];
+
+function beforeEventsBreak(event) {
   if (!event.player || !event.block) return;
-
-  for (let i = 0; i < handlers.length; i++) {
-    handlers[i](event);
+  for (let i = 0; i < handlerBeforeEvents.length; i++) {
+    handlerBeforeEvents[i](event);
     if (event.cancel) return;
   }
 }
 
-world.beforeEvents.playerBreakBlock.subscribe(playerBreakRouter);
+function afterEventsBreak(event) {
+  if (!event.player || !event.block) return;
+  for (let i = 0; i < handlerAfterEvents.length; i++) {
+    handlerAfterEvents[i](event);
+    if (event.cancel) return;
+  }
+}
+
+world.beforeEvents.playerBreakBlock.subscribe(beforeEventsBreak);
+world.afterEvents.playerBreakBlock.subscribe(afterEventsBreak);

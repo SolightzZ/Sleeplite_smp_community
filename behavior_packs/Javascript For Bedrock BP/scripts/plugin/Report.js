@@ -1,5 +1,9 @@
-import { world, system } from "@minecraft/server";
-import { ActionFormData, ModalFormData, MessageFormData } from "@minecraft/server-ui";
+import { system, world } from "@minecraft/server";
+import {
+  ActionFormData,
+  MessageFormData,
+  ModalFormData,
+} from "@minecraft/server-ui";
 
 const CONFIG = {
   maxReports: 10,
@@ -180,15 +184,27 @@ const note = (player) => {
       },
       {
         category: "3. อุปกรณ์สวมใส่ (Armor & Tools)",
-        items: ["Wolf Armor: ชุดเกราะหมาป่า", "Wolf Tool: เครื่องมือหมาป่า", "Demon Armor: ชุดเกราะปีศาจ", "Demon Sword: ดาบปีศาจ"],
+        items: [
+          "Wolf Armor: ชุดเกราะหมาป่า",
+          "Wolf Tool: เครื่องมือหมาป่า",
+          "Demon Armor: ชุดเกราะปีศาจ",
+          "Demon Sword: ดาบปีศาจ",
+        ],
       },
       {
         category: "4. ระบบการตาย (Death System)",
-        items: ["Gravestones: หลุมศพเก็บของเมื่อตาย", "Death Location: แจ้งพิกัดจุดตายในแชท", "Player Heads: ดรอปหัวผู้เล่นเมื่อถูกฆ่า"],
+        items: [
+          "Gravestones: หลุมศพเก็บของเมื่อตาย",
+          "Death Location: แจ้งพิกัดจุดตายในแชท",
+          "Player Heads: ดรอปหัวผู้เล่นเมื่อถูกฆ่า",
+        ],
       },
       {
         category: "5. เครื่องมือผู้ดูแล (Admin Tools)",
-        items: ["Ban Player: ระบบแบนและปลดแบน", "View Inventory: ดูของในตัวผู้เล่นอื่น"],
+        items: [
+          "Ban Player: ระบบแบนและปลดแบน",
+          "View Inventory: ดูของในตัวผู้เล่นอื่น",
+        ],
       },
       {
         category: "6. การสร้างของ (Crafting)",
@@ -330,10 +346,16 @@ const note = (player) => {
       },
     ];
 
-    let bodyText = "§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n";
+    let bodyText =
+      "§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n";
 
     // Loop ข้อมูลออกมาแสดงผล
-    bodyText += data.map((section) => `§3${section.category}§r\n§f- ${section.items.join("\n- ")}`).join("\n\n");
+    bodyText += data
+      .map(
+        (section) =>
+          `§3${section.category}§r\n§f- ${section.items.join("\n- ")}`,
+      )
+      .join("\n\n");
 
     ui.body(bodyText);
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
@@ -353,7 +375,9 @@ const sendform = (player) => {
     const list = Database.get(name);
 
     if (list.length >= CONFIG.maxReports) {
-      player.sendMessage(`§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
+      player.sendMessage(
+        `§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`,
+      );
       reportmenu(player);
       return;
     }
@@ -451,7 +475,7 @@ const mylist = (player, mode) => {
             player.sendMessage("§c[Report] ลบข้อมูลสำเร็จ");
             mylist(player, mode);
           },
-          () => mylist(player, mode)
+          () => mylist(player, mode),
         );
       }
     });
@@ -592,7 +616,7 @@ const adminact = (player, targetName, index) => {
             player.sendMessage("§c[Report] ลบข้อมูลสำเร็จ");
             adminmsg(player, targetName);
           },
-          () => adminact(player, targetName, index)
+          () => adminact(player, targetName, index),
         );
       } else {
         adminmsg(player, targetName);
@@ -702,5 +726,3 @@ const menu = (player) => {
 export function RUNREPORT({ source }) {
   menu(source);
 }
-
-

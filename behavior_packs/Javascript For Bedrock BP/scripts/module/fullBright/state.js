@@ -1,4 +1,4 @@
-import { tag, effect, time, level, particle } from "./const.js";
+import { effect, level, particle, tag, time } from "./const.js";
 
 export const hasBright = (p) => p.hasTag(tag);
 

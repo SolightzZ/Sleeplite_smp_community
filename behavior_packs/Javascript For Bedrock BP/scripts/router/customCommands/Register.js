@@ -1,9 +1,9 @@
 import {
-  system,
   CommandPermissionLevel,
   CustomCommandStatus,
+  system,
 } from "@minecraft/server";
-import { showServerMenu } from "./functions.js";
+import { showServerMenu } from "./Transfer";
 
 const quickServersCommand = (origin) => {
   const player = origin.sourceEntity;
@@ -20,13 +20,20 @@ const quickServersCommand = (origin) => {
 };
 
 function registerCommands(init) {
-  const commandData = {
-    name: "addon:server",
-    description: "§7Quick Server - เข้าร่วมเซิร์ฟเวอร์อื่นๆ",
-    permissionLevel: CommandPermissionLevel.Any,
-  };
+  try {
+    const commandData = {
+      name: "addon:server",
+      description: "§7Quick Server - เข้าร่วมเซิร์ฟเวอร์อื่นๆ",
+      permissionLevel: CommandPermissionLevel.Any,
+    };
 
-  init.customCommandRegistry.registerCommand(commandData, quickServersCommand);
+    init.customCommandRegistry.registerCommand(
+      commandData,
+      quickServersCommand,
+    );
+  } catch (error) {
+    console.error("[Startup] Failed to register commands: " + error);
+  }
 }
 
 export { registerCommands };

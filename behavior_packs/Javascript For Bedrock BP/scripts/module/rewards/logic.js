@@ -1,7 +1,7 @@
 import { ActionFormData, MessageFormData } from "@minecraft/server-ui";
 import { list } from "./constants.js";
 import { load, save } from "./database.js";
-import { time, name, give } from "./functions.js";
+import { give, name, time } from "./functions.js";
 
 export function menu(player) {
   const today = time();

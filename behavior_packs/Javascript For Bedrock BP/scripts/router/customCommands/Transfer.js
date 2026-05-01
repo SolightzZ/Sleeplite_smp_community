@@ -1,7 +1,6 @@
-import { Player } from "@minecraft/server";
-import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { transferPlayer } from "@minecraft/server-admin";
-import { SERVER_LIST, MESSAGES } from "./Source.js";
+import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
+import { MESSAGES, SERVER_LIST } from "./Source.js";
 
 export function showServerMenu(player) {
   try {

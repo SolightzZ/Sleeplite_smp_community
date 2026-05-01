@@ -1,16 +1,38 @@
-import { world } from "@minecraft/server";
+// ==========================
+// Core / System
+// ==========================
+import "./router/Startup.js";
 
-// Modules
+// ==========================
+// Player Lifecycle
+// ==========================
+import "./router/PlayerJoin.js";
+import "./router/PlayerLeave.js";
+import "./router/PlayerSpawn.js";
+import "./router/PlayerDimensionChange.js";
 
-// Plugins
-import "./plugin/NameTagRank.js";
-import "./plugin/Welcome.js";
-import "./plugin/Report.js";
+// ==========================
+// Player Interaction
+// ==========================
+import "./router/ChatSend.js";
+import "./router/ItemUse.js";
+import "./router/PlayerInteractWithBlock.js";
+import "./router/PlayerInteractWithEntity.js";
 
-// New Addons
-import "./plugin/AFK_Cinematic.js";
-import "./plugin/Flashlight.js";
-import "./plugin/Take_A_Seat.js";
+// ==========================
+// Block Events
+// ==========================
+import "./router/PlayerPlaceBlock.js";
+import "./router/PlayerBreakBlock.js";
+import "./router/EntityHitBlock.js";
 
-// System
-import "./plugin/RuntimeInfo.js";
+// ==========================
+// Entity Lifecycle
+// ==========================
+import "./router/EntitySpawn.js";
+import "./router/EntityDie.js";
+
+// ==========================
+// World Events
+// ==========================
+import "./router/Explosion.js";

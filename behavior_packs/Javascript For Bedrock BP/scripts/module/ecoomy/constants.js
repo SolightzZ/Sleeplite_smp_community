@@ -27,11 +27,16 @@ export const MESSAGES = {
   },
 
   SUCCESS: {
-    DEPOSIT: (amount) => `§a[/] ฝาก §f${amount.toLocaleString()} §aเพชรเรียบร้อย`,
-    WITHDRAW: (amount) => `§a[/] ถอน §f${amount.toLocaleString()} §aเพชรเรียบร้อย`,
-    TRANSFER_SENDER: (sender, amount, target) => `§a[Banking] §f${sender} §aโอน: §f[${amount.toLocaleString()} Diamond]§a ให้:§f ${target}`,
-    TRANSFER_RECEIVER: (receiver, amount, sender) => `§a[Banking] §f${receiver} §aได้รับ: §f[${amount.toLocaleString()} Diamond]§a จาก:§f ${sender}`,
-    INTEREST_CLAIMED: (amount) => `§a[ดอกเบี้ย] รับดอกเบี้ย §f+${amount.toLocaleString()} §aเพชรเรียบร้อย!`,
+    DEPOSIT: (amount) =>
+      `§a[/] ฝาก §f${amount.toLocaleString()} §aเพชรเรียบร้อย`,
+    WITHDRAW: (amount) =>
+      `§a[/] ถอน §f${amount.toLocaleString()} §aเพชรเรียบร้อย`,
+    TRANSFER_SENDER: (sender, amount, target) =>
+      `§a[Banking] §f${sender} §aโอน: §f[${amount.toLocaleString()} Diamond]§a ให้:§f ${target}`,
+    TRANSFER_RECEIVER: (receiver, amount, sender) =>
+      `§a[Banking] §f${receiver} §aได้รับ: §f[${amount.toLocaleString()} Diamond]§a จาก:§f ${sender}`,
+    INTEREST_CLAIMED: (amount) =>
+      `§a[ดอกเบี้ย] รับดอกเบี้ย §f+${amount.toLocaleString()} §aเพชรเรียบร้อย!`,
   },
 
   INFO: {

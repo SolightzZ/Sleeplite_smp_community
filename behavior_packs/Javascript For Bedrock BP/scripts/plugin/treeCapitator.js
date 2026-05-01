@@ -1,4 +1,4 @@
-import { system, ItemStack } from "@minecraft/server";
+import { ItemStack, system, world } from "@minecraft/server";
 
 export const isTree = (block) => {
   if (!logTypes.includes(block.typeId)) return false;
@@ -86,3 +86,17 @@ const leafTypes = [
   "minecraft:nether_wart_block",
   "minecraft:crimson_hyphae",
 ];
+
+world.beforeEvents.playerBreakBlock.subscribe((event) => {
+  const { player, block, itemStack } = event;
+
+  // Tre Capitator
+  if (
+    player.isSneaking &&
+    itemStack?.typeId.includes("axe") &&
+    !itemStack?.typeId.includes("pick") &&
+    isTree(block)
+  ) {
+    breakTree(block);
+  }
+});

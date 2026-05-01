@@ -1,6 +1,7 @@
+import { world } from "@minecraft/server";
 import { DathCounter } from "../module/dropheads/event.js";
-import { gravestone_main } from "../module/graveStones/gravestones.js";
 import { onDeadFullBright } from "../module/fullBright/events.js";
+import { gravestone_main } from "../module/graveStones/gravestones.js";
 import { magnetDie } from "../module/magNet/events.js";
 const PLAYER_ACTIONS = [
   gravestone_main,

@@ -1,8 +1,8 @@
 import { ActionFormData } from "@minecraft/server-ui";
 import { setting } from "./config.js";
-import { canUse } from "./validate.js";
-import { hasUser, countUser } from "./state.js";
+import { countUser, hasUser } from "./state.js";
 import { toggle } from "./toggle.js";
+import { canUse } from "./validate.js";
 
 export function showMenu(player) {
   if (!canUse(player)) return;
@@ -21,7 +21,9 @@ export function showMenu(player) {
 
   const form = new ActionFormData();
   form.title("Magnet System");
-  form.body(`§7Status: ${isOn ? "§aActive" : "§cInactive"}\n§7Player: ${current}/${setting.maxPeople}`);
+  form.body(
+    `§7Status: ${isOn ? "§aActive" : "§cInactive"}\n§7Player: ${current}/${setting.maxPeople}`,
+  );
   form.button(btnText, btnIcon);
 
   form.show(player).then((res) => {

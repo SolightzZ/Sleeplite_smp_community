@@ -11,6 +11,8 @@ export const count = (block) => {
 export const fix = (text) => {
   const raw = text.split(":")[1] || text;
   const words = raw.split("_");
-  const nice = words.map((word) => word.charAt(0).toUpperCase() + word.slice(1));
+  const nice = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1),
+  );
   return nice.join(" ");
 };

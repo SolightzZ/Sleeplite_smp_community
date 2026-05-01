@@ -1,5 +1,4 @@
 import { system } from "@minecraft/server";
-
 import { dy } from "./help_Durability.js";
 
 const help = `§8--------- §eHelper §8---------
@@ -18,19 +17,24 @@ const adminHelp = `§8--------- §cHelper Admin §8---------
 §7[§c/§7] !check-reward - แสดงข้อมูลล็อกอิน JSON Reward
 `;
 
-export function help_main(event) {
-  const { sender: player, message } = event;
-  const command = message.trim().toLowerCase();
+export function helpmain(event) {
+  event.cancel = false;
+  try {
+    const { sender: player, message } = event;
+    const command = message.trim().toLowerCase();
 
-  if (command === "!help") {
-    event.cancel = true;
-    player.sendMessage(help);
-    if (player.hasTag("admin")) {
-      player.sendMessage(adminHelp);
+    if (command === "!help") {
+      event.cancel = true;
+      player.sendMessage(help);
+      if (player.hasTag("admin")) {
+        player.sendMessage(adminHelp);
+      }
     }
-  }
-  if (command === "!d") {
-    event.cancel = true;
-    system.runTimeout(() => dy(player), 20);
+    if (command === "!d") {
+      event.cancel = true;
+      system.runTimeout(() => dy(player), 20);
+    }
+  } catch (error) {
+    console.warn("help_main", error.message);
   }
 }

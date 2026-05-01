@@ -1,11 +1,20 @@
 import { ItemStack } from "@minecraft/server";
-import { Configuration, HalfZone, UserMessages, EdgeOffsets } from "./constants.js";
+import {
+  Configuration,
+  EdgeOffsets,
+  HalfZone,
+  UserMessages,
+} from "./constants.js";
 
 export const playerHasAccessToZone = (player, ownerName, zoneByOwnerName) =>
-  player.name === ownerName || zoneByOwnerName[ownerName]?.friends.includes(player.name) || player.hasTag(Configuration.AdministratorTag);
+  player.name === ownerName ||
+  zoneByOwnerName[ownerName]?.friends.includes(player.name) ||
+  player.hasTag(Configuration.AdministratorTag);
 
 export const validateZoneCreation = (player, zoneByOwnerName) => {
-  if (Object.keys(zoneByOwnerName).length >= Configuration.MaximumZonesInServer) {
+  if (
+    Object.keys(zoneByOwnerName).length >= Configuration.MaximumZonesInServer
+  ) {
     return { isValid: false, reason: UserMessages.ServerZoneLimitReached };
   }
   if (zoneByOwnerName[player.name]) {
@@ -15,7 +24,11 @@ export const validateZoneCreation = (player, zoneByOwnerName) => {
     return { isValid: false, reason: UserMessages.OnlyOverworld };
   }
 
-  const base = { x: Math.floor(player.location.x), y: Math.floor(player.location.y) - 1, z: Math.floor(player.location.z) };
+  const base = {
+    x: Math.floor(player.location.x),
+    y: Math.floor(player.location.y) - 1,
+    z: Math.floor(player.location.z),
+  };
   const bottom = base.y - HalfZone;
   const top = base.y + HalfZone;
 
@@ -33,7 +46,13 @@ export const consumeRequiredBlockFromInventory = (player) => {
     const item = container.getItem(slot);
     if (item?.typeId === Configuration.RequiredBlockToCreateZone) {
       if (item.amount > 1) {
-        container.setItem(slot, new ItemStack(Configuration.RequiredBlockToCreateZone, item.amount - 1));
+        container.setItem(
+          slot,
+          new ItemStack(
+            Configuration.RequiredBlockToCreateZone,
+            item.amount - 1,
+          ),
+        );
       } else {
         container.setItem(slot, undefined);
       }
@@ -44,7 +63,12 @@ export const consumeRequiredBlockFromInventory = (player) => {
 };
 
 export const isBoxOverlapping = (a, b) =>
-  a.start.x <= b.end.x && a.end.x >= b.start.x && a.start.y <= b.end.y && a.end.y >= b.start.y && a.start.z <= b.end.z && a.end.z >= b.start.z;
+  a.start.x <= b.end.x &&
+  a.end.x >= b.start.x &&
+  a.start.y <= b.end.y &&
+  a.end.y >= b.start.y &&
+  a.start.z <= b.end.z &&
+  a.end.z >= b.start.z;
 
 export const isNewZoneOverlappingAny = (newZone, zoneByOwnerName) => {
   for (const zone of Object.values(zoneByOwnerName)) {
@@ -54,13 +78,25 @@ export const isNewZoneOverlappingAny = (newZone, zoneByOwnerName) => {
 };
 
 export const buildNewZoneFromCenter = (center) => ({
-  start: { x: center.x - HalfZone, y: center.y - HalfZone, z: center.z - HalfZone },
-  end: { x: center.x + HalfZone, y: center.y + HalfZone, z: center.z + HalfZone },
+  start: {
+    x: center.x - HalfZone,
+    y: center.y - HalfZone,
+    z: center.z - HalfZone,
+  },
+  end: {
+    x: center.x + HalfZone,
+    y: center.y + HalfZone,
+    z: center.z + HalfZone,
+  },
   friends: [],
 });
 
 export const isFormOk = (player, response) => {
-  if (response.canceled || ("formValues" in response && (!response.formValues || !Array.isArray(response.formValues)))) {
+  if (
+    response.canceled ||
+    ("formValues" in response &&
+      (!response.formValues || !Array.isArray(response.formValues)))
+  ) {
     player.sendMessage(UserMessages.InvalidForm);
     return false;
   }

@@ -1,12 +1,12 @@
 import { ActionFormData } from "@minecraft/server-ui";
 import {
-  title,
-  onText,
+  msgOff,
+  msgOn,
+  offIcon,
   offText,
   onIcon,
-  offIcon,
-  msgOn,
-  msgOff,
+  onText,
+  title,
 } from "./const.js";
 import { hasBright, setBright } from "./state.js";
 

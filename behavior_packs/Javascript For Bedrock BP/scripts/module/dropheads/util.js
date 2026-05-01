@@ -1,7 +1,7 @@
 const dimNames = {
   "minecraft:overworld": "Overworld",
   "minecraft:nether": "Nether",
-  "minecraft:the_end": "The End"
+  "minecraft:the_end": "The End",
 };
 
 export const worldName = (id) => {

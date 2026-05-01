@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 
 const BOSS_IDS = ["minecraft:ender_dragon", "minecraft:wither"];
 const BOSS_TAG = "boss";
@@ -83,12 +83,16 @@ const displayBossTitle = (entity, name, subtitle, isDeathEvent) => {
 };
 
 export function itile_main(event) {
-  const entity = event.entity;
-  if (!entity) return;
+  try {
+    const entity = event.entity;
+    if (!entity) return;
 
-  if (!BOSS_IDS.includes(entity.typeId)) return;
-  if (entity.hasTag(BOSS_TAG)) return;
+    if (!BOSS_IDS.includes(entity.typeId)) return;
+    if (entity.hasTag(BOSS_TAG)) return;
 
-  entity.addTag(BOSS_TAG);
-  displayBossTitle(entity, formatName(entity.typeId), "Spawn", false);
+    entity.addTag(BOSS_TAG);
+    displayBossTitle(entity, formatName(entity.typeId), "Spawn", false);
+  } catch (error) {
+    console.warn("itile_main", error.message);
+  }
 }

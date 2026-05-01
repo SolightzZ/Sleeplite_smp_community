@@ -1,5 +1,5 @@
-import { system } from "@minecraft/server";
-import { itile_main } from "./plugins/title";
+import { system, world } from "@minecraft/server";
+import { itile_main } from "../plugin/title";
 
 const SPAWN_ACTIONS = {
   "minecraft:ender_dragon": [itile_main],

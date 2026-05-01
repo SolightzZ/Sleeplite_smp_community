@@ -1,6 +1,14 @@
-import { world, Player, ItemStack } from "@minecraft/server";
-import { CONFIG, DEFAULTS, MESSAGES } from "./constants.js";
-import { getBalance, setBalance, addBalance, removeBalance, getInterestDate, setInterestDate, initializeInterest } from "./database.js";
+import { ItemStack, world } from "@minecraft/server";
+import { CONFIG, MESSAGES } from "./constants.js";
+import {
+  addBalance,
+  getBalance,
+  getInterestDate,
+  initializeInterest,
+  removeBalance,
+  setBalance,
+  setInterestDate,
+} from "./database.js";
 
 export function getThailandDate() {
   const now = new Date();
@@ -11,7 +19,7 @@ export function getThailandDate() {
     now.getUTCHours() + CONFIG.TIMEZONE_OFFSET,
     now.getUTCMinutes(),
     now.getUTCSeconds(),
-    now.getUTCMilliseconds()
+    now.getUTCMilliseconds(),
   );
 }
 
@@ -125,7 +133,10 @@ function addDiamondsToInventory(player, amount) {
 
   for (let i = 0; i < inv.size && remaining > 0; i++) {
     const stack = inv.getItem(i);
-    if (stack?.typeId === CONFIG.DIAMOND_ITEM_ID && stack.amount < CONFIG.MAX_STACK_SIZE) {
+    if (
+      stack?.typeId === CONFIG.DIAMOND_ITEM_ID &&
+      stack.amount < CONFIG.MAX_STACK_SIZE
+    ) {
       const give = Math.min(remaining, CONFIG.MAX_STACK_SIZE - stack.amount);
       stack.amount += give;
       inv.setItem(i, stack);
@@ -150,7 +161,10 @@ export function requirePaper(player) {
 
     for (let i = 0; i < inv.size; i++) {
       const item = inv.getItem(i);
-      if (item?.typeId === CONFIG.PAPER_ITEM_ID && (!item.getLore || item.getLore().length === 0)) {
+      if (
+        item?.typeId === CONFIG.PAPER_ITEM_ID &&
+        (!item.getLore || item.getLore().length === 0)
+      ) {
         if (item.amount > 1) {
           item.amount--;
           inv.setItem(i, item);
@@ -273,7 +287,8 @@ export function claimInterest(player) {
     }
 
     const lastClaimValue = getInterestDate(player);
-    const lastClaimTime = lastClaimValue > 0 ? parseDateIntValue(lastClaimValue).getTime() : 0;
+    const lastClaimTime =
+      lastClaimValue > 0 ? parseDateIntValue(lastClaimValue).getTime() : 0;
     const nextClaimTime = lastClaimTime + CONFIG.INTEREST_COOLDOWN_MS;
 
     if (Date.now() < nextClaimTime) return 0;
@@ -294,20 +309,30 @@ export function getInterestStatus(player) {
     const balance = getBalance(player);
     const lastClaimValue = getInterestDate(player);
     const lastClaimDate = parseDateIntValue(lastClaimValue);
-    const interest = balance > 0 ? Math.floor(balance * CONFIG.INTEREST_RATE) : 0;
+    const interest =
+      balance > 0 ? Math.floor(balance * CONFIG.INTEREST_RATE) : 0;
 
-    const lastDateStr = lastClaimValue === 0 ? "ยังไม่เคยรับ" : formatDate(lastClaimDate);
+    const lastDateStr =
+      lastClaimValue === 0 ? "ยังไม่เคยรับ" : formatDate(lastClaimDate);
 
     let statusText;
     if (balance <= 0) {
       statusText = "เงินต้น 0 ไม่มีดอกเบี้ย";
     } else if (lastClaimValue === 0) {
       statusText = "สามารถรับดอกเบี้ยได้ (ครั้งแรก)";
-    } else if (Date.now() >= lastClaimDate.getTime() + CONFIG.INTEREST_COOLDOWN_MS) {
+    } else if (
+      Date.now() >=
+      lastClaimDate.getTime() + CONFIG.INTEREST_COOLDOWN_MS
+    ) {
       statusText = "§aสามารถรับดอกเบี้ยได้แล้ว!§r";
     } else {
-      const daysRemaining = Math.ceil((lastClaimDate.getTime() + CONFIG.INTEREST_COOLDOWN_MS - Date.now()) / (1000 * 60 * 60 * 24));
-      const nextClaimDate = formatDate(new Date(lastClaimDate.getTime() + CONFIG.INTEREST_COOLDOWN_MS));
+      const daysRemaining = Math.ceil(
+        (lastClaimDate.getTime() + CONFIG.INTEREST_COOLDOWN_MS - Date.now()) /
+          (1000 * 60 * 60 * 24),
+      );
+      const nextClaimDate = formatDate(
+        new Date(lastClaimDate.getTime() + CONFIG.INTEREST_COOLDOWN_MS),
+      );
       statusText = `รออีก ${daysRemaining} วัน (รับได้: ${nextClaimDate})`;
     }
 
@@ -345,12 +370,23 @@ export function executeTransfer(sender, target, amount) {
 
     createTransferSlip(sender, target.name, amount, newBalance);
 
-    sender.sendMessage(MESSAGES.SUCCESS.TRANSFER_SENDER(sender.name, amount, target.name));
-    target.sendMessage(MESSAGES.SUCCESS.TRANSFER_RECEIVER(target.name, amount, sender.name));
+    sender.sendMessage(
+      MESSAGES.SUCCESS.TRANSFER_SENDER(sender.name, amount, target.name),
+    );
+    target.sendMessage(
+      MESSAGES.SUCCESS.TRANSFER_RECEIVER(target.name, amount, sender.name),
+    );
 
     return true;
   } catch (e) {
-    console.warn("[BANK] executeTransfer:", sender?.name, "->", target?.name, amount, e);
+    console.warn(
+      "[BANK] executeTransfer:",
+      sender?.name,
+      "->",
+      target?.name,
+      amount,
+      e,
+    );
     return false;
   }
 }

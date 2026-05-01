@@ -1,20 +1,27 @@
-import { world, system, Player } from "@minecraft/server";
-import { ActionFormData, ModalFormData, MessageFormData } from "@minecraft/server-ui";
-import { CONFIG, MESSAGES, UI_TITLES, TAGS } from "./constants.js";
-import { initializeObjective, getBalance, getAllBankPlayers } from "./database.js";
+import { system, world } from "@minecraft/server";
 import {
-  countDiamonds,
-  getInventoryCapacity,
-  requirePaper,
-  depositDiamond,
-  withdrawDiamond,
+  ActionFormData,
+  MessageFormData,
+  ModalFormData,
+} from "@minecraft/server-ui";
+import { CONFIG, MESSAGES, TAGS, UI_TITLES } from "./constants.js";
+import {
+  getAllBankPlayers,
+  getBalance,
+  initializeObjective,
+} from "./database.js";
+import {
   claimInterest,
-  getInterestStatus,
-  getTransferTargets,
-  executeTransfer,
+  countDiamonds,
   createDepositSlip,
   createWithdrawSlip,
-  getDateTime,
+  depositDiamond,
+  executeTransfer,
+  getInterestStatus,
+  getInventoryCapacity,
+  getTransferTargets,
+  requirePaper,
+  withdrawDiamond,
 } from "./functions.js";
 
 function isAdmin(player) {
@@ -75,7 +82,7 @@ async function showBalanceUI(player) {
           `ชื่อ: ${player.name}\n` +
           `ไอดี: ${player.id}\n\n` +
           `ยอดเงินของคุณ ${balance} เพชร§r\n` +
-          `----------------------`
+          `----------------------`,
       )
       .button1("ตกลง")
       .button2("ปิด")
@@ -177,7 +184,7 @@ async function transferMoneyUI(player) {
       .title(UI_TITLES.TRANSFER)
       .dropdown(
         "เลือกผู้รับ",
-        targets.map((p) => p.name)
+        targets.map((p) => p.name),
       )
       .slider("จำนวนเพชร", 1, balance, { valueStep: 1, defaultValue: 1 })
       .show(player);
@@ -202,7 +209,8 @@ async function transferMoneyUI(player) {
 
 async function showInterestStatusUI(player) {
   try {
-    const { balance, interest, lastDateStr, statusText } = getInterestStatus(player);
+    const { balance, interest, lastDateStr, statusText } =
+      getInterestStatus(player);
 
     await new MessageFormData()
       .title(UI_TITLES.INTEREST_STATUS)
@@ -211,7 +219,7 @@ async function showInterestStatusUI(player) {
           `สถานะ: ${statusText}\n\n` +
           `เงินต้น: ${balance.toLocaleString()} เพชร\n` +
           `ดอกเบี้ย: ${interest.toLocaleString()} เพชร (${CONFIG.INTEREST_RATE}%)\n` +
-          `รวมหลังรับ: ${(balance + interest).toLocaleString()} เพชร`
+          `รวมหลังรับ: ${(balance + interest).toLocaleString()} เพชร`,
       )
       .button1("ตกลง")
       .button2("ปิด")
@@ -246,7 +254,8 @@ async function showInterestClaimUI(player) {
 
 function getPlayerFinanceInfo(playerName) {
   const playerObj = world.getPlayers().find((p) => p.name === playerName);
-  const { balance, interest, lastDateStr, statusText } = getInterestStatus(playerName);
+  const { balance, interest, lastDateStr, statusText } =
+    getInterestStatus(playerName);
 
   return {
     balance,
@@ -265,9 +274,14 @@ async function showAdminDropdown(admin, playerNames) {
   }
 
   try {
-    const response = await new ModalFormData().title(UI_TITLES.ADMIN_FINANCE).dropdown("เลือกผู้เล่น", playerNames).show(admin);
+    const response = await new ModalFormData()
+      .title(UI_TITLES.ADMIN_FINANCE)
+      .dropdown("เลือกผู้เล่น", playerNames)
+      .show(admin);
 
-    return response?.formValues?.[0] != null ? playerNames[response.formValues[0]] : null;
+    return response?.formValues?.[0] != null
+      ? playerNames[response.formValues[0]]
+      : null;
   } catch (e) {
     console.warn("[ADMIN] showAdminDropdown:", e);
     admin.sendMessage(MESSAGES.ERROR.GENERAL_ERROR);
@@ -292,7 +306,11 @@ async function displayPlayerFinance(admin, playerName) {
       "§7━━━━━━━━━━━━━━━━",
     ].join("\n");
 
-    const form = new MessageFormData().title(`ข้อมูลการเงิน: ${playerName}`).body(bodyText).button1("ปิดหน้าต่าง").button2("เลือกผู้เล่นอีกครั้ง");
+    const form = new MessageFormData()
+      .title(`ข้อมูลการเงิน: ${playerName}`)
+      .body(bodyText)
+      .button1("ปิดหน้าต่าง")
+      .button2("เลือกผู้เล่นอีกครั้ง");
 
     const response = await form.show(admin);
     if (!response || response.canceled) return;

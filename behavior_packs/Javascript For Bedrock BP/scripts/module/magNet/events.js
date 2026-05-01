@@ -1,4 +1,3 @@
-import { canUse } from "./validate.js";
 import { showMenu } from "./menu.js";
 import { removeUser } from "./state.js";
 

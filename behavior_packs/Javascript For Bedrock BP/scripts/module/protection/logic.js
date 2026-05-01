@@ -1,13 +1,18 @@
-import { world, system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import { Configuration, UserMessages, TextColorCodes, HalfZone } from "./constants.js";
 import {
-  validateZoneCreation,
-  consumeRequiredBlockFromInventory,
-  isNewZoneOverlappingAny,
-  buildNewZoneFromCenter,
-  isFormOk,
+  Configuration,
+  HalfZone,
+  TextColorCodes,
+  UserMessages,
+} from "./constants.js";
+import {
   buildBorderPoints,
+  buildNewZoneFromCenter,
+  consumeRequiredBlockFromInventory,
+  isFormOk,
+  isNewZoneOverlappingAny,
+  validateZoneCreation,
 } from "./functions.js";
 
 const activeBorderByPlayerName = new Map();
@@ -43,7 +48,10 @@ const renderAllBordersOnce = () => {
     for (const [playerName, state] of activeBorderByPlayerName) {
       try {
         const currentPlayer = players.get(playerName);
-        if (!currentPlayer || state.elapsed >= Configuration.BorderDisplayDurationTicks) {
+        if (
+          !currentPlayer ||
+          state.elapsed >= Configuration.BorderDisplayDurationTicks
+        ) {
           removeList.push(playerName);
           continue;
         }
@@ -53,7 +61,9 @@ const renderAllBordersOnce = () => {
         }
         state.elapsed += 1;
       } catch (eachError) {
-        console.warn(`${TextColorCodes.Error}Error rendering overload border for ${playerName}: ${eachError}`);
+        console.warn(
+          `${TextColorCodes.Error}Error rendering overload border for ${playerName}: ${eachError}`,
+        );
         removeList.push(playerName);
       }
     }
@@ -72,7 +82,10 @@ export const showZoneBorderForPlayer = async (player, zoneDatabase) => {
     const zone = zoneDatabase.zoneByOwnerName[player.name];
     if (!zone) return player.sendMessage(UserMessages.PlayerHasNoZone);
 
-    const borderPoints = buildBorderPoints(zone.start, Configuration.ParticleStepDistance);
+    const borderPoints = buildBorderPoints(
+      zone.start,
+      Configuration.ParticleStepDistance,
+    );
     activeBorderByPlayerName.set(player.name, {
       zone,
       dimension: player.dimension,
@@ -82,7 +95,9 @@ export const showZoneBorderForPlayer = async (player, zoneDatabase) => {
     startParticleLoopIfNeeded();
   } catch (error) {
     player.sendMessage(`[x] เกิดข้อผิดพลาดในการแสดงขอบเขต!`);
-    console.warn(`${TextColorCodes.Error}Error showZoneBorderForPlayer: ${error}`);
+    console.warn(
+      `${TextColorCodes.Error}Error showZoneBorderForPlayer: ${error}`,
+    );
   }
 };
 
@@ -141,7 +156,8 @@ export const deleteZoneOfPlayer = async (player, zoneDatabase) => {
     zoneDatabase.locationToZoneCache.clear();
     activeBorderByPlayerName.delete(player.name);
 
-    if (Object.keys(zoneDatabase.zoneByOwnerName).length === 0) stopParticleLoopIfIdle();
+    if (Object.keys(zoneDatabase.zoneByOwnerName).length === 0)
+      stopParticleLoopIfIdle();
 
     player.sendMessage(UserMessages.ZoneDeleted);
   } catch (error) {
@@ -161,14 +177,26 @@ export const manageZoneFriends = async (player, zoneDatabase) => {
       .filter((n) => n !== player.name);
     const form = new ModalFormData()
       .title("จัดการเพื่อน")
-      .dropdown("การดำเนินการ", ["เพิ่มเพื่อน", "ลบเพื่อน"], { defaultValueIndex: 0 })
-      .dropdown("ผู้เล่น", otherPlayerNames.length ? otherPlayerNames : [UserMessages.NoOnlinePlayers], { defaultValueIndex: 0 });
+      .dropdown("การดำเนินการ", ["เพิ่มเพื่อน", "ลบเพื่อน"], {
+        defaultValueIndex: 0,
+      })
+      .dropdown(
+        "ผู้เล่น",
+        otherPlayerNames.length
+          ? otherPlayerNames
+          : [UserMessages.NoOnlinePlayers],
+        { defaultValueIndex: 0 },
+      );
 
     const response = await form.show(player);
     if (!isFormOk(player, response)) return;
 
     const [actionIndex, playerIndex] = response.formValues;
-    if (typeof playerIndex !== "number" || playerIndex < 0 || playerIndex >= otherPlayerNames.length) {
+    if (
+      typeof playerIndex !== "number" ||
+      playerIndex < 0 ||
+      playerIndex >= otherPlayerNames.length
+    ) {
       return player.sendMessage(UserMessages.InvalidForm);
     }
 
@@ -202,17 +230,25 @@ export const manageZoneFriends = async (player, zoneDatabase) => {
 
 export const administratorDeleteAnyZone = async (player, zoneDatabase) => {
   try {
-    if (!player.hasTag(Configuration.AdministratorTag)) return player.sendMessage(UserMessages.AdministratorOnly);
+    if (!player.hasTag(Configuration.AdministratorTag))
+      return player.sendMessage(UserMessages.AdministratorOnly);
 
     const ownerNames = Object.keys(zoneDatabase.zoneByOwnerName);
-    if (!ownerNames.length) return player.sendMessage(UserMessages.NoZonesInServer);
+    if (!ownerNames.length)
+      return player.sendMessage(UserMessages.NoZonesInServer);
 
-    const form = new ModalFormData().title("ลบโซน (แอดมิน)").dropdown("เลือกโซนที่จะลบ", ownerNames, { defaultValueIndex: 0 });
+    const form = new ModalFormData()
+      .title("ลบโซน (แอดมิน)")
+      .dropdown("เลือกโซนที่จะลบ", ownerNames, { defaultValueIndex: 0 });
     const response = await form.show(player);
     if (!isFormOk(player, response)) return;
 
     const ownerIndex = response.formValues[0];
-    if (typeof ownerIndex !== "number" || ownerIndex < 0 || ownerIndex >= ownerNames.length) {
+    if (
+      typeof ownerIndex !== "number" ||
+      ownerIndex < 0 ||
+      ownerIndex >= ownerNames.length
+    ) {
       return player.sendMessage(UserMessages.InvalidZoneSelection);
     }
 
@@ -226,30 +262,42 @@ export const administratorDeleteAnyZone = async (player, zoneDatabase) => {
     zoneDatabase.locationToZoneCache.clear();
     activeBorderByPlayerName.delete(ownerName);
 
-    if (Object.keys(zoneDatabase.zoneByOwnerName).length === 0) stopParticleLoopIfIdle();
+    if (Object.keys(zoneDatabase.zoneByOwnerName).length === 0)
+      stopParticleLoopIfIdle();
 
     player.sendMessage(UserMessages.ZoneDeletedByAdministrator(ownerName));
     const ownerPlayer = world.getPlayers().find((p) => p.name === ownerName);
-    if (ownerPlayer) ownerPlayer.sendMessage(UserMessages.YourZoneDeletedByAdministrator);
+    if (ownerPlayer)
+      ownerPlayer.sendMessage(UserMessages.YourZoneDeletedByAdministrator);
   } catch (error) {
     player.sendMessage(`[x] เกิดข้อผิดพลาดในการลบโซนโดยแอดมิน!`);
-    console.warn(`${TextColorCodes.Error}Error administratorDeleteAnyZone: ${error}`);
+    console.warn(
+      `${TextColorCodes.Error}Error administratorDeleteAnyZone: ${error}`,
+    );
   }
 };
 
 export const administratorTeleportToZone = async (player, zoneDatabase) => {
   try {
-    if (!player.hasTag(Configuration.AdministratorTag)) return player.sendMessage(UserMessages.AdministratorOnly);
+    if (!player.hasTag(Configuration.AdministratorTag))
+      return player.sendMessage(UserMessages.AdministratorOnly);
 
     const ownerNames = Object.keys(zoneDatabase.zoneByOwnerName);
-    if (!ownerNames.length) return player.sendMessage(UserMessages.NoZonesInServer);
+    if (!ownerNames.length)
+      return player.sendMessage(UserMessages.NoZonesInServer);
 
-    const form = new ModalFormData().title("เทเลพอร์ต (แอดมิน)").dropdown("เลือกโซนที่จะเทเลพอร์ต", ownerNames, { defaultValueIndex: 0 });
+    const form = new ModalFormData()
+      .title("เทเลพอร์ต (แอดมิน)")
+      .dropdown("เลือกโซนที่จะเทเลพอร์ต", ownerNames, { defaultValueIndex: 0 });
     const response = await form.show(player);
     if (!isFormOk(player, response)) return;
 
     const ownerIndex = response.formValues[0];
-    if (typeof ownerIndex !== "number" || ownerIndex < 0 || ownerIndex >= ownerNames.length) {
+    if (
+      typeof ownerIndex !== "number" ||
+      ownerIndex < 0 ||
+      ownerIndex >= ownerNames.length
+    ) {
       return player.sendMessage(UserMessages.InvalidZoneSelection);
     }
 
@@ -257,12 +305,18 @@ export const administratorTeleportToZone = async (player, zoneDatabase) => {
     const zone = zoneDatabase.zoneByOwnerName[ownerName];
     if (!zone) return player.sendMessage(UserMessages.ZoneNotFound);
 
-    const center = { x: zone.start.x + HalfZone, y: zone.start.y + HalfZone, z: zone.start.z + HalfZone };
+    const center = {
+      x: zone.start.x + HalfZone,
+      y: zone.start.y + HalfZone,
+      z: zone.start.z + HalfZone,
+    };
     player.teleport(center, { dimension: player.dimension });
     player.sendMessage(UserMessages.TeleportSuccess(ownerName));
   } catch (error) {
     player.sendMessage(`[x] เกิดข้อผิดพลาดในการเทเลพอร์ต!`);
-    console.warn(`${TextColorCodes.Error}Error administratorTeleportToZone: ${error}`);
+    console.warn(
+      `${TextColorCodes.Error}Error administratorTeleportToZone: ${error}`,
+    );
   }
 };
 

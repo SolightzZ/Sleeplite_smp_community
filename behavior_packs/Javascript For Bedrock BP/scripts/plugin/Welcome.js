@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 
 const stat = "Deaths";
 const head = "§e[!] Welcome to Sleeplite SMP Season 1";

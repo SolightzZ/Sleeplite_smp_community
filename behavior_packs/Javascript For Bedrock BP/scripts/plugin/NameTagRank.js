@@ -1,8 +1,8 @@
-import { world, system } from "@minecraft/server";
+import { world } from "@minecraft/server";
 import {
-  ModalFormData,
   ActionFormData,
   MessageFormData,
+  ModalFormData,
 } from "@minecraft/server-ui";
 
 const CONFIG = {

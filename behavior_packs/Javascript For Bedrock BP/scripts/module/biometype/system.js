@@ -1,10 +1,10 @@
-import { system, Player } from "@minecraft/server";
+import { system } from "@minecraft/server";
+import { Colors } from "./database.js";
 import {
   getBiomeIdAtLocation,
   getBiomeName,
   getDimensionName,
 } from "./functions.js";
-import { Colors } from "./constants.js";
 
 export function handlePlayerDimensionChange({ player }) {
   if (player?.typeId !== "minecraft:player" || !player.isValid) return;

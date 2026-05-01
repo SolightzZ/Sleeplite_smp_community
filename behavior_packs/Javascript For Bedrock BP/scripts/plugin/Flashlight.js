@@ -1,274 +1,206 @@
-import {
-  world,
-  system,
-  EquipmentSlot,
-  ItemStack,
-  BlockPermutation,
-} from "@minecraft/server";
-
-import { isTree, breakTree } from "./treeCapitator.js";
-import { isOreVein, breakOreVein, pickaxeBreaks } from "./veinMiner.js";
-
-
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-  const { player, block, itemStack } = event;
-
-  // Tre Capitator
-  if (
-    player.isSneaking &&
-    itemStack?.typeId.includes("axe") &&
-    !itemStack?.typeId.includes("pick") &&
-    isTree(block)
-  ) {
-    breakTree(block);
-  }
-
-  //Vein  Miner
-  if (
-    player.isSneaking &&
-    Object.keys(pickaxeBreaks).includes(itemStack?.typeId) &&
-    isOreVein(block)
-  ) {
-    breakOreVein(block, itemStack);
-  }
-});
-
-world.afterEvents.playerBreakBlock.subscribe((event) => {
-  const { brokenBlockPermutation, block, player } = event;
-  const blockId = brokenBlockPermutation.type.id;
-
-
-
-  // Auto Replant
-  if (blockId in cropConfigs) {
-    const crop = cropConfigs[blockId];
-    const growth = brokenBlockPermutation.getState(crop.state);
-
-    if (growth >= 7) {
-      const loc = block.location;
-      const dim = player.dimension;
-
-      dim
-        .getBlock(loc)
-        .setPermutation(
-          BlockPermutation.resolve(blockId).withState(crop.state, 0),
-        );
-    }
-  }
-});
-
-world.afterEvents.playerInteractWithBlock.subscribe((event) => {
-  const { block } = event;
-
-  // Open Double Doors (click low door)
-  if (block.typeId.includes("door") && !block.typeId.includes("trap")) {
-    const neighbors = [
-      block.east(),
-      block.west(),
-      block.north(),
-      block.south(),
-    ];
-
-    const direction = block.permutation.getState(
-      "minecraft:cardinal_direction",
-    );
-    const open_bit = block.permutation.getState("open_bit");
-
-    for (const door of neighbors) {
-      if (door.typeId.includes("door") && !door.typeId.includes("trap")) {
-        const direction2 = door.permutation.getState(
-          "minecraft:cardinal_direction",
-        );
-
-        if (direction === direction2) {
-          const perm = door.permutation.withState("open_bit", open_bit);
-          door.setPermutation(perm);
-        }
-      }
-    }
-  }
-});
-
-world.beforeEvents.playerInteractWithBlock.subscribe((event) => {
-  const { block, blockFace, itemStack, player } = event;
-
-  const direction = block.permutation.getState("facing_direction");
-
-  if (!itemStack && direction >= 0 && player.isSneaking) {
-    event.cancel = true;
-    const newDir = directionNumber(blockFace)
-    system.run(() => {
-      const perm = block.permutation.withState("facing_direction", newDir);
-      block.setPermutation(perm)
-    })
-  }
-
-
-  if (
-    block.typeId.includes("anvil") &&
-    block.typeId !== "minecraft:anvil" &&
-    itemStack?.typeId === "minecraft:iron_ingot" &&
-    !player.isSneaking
-  ) {
-    event.cancel = true;
-    const amount = itemStack.amount;
-    const heldItem = player.getComponent("inventory").container;
-
-    system.run(() => {
-      const states = block.permutation.getAllStates();
-      const condition = states["damage"];
-      if (condition == "very_damaged") {
-        states["damage"] = "slightly_damaged";
-      } else if (condition == "slightly_damaged") {
-        states["damage"] = "undamaged";
-      }
-
-      const perm = BlockPermutation.resolve(block.typeId, states);
-      block.setPermutation(perm);
-
-      if (amount > 1) {
-        heldItem.setItem(
-          player.selectedSlotIndex,
-          new ItemStack(itemStack.typeId, amount - 1),
-        );
-      } else {
-        heldItem.setItem(player.selectedSlotIndex, undefined);
-      }
-    });
-  }
-});
-
-world.afterEvents.entityDie.subscribe((event) => {
-  const { deadEntity } = event;
-  if (deadEntity.typeId != "minecraft:player") return;
-
-  deadEntity.addTag(`gao:loc:::${JSON.stringify(deadEntity.location)}`);
-});
-
-world.afterEvents.playerSpawn.subscribe((event) => {
-  if (event.initialSpawn) return;
-  const player = event.player;
-  const tag = player.getTags().find((tag) => tag.startsWith("gao:loc:::"));
-  if (tag) {
-    const location = JSON.parse(tag.slice(10));
-    player.sendMessage(
-      `You died at ${Math.floor(location.x)} ${Math.floor(location.y)} ${Math.floor(location.z)}`,
-    );
-    player.removeTag(tag);
-  }
-});
+import { EquipmentSlot, system, world } from "@minecraft/server";
 
 const previousLights = new Map();
+const playerCache = new Map();
+
+let index = 0;
 
 system.runInterval(() => {
-  for (const player of world.getAllPlayers()) {
-    const equippable = player.getComponent("equippable");
-    if (!equippable) continue;
+  const players = world.getAllPlayers();
+  if (!players.length) return;
 
-    const heldItem = equippable.getEquipment(EquipmentSlot.Mainhand);
-    const offhandItem = equippable.getEquipment(EquipmentSlot.Offhand);
+  for (let i = 0; i < 2; i++) {
+    if (index >= players.length) index = 0;
+    const player = players[index++];
+    updatePlayer(player);
+  }
+}, 2);
 
-    const oldBlocks = previousLights.get(player.id);
-    if (oldBlocks) {
-      for (const loc of oldBlocks) {
-        const block = player.dimension.getBlock(loc);
-        if (block?.typeId === "minecraft:light_block_7") {
-          block.setType("minecraft:air");
-        }
+function updatePlayer(player) {
+  const id = player.id;
+
+  const equippable = player.getComponent("equippable");
+  if (!equippable) return;
+
+  const isHolding = isHoldingFlashlight(equippable);
+
+  // skip heavy logic ถ้าไม่มี flashlight และไม่มี light ค้าง
+  if (!isHolding && !previousLights.has(id)) return;
+
+  const prev = previousLights.get(id) ?? [];
+  const dim = player.dimension;
+
+  if (!isHolding) {
+    clearLights(dim, prev);
+    previousLights.delete(id);
+    playerCache.delete(id);
+    return;
+  }
+
+  const head = player.getHeadLocation();
+  const dir = player.getViewDirection();
+
+  if (!hasMoved(id, head, dir)) return;
+
+  const next = traceLightPositions(head, dir, dim);
+  applyLightDiff(dim, prev, next);
+
+  previousLights.set(id, next);
+}
+
+// arrow (pure)
+const isHoldingFlashlight = (equippable) => {
+  const held = equippable.getEquipment(EquipmentSlot.Mainhand);
+  const off = equippable.getEquipment(EquipmentSlot.Offhand);
+  return held?.typeId === "gao:flashlight" || off?.typeId === "gao:flashlight";
+};
+
+// arrow (light logic + cache)
+const hasMoved = (id, head, dir) => {
+  const cache = playerCache.get(id);
+
+  if (
+    cache &&
+    Math.abs(cache.x - head.x) < 0.2 &&
+    Math.abs(cache.y - head.y) < 0.2 &&
+    Math.abs(cache.z - head.z) < 0.2 &&
+    Math.abs(cache.dx - dir.x) < 0.05 &&
+    Math.abs(cache.dy - dir.y) < 0.05 &&
+    Math.abs(cache.dz - dir.z) < 0.05
+  ) {
+    return false;
+  }
+
+  playerCache.set(id, {
+    x: head.x,
+    y: head.y,
+    z: head.z,
+    dx: dir.x,
+    dy: dir.y,
+    dz: dir.z,
+  });
+
+  return true;
+};
+
+// function (loop + getBlock heavy)
+function traceLightPositions(head, dir, dim) {
+  const result = [];
+
+  let lx, ly, lz;
+
+  for (let i = 3; i <= 16; i += 3) {
+    const x = Math.floor(head.x + dir.x * i);
+    const y = Math.floor(head.y + dir.y * i);
+    const z = Math.floor(head.z + dir.z * i);
+
+    if (y < -64 || y > 320) continue;
+
+    if (x === lx && y === ly && z === lz) continue;
+    lx = x;
+    ly = y;
+    lz = z;
+
+    const block = dim.getBlock({ x, y, z });
+    if (!block) break;
+
+    // stop ray เมื่อชนบล็อกตัน
+    if (
+      block.typeId !== "minecraft:air" &&
+      block.typeId !== "minecraft:light_block_9"
+    ) {
+      break;
+    }
+
+    result.push(x, y, z);
+  }
+
+  return result;
+}
+
+// function (heavy diff logic)
+function applyLightDiff(dim, prev, next) {
+  // ADD
+  for (let i = 0; i < next.length; i += 3) {
+    const x = next[i];
+    const y = next[i + 1];
+    const z = next[i + 2];
+
+    let found = false;
+
+    for (let j = 0; j < prev.length; j += 3) {
+      if (prev[j] === x && prev[j + 1] === y && prev[j + 2] === z) {
+        found = true;
+        break;
       }
     }
 
-    if (
-      heldItem?.typeId === "gao:flashlight" ||
-      offhandItem?.typeId === "gao:flashlight"
-    ) {
-      const headLoc = player.getHeadLocation();
-      const viewDir = player.getViewDirection();
-      const newLightPositions = [];
-      let lastX, lastY, lastZ;
+    if (!found) {
+      const block = dim.getBlock({ x, y, z });
 
-      for (let i = 1; i <= 24; i++) {
-        const x = Math.floor(headLoc.x + viewDir.x * i);
-        const y = Math.floor(headLoc.y + viewDir.y * i);
-        const z = Math.floor(headLoc.z + viewDir.z * i);
-
-        if (x === lastX && y === lastY && z === lastZ) continue;
-        lastX = x; lastY = y; lastZ = z;
-
-        const loc = { x, y, z };
-        const block = player.dimension.getBlock(loc);
-        if (
-          block &&
-          (block.typeId === "minecraft:air" || block.typeId === "minecraft:light_block_7")
-        ) {
-          block.setType("minecraft:light_block_7");
-          newLightPositions.push(loc);
+      if (
+        block &&
+        (block.typeId === "minecraft:air" ||
+          block.typeId === "minecraft:light_block_9")
+      ) {
+        if (block.typeId !== "minecraft:light_block_9") {
+          block.setType("minecraft:light_block_9");
         }
       }
-
-      previousLights.set(player.id, newLightPositions);
-    } else {
-      previousLights.delete(player.id);
     }
   }
-}, 1);
 
-world.afterEvents.playerLeave.subscribe((event) => {
-  const playerId = event.playerId;
-  const oldBlocks = previousLights.get(playerId);
+  // REMOVE
+  for (let i = 0; i < prev.length; i += 3) {
+    const x = prev[i];
+    const y = prev[i + 1];
+    const z = prev[i + 2];
 
-  if (oldBlocks) {
-    for (const loc of oldBlocks) {
-      const dim = world.getDimension("overworld");
-      const block = dim.getBlock(loc);
-      if (block?.typeId === "minecraft:light_block_7") {
+    let still = false;
+
+    for (let j = 0; j < next.length; j += 3) {
+      if (next[j] === x && next[j + 1] === y && next[j + 2] === z) {
+        still = true;
+        break;
+      }
+    }
+
+    if (!still) {
+      const block = dim.getBlock({ x, y, z });
+
+      if (block?.typeId === "minecraft:light_block_9") {
         block.setType("minecraft:air");
       }
     }
-    previousLights.delete(playerId);
   }
-});
+}
 
-world.afterEvents.itemUse.subscribe((event) => {
-  const { source, itemStack } = event;
+// function (IO heavy)
+function clearLights(dim, prev) {
+  for (let i = 0; i < prev.length; i += 3) {
+    const block = dim.getBlock({
+      x: prev[i],
+      y: prev[i + 1],
+      z: prev[i + 2],
+    });
 
-  if (itemStack.typeId == "minecraft:sponge") {
-    const headLoc = source.getHeadLocation();
-    const viewDir = source.getViewDirection();
-    const blockAtLoc = getBlockFromView(source, headLoc, viewDir, 5);
-
-    if (blockAtLoc?.typeId === "minecraft:water") {
-      blockAtLoc.setType(itemStack.typeId);
+    if (block?.typeId === "minecraft:light_block_9") {
+      block.setType("minecraft:air");
     }
   }
-});
+}
 
-export const getBlockFromView = (player, location, view, distance) => {
-  return player.dimension.getBlock({
-    x: Math.floor((view.x * distance) + location.x),
-    y: Math.floor((view.y * distance) + location.y),
-    z: Math.floor((view.z * distance) + location.z),
-  });
+const handlerFlashlight = ({ playerId }) => {
+  try {
+    const prev = previousLights.get(playerId);
+    if (!prev) return;
+    const dim = world.getDimension("overworld");
+    clearLights(dim, prev);
+    previousLights.delete(playerId);
+    playerCache.delete(playerId);
+  } catch (erro) {
+    console.log("Flashlight: " + erro);
+  }
 };
 
-const DIRS = { Down: 0, Up: 1, North: 2, South: 3, West: 4, East: 5 };
-const directionNumber = (direction) => DIRS[direction] ?? -1;
-
-const cropConfigs = {
-  "minecraft:wheat": {
-    seed: "minecraft:wheat_seeds",
-    state: "growth",
-  },
-  "minecraft:carrots": {
-    seed: "minecraft:carrot",
-    state: "growth",
-  },
-  "minecraft:potatoes": {
-    seed: "minecraft:potato",
-    state: "growth",
-  },
-  "minecraft:beetroot": {
-    seed: "minecraft:beetroot_seeds",
-    state: "growth",
-  },
-};
+export { handlerFlashlight };
