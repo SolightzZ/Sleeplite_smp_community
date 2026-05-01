@@ -36,3 +36,5 @@ import "./router/EntityDie.js";
 // World Events
 // ==========================
 import "./router/Explosion.js";
+
+import "./plugin/treeCapitator.js";

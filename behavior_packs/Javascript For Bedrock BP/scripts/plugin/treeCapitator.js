@@ -1,64 +1,6 @@
 import { ItemStack, system, world } from "@minecraft/server";
 
-export const isTree = (block) => {
-  if (!logTypes.includes(block.typeId)) return false;
-
-  let current = block.above();
-  while (current) {
-    const id = current.typeId;
-    if (logTypes.includes(id)) {
-      current = current.above();
-      continue;
-    }
-    if (leafTypes.includes(id)) {
-      return true;
-    }
-    return false;
-  }
-  return false;
-};
-
-export const breakTree = (startBlock) => {
-  const dimension = startBlock.dimension;
-  const targetId = startBlock.typeId;
-
-  const queue = [];
-  const pushIfValid = (b) => {
-    if (b && b.typeId === targetId) queue.push(b);
-  };
-
-  pushIfValid(startBlock.above());
-  pushIfValid(startBlock.below());
-  pushIfValid(startBlock.north());
-  pushIfValid(startBlock.south());
-  pushIfValid(startBlock.east());
-  pushIfValid(startBlock.west());
-
-  const handle = system.runInterval(() => {
-    if (queue.length === 0) {
-      system.clearRun(handle);
-      return;
-    }
-
-    const currentBatch = queue.splice(0, queue.length);
-
-    for (const block of currentBatch) {
-      if (!block || block.typeId !== targetId) continue;
-
-      block.setType("minecraft:air");
-      dimension.spawnItem(new ItemStack(targetId, 1), block.location);
-
-      pushIfValid(block.above());
-      pushIfValid(block.below());
-      pushIfValid(block.north());
-      pushIfValid(block.south());
-      pushIfValid(block.east());
-      pushIfValid(block.west());
-    }
-  }, 1);
-};
-
-const logTypes = [
+const LOG_TYPES = new Set([
   "minecraft:oak_log",
   "minecraft:birch_log",
   "minecraft:spruce_log",
@@ -70,9 +12,9 @@ const logTypes = [
   "minecraft:pale_oak_log",
   "minecraft:crimson_stem",
   "minecraft:warped_stem",
-];
+]);
 
-const leafTypes = [
+const LEAF_TYPES = new Set([
   "minecraft:oak_leaves",
   "minecraft:birch_leaves",
   "minecraft:spruce_leaves",
@@ -85,18 +27,80 @@ const leafTypes = [
   "minecraft:warped_wart_block",
   "minecraft:nether_wart_block",
   "minecraft:crimson_hyphae",
+]);
+
+const getNeighbors = (block) => [
+  block.above(),
+  block.below(),
+  block.north(),
+  block.south(),
+  block.east(),
+  block.west(),
 ];
 
-world.beforeEvents.playerBreakBlock.subscribe((event) => {
-  const { player, block, itemStack } = event;
+const hasAdjacentLeaf = (block) => {
+  const neighbors = getNeighbors(block);
+  for (let i = 0; i < neighbors.length; i++) {
+    const neighbor = neighbors[i];
+    if (neighbor && LEAF_TYPES.has(neighbor.typeId)) return true;
+  }
+  return false;
+};
 
-  // Tre Capitator
-  if (
-    player.isSneaking &&
-    itemStack?.typeId.includes("axe") &&
-    !itemStack?.typeId.includes("pick") &&
-    isTree(block)
-  ) {
+const isTree = (block) => {
+  if (!LOG_TYPES.has(block.typeId)) return false;
+
+  const below = block.below();
+  if (below && LOG_TYPES.has(below.typeId)) return false;
+
+  const logs = [block];
+  let current = block.above();
+  while (current && LOG_TYPES.has(current.typeId)) {
+    logs.push(current);
+    current = current.above();
+  }
+
+  for (let i = 0; i < logs.length; i++) {
+    if (hasAdjacentLeaf(logs[i])) return true;
+  }
+  return false;
+};
+
+const breakTree = (startBlock) => {
+  const { dimension, typeId: targetId } = startBlock;
+
+  const queue = [];
+  const firstAbove = startBlock.above();
+  if (firstAbove && firstAbove.typeId === targetId) queue.push(firstAbove);
+
+  const handle = system.runInterval(() => {
+    if (queue.length === 0) {
+      system.clearRun(handle);
+      return;
+    }
+
+    const batch = queue.splice(0, queue.length);
+
+    for (let i = 0; i < batch.length; i++) {
+      const block = batch[i];
+      if (!block || block.typeId !== targetId) continue;
+
+      block.setType("minecraft:air");
+      dimension.spawnItem(new ItemStack(targetId, 1), block.location);
+
+      const next = block.above();
+      if (next && next.typeId === targetId) queue.push(next);
+    }
+  }, 1);
+};
+
+function handleTreeCapitator(event) {
+  const { player, block, itemStack } = event;
+  const isAxe =
+    itemStack?.typeId.includes("axe") && !itemStack?.typeId.includes("pick");
+  if (player.isSneaking && isAxe && isTree(block)) {
     breakTree(block);
   }
-});
+}
+
+world.beforeEvents.playerBreakBlock.subscribe(handleTreeCapitator);
