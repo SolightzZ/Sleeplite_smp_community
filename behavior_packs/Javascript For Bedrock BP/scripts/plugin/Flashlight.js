@@ -1,20 +1,33 @@
-import { EquipmentSlot, system, world } from "@minecraft/server";
+import { EquipmentSlot, world } from "@minecraft/server";
 
 const previousLights = new Map();
 const playerCache = new Map();
 
 let index = 0;
+let tick = 0;
+let playersCache = [];
 
-system.runInterval(() => {
-  const players = world.getAllPlayers();
-  if (!players.length) return;
+function FlashlightRunInterval(event) {
+  try {
+    tick++;
+    if (tick % 20 === 0) {
+      playersCache = world.getAllPlayers();
+    }
 
-  for (let i = 0; i < 2; i++) {
-    if (index >= players.length) index = 0;
-    const player = players[index++];
-    updatePlayer(player);
+    if (!playersCache.length) return;
+
+    for (let i = 0; i < 2; i++) {
+      if (index >= playersCache.length) index = 0;
+
+      const player = playersCache[index++];
+      updatePlayer(player);
+    }
+  } catch (error) {
+    console.error("Flashlight: " + error);
   }
-}, 2);
+}
+
+export { FlashlightRunInterval };
 
 function updatePlayer(player) {
   const id = player.id;
@@ -24,7 +37,6 @@ function updatePlayer(player) {
 
   const isHolding = isHoldingFlashlight(equippable);
 
-  // skip heavy logic ถ้าไม่มี flashlight และไม่มี light ค้าง
   if (!isHolding && !previousLights.has(id)) return;
 
   const prev = previousLights.get(id) ?? [];
@@ -48,14 +60,12 @@ function updatePlayer(player) {
   previousLights.set(id, next);
 }
 
-// arrow (pure)
 const isHoldingFlashlight = (equippable) => {
   const held = equippable.getEquipment(EquipmentSlot.Mainhand);
   const off = equippable.getEquipment(EquipmentSlot.Offhand);
   return held?.typeId === "gao:flashlight" || off?.typeId === "gao:flashlight";
 };
 
-// arrow (light logic + cache)
 const hasMoved = (id, head, dir) => {
   const cache = playerCache.get(id);
 
@@ -83,7 +93,6 @@ const hasMoved = (id, head, dir) => {
   return true;
 };
 
-// function (loop + getBlock heavy)
 function traceLightPositions(head, dir, dim) {
   const result = [];
 
@@ -118,7 +127,6 @@ function traceLightPositions(head, dir, dim) {
   return result;
 }
 
-// function (heavy diff logic)
 function applyLightDiff(dim, prev, next) {
   // ADD
   for (let i = 0; i < next.length; i += 3) {
@@ -175,7 +183,6 @@ function applyLightDiff(dim, prev, next) {
   }
 }
 
-// function (IO heavy)
 function clearLights(dim, prev) {
   for (let i = 0; i < prev.length; i += 3) {
     const block = dim.getBlock({
@@ -190,7 +197,7 @@ function clearLights(dim, prev) {
   }
 }
 
-const handlerFlashlight = ({ playerId }) => {
+function handlerFlashlight({ playerId }) {
   try {
     const prev = previousLights.get(playerId);
     if (!prev) return;
@@ -201,6 +208,6 @@ const handlerFlashlight = ({ playerId }) => {
   } catch (erro) {
     console.log("Flashlight: " + erro);
   }
-};
+}
 
 export { handlerFlashlight };

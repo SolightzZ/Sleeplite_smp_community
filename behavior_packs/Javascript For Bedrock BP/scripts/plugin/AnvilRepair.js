@@ -1,32 +1,36 @@
 import { ItemStack, system } from "@minecraft/server";
 
 const applyAnvilRepair = (block, permutation, damage, player, item) => {
-  system.run(() => {
-    let newDamage;
+  try {
+    system.run(() => {
+      let newDamage;
 
-    if (damage === "very_damaged") newDamage = "slightly_damaged";
-    else if (damage === "slightly_damaged") newDamage = "undamaged";
-    else return;
+      if (damage === "very_damaged") newDamage = "slightly_damaged";
+      else if (damage === "slightly_damaged") newDamage = "undamaged";
+      else return;
 
-    block.setPermutation(permutation.withState("damage", newDamage));
+      block.setPermutation(permutation.withState("damage", newDamage));
 
-    player.playSound("random.anvil_use", {
-      volume: 1.0,
-      pitch: 1.0,
+      player.playSound("random.anvil_use", {
+        volume: 1.0,
+        pitch: 1.0,
+      });
+
+      const inv = player.getComponent("inventory")?.container;
+      if (!inv) return;
+
+      const slot = player.selectedSlotIndex;
+      const amount = item.amount;
+
+      if (amount > 1) {
+        inv.setItem(slot, new ItemStack(item.typeId, amount - 1));
+      } else {
+        inv.setItem(slot, undefined);
+      }
     });
-
-    const inv = player.getComponent("inventory")?.container;
-    if (!inv) return;
-
-    const slot = player.selectedSlotIndex;
-    const amount = item.amount;
-
-    if (amount > 1) {
-      inv.setItem(slot, new ItemStack(item.typeId, amount - 1));
-    } else {
-      inv.setItem(slot, undefined);
-    }
-  });
+  } catch (error) {
+    console.error("applyAnvilRepair: " + error);
+  }
 };
 
 function handleRepairAnvil(event) {

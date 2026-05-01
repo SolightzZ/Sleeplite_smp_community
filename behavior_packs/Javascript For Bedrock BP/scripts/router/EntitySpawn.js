@@ -6,7 +6,7 @@ const SPAWN_ACTIONS = {
   "minecraft:wither": [itile_main],
 };
 
-export function onEntitySpawn(event) {
+function onEntitySpawn(event) {
   const entity = event.entity;
   if (!entity) return;
 

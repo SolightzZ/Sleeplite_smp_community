@@ -2,6 +2,7 @@
 // Core / System
 // ==========================
 import "./router/Startup.js";
+import "./router/System.RunInterval.js";
 
 // ==========================
 // Player Lifecycle
@@ -36,5 +37,3 @@ import "./router/EntityDie.js";
 // World Events
 // ==========================
 import "./router/Explosion.js";
-
-import "./plugin/treeCapitator.js";

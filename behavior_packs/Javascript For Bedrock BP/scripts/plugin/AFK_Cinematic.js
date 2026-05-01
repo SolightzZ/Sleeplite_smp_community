@@ -6,7 +6,7 @@ import {
 } from "@minecraft/server";
 
 const CONFIG = {
-  defaultIdleSeconds: 120, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
+  defaultIdleSeconds: 512, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
   warningSeconds: 5, // เวลาก่อนเข้า AFK ที่จะแจ้งเตือน
 
   movementTolerance: 0.15, // ระยะขยับเล็กน้อยที่ยังถือว่า "ไม่ขยับ"
@@ -853,14 +853,13 @@ function registerCommandAFK(init) {
   init.customCommandRegistry.registerCommand(commandData, quckCommandAFK);
 }
 
-export { registerCommandAFK };
-
 // =====================================================================
 //                         Main Loop
 // ======================================================================
 
 // Fast Loop (1 Tick): คุมกล้อง Cinematic ให้ลื่นไหล และให้ผู้เล่นหลุด AFK ทันทีที่ขยับตัว
-system.runInterval(() => {
+
+function handleAFK() {
   blockCache.clear();
 
   for (const player of world.getAllPlayers()) {
@@ -877,10 +876,11 @@ system.runInterval(() => {
       updateAfkCamera(player, state, loc);
     }
   }
-}, 1);
+}
 
 // Slow Loop (20 Ticks = 1 วินาที): เช็คคนปกติว่ายืนนิ่งหรือไม่ ลดภาระเซิร์ฟเวอร์ลง 20 เท่าสำหรับคนที่ยังไม่ AFK
-system.runInterval(() => {
+
+function handleAddPlayer(event) {
   for (const player of world.getAllPlayers()) {
     const state = ensureState(player);
     if (state.isAfk) continue;
@@ -900,7 +900,7 @@ system.runInterval(() => {
       updateIdlePlayer(player, state, 20);
     }
   }
-}, 20);
+}
 
 function playerLeaveAfk(playerId) {
   if (!playerId) return;
@@ -909,4 +909,5 @@ function playerLeaveAfk(playerId) {
   clearTrackedRun(actionBarIntervals, playerId);
   playerStates.delete(playerId);
 }
-export { playerLeaveAfk };
+
+export { handleAFK, handleAddPlayer, registerCommandAFK, playerLeaveAfk };
