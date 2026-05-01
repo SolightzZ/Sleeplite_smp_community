@@ -4,6 +4,7 @@ import { onHammerBreak } from "../module/hammer/index";
 import { handleBlockEditPreEvent } from "../module/protection/system";
 import { handleAutoReplant } from "../plugin/AutoReplant";
 import { VeinMiner } from "../plugin/veinMiner";
+import { handleTreeCapitator } from "../plugin/treeCapitator";
 
 const handlerAfterEvents = [
   onCropBreak,
@@ -12,7 +13,7 @@ const handlerAfterEvents = [
   handleAutoReplant,
 ];
 
-const handlerBeforeEvents = [VeinMiner];
+const handlerBeforeEvents = [VeinMiner, handleTreeCapitator];
 
 function beforeEventsBreak(event) {
   if (!event.player || !event.block) return;

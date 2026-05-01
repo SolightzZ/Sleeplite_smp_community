@@ -166,7 +166,7 @@ const breakTree = (startBlock, player) => {
 };
 
 // จัดการการตัดต้นไม้: ตรวจสอบเงื่อนไขและเรียกใช้งานระบบ TreeCapitator
-const handleTreeCapitator = (event) => {
+function handleTreeCapitator(event) {
   try {
     const { player, block, itemStack } = event;
     if (!player.isSneaking) return;
@@ -180,6 +180,6 @@ const handleTreeCapitator = (event) => {
   } catch (error) {
     console.error("handleTreeCapitator: " + error);
   }
-};
+}
 
-world.beforeEvents.playerBreakBlock.subscribe(handleTreeCapitator);
+export { handleTreeCapitator };
