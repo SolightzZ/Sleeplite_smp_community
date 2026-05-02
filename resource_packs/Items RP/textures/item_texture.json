@@ -101,6 +101,9 @@
     },
     "bank": {
       "textures": "textures/items/bank.png"
+    },
+    "gao:flashlight": {
+      "textures": "textures/items/flashlight"
     }
   }
 }
