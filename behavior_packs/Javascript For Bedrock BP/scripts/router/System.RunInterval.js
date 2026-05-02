@@ -23,5 +23,6 @@ let tick = 0;
 
 system.runInterval(() => {
   tick++;
+  console.log(tick);
   runTaskList(tasks);
 }, 1);

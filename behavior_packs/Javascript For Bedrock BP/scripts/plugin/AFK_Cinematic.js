@@ -6,7 +6,7 @@ import {
 } from "@minecraft/server";
 
 const CONFIG = {
-  defaultIdleSeconds: 512, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
+  defaultIdleSeconds: 99999, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
   warningSeconds: 5, // เวลาก่อนเข้า AFK ที่จะแจ้งเตือน
 
   movementTolerance: 0.15, // ระยะขยับเล็กน้อยที่ยังถือว่า "ไม่ขยับ"

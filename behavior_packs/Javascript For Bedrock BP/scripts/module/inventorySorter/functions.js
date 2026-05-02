@@ -212,14 +212,15 @@ export function compareItemsByMode(a, b, mode) {
 
 export function cloneWithAmountLike(ref, amount) {
   const hasCustomData = ref.nameTag || ref.getLore?.()?.length > 0;
+  const safeAmount = Math.max(1, Math.min(255, amount || 1));
 
   if (hasCustomData && typeof ref.clone === "function") {
     const c = ref.clone();
-    c.amount = amount;
+    c.amount = safeAmount;
     return c;
   }
 
-  return new ItemStack(ref.typeId, amount);
+  return new ItemStack(ref.typeId, safeAmount);
 }
 
 function getStackKey(item) {
