@@ -10,7 +10,7 @@ import { RUNREPORT } from "../plugin/Report.js";
 import { setting_main } from "../plugin/setting.js";
 import { ZoneProtection_OnItemUse } from "../module/protection/system.js";
 
-export function onItemUse(event) {
+function onItemUse(event) {
   const { source, itemStack } = event;
   if (!(source instanceof Player) || !itemStack) return;
 

@@ -12,7 +12,7 @@ const CHAT_HANDLERS = [
   ZoneProtection_OnChat,
 ];
 
-export function onChatMessage(event) {
+function onChatMessage(event) {
   try {
     const sender = event.sender;
     if (!sender) return;

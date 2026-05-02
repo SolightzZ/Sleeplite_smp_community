@@ -1,7 +1,7 @@
 import { system } from "@minecraft/server";
 import { registerCustomCommandIventory } from "../module/inventorySorter/commands.js";
 import { registerCustomCommandTakeASeat } from "../module/simpleSit/index.js";
-import { registerCommands } from "./customCommands/Register.js";
+import { registerCommands } from "../module/customCommands/Register.js";
 import { registerCommandAFK } from "../module/AFKCinematic/index.js";
 
 system.beforeEvents.startup.subscribe((init) => {

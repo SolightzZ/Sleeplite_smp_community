@@ -10,7 +10,7 @@ const PLAYER_ACTIONS = [
   onDeadFullBright,
 ];
 
-export function onEntityDeath(event) {
+function onEntityDeath(event) {
   const entity = event.deadEntity;
   if (!entity || entity.typeId !== "minecraft:player") return;
 

@@ -14,7 +14,7 @@ const PLAYER_LEAVE = [
   handlerFlashlight,
 ];
 
-export function onPlayerLeave(event) {
+function onPlayerLeave(event) {
   const playerId = event.playerId;
   if (!playerId) return;
 
