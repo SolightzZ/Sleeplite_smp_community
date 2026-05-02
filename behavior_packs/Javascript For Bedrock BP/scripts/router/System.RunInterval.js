@@ -7,7 +7,6 @@ const tasks = [
   { run: FlashlightRunInterval, rate: 2, last: 0 },
   { run: handleAFK, rate: 1, last: 0 },
   { run: handleAddPlayer, rate: 10, last: 0 },
-  { run: handleSit, rate: 100, last: 0 },
 ];
 
 function runTaskList(list) {
@@ -23,6 +22,5 @@ let tick = 0;
 
 system.runInterval(() => {
   tick++;
-  console.log(tick);
   runTaskList(tasks);
 }, 1);

@@ -10,7 +10,6 @@ const CHAT_HANDLERS = [
   xz_main,
   RewardchatSend,
   ZoneProtection_OnChat,
-  chatMessage,
 ];
 
 export function onChatMessage(event) {

@@ -5,12 +5,7 @@ import { handleRepairAnvil } from "../plugin/AnvilRepair";
 import { openDoor } from "../plugin/OpenDoor";
 import { handleWithBlock } from "../plugin/Take_A_Seat";
 
-const beforeHandlers = [
-  touch,
-  handleBlockEditPreEvent,
-  handleRepairAnvil,
-  handleWithBlock,
-];
+const beforeHandlers = [touch, handleBlockEditPreEvent, handleRepairAnvil];
 const afterHandlers = [openDoor];
 
 function runHandlers(handlers, event) {
