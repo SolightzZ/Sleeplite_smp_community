@@ -79,72 +79,119 @@ const loadData = () => {
 };
 
 const createJobData = (job) => {
-  job.id = jobId++;
-  jobs.push(job);
-  saveData();
+  try {
+    job.id = jobId++;
+    jobs.push(job);
+    saveData();
+  } catch (error) {
+    console.error(" createJobData: " + error);
+  }
 };
 
 const deleteJobData = (id) => {
-  const index = jobs.findIndex((j) => j.id === id);
-  if (index !== -1) jobs.splice(index, 1);
-  saveData();
+  try {
+    const index = jobs.findIndex((j) => j.id === id);
+    if (index !== -1) jobs.splice(index, 1);
+    saveData();
+  } catch (error) {
+    console.error(" deleteJobData: " + error);
+  }
 };
 
 const showUI = (player, form, callback) => {
-  system.run(() => {
-    form
-      .show(player)
-      .then((res) => {
-        if (!res.canceled) callback(res);
-      })
-      .catch((err) => console.error("[UI Error]", err));
-  });
+  try {
+    system.run(() => {
+      form
+        .show(player)
+        .then((res) => {
+          if (!res.canceled) callback(res);
+        })
+        .catch((err) => console.error("[UI Error]", err));
+    });
+  } catch (error) {
+    console.error(" showUI: " + error);
+  }
 };
 
 const countItem = (inv, typeId) => {
-  let count = 0;
-  for (let i = 0; i < inv.size; i++) {
-    const it = inv.getItem(i);
-    if (it && it.typeId === typeId) count += it.amount;
+  try {
+    let count = 0;
+    for (let i = 0; i < inv.size; i++) {
+      const it = inv.getItem(i);
+      if (it && it.typeId === typeId) count += it.amount;
+    }
+    return count;
+  } catch (error) {
+    console.error(" countItem: " + error);
   }
-  return count;
 };
 
 const getInvMap = (inv) => {
-  const map = new Map();
-  for (let i = 0; i < inv.size; i++) {
-    const it = inv.getItem(i);
-    if (!it) continue;
-    map.set(it.typeId, (map.get(it.typeId) ?? 0) + it.amount);
+  try {
+    const map = new Map();
+    for (let i = 0; i < inv.size; i++) {
+      const it = inv.getItem(i);
+      if (!it) continue;
+      map.set(it.typeId, (map.get(it.typeId) ?? 0) + it.amount);
+    }
+    return map;
+  } catch (error) {
+    console.error(" getInvMap: " + error);
   }
-  return map;
 };
 
-const findPlayerById = (id) =>
-  world.getAllPlayers().find((p) => p.id === id) ?? null;
+const findPlayerById = (id) => {
+  try {
+    world.getAllPlayers().find((p) => p.id === id) ?? null;
+  } catch (error) {
+    console.error(" findPlayerById: " + error);
+  }
+};
 
-const totalDiamond = (job) =>
-  job.items.reduce((sum, it) => sum + it.diamond, 0);
+const totalDiamond = (job) => {
+  try {
+    job.items.reduce((sum, it) => sum + it.diamond, 0);
+  } catch (error) {
+    console.error(" totalDiamond: " + error);
+  }
+};
 
 const stopTimer = (riderId) => {
-  const t = timerMap.get(riderId);
-  if (!t) return;
-  system.clearRun(t.intervalId);
-  timerMap.delete(riderId);
+  try {
+    const t = timerMap.get(riderId);
+    if (!t) return;
+    system.clearRun(t.intervalId);
+    timerMap.delete(riderId);
+  } catch (error) {
+    console.error(" stopTimer: " + error);
+  }
 };
 
-const hasOwnerNotify = (ownerId) =>
-  (ownerNotifyMap.get(ownerId)?.size ?? 0) > 0;
+const hasOwnerNotify = (ownerId) => {
+  try {
+    (ownerNotifyMap.get(ownerId)?.size ?? 0) > 0;
+  } catch (error) {
+    console.error(" hasOwnerNotify: " + error);
+  }
+};
 
 function handleJob(event) {
-  const { source, itemStack } = event;
-  if (itemStack.typeId !== "minecraft:stick") return;
-  showMainMenu(source);
+  try {
+    const { source, itemStack } = event;
+    if (itemStack.typeId !== "minecraft:stick") return;
+    showMainMenu(source);
+  } catch (error) {
+    console.error(" handleJob: " + error);
+  }
 }
 
 function onPlayerLeave(event) {
-  selectedMap.delete(event.playerId);
-  amountMap.delete(event.playerId);
+  try {
+    selectedMap.delete(event.playerId);
+    amountMap.delete(event.playerId);
+  } catch (error) {
+    console.error(" onPlayerLeave: " + error);
+  }
 }
 
 system.run(() => {

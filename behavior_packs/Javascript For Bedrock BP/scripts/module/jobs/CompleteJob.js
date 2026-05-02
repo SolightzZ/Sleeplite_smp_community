@@ -16,198 +16,204 @@ import {
 import { showMainMenu } from "./Menu";
 
 const checkJobItems = (inv, job) => {
-  const invMap = getInvMap(inv);
-  for (const item of job.items) {
-    const have = invMap.get(item.id) ?? 0;
-    if (have < item.amount)
-      return `${item.id.replace("minecraft:", "")} (${have}/${item.amount})`;
+  try {
+    const invMap = getInvMap(inv);
+    for (const item of job.items) {
+      const have = invMap.get(item.id) ?? 0;
+      if (have < item.amount)
+        return `${item.id.replace("minecraft:", "")} (${have}/${item.amount})`;
+    }
+    return null;
+  } catch (error) {
+    console.error(" checkJobItems: " + error);
   }
-  return null;
 };
 
 const removeJobItems = (inv, job) => {
-  for (const item of job.items) {
-    let need = item.amount;
-    for (let i = 0; i < inv.size && need > 0; i++) {
-      const it = inv.getItem(i);
-      if (!it || it.typeId !== item.id) continue;
-      const take = Math.min(it.amount, need);
-      it.amount -= take;
-      need -= take;
-      inv.setItem(i, it.amount <= 0 ? undefined : it);
+  try {
+    for (const item of job.items) {
+      let need = item.amount;
+      for (let i = 0; i < inv.size && need > 0; i++) {
+        const it = inv.getItem(i);
+        if (!it || it.typeId !== item.id) continue;
+        const take = Math.min(it.amount, need);
+        it.amount -= take;
+        need -= take;
+        inv.setItem(i, it.amount <= 0 ? undefined : it);
+      }
     }
+  } catch (error) {
+    console.error(" removeJobItems: " + error);
   }
 };
 
 const giveDiamond = (player, amount) => {
-  const inv = player.getComponent("minecraft:inventory").container;
-  let remaining = amount;
-  for (let i = 0; i < inv.size && remaining > 0; i++) {
-    const it = inv.getItem(i);
-    if (!it || it.typeId !== "minecraft:diamond") continue;
-    const space = 64 - it.amount;
-    if (space <= 0) continue;
-    const add = Math.min(space, remaining);
-    it.amount += add;
-    remaining -= add;
-    inv.setItem(i, it);
-  }
-  for (let i = 0; i < inv.size && remaining > 0; i++) {
-    if (inv.getItem(i)) continue;
-    const size = Math.min(64, remaining);
-    inv.setItem(i, new ItemStack("minecraft:diamond", size));
-    remaining -= size;
+  try {
+    const inv = player.getComponent("minecraft:inventory").container;
+    let remaining = amount;
+    for (let i = 0; i < inv.size && remaining > 0; i++) {
+      const it = inv.getItem(i);
+      if (!it || it.typeId !== "minecraft:diamond") continue;
+      const space = 64 - it.amount;
+      if (space <= 0) continue;
+      const add = Math.min(space, remaining);
+      it.amount += add;
+      remaining -= add;
+      inv.setItem(i, it);
+    }
+    for (let i = 0; i < inv.size && remaining > 0; i++) {
+      if (inv.getItem(i)) continue;
+      const size = Math.min(64, remaining);
+      inv.setItem(i, new ItemStack("minecraft:diamond", size));
+      remaining -= size;
+    }
+  } catch (error) {
+    console.error(" giveDiamond: " + error);
   }
 };
 
-//  Owner notify helpers
 const addOwnerNotify = (ownerId, jobId_) => {
-  if (!ownerNotifyMap.has(ownerId)) ownerNotifyMap.set(ownerId, new Set());
-  ownerNotifyMap.get(ownerId).add(jobId_);
+  try {
+    if (!ownerNotifyMap.has(ownerId)) ownerNotifyMap.set(ownerId, new Set());
+    ownerNotifyMap.get(ownerId).add(jobId_);
+  } catch (error) {
+    console.error(" addOwnerNotify: " + error);
+  }
 };
 
 // =========================================
 // Complete Job
 // =========================================
 function completeJob(player) {
-  const activeJobId = playerJobMap.get(player.id);
-  if (activeJobId === undefined) {
-    player.sendMessage("[Job] You have no active job");
+  try {
+    const activeJobId = playerJobMap.get(player.id);
+    if (activeJobId === undefined) {
+      player.sendMessage("[Job] คุณไม่มีงานที่กำลังทำอยู่");
+      form.button("Back");
+      showUI(player, form, () => showMainMenu(player));
+      return;
+    }
+
+    const job = jobs.find((j) => j.id === activeJobId);
+    if (!job) {
+      stopTimer(player.id);
+      playerJobMap.delete(player.id);
+      player.sendMessage("[Job] ไม่พบงาน");
+      return;
+    }
+
+    const inv = player.getComponent("minecraft:inventory").container;
+    const total = totalDiamond(job);
+    const invMap = getInvMap(inv);
+
+    const t = timerMap.get(player.id);
+    let timeStr = "N/A";
+    if (t) {
+      const secs = Math.ceil(
+        (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
+      );
+      const m = Math.floor(secs / 60);
+      const s = secs % 60;
+      timeStr = `${m}:${String(s).padStart(2, "0")}`;
+    }
+
+    let body = `Job from: ${job.ownerName}\nReward: ${total} diamond\nTime left: ${timeStr}\n\nItems: `;
+    for (const item of job.items) {
+      const have = invMap.get(item.id) ?? 0;
+      const ok = have >= item.amount;
+      body += `${ok ? "[OK] " : "[MISSING] "}${item.id.replace("minecraft:", "")}  ${have}/${item.amount} (${item.diamond} diamond)\n`;
+    }
+
+    const form = new ActionFormData();
+    form.title("Active Job");
+    form.body(body);
+    form.button("Submit");
+    form.button("Cancel Job");
     form.button("Back");
-    showUI(player, form, () => showMainMenu(player));
-    return;
-  }
 
-  const job = jobs.find((j) => j.id === activeJobId);
-  if (!job) {
-    stopTimer(player.id);
-    playerJobMap.delete(player.id);
-    player.sendMessage("[Job] Job not found (may have been cancelled)");
-    return;
-  }
+    showUI(player, form, (res) => {
+      if (res.selection === 2) {
+        showMainMenu(player);
+        return;
+      }
 
-  const inv = player.getComponent("minecraft:inventory").container;
-  const total = totalDiamond(job);
-  const invMap = getInvMap(inv);
-
-  // เวลาที่เหลือ
-  const t = timerMap.get(player.id);
-  let timeStr = "N/A";
-
-  if (t) {
-    const secs = Math.ceil(
-      (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
-    );
-
-    const m = Math.floor(secs / 60);
-    const s = secs % 60;
-
-    timeStr = `${m}:${String(s).padStart(2, "0")}`;
-  }
-
-  let body = `Job from: ${job.ownerName}
-Reward: ${total} diamond
-Time left: ${timeStr}
-
-Items:
-`;
-
-  for (const item of job.items) {
-    const have = invMap.get(item.id) ?? 0;
-    const ok = have >= item.amount;
-
-    body += `${ok ? "[OK] " : "[MISSING] "}${item.id.replace("minecraft:", "")}  ${have}/${item.amount} (${item.diamond} diamond)\n`;
-  }
-
-  const form = new ActionFormData();
-  form.title("Active Job");
-  form.body(body);
-  form.button("Submit");
-  form.button("Cancel Job");
-  form.button("Back");
-
-  showUI(player, form, (res) => {
-    if (res.selection === 2) {
-      showMainMenu(player);
-      return;
-    }
-
-    // Cancel Job
-    if (res.selection === 1) {
-      const confirmForm = new ActionFormData();
-      confirmForm.title("Cancel Delivery?");
-      confirmForm.body(
-        `Are you sure you want to cancel this delivery?\nThe order will return to the queue.\nYou will NOT receive any diamond.`,
-      );
-      confirmForm.button("Yes, Cancel"); // 0
-      confirmForm.button("No, Keep"); // 1
-
-      showUI(player, confirmForm, (r) => {
-        if (r.selection === 1) {
-          completeJob(player);
-          return;
-        }
-
-        stopTimer(player.id);
-        playerJobMap.delete(player.id);
-
-        job.status = "open";
-        job.takenBy = null;
-        saveData();
-
-        player.sendMessage(
-          "[Job] You cancelled the delivery. It is back in the queue",
+      if (res.selection === 1) {
+        const confirmForm = new ActionFormData();
+        confirmForm.title("Cancel Delivery?");
+        confirmForm.body(
+          `คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\nคำสั่งซื้อจะถูกส่งกลับไปยังคิว\nคุณจะ ไม่ได้รับเพชรใดๆ`,
         );
+        confirmForm.button("Yes, Cancel");
+        confirmForm.button("No, Keep");
 
-        const owner = findPlayerById(job.owner);
-        if (owner)
-          owner.sendMessage(
-            `[Job] ${player.name} cancelled the delivery. It is open again`,
+        showUI(player, confirmForm, (r) => {
+          if (r.selection === 1) {
+            completeJob(player);
+            return;
+          }
+
+          stopTimer(player.id);
+          playerJobMap.delete(player.id);
+
+          job.status = "open";
+          job.takenBy = null;
+          saveData();
+
+          player.sendMessage(
+            "[Job] You cancelled the delivery. It is back in the queue",
           );
+
+          const owner = findPlayerById(job.owner);
+          if (owner)
+            owner.sendMessage(
+              `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยังคิว`,
+            );
+        });
+        return;
+      }
+
+      const inv2 = player.getComponent("minecraft:inventory").container;
+      const missing = checkJobItems(inv2, job);
+      if (missing) {
+        player.sendMessage(`[Job] รายการที่ยังไม่ครบ: ${missing}`);
+        return;
+      }
+
+      // ลบ item
+      removeJobItems(inv2, job);
+
+      // ให้เพชร
+      giveDiamond(player, total);
+
+      // ส่ง item ไป ให้ owner
+      const deliveryItems = job.items.map((it) => ({
+        id: it.id,
+        amount: it.amount,
+      }));
+      pendingDelivery.set(job.id, {
+        ownerName: player.name,
+        items: deliveryItems,
       });
-      return;
-    }
+      addOwnerNotify(job.owner, job.id);
 
-    // ── Submit ──────────────────────────────────────────────────────────────
-    const inv2 = player.getComponent("minecraft:inventory").container;
-    const missing = checkJobItems(inv2, job);
-    if (missing) {
-      player.sendMessage(`[Job] Missing: ${missing}`);
-      return;
-    }
+      // หยุด timer
+      stopTimer(player.id);
+      playerJobMap.delete(player.id);
 
-    // ตัดของจาก rider
-    removeJobItems(inv2, job);
+      job.status = "done";
+      saveData();
 
-    // ให้ diamond แก่ rider
-    giveDiamond(player, total);
+      player.sendMessage(`[Job] งานเสร็จสมบูรณ์ ได้รับ ${total} เพชร`);
 
-    // เก็บของไว้ใน pendingDelivery รอ owner มารับ
-    const deliveryItems = job.items.map((it) => ({
-      id: it.id,
-      amount: it.amount,
-    }));
-    pendingDelivery.set(job.id, {
-      ownerName: player.name,
-      items: deliveryItems,
+      const owner = findPlayerById(job.owner);
+      if (owner)
+        owner.sendMessage(
+          `[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “My Orders” เพื่อรับไอเท็มของคุณ`,
+        );
     });
-    addOwnerNotify(job.owner, job.id);
-
-    // หยุด timer
-    stopTimer(player.id);
-    playerJobMap.delete(player.id);
-
-    job.status = "done";
-    saveData();
-
-    player.sendMessage(`[Job] Complete! Received ${total} diamond`);
-
-    const owner = findPlayerById(job.owner);
-    if (owner)
-      owner.sendMessage(
-        `[Job] ${player.name} completed your delivery! Open My Orders to receive your items`,
-      );
-  });
+  } catch (error) {
+    console.error("[Job] completeJob: " + error);
+  }
 }
 
 export { completeJob, giveDiamond };
