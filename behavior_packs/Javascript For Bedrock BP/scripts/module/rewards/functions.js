@@ -1,7 +1,7 @@
 import { ItemStack } from "@minecraft/server";
 import { config } from "./constants.js";
 
-export function time() {
+function time() {
   const d = new Date();
   const day = String(d.getDate()).padStart(2, "0");
   const month = String(d.getMonth() + 1).padStart(2, "0");
@@ -9,12 +9,12 @@ export function time() {
   return `${day}/${month}/${year}`;
 }
 
-export function name(id) {
+function name(id) {
   let text = id.split(":")[1] || id;
   return text.replace(/_/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
 }
 
-export function give(player, id, count) {
+function give(player, id, count) {
   try {
     const inv = player.getComponent("minecraft:inventory");
     if (!inv || !inv.container) return false;
@@ -92,3 +92,5 @@ export function give(player, id, count) {
     return false;
   }
 }
+
+export { time, name, give };

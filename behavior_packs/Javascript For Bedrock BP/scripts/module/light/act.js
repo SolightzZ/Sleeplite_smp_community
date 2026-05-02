@@ -1,11 +1,11 @@
 import { ItemStack } from "@minecraft/server";
 import { limit, list, range } from "./vals.js";
 
-export function check(tool) {
+function check(tool) {
   return tool?.typeId === "minecraft:light_block_13";
 }
 
-export function dig(boy, spot) {
+function dig(boy, spot) {
   try {
     const drop = "minecraft:light_block_13";
     const { x, y, z } = spot.location;
@@ -18,7 +18,7 @@ export function dig(boy, spot) {
   }
 }
 
-export function shine(boy) {
+function shine(boy) {
   const dim = boy.dimension;
   const { x: px, y: py, z: pz } = boy.location;
 
@@ -50,3 +50,5 @@ export function shine(boy) {
   }
   return count;
 }
+
+export { shine, dig, check };

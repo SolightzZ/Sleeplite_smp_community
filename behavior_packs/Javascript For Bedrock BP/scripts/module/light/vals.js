@@ -1,8 +1,10 @@
-export const list = new Set(
+const list = new Set(
   Array.from({ length: 16 }, (_, i) => `minecraft:light_block_${i}`),
 );
-export const max = 3;
-export const range = 16;
-export const limit = 64;
-export const wait = 150;
-export const gang = new Set();
+const max = 3;
+const range = 16;
+const limit = 64;
+const wait = 150;
+const gang = new Set();
+
+export { list, max, range, limit, wait, gang };

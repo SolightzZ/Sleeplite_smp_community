@@ -1,8 +1,7 @@
 import { ActionFormData } from "@minecraft/server-ui";
 import { setting } from "./config.js";
 import { countUser, hasUser } from "./state.js";
-import { toggle } from "./toggle.js";
-import { canUse } from "./validate.js";
+import { canUse, toggle } from "./toggle.js";
 
 export function showMenu(player) {
   if (!canUse(player)) return;

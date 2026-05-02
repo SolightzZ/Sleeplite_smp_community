@@ -48,7 +48,7 @@ function run(boy) {
   }, 2);
 }
 
-export function LlightentityHitBlock(evt) {
+function LlightentityHitBlock(evt) {
   const boy = evt.damagingEntity;
   const spot = evt.hitBlock;
 
@@ -60,7 +60,7 @@ export function LlightentityHitBlock(evt) {
   }
 }
 
-export function LligitemUse(evt) {
+function LligitemUse(evt) {
   const boy = evt.source;
   const tool = evt.itemStack;
 
@@ -69,3 +69,5 @@ export function LligitemUse(evt) {
   evt.cancel = true;
   run(boy);
 }
+
+export { LlightentityHitBlock, LligitemUse };

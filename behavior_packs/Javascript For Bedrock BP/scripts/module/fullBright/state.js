@@ -1,30 +1,39 @@
-import { effect, level, particle, tag, time } from "./const.js";
+const tag = "bright";
+const effect = "night_vision";
 
-export const hasBright = (p) => p.hasTag(tag);
+export const hasBright = (player) => player.hasTag(tag);
 
-const addBright = (p) => {
-  p.addTag(tag);
-  p.addEffect(effect, time, {
-    amplifier: level,
-    showParticles: particle,
+const apply = (player) => {
+  if (player.hasTag(tag)) return false;
+
+  player.addTag(tag);
+  player.addEffect(effect, 20 * 60 * 20, {
+    amplifier: 0,
+    showParticles: false,
   });
+
+  return true;
 };
 
-const clearBright = (p) => {
-  p.removeTag(tag);
-  if (p.getEffect(effect)) {
-    p.removeEffect(effect);
+const remove = (player) => {
+  if (!player.hasTag(tag)) return false;
+
+  player.removeTag(tag);
+
+  if (player.getEffect(effect)) {
+    player.removeEffect(effect);
   }
+
+  return true;
 };
 
-export const setBright = (p, on) => {
-  if (on === hasBright(p)) return;
-
-  on ? addBright(p) : clearBright(p);
-  return on;
+const toggleBright = (player) => {
+  return player.hasTag(tag) ? !remove(player) : apply(player);
 };
 
-export const resetBright = (p) => {
-  if (!p) return;
-  clearBright(p);
+const resetBright = (player) => {
+  if (!player || !player.hasTag(tag)) return;
+  remove(player);
 };
+
+export { toggleBright, resetBright };

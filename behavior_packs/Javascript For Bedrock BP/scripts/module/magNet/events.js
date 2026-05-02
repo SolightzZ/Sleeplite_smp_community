@@ -1,16 +1,18 @@
 import { showMenu } from "./menu.js";
 import { removeUser } from "./state.js";
 
-export function MagnetonUseItem({ source }) {
+function MagnetonUseItem({ source }) {
   showMenu(source);
 }
 
-export function onLeave(event) {
+function onLeave(event) {
   removeUser(event.playerId);
 }
 
-export function magnetDie(event) {
+function magnetDie(event) {
   if (event.deadEntity?.typeId === "minecraft:player") {
     removeUser(event.deadEntity.id);
   }
 }
+
+export { MagnetonUseItem, onLeave, magnetDie };

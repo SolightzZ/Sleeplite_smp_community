@@ -1,4 +1,4 @@
-export const setting = {
+const setting = {
   range: 12,
   maxPeople: 8,
   maxItem: 32,
@@ -18,3 +18,5 @@ export const setting = {
     full: "Full System",
   },
 };
+
+export { setting };

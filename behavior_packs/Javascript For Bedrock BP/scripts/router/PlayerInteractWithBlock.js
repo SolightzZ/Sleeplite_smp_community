@@ -3,7 +3,7 @@ import { touch } from "../module/endPortalFrame/play";
 import { handleBlockEditPreEvent } from "../module/protection/system";
 import { handleRepairAnvil } from "../plugin/AnvilRepair";
 import { openDoor } from "../plugin/OpenDoor";
-import { handleWithBlock } from "../plugin/Take_A_Seat";
+import { handleWithBlock } from "../module/simpleSit/index";
 
 const beforeHandlers = [touch, handleBlockEditPreEvent, handleRepairAnvil];
 const afterHandlers = [openDoor];

@@ -2,21 +2,25 @@ import { world } from "@minecraft/server";
 import { resetBright } from "./state.js";
 import { showMenu } from "./ui.js";
 
-export function FullBrightUseItem({ source }) {
+function FullBrightUseItem({ source }) {
   showMenu(source);
 }
 
-export function onDeadFullBright({ deadEntity }) {
+function onDeadFullBright({ deadEntity }) {
   if (deadEntity?.typeId === "minecraft:player") {
     resetBright(deadEntity);
   }
 }
 
-export function onLeaveFullBright({ playerId }) {
+function onLeaveFullBright({ playerId }) {
   try {
-    const p = world.getEntity(playerId);
-    if (p?.typeId === "minecraft:player") {
-      resetBright(p);
+    const player = world.getEntity(playerId);
+    if (player?.typeId === "minecraft:player") {
+      resetBright(player);
     }
-  } catch {}
+  } catch (error) {
+    console.error("onLeaveFullBright:", error);
+  }
 }
+
+export { FullBrightUseItem, onDeadFullBright, onLeaveFullBright };

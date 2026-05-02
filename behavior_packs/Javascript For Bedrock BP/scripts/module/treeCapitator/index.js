@@ -182,4 +182,6 @@ function handleTreeCapitator(event) {
   }
 }
 
+world.beforeEvents.playerInteractWithBlock.subscribe(handleTreeCapitator);
+
 export { handleTreeCapitator };

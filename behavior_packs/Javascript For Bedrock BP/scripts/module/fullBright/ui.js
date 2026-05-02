@@ -1,32 +1,25 @@
 import { ActionFormData } from "@minecraft/server-ui";
-import {
-  msgOff,
-  msgOn,
-  offIcon,
-  offText,
-  onIcon,
-  onText,
-  title,
-} from "./const.js";
-import { hasBright, setBright } from "./state.js";
+import { hasBright, toggleBright } from "./state.js";
 
-const build = (on) =>
-  new ActionFormData()
-    .title(title)
-    .button(on ? onText : offText, on ? onIcon : offIcon);
+function showMenu(p) {
+  const isOn = hasBright(p);
 
-export const showMenu = (p) => {
-  const now = hasBright(p);
+  const form = new ActionFormData()
+    .title("Full Bright")
+    .button(
+      isOn ? "Turn Off" : "Turn On",
+      isOn ? "textures/items/full2" : "textures/items/full",
+    );
 
-  build(now)
-    .show(p)
-    .then((res) => {
-      if (res.canceled) return;
+  form.show(p).then((res) => {
+    if (res.canceled) return;
 
-      const next = setBright(p, !now);
-      if (next === undefined) return;
+    const next = toggleBright(p);
 
-      const msg = next ? msgOn : msgOff;
-      p.onScreenDisplay.setActionBar(msg(p.name));
-    });
-};
+    p.onScreenDisplay.setActionBar(
+      next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`,
+    );
+  });
+}
+
+export { showMenu };

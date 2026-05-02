@@ -1,7 +1,10 @@
 import { setting } from "./config.js";
 import { startLoop } from "./loop.js";
 import { addUser, countUser, hasUser, removeUser } from "./state.js";
-import { canUse } from "./validate.js";
+
+export function canUse(player) {
+  return player && player.isValid && player.location && player.dimension;
+}
 
 export function toggle(player, turnOn) {
   if (!canUse(player)) return;

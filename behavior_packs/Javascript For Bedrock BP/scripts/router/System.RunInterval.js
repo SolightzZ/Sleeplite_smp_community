@@ -1,7 +1,8 @@
 import { system } from "@minecraft/server";
-import { handleAddPlayer, handleAFK } from "../plugin/AFK_Cinematic";
+
 import { FlashlightRunInterval } from "../plugin/Flashlight";
-import { handleSit } from "../plugin/Take_A_Seat";
+import { handleSit } from "../module/simpleSit/index.js";
+import { handleAddPlayer, handleAFK } from "../module/AFKCinematic/index.js";
 
 const tasks = [
   { run: FlashlightRunInterval, rate: 2, last: 0 },

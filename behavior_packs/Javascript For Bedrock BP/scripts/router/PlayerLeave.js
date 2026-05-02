@@ -3,8 +3,8 @@ import { system, world } from "@minecraft/server";
 import { onLeaveFullBright } from "../module/fullBright/events.js";
 import { onLeave } from "../module/magNet/events.js";
 import { clearVisualStateForPlayers } from "../module/protection/system.js";
-import { playerLeaveAfk } from "../plugin/AFK_Cinematic.js";
 import { handlerFlashlight } from "../plugin/Flashlight.js";
+import { playerLeaveAfk } from "../module/AFKCinematic/index.js";
 
 const PLAYER_LEAVE = [
   onLeaveFullBright,

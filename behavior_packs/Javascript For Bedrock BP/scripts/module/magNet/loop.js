@@ -18,7 +18,7 @@ const stopLoop = () => {
   }
 };
 
-export function startLoop() {
+function startLoop() {
   if (hasTimer()) return;
 
   const id = system.runInterval(() => {
@@ -43,3 +43,5 @@ export function startLoop() {
 
   setTimer(id);
 }
+
+export { startLoop };

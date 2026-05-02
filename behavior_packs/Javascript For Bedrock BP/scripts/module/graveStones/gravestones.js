@@ -39,7 +39,7 @@ const safeAddItem = (container, itemStack) => {
   }
 };
 
-export function gravestone_main({ deadEntity: deadPlayer }) {
+function gravestone_main({ deadEntity: deadPlayer }) {
   if (!deadPlayer || !deadPlayer.dimension || !deadPlayer.location) return;
 
   const dimension = deadPlayer.dimension;
@@ -77,3 +77,5 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
     }
   }
 }
+
+export { gravestone_main };

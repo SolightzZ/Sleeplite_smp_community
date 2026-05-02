@@ -1,6 +1,6 @@
 import { system } from "@minecraft/server";
 
-export function onGravestoneInteract(event) {
+function onGravestoneInteract(event) {
   const { target, player } = event;
   if (!player || !target) return;
   if (target.typeId !== "true:gravestone_storage") return;
@@ -9,3 +9,5 @@ export function onGravestoneInteract(event) {
     target.kill();
   });
 }
+
+export { onGravestoneInteract };

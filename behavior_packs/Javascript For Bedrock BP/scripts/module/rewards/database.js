@@ -1,6 +1,6 @@
 import { config } from "./constants.js";
 
-export function load(player) {
+function load(player) {
   try {
     const raw = player.getDynamicProperty(config.dbKey);
     if (!raw) return { last: null, count: 0 };
@@ -11,7 +11,7 @@ export function load(player) {
   }
 }
 
-export function save(player, data) {
+function save(player, data) {
   try {
     const text = JSON.stringify(data);
     player.setDynamicProperty(config.dbKey, text);
@@ -22,7 +22,9 @@ export function save(player, data) {
   }
 }
 
-export function reset(player) {
+function reset(player) {
   console.warn("Reward reset" + config.dbKey);
   player.setDynamicProperty(config.dbKey, undefined);
 }
+
+export { load, save, reset };
