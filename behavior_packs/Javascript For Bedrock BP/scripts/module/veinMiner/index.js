@@ -6,7 +6,7 @@ import {
 } from "@minecraft/server";
 
 const MAX_BLOCKS_PER_VEIN = 96;
-const MAX_BLOCKS_PER_TICK = 16;
+const MAX_BLOCKS_PER_TICK = 32;
 const SOUND_DIG = "dig.stone";
 const SOUND_BREAK = "random.break";
 const SOUND_VOLUME = 0.45;
@@ -387,8 +387,7 @@ export const breakOreVein = (block, item, player) => {
   if (queue.length === 0) return;
 
   const runId = system.runInterval(() => {
-    let processed = 0;
-    while (queue.length > 0 && processed < MAX_BLOCKS_PER_TICK) {
+    for (let i = 0; queue.length > 0 && i < MAX_BLOCKS_PER_TICK; i++) {
       try {
         const current = queue.shift();
         if (!current || current.typeId !== targetId) continue;
@@ -422,8 +421,6 @@ export const breakOreVein = (block, item, player) => {
         }
 
         equipment.setEquipment(EquipmentSlot.Mainhand, liveItem);
-
-        processed++;
 
         for (const neighbor of getSameOreNeighbors(current, targetId)) {
           pushIfValid(neighbor);
