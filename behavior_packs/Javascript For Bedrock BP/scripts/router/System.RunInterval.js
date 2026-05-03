@@ -2,12 +2,11 @@ import { system } from "@minecraft/server";
 
 import { FlashlightRunInterval } from "../plugin/Flashlight";
 import { handleSit } from "../module/simpleSit/index.js";
-import { handleAddPlayer, handleAFK } from "../module/AFKCinematic/index.js";
+import { handleIdlePoller } from "../module/AFKCinematic/index.js";
 
 const tasks = [
   { run: FlashlightRunInterval, rate: 2, last: 0 },
-  { run: handleAFK, rate: 1, last: 0 },
-  { run: handleAddPlayer, rate: 10, last: 0 },
+  { run: handleIdlePoller, rate: 20, last: 0 },
 ];
 
 function runTaskList(list) {

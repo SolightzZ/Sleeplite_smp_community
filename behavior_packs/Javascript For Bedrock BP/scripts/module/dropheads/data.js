@@ -36,5 +36,9 @@ export const map = {
 };
 
 export const item = (name) => {
-  return map[name] ?? null;
+  try {
+    return map?.[name] ?? null;
+  } catch (error) {
+    console.error("item: " + error);
+  }
 };

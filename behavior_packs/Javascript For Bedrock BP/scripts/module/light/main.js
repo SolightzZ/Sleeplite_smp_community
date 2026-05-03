@@ -1,6 +1,12 @@
 import { system, world } from "@minecraft/server";
 import { check, dig, shine } from "./act.js";
-import { gang, limit, max, wait } from "./vals.js";
+
+const max = 3;
+const wait = 150;
+const gang = new Set();
+const list = new Set(
+  Array.from({ length: 16 }, (_, i) => `minecraft:light_block_${i}`),
+);
 
 function clean() {
   const all = new Map(world.getAllPlayers().map((p) => [p.id, p]));
@@ -70,4 +76,4 @@ function LligitemUse(evt) {
   run(boy);
 }
 
-export { LlightentityHitBlock, LligitemUse };
+export { LlightentityHitBlock, LligitemUse, list };

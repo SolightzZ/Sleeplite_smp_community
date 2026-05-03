@@ -1,5 +1,8 @@
 import { ItemStack } from "@minecraft/server";
-import { limit, list, range } from "./vals.js";
+import { list } from "./main.js";
+
+const range = 16;
+const limit = 64;
 
 function check(tool) {
   return tool?.typeId === "minecraft:light_block_13";
