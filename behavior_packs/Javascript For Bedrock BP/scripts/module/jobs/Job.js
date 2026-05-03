@@ -48,29 +48,29 @@ const saveData = () => {
 const loadData = () => {
   try {
     const j = world.getDynamicProperty("jobs_data_jobs");
-    console.log("j:", j);
+    console.log("jobs:", j);
     if (j) {
       jobs.length = 0;
       jobs.push(...JSON.parse(j));
     }
     const jId = world.getDynamicProperty("jobs_data_jobId");
-    console.log("jId:", jId);
+    console.log("jobId (auto increment id):", jId);
     if (jId !== undefined) jobId = jId;
 
     const pjm = world.getDynamicProperty("jobs_data_playerJobMap");
-    console.log("pjm:", pjm);
+    console.log("playerJobMap:", pjm);
     if (pjm) JSON.parse(pjm).forEach(([k, v]) => playerJobMap.set(k, v));
 
     const tm = world.getDynamicProperty("jobs_data_timerMap");
-    console.log("tm:", tm);
+    console.log("timerMap:", tm);
     if (tm) JSON.parse(tm).forEach(([k, v]) => timerMap.set(k, v));
 
     const pd = world.getDynamicProperty("jobs_data_pendingDelivery");
-    console.log("pd:", pd);
+    console.log("pendingDelivery:", pd);
     if (pd) JSON.parse(pd).forEach(([k, v]) => pendingDelivery.set(k, v));
 
     const onm = world.getDynamicProperty("jobs_data_ownerNotifyMap");
-    console.log("onm:", onm);
+    console.log("ownerNotifyMap:", onm);
     if (onm)
       JSON.parse(onm).forEach(([k, v]) => ownerNotifyMap.set(k, new Set(v)));
   } catch (e) {
@@ -177,20 +177,21 @@ const hasOwnerNotify = (ownerId) => {
 
 function handleJob(event) {
   try {
-    const { source, itemStack } = event;
-    if (itemStack.typeId !== "minecraft:stick") return;
+    const { source } = event;
     showMainMenu(source);
   } catch (error) {
     console.error(" handleJob: " + error);
   }
 }
 
-function onPlayerLeave(event) {
+function JobLeave(event) {
   try {
-    selectedMap.delete(event.playerId);
-    amountMap.delete(event.playerId);
+    const players = event.playerId;
+    console.log("players:", players);
+    selectedMap.delete(players);
+    amountMap.delete(players);
   } catch (error) {
-    console.error(" onPlayerLeave: " + error);
+    console.error(" JobLeave: " + error);
   }
 }
 
@@ -198,8 +199,6 @@ system.run(() => {
   for (const type of ItemTypes.getAll()) ITEM_IDS.add(type.id);
   loadData();
 });
-world.afterEvents.itemUse.subscribe(handleJob);
-world.afterEvents.playerLeave.subscribe(onPlayerLeave);
 
 export {
   countItem,
@@ -207,7 +206,9 @@ export {
   deleteJobData,
   findPlayerById,
   getInvMap,
+  handleJob,
   hasOwnerNotify,
+  JobLeave,
   loadData,
   saveData,
   showUI,

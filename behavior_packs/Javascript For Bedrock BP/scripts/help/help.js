@@ -7,7 +7,6 @@ const help = `§8--------- §eHelper §8---------
 §7[§a/§7] /r §7Inventory Sorter (/r max) - เรียงไอเทมในตัว
 §7[§a/§7] /c §7Chest Sorter (/c chess) - เรียงไอเทมในกล่อง
 §7[§a/§7] !xz §7Nether Calculator (!xz หรือ !xz -200 200) - คำนวณพิกัดเนเทอร์
-§7[§a/§7] !f §7Food Stats - แสดงค่าอาหารต่างๆ
 §7[§a/§7] !d §7Durability & Player name - แสดงความทนทานไอเทมในตัว และ แสดงแท็กชื่อ
 `;
 
@@ -17,7 +16,7 @@ const adminHelp = `§8--------- §cHelper Admin §8---------
 §7[§c/§7] !check-reward - แสดงข้อมูลล็อกอิน JSON Reward
 `;
 
-export function helpmain(event) {
+function helpmain(event) {
   event.cancel = false;
   try {
     const { sender: player, message } = event;
@@ -38,3 +37,5 @@ export function helpmain(event) {
     console.warn("help_main", error.message);
   }
 }
+
+export { helpmain };

@@ -1,213 +1,291 @@
-import { EquipmentSlot, world } from "@minecraft/server";
+import {
+  EntityComponentTypes,
+  EquipmentSlot,
+  system,
+  world,
+} from "@minecraft/server";
+
+const LIGHT_BLOCK = "minecraft:light_block_15";
+const AIR_BLOCK = "minecraft:air";
+const FLASHLIGHT_ID = "gao:flashlight";
+
+const RECONCILE_INTERVAL = 200;
+const TARGET_LATENCY_TICKS = 5;
+
+const BATCH_MIN = 1;
+const BATCH_MAX = 8;
+
+const HEAD_THRESHOLD = 0.15;
+const DIR_THRESHOLD = 0.04;
+
+const Y_MIN = -64;
+const Y_MAX = 320;
 
 const previousLights = new Map();
 const playerCache = new Map();
 
+let playersCache = [];
 let index = 0;
 let tick = 0;
-let playersCache = [];
 
-function FlashlightRunInterval(event) {
+function FlashlightRunInterval() {
   try {
     tick++;
-    if (tick % 20 === 0) {
-      playersCache = world.getAllPlayers();
+
+    if (tick % RECONCILE_INTERVAL === 0) {
+      reconcilePlayers();
     }
 
-    if (!playersCache.length) return;
+    if (playersCache.length === 0) return;
 
-    for (let i = 0; i < 2; i++) {
+    const activeCount = previousLights.size || 1;
+    const batchSize = Math.min(
+      BATCH_MAX,
+      Math.max(BATCH_MIN, Math.ceil(activeCount / TARGET_LATENCY_TICKS)),
+    );
+
+    for (let i = 0; i < batchSize; i++) {
       if (index >= playersCache.length) index = 0;
 
       const player = playersCache[index++];
-      updatePlayer(player);
+      if (player?.isValid) {
+        updatePlayer(player);
+      }
     }
-  } catch (error) {
-    console.error("Flashlight: " + error);
+  } catch (err) {
+    console.error("[Flashlight] FlashlightRunInterval:", err);
   }
 }
-
-export { FlashlightRunInterval };
 
 function updatePlayer(player) {
-  const id = player.id;
+  try {
+    const id = player.id;
 
-  const equippable = player.getComponent("equippable");
-  if (!equippable) return;
+    const equippable = player.getComponent(EntityComponentTypes.Equippable);
+    if (!equippable) return;
 
-  const isHolding = isHoldingFlashlight(equippable);
+    const isHolding = isHoldingFlashlight(equippable);
 
-  if (!isHolding && !previousLights.has(id)) return;
-
-  const prev = previousLights.get(id) ?? [];
-  const dim = player.dimension;
-
-  if (!isHolding) {
-    clearLights(dim, prev);
-    previousLights.delete(id);
-    playerCache.delete(id);
-    return;
-  }
-
-  const head = player.getHeadLocation();
-  const dir = player.getViewDirection();
-
-  if (!hasMoved(id, head, dir)) return;
-
-  const next = traceLightPositions(head, dir, dim);
-  applyLightDiff(dim, prev, next);
-
-  previousLights.set(id, next);
-}
-
-const isHoldingFlashlight = (equippable) => {
-  const held = equippable.getEquipment(EquipmentSlot.Mainhand);
-  const off = equippable.getEquipment(EquipmentSlot.Offhand);
-  return held?.typeId === "gao:flashlight" || off?.typeId === "gao:flashlight";
-};
-
-const hasMoved = (id, head, dir) => {
-  const cache = playerCache.get(id);
-
-  if (
-    cache &&
-    Math.abs(cache.x - head.x) < 0.2 &&
-    Math.abs(cache.y - head.y) < 0.2 &&
-    Math.abs(cache.z - head.z) < 0.2 &&
-    Math.abs(cache.dx - dir.x) < 0.05 &&
-    Math.abs(cache.dy - dir.y) < 0.05 &&
-    Math.abs(cache.dz - dir.z) < 0.05
-  ) {
-    return false;
-  }
-
-  playerCache.set(id, {
-    x: head.x,
-    y: head.y,
-    z: head.z,
-    dx: dir.x,
-    dy: dir.y,
-    dz: dir.z,
-  });
-
-  return true;
-};
-
-function traceLightPositions(head, dir, dim) {
-  const result = [];
-
-  let lx, ly, lz;
-
-  for (let i = 3; i <= 16; i += 3) {
-    const x = Math.floor(head.x + dir.x * i);
-    const y = Math.floor(head.y + dir.y * i);
-    const z = Math.floor(head.z + dir.z * i);
-
-    if (y < -64 || y > 320) continue;
-
-    if (x === lx && y === ly && z === lz) continue;
-    lx = x;
-    ly = y;
-    lz = z;
-
-    const block = dim.getBlock({ x, y, z });
-    if (!block) break;
-
-    // stop ray เมื่อชนบล็อกตัน
-    if (
-      block.typeId !== "minecraft:air" &&
-      block.typeId !== "minecraft:light_block_9"
-    ) {
-      break;
+    if (!isHolding) {
+      if (previousLights.has(id)) {
+        clearPlayerLights(player.dimension, id);
+      }
+      return;
     }
 
-    result.push(x, y, z);
+    const head = player.getHeadLocation();
+    const dir = player.getViewDirection();
+
+    if (!hasMoved(id, head, dir)) return;
+
+    const dim = player.dimension;
+    const prevSet = previousLights.get(id) ?? new Set();
+    const nextSet = traceLightPositions(head, dir, dim);
+
+    applyLightDiff(dim, prevSet, nextSet);
+
+    if (nextSet.size > 0) {
+      previousLights.set(id, nextSet);
+    } else {
+      previousLights.delete(id);
+    }
+  } catch (err) {
+    console.error("[Flashlight] updatePlayer:", err);
+  }
+}
+
+function isHoldingFlashlight(equippable) {
+  try {
+    const main = equippable.getEquipment(EquipmentSlot.Mainhand);
+    const off = equippable.getEquipment(EquipmentSlot.Offhand);
+    return main?.typeId === FLASHLIGHT_ID || off?.typeId === FLASHLIGHT_ID;
+  } catch (err) {
+    console.error("[Flashlight] isHoldingFlashlight:", err);
+    return false;
+  }
+}
+
+function hasMoved(id, head, dir) {
+  try {
+    const cache = playerCache.get(id);
+
+    if (
+      cache &&
+      Math.abs(cache.x - head.x) < HEAD_THRESHOLD &&
+      Math.abs(cache.y - head.y) < HEAD_THRESHOLD &&
+      Math.abs(cache.z - head.z) < HEAD_THRESHOLD &&
+      Math.abs(cache.dx - dir.x) < DIR_THRESHOLD &&
+      Math.abs(cache.dy - dir.y) < DIR_THRESHOLD &&
+      Math.abs(cache.dz - dir.z) < DIR_THRESHOLD
+    ) {
+      return false;
+    }
+
+    playerCache.set(id, {
+      x: head.x,
+      y: head.y,
+      z: head.z,
+      dx: dir.x,
+      dy: dir.y,
+      dz: dir.z,
+    });
+
+    return true;
+  } catch (err) {
+    console.error("[Flashlight] hasMoved:", err);
+    return true;
+  }
+}
+
+function traceLightPositions(head, dir, dim) {
+  const result = new Set();
+
+  try {
+    const x = Math.floor(head.x + dir.x);
+    const y = Math.floor(head.y + dir.y);
+    const z = Math.floor(head.z + dir.z);
+
+    if (y < Y_MIN || y > Y_MAX) return result;
+
+    const block = dim.getBlock({ x, y, z });
+    if (block && (block.typeId === AIR_BLOCK || block.typeId === LIGHT_BLOCK)) {
+      result.add(`${x},${y},${z}`);
+    }
+  } catch (err) {
+    console.error("[Flashlight] traceLightPositions:", err);
   }
 
   return result;
 }
 
-function applyLightDiff(dim, prev, next) {
-  // ADD
-  for (let i = 0; i < next.length; i += 3) {
-    const x = next[i];
-    const y = next[i + 1];
-    const z = next[i + 2];
-
-    let found = false;
-
-    for (let j = 0; j < prev.length; j += 3) {
-      if (prev[j] === x && prev[j + 1] === y && prev[j + 2] === z) {
-        found = true;
-        break;
-      }
-    }
-
-    if (!found) {
-      const block = dim.getBlock({ x, y, z });
-
-      if (
-        block &&
-        (block.typeId === "minecraft:air" ||
-          block.typeId === "minecraft:light_block_9")
-      ) {
-        if (block.typeId !== "minecraft:light_block_9") {
-          block.setType("minecraft:light_block_9");
-        }
-      }
-    }
-  }
-
-  // REMOVE
-  for (let i = 0; i < prev.length; i += 3) {
-    const x = prev[i];
-    const y = prev[i + 1];
-    const z = prev[i + 2];
-
-    let still = false;
-
-    for (let j = 0; j < next.length; j += 3) {
-      if (next[j] === x && next[j + 1] === y && next[j + 2] === z) {
-        still = true;
-        break;
-      }
-    }
-
-    if (!still) {
-      const block = dim.getBlock({ x, y, z });
-
-      if (block?.typeId === "minecraft:light_block_9") {
-        block.setType("minecraft:air");
-      }
-    }
-  }
-}
-
-function clearLights(dim, prev) {
-  for (let i = 0; i < prev.length; i += 3) {
-    const block = dim.getBlock({
-      x: prev[i],
-      y: prev[i + 1],
-      z: prev[i + 2],
-    });
-
-    if (block?.typeId === "minecraft:light_block_9") {
-      block.setType("minecraft:air");
-    }
-  }
-}
-
-function handlerFlashlight({ playerId }) {
+function applyLightDiff(dim, prevSet, nextSet) {
   try {
-    const prev = previousLights.get(playerId);
-    if (!prev) return;
-    const dim = world.getDimension("overworld");
-    clearLights(dim, prev);
+    for (const key of nextSet) {
+      if (prevSet.has(key)) continue;
+
+      const [x, y, z] = parseKey(key);
+      const block = dim.getBlock({ x, y, z });
+
+      if (block?.typeId === AIR_BLOCK) {
+        block.setType(LIGHT_BLOCK);
+      }
+    }
+
+    for (const key of prevSet) {
+      if (nextSet.has(key)) continue;
+
+      const [x, y, z] = parseKey(key);
+      const block = dim.getBlock({ x, y, z });
+
+      if (block?.typeId === LIGHT_BLOCK) {
+        block.setType(AIR_BLOCK);
+      }
+    }
+  } catch (err) {
+    console.error("[Flashlight] applyLightDiff:", err);
+  }
+}
+
+function clearPlayerLights(dim, playerId) {
+  try {
+    const lights = previousLights.get(playerId);
+    if (!lights) return;
+
+    for (const key of lights) {
+      const [x, y, z] = parseKey(key);
+      const block = dim.getBlock({ x, y, z });
+      if (block?.typeId === LIGHT_BLOCK) {
+        block.setType(AIR_BLOCK);
+      }
+    }
+  } catch (err) {
+    console.error("[Flashlight] clearPlayerLights:", err);
+  } finally {
     previousLights.delete(playerId);
     playerCache.delete(playerId);
-  } catch (erro) {
-    console.log("Flashlight: " + erro);
   }
 }
 
-export { handlerFlashlight };
+function handlerFlashlight({ playerId, dimension }) {
+  try {
+    if (!previousLights.has(playerId)) return;
+
+    const dim = dimension ?? world.getDimension("overworld");
+    clearPlayerLights(dim, playerId);
+    console.log("playerId:", playerId);
+  } catch (err) {
+    console.error("[Flashlight] handlerFlashlight:", err);
+  }
+}
+
+function parseKey(key) {
+  const parts = key.split(",");
+  return [+parts[0], +parts[1], +parts[2]];
+}
+
+function reconcilePlayers() {
+  try {
+    const live = new Set(world.getAllPlayers().map((p) => p.id));
+
+    for (const [id] of previousLights) {
+      if (!live.has(id)) cleanupPlayer(id);
+    }
+
+    playersCache = playersCache.filter((p) => p.isValid && live.has(p.id));
+
+    if (index >= playersCache.length) index = 0;
+  } catch (err) {
+    console.error("[Flashlight] reconcilePlayers:", err);
+  }
+}
+
+function cleanupPlayer(playerId) {
+  try {
+    const lights = previousLights.get(playerId);
+    if (lights) {
+      const dim = world.getDimension("overworld");
+      for (const key of lights) {
+        try {
+          const [x, y, z] = parseKey(key);
+          const block = dim.getBlock({ x, y, z });
+          if (block?.typeId === LIGHT_BLOCK) block.setType(AIR_BLOCK);
+        } catch {}
+      }
+    }
+  } catch {
+  } finally {
+    previousLights.delete(playerId);
+    playerCache.delete(playerId);
+  }
+}
+
+// world.afterEvents.playerSpawn.subscribe(({ player, initialSpawn }) => {});
+function flashSpawn(event) {
+  try {
+    const player = event.player;
+    if (
+      player &&
+      player.isValid &&
+      !playersCache.some((p) => p.id === player.id)
+    ) {
+      playersCache.push(player);
+      console.log("playersCache:", JSON.stringify(playersCache));
+    }
+  } catch (error) {
+    console.warn("flash_spawn", error.message);
+  }
+}
+
+// world.afterEvents.playerLeave.subscribe(({ playerId }) => {});
+function flashLeave(playerId) {
+  try {
+    cleanupPlayer(playerId);
+    playersCache = playersCache.filter((p) => p.id !== playerId);
+    console.log("playerId:", playerId);
+    if (index >= playersCache.length) index = 0;
+  } catch (error) {
+    console.warn("flash_leave", error.message);
+  }
+}
+
+export { flashLeave, FlashlightRunInterval, flashSpawn, handlerFlashlight };

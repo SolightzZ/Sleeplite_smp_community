@@ -4,13 +4,13 @@ import { handleEntityInteractPreEvent } from "../module/protection/system";
 
 const handlers = [onGravestoneInteract, handleEntityInteractPreEvent];
 
-function onPlayerInteractWithEntity(event) {
-  for (let i = 0; i < handlers.length; i++) {
-    handlers[i](event);
-    if (event.cancel) return;
+world.beforeEvents.playerInteractWithEntity.subscribe((event) => {
+  try {
+    for (let i = 0; i < handlers.length; i++) {
+      handlers[i](event);
+      if (event.cancel) return;
+    }
+  } catch (error) {
+    console.warn("player_interact_with_entity", error.message);
   }
-}
-
-world.beforeEvents.playerInteractWithEntity.subscribe(
-  onPlayerInteractWithEntity,
-);
+});

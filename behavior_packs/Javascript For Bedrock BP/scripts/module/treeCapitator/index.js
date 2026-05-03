@@ -5,183 +5,301 @@ import {
   world,
 } from "@minecraft/server";
 
-const LOG_TYPES = new Set([
-  "minecraft:oak_log",
-  "minecraft:birch_log",
-  "minecraft:spruce_log",
-  "minecraft:jungle_log",
-  "minecraft:acacia_log",
-  "minecraft:dark_oak_log",
-  "minecraft:mangrove_log",
-  "minecraft:cherry_log",
-  "minecraft:pale_oak_log",
-  "minecraft:crimson_stem",
-  "minecraft:warped_stem",
+const treeMap = new Map([
+  ["minecraft:oak_log", "minecraft:oak_leaves"],
+  ["minecraft:birch_log", "minecraft:birch_leaves"],
+  ["minecraft:spruce_log", "minecraft:spruce_leaves"],
+  ["minecraft:jungle_log", "minecraft:jungle_leaves"],
+  ["minecraft:acacia_log", "minecraft:acacia_leaves"],
+  ["minecraft:dark_oak_log", "minecraft:dark_oak_leaves"],
+  ["minecraft:mangrove_log", "minecraft:mangrove_leaves"],
+  ["minecraft:cherry_log", "minecraft:cherry_leaves"],
+  ["minecraft:pale_oak_log", "minecraft:pale_oak_leaves"],
+  ["minecraft:crimson_stem", "minecraft:nether_wart_block"],
+  ["minecraft:warped_stem", "minecraft:warped_wart_block"],
 ]);
 
-const LEAF_TYPES = new Set([
-  "minecraft:oak_leaves",
-  "minecraft:birch_leaves",
-  "minecraft:spruce_leaves",
-  "minecraft:jungle_leaves",
-  "minecraft:acacia_leaves",
-  "minecraft:dark_oak_leaves",
-  "minecraft:mangrove_leaves",
-  "minecraft:cherry_leaves",
-  "minecraft:pale_oak_leaves",
-  "minecraft:warped_wart_block",
-  "minecraft:nether_wart_block",
-  "minecraft:crimson_hyphae",
-]);
+const CFG = {
+  // blocks ที่จะ break ต่อ job ต่อ tick — ปรับตาม TPS จริง
+  maxColumnHeight: 32,
 
-const MAX_LOGS = 64;
+  // จำนวน job สูงสุดที่รันใน 1 tick (ลด lag spike)
+  blocksPerTick: 6,
 
-const getSixNeighbors = (block) => [
-  block.above(),
-  block.below(),
-  block.north(),
-  block.south(),
-  block.east(),
-  block.west(),
-];
+  //  timeout ก่อน abandon job (ms)
+  maxJobsPerTick: 6,
 
-// ตรวจสอบใบไม้รอบบล็อก: ตรวจสอบว่าบล็อกมีใบไม้อยู่ติดกันหรือไม่
-const hasAdjacentLeaf = (block) => {
-  try {
-    const neighbors = getSixNeighbors(block);
-    for (let i = 0; i < neighbors.length; i++) {
-      const n = neighbors[i];
-      if (n && LEAF_TYPES.has(n.typeId)) return true;
-    }
-    return false;
-  } catch (error) {
-    console.error("hasAdjacentLeaf: " + error);
-  }
+  // จำนวน active job สูงสุดต่อ player
+  jobTimeoutMs: 15_000,
+
+  // จำนวน active job สูงสุดต่อ player
+  maxJobsPerPlayer: 2,
 };
 
-// ตรวจสอบโคนต้นไม้: เช็คว่าบล็อกเป็นฐานของต้นไม้จริง (มีลำต้นต่อขึ้นและมีใบไม้)
-const isTreeBase = (block) => {
-  try {
-    if (!LOG_TYPES.has(block.typeId)) return false;
+// State
+const jobQueue = new Map();
+const pendingTrees = new Set();
+/** นับ active jobs ต่อ player เพื่อ enforce maxJobsPerPlayer */
+const playerJobCount = new Map();
 
-    const below = block.below();
-    if (below && LOG_TYPES.has(below.typeId)) return false;
+let jobSeq = 0;
+let runHandle = null;
 
-    const column = [block];
-    let cur = block.above();
-    while (cur && LOG_TYPES.has(cur.typeId)) {
-      column.push(cur);
+// Player job counter helpers
+const incrementPlayerJobs = (playerId) => {
+  const count = (playerJobCount.get(playerId) ?? 0) + 1;
+  playerJobCount.set(playerId, count);
+};
+
+const decrementPlayerJobs = (playerId) => {
+  const n = (playerJobCount.get(playerId) ?? 1) - 1;
+  if (n <= 0) playerJobCount.delete(playerId);
+  else playerJobCount.set(playerId, n);
+};
+
+const playerJobsFull = (playerId) =>
+  (playerJobCount.get(playerId) ?? 0) >= CFG.maxJobsPerPlayer;
+
+// Job lifecycle
+const removeJob = (jobId, job) => {
+  jobQueue.delete(jobId);
+  pendingTrees.delete(job.treeKey);
+  decrementPlayerJobs(job.playerId);
+};
+
+// Executor
+const startExecutor = () => {
+  if (runHandle !== null) {
+    return;
+  }
+
+  runHandle = system.runInterval(() => {
+    if (jobQueue.size === 0) {
+      system.clearRun(runHandle);
+      runHandle = null;
+      return;
+    }
+
+    const now = Date.now();
+    let jobsDone = 0;
+
+    const jobs = Array.from(jobQueue);
+    const jobLimit = Math.min(jobs.length, CFG.maxJobsPerTick);
+
+    for (let i = 0; i < jobLimit; i++) {
+      const [jobId, job] = jobs[i];
+
+      // Timeout
+      if (now - job.startMs > CFG.jobTimeoutMs) {
+        removeJob(jobId, job);
+        continue;
+      }
+
+      // Player ออกไปแล้ว
+      if (!job.player.isValid) {
+        removeJob(jobId, job);
+        continue;
+      }
+
+      // Break blocks
+      const blockLimit = Math.min(
+        CFG.blocksPerTick,
+        job.locations.length - job.index,
+      );
+
+      for (let i = 0; i < blockLimit; i++) {
+        const loc = job.locations[job.index++];
+        try {
+          const block = job.dimension.getBlock(loc);
+          if (!block) {
+            continue;
+          }
+          if (block.typeId !== job.typeId) {
+            continue;
+          }
+          block.setType("minecraft:air");
+          job.dimension.spawnItem(new ItemStack(job.typeId, 1), loc);
+          damageAxe(job.player);
+        } catch (e) {}
+      }
+
+      // Job เสร็จ
+      if (job.index >= job.locations.length) {
+        removeJob(jobId, job);
+      }
+
+      jobsDone++;
+    }
+  }, 1);
+};
+
+// Helpers
+// ตรวจว่า block มี leaf อยู่รอบๆ (6 ทิศ)
+const hasAdjacentLeaf = (block, leafTypeId) => {
+  for (let i = 0; i < 6; i++) {
+    try {
+      let n;
+      if (i === 0) n = block.north();
+      else if (i === 1) n = block.south();
+      else if (i === 2) n = block.east();
+      else if (i === 3) n = block.west();
+      else if (i === 4) n = block.above();
+      else n = block.below();
+
+      if (n && n.typeId === leafTypeId) {
+        return true;
+      }
+    } catch (e) {}
+  }
+  return false;
+};
+
+// รวบรวม log column แนวตั้ง (Y+) จาก startBlock  คืน { locations, hasLeaf }
+const collectYColumn = (startBlock, logTypeId, leafTypeId) => {
+  const locations = [];
+  let hasLeaf = false;
+  let cur = startBlock;
+
+  for (let i = 0; i < CFG.maxColumnHeight; i++) {
+    if (!cur || cur.typeId !== logTypeId) break;
+
+    locations.push({ ...cur.location });
+    if (!hasLeaf && hasAdjacentLeaf(cur, leafTypeId)) hasLeaf = true;
+    try {
       cur = cur.above();
+    } catch (e) {
+      break;
     }
-
-    for (let i = 0; i < column.length; i++) {
-      if (hasAdjacentLeaf(column[i])) return true;
-    }
-    return false;
-  } catch (error) {
-    console.error("isTreeBase: " + error);
   }
+
+  return { locations, hasLeaf };
 };
 
+//  ลด durability ของขวานที่ถือ รองรับ Unbreaking enchant
 const damageAxe = (player) => {
   try {
-    const inventory = player.getComponent("minecraft:inventory");
-    if (!inventory?.container) return;
+    const inv = player.getComponent("minecraft:inventory");
+    if (!inv?.container) {
+      return;
+    }
 
-    const slot = inventory.container.getSlot(player.selectedSlotIndex);
-    const item = slot.getItem();
-    if (!item) return;
+    const slot = player.selectedSlotIndex;
+    const item = inv.container.getItem(slot);
+    if (!item) {
+      return;
+    }
 
-    const durability = item.getComponent(ItemComponentTypes.Durability);
-    if (!durability || durability.unbreakable) return;
+    const dur = item.getComponent(ItemComponentTypes.Durability);
+    if (!dur || dur.unbreakable) {
+      return;
+    }
 
-    const chance = durability.getDamageChance
-      ? durability.getDamageChance(0)
-      : 100 /
-        ((item
-          .getComponent("minecraft:enchantable")
-          ?.getEnchantment("unbreaking")?.level ?? 0) +
-          1);
+    const unbreaking =
+      item.getComponent("minecraft:enchantable")?.getEnchantment("unbreaking")
+        ?.level ?? 0;
 
-    if (Math.random() * 100 > chance) return;
+    // สูตร Unbreaking: random% chance to skip damage
+    if (Math.random() * 100 > 100 / (unbreaking + 1)) {
+      return;
+    }
 
-    durability.damage += 1;
+    dur.damage += 1;
 
-    if (durability.damage >= durability.maxDurability) {
-      slot.setItem(undefined);
+    if (dur.damage >= dur.maxDurability) {
+      inv.container.setItem(slot, undefined);
       player.dimension.playSound("random.break", player.location);
     } else {
-      slot.setItem(item);
+      // ต้อง setItem กลับเพื่อ sync กับ client
+      inv.container.setItem(slot, item);
     }
-  } catch (error) {
-    console.error("damageAxe: " + error);
+  } catch (e) {
+    /* inventory closed / player invalid */
   }
 };
 
-// ตัดต้นไม้ทั้งต้น: ค้นหาและทำลายบล็อกไม้ที่เชื่อมต่อกันทั้งหมดแบบค่อยเป็นค่อยไป
-const breakTree = (startBlock, player) => {
+function TreeCapitatorBreakBlock(event) {
   try {
-    const { dimension, typeId: targetId } = startBlock;
+    const { player, block, brokenBlockPermutation } = event;
 
-    const visited = new Set();
-    const stack = [startBlock];
-    const allLogs = [];
-
-    while (stack.length > 0 && allLogs.length < MAX_LOGS) {
-      const block = stack.pop();
-      if (!block || block.typeId !== targetId) continue;
-
-      const k = `${block.location.x},${block.location.y},${block.location.z}`;
-      if (visited.has(k)) continue;
-      visited.add(k);
-      allLogs.push(block);
-
-      const neighbors = getSixNeighbors(block);
-      for (let i = 0; i < neighbors.length; i++) {
-        const n = neighbors[i];
-        if (!n || n.typeId !== targetId) continue;
-        const nk = `${n.location.x},${n.location.y},${n.location.z}`;
-        if (!visited.has(nk)) stack.push(n);
-      }
+    // Basic guards
+    if (!player.isSneaking) {
+      return;
     }
 
-    let index = 0;
-    const handle = system.runInterval(() => {
-      if (index >= allLogs.length) {
-        system.clearRun(handle);
+    const inv = player.getComponent("minecraft:inventory");
+    const heldItem = inv?.container?.getItem(player.selectedSlotIndex);
+    const heldId = heldItem?.typeId ?? "";
+    if (!heldId.includes("axe") || heldId.includes("pick")) {
+      return;
+    }
+
+    const logTypeId = brokenBlockPermutation.type.id;
+    const leafTypeId = treeMap.get(logTypeId);
+    if (!leafTypeId) {
+      return;
+    }
+
+    // Per-player job limit
+    const playerId = player.id;
+    if (playerJobsFull(playerId)) {
+      return;
+    }
+
+    // Duplicate-tree guard
+    const dim = player.dimension;
+    const loc = block.location;
+    const treeKey = `${dim.id}:${loc.x},${loc.y},${loc.z}`;
+    if (pendingTrees.has(treeKey)) {
+      return;
+    }
+
+    //ดูว่ามี log อยู่เหนือ block ที่ตัดหรือเปล่า
+    let startBlock;
+    try {
+      const above = dim.getBlock({ x: loc.x, y: loc.y + 1, z: loc.z });
+      if (!above) {
         return;
       }
+      if (above.typeId !== logTypeId) {
+        return;
+      }
+      startBlock = above;
+    } catch (e) {
+      return;
+    }
 
-      const block = allLogs[index++];
+    //Collect + validate
+    const { locations, hasLeaf } = collectYColumn(
+      startBlock,
+      logTypeId,
+      leafTypeId,
+    );
+    if (!hasLeaf || locations.length === 0) {
+      return;
+    }
 
-      if (!block || block.typeId !== targetId) return;
+    //Enqueue
+    const jobId = `tc${++jobSeq}`;
+    pendingTrees.add(treeKey);
+    incrementPlayerJobs(playerId);
 
-      block.setType("minecraft:air");
-      dimension.spawnItem(new ItemStack(targetId, 1), block.location);
-      damageAxe(player);
-    }, 1);
-  } catch (error) {
-    console.error("breakTree: " + error);
-  }
-};
+    jobQueue.set(jobId, {
+      player,
+      dimension: dim,
+      locations,
+      typeId: logTypeId,
+      index: 0,
+      startMs: Date.now(),
+      treeKey,
+      playerId,
+    });
 
-// จัดการการตัดต้นไม้: ตรวจสอบเงื่อนไขและเรียกใช้งานระบบ TreeCapitator
-function handleTreeCapitator(event) {
-  try {
-    const { player, block, itemStack } = event;
-    if (!player.isSneaking) return;
-
-    const typeId = itemStack?.typeId;
-    if (!typeId || !typeId.includes("axe") || typeId.includes("pick")) return;
-
-    if (!isTreeBase(block)) return;
-
-    breakTree(block, player);
-  } catch (error) {
-    console.error("handleTreeCapitator: " + error);
+    startExecutor();
+  } catch (e) {
+    console.error("[TreeCapitator]", e);
   }
 }
+// Event handler
+world.afterEvents.playerBreakBlock.subscribe((event) => {});
 
-world.beforeEvents.playerInteractWithBlock.subscribe(handleTreeCapitator);
-
-export { handleTreeCapitator };
+export { TreeCapitatorBreakBlock };

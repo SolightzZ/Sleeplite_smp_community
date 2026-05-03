@@ -9,17 +9,17 @@ const beforeHandlers = [touch, handleBlockEditPreEvent, handleRepairAnvil];
 const afterHandlers = [openDoor];
 
 function runHandlers(handlers, event) {
-  for (let i = 0; i < handlers.length; i++) {
-    const handler = handlers[i];
-
-    try {
+  try {
+    for (let i = 0; i < handlers.length; i++) {
+      const handler = handlers[i];
       const result = handler(event);
       if (result === false || event.cancel) return false;
-    } catch (e) {
-      console.error(`Handler error [${handler.name}]:`, e.message);
     }
+
+    return true;
+  } catch (e) {
+    console.error(`Handler error [${handler.name}]:`, e.message);
   }
-  return true;
 }
 
 world.beforeEvents.playerInteractWithBlock.subscribe((event) => {

@@ -6,7 +6,7 @@ import {
 } from "@minecraft/server";
 
 const CONFIG = {
-  defaultIdleSeconds: 99999, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
+  defaultIdleSeconds: 300, // เวลาที่ต้องอยู่นิ่งก่อนเข้า AFK
   warningSeconds: 5, // เวลาก่อนเข้า AFK ที่จะแจ้งเตือน
 
   movementTolerance: 0.15, // ระยะขยับเล็กน้อยที่ยังถือว่า "ไม่ขยับ"
@@ -23,8 +23,6 @@ const CONFIG = {
   collisionStep: 0.45, // ความละเอียดการเช็คชน
   collisionBuffer: 0.2, // ระยะกันกล้องชนบล็อก
 };
-
-const MAX_COLLISION_STEPS = 24;
 
 const PASS_THROUGH_BLOCKS = new Set([
   "minecraft:air",
@@ -360,554 +358,657 @@ const SHOT_LIBRARY = [
   },
 ];
 
-// state ของผู้เล่นแต่ละคน / handle interval ของ warning และ action bar
 const playerStates = new Map();
 const warningIntervals = new Map();
 const actionBarIntervals = new Map();
 
-// คืน object { x, y, z } จาก location — ป้องกัน reference ค้าง
 function clonePosition(location) {
-  return { x: location.x, y: location.y, z: location.z };
+  try {
+    return { x: location.x, y: location.y, z: location.z };
+  } catch (error) {
+    console.error("clonePosition: " + error);
+  }
 }
 
-// คืน object { x, y } จาก rotation — ป้องกัน reference ค้าง
 function cloneRotation(rotation) {
-  return { x: rotation.x, y: rotation.y };
+  try {
+    return { x: rotation.x, y: rotation.y };
+  } catch (error) {
+    console.error("cloneRotation: " + error);
+  }
 }
 
-// ยกเลิก system.runInterval handle แล้วลบออกจาก Map
 function clearTrackedRun(store, key) {
-  const handle = store.get(key);
-  if (handle !== undefined) {
-    system.clearRun(handle);
-    store.delete(key);
-  }
-}
-
-// ส่งข้อความ action bar โดยไม่ throw ถ้า player ออกไปแล้ว
-function safeActionBar(player, message) {
   try {
-    player.onScreenDisplay.setActionBar(message);
-  } catch {}
-}
-
-// รัน command บน player โดยไม่ throw ถ้า player ออกไปแล้ว
-function safeCommand(player, command) {
-  try {
-    player.runCommand(command);
-  } catch {}
-}
-
-// ส่งข้อความ chat โดยไม่ throw ถ้า player ออกไปแล้ว
-function safeChat(player, message) {
-  try {
-    player.sendMessage(message);
-  } catch {}
-}
-
-// ยกเลิก interval ที่ค้างอยู่แล้ว clear action bar ทันที 1 ครั้ง
-function clearActionBar(player) {
-  clearTrackedRun(actionBarIntervals, player.id);
-  safeActionBar(player, "");
-}
-
-// ยกเลิก countdown warning interval ของ player
-function stopWarning(playerId) {
-  clearTrackedRun(warningIntervals, playerId);
-}
-
-// คำนวณจำนวน tick ที่ต้อง idle ก่อนเข้า AFK (ใช้เป็น fallback ถ้า cache miss)
-function getIdleTicks(state) {
-  return Math.max(CONFIG.minIdleSeconds, state.idleSeconds) * 20;
-}
-
-// คำนวณจำนวน tick ของช่วง warning ก่อนเข้า AFK (ใช้เป็น fallback ถ้า cache miss)
-function getWarningTicks(state) {
-  return Math.min(
-    CONFIG.warningSeconds * 20,
-    Math.max(20, getIdleTicks(state) - 20),
-  );
-}
-
-// เปิด interval นับถอยหลังแสดง action bar "AFK in Xs" แล้วหยุดเองเมื่อหมดเวลา
-function startWarning(player, state) {
-  stopWarning(player.id);
-  clearTrackedRun(actionBarIntervals, player.id);
-
-  const warningTicks = getWarningTicks(state);
-  let elapsed = 0;
-
-  const show = () => {
-    const secondsLeft = Math.max(0, Math.ceil((warningTicks - elapsed) / 20));
-    safeActionBar(player, `§eAFK Cinematic in §c${secondsLeft}s`);
-  };
-
-  show();
-
-  const handle = system.runInterval(() => {
-    elapsed++;
-    if (elapsed >= warningTicks) {
-      stopWarning(player.id);
-      return;
+    const handle = store.get(key);
+    if (handle !== undefined) {
+      system.clearRun(handle);
+      store.delete(key);
     }
+  } catch (error) {
+    console.error("clearTrackedRun: " + error);
+  }
+}
+
+function safeCall(callback) {
+  try {
+    callback();
+  } catch (error) {
+    console.error("safeCall: " + error);
+  }
+}
+
+function clearActionBar(player) {
+  try {
+    clearTrackedRun(actionBarIntervals, player.id);
+  } catch (error) {
+    console.error("clearActionBar: " + error);
+  }
+}
+
+function stopWarning(playerId) {
+  try {
+    clearTrackedRun(warningIntervals, playerId);
+  } catch (error) {
+    console.error("stopWarning: " + error);
+  }
+}
+
+function startWarning(player, state) {
+  try {
+    stopWarning(player.id);
+    clearTrackedRun(actionBarIntervals, player.id);
+
+    const warningTicks = state.warningTicksCache;
+    let elapsed = 0;
+
+    const show = () => {
+      try {
+        const secondsLeft = Math.max(
+          0,
+          Math.ceil((warningTicks - elapsed) / 20),
+        );
+        safeCall(() =>
+          player.onScreenDisplay.setActionBar(
+            `§eAFK Cinematic in §c${secondsLeft}s`,
+          ),
+        );
+      } catch (error) {
+        console.error("show: " + error);
+      }
+    };
+
     show();
-  }, 1);
 
-  warningIntervals.set(player.id, handle);
+    const handle = system.runInterval(() => {
+      try {
+        elapsed++;
+        if (elapsed >= warningTicks) {
+          stopWarning(player.id);
+          return;
+        }
+        show();
+      } catch (error) {
+        console.error("startWarningInterval: " + error);
+      }
+    }, 1);
+
+    warningIntervals.set(player.id, handle);
+  } catch (error) {
+    console.error("startWarning: " + error);
+  }
 }
 
-// Polynomial hash ของ string → uint32 ใช้เป็น seed สำหรับ shot sequence
 function hashString(text) {
-  let hash = 0;
-  for (let index = 0; index < text.length; index++) {
-    hash = (hash * 31 + text.charCodeAt(index)) >>> 0;
+  try {
+    let hash = 0;
+    for (let index = 0; index < text.length; index++) {
+      hash = (hash * 31 + text.charCodeAt(index)) >>> 0;
+    }
+    return hash;
+  } catch (error) {
+    console.error("hashString: " + error);
   }
-  return hash;
 }
 
-// Wrap yaw ให้อยู่ในช่วง (-180, 180] ด้วย modulo — O(1) ไม่มี loop
 function normalizeYaw(yaw) {
-  return ((((yaw + 180) % 360) + 360) % 360) - 180;
+  try {
+    return ((((yaw + 180) % 360) + 360) % 360) - 180;
+  } catch (error) {
+    console.error("normalizeYaw: " + error);
+  }
 }
 
-// ความต่างระหว่างสอง yaw โดย normalize ก่อนเพื่อข้าม ±180 ได้ถูกต้อง
 function angleDifference(current, previous) {
-  return Math.abs(normalizeYaw(current - previous));
+  try {
+    return Math.abs(normalizeYaw(current - previous));
+  } catch (error) {
+    console.error("angleDifference: " + error);
+  }
 }
 
-// ระยะ 3D Euclidean ระหว่างสองจุด
 function distanceBetween(a, b) {
-  const dx = a.x - b.x;
-  const dy = a.y - b.y;
-  const dz = a.z - b.z;
-  return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  try {
+    const dx = a.x - b.x;
+    const dy = a.y - b.y;
+    const dz = a.z - b.z;
+    return Math.sqrt(dx * dx + dy * dy + dz * dz);
+  } catch (error) {
+    console.error("distanceBetween: " + error);
+  }
 }
 
-// Linear interpolate ระหว่างสองจุด 3D — amount 0 = a, 1 = b
 function lerpPosition(a, b, amount) {
-  return {
-    x: a.x + (b.x - a.x) * amount,
-    y: a.y + (b.y - a.y) * amount,
-    z: a.z + (b.z - a.z) * amount,
-  };
+  try {
+    return {
+      x: a.x + (b.x - a.x) * amount,
+      y: a.y + (b.y - a.y) * amount,
+      z: a.z + (b.z - a.z) * amount,
+    };
+  } catch (error) {
+    console.error("lerpPosition: " + error);
+  }
 }
 
-// แปลง forward/right/up ตาม yaw → offset 3D โลก ใช้คำนวณตำแหน่งกล้อง
 function rotateRelative(yaw, forward, right, up = 0) {
-  const radians = (yaw * Math.PI) / 180;
-  return {
-    x: -Math.sin(radians) * forward + Math.cos(radians) * right,
-    y: up,
-    z: Math.cos(radians) * forward + Math.sin(radians) * right,
-  };
+  try {
+    const radians = (yaw * Math.PI) / 180;
+    return {
+      x: -Math.sin(radians) * forward + Math.cos(radians) * right,
+      y: up,
+      z: Math.cos(radians) * forward + Math.sin(radians) * right,
+    };
+  } catch (error) {
+    console.error("rotateRelative: " + error);
+  }
 }
 
-// สร้าง array shot 30 ตัวจาก SHOT_LIBRARY โดย offset yaw + สุ่ม mirror จาก seed
 function buildShotSequence(baseYaw, seed) {
-  const sequence = [];
-  const startIndex = seed % SHOT_LIBRARY.length;
+  try {
+    const sequence = [];
+    const startIndex = seed % SHOT_LIBRARY.length;
 
-  for (let index = 0; index < SHOT_LIBRARY.length; index++) {
-    const template = SHOT_LIBRARY[(startIndex + index) % SHOT_LIBRARY.length];
-    const mirrored = ((seed >> (index % 8)) & 1) === 1 ? -1 : 1;
-    sequence.push({
-      yaw: normalizeYaw(baseYaw + template.yawOffset * mirrored),
-      distance: template.distance,
-      height: template.height,
-      slide: template.slide,
-      bob: template.bob,
-      duration: template.duration,
-      targetUp: template.targetUp,
-      targetForward: template.targetForward ?? 0,
-      targetRight: (template.targetRight ?? 0) * mirrored,
-    });
+    for (let index = 0; index < SHOT_LIBRARY.length; index++) {
+      const template = SHOT_LIBRARY[(startIndex + index) % SHOT_LIBRARY.length];
+      const mirrored = ((seed >> (index % 8)) & 1) === 1 ? -1 : 1;
+      sequence.push({
+        yaw: normalizeYaw(baseYaw + template.yawOffset * mirrored),
+        distance: template.distance,
+        height: template.height,
+        slide: template.slide,
+        bob: template.bob,
+        duration: template.duration,
+        targetUp: template.targetUp,
+        targetForward: template.targetForward ?? 0,
+        targetRight: (template.targetRight ?? 0) * mirrored,
+      });
+    }
+
+    return sequence;
+  } catch (error) {
+    console.error("buildShotSequence: " + error);
   }
-
-  return sequence;
 }
 
-// ดึง state ของ player จาก Map — ถ้ายังไม่มีให้สร้างใหม่พร้อม cache
 function ensureState(player) {
-  let state = playerStates.get(player.id);
-  if (state) {
+  try {
+    let state = playerStates.get(player.id);
+    if (state) {
+      return state;
+    }
+
+    state = {
+      lastPosition: clonePosition(player.location),
+      lastRotation: cloneRotation(player.getRotation()),
+      dimensionId: player.dimension.id,
+      idleTicks: 0,
+      idleSeconds: CONFIG.defaultIdleSeconds,
+      idleTicksCache: CONFIG.defaultIdleSeconds * 20,
+      warningTicksCache: Math.min(
+        CONFIG.warningSeconds * 20,
+        Math.max(20, CONFIG.defaultIdleSeconds * 20 - 20),
+      ),
+      isAfk: false,
+      anchor: clonePosition(player.location),
+      baseYaw: player.getRotation().y,
+      sequence: [],
+      sequenceIndex: 0,
+      shotTicks: 0,
+      waveClock: Math.random() * Math.PI * 2,
+    };
+
+    playerStates.set(player.id, state);
     return state;
+  } catch (error) {
+    console.error("ensureState: " + error);
   }
-
-  state = {
-    lastPosition: clonePosition(player.location),
-    lastRotation: cloneRotation(player.getRotation()),
-    dimensionId: player.dimension.id,
-    idleTicks: 0,
-    idleSeconds: CONFIG.defaultIdleSeconds,
-    idleTicksCache: CONFIG.defaultIdleSeconds * 20, // cache ป้องกันคำนวณซ้ำทุก tick
-    warningTicksCache: Math.min(
-      CONFIG.warningSeconds * 20,
-      Math.max(20, CONFIG.defaultIdleSeconds * 20 - 20),
-    ),
-    isAfk: false,
-    anchor: clonePosition(player.location),
-    baseYaw: player.getRotation().y,
-    sequence: [],
-    sequenceIndex: 0,
-    shotTicks: 0,
-    originalNameTag: player.nameTag,
-    waveClock: Math.random() * Math.PI * 2,
-  };
-
-  playerStates.set(player.id, state);
-  return state;
 }
 
-// บันทึก position/rotation/dimension ล่าสุดลง state — รับ cached loc/rot เพื่อไม่ access ซ้ำ
 function refreshBaseline(player, state, loc, rot) {
-  state.lastPosition = clonePosition(loc ?? player.location);
-  state.lastRotation = cloneRotation(rot ?? player.getRotation());
-  state.dimensionId = player.dimension.id;
-}
-
-// ตรวจว่า player ขยับหรือเปล่า โดยใช้ cached loc/rot จาก main loop — ไม่ access property เอง
-function hasMoved(player, state, loc, rot) {
-  if (player.dimension.id !== state.dimensionId) {
-    return true;
+  try {
+    state.lastPosition = clonePosition(loc ?? player.location);
+    state.lastRotation = cloneRotation(rot ?? player.getRotation());
+    state.dimensionId = player.dimension.id;
+  } catch (error) {
+    console.error("refreshBaseline: " + error);
   }
-
-  const dx = Math.abs(loc.x - state.lastPosition.x);
-  const dy = Math.abs(loc.y - state.lastPosition.y);
-  const dz = Math.abs(loc.z - state.lastPosition.z);
-  const yawDelta = angleDifference(rot.y, state.lastRotation.y);
-  const pitchDelta = Math.abs(rot.x - state.lastRotation.x);
-
-  return (
-    dx > CONFIG.movementTolerance ||
-    dy > CONFIG.movementTolerance ||
-    dz > CONFIG.movementTolerance ||
-    yawDelta > CONFIG.rotationTolerance ||
-    pitchDelta > CONFIG.rotationTolerance
-  );
 }
 
-// คำนวณ pitch/yaw ให้กล้องที่ from หันไปหา target
-function faceTarget(from, target) {
-  const dx = target.x - from.x;
-  const dy = target.y - from.y;
-  const dz = target.z - from.z;
-  const horizontal = Math.max(0.001, Math.sqrt(dx * dx + dz * dz));
+function hasMoved(player, state, loc, rot) {
+  try {
+    if (player.dimension.id !== state.dimensionId) {
+      return true;
+    }
 
-  return {
-    pitch: -((Math.atan2(dy, horizontal) * 180) / Math.PI),
-    yaw: normalizeYaw(-((Math.atan2(dx, dz) * 180) / Math.PI)),
-  };
+    const dx = Math.abs(loc.x - state.lastPosition.x);
+    const dy = Math.abs(loc.y - state.lastPosition.y);
+    const dz = Math.abs(loc.z - state.lastPosition.z);
+    const yawDelta = angleDifference(rot.y, state.lastRotation.y);
+    const pitchDelta = Math.abs(rot.x - state.lastRotation.x);
+
+    return (
+      dx > CONFIG.movementTolerance ||
+      dy > CONFIG.movementTolerance ||
+      dz > CONFIG.movementTolerance ||
+      yawDelta > CONFIG.rotationTolerance ||
+      pitchDelta > CONFIG.rotationTolerance
+    );
+  } catch (error) {
+    console.error("hasMoved: " + error);
+  }
+}
+
+function faceTarget(from, target) {
+  try {
+    const dx = target.x - from.x;
+    const dy = target.y - from.y;
+    const dz = target.z - from.z;
+    const horizontal = Math.max(0.001, Math.sqrt(dx * dx + dz * dz));
+
+    return {
+      pitch: -((Math.atan2(dy, horizontal) * 180) / Math.PI),
+      yaw: normalizeYaw(-((Math.atan2(dx, dz) * 180) / Math.PI)),
+    };
+  } catch (error) {
+    console.error("faceTarget: " + error);
+  }
 }
 
 const blockCache = new Map();
 
 function getBlockTypeId(dimension, position) {
-  const x = Math.floor(position.x);
-  const y = Math.floor(position.y);
-  const z = Math.floor(position.z);
-  const key = `${dimension.id}:${x},${y},${z}`;
-
-  const cached = blockCache.get(key);
-  if (cached !== undefined) return cached === "null" ? undefined : cached;
-
   try {
-    const typeId = dimension.getBlock({ x, y, z })?.typeId;
-    blockCache.set(key, typeId ?? "null");
-    return typeId;
-  } catch {
-    blockCache.set(key, "null");
-    return undefined;
+    const x = Math.floor(position.x);
+    const y = Math.floor(position.y);
+    const z = Math.floor(position.z);
+    const key = `${dimension.id}:${x},${y},${z}`;
+
+    const cached = blockCache.get(key);
+    if (cached !== undefined) return cached === "null" ? undefined : cached;
+
+    try {
+      const typeId = dimension.getBlock({ x, y, z })?.typeId;
+      blockCache.set(key, typeId ?? "null");
+      return typeId;
+    } catch {
+      blockCache.set(key, "null");
+      return undefined;
+    }
+  } catch (error) {
+    console.error("getBlockTypeId: " + error);
   }
 }
 
-// ตรวจว่า block typeId นั้นกล้องทะลุผ่านได้ (อากาศ น้ำ หญ้า ฯลฯ)
 function isPassThroughType(typeId) {
-  return typeId !== undefined && PASS_THROUGH_BLOCKS.has(typeId);
+  try {
+    return typeId !== undefined && PASS_THROUGH_BLOCKS.has(typeId);
+  } catch (error) {
+    console.error("isPassThroughType: " + error);
+  }
 }
 
-// ตรวจว่าตำแหน่งนั้นกล้องผ่านได้ไหม — รวม query + check ในขั้นตอนเดียว
 function isPassablePosition(dimension, position) {
-  return isPassThroughType(getBlockTypeId(dimension, position));
+  try {
+    return isPassThroughType(getBlockTypeId(dimension, position));
+  } catch (error) {
+    console.error("isPassablePosition: " + error);
+  }
 }
 
-// เลื่อนตำแหน่งขึ้น 0.5 ต่อรอบสูงสุด 6 ครั้งจนกล้องไม่อยู่ในบล็อก
-// skipLift = true สำหรับ shot สูง (height > 5) เพื่อ skip การ query ที่ไม่จำเป็น
 function liftAboveCollision(dimension, position, skipLift = false) {
-  if (skipLift) return position;
+  try {
+    if (skipLift) return position;
 
-  let lifted = clonePosition(position);
+    let lifted = clonePosition(position);
 
-  for (let tries = 0; tries < 6; tries++) {
-    if (isPassablePosition(dimension, lifted)) {
-      return lifted;
+    for (let tries = 0; tries < 6; tries++) {
+      if (isPassablePosition(dimension, lifted)) {
+        return lifted;
+      }
+      lifted = { x: lifted.x, y: lifted.y + 0.5, z: lifted.z };
     }
-    lifted = { x: lifted.x, y: lifted.y + 0.5, z: lifted.z };
-  }
 
-  return lifted;
+    return lifted;
+  } catch (error) {
+    console.error("liftAboveCollision: " + error);
+  }
 }
 
-// Ray-march จาก focus ไปยัง desired ≤ MAX_COLLISION_STEPS ขั้น
-// ถ้าชนบล็อกจะถอยหลัง collisionBuffer — skip lift ถ้า shotHeight > 5
 function pullCameraForward(dimension, focus, desired, shotHeight = 0) {
-  const travel = distanceBetween(focus, desired);
-  if (travel <= 0.001) {
+  try {
+    const travel = distanceBetween(focus, desired);
+    if (travel <= 0.001) {
+      return liftAboveCollision(dimension, desired, shotHeight > 5.0);
+    }
+
+    const steps = Math.min(
+      24,
+      Math.max(2, Math.ceil(travel / CONFIG.collisionStep)),
+    );
+    let safe = clonePosition(focus);
+
+    for (let index = 1; index <= steps; index++) {
+      const sample = lerpPosition(focus, desired, index / steps);
+      if (!isPassablePosition(dimension, sample)) {
+        const retreat = Math.min(1, CONFIG.collisionBuffer / travel);
+        return liftAboveCollision(
+          dimension,
+          lerpPosition(safe, focus, retreat),
+          shotHeight > 5.0,
+        );
+      }
+      safe = sample;
+    }
+
     return liftAboveCollision(dimension, desired, shotHeight > 5.0);
+  } catch (error) {
+    console.error("pullCameraForward: " + error);
   }
-
-  const steps = Math.min(
-    MAX_COLLISION_STEPS,
-    Math.max(2, Math.ceil(travel / CONFIG.collisionStep)),
-  );
-  let safe = clonePosition(focus);
-
-  for (let index = 1; index <= steps; index++) {
-    const sample = lerpPosition(focus, desired, index / steps);
-    if (!isPassablePosition(dimension, sample)) {
-      const retreat = Math.min(1, CONFIG.collisionBuffer / travel);
-      return liftAboveCollision(
-        dimension,
-        lerpPosition(safe, focus, retreat),
-        shotHeight > 5.0,
-      );
-    }
-    safe = sample;
-  }
-
-  return liftAboveCollision(dimension, desired, shotHeight > 5.0);
 }
 
-// คำนวณ position + rotation กล้องสำหรับ tick นี้ รับ cached loc เพื่อไม่ access ซ้ำ
 function getCameraFrame(player, state, loc) {
-  const playerLoc = loc ?? player.location;
-  const shot = state.sequence[state.sequenceIndex];
-  const progress = shot.duration <= 0 ? 0 : state.shotTicks / shot.duration;
-  const breath = Math.sin(state.waveClock + progress * Math.PI * 2);
-  const drift = Math.cos(state.waveClock * 0.7 + progress * Math.PI * 2);
-  const anchor = state.anchor;
+  try {
+    const playerLoc = loc ?? player.location;
+    const shot = state.sequence[state.sequenceIndex];
+    const progress = shot.duration <= 0 ? 0 : state.shotTicks / shot.duration;
+    const breath = Math.sin(state.waveClock + progress * Math.PI * 2);
+    const drift = Math.cos(state.waveClock * 0.7 + progress * Math.PI * 2);
+    const anchor = state.anchor;
 
-  const desiredOffset = rotateRelative(
-    shot.yaw,
-    shot.distance,
-    drift * shot.slide,
-    shot.height + breath * shot.bob,
-  );
+    const desiredOffset = rotateRelative(
+      shot.yaw,
+      shot.distance,
+      drift * shot.slide,
+      shot.height + breath * shot.bob,
+    );
 
-  const desiredPosition = {
-    x: anchor.x + desiredOffset.x,
-    y: anchor.y + desiredOffset.y,
-    z: anchor.z + desiredOffset.z,
-  };
+    const desiredPosition = {
+      x: anchor.x + desiredOffset.x,
+      y: anchor.y + desiredOffset.y,
+      z: anchor.z + desiredOffset.z,
+    };
 
-  const targetOffset = rotateRelative(
-    state.baseYaw,
-    shot.targetForward,
-    shot.targetRight,
-    shot.targetUp,
-  );
+    const targetOffset = rotateRelative(
+      state.baseYaw,
+      shot.targetForward,
+      shot.targetRight,
+      shot.targetUp,
+    );
 
-  const target = {
-    x: playerLoc.x + targetOffset.x,
-    y: playerLoc.y + targetOffset.y,
-    z: playerLoc.z + targetOffset.z,
-  };
+    const target = {
+      x: playerLoc.x + targetOffset.x,
+      y: playerLoc.y + targetOffset.y,
+      z: playerLoc.z + targetOffset.z,
+    };
 
-  const resolvedPosition = pullCameraForward(
-    player.dimension,
-    target,
-    desiredPosition,
-    shot.height,
-  );
-  const rotation = faceTarget(resolvedPosition, target);
+    const resolvedPosition = pullCameraForward(
+      player.dimension,
+      target,
+      desiredPosition,
+      shot.height,
+    );
+    const rotation = faceTarget(resolvedPosition, target);
 
-  return { position: resolvedPosition, rotation };
-}
-
-// เริ่ม AFK mode: ตั้ง anchor, สร้าง shot sequence, ซ่อน HUD, ตั้ง FOV
-function startAfk(player, state) {
-  stopWarning(player.id);
-  clearActionBar(player);
-
-  state.isAfk = true;
-  state.idleTicks = getIdleTicks(state);
-  state.anchor = clonePosition(player.location);
-  state.baseYaw = player.getRotation().y;
-  state.sequence = buildShotSequence(state.baseYaw, hashString(player.id));
-  state.sequenceIndex = 0;
-  state.shotTicks = 0;
-  state.waveClock = Math.random() * Math.PI * 2;
-  state.originalNameTag = player.nameTag;
-
-  player.nameTag = `§7[AFK] §f${state.originalNameTag}`;
-  safeCommand(player, "hud @s hide all");
-  safeCommand(player, `camera @s fov_set ${CONFIG.cinematicFov}`);
-}
-
-// ออกจาก AFK mode: reset กล้อง HUD nameTag และล้าง interval ทั้งหมด
-function stopAfk(player, state) {
-  state.isAfk = false;
-  state.idleTicks = 0;
-  state.sequenceIndex = 0;
-  state.shotTicks = 0;
-
-  safeCommand(player, "camera @s clear");
-  safeCommand(player, "camera @s fov_clear 0.2 linear");
-  safeCommand(player, "hud @s reset");
-  player.nameTag = state.originalNameTag;
-
-  stopWarning(player.id);
-  clearTrackedRun(actionBarIntervals, player.id);
-  clearActionBar(player);
-}
-
-// นับ idle tick — ใช้ cache เพื่อ trigger warning / AFK โดยไม่คำนวณซ้ำ
-function updateIdlePlayer(player, state, ticksToAdd = 1) {
-  for (let i = 0; i < ticksToAdd; i++) {
-    state.idleTicks++;
-    const idleTicks = state.idleTicksCache ?? getIdleTicks(state);
-    const warningTicks = state.warningTicksCache ?? getWarningTicks(state);
-
-    if (state.idleTicks === idleTicks - warningTicks) {
-      startWarning(player, state);
-    }
-
-    if (state.idleTicks >= idleTicks) {
-      startAfk(player, state);
-      break;
-    }
+    return { position: resolvedPosition, rotation };
+  } catch (error) {
+    console.error("getCameraFrame: " + error);
   }
 }
 
-// ส่ง camera command 1 tick แล้วเลื่อน shot index เมื่อ shot หมด duration — รับ cached loc
-function updateAfkCamera(player, state, loc) {
-  const frame = getCameraFrame(player, state, loc);
-  safeCommand(
-    player,
-    `camera @s set minecraft:free pos ${frame.position.x.toFixed(3)} ${frame.position.y.toFixed(3)} ${frame.position.z.toFixed(3)} rot ${frame.rotation.pitch.toFixed(3)} ${frame.rotation.yaw.toFixed(3)}`,
-  );
+function startAfk(player, state) {
+  try {
+    stopWarning(player.id);
+    clearActionBar(player);
 
-  state.shotTicks++;
-  const shot = state.sequence[state.sequenceIndex];
-  if (state.shotTicks >= shot.duration) {
-    state.sequenceIndex = (state.sequenceIndex + 1) % state.sequence.length;
+    state.isAfk = true;
+    state.idleTicks = state.idleTicksCache;
+    state.anchor = clonePosition(player.location);
+    state.baseYaw = player.getRotation().y;
+    state.sequence = buildShotSequence(state.baseYaw, hashString(player.id));
+    state.sequenceIndex = 0;
     state.shotTicks = 0;
     state.waveClock = Math.random() * Math.PI * 2;
+
+    safeCall(() => player.runCommand("hud @s hide all"));
+    safeCall(() =>
+      player.runCommand(`camera @s fov_set ${CONFIG.cinematicFov}`),
+    );
+  } catch (error) {
+    console.error("startAfk: " + error);
   }
 }
 
-// ตั้ง idle threshold ใหม่ + อัปเดต cache ทั้งสองค่าทันที
+function stopAfk(player, state) {
+  try {
+    state.isAfk = false;
+    state.idleTicks = 0;
+    state.sequenceIndex = 0;
+    state.shotTicks = 0;
+
+    safeCall(() => player.runCommand("camera @s clear"));
+    safeCall(() => player.runCommand("camera @s fov_clear 0.2 linear"));
+    safeCall(() => player.runCommand("hud @s reset"));
+
+    stopWarning(player.id);
+    clearTrackedRun(actionBarIntervals, player.id);
+    clearActionBar(player);
+  } catch (error) {
+    console.error("stopAfk: " + error);
+  }
+}
+
+function updateIdlePlayer(player, state, ticksToAdd = 1) {
+  try {
+    for (let i = 0; i < ticksToAdd; i++) {
+      state.idleTicks++;
+      const idleTicks = state.idleTicksCache;
+      const warningTicks = state.warningTicksCache;
+
+      if (state.idleTicks === idleTicks - warningTicks) {
+        startWarning(player, state);
+      }
+
+      if (state.idleTicks >= idleTicks) {
+        startAfk(player, state);
+        break;
+      }
+    }
+  } catch (error) {
+    console.error("updateIdlePlayer: " + error);
+  }
+}
+
+function updateAfkCamera(player, state, loc) {
+  try {
+    const frame = getCameraFrame(player, state, loc);
+    safeCall(() =>
+      player.runCommand(
+        `camera @s set minecraft:free pos ${frame.position.x.toFixed(3)} ${frame.position.y.toFixed(3)} ${frame.position.z.toFixed(3)} rot ${frame.rotation.pitch.toFixed(3)} ${frame.rotation.yaw.toFixed(3)}`,
+      ),
+    );
+
+    state.shotTicks++;
+    const shot = state.sequence[state.sequenceIndex];
+    if (state.shotTicks >= shot.duration) {
+      state.sequenceIndex = (state.sequenceIndex + 1) % state.sequence.length;
+      state.shotTicks = 0;
+      state.waveClock = Math.random() * Math.PI * 2;
+    }
+  } catch (error) {
+    console.error("updateAfkCamera: " + error);
+  }
+}
+
 function setPlayerIdleTime(player, seconds) {
-  const state = ensureState(player);
-  const clampedSeconds = Math.max(
-    CONFIG.minIdleSeconds,
-    Math.min(CONFIG.maxIdleSeconds, Math.floor(seconds)),
-  );
+  try {
+    const state = ensureState(player);
+    const clampedSeconds = Math.max(
+      CONFIG.minIdleSeconds,
+      Math.min(CONFIG.maxIdleSeconds, Math.floor(seconds)),
+    );
 
-  state.idleSeconds = clampedSeconds;
-  state.idleTicks = 0;
-  state.idleTicksCache = clampedSeconds * 20;
-  state.warningTicksCache = Math.min(
-    CONFIG.warningSeconds * 20,
-    Math.max(20, state.idleTicksCache - 20),
-  );
-  stopWarning(player.id);
-  refreshBaseline(player, state);
+    state.idleSeconds = clampedSeconds;
+    state.idleTicks = 0;
+    state.idleTicksCache = clampedSeconds * 20;
+    state.warningTicksCache = Math.min(
+      CONFIG.warningSeconds * 20,
+      Math.max(20, state.idleTicksCache - 20),
+    );
+    stopWarning(player.id);
+    refreshBaseline(player, state);
 
-  safeChat(player, `§7[AFK] Start time set to §e${clampedSeconds}§7 seconds.`);
+    safeCall(() =>
+      player.sendMessage(
+        `§7[AFK] Start time set to §e${clampedSeconds}§7 seconds.`,
+      ),
+    );
+  } catch (error) {
+    console.error("setPlayerIdleTime: " + error);
+  }
 }
 
-// Force เข้า AFK mode ทันทีโดยไม่รอ idle — ตรวจก่อนว่ากำลัง AFK อยู่แล้วหรือเปล่า
 function startCinematicNow(player) {
-  const state = ensureState(player);
+  try {
+    const state = ensureState(player);
 
-  if (state.isAfk) {
-    safeChat(player, "§7[AFK] Cinematic+ is already running.");
-    return;
+    if (state.isAfk) {
+      safeCall(() =>
+        player.sendMessage("§7[AFK] Cinematic+ is already running."),
+      );
+      return;
+    }
+
+    stopWarning(player.id);
+    refreshBaseline(player, state);
+    startAfk(player, state);
+  } catch (error) {
+    console.error("startCinematicNow: " + error);
   }
-
-  stopWarning(player.id);
-  refreshBaseline(player, state);
-  startAfk(player, state);
 }
 
 const quckCommandAFK = (origin) => {
-  const player = origin.sourceEntity;
+  try {
+    const player = origin.sourceEntity;
 
-  if (!player || !player.isValid) {
-    return { status: CustomCommandStatus.Failure };
+    if (!player || !player.isValid) {
+      return { status: CustomCommandStatus.Failure };
+    }
+
+    system.run(() => {
+      try {
+        startCinematicNow(player);
+      } catch (error) {
+        console.error("quckCommandAFKRun: " + error);
+      }
+    });
+  } catch (error) {
+    console.error("quckCommandAFK: " + error);
   }
-
-  system.run(() => {
-    startCinematicNow(player);
-  });
 };
 
 function registerCommandAFK(init) {
-  const commandData = {
-    name: "addon:afk",
-    description: "Enter AFK Cinematic mode immediately.",
-    permissionLevel: CommandPermissionLevel.Any,
-    cheatsRequired: false,
-  };
+  try {
+    const commandData = {
+      name: "addon:afk",
+      description: "Enter AFK Cinematic mode immediately.",
+      permissionLevel: CommandPermissionLevel.Any,
+      cheatsRequired: false,
+    };
 
-  init.customCommandRegistry.registerCommand(commandData, quckCommandAFK);
-}
-
-// =====================================================================
-//                         Main Loop
-// ======================================================================
-
-// Fast Loop (1 Tick): คุมกล้อง Cinematic ให้ลื่นไหล และให้ผู้เล่นหลุด AFK ทันทีที่ขยับตัว
-
-function handleAFK() {
-  blockCache.clear();
-
-  for (const player of world.getAllPlayers()) {
-    const state = ensureState(player);
-    if (!state.isAfk) continue;
-
-    const loc = player.location;
-    const rot = player.getRotation();
-
-    if (hasMoved(player, state, loc, rot)) {
-      stopAfk(player, state);
-      state.anchor = clonePosition(loc);
-    } else {
-      updateAfkCamera(player, state, loc);
-    }
+    init.customCommandRegistry.registerCommand(commandData, quckCommandAFK);
+  } catch (error) {
+    console.error("registerCommandAFK: " + error);
   }
 }
 
-// Slow Loop (20 Ticks = 1 วินาที): เช็คคนปกติว่ายืนนิ่งหรือไม่ ลดภาระเซิร์ฟเวอร์ลง 20 เท่าสำหรับคนที่ยังไม่ AFK
+function handleAFK() {
+  try {
+    blockCache.clear();
+
+    const players = world.getAllPlayers();
+    const length = players.length;
+
+    for (let i = 0; i < length; i++) {
+      const player = players[i];
+      const state = ensureState(player);
+      if (!state.isAfk) continue;
+
+      const loc = player.location;
+      const rot = player.getRotation();
+
+      if (hasMoved(player, state, loc, rot)) {
+        stopAfk(player, state);
+        state.anchor = clonePosition(loc);
+      } else {
+        updateAfkCamera(player, state, loc);
+      }
+    }
+  } catch (error) {
+    console.error("handleAFK: " + error);
+  }
+}
 
 function handleAddPlayer(event) {
-  for (const player of world.getAllPlayers()) {
-    const state = ensureState(player);
-    if (state.isAfk) continue;
+  try {
+    const players = world.getAllPlayers();
+    const length = players.length;
 
-    const loc = player.location;
-    const rot = player.getRotation();
+    for (let i = 0; i < length; i++) {
+      const player = players[i];
+      const state = ensureState(player);
+      if (state.isAfk) continue;
 
-    if (hasMoved(player, state, loc, rot)) {
-      refreshBaseline(player, state, loc, rot);
-      state.idleTicks = 0;
-      if (warningIntervals.has(player.id)) {
-        stopWarning(player.id);
-        clearActionBar(player);
+      const loc = player.location;
+      const rot = player.getRotation();
+
+      if (hasMoved(player, state, loc, rot)) {
+        refreshBaseline(player, state, loc, rot);
+        state.idleTicks = 0;
+        if (warningIntervals.has(player.id)) {
+          stopWarning(player.id);
+          clearActionBar(player);
+        }
+        state.anchor = clonePosition(loc);
+      } else {
+        updateIdlePlayer(player, state, 20);
       }
-      state.anchor = clonePosition(loc);
-    } else {
-      updateIdlePlayer(player, state, 20);
     }
+  } catch (error) {
+    console.error("handleAddPlayer: " + error);
   }
 }
 
 function playerLeaveAfk(playerId) {
-  if (!playerId) return;
+  try {
+    if (!playerId) return;
 
-  stopWarning(playerId);
-  clearTrackedRun(actionBarIntervals, playerId);
-  playerStates.delete(playerId);
+    stopWarning(playerId);
+    clearTrackedRun(actionBarIntervals, playerId);
+    playerStates.delete(playerId);
+    console.log("playerId:", playerId);
+  } catch (error) {
+    console.error("playerLeaveAfk: " + error);
+  }
 }
 
-export { handleAFK, handleAddPlayer, registerCommandAFK, playerLeaveAfk };
+export { handleAddPlayer, handleAFK, playerLeaveAfk, registerCommandAFK };

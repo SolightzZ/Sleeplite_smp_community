@@ -48,10 +48,15 @@ function receiveItems(player) {
     const pendingIds = ownerNotifyMap.get(player.id);
     if (!pendingIds || pendingIds.size === 0) {
       player.sendMessage("[Job] ไม่มีไอเท็มให้รับ");
+      const form = new ActionFormData();
+      form.title("Receive Items");
+      form.body("No items to receive.");
       form.button("Back");
       showUI(player, form, () => showMainMenu(player));
       return;
     }
+
+    const form = new ActionFormData();
 
     const allItems = [];
     for (const jid of pendingIds) {
@@ -65,7 +70,6 @@ function receiveItems(player) {
       body += `- ${item.id.replace("minecraft:", "")} x${item.amount}\n`;
     body += "\nPress Receive to collect all items.";
 
-    const form = new ActionFormData();
     form.title("Receive Items");
     form.body(body);
     form.button("Receive All");
@@ -92,7 +96,7 @@ function receiveItems(player) {
   } catch (error) {
     console.error("receiveItems: " + error);
   }
-}
+} 
 
 // Main Menu
 const showMainMenu = (player) => {

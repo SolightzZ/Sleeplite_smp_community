@@ -7,6 +7,7 @@ function MagnetonUseItem({ source }) {
 
 function onLeave(event) {
   removeUser(event.playerId);
+  console.log("event.playerId:", event.playerId);
 }
 
 function magnetDie(event) {

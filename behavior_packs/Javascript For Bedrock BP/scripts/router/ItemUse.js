@@ -9,34 +9,39 @@ import { chatrankssitemUse } from "../plugin/NameTagRank.js";
 import { RUNREPORT } from "../plugin/Report.js";
 import { setting_main } from "../plugin/setting.js";
 import { ZoneProtection_OnItemUse } from "../module/protection/system.js";
+import { handleJob } from "../module/jobs/Job.js";
 
-function onItemUse(event) {
-  const { source, itemStack } = event;
-  if (!(source instanceof Player) || !itemStack) return;
+world.afterEvents.itemUse.subscribe((event) => {
+  try {
+    const { source, itemStack } = event;
+    if (!(source instanceof Player) || !itemStack) return;
 
-  const Items = itemStack.typeId;
+    const Items = itemStack.typeId;
 
-  if (Items === "minecraft:light_block_13") {
-    return LligitemUse(event);
-  } else if (Items === "minecraft:compass") {
-    return setting_main(event);
-  } else if (Items === "addon:protection") {
-    return ZoneProtection_OnItemUse(event);
-  } else if (Items === "addon:trade") {
-    return RewarditemUse(event);
-  } else if (Items === "addon:emote") {
-    return startEmote(event);
-  } else if (Items === "minecraft:paper") {
-    return RUNREPORT(event);
-  } else if (Items === "minecraft:command_block") {
-    return chatrankssitemUse(event);
-  } else if (Items === "addon:magnet_") {
-    return MagnetonUseItem(event);
-  } else if (Items === "addon:fullbright_") {
-    return FullBrightUseItem(event);
-  } else if (Items === "minecraft:sponge") {
-    return handleSpongeAbsorption(event);
+    if (Items === "minecraft:light_block_13") {
+      return LligitemUse(event);
+    } else if (Items === "minecraft:compass") {
+      return setting_main(event);
+    } else if (Items === "addon:protection") {
+      return ZoneProtection_OnItemUse(event);
+    } else if (Items === "addon:trade") {
+      return RewarditemUse(event);
+    } else if (Items === "addon:emote") {
+      return startEmote(event);
+    } else if (Items === "minecraft:paper") {
+      return RUNREPORT(event);
+    } else if (Items === "minecraft:command_block") {
+      return chatrankssitemUse(event);
+    } else if (Items === "addon:magnet_") {
+      return MagnetonUseItem(event);
+    } else if (Items === "addon:fullbright_") {
+      return FullBrightUseItem(event);
+    } else if (Items === "minecraft:sponge") {
+      return handleSpongeAbsorption(event);
+    } else if (Items === "addon:bank") {
+      handleJob(event);
+    }
+  } catch (error) {
+    console.warn("item_use", error.message);
   }
-}
-
-world.afterEvents.itemUse.subscribe(onItemUse);
+});

@@ -31,14 +31,19 @@ const showWelcome = (boy) => {
 };
 
 function playerSpawnWelcome(event) {
-  const boy = event.player;
-  const isNew = event.initialSpawn;
+  try {
+    const boy = event.player;
+    console.log("boy:", boy.name);
+    const isNew = event.initialSpawn;
 
-  if (!isNew) return;
+    if (!isNew) return;
 
-  system.runTimeout(() => {
-    showWelcome(boy);
-  }, wait);
+    system.runTimeout(() => {
+      showWelcome(boy);
+    }, wait);
+  } catch (error) {
+    console.warn("player_spawn_welcome", error.message);
+  }
 }
 
 export { playerSpawnWelcome };

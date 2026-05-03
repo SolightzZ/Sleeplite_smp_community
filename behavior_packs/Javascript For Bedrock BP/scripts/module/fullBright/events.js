@@ -12,11 +12,12 @@ function onDeadFullBright({ deadEntity }) {
   }
 }
 
-function onLeaveFullBright({ playerId }) {
+function onLeaveFullBright(playerId) {
   try {
     const player = world.getEntity(playerId);
     if (player?.typeId === "minecraft:player") {
       resetBright(player);
+      resetBright(player.name);
     }
   } catch (error) {
     console.error("onLeaveFullBright:", error);

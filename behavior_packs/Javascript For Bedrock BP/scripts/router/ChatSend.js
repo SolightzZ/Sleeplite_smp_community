@@ -12,7 +12,7 @@ const CHAT_HANDLERS = [
   ZoneProtection_OnChat,
 ];
 
-function onChatMessage(event) {
+world.beforeEvents.chatSend.subscribe((event) => {
   try {
     const sender = event.sender;
     if (!sender) return;
@@ -28,5 +28,4 @@ function onChatMessage(event) {
   } catch (error) {
     console.warn("onChatMessage", error.message);
   }
-}
-world.beforeEvents.chatSend.subscribe(onChatMessage);
+});

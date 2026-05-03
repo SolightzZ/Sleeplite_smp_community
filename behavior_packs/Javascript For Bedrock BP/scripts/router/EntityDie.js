@@ -10,13 +10,15 @@ const PLAYER_ACTIONS = [
   onDeadFullBright,
 ];
 
-function onEntityDeath(event) {
-  const entity = event.deadEntity;
-  if (!entity || entity.typeId !== "minecraft:player") return;
+world.afterEvents.entityDie.subscribe((event) => {
+  try {
+    const entity = event.deadEntity;
+    if (!entity || entity.typeId !== "minecraft:player") return;
 
-  for (let i = 0; i < PLAYER_ACTIONS.length; i++) {
-    PLAYER_ACTIONS[i](event);
+    for (let i = 0; i < PLAYER_ACTIONS.length; i++) {
+      PLAYER_ACTIONS[i](event);
+    }
+  } catch (error) {
+    console.warn("entity_die", error.message);
   }
-}
-
-world.afterEvents.entityDie.subscribe(onEntityDeath);
+});

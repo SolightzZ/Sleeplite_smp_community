@@ -87,14 +87,15 @@ const addOwnerNotify = (ownerId, jobId_) => {
 function completeJob(player) {
   try {
     const activeJobId = playerJobMap.get(player.id);
+
     if (activeJobId === undefined) {
       player.sendMessage("[Job] คุณไม่มีงานที่กำลังทำอยู่");
-      form.button("Back");
-      showUI(player, form, () => showMainMenu(player));
+      showMainMenu(player);
       return;
     }
 
     const job = jobs.find((j) => j.id === activeJobId);
+
     if (!job) {
       stopTimer(player.id);
       playerJobMap.delete(player.id);
@@ -108,6 +109,7 @@ function completeJob(player) {
 
     const t = timerMap.get(player.id);
     let timeStr = "N/A";
+
     if (t) {
       const secs = Math.ceil(
         (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
@@ -117,13 +119,26 @@ function completeJob(player) {
       timeStr = `${m}:${String(s).padStart(2, "0")}`;
     }
 
-    let body = `Job from: ${job.ownerName}\nReward: ${total} diamond\nTime left: ${timeStr}\n\nItems: `;
+    let body = `Job from: ${job.ownerName}\nReward: ${total} diamond\nTime left: ${timeStr}\n\nItems:\n`;
+
     for (const item of job.items) {
       const have = invMap.get(item.id) ?? 0;
       const ok = have >= item.amount;
-      body += `${ok ? "[OK] " : "[MISSING] "}${item.id.replace("minecraft:", "")}  ${have}/${item.amount} (${item.diamond} diamond)\n`;
+
+      body += `${ok ? "[OK] " : "[MISSING] "}${item.id.replace(
+        "minecraft:",
+        "",
+      )} ${have}/${item.amount} (${item.diamond} diamond)\n`;
     }
 
+    showActiveJobForm(player, job, body, total);
+  } catch (error) {
+    console.error("[Job] completeJob: " + error);
+  }
+}
+
+function showActiveJobForm(player, job, body, total) {
+  try {
     const form = new ActionFormData();
     form.title("Active Job");
     form.body(body);
@@ -138,65 +153,33 @@ function completeJob(player) {
       }
 
       if (res.selection === 1) {
-        const confirmForm = new ActionFormData();
-        confirmForm.title("Cancel Delivery?");
-        confirmForm.body(
-          `คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\nคำสั่งซื้อจะถูกส่งกลับไปยังคิว\nคุณจะ ไม่ได้รับเพชรใดๆ`,
-        );
-        confirmForm.button("Yes, Cancel");
-        confirmForm.button("No, Keep");
-
-        showUI(player, confirmForm, (r) => {
-          if (r.selection === 1) {
-            completeJob(player);
-            return;
-          }
-
-          stopTimer(player.id);
-          playerJobMap.delete(player.id);
-
-          job.status = "open";
-          job.takenBy = null;
-          saveData();
-
-          player.sendMessage(
-            "[Job] You cancelled the delivery. It is back in the queue",
-          );
-
-          const owner = findPlayerById(job.owner);
-          if (owner)
-            owner.sendMessage(
-              `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยังคิว`,
-            );
-        });
+        showCancelConfirmForm(player, job);
         return;
       }
 
-      const inv2 = player.getComponent("minecraft:inventory").container;
-      const missing = checkJobItems(inv2, job);
+      const inv = player.getComponent("minecraft:inventory").container;
+      const missing = checkJobItems(inv, job);
+
       if (missing) {
         player.sendMessage(`[Job] รายการที่ยังไม่ครบ: ${missing}`);
         return;
       }
 
-      // ลบ item
-      removeJobItems(inv2, job);
-
-      // ให้เพชร
+      removeJobItems(inv, job);
       giveDiamond(player, total);
 
-      // ส่ง item ไป ให้ owner
       const deliveryItems = job.items.map((it) => ({
         id: it.id,
         amount: it.amount,
       }));
+
       pendingDelivery.set(job.id, {
         ownerName: player.name,
         items: deliveryItems,
       });
+
       addOwnerNotify(job.owner, job.id);
 
-      // หยุด timer
       stopTimer(player.id);
       playerJobMap.delete(player.id);
 
@@ -206,13 +189,55 @@ function completeJob(player) {
       player.sendMessage(`[Job] งานเสร็จสมบูรณ์ ได้รับ ${total} เพชร`);
 
       const owner = findPlayerById(job.owner);
-      if (owner)
+      if (owner) {
         owner.sendMessage(
           `[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “My Orders” เพื่อรับไอเท็มของคุณ`,
         );
+      }
     });
   } catch (error) {
-    console.error("[Job] completeJob: " + error);
+    console.error("[Job] showActiveJobForm: " + error);
+  }
+}
+
+function showCancelConfirmForm(player, job) {
+  try {
+    const form = new ActionFormData();
+    form.title("Cancel Delivery?");
+    form.body(
+      "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\n" +
+        "คำสั่งซื้อจะถูกส่งกลับไปยังคิว\n" +
+        "คุณจะ ไม่ได้รับเพชรใดๆ",
+    );
+    form.button("Yes, Cancel");
+    form.button("No, Keep");
+
+    showUI(player, form, (res) => {
+      if (res.selection === 1) {
+        completeJob(player);
+        return;
+      }
+
+      stopTimer(player.id);
+      playerJobMap.delete(player.id);
+
+      job.status = "open";
+      job.takenBy = null;
+      saveData();
+
+      player.sendMessage(
+        "[Job] คุณได้ยกเลิกการจัดส่งเรียบร้อยแล้ว งานถูกนำกลับเข้าสู่คิวอีกครั้ง",
+      );
+
+      const owner = findPlayerById(job.owner);
+      if (owner) {
+        owner.sendMessage(
+          `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยังคิว`,
+        );
+      }
+    });
+  } catch (error) {
+    console.error("[Job] showCancelConfirmForm: " + error);
   }
 }
 

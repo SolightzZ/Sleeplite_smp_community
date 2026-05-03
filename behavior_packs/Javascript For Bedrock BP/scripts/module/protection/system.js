@@ -209,6 +209,7 @@ export function clearVisualStateForPlayers(event) {
   const playerName = event;
   clearVisualStateForPlayer(playerName);
   userInterfaceLockByPlayer.delete(playerName);
+  console.log("playerName:", playerName);
 }
 
 system.run(() => zoneDatabase.loadAllZonesFromStorage());
