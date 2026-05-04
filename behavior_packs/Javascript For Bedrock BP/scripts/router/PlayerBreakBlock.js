@@ -1,12 +1,10 @@
 import { world } from "@minecraft/server";
-import { onHammerBreak } from "../module/hammer/index";
 import { handleBlockEditPreEvent } from "../module/protection/system";
 import { handleAutoReplant } from "../plugin/AutoReplant";
 import { VeinMiner } from "../module/veinMiner/index";
 import { TreeCapitatorBreakBlock } from "../module/treeCapitator/index";
 
 const handlerAfterEvents = [
-  onHammerBreak,
   handleBlockEditPreEvent,
   handleAutoReplant,
   TreeCapitatorBreakBlock,

@@ -1,4 +1,4 @@
-export const list = [
+const list = [
   // 1-7 Day
   { day: 1, id: "minecraft:apple", count: 8 },
   { day: 2, id: "minecraft:bread", count: 12 },
@@ -40,9 +40,11 @@ export const list = [
   { day: 30, id: "minecraft:enchanted_golden_apple", count: 7 },
 ];
 
-export const config = {
+const config = {
   vipMul: 2,
   vipTag: "vip",
   adminTag: "admin",
   dbKey: "reward:one1",
 };
+
+export { list, config };

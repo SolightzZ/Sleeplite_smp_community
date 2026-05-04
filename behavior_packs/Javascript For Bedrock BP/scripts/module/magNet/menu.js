@@ -3,7 +3,7 @@ import { setting } from "./config.js";
 import { countUser, hasUser } from "./state.js";
 import { canUse, toggle } from "./toggle.js";
 
-export function showMenu(player) {
+function showMenu(player) {
   if (!canUse(player)) return;
 
   const isOn = hasUser(player.id);
@@ -31,3 +31,5 @@ export function showMenu(player) {
     }
   });
 }
+
+export { showMenu };

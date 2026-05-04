@@ -1,5 +1,4 @@
 import { world } from "@minecraft/server";
-import { chatMessage } from "../module/simpleSit/index";
 import { helpmain } from "../help/help";
 import { xz_main } from "../plugin/nether";
 import { RewardchatSend } from "../module/rewards/system";

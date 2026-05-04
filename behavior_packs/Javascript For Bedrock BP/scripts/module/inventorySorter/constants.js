@@ -1,4 +1,4 @@
-export const SORTING_MODES = {
+const SORTING_MODES = {
   type: "type", // เรียงตามชนิดของไอเท็ม (ค่าเริ่มต้น)
   low: "asc", // เรียงตามจำนวน: น้อย -> มาก
   max: "desc", // เรียงตามจำนวน: มาก -> น้อย
@@ -12,7 +12,7 @@ export const SORTING_MODES = {
   column: "column", // จัดลาย: แบบแถวแนวตั้ง (ใส่ 1 คอลัมน์ เว้น 1 คอลัมน์)
 };
 
-export const RARITY_ORDER = {
+const RARITY_ORDER = {
   // Common
   "minecraft:dirt": 0,
   "minecraft:cobblestone": 0,
@@ -35,7 +35,7 @@ export const RARITY_ORDER = {
   "minecraft:netherite_scrap": 3,
 };
 
-export const ITEM_CATEGORIES = {
+const ITEM_CATEGORIES = {
   weapon: 0,
   tool: 1,
   armor: 2,
@@ -45,7 +45,7 @@ export const ITEM_CATEGORIES = {
   misc: 6,
 };
 
-export const Colors = {
+const Colors = {
   gold: "§6",
   white: "§f",
   gray: "§7",
@@ -55,6 +55,8 @@ export const Colors = {
   yellow: "§e",
 };
 
-export const SETTINGS = {
+const SETTINGS = {
   HOTBAR_SIZE: 9,
 };
+
+export { SORTING_MODES, RARITY_ORDER, ITEM_CATEGORIES, Colors, SETTINGS };

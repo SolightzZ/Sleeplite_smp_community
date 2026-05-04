@@ -3,6 +3,8 @@ import { registerCustomCommandIventory } from "../module/inventorySorter/command
 import { registerCustomCommandTakeASeat } from "../module/simpleSit/index.js";
 import { registerCommands } from "../module/customCommands/Register.js";
 import { registerCommandAFK } from "../module/AFKCinematic/index.js";
+import { RegisterRewards } from "../module/rewards/system.js";
+import { RegisterHelp } from "../help/help.js";
 
 system.beforeEvents.startup.subscribe((init) => {
   try {
@@ -10,6 +12,8 @@ system.beforeEvents.startup.subscribe((init) => {
     registerCommandAFK(init);
     registerCustomCommandIventory(init);
     registerCustomCommandTakeASeat(init);
+    RegisterRewards(init);
+    RegisterHelp(init);
   } catch (error) {
     console.error("[Startup] Failed to register commands: " + error);
   }

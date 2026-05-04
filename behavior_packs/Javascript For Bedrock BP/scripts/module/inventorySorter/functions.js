@@ -1,14 +1,14 @@
 import { ItemStack } from "@minecraft/server";
 import { ITEM_CATEGORIES, RARITY_ORDER, SORTING_MODES } from "./constants.js";
 
-export function countTotalItems(items) {
+function countTotalItems(items) {
   if (!items) return 0;
   return items.reduce((total, item) => {
     return total + (item ? item.amount : 0);
   }, 0);
 }
 
-export function normalizeMode(mode) {
+function normalizeMode(mode) {
   const m = (mode ?? "type").toLowerCase();
   return SORTING_MODES[m] ?? "type";
 }
@@ -117,7 +117,7 @@ function getItemDisplayName(item) {
     .toLowerCase();
 }
 
-export function compareItemsByMode(a, b, mode) {
+function compareItemsByMode(a, b, mode) {
   if (!a && !b) return 0;
   if (!a) return 1;
   if (!b) return -1;
@@ -210,7 +210,7 @@ export function compareItemsByMode(a, b, mode) {
   return a.typeId < b.typeId ? -1 : 1;
 }
 
-export function cloneWithAmountLike(ref, amount) {
+function cloneWithAmountLike(ref, amount) {
   const hasCustomData = ref.nameTag || ref.getLore?.()?.length > 0;
   const safeAmount = Math.max(1, Math.min(255, amount || 1));
 
@@ -234,7 +234,7 @@ function getStackKey(item) {
   return `${item.typeId}_${item.nameTag || ""}_${JSON.stringify(lore)}`;
 }
 
-export function sortAndMergeItems(items, maxSize) {
+function sortAndMergeItems(items, maxSize) {
   try {
     const buckets = new Map();
 
@@ -283,7 +283,7 @@ export function sortAndMergeItems(items, maxSize) {
   }
 }
 
-export function applyChessPattern(items, containerSize) {
+function applyChessPattern(items, containerSize) {
   const result = new Array(containerSize).fill(undefined);
   let itemIndex = 0;
 
@@ -302,7 +302,7 @@ export function applyChessPattern(items, containerSize) {
   return result;
 }
 
-export function applyLinePattern(items, containerSize) {
+function applyLinePattern(items, containerSize) {
   const result = new Array(containerSize).fill(undefined);
   const rowSize = 9;
   let itemIndex = 0;
@@ -334,7 +334,7 @@ export function applyLinePattern(items, containerSize) {
   return result;
 }
 
-export function applyColumnPattern(items, containerSize) {
+function applyColumnPattern(items, containerSize) {
   const result = new Array(containerSize).fill(undefined);
   const rowSize = 9;
   let itemIndex = 0;
@@ -366,7 +366,7 @@ export function applyColumnPattern(items, containerSize) {
   return result;
 }
 
-export function isInventorySortedAndMerged(items, maxSize, mode = "type") {
+function isInventorySortedAndMerged(items, maxSize, mode = "type") {
   try {
     let prev = null;
     let foundEmpty = false;
@@ -401,7 +401,7 @@ export function isInventorySortedAndMerged(items, maxSize, mode = "type") {
   }
 }
 
-export function isContainerSorted(container, mode = "type") {
+function isContainerSorted(container, mode = "type") {
   try {
     let prev = null;
     let foundEmpty = false;
@@ -438,7 +438,7 @@ export function isContainerSorted(container, mode = "type") {
   }
 }
 
-export function writeContainerDiff(container, newItems) {
+function writeContainerDiff(container, newItems) {
   const size = Math.min(container.size, newItems.length);
 
   for (let i = 0; i < size; i++) {
@@ -455,10 +455,25 @@ export function writeContainerDiff(container, newItems) {
   }
 }
 
-export function formatBlockName(typeId) {
+function formatBlockName(typeId) {
   return (typeId ?? "minecraft:unknown")
     .replace("minecraft:", "")
     .split("_")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
 }
+
+export {
+  sortAndMergeItems,
+  applyChessPattern,
+  applyLinePattern,
+  applyColumnPattern,
+  isInventorySortedAndMerged,
+  isContainerSorted,
+  writeContainerDiff,
+  formatBlockName,
+  countTotalItems,
+  normalizeMode,
+  compareItemsByMode,
+  cloneWithAmountLike,
+};

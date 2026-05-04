@@ -1,7 +1,7 @@
 import { setting } from "./config.js";
 import { hasUser } from "./state.js";
 
-export function pullItem(player) {
+function pullItem(player) {
   try {
     if (!hasUser(player.id)) return;
 
@@ -31,3 +31,5 @@ export function pullItem(player) {
     console.warn(`Magnet Error: ${err}`);
   }
 }
+
+export { pullItem };

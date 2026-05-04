@@ -1,13 +1,47 @@
-import { world } from "@minecraft/server";
+import {
+  CommandPermissionLevel,
+  CustomCommandStatus,
+  system,
+  world,
+} from "@minecraft/server";
 import { config } from "./constants.js";
 import { load, reset } from "./database.js";
 import { menu } from "./logic.js";
 
-export function RewarditemUse({ source }) {
-  menu(source);
+function RewarditemUse(event) {
+  menu(event);
 }
 
-export function RewardchatSend(event) {
+function RegisterRewards(init) {
+  try {
+    init.customCommandRegistry.registerCommand(
+      {
+        name: "addon:rw",
+        description: "Rewards - รับรางวัลล็อกอิน",
+        permissionLevel: CommandPermissionLevel.Any,
+        cheatsRequired: false,
+      },
+      (origin) => {
+        const player = origin.sourceEntity;
+
+        if (!player || !player.isValid) {
+          return {
+            status: CustomCommandStatus.Failure,
+            message: "§cThis command can only be used by players!",
+          };
+        }
+        system.run(() => RewarditemUse(player));
+        return {
+          status: CustomCommandStatus.Success,
+        };
+      },
+    );
+  } catch (error) {
+    console.error("[RegisterRewards] Failed to register commands: " + error);
+  }
+}
+
+function RewardchatSend(event) {
   const p = event.sender;
   const msg = event.message;
 
@@ -29,3 +63,5 @@ export function RewardchatSend(event) {
     p.sendMessage(text);
   }
 }
+
+export { RewarditemUse, RewardchatSend, RegisterRewards };

@@ -2,11 +2,11 @@ import { setting } from "./config.js";
 import { startLoop } from "./loop.js";
 import { addUser, countUser, hasUser, removeUser } from "./state.js";
 
-export function canUse(player) {
+function canUse(player) {
   return player && player.isValid && player.location && player.dimension;
 }
 
-export function toggle(player, turnOn) {
+function toggle(player, turnOn) {
   if (!canUse(player)) return;
   const id = player.id;
 
@@ -27,3 +27,5 @@ export function toggle(player, turnOn) {
     player.playSound("random.orb", { pitch: 0.5 });
   }
 }
+
+export { canUse, toggle };

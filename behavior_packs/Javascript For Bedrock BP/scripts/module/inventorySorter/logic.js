@@ -11,7 +11,7 @@ import {
 } from "./functions.js";
 import { SETTINGS, Colors } from "./constants.js";
 
-export function sortPlayerInventory(player, mode) {
+function sortPlayerInventory(player, mode) {
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv)
     return { ok: false, msg: `${Colors.red}[x] ไม่พบ Inventory ของผู้เล่น` };
@@ -54,7 +54,7 @@ export function sortPlayerInventory(player, mode) {
   };
 }
 
-export function sortBlockContainer(player, mode) {
+function sortBlockContainer(player, mode) {
   const bv = player.getBlockFromViewDirection?.();
   const block = bv?.block;
   if (!block)
@@ -111,3 +111,5 @@ export function sortBlockContainer(player, mode) {
     msg: `${Colors.yellow}[${blockName}] ${Colors.white}เรียงสำเร็จ ${Colors.gray}${itemCount} ไอเทม / ${emptySlots} ช่องว่าง §7(${sortMode})`,
   };
 }
+
+export { sortPlayerInventory, sortBlockContainer };

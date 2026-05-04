@@ -1,7 +1,6 @@
 import { system } from "@minecraft/server";
 
 import { FlashlightRunInterval } from "../plugin/Flashlight";
-import { handleSit } from "../module/simpleSit/index.js";
 import { handleIdlePoller } from "../module/AFKCinematic/index.js";
 
 const tasks = [

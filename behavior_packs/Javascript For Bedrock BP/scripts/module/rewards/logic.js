@@ -3,7 +3,7 @@ import { list } from "./constants.js";
 import { load, save } from "./database.js";
 import { give, name, time } from "./functions.js";
 
-export function menu(player) {
+function menu(player) {
   const today = time();
   const db = load(player);
 
@@ -60,6 +60,8 @@ export function menu(player) {
     confirm(player, db, today);
   });
 }
+
+export { menu };
 
 function confirm(player, db, today) {
   const item = list[db.count];

@@ -3,31 +3,43 @@ const data = {
   timer: null,
 };
 
-export function addUser(player) {
+function addUser(player) {
   data.users.set(player.id, player);
 }
-export function removeUser(id) {
+function removeUser(id) {
   data.users.delete(id);
 }
-export function hasUser(id) {
+function hasUser(id) {
   return data.users.has(id);
 }
-export function countUser() {
+function countUser() {
   return data.users.size;
 }
-export function getUserEntries() {
+function getUserEntries() {
   return data.users.entries();
 }
 
-export function setTimer(id) {
+function setTimer(id) {
   data.timer = id;
 }
-export function clearTimer() {
+function clearTimer() {
   data.timer = null;
 }
-export function hasTimer() {
+function hasTimer() {
   return data.timer !== null;
 }
-export function getTimer() {
+function getTimer() {
   return data.timer;
 }
+
+export {
+  addUser,
+  removeUser,
+  hasUser,
+  countUser,
+  getUserEntries,
+  setTimer,
+  clearTimer,
+  hasTimer,
+  getTimer,
+};
