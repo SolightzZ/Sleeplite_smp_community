@@ -1,22 +1,32 @@
 import { biomeIdList, EXCLUDED_BIOMES } from "./database.js";
 
-export const getBiomeIdAtLocation = (player) => {
-  if (!player?.location || !player?.dimension) return null;
+const getBiomeIdAtLocation = (player) => {
   try {
+    if (!player?.location || !player?.dimension) return null;
     return player.dimension.getBiome(player.location)?.id ?? null;
-  } catch (e) {
-    console.warn("GetBiomeIdAtLocation: " + e);
     return null;
+  } catch (error) {
+    console.error("GetBiomeIdAtLocation: " + error);
   }
 };
 
-export const getBiomeName = (biomeId) => {
-  if (!biomeId) return null;
-  return EXCLUDED_BIOMES.includes(biomeId)
-    ? null
-    : biomeIdList[biomeId] || biomeId;
+const getBiomeName = (biomeId) => {
+  try {
+    if (!biomeId) return null;
+    return EXCLUDED_BIOMES.includes(biomeId)
+      ? null
+      : biomeIdList[biomeId] || biomeId;
+  } catch (error) {
+    console.error("getBiomeName: " + error);
+  }
 };
 
-export const getDimensionName = (dimensionId) => {
-  return biomeIdList[dimensionId] || dimensionId || "Unknown Dimension";
+const getDimensionName = (dimensionId) => {
+  try {
+    return biomeIdList[dimensionId] || dimensionId || "Unknown Dimension";
+  } catch (error) {
+    console.error("getDimensionName: " + error);
+  }
 };
+
+export { getBiomeIdAtLocation, getBiomeName, getDimensionName };

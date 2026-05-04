@@ -3,7 +3,7 @@ import { shop } from "./rules.js";
 const memory = new Map();
 let count = 1;
 
-export const ask = (block) => {
+const ask = (block) => {
   const place = `${block.location.x}_${block.location.y}_${block.location.z}`;
 
   if (memory.has(place)) {
@@ -24,7 +24,9 @@ export const ask = (block) => {
   return data;
 };
 
-export const forget = (block) => {
+const forget = (block) => {
   const place = `${block.location.x}_${block.location.y}_${block.location.z}`;
   memory.delete(place);
 };
+
+export { ask, forget };

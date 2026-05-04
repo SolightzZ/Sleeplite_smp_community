@@ -1,7 +1,7 @@
 import { system } from "@minecraft/server";
 import { inventorys } from "./rules.js";
 
-export const see = (player, thing) => {
+const see = (player, thing) => {
   const bag = player.getComponent(inventorys).container;
   for (let i = 0; i < bag.size; i++) {
     const item = bag.getItem(i);
@@ -10,7 +10,7 @@ export const see = (player, thing) => {
   return false;
 };
 
-export const eat = (player, thing) => {
+const eat = (player, thing) => {
   system.run(() => {
     const bag = player.getComponent(inventorys).container;
     for (let i = 0; i < bag.size; i++) {
@@ -28,15 +28,17 @@ export const eat = (player, thing) => {
   });
 };
 
-export const hit = (player, pain) => {
+const hit = (player, pain) => {
   if (pain <= 0) return;
   system.run(() => {
     player.applyDamage(pain);
   });
 };
 
-export const say = (player, msg) => {
+const say = (player, msg) => {
   system.run(() => {
     player.onScreenDisplay.setActionBar(msg);
   });
 };
+
+export { see, eat, hit, say };

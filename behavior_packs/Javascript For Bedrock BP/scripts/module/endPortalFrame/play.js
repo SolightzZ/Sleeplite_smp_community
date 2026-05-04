@@ -3,7 +3,7 @@ import { eat, hit, say, see } from "./hand.js";
 import { boss, door, key, team, zone } from "./rules.js";
 import { count, fix } from "./tools.js";
 
-export function touch(event) {
+function touch(event) {
   try {
     const { player, block, itemStack: item } = event;
 
@@ -40,3 +40,5 @@ export function touch(event) {
     console.warn("EndPortalFrame " + error.message);
   }
 }
+
+export { touch };

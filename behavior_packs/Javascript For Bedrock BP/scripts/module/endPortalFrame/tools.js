@@ -1,14 +1,14 @@
 import { world } from "@minecraft/server";
 import { zone } from "./rules.js";
 
-export const count = (block) => {
+const count = (block) => {
   return world.getPlayers({
     location: block.location,
     maxDistance: zone,
   }).length;
 };
 
-export const fix = (text) => {
+const fix = (text) => {
   const raw = text.split(":")[1] || text;
   const words = raw.split("_");
   const nice = words.map(
@@ -16,3 +16,5 @@ export const fix = (text) => {
   );
   return nice.join(" ");
 };
+
+export { count, fix };

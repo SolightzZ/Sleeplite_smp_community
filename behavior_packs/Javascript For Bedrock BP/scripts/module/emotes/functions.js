@@ -62,7 +62,7 @@ function openSubMenu(player, group) {
   }
 }
 
-export function showMain(player) {
+function showMain(player) {
   const menu = new ActionFormData().title("§eEmote Menu");
   try {
     for (const group of emoteList) {
@@ -88,3 +88,5 @@ export function showMain(player) {
     console.warn("openSubMenu" + e);
   }
 }
+
+export { showMain };
