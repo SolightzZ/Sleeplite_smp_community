@@ -1,7 +1,6 @@
 import { world, system } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 
-// This list will be replaced/injected by the PHP generator
 const TEXTURE_OPTIONS = [
   {
     name: "Default",
@@ -45,7 +44,6 @@ world.beforeEvents.worldInitialize.subscribe((initEvent) => {
         const player = e.player;
         const block = e.block;
 
-        // Only if holding the brush
         const equipment = player.getComponent("equippable");
         const mainHand = equipment?.getEquipment("Mainhand");
 
@@ -54,9 +52,8 @@ world.beforeEvents.worldInitialize.subscribe((initEvent) => {
             showMainMenu(player, block);
           });
         } else {
-          // If not holding usage brush (empty hand or other item)
           system.run(() => {
-            player.sendMessage({ translate: "custom.message.need_brush" });
+            player.sendMessage("You need a Custom Brush");
           });
         }
       },
@@ -64,7 +61,6 @@ world.beforeEvents.worldInitialize.subscribe((initEvent) => {
   );
 });
 
-// Global interval to handle particle effects for players holding the brush
 system.runInterval(() => {
   const players = world.getAllPlayers();
   for (const player of players) {
@@ -73,43 +69,35 @@ system.runInterval(() => {
 
     if (mainHand?.typeId === "custom:brush") {
       try {
-        // Raycast to check block player is looking at
         const hit = player.getBlockFromViewDirection({ maxDistance: 10 });
         const block = hit?.block;
 
         if (block && block.typeId === "custom:paintings") {
-          // Calculate center of the block
           const center = {
             x: block.location.x + 0.5,
             y: block.location.y + 0.5,
             z: block.location.z + 0.5,
           };
 
-          // Spawn redstone particles
-          try {
-            // Attempt to spawn particle at block center
-            player.dimension.spawnParticle(
-              "minecraft:redstone_torch_dust_particle",
-              center,
-            );
-          } catch (e) {
-            // Fallback harmlessly if particle fails
-          }
+          player.dimension.spawnParticle(
+            "minecraft:redstone_torch_dust_particle",
+            center,
+          );
         }
       } catch (err) {
-        // Component access or raycast errors
+        console.error("[CustomFrames] " + err);
       }
     }
   }
-}, 5); // Run every 5 ticks (0.25s)
+}, 5);
 
 function showMainMenu(player, block) {
   const form = new ActionFormData()
     .title("Frame Settings")
-    .body({ translate: "custom.menu.website_info" })
-    .button({ translate: "custom.menu.change_size" })
-    .button({ translate: "custom.menu.change_texture" })
-    .button({ translate: "custom.menu.get_link" });
+    .body("You can customize the addon at: §ahttps://www.trmc-addons.com/cp")
+    .button("Change Size")
+    .button("Change Texture")
+    .button("Get Website Link");
 
   form.show(player).then((response) => {
     if (response.canceled) return;
@@ -119,16 +107,18 @@ function showMainMenu(player, block) {
     } else if (response.selection === 1) {
       showTextureForm(player, block);
     } else if (response.selection === 2) {
-      player.sendMessage({ translate: "custom.menu.website_info" });
+      player.sendMessage(
+        "You can customize the addon at: §ahttps://www.trmc-addons.com/cp",
+      );
     }
   });
 }
 
 function showSizeForm(player, block) {
   const form = new ActionFormData()
-    .title({ translate: "custom.menu.select_size" })
-    .body({ translate: "custom.menu.size_desc" })
-    .button({ translate: "custom.menu.custom_size" });
+    .title("Select Size")
+    .body("Choose a preset or enter custom size.")
+    .button("Custom Size Input");
 
   SIZES.forEach((size) => {
     form.button(size.name);
@@ -152,9 +142,9 @@ function showCustomSizeForm(player, block) {
   const currentH = perm.getState("custom:height") ?? 1;
 
   const form = new ModalFormData()
-    .title({ translate: "custom.menu.custom_size" })
-    .slider({ translate: "custom.menu.width" }, 1, 8, 1, currentW)
-    .slider({ translate: "custom.menu.height" }, 1, 8, 1, currentH);
+    .title("Custom Size Input")
+    .slider("Width (Blocks)", 1, 8, 1, currentW)
+    .slider("Height (Blocks)", 1, 8, 1, currentH);
 
   form.show(player).then((response) => {
     if (response.canceled) return;
@@ -181,7 +171,7 @@ function applySize(block, w, h, player = null) {
       player.sendMessage({
         rawtext: [
           { text: "§a" },
-          { translate: "custom.message.applied" },
+          "Texture applied:",
           { text: ` §fSize ${width}x${height}` },
         ],
       });
@@ -204,7 +194,7 @@ function showTextureForm(player, block, filter = "") {
     player.sendMessage({
       rawtext: [
         { text: "§c" },
-        { translate: "custom.message.not_found" },
+        "No textures found matching:",
         { text: ` "${filter}"` },
       ],
     });
@@ -215,22 +205,19 @@ function showTextureForm(player, block, filter = "") {
 
   if (filter) {
     form.title({
-      rawtext: [
-        { translate: "custom.menu.filter_active" },
-        { text: ` ${filter}` },
-      ],
+      rawtext: ["Filter:", { text: ` ${filter}` }],
     });
   } else {
-    form.title({ translate: "custom.menu.change_texture" });
+    form.title("Change Texture");
   }
 
   form.button(
     {
       rawtext: [
         { text: "§b§l" },
-        { translate: "custom.menu.search_filter" },
+        "Search / Filter",
         { text: "\n§8" },
-        { translate: "custom.menu.search_filter_desc" },
+        "Type a name to search...",
       ],
     },
     "textures/items/brushFrame",
@@ -240,9 +227,9 @@ function showTextureForm(player, block, filter = "") {
     form.button({
       rawtext: [
         { text: "§c§l" },
-        { translate: "custom.menu.reset_filter" },
+        "Reset Filter",
         { text: "\n§8" },
-        { translate: "custom.menu.reset_filter_desc" },
+        "Show all textures",
       ],
     });
   }
@@ -258,10 +245,10 @@ function showTextureForm(player, block, filter = "") {
 
     if (selection === 0) {
       const searchForm = new ModalFormData()
-        .title({ translate: "custom.menu.search" })
+        .title("Search Texture")
         .textField(
-          { translate: "custom.menu.search_input" },
-          { translate: "custom.menu.search_placeholder" },
+          "Search for a texture by name:",
+          "e.g. wall, wood...",
           filter,
         );
 

@@ -1,23 +1,2 @@
 tile.custom:paintings.name=Custom Frame
 item.custom:brush.name=Frame Brush
-custom.message.need_brush=You need a Custom Brush
-custom.menu.website_info=You can customize the addon at: §ahttps://www.trmc-addons.com/cp
-custom.menu.get_link=Get Website Link
-
-custom.menu.change_size=Change Size
-custom.menu.change_texture=Change Texture
-custom.menu.search=Search Texture
-custom.menu.select_size=Select Size
-custom.menu.size_desc=Choose a preset or enter custom size.
-custom.menu.custom_size=Custom Size Input
-custom.menu.width=Width (Blocks)
-custom.menu.height=Height (Blocks)
-custom.menu.search_input=Search for a texture by name:
-custom.menu.search_placeholder=e.g. wall, wood...
-custom.menu.search_filter=Search / Filter
-custom.menu.search_filter_desc=Type a name to search...
-custom.menu.filter_active=Filter:
-custom.menu.reset_filter=Reset Filter
-custom.menu.reset_filter_desc=Show all textures
-custom.message.not_found=No textures found matching:
-custom.message.applied=Texture applied:
