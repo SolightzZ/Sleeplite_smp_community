@@ -1,14 +1,6 @@
 
 ## BLOCKS
 tile.true:gravestone.name=Gravestone 
-tile.dustydecorations:apple_barrel.name=Apple barrel 
-tile.dustydecorations:beetroot_barrel.name=Beetroot barrel 
-tile.dustydecorations:carrot_barrel.name=Carrot barrel 
-tile.dustydecorations:cod_barrel.name=Cod barrel 
-tile.dustydecorations:empty_barrel.name=Empty barrel 
-tile.dustydecorations:potato_barrel.name=Potato barrel 
-tile.dustydecorations:salmon_barrel.name=Salmon barrel 
-tile.dustydecorations:sweet_berries_barrel.name=Sweet berries barrel 
 
 ## Avanced Crafting Table
 tile.addon:avanced_crafting.name=Avanced Crafting Table
@@ -16,10 +8,7 @@ addon:avanced_crafting=
 addon:avanced=Blocks 
 
 ## Items
-item.fd:copperapple.name=Copper Apple
-item.addon:cooked_axolotl_bucket_3.name=Cooked axolotl bucket 
 item.addon:cooked_axolotl_bucket.name=Cooked axolotl bucket 
-item.addon:cooked_axolotl_bucket_2.name=Cooked axolotl bucket 
 item.addon:sp_1.name=Sprite 
 item.addon:sp_2.name=Fruit juice 
 item.addon:sp_3.name=Coca cola 
@@ -27,6 +16,12 @@ item.addon:sp_4.name=Matcha green tea 
 item.addon:Diamond_f.name=Diamond
 item.addon:magnet_.name=Magnet 
 item.addon:fullbright_.name=Full Bright 
+item.addon:m1=Orange Fizz 
+item.addon:m2=Lemon-Lime 
+item.addon:m3=Strawberry 
+
+
+## Groups
 addon:groups=Items 
 addon:light_block=Command 
 item.addon:protection.name=Protection 
@@ -54,222 +49,67 @@ item.addon:su1.name=Tamago Sushi 
 item.addon:su2.name=Salmon Sushi 
 item.addon:the_coffee_bean.name=The coffee bean 
 addon.water_bottle=Water Bottle 
-item.addon:bank=Bank 
+item.addon:bank=Jobs 
 
 ## Emotes
 item.addon:e1=Emotes 
 
-## Heads
-addon:equipment_heads=Equipment heads 
-addon:block_heads=Block heads 
-tile.addon:cxnthiaz_block.name=Cxnthiaz block 
-item.addon:cxnthiaz=Cxnthiaz Head 
-tile.addon:dam0nz17_block.name=DAM0NZ17 block 
-item.addon:dam0nz17=DAM0NZ17 Head 
-tile.addon:deMonKung9987_block.name=DeMonKung9987 block 
-item.addon:deMonKung9987=DeMonKung9987 Head 
-tile.addon:doomyzazaz_block.name=DoomyZazaz block 
-item.addon:doomyzazaz=DoomyZazaz Head 
-tile.addon:guyyaReiki_block.name=GuyyaReiki block 
-item.addon:guyyaReiki=GuyyaReiki Head 
-tile.addon:henry_tv_chanel_block.name=NamaewaHenry block 
-item.addon:henry_tv_chanel=NamaewaHenry Head 
-tile.addon:karto_block.name=KartoZx block 
-item.addon:karto=KartoZx Head 
-tile.addon:Kinorlsao_block.name=KinorlSAO block 
-item.addon:Kinorlsao=KinorlSAO Head 
-tile.addon:kwanXD009_block.name=YuyuKw block 
-item.addon:kwanXD009=YuyuKw Head 
-tile.addon:love_bullet8722_block.name=Love_Bullet8722 block 
-item.addon:love_bullet8722=Love_Bullet8722 Head 
-tile.addon:momoi961277127_block.name=Sakumoii block 
-item.addon:momoi961277127=Sakumoii Head 
-tile.addon:naraphatz_block.name=NaraphatZ block 
-item.addon:naraphatz=NaraphatZ Head 
-tile.addon:neumaxz_block.name=NEUMAXz block 
-item.addon:neumaxz=NEUMAXz Head 
-tile.addon:sekpongpipat258_block.name=SoulSkyCraft block 
-item.addon:sekpongpipat258=SoulSkyCraft Head 
-tile.addon:solightzZ_block.name=SolightzZ block 
-item.addon:solightzZ=SolightzZ Head 
-tile.addon:taFlookXD_block.name=TaFlookXD block 
-item.addon:taFlookXD=TaFlookXD Head 
-tile.addon:tawan8347T_block.name=Tawan8347T block 
-item.addon:tawan8347T=Tawan8347T Head 
-tile.addon:winosata2009_block.name=winosata2009 block 
-item.addon:winosata2009=winosata2009 Head 
-tile.addon:xxsomponxx_block.name=XxsomponxX block 
-item.addon:xxsomponxx=XxsomponxX Head 
-tile.addon:zeerza22_block.name=zeerza22 block 
-item.addon:zeerza22=zeerza22 Head 
+## Items
+item.addon:fullbright_=Fullbright 
+item.addon:magnet_=Magnet 
+item.addon:dr=Dollar 
+item.addon:sp_4=Yellow Soda 
+item.addon:sp_3=Red Soda 
+item.addon:sp_2=Green Soda 
+item.addon:sp_1=Blue Soda 
+item.addon:cola=Cola 
+item.addon:protection=Protec
+item.addon:emote=Emotes 
+item.addon:trade=Reward 
+item.addon:cam=Cam 
+item.gao:flashlight=Flashlight 
+item.addon:game1=GameBoy Red Edition 
+item.addon:game2=Game Gear Pro 
+item.addon:game3=Nintendo 
+item.addon:game4=Cute-Pet Tamagotchi 
+item.addon:game5=Tetris Master 99-in-1 
+item.addon:gif=Gif 
+item.addon:festival=Songkran Splash Bucket 
+item.addon:festival2=Handmade Jasmine Garland 
+item.addon:festival3=Classic Aloha Songkran Shirt 
 
-## New
-tile.addon:maewsanCH8_block.name=MaewsanCH8 block 
-item.addon:maewsanCH8=MaewsanCH8 Head 
-tile.addon:Bank5273_block.name=Bank5273 block 
-item.addon:Bank5273=Bank5273 Head 
-tile.addon:Ironbongbang951_block.name=Ironbongbang951 block 
-item.addon:Ironbongbang951=Ironbongbang951 Head 
-tile.addon:GDuM71_block.name=GDuM71 block 
-item.addon:GDuM71=GDuM71 Head 
-tile.addon:Mutantbowl7440_block.name=Mutantbowl7440 block 
-item.addon:Mutantbowl7440=Mutantbowl7440 Head 
-tile.addon:FewerHen6405811_block.name=FewerHen6405811 block 
-item.addon:FewerHen6405811=FewerHen6405811 Head 
-tile.addon:red2535a_block.name=Red2535a block 
-item.addon:red2535a=Red2535a Head 
-
-
-
-
-
-
-
-## BLOCKS
-tile.addon:paint16x16.name=Painting 16x16 
-tile.addon:paint64x64.name=Painting 64x64 
-tile.addon:paint32x64.name=Painting 32x64 
-tile.addon:paint32x24.name=Painting 32x24 
-
-
-
-
+item.addon:su1=Ikura Sushi 
+item.addon:su2=Salmon Roll 
+item.addon:mcdonald=McDonald's Takeout Bag 
+item.addon:kfc=KFC Bucket Box 
+item.addon:dunlin_donuts=Dunkin Coffee 
+item.addon:the_coffee_bean=Starbucks Hot Latte 
+item:addon:cooked_axolotl_bucket=Cooked axolotl bucket 
 
 ## Sleeplite SMP
-accessibility.chat.howtoopen=Press %s to open chat
-accessibility.chat.howtoemote=Press or Hold %s to Emote
+accessibility.chat.howtoopen=%s to chat
+accessibility.chat.howtoemote=%s to Emote
 chat.type.sleeping=§3[+] %s in bed. %s more to skip night.
 map.position= §7%s %s %s
-multiplayer.player.joined= §7%s §ajoined the 
-multiplayer.player.left= §7%s §cleft the 
+multiplayer.player.joined=§a[+] §7%s §ajoined the 
+multiplayer.player.left=§c[-] §7%s §cleft the 
 hudScreen.daysPlayed=§7 %s
-accessibility.button.back=§7back
+accessibility.button.back=§7Back to Game
 accessibility.button.exit=§7Exit
-
-
 pauseScreen.secondaryClientLeave= 
-pauseScreen.feed=Feed
-pauseScreen.invite=
-pauseScreen.ipAddress=IP: %1
-pauseScreen.error.noIpAddress=No IP found
-pauseScreen.error.noPort=No Port found
-pauseScreen.title=Game Paused
-pauseScreen.betaFeedback=Beta Feedback
-pauseScreen.xboxLiveDisconnect=Oops! Your Microsoft Account was disconnected. To invite more players, sign in on the Main Menu and restart your world.
-pauseScreen.joinCode.Label=JOIN CODE
+pauseScreen.ipAddres=IP: %1
 
-permissions.operator=Admin 
-permissions.member=support
-permissions.visitor=joined
-
-tile.bed.noSleep=§9[x] Sleep only at night
-tile.bed.notSafe=§c[!] Monsters
-tile.bed.notValid=
-tile.bed.occupied=
-tile.bed.respawnSet=§a[/] Saved
-tile.bed.tooFar=
-tile.bed.obstructed=
-
-trial.upsell.trialLabel= 
-trial.upsell.title= 
-trial.upsell.description=  
-trial.upsell.description.updated= 
-trial.upsell.description.worldsDontTransferToFullGame.line1= 
-trial.upsell.description.worldsDontTransferToFullGame.line2=  
-trial.upsell.unlock=  
-trial.upsell.startTrial=  
-trial.upsell.continueTrial= 
-
-content.import.failed=Failed to import '%s'
-content.import.failed.subtitle=See output log for more details
-content.import.failed.subtitle_duplicate=Duplicate pack detected
-content.import.failed.subtitle_malformed_zip=Not a valid zip archive
-content.import.failed.subtitle_premiumcontent=Content in this world is not supported by Minecraft: Education Edition.
-content.import.failed.title_premiumcontent=Content Not Supported
-content.import.succeeded=Successfully imported '%s'
-content.import.succeeded_with_warnings=Successfully imported '%s' with warnings
-content.import.succeeded_with_warnings.subtitle=Click here for more info
-content.import.started=§7Sever started... 
-
-
-death.attack.anvil=§7%1$s was squashed by a falling anvil
-death.attack.arrow.item=§7%1$s was shot by %2$s using %3$s
-death.attack.bullet=§7%1$s was sniped by %2$s
-death.attack.cactus=§7%1$s was pricked to death
-death.attack.cactus.player=§7%1$s walked into a cactus whilst trying to escape %2$s
-death.attack.drown=§7%1$s drowned
-death.attack.drown.player=§7%1$s drowned whilst trying to escape %2$s
-death.attack.explosion=§7%1$s blew up
-death.attack.explosion.by.bed=§7%1$s was killed by [Intentional Game Design]
-death.attack.explosion.player=§7%1$s was blown up by %2$s
-death.attack.fall=§7%1$s hit the ground too hard
-death.attack.fallingBlock=§7%1$s was squashed by a falling block
-death.attack.fireball=§7%1$s was fireballed by %2$s
-death.attack.fireball.item=§7%1$s was fireballed by %2$s using %3$s
-death.attack.fireworks=§7%1$s went off with a bang
-death.attack.flyIntoWall=§7%1$s experienced kinetic energy
-death.attack.generic=§7%1$s died
-death.attack.indirectMagic=§7%1$s was killed by %2$s using magic
-death.attack.indirectMagic.item=§7%1$s was killed by %2$s using %3$s
-death.attack.inFire=§7%1$s went up in flames
-death.attack.inFire.player=§7%1$s walked into fire whilst fighting %2$s
-death.attack.inWall=§7%1$s suffocated in a wall
-death.attack.lava=§7%1$s tried to swim in lava
-death.attack.lightningBolt=§7%1$s was struck by lightning
-death.attack.magic=§7%1$s was killed by magic
-death.attack.magma=§7%1$s discovered the floor was lava
-death.attack.magma.player=§7%1$s walked on danger zone due to %2$s
-death.attack.mob=§7%1$s was slain by %2$s
-death.attack.mob.item=§7%1$s was slain by %2$s using %3$s
-death.attack.onFire=§7%1$s burned to death
-death.attack.onFire.player=§7%1$s was burnt to a crisp whilst fighting %2$s
-death.attack.outOfWorld=§7%1$s fell out of the world
-death.attack.player.item=§7%1$s was slain by %2$s using %3$s
-death.attack.spit=§7%1$s was spitballed by %2$s
-death.attack.starve=§7%1$s starved to death
-death.attack.sweetBerry=§7%1$s was poked to death by a sweet berry bush
-death.attack.thorns=§7%1$s was killed trying to hurt %2$s
-death.attack.thrown=§7%1$s was pummeled by %2$s
-death.attack.thrown.item=§7%1$s was pummeled by %2$s using %3$s
-death.attack.trident=§7%1$s was impaled to death by %2$s
-death.attack.wither=§7%1$s withered away
-death.attack.freeze=§7%1$s froze to death
-death.attack.sonicBoom=§7%1$s was obliterated by a sonically-charged shriek
-death.attack.sonicBoom.player=§7%1$s was obliterated by a sonically-charged shriek whilst trying to escape %2$s
-death.attack.stalactite=§7%1$s was skewered by a falling stalactite
-death.attack.stalagmite=§7%1$s was impaled on a stalagmite
-death.fell.accident.generic=§7%1$s fell from a high place
-death.fell.accident.ladder=§7%1$s fell off a ladder
-death.fell.accident.vines=§7%1$s fell off some vines
-death.fell.accident.water=§7%1$s fell out of the water
-death.fell.assist=§7%1$s was doomed to fall by %2$s
-death.fell.assist.item=§7%1$s was doomed to fall by %2$s using %3$s
-death.fell.finish=§7%1$s fell too far and was finished by %2$s
-death.fell.finish.item=§7%1$s fell too far and was finished by %2$s using %3$s
-death.fell.killer=§7%1$s was doomed to fall
+tile.bed.noSleep=§9[x] You can only sleep at night or during thunderstorms
+tile.bed.notSafe=§c[!] You may not rest now, there are monsters nearby
+tile.bed.notValid=§6[!] Your home bed was missing or obstructed
+tile.bed.occupied=§6[!] This bed is occupied
+tile.bed.respawnSet=§a[/] Respawn point set
+tile.bed.tooFar=§6[!] Bed is too far away
+tile.bed.obstructed=§6[!] Bed is obstructed
 
 
 
-deathScreen.deleteWorld=§7Delete world
-deathScreen.hardcoreInfo=§7You cannot respawn in hardcore mode!
-deathScreen.leaveServer=§7Leave server
-deathScreen.message=§7You died!
-deathScreen.quit=§7Main menu
-deathScreen.quit.confirm=§7Are you sure you want to quit?
-deathScreen.quit.confirmToMainMenuWarning=§7Are you sure you want to exit the game to the main menu?
-deathScreen.quit.confirmToMainMenuTitleWarning=§7Quit to Main Menu?
-deathScreen.quit.secondaryClient=§7Save and Leave
-deathScreen.quit.secondaryClient.confirmLeaveWarning=§7Are you sure you want to save and leave the game?
-deathScreen.quit.secondaryClient.confirmLeaveTitleWarning=§7Save and Leave
-deathScreen.respawn=§7Respawn
-deathScreen.score=§7Score
-deathScreen.title=§7You died!
-deathScreen.title.hardcore=§7Game over!
-deathScreen.titleScreen=§7Title screen
-
-
-
-## ==================================== Craftable Secret Items =================================== 
+## Craftable Secret Items
 mys:itemGroup.name.doubleslabs=Double Slabs
 mys:itemGroup.name.secretblocks=Secret Blocks
 mys:itemGroup.name.structureblocks=Structure Blocks

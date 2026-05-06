@@ -4,16 +4,15 @@
     "description": {
       "identifier": "recipes_be08d83b"
     },
-    "tags": [
-      "crafting_table"
-    ],
-    "pattern": [
-      "A A",
-      "AAA"
-    ],
+    "tags": ["crafting_table"],
+    "pattern": ["A A", "ABA"],
     "key": {
       "A": {
         "item": "minecraft:bamboo_planks",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:stick",
         "data": 0
       }
     },

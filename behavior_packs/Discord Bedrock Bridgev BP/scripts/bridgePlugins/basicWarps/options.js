@@ -1,3 +1,3 @@
 export const options = {
-  cooldown: 5, // cooldown in seconds
-};
+    "cooldown": 5, // cooldown in seconds
+}

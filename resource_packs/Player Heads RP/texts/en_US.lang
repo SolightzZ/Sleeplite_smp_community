@@ -17,7 +17,9 @@ item.bluefirefroggy:player_head_16=Player Head
 item.bluefirefroggy:player_head_17=Player Head
 item.bluefirefroggy:player_head_18=Player Head
 item.bluefirefroggy:player_head_19=Player Head
+item.bluefirefroggy:player_head_20=Player Head
 item.bluefirefroggy:player_head_21=Player Head
+item.bluefirefroggy:player_head_22=Player Head
 item.bluefirefroggy:player_head_23=Player Head
 item.bluefirefroggy:player_head_24=Player Head
 item.bluefirefroggy:player_head_25=Player Head
@@ -58,3 +60,6 @@ tile.bluefirefroggy:player_head_27_block.name=Player Head
 tile.bluefirefroggy:player_head_28_block.name=Player Head
 tile.bluefirefroggy:player_head_29_block.name=Player Head
 tile.bluefirefroggy:player_head_30_block.name=Player Head
+
+
+bluefirefroggy:itemGroup.name.player_head=Player Heads

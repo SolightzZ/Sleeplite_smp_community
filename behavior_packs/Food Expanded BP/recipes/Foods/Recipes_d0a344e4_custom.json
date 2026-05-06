@@ -4,16 +4,15 @@
     "description": {
       "identifier": "recipes_6f61293f"
     },
-    "tags": [
-      "crafting_table"
-    ],
-    "pattern": [
-      "A A",
-      "AAA"
-    ],
+    "tags": ["crafting_table"],
+    "pattern": ["A A", "ABA"],
     "key": {
       "A": {
         "item": "minecraft:mangrove_planks",
+        "data": 0
+      },
+      "B": {
+        "item": "minecraft:stick",
         "data": 0
       }
     },

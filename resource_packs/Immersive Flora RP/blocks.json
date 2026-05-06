@@ -26,9 +26,6 @@
   "seta_deformada": {
     "sound": "fungus"
   },
-  "moras_azules_infernales": {
-    "sound": "grass"
-  },
   "verruga_colgante_escarlata": {
     "sound": "grass"
   },
@@ -95,9 +92,6 @@
   "alocasia_frydek": {
     "sound": "grass"
   },
-  "follage_de_roble": {
-    "sound": "azalea_leaves"
-  },
   "hongo_rojo_oeste": {
     "sound": "fungus"
   },
@@ -161,16 +155,10 @@
   "hongo_carmesi_lateral": {
     "sound": "fungus"
   },
-  "palito_de_brasil": {
-    "sound": "grass"
-  },
   "ave_de_paraiso": {
     "sound": "grass"
   },
   "arbusto_de_helecho": {
-    "sound": "grass"
-  },
-  "flor_test": {
     "sound": "grass"
   },
   "format_version": [1, 1, 0]

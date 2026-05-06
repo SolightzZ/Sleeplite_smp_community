@@ -1,37 +1,33 @@
 {
-	"format_version": "1.20.20",
-	"minecraft:client_entity": {
-		"description": {
-			"identifier": "ph:roach",
-			"materials": {
-				"default": "spider"
-			},
-			"textures": {
-				"default": "textures/entity/animals/roach"
-			},
-			"geometry": {
-				"default": "geometry.roach"
-			},
-			"animations": {
-				"walk": "animation.roach.walk",
-				"idle": "animation.roach.tentacle_shake",
-				"befly": "animation.roach.befly",
-				"fly": "animation.roach.fly",
-				"ac": "controller.animation.roach"
-			},
-			"scripts": {
-				"pre_animation": [
-					"v.fly=!query.is_on_ground;",
-					"v.walk=q.modified_move_speed>0.01;"
-				],
-				"animate": [
-					"ac"
-				]
-			},
-			"render_controllers": [
-				"controller.render.zombie"
-			],
-			"spawn_egg": {}
-		}
-	}
+  "format_version": "1.20.20",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "addon:roach",
+      "materials": {
+        "default": "spider"
+      },
+      "textures": {
+        "default": "textures/entity/roach"
+      },
+      "geometry": {
+        "default": "geometry.roach"
+      },
+      "animations": {
+        "walk": "animation.roach.walk",
+        "idle": "animation.roach.tentacle_shake",
+        "befly": "animation.roach.befly",
+        "fly": "animation.roach.fly",
+        "ac": "controller.animation.roach"
+      },
+      "scripts": {
+        "pre_animation": [
+          "v.fly=!query.is_on_ground;",
+          "v.walk=q.modified_move_speed>0.01;"
+        ],
+        "animate": ["ac"]
+      },
+      "render_controllers": ["controller.render.zombie"],
+      "spawn_egg": {}
+    }
+  }
 }

@@ -672,3 +672,7 @@ item.vf_campfire_creations:cooked_campfire_bread_skewer=Cooked Campfire Bread Sk
 
 vf:cooked_recipes=Cooked Skewers
 vf:raw_recipes=Raw Skewers
+
+addon:foods_group=Pork Skewer
+addon:foods_group2=Hot Fresh
+addon:foods_group3=Thai Spicy Soup

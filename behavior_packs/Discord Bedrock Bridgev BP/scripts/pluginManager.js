@@ -20,22 +20,6 @@ import {
 const pluginsDB = database.makeTable("pluginManager");
 if (!pluginsDB.has("plugins")) {
   // Default plugins from index.js
-  pluginsDB.set("plugins", [
-    { path: "./bridgePlugins/basicNicerChat", enabled: true },
-    { path: "./bridgePlugins/basicCustomCommands", enabled: true },
-    { path: "./bridgePlugins/deathCounter", enabled: true },
-    { path: "./bridgePlugins/stepCounter", enabled: true },
-    { path: "./bridgePlugins/playtime", enabled: true },
-    { path: "./bridgePlugins/gameModes", enabled: true },
-    { path: "./bridgePlugins/TPS", enabled: true },
-    { path: "./bridgePlugins/simpleCommandLog", enabled: false },
-    { path: "./bridgePlugins/getAwayWithMurder", enabled: false },
-    { path: "./bridgePlugins/idcAbtAnimals", enabled: false },
-    { path: "./bridgePlugins/customCommandCompatibility", enabled: false },
-    { path: "./bridgePlugins/basicWarps/main", enabled: false },
-    { path: "./bridgePlugins/chatRank/main", enabled: false },
-    { path: "./bridgePlugins/blockStats", enabled: false },
-  ]);
 }
 
 // Map to track loaded plugins
