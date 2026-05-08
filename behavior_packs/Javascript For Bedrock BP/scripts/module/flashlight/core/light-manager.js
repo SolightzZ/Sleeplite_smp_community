@@ -22,17 +22,17 @@ export function clearLight(playerId, fallbackDim) {
         movementCache.delete(playerId);
         return;
     }
-    const dim = world.getDimension(light.dimId) || fallbackDim;
-    if (dim) {
-        try {
-            const block = dim.getBlock(light);
-            if (block && (block.typeId === LIGHT_BLOCK || block.typeId === "minecraft:light_block")) {
-                block.setType(AIR_BLOCK);
-            }
-        } catch (e) { }
-    }
+    // Always remove from tracking first to prevent stale references
     activeLights.delete(playerId);
     movementCache.delete(playerId);
+    const dim = world.getDimension(light.dimId) || fallbackDim;
+    if (!dim) return;
+    try {
+        const block = dim.getBlock(light);
+        if (block && (block.typeId === LIGHT_BLOCK || block.typeId === "minecraft:light_block")) {
+            block.setType(AIR_BLOCK);
+        }
+    } catch (e) { }
 }
 
 export function updatePlayer(player) {
@@ -105,7 +105,11 @@ export function updatePlayer(player) {
                     return;
                 }
             }
-        } catch (e) { }
+        } catch (e) {
+            // setType failed — clear stale tracking so the old block isn't orphaned
+            activeLights.delete(id);
+            return;
+        }
     }
     activeLights.delete(id);
 }

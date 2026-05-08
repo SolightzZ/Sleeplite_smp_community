@@ -86,8 +86,7 @@ export function flashSpawn(event) {
 
 export function flashLeave(playerId) {
   clearLight(playerId);
-  const qLen = playersQueue.length;
-  for (let i = 0; i < qLen; i++) {
+  for (let i = 0; i < playersQueue.length; i++) {
     if (playersQueue[i].id === playerId) {
       const last = playersQueue.pop();
       if (i < playersQueue.length) {

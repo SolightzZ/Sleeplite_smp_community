@@ -1,5 +1,5 @@
 import { CONFIG, SHOT_LIBRARY } from "../config.js";
-import { playerStates } from "./state.js";
+import { playerStates, blockCache } from "./state.js";
 import { cloneVec3, cloneVec2, angleDiff, normalizeYaw } from "../utils/math.js";
 
 export function ensureState(player) {
@@ -32,9 +32,17 @@ export function ensureState(player) {
 }
 
 export function refreshBaseline(player, s) {
+  const newDimId = player.dimension.id;
+  if (newDimId !== s.dimensionId) {
+    // Clear cached blocks from the old dimension to avoid stale memory
+    const prefix = s.dimensionId + ":";
+    for (const key of blockCache.keys()) {
+      if (key.startsWith(prefix)) blockCache.delete(key);
+    }
+  }
   s.lastPosition = cloneVec3(player.location);
   s.lastRotation = cloneVec2(player.getRotation());
-  s.dimensionId = player.dimension.id;
+  s.dimensionId = newDimId;
 }
 
 export function hasMoved(player, s) {

@@ -37,13 +37,16 @@ export function handleIdlePoller() {
 
       s.idleTicks++;
 
-      const remaining = s.idleSecondsCache - s.idleTicks;
+      const idleTicksTarget = s.idleSecondsCache * 20;
+      const warningTicksTarget = s.warningSecondsCache * 20;
+      const remaining = idleTicksTarget - s.idleTicks;
+      const remainingSeconds = Math.ceil(remaining / 20);
 
-      if (!s.warningShown && remaining <= s.warningSecondsCache) {
+      if (!s.warningShown && remaining <= warningTicksTarget) {
         s.warningShown = true;
       }
       if (s.warningShown && remaining > 0) {
-        player.onScreenDisplay.setActionBar(`§eAFK Cinematic in §c${remaining}s`);
+        player.onScreenDisplay.setActionBar(`§eAFK Cinematic in §c${remainingSeconds}s`);
       }
 
       if (remaining <= 0) {

@@ -6,8 +6,10 @@ const quickCommandAFK = (origin) => {
     const player = origin.sourceEntity;
     if (!player?.isValid) return { status: CustomCommandStatus.Failure };
     system.run(() => startCinematicNow(player));
+    return { status: CustomCommandStatus.Success };
   } catch (error) {
     console.error("quickCommandAFK: " + error);
+    return { status: CustomCommandStatus.Failure };
   }
 };
 

@@ -58,7 +58,7 @@ export function pullCamera(dim, focus, desired, shotH = 0) {
     lerp3Into(sample, focus, desired, i / steps);
     if (!isPassable(dim, sample)) {
       const retreat = Math.min(1, CONFIG.collisionBuffer / travel);
-      lerp3Into(sample, safe, focus, retreat);
+      lerp3Into(sample, desired, safe, retreat);
       return liftAbove(dim, sample, shotH > 5);
     }
     safe.x = sample.x; safe.y = sample.y; safe.z = sample.z;
