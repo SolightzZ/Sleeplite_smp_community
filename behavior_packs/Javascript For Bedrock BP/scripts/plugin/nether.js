@@ -1,70 +1,67 @@
 import { system } from "@minecraft/server";
 
-const TO_NETHER_FACTOR = 1 / 8;
-const TO_OVERWORLD_FACTOR = 8;
+const DIM_OVERWORLD = "minecraft:overworld";
+const DIM_NETHER = "minecraft:nether";
 
-const toNether = (x, z) => ({
-  x: Math.floor(x * TO_NETHER_FACTOR),
-  z: Math.floor(z * TO_NETHER_FACTOR),
-});
+const MSG_PREFIX = "§7[§l\u00BB§r§7] ";
+const MSG_INVALID_NUM = "§c[x] กรุณาป้อนพิกัดเป็นตัวเลขที่ถูกต้อง";
+const MSG_USAGE = "§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ตัวอย่าง: !xz 200 200";
+const MSG_UNSUPPORTED = "§eไม่สามารถคำนวณได้ในมิตินี้";
 
-const toOverworld = (x, z) => ({
-  x: Math.floor(x * TO_OVERWORLD_FACTOR),
-  z: Math.floor(z * TO_OVERWORLD_FACTOR),
-});
+const sendCalculated = (player, x, z) => {
+  if (!player.isValid()) return;
 
-const calculate = (player, x, z) => {
-  const dimensionId = player.dimension.id;
+  const dimId = player.dimension.id;
+  const rx = Math.round(x);
+  const rz = Math.round(z);
 
-  const roundedX = Math.round(x);
-  const roundedZ = Math.round(z);
-
-  const { x: nx, z: nz } = toNether(x, z);
-  const { x: ox, z: oz } = toOverworld(x, z);
-
-  let message;
-  if (dimensionId === "minecraft:overworld") {
-    message = `§7[§l\u00BB§r§7] §aOverworld: <x${roundedX}> <z${roundedZ}> §cNether: <x${nx}> <z${nz}>`;
-  } else if (dimensionId === "minecraft:nether") {
-    message = `§7[§l\u00BB§r§7] §cNether: X=${roundedX}, Z=${roundedZ} §aOverworld: X=${ox}, Z=${oz}`;
+  let msg;
+  if (dimId === DIM_OVERWORLD) {
+    const nx = Math.floor(x * 0.125);
+    const nz = Math.floor(z * 0.125);
+    msg = `${MSG_PREFIX}§aOverworld: <x${rx}> <z${rz}> §cNether: <x${nx}> <z${nz}>`;
+  } else if (dimId === DIM_NETHER) {
+    const ox = Math.floor(x * 8);
+    const oz = Math.floor(z * 8);
+    msg = `${MSG_PREFIX}§cNether: X=${rx}, Z=${rz} §aOverworld: X=${ox}, Z=${oz}`;
   } else {
-    message = "§eไม่สามารถคำนวณได้ในมิตินี้";
+    msg = MSG_UNSUPPORTED;
   }
 
-  player.sendMessage(message);
+  player.sendMessage(msg);
 };
 
-export function xz_main(event) {
-  const { sender: player, message } = event;
-  const trimmedMessage = message.trim().toLowerCase();
+export const xz_main = (event) => {
+  const raw = event.message;
+  if (raw.charCodeAt(0) !== 33 || !raw.startsWith("!xz")) return;
 
-  if (!trimmedMessage.startsWith("!xz")) return;
+  const player = event.sender;
+  if (!player?.isValid()) return;
 
   event.cancel = true;
-  const args = trimmedMessage.split(/\s+/);
 
-  let x, z;
+  const trimmed = raw.trim();
+  const sp1 = trimmed.indexOf(" ");
 
-  if (args.length === 1) {
+  if (sp1 === -1) {
     const loc = player.location;
-    x = loc.x;
-    z = loc.z;
-  } else if (args.length === 3) {
-    const parsedX = parseFloat(args[1]);
-    const parsedZ = parseFloat(args[2]);
-
-    if (isNaN(parsedX) || isNaN(parsedZ)) {
-      player.sendMessage("§c[x] กรุณาป้อนพิกัดเป็นตัวเลขที่ถูกต้อง");
-      return;
-    }
-    x = parsedX;
-    z = parsedZ;
-  } else {
-    player.sendMessage(
-      "§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ตัวอย่าง: !xz 200 200",
-    );
+    system.run(() => sendCalculated(player, loc.x, loc.z));
     return;
   }
 
-  system.run(() => calculate(player, x, z));
-}
+  const sp2 = trimmed.indexOf(" ", sp1 + 1);
+  if (sp2 === -1) {
+    player.sendMessage(MSG_USAGE);
+    return;
+  }
+
+  const argX = parseFloat(trimmed.slice(sp1 + 1, sp2));
+  const argZ = parseFloat(trimmed.slice(sp2 + 1));
+
+  if (isNaN(argX) || isNaN(argZ)) {
+    player.sendMessage(MSG_INVALID_NUM);
+    return;
+  }
+
+  system.run(() => sendCalculated(player, argX, argZ));
+};
