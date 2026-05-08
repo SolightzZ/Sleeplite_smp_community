@@ -15,12 +15,16 @@ export const add = (player) => {
   try {
     objA.addScore(player, 1);
     objB.addScore(`*${player.name}`, 1);
-  } catch {}
+  } catch (error) {
+    console.warn(`Error add: ${error}`);
+  }
 };
 
 export const init = () => {
   try {
     objA = board(boardA);
     objB = board(boardB);
-  } catch {}
+  } catch (error) {
+    console.warn(`Error init: ${error}`);
+  }
 };

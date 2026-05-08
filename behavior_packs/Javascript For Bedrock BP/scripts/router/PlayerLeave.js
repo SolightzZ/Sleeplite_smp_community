@@ -5,10 +5,10 @@ import { onLeaveFullBright } from "../module/fullBright/events.js";
 import { JobLeave } from "../module/jobs/Job.js";
 import { onLeave } from "../module/magNet/index.js";
 import { clearVisualStateForPlayers } from "../module/protection/index.js";
-import { flashLeave, handlerFlashlight } from "../module/flashlight/core/engine.js";
-
-
-
+import {
+  flashLeave,
+  handlerFlashlight,
+} from "../module/flashlight/core/engine.js";
 
 const PLAYER_LEAVE = [
   onLeaveFullBright,

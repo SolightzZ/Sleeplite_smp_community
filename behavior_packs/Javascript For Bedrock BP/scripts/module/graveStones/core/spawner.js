@@ -1,9 +1,19 @@
-import { GRAVESTONE_ENTITY, DIMENSION_HEIGHT_RULE, CENTER_OFFSET, INVENTORY_COMPONENT } from "../config.js";
+import {
+  GRAVESTONE_ENTITY,
+  DIMENSION_HEIGHT_RULE,
+  CENTER_OFFSET,
+  INVENTORY_COMPONENT,
+} from "../config.js";
 import { floorPosition, getGraveY } from "../utils/location.js";
 import { findNearbyItems, safeAddItem } from "./container.js";
 
 export function gravestone_main({ deadEntity: deadPlayer }) {
-  if (!deadPlayer || !deadPlayer.isValid || deadPlayer.typeId !== "minecraft:player") return;
+  if (
+    !deadPlayer ||
+    !deadPlayer.isValid ||
+    deadPlayer.typeId !== "minecraft:player"
+  )
+    return;
 
   const dimension = deadPlayer.dimension;
   const pos = floorPosition(deadPlayer.location);
@@ -42,7 +52,6 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
         console.error("[Gravestone] Error removing drop:", e);
       }
     } else {
-      // Storage is likely full, stop collecting to prevent item deletion
       break;
     }
   }

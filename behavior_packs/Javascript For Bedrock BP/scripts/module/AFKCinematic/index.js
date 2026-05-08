@@ -1,7 +1,7 @@
-import { handleIdlePoller, playerLeaveAfk, setPlayerIdleTime } from "./core/poller";
-import { registerCommandAFK } from "./commands/afk-command";
-
 export {
-  handleIdlePoller, playerLeaveAfk, registerCommandAFK,
-  setPlayerIdleTime
-};
+  handleIdlePoller,
+  handleIdlePoller as handleAFKSpawn,
+  playerLeaveAfk,
+  setPlayerIdleTime,
+} from "./core/poller.js";
+export { registerCommandAFK } from "./commands/afk-command.js";

@@ -2,7 +2,7 @@ export const boardA = "Deaths";
 export const boardB = "DeathsPlus";
 
 export const map = {
-  SolightzZ: "addon:solightzz",
+  SolightzZ: "bluefirefroggy:player_head_16",
   Cxnthiaz: "addon:cxnthiaz",
   DAM0NZ17: "addon:dam0nz17",
   DeMonKung9987: "addon:demonkung9987",

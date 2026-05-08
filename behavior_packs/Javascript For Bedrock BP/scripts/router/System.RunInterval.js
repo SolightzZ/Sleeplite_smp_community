@@ -1,13 +1,11 @@
 import { system } from "@minecraft/server";
 
-import { handleIdlePoller } from "../module/AFKCinematic/index.js";
+import { handleAFKSpawn } from "../module/AFKCinematic/index.js";
 import { FlashlightRunInterval } from "../module/flashlight/core/engine.js";
-
-
 
 const tasks = [
   { run: FlashlightRunInterval, rate: 2, next: 0 },
-  { run: handleIdlePoller, rate: 20, next: 0 },
+  { run: handleAFKSpawn, rate: 20, next: 0 },
 ];
 
 function runTaskList(list) {

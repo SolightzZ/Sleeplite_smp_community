@@ -5,7 +5,7 @@ import {
 } from "@minecraft/server";
 import { dy } from "./help_Durability.js";
 
-const help = `§8--------- §eHelper §8---------
+const HELP_TEXT = `§8--------- §eHelper §8---------
 §7[§a/§7] /addon:help §7Help - คําสั่งต่างๆ
 §7[§a/§7] /server §7Quick Server - เข้าร่วมเซิร์ฟเวอร์อื่นๆ
 §7[§a/§7] /msg §7Private Message (/msg steve Hi) - ส่งข้อความส่วนตัว
@@ -17,84 +17,57 @@ const help = `§8--------- §eHelper §8---------
 §7[§a/§7] !d §7Durability & Player name - แสดงความทนทานไอเทมในตัว และ แสดงแท็กชื่อ
 `;
 
-const adminHelp = `§8--------- §cHelper Admin §8---------
+const ADMIN_HELP_TEXT = `§8--------- §cHelper Admin §8---------
 §7[§c/§7] !json - แสดงข้อมูล JSON Protection
 §7[§c/§7] !reset-login - รีเซ็ตข้อมูล Reward
 §7[§c/§7] !check-reward - แสดงข้อมูลล็อกอิน JSON Reward
 `;
 
-function showHelp(player) {
-  player.sendMessage(help);
-  if (player.hasTag("admin")) {
-    player.sendMessage(adminHelp);
-  }
-}
+const showHelp = (player) => {
+  player.sendMessage(HELP_TEXT);
+  if (player.hasTag("admin")) player.sendMessage(ADMIN_HELP_TEXT);
+};
 
-function showDurability(player) {
-  system.runTimeout(() => dy(player), 20);
-}
+export const helpmain = (event) => {
+  const msg = event.message;
+  if (!msg) return;
 
-function helpmain(event) {
-  try {
-    const { sender: player, message } = event;
-    if (!message) return;
+  const c0 = msg.charCodeAt(0);
+  if (c0 !== 33) return;
 
-    const command = message.trim().toLowerCase();
+  const command = msg.trim().toLowerCase();
 
-    if (command === "!help") {
-      event.cancel = true;
-      showHelp(player);
-    }
-
-    if (command === "!d") {
-      event.cancel = true;
-      showDurability(player);
-    }
-  } catch (error) {
-    console.warn("help_main", error.message);
-  }
-}
-
-function handleHelp(player, command) {
   if (command === "!help") {
-    player.sendMessage(help);
-    if (player.hasTag("admin")) {
-      player.sendMessage(adminHelp);
-    }
+    event.cancel = true;
+    const player = event.sender;
+    if (player?.isValid) showHelp(player);
+    return;
   }
 
   if (command === "!d") {
-    system.runTimeout(() => dy(player), 20);
+    event.cancel = true;
+    const player = event.sender;
+    if (player?.isValid) system.runTimeout(() => {
+      if (player.isValid) dy(player);
+    }, 20);
   }
-}
+};
 
-function RegisterHelp(init) {
-  try {
-    init.customCommandRegistry.registerCommand(
-      {
-        name: "addon:help",
-        description: "Help - คําสั่งต่างๆ",
-        permissionLevel: CommandPermissionLevel.Any,
-        cheatsRequired: false,
-      },
-      (origin) => {
-        const player = origin.sourceEntity;
-
-        if (!player || !player.isValid) {
-          return {
-            status: CustomCommandStatus.Failure,
-            message: "§cใช้ได้เฉพาะผู้เล่น",
-          };
-        }
-        showHelp(player);
-        return {
-          status: CustomCommandStatus.Success,
-        };
-      },
-    );
-  } catch (error) {
-    console.error("[RegisterHelp] Failed:", error);
-  }
-}
-
-export { helpmain, RegisterHelp };
+export const RegisterHelp = (init) => {
+  init.customCommandRegistry.registerCommand(
+    {
+      name: "addon:help",
+      description: "Help - คําสั่งต่างๆ",
+      permissionLevel: CommandPermissionLevel.Any,
+      cheatsRequired: false,
+    },
+    (origin) => {
+      const player = origin.sourceEntity;
+      if (!player?.isValid) {
+        return { status: CustomCommandStatus.Failure, message: "§cใช้ได้เฉพาะผู้เล่น" };
+      }
+      showHelp(player);
+      return { status: CustomCommandStatus.Success };
+    },
+  );
+};

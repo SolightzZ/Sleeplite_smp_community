@@ -57,7 +57,7 @@ const consumeSeed = (container, seedId) => {
  */
 export const handleAutoReplant = (event) => {
   const player = event.player;
-  if (!player?.isValid()) return;
+  if (!player?.isValid) return;
 
   const perm = event.brokenBlockPermutation;
   if (!perm) return;

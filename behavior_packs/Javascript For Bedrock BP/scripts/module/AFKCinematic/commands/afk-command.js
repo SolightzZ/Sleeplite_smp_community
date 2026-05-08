@@ -1,11 +1,14 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
-import { startCinematicNow } from "../core/afk-manager";
+import { startCinematicNow } from "../core/poller.js";
 
 const quickCommandAFK = (origin) => {
-  const player = origin.sourceEntity;
-  if (!player || !player.isValid) return { status: CustomCommandStatus.Failure };
-  system.run(() => startCinematicNow(player));
-  return { status: CustomCommandStatus.Success };
+  try {
+    const player = origin.sourceEntity;
+    if (!player?.isValid) return { status: CustomCommandStatus.Failure };
+    system.run(() => startCinematicNow(player));
+  } catch (error) {
+    console.error("quickCommandAFK: " + error);
+  }
 };
 
 export function registerCommandAFK(init) {
@@ -19,5 +22,7 @@ export function registerCommandAFK(init) {
       },
       quickCommandAFK,
     );
-  } catch { }
+  } catch (error) {
+    console.error("registerCommandAFK: " + error);
+  }
 }

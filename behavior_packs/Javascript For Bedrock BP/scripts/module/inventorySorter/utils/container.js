@@ -2,17 +2,32 @@ import { cloneWithAmountLike, compareItemsByMode } from "./item.js";
 
 /**
  * Build a stable stack key for grouping identical items.
- * Items that share typeId, nameTag, and lore are treated as the same stack.
+ * Items that share typeId, nameTag, lore, and enchantments are treated as the same stack.
  * @param {import("@minecraft/server").ItemStack|null|undefined} item
  * @returns {string|null}
  */
 const getStackKey = (item) => {
   if (!item?.typeId) return null;
+
+  // Build enchantment fingerprint — items with different enchants must NOT merge
+  const enchComp = item.getComponent("minecraft:enchantable");
+  const enchants = enchComp?.getEnchantments?.();
+  let enchStr = "";
+  if (enchants && enchants.length > 0) {
+    // Sort by type so order doesn't matter
+    const parts = new Array(enchants.length);
+    for (let i = 0; i < enchants.length; i++) {
+      parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
+    }
+    parts.sort();
+    enchStr = parts.join(",");
+  }
+
   const lore = item.getLore?.();
-  if (!item.nameTag && (!lore || lore.length === 0)) return item.typeId;
-  // Only stringify lore when it exists — avoid JSON call on every clean item
   const loreStr = lore && lore.length > 0 ? JSON.stringify(lore) : "";
-  return `${item.typeId}\x00${item.nameTag || ""}\x00${loreStr}`;
+
+  if (!item.nameTag && !loreStr && !enchStr) return item.typeId;
+  return `${item.typeId}\x00${item.nameTag || ""}\x00${loreStr}\x00${enchStr}`;
 };
 
 /**
@@ -56,7 +71,9 @@ export const sortAndMergeItems = (items, maxSize) => {
   const out = /** @type {(import("@minecraft/server").ItemStack|undefined)[]} */ ([]);
   const maxAmountCache = new Map();
 
-  for (const group of buckets.values()) {
+  const bucketValues = Array.from(buckets.values());
+  for (let g = 0; g < bucketValues.length; g++) {
+    const group = bucketValues[g];
     const typeId = group.ref.typeId;
     let maxAmt = maxAmountCache.get(typeId);
     if (maxAmt === undefined) {
@@ -113,13 +130,14 @@ export const isInventorySortedAndMerged = (items, _maxSize, mode = "type") => {
  * to avoid allocating a temp array.
  * @param {import("@minecraft/server").Container} container
  * @param {string} [mode="type"]
+ * @param {number} [startSlot=0] - first slot to check (use HOTBAR_SIZE to skip hotbar)
  * @returns {boolean}
  */
-export const isContainerSorted = (container, mode = "type") => {
+export const isContainerSorted = (container, mode = "type", startSlot = 0) => {
   let prev = null;
   let foundEmpty = false;
   const size = container.size;
-  for (let i = 0; i < size; i++) {
+  for (let i = startSlot; i < size; i++) {
     const cur = container.getItem(i);
     if (!cur) {
       foundEmpty = true;
@@ -138,15 +156,33 @@ export const isContainerSorted = (container, mode = "type") => {
 };
 
 /**
+ * Build an enchantment fingerprint string for equality checks.
+ * @param {import("@minecraft/server").ItemStack} item
+ * @returns {string}
+ */
+const getEnchantFingerprint = (item) => {
+  const enchants = item.getComponent("minecraft:enchantable")?.getEnchantments?.();
+  if (!enchants || enchants.length === 0) return "";
+  const parts = new Array(enchants.length);
+  for (let i = 0; i < enchants.length; i++) {
+    parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
+  }
+  parts.sort();
+  return parts.join(",");
+};
+
+/**
  * Write only changed slots to minimize API calls — critical for multiplayer performance.
- * Two items are considered equal if they share the same typeId, amount, nameTag, and lore.
+ * Two items are considered equal if they share typeId, amount, nameTag, lore, and enchantments.
  * @param {import("@minecraft/server").Container} container
  * @param {(import("@minecraft/server").ItemStack|null|undefined)[]} newItems
+ * @param {number} [startSlot=0] - write offset into the container (e.g. HOTBAR_SIZE to skip hotbar)
  */
-export const writeContainerDiff = (container, newItems) => {
-  const size = container.size < newItems.length ? container.size : newItems.length;
-  for (let i = 0; i < size; i++) {
-    const cur = container.getItem(i);
+export const writeContainerDiff = (container, newItems, startSlot = 0) => {
+  const maxWrite = container.size - startSlot;
+  const len = newItems.length < maxWrite ? newItems.length : maxWrite;
+  for (let i = 0; i < len; i++) {
+    const cur = container.getItem(startSlot + i);
     const nxt = newItems[i];
 
     if (!cur && !nxt) continue;
@@ -155,15 +191,14 @@ export const writeContainerDiff = (container, newItems) => {
         cur.typeId === nxt.typeId &&
         cur.amount === nxt.amount &&
         cur.nameTag === nxt.nameTag) {
-      // Lore check — only pay JSON cost when other fields already match
       const curLore = cur.getLore?.();
       const nxtLore = nxt.getLore?.();
       const loreMatch = curLore && nxtLore
         ? JSON.stringify(curLore) === JSON.stringify(nxtLore)
         : !curLore?.length && !nxtLore?.length;
-      if (loreMatch) continue;
+      if (loreMatch && getEnchantFingerprint(cur) === getEnchantFingerprint(nxt)) continue;
     }
 
-    container.setItem(i, nxt);
+    container.setItem(startSlot + i, nxt);
   }
 };

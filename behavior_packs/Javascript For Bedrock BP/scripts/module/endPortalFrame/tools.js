@@ -3,10 +3,18 @@ import { zone } from "./rules.js";
 
 const count = (block) => {
   if (!block || !block.isValid) return 0;
-  return world.getPlayers({
-    location: block.location,
-    maxDistance: zone,
-  }).length;
+  const { x, y, z } = block.location;
+  const dimId = block.dimension.id;
+  const zoneSq = zone * zone;
+  let n = 0;
+  for (const player of world.getAllPlayers()) {
+    if (!player.isValid) continue;
+    if (player.dimension.id !== dimId) continue;
+    const loc = player.location;
+    const dx = loc.x - x, dy = loc.y - y, dz = loc.z - z;
+    if (dx * dx + dy * dy + dz * dz <= zoneSq) n++;
+  }
+  return n;
 };
 
 const fix = (text) => {

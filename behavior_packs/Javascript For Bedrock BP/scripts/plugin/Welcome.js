@@ -31,10 +31,10 @@ const showWelcome = (player) => {
 export const playerSpawnWelcome = (event) => {
   if (!event.initialSpawn) return;
   const player = event.player;
-  if (!player?.isValid()) return;
+  if (!player?.isValid) return;
 
   system.runTimeout(() => {
-    if (!player.isValid()) return;
+    if (!player.isValid) return;
     showWelcome(player);
   }, DELAY);
 };

@@ -5,36 +5,17 @@ import {
   system,
 } from "@minecraft/server";
 import { sortBlockContainer, sortPlayerInventory } from "../core/sorter.js";
+import { SORTING_MODES } from "../config.js";
 
-// ─── Enum values (matches SORTING_MODES keys in config.js) ────────────────
-const SORT_MODE_ENUM = /** @type {string[]} */ ([
-  "type",
-  "low",
-  "max",
-  "rarity",
-  "stack",
-  "tool",
-  "name",
-  "durability",
-  "chess",
-  "line",
-  "column",
-]);
+// Derive enum values from SORTING_MODES keys — single source of truth
+const SORT_MODE_ENUM = Object.keys(SORTING_MODES);
 
-// ─── Command handlers ─────────────────────────────────────────────────────
-
-/**
- * /addon:r <mode> — sort the player's main inventory.
- * @param {import("@minecraft/server").CustomCommandOrigin} origin
- * @param {string} mode
- * @returns {import("@minecraft/server").CustomCommandResult}
- */
 const sortInventoryCommand = (origin, mode) => {
   const player = origin.sourceEntity;
-  if (!player?.isValid()) return { status: CustomCommandStatus.Failure };
+  if (!player?.isValid) return { status: CustomCommandStatus.Failure };
 
   system.run(() => {
-    if (!player.isValid()) return;
+    if (!player.isValid) return;
     const res = sortPlayerInventory(player, mode);
     if (res.msg) player.sendMessage(res.msg);
   });
@@ -42,18 +23,12 @@ const sortInventoryCommand = (origin, mode) => {
   return { status: CustomCommandStatus.Success };
 };
 
-/**
- * /addon:c <mode> — sort the container the player is looking at.
- * @param {import("@minecraft/server").CustomCommandOrigin} origin
- * @param {string} mode
- * @returns {import("@minecraft/server").CustomCommandResult}
- */
 const sortContainerCommand = (origin, mode) => {
   const player = origin.sourceEntity;
-  if (!player?.isValid()) return { status: CustomCommandStatus.Failure };
+  if (!player?.isValid) return { status: CustomCommandStatus.Failure };
 
   system.run(() => {
-    if (!player.isValid()) return;
+    if (!player.isValid) return;
     const res = sortBlockContainer(player, mode);
     if (res.msg) player.sendMessage(res.msg);
   });
@@ -61,13 +36,6 @@ const sortContainerCommand = (origin, mode) => {
   return { status: CustomCommandStatus.Success };
 };
 
-// ─── Registration ─────────────────────────────────────────────────────────
-
-/**
- * Register /addon:r and /addon:c with the Custom Command API.
- * Call this once from the worldInitialize event.
- * @param {import("@minecraft/server").WorldInitializeAfterEvent} init
- */
 export function registerCustomCommandIventory(init) {
   init.customCommandRegistry.registerEnum("addon:SortingMode", SORT_MODE_ENUM);
 

@@ -53,7 +53,7 @@ const displayBossTitle = (entity, name, subtitle, isDeathEvent) => {
   const players = [];
 
   const animate = () => {
-    if (!entity?.isValid()) return;
+    if (!entity?.isValid) return;
 
     players.length = 0;
     getNearbyPlayers(entity, players);
@@ -72,7 +72,7 @@ const displayBossTitle = (entity, name, subtitle, isDeathEvent) => {
 
     for (let i = 0; i < players.length; i++) {
       const player = players[i];
-      if (!player.isValid()) continue;
+      if (!player.isValid) continue;
       player.onScreenDisplay.setTitle(currentTitle, titleOptions);
       player.playSound(SND_SHOOT);
       if (isFinal) player.playSound(finalSound, { volume: 0.5, pitch: 1 });
@@ -87,7 +87,7 @@ const displayBossTitle = (entity, name, subtitle, isDeathEvent) => {
 
 export const itile_main = (event) => {
   const entity = event.entity;
-  if (!entity?.isValid()) return;
+  if (!entity?.isValid) return;
   if (!BOSS_IDS.has(entity.typeId)) return;
   if (entity.hasTag(BOSS_TAG)) return;
 

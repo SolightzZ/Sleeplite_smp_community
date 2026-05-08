@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { flashSpawn } from "../module/flashlight/core/engine";
+import { flashSpawn } from "../module/flashlight/index.js";
 import { playerSpawnWelcome } from "../plugin/Welcome";
 
 const PLAYER_SPAWN = [playerSpawnWelcome, flashSpawn];

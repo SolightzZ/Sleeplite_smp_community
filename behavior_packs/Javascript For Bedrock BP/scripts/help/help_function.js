@@ -1,28 +1,31 @@
 import { EnchantmentTypes } from "@minecraft/server";
 
-const getProtectionBonus = (enchants) => {
-  const protectionType = EnchantmentTypes.get("protection");
-  let bonus = 0;
-  const details = [];
+let _protType = undefined;
 
-  if (protectionType) {
-    const level =
-      enchants?.find((e) => e.type.id === protectionType.id)?.level || 0;
-    if (level > 0 && level <= protectionType.maxLevel) {
-      bonus = level * 4;
-      details.push(`Protection: ${bonus}%`);
+const getProtectionBonus = (enchants) => {
+  if (!enchants) return { protectionBonus: 0, details: [] };
+  if (_protType === undefined) _protType = EnchantmentTypes.get("protection") ?? null;
+  if (!_protType) return { protectionBonus: 0, details: [] };
+  let level = 0;
+  for (let i = 0; i < enchants.length; i++) {
+    if (enchants[i].type.id === _protType.id) {
+      level = enchants[i].level;
+      break;
     }
   }
-
-  return {
-    protectionBonus: Math.min(20, bonus),
-    details,
-  };
+  if (level <= 0 || level > _protType.maxLevel) {
+    return { protectionBonus: 0, details: [] };
+  }
+  const bonus = Math.min(20, level * 4);
+  return { protectionBonus: bonus, details: [`Protection: ${bonus}%`] };
 };
 
 const getBreachReduction = (enchants) => {
-  const breachLevel = enchants?.find((e) => e.type.id === "breach")?.level || 0;
-  return breachLevel * 15;
+  if (!enchants) return 0;
+  for (let i = 0; i < enchants.length; i++) {
+    if (enchants[i].type.id === "breach") return enchants[i].level * 15;
+  }
+  return 0;
 };
 
 export const getDamageReduction = (armor, toughness, enchants, damage) => {
@@ -33,16 +36,6 @@ export const getDamageReduction = (armor, toughness, enchants, damage) => {
     ) / 25;
   const { protectionBonus, details } = getProtectionBonus(enchants);
   const breachReduction = getBreachReduction(enchants);
-  const total = Math.max(
-    0,
-    Math.min(80, baseReduction * 100 + protectionBonus - breachReduction),
-  );
-
-  return {
-    total,
-    base: baseReduction * 100,
-    protectionBonus,
-    breachReduction,
-    details,
-  };
+  const total = Math.max(0, Math.min(80, baseReduction * 100 + protectionBonus - breachReduction));
+  return { total, base: baseReduction * 100, protectionBonus, breachReduction, details };
 };

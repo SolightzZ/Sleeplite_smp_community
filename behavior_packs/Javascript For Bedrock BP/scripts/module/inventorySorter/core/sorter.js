@@ -15,14 +15,6 @@ import {
 
 // ─── Helpers ───────────────────────────────────────────────────────────────
 
-/**
- * Read items from a Container slice [start, start+length).
- * Avoids Array.from + arrow allocation — uses plain for-i loop.
- * @param {import("@minecraft/server").Container} container
- * @param {number} start
- * @param {number} length
- * @returns {(import("@minecraft/server").ItemStack|undefined)[]}
- */
 const readSlice = (container, start, length) => {
   const arr = new Array(length);
   for (let i = 0; i < length; i++) {
@@ -31,11 +23,6 @@ const readSlice = (container, start, length) => {
   return arr;
 };
 
-/**
- * Return true if every element in arr is falsy.
- * @param {any[]} arr
- * @returns {boolean}
- */
 const isAllEmpty = (arr) => {
   for (let i = 0; i < arr.length; i++) {
     if (arr[i]) return false;
@@ -53,7 +40,7 @@ const isAllEmpty = (arr) => {
  * @returns {{ ok: boolean; msg: string }}
  */
 export function sortPlayerInventory(player, mode) {
-  if (!player?.isValid()) {
+  if (!player?.isValid) {
     return { ok: false, msg: `${Colors.red}[x] Player is no longer valid` };
   }
 
@@ -70,12 +57,12 @@ export function sortPlayerInventory(player, mode) {
   // Read main inventory (skip hotbar)
   const mainItems = readSlice(inv, hotbarEnd, mainLen);
 
-  // Skip if already empty or sorted
+  // Skip if already empty or sorted (check main inventory only, not hotbar)
   if (isAllEmpty(mainItems)) {
     return { ok: true, msg: `${Colors.green}[/] เรียงเรียบร้อยแล้ว` };
   }
 
-  if (isContainerSorted(inv, sortMode)) {
+  if (isContainerSorted(inv, sortMode, hotbarEnd)) {
     return { ok: true, msg: `${Colors.green}[/] เรียงเรียบร้อยแล้ว` };
   }
 
@@ -83,28 +70,8 @@ export function sortPlayerInventory(player, mode) {
   const merged = sortAndMergeItems(mainItems, mainLen);
   merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
 
-  // Write only changed slots (hotbarEnd offset)
-  const size = mainLen < merged.length ? mainLen : merged.length;
-  for (let i = 0; i < size; i++) {
-    const cur = inv.getItem(hotbarEnd + i);
-    const nxt = merged[i];
-
-    if (!cur && !nxt) continue;
-
-    if (cur && nxt &&
-        cur.typeId === nxt.typeId &&
-        cur.amount === nxt.amount &&
-        cur.nameTag === nxt.nameTag) {
-      const cl = cur.getLore?.();
-      const nl = nxt.getLore?.();
-      const loreMatch = cl && nl
-        ? JSON.stringify(cl) === JSON.stringify(nl)
-        : !cl?.length && !nl?.length;
-      if (loreMatch) continue;
-    }
-
-    inv.setItem(hotbarEnd + i, nxt);
-  }
+  // Write only changed slots — skip hotbar via startSlot offset
+  writeContainerDiff(inv, merged, hotbarEnd);
 
   return {
     ok: true,
@@ -120,7 +87,7 @@ export function sortPlayerInventory(player, mode) {
  * @returns {{ ok: boolean; msg: string }}
  */
 export function sortBlockContainer(player, mode) {
-  if (!player?.isValid()) {
+  if (!player?.isValid) {
     return { ok: false, msg: `${Colors.red}[x] Player is no longer valid` };
   }
 
@@ -155,9 +122,15 @@ export function sortBlockContainer(player, mode) {
   let merged;
 
   if (sortMode === "chess" || sortMode === "line" || sortMode === "column") {
-    // Pattern modes: always sort by "type" first, then apply visual layout
-    const sorted = sortAndMergeItems(rawItems, itemCount);
-    sorted.sort((a, b) => compareItemsByMode(a, b, "type"));
+    // Pattern modes: sort by amount ascending (น้อย→มาก), then typeId as tiebreaker
+    const sorted = sortAndMergeItems(rawItems, size);
+    sorted.sort((a, b) => {
+      if (!a && !b) return 0;
+      if (!a) return 1;
+      if (!b) return -1;
+      if (a.amount !== b.amount) return a.amount - b.amount;
+      return a.typeId < b.typeId ? -1 : a.typeId > b.typeId ? 1 : 0;
+    });
 
     if (sortMode === "chess")  merged = applyChessPattern(sorted, size);
     else if (sortMode === "line")   merged = applyLinePattern(sorted, size);

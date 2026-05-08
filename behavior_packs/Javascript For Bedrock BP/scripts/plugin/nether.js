@@ -9,7 +9,7 @@ const MSG_USAGE = "§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ต�
 const MSG_UNSUPPORTED = "§eไม่สามารถคำนวณได้ในมิตินี้";
 
 const sendCalculated = (player, x, z) => {
-  if (!player.isValid()) return;
+  if (!player.isValid) return;
 
   const dimId = player.dimension.id;
   const rx = Math.round(x);
@@ -36,7 +36,7 @@ export const xz_main = (event) => {
   if (raw.charCodeAt(0) !== 33 || !raw.startsWith("!xz")) return;
 
   const player = event.sender;
-  if (!player?.isValid()) return;
+  if (!player?.isValid) return;
 
   event.cancel = true;
 

@@ -12,7 +12,7 @@ const RANK_LEN = CONFIG.PREFIX_RANK.length;
 const ACTIVE_LEN = CONFIG.PREFIX_ACTIVE.length;
 
 const isValidPlayer = (player) =>
-  player?.typeId === "minecraft:player" && player.isValid();
+  player?.typeId === "minecraft:player" && player.isValid;
 
 const getOwnedRanks = (player, tags = player.getTags()) => {
   const out = [];
@@ -201,7 +201,7 @@ const showMainMenu = (admin) => {
   form.show(admin).then((res) => {
     if (res.canceled) return;
     const target = players[res.selection];
-    if (target?.isValid()) showActions(admin, target);
+    if (target?.isValid) showActions(admin, target);
   });
 };
 
@@ -211,5 +211,5 @@ export const playerJoinNameTag = (event) => {
 };
 
 export const chatrankssitemUse = ({ source }) => {
-  if (source?.isValid()) showMainMenu(source);
+  if (source?.isValid) showMainMenu(source);
 };

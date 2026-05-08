@@ -3,7 +3,7 @@ export const inventorys = "minecraft:inventory";
 export const key = "minecraft:ender_eye";
 export const boss = "admin";
 export const zone = 10;
-export const team = 3;
+export const team = 2;
 
 export const shop = [
   // Overworld
@@ -14,7 +14,7 @@ export const shop = [
   { id: "minecraft:totem_of_undying", hp: 9 },
   { id: "minecraft:wild_armor_trim_smithing_template", hp: 9 },
   { id: "minecraft:mace", hp: 9 },
-  { id: "minecraft:tide_armor_trim_smithing_template", hp: 8 },
+  { id: "minecraft:netherite_nautilus_armor", hp: 8 },
 
   // Nether
   { id: "minecraft:beacon", hp: 10 },
