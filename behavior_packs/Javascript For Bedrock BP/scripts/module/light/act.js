@@ -8,19 +8,6 @@ function check(tool) {
   return tool?.typeId === "minecraft:light_block_13";
 }
 
-function dig(boy, spot) {
-  try {
-    const drop = "minecraft:light_block_13";
-    const { x, y, z } = spot.location;
-    const pos = { x: x + 0.5, y: y + 0.5, z: z + 0.5 };
-
-    boy.dimension.spawnItem(new ItemStack(drop, 1), pos);
-    spot.setType("minecraft:air");
-  } catch (err) {
-    boy.sendMessage("§cCannot break this!");
-  }
-}
-
 /**
  * Optimized light block search.
  * Uses a smaller range and more efficient loop to avoid script watchdog timeouts.
@@ -62,4 +49,4 @@ function shine(boy) {
   return count;
 }
 
-export { check, dig, limit, shine };
+export { check, limit, shine };

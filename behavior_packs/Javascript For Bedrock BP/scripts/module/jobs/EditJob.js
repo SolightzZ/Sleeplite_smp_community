@@ -1,6 +1,6 @@
 import { system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { giveDiamond } from "./CompleteJob";
+import { giveDiamond } from "./CompleteJob.js";
 import {
   deleteJobData,
   findPlayerById,
@@ -10,8 +10,8 @@ import {
   stopTimer,
   timerMap,
   totalDiamond,
-} from "./Job";
-import { showMainMenu } from "./Menu";
+} from "./Job.js";
+import { showMainMenu } from "./Menu.js";
 
 const refundOwner = (job) => {
   const owner = findPlayerById(job.owner);

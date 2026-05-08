@@ -1,5 +1,5 @@
 import { EquipmentSlot } from "@minecraft/server";
-import { PICKAXE_BREAKS } from "../data/ores";
+import { PICKAXE_BREAKS } from "../data/ores.js";
 
 export const getPlayerPickaxe = (player) => {
   const equip = player.getComponent("minecraft:equippable");

@@ -1,7 +1,7 @@
 import { ItemStack } from "@minecraft/server";
-import { applyDurabilityDamage } from "../utils/durability";
-import { getPlayerPickaxe } from "../utils/player";
-import { state } from "./queue";
+import { applyDurabilityDamage } from "../utils/durability.js";
+import { getPlayerPickaxe } from "../utils/player.js";
+import { state } from "./queue.js";
 
 export const finalizeJobDrops = (dimension, location, dropTypeId, amount, xpTotal) => {
   if (dropTypeId && amount > 0) {

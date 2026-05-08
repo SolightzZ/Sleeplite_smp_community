@@ -1,4 +1,3 @@
-import { world } from "@minecraft/server";
-import { LlightentityHitBlock } from "../module/light/main";
+// import { world } from "@minecraft/server";
 
-world.afterEvents.entityHitBlock.subscribe(LlightentityHitBlock);
+// world.afterEvents.entityHitBlock.subscribe();

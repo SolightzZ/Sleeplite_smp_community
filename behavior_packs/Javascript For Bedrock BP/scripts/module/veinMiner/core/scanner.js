@@ -1,6 +1,6 @@
-import { getLocKey, getBlockSafe } from "../utils/block";
-import { DIRECTIONS } from "../constants";
-import { CFG } from "../config";
+import { getLocKey, getBlockSafe } from "../utils/block.js";
+import { DIRECTIONS } from "../constants.js";
+import { CFG } from "../config.js";
 
 export const scanVein = (startBlock, targetId) => {
   const dimension = startBlock.dimension;
@@ -32,5 +32,7 @@ export const scanVein = (startBlock, targetId) => {
       }
     }
   }
-  return { locations, visitedKeys: Array.from(visited) };
+  const visitedKeys = [];
+  visited.forEach((key) => visitedKeys.push(key));
+  return { locations, visitedKeys };
 };

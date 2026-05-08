@@ -105,6 +105,7 @@ export const openMainMenuForPlayer = async (player) => {
 
     const { canceled, selection } = await form.show(player);
     if (canceled) return;
+    if (!player.isValid) return;
 
     if (selection < actions.length) {
       await actions[selection]();

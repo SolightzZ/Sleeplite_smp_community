@@ -84,10 +84,12 @@ export const adminmsg = (player, targetName) => {
     const ui = new ActionFormData();
     ui.title(`ข้อความจาก ${targetName}`);
 
-    list.forEach((item) => {
+    const listLen = list.length;
+    for (let i = 0; i < listLen; i++) {
+      const item = list[i];
       const status = item.r ? "[ตอบแล้ว]" : "[รอ]";
       ui.button(`${status} ${item.t}`);
-    });
+    }
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
     ui.show(player).then((res) => {
@@ -115,9 +117,11 @@ export const adminpanel = (player) => {
 
     ui.button("Dump (Console)");
 
-    names.forEach((n) => {
+    const namesLen = names.length;
+    for (let i = 0; i < namesLen; i++) {
+      const n = names[i];
       ui.button(`${n} (${db[n].length})`);
-    });
+    }
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 

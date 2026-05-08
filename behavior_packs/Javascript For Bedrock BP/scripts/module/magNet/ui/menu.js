@@ -20,17 +20,21 @@ export function showMenu(player) {
 
   const form = new ActionFormData()
     .title("Magnet System")
-    .body(
-      `§7Status: ${isOn ? "§aActive" : "§cInactive"}\n§7Player: ${current}/${setting.maxPeople}`,
-    )
-    .button(btnText, btnIcon);
+    .body(`§7Status: ${isOn ? "§aActive" : "§cInactive"}`)
+    .label(`§7Player: ${current}/${setting.maxPeople}`)
+    .button(btnText, btnIcon)
+    .label("                 @Sleeplite SMP");
 
-  form.show(player).then((res) => {
-    if (!res || res.canceled || res.selection !== 0) return;
-    toggle(player, !isOn);
-  }).catch((error) => {
-    if (error.message !== "User is busy") {
-      console.error("[Magnet] UI Error:", error);
-    }
-  });
+  form
+    .show(player)
+    .then((res) => {
+      if (!res || res.canceled || res.selection !== 0) return;
+      if (!player.isValid) return;
+      toggle(player, !isOn);
+    })
+    .catch((error) => {
+      if (error.message !== "User is busy") {
+        console.error("[Magnet] UI Error:", error);
+      }
+    });
 }

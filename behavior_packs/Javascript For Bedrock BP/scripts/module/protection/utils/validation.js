@@ -92,10 +92,10 @@ export const buildNewZoneFromCenter = (center) => ({
 });
 
 export const isFormOk = (player, response) => {
+  if (response.canceled) return false;
   if (
-    response.canceled ||
-    ("formValues" in response &&
-      (!response.formValues || !Array.isArray(response.formValues)))
+    "formValues" in response &&
+    (!response.formValues || !Array.isArray(response.formValues))
   ) {
     player.sendMessage(UserMessages.InvalidForm);
     return false;

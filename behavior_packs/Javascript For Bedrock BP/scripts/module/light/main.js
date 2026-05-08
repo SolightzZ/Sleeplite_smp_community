@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { check, dig, limit, shine } from "./act.js";
+import { check, limit, shine } from "./act.js";
 
 const max = 3;
 const wait = 150;
@@ -54,18 +54,6 @@ function run(boy) {
   }, 2);
 }
 
-function LlightentityHitBlock(evt) {
-  const boy = evt.damagingEntity;
-  const spot = evt.hitBlock;
-
-  if (
-    boy?.typeId === "minecraft:player" &&
-    spot?.typeId.includes("light_block")
-  ) {
-    dig(boy, spot);
-  }
-}
-
 function LligitemUse(evt) {
   const boy = evt.source;
   const tool = evt.itemStack;
@@ -76,5 +64,4 @@ function LligitemUse(evt) {
   run(boy);
 }
 
-export { list, LlightentityHitBlock, LligitemUse };
-
+export { list, LligitemUse };

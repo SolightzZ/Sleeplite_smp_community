@@ -1,4 +1,4 @@
-import { state } from "./state";
+import { state } from "./state.js";
 
 export const cleanupJobState = (job) => {
   state.pendingTrees.delete(job.treeKey);

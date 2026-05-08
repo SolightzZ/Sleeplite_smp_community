@@ -26,7 +26,7 @@ export function pullItem(player) {
       if (totalPulled >= setting.maxItem) break;
       if (!entity.isValid) continue;
 
-      entity.teleport(target);
+      entity.teleport(target, { dimension: player.dimension });
       totalPulled++;
     }
   }

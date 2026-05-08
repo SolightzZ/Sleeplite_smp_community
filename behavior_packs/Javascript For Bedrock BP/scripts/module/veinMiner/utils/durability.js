@@ -3,7 +3,7 @@ import { EquipmentSlot, ItemComponentTypes } from "@minecraft/server";
 export const applyDurabilityDamage = (player, item, amount, unbreakingLevel) => {
   if (amount <= 0 || !item) return;
   const dur = item.getComponent(ItemComponentTypes.Durability);
-  if (!dur || dur.unbreakable) return;
+  if (!dur) return;
 
   let actualDamage = 0;
   for (let i = 0; i < amount; i++) {
@@ -14,11 +14,15 @@ export const applyDurabilityDamage = (player, item, amount, unbreakingLevel) => 
 
   if (actualDamage <= 0) return;
 
-  dur.damage += actualDamage;
+  const newDamage = dur.damage + actualDamage;
+  dur.damage = Math.min(newDamage, dur.maxDurability);
+
   const equip = player.getComponent("minecraft:equippable");
+  if (!equip) return;
+
   if (dur.damage >= dur.maxDurability) {
     equip.setEquipment(EquipmentSlot.Mainhand, undefined);
-    player.dimension.playSound("random.break", player.location);
+    try { player.dimension.playSound("random.break", player.location); } catch { }
   } else {
     equip.setEquipment(EquipmentSlot.Mainhand, item);
   }

@@ -1,6 +1,6 @@
-import { getBlockSafe } from "../utils/block";
-import { LEAF_OFFSETS } from "../constants";
-import { CFG } from "../config";
+import { getBlockSafe } from "../utils/block.js";
+import { LEAF_OFFSETS } from "../constants.js";
+import { CFG } from "../config.js";
 
 export const detectTree = (startBlock, logTypeId, leafTypeId) => {
   const dimension = startBlock.dimension;

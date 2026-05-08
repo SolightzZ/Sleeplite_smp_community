@@ -4,6 +4,10 @@ import { playerStates } from "./state.js";
 import { getCameraFrame } from "./afk.js";
 import { tickBlockCache } from "./block.js";
 
+function safeRun(player, command) {
+  const p = player.runCommand(command);
+}
+
 export class CinematicScheduler {
   constructor() {
     this._ids = [];
@@ -74,7 +78,8 @@ export class CinematicScheduler {
 
       try {
         const { position: p, rotation: r } = getCameraFrame(player, s);
-        player.runCommand(
+        safeRun(
+          player,
           `camera @s set minecraft:free pos ${p.x.toFixed(3)} ${p.y.toFixed(3)} ${p.z.toFixed(3)} rot ${r.pitch.toFixed(3)} ${r.yaw.toFixed(3)}`,
         );
       } catch {

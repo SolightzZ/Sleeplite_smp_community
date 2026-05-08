@@ -1,11 +1,11 @@
 import { system } from "@minecraft/server";
-import { CFG } from "./config";
-import { state } from "./core/state";
-import { LOG_TO_LEAF } from "./data/trees";
-import { getPlayerAxe } from "./utils/inventory";
-import { getBlockSafe } from "./utils/block";
-import { detectTree } from "./core/detector";
-import { processJobs } from "./core/processor";
+import { CFG } from "./config.js";
+import { state } from "./core/state.js";
+import { LOG_TO_LEAF } from "./data/trees.js";
+import { getPlayerAxe } from "./utils/inventory.js";
+import { getBlockSafe } from "./utils/block.js";
+import { detectTree } from "./core/detector.js";
+import { processJobs } from "./core/processor.js";
 
 /**
  * Tree Capitator - Production SMP Edition
@@ -15,6 +15,7 @@ import { processJobs } from "./core/processor";
 function onBlockBreak(event) {
   const { player, block, brokenBlockPermutation } = event;
 
+  if (!player || !player.isValid) return;
   if (!player.isSneaking) return;
 
   if (state.jobQueue.length >= CFG.maxGlobalJobs) return;

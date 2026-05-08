@@ -8,8 +8,8 @@ import {
   jobs,
   selectedMap,
   showUI,
-} from "./Job";
-import { showMainMenu } from "./Menu";
+} from "./Job.js";
+import { showMainMenu } from "./Menu.js";
 
 export const getIcon = (typeId) => {
   return ITEM_IDS.has(typeId)
@@ -24,7 +24,8 @@ export const formatName = (id) => {
 
 export const searchBlock = (player) => {
   if (!player.isValid) return;
-  const inv = player.getComponent("minecraft:inventory").container;
+  const inv = player.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
   const invMap = getInvMap(inv);
 
   if (invMap.size === 0) {
@@ -134,7 +135,8 @@ export function createJob(player) {
         createJob(player);
         return;
       }
-      const inv = player.getComponent("minecraft:inventory").container;
+      const inv = player.getComponent("minecraft:inventory")?.container;
+      if (!inv) return;
       const invMap = getInvMap(inv);
 
       let missing = null;
@@ -244,7 +246,8 @@ export const openConfirmForm = (player) => {
     body += `- ${id.replace("minecraft:", "")}: x${amount}  (${diamond} diamond)\n`;
   }
 
-  const inv = player.getComponent("minecraft:inventory").container;
+  const inv = player.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
   const haveDiam = countItem(inv, "minecraft:diamond");
   body += `\nTotal reward: ${total} diamond`;
   body += `\nYour diamond: ${haveDiam} / ${total}`;
@@ -269,7 +272,8 @@ export const openConfirmForm = (player) => {
       return;
     }
 
-    const inv2 = player.getComponent("minecraft:inventory").container;
+    const inv2 = player.getComponent("minecraft:inventory")?.container;
+    if (!inv2) return;
     const haveDiam2 = countItem(inv2, "minecraft:diamond");
 
     if (haveDiam2 < total) {

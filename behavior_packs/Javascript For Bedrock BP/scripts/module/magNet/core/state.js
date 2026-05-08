@@ -1,10 +1,10 @@
 const data = {
-  users: new Map(),
+  users: new Set(),
   timer: null,
 };
 
 export function addUser(player) {
-  data.users.set(player.id, player);
+  data.users.add(player.id);
 }
 export function removeUser(id) {
   data.users.delete(id);
@@ -15,8 +15,8 @@ export function hasUser(id) {
 export function countUser() {
   return data.users.size;
 }
-export function getUserEntries() {
-  return data.users.entries();
+export function getUserIds() {
+  return Array.from(data.users);
 }
 
 export function setTimer(id) {

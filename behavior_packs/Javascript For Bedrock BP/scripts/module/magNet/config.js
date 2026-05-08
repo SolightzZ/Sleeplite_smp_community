@@ -7,8 +7,8 @@ const setting = {
   canPull: ["minecraft:item", "minecraft:xp_orb"],
 
   icon: {
-    on: "textures/items/magnet",
-    off: "textures/items/magnet2",
+    on: "textures/items/magnet_",
+    off: "textures/ui/icon_none",
     full: "textures/ui/Ping_Offline_Red",
   },
 
@@ -20,4 +20,3 @@ const setting = {
 };
 
 export { setting };
-

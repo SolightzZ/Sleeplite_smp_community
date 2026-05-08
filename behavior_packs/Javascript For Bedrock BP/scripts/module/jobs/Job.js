@@ -1,5 +1,5 @@
 import { ItemTypes, system, world } from "@minecraft/server";
-import { showMainMenu } from "./Menu";
+import { showMainMenu } from "./Menu.js";
 
 export let jobs = [];
 export let jobId = 0;
@@ -89,7 +89,7 @@ export const deleteJobData = (id) => {
   saveData();
 };
 
-export const showUI = (player, form, callback) => {
+export const showUI = (player, form, callback, retries = 3) => {
   system.run(() => {
     if (!player || !player.isValid) return;
     form
@@ -99,7 +99,9 @@ export const showUI = (player, form, callback) => {
         callback(res);
       })
       .catch((err) => {
-        if (err.message !== "User is busy") {
+        if (err?.message === "User is busy" && retries > 0) {
+          system.runTimeout(() => showUI(player, form, callback, retries - 1), 10);
+        } else if (err?.message !== "User is busy") {
           console.error("[Job] UI Error:", err);
         }
       });
@@ -148,7 +150,7 @@ export const totalDiamond = (job) => {
 export const stopTimer = (riderId) => {
   const t = timerMap.get(riderId);
   if (!t) return;
-  system.clearRun(t.intervalId);
+  if (t.intervalId !== undefined) system.clearRun(t.intervalId);
   timerMap.delete(riderId);
 };
 

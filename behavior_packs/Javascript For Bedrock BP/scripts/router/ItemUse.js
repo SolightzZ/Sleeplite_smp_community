@@ -7,11 +7,9 @@ import { LligitemUse } from "../module/light/main.js";
 import { MagnetonUseItem } from "../module/magNet/index.js";
 import { ZoneProtection_OnItemUse } from "../module/protection/index.js";
 import { RewarditemUse } from "../module/rewards/system.js";
-import { chatrankssitemUse } from "../plugin/NameTagRank.js";
+import { chatrankssitemUse } from "../module/nameteg/index.js";
 import { RUNREPORT } from "../module/report/index.js";
 import { setting_main } from "../plugin/setting.js";
-
-
 
 world.afterEvents.itemUse.subscribe((event) => {
   try {

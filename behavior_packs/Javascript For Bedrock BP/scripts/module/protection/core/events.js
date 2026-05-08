@@ -32,13 +32,15 @@ export function handleEntityInteractPreEvent(event) {
 export function handleExplosionPreEvent(event) {
   const loc = event.location;
 
-  const zones = Object.values(zoneDatabase.zoneByOwnerName);
-  if (zones.length === 0) return;
+  const zoneValues = Object.values(zoneDatabase.zoneByOwnerName);
+  const zonesLen = zoneValues.length;
+  if (zonesLen === 0) return;
 
   let nearZone = false;
-  const radius = 8; 
+  const radius = 8;
 
-  for (const zone of zones) {
+  for (let i = 0; i < zonesLen; i++) {
+    const zone = zoneValues[i];
     if (
       loc.x >= zone.start.x - radius &&
       loc.x <= zone.end.x + radius &&
@@ -54,17 +56,20 @@ export function handleExplosionPreEvent(event) {
 
   if (!nearZone) return;
 
-  if (
-    event
-      .getImpactedBlocks()
-      .some((b) => zoneDatabase.findZoneByLocation(b.location))
-  ) {
-    event.cancel = true;
+  const impacted = event.getImpactedBlocks();
+  const impactedLen = impacted.length;
+  for (let i = 0; i < impactedLen; i++) {
+    if (zoneDatabase.findZoneByLocation(impacted[i].location)) {
+      event.cancel = true;
+      return;
+    }
   }
 }
 
 export const ZoneProtection_OnItemUse = ({ source }) => {
-  openMainMenuForPlayer(source);
+  if (source && source.isValid) {
+    openMainMenuForPlayer(source);
+  }
 };
 
 export const ZoneProtection_OnChat = (event) => {

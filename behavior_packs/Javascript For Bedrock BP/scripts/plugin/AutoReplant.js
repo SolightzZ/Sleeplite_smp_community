@@ -1,7 +1,5 @@
 import { BlockPermutation } from "@minecraft/server";
 
-
-/** @type {Record<string, string>} */
 const CROP_MAP = {
   "minecraft:wheat": "minecraft:wheat_seeds",
   "minecraft:carrots": "minecraft:carrot",
@@ -9,34 +7,22 @@ const CROP_MAP = {
   "minecraft:beetroot": "minecraft:beetroot_seeds",
 };
 
-
-/** @type {Record<string, import("@minecraft/server").BlockPermutation|null>} */
 const permCache = Object.create(null);
 
-/**
- * @param {string} id
- * @returns {import("@minecraft/server").BlockPermutation|null}
- */
 const getPerm = (id) => {
   if (id in permCache) return permCache[id];
   let perm = null;
   try {
     perm = BlockPermutation.resolve(id).withState("growth", 0);
-  } catch {
+  } catch (e) {
+    console.error("getPerm: " + e);
   }
   permCache[id] = perm;
   return perm;
 };
 
-
-/**
- * @param {import("@minecraft/server").Container} container
- * @param {string} seedId
- * @returns {boolean}
- */
 const consumeSeed = (container, seedId) => {
-  const size = container.size;
-  for (let i = 0; i < size; i++) {
+  for (let i = 0; i < container.size; i++) {
     const item = container.getItem(i);
     if (!item || item.typeId !== seedId) continue;
 
@@ -51,10 +37,6 @@ const consumeSeed = (container, seedId) => {
   return false;
 };
 
-
-/**
- * @param {import("@minecraft/server").PlayerBreakBlockBeforeEvent} event
- */
 export const handleAutoReplant = (event) => {
   const player = event.player;
   if (!player?.isValid) return;
@@ -67,7 +49,6 @@ export const handleAutoReplant = (event) => {
 
   const seedId = CROP_MAP[id];
   if (!seedId) return;
-
 
   if (perm.getState("growth") !== 7) return;
 

@@ -33,7 +33,9 @@ export const sendform = (player) => {
 
         if (!t || !b || t.trim() === "" || b.trim() === "") {
           player.sendMessage("§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน");
-          system.runTimeout(() => sendform(player), 20);
+          system.runTimeout(() => {
+          if (player.isValid) sendform(player);
+        }, 20);
           return;
         }
 
@@ -67,9 +69,10 @@ export const mylist = (player, mode) => {
     ui.title(mode === "edit" ? "เลือกรายการเพื่อแก้ไข" : "เลือกรายการเพื่อลบ");
     ui.body("รายการข้อความของท่าน");
 
-    list.forEach((item, i) => {
-      ui.button(`${i + 1}. ${item.t}`);
-    });
+    const listLen = list.length;
+    for (let i = 0; i < listLen; i++) {
+      ui.button(`${i + 1}. ${list[i].t}`);
+    }
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
@@ -125,7 +128,10 @@ export const inbox = (player) => {
   try {
     const name = player.name;
     const list = Database.get(name);
-    const replied = list.filter((item) => item.r !== "");
+    const replied = [];
+    for (let i = 0; i < list.length; i++) {
+      if (list[i].r !== "") replied.push(list[i]);
+    }
 
     if (replied.length === 0) {
       const ui = new ActionFormData();
@@ -140,9 +146,10 @@ export const inbox = (player) => {
     ui.title("กล่องจดหมาย (Inbox)");
     ui.body("รายการที่ได้รับการตอบกลับแล้ว");
 
-    replied.forEach((item) => {
-      ui.button(`อ่าน: ${item.t}`);
-    });
+    const repliedLen = replied.length;
+    for (let i = 0; i < repliedLen; i++) {
+      ui.button(`อ่าน: ${replied[i].t}`);
+    }
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 

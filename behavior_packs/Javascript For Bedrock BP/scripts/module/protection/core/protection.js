@@ -43,12 +43,20 @@ const renderAllBordersOnce = () => {
     stopParticleLoopIfIdle();
     if (activeBorderByPlayerName.size === 0) return;
 
-    const players = new Map(world.getPlayers().map((p) => [p.name, p]));
-    const removeList = [];
+    const allPlayers = world.getPlayers();
+    const playerLookup = new Map();
+    for (let i = 0; i < allPlayers.length; i++) {
+      playerLookup.set(allPlayers[i].name, allPlayers[i]);
+    }
 
-    for (const [playerName, state] of activeBorderByPlayerName) {
+    const removeList = [];
+    const entries = Array.from(activeBorderByPlayerName.entries());
+    const entriesLen = entries.length;
+
+    for (let i = 0; i < entriesLen; i++) {
+      const [playerName, state] = entries[i];
       try {
-        const currentPlayer = players.get(playerName);
+        const currentPlayer = playerLookup.get(playerName);
         if (
           !currentPlayer ||
           state.elapsed >= Configuration.BorderDisplayDurationTicks
@@ -57,8 +65,10 @@ const renderAllBordersOnce = () => {
           continue;
         }
 
-        for (const pos of state.borderPoints) {
-          state.dimension.spawnParticle(Configuration.ParticleTypeId, pos);
+        const pts = state.borderPoints;
+        const ptsLen = pts.length;
+        for (let j = 0; j < ptsLen; j++) {
+          state.dimension.spawnParticle(Configuration.ParticleTypeId, pts[j]);
         }
         state.elapsed += 1;
       } catch (eachError) {
@@ -69,7 +79,10 @@ const renderAllBordersOnce = () => {
       }
     }
 
-    for (const name of removeList) activeBorderByPlayerName.delete(name);
+    const removeLen = removeList.length;
+    for (let i = 0; i < removeLen; i++) {
+      activeBorderByPlayerName.delete(removeList[i]);
+    }
     stopParticleLoopIfIdle();
   } catch (error) {
     console.warn(`${TextColorCodes.Error}Error particle loop: ${error}`);
@@ -266,9 +279,14 @@ export const administratorDeleteAnyZone = async (player) => {
       stopParticleLoopIfIdle();
 
     player.sendMessage(UserMessages.ZoneDeletedByAdministrator(ownerName));
-    const ownerPlayer = world.getPlayers().find((p) => p.name === ownerName);
-    if (ownerPlayer)
-      ownerPlayer.sendMessage(UserMessages.YourZoneDeletedByAdministrator);
+    const allPlayers = world.getPlayers();
+    const allPlayersLen = allPlayers.length;
+    for (let i = 0; i < allPlayersLen; i++) {
+      if (allPlayers[i].name === ownerName) {
+        allPlayers[i].sendMessage(UserMessages.YourZoneDeletedByAdministrator);
+        break;
+      }
+    }
   } catch (error) {
     player.sendMessage(`[x] เกิดข้อผิดพลาดในการลบโซนโดยแอดมิน!`);
     console.warn(

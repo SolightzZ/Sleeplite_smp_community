@@ -1,6 +1,6 @@
 import { system } from "@minecraft/server";
-import { SEAT_ENTITY_ID } from "../constants";
-import { startGlobalSeatCheck } from "./seat-checker";
+import { SEAT_ENTITY_ID } from "../constants.js";
+import { startGlobalSeatCheck } from "./seat-checker.js";
 
 export const activeSeats = new Map();
 

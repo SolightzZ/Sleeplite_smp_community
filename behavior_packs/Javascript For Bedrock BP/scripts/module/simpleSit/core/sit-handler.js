@@ -1,9 +1,9 @@
-import { SEAT_NEAR_RADIUS } from "../config";
-import { SEAT_ENTITY_ID } from "../constants";
-import { isBreathableBlock } from "../utils/block";
-import { weirdoToRotation } from "../utils/rotation";
-import { validatePlayerForSit } from "../utils/validation";
-import { spawnSeat } from "./seat-manager";
+import { SEAT_NEAR_RADIUS } from "../config.js";
+import { SEAT_ENTITY_ID } from "../constants.js";
+import { isBreathableBlock } from "../utils/block.js";
+import { weirdoToRotation } from "../utils/rotation.js";
+import { validatePlayerForSit } from "../utils/validation.js";
+import { spawnSeat } from "./seat-manager.js";
 
 export function handleSitCommand(player) {
   if (!validatePlayerForSit(player)) return;

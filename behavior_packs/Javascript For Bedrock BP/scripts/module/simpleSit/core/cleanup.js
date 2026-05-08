@@ -1,11 +1,12 @@
 import { world, system } from "@minecraft/server";
-import { SEAT_ENTITY_ID } from "../constants";
+import { SEAT_ENTITY_ID } from "../constants.js";
 
 export function clearSeatsInDimension(dimensionName) {
   try {
     const dimension = world.getDimension(dimensionName);
-    for (const entity of dimension.getEntities({ type: SEAT_ENTITY_ID })) {
-      entity.remove();
+    const entities = dimension.getEntities({ type: SEAT_ENTITY_ID });
+    for (let i = 0; i < entities.length; i++) {
+      entities[i].remove();
     }
   } catch { }
 }

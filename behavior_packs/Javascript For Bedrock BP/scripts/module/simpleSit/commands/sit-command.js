@@ -1,5 +1,5 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
-import { handleSitCommand } from "../core/sit-handler";
+import { handleSitCommand } from "../core/sit-handler.js";
 
 export function registerCustomCommandTakeASeat(init) {
   init.customCommandRegistry.registerCommand(

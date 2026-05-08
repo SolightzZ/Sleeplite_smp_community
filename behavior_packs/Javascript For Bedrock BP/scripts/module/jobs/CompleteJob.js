@@ -12,8 +12,8 @@ import {
   stopTimer,
   timerMap,
   totalDiamond,
-} from "./Job";
-import { showMainMenu } from "./Menu";
+} from "./Job.js";
+import { showMainMenu } from "./Menu.js";
 
 export const checkJobItems = (inv, job) => {
   const invMap = getInvMap(inv);
@@ -46,7 +46,8 @@ export const removeJobItems = (inv, job) => {
 
 export const giveDiamond = (player, amount) => {
   if (!player.isValid) return false;
-  const inv = player.getComponent("minecraft:inventory").container;
+  const inv = player.getComponent("minecraft:inventory")?.container;
+  if (!inv) return false;
   const invSize = inv.size;
 
   let freeSpace = 0;
@@ -116,7 +117,8 @@ export function completeJob(player) {
     return;
   }
 
-  const inv = player.getComponent("minecraft:inventory").container;
+  const inv = player.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
   const total = totalDiamond(job);
   const invMap = getInvMap(inv);
 
@@ -171,7 +173,8 @@ export function showActiveJobForm(player, job, body, total) {
 
     if (!player.isValid) return;
 
-    const inv = player.getComponent("minecraft:inventory").container;
+    const inv = player.getComponent("minecraft:inventory")?.container;
+    if (!inv) return;
     const missing = checkJobItems(inv, job);
 
     if (missing) {
@@ -192,7 +195,7 @@ export function showActiveJobForm(player, job, body, total) {
     }
 
     pendingDelivery.set(job.id, {
-      ownerName: player.name,
+      ownerName: job.ownerName,
       items: deliveryItems,
     });
 

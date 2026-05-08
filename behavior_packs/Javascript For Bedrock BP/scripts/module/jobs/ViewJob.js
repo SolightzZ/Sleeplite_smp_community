@@ -9,8 +9,8 @@ import {
   stopTimer,
   timerMap,
   totalDiamond,
-} from "./Job";
-import { showMainMenu } from "./Menu";
+} from "./Job.js";
+import { showMainMenu } from "./Menu.js";
 
 const startTimer = (riderId, jobId_, savedStartTick) => {
   stopTimer(riderId);

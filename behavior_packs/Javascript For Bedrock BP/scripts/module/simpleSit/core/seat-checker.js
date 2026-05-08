@@ -1,7 +1,7 @@
 import { system } from "@minecraft/server";
-import { activeSeats } from "./seat-manager";
-import { isRemovedBlock } from "../utils/block";
-import { seatHasMoved } from "../utils/location";
+import { activeSeats } from "./seat-manager.js";
+import { isRemovedBlock } from "../utils/block.js";
+import { seatHasMoved } from "../utils/location.js";
 
 export let globalSeatCheckInterval = null;
 
@@ -9,10 +9,14 @@ export function startGlobalSeatCheck() {
   if (globalSeatCheckInterval !== null) return;
 
   globalSeatCheckInterval = system.runInterval(() => {
-    for (const [seatId, seatData] of activeSeats) {
+    const entries = Array.from(activeSeats.entries());
+    const entriesLen = entries.length;
+
+    for (let i = 0; i < entriesLen; i++) {
+      const [seatId, seatData] = entries[i];
       const { seatEntity, dimension, spawnLocation, blockLocation } = seatData;
 
-      if (!seatEntity || !seatEntity.isValid()) {
+      if (!seatEntity || !seatEntity.isValid) {
         activeSeats.delete(seatId);
         continue;
       }
@@ -23,7 +27,7 @@ export function startGlobalSeatCheck() {
           const block = dimension.getBlock(blockLocation);
           isBlockRemoved = block ? isRemovedBlock(block.typeId) : true;
         } catch {
-          isBlockRemoved = true; 
+          isBlockRemoved = true;
         }
       } else {
         const underLocation = {
@@ -48,7 +52,11 @@ export function startGlobalSeatCheck() {
       const hasMoved = seatHasMoved(seatEntity.location, spawnLocation);
 
       const rideable = seatEntity.getComponent("minecraft:rideable");
-      const hasRider = rideable ? rideable.getRiders().length > 0 : false;
+      let hasRider = false;
+      if (rideable) {
+        const riders = rideable.getRiders();
+        hasRider = riders.length > 0;
+      }
 
       if (isBlockRemoved || isSeatInWater || hasMoved || !hasRider) {
         try {

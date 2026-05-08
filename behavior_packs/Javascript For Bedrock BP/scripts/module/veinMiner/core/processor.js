@@ -1,10 +1,10 @@
 import { system } from "@minecraft/server";
-import { state, popJob } from "./queue";
-import { CFG } from "../config";
-import { getBlockSafe, getAirPerm } from "../utils/block";
-import { getPlayerPickaxe } from "../utils/player";
-import { finalizeAndCleanupState } from "./lifecycle";
-import { ORE_XP } from "../data/ores";
+import { state, popJob } from "./queue.js";
+import { CFG } from "../config.js";
+import { getBlockSafe, getAirPerm } from "../utils/block.js";
+import { getPlayerPickaxe } from "../utils/player.js";
+import { finalizeAndCleanupState } from "./lifecycle.js";
+import { ORE_XP } from "../data/ores.js";
 
 export const processVeinJobs = () => {
   if (state.jobQueue.length === 0) {

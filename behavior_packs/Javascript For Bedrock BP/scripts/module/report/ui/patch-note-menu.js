@@ -10,12 +10,17 @@ export const note = (player) => {
     let bodyText =
       "§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n";
 
-    bodyText += patchNotesData
-      .map(
-        (section) =>
-          `§3${section.category}§r\n§f- ${section.items.join("\n- ")}`,
-      )
-      .join("\n\n");
+    const sectionsLen = patchNotesData.length;
+    for (let i = 0; i < sectionsLen; i++) {
+      const section = patchNotesData[i];
+      if (i > 0) bodyText += "\n\n";
+      bodyText += `§3${section.category}§r\n§f- `;
+      const itemsLen = section.items.length;
+      for (let j = 0; j < itemsLen; j++) {
+        if (j > 0) bodyText += "\n- ";
+        bodyText += section.items[j];
+      }
+    }
 
     ui.body(bodyText);
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");

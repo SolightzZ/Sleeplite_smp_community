@@ -1,11 +1,11 @@
 import { system } from "@minecraft/server";
-import { CFG } from "./config";
-import { state } from "./core/queue";
-import { getLocKey } from "./utils/block";
-import { PICKAXE_BREAKS, ORE_DROP } from "./data/ores";
-import { scanVein } from "./core/scanner";
-import { getEnchantData } from "./utils/enchant";
-import { processVeinJobs } from "./core/processor";
+import { CFG } from "./config.js";
+import { state } from "./core/queue.js";
+import { getLocKey } from "./utils/block.js";
+import { PICKAXE_BREAKS, ORE_DROP } from "./data/ores.js";
+import { scanVein } from "./core/scanner.js";
+import { getEnchantData } from "./utils/enchant.js";
+import { processVeinJobs } from "./core/processor.js";
 
 /**
  * Vein Miner - Production SMP Edition
@@ -15,6 +15,7 @@ import { processVeinJobs } from "./core/processor";
 export function VeinMiner(event) {
   const { player, block, itemStack } = event;
 
+  if (!player?.isValid) return;
   if (!player?.isSneaking) return;
   if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
 

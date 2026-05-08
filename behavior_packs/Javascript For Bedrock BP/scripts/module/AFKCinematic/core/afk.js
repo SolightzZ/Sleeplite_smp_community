@@ -1,8 +1,17 @@
 import { CONFIG } from "../config.js";
-import { cloneVec3, rotateRelInto, faceTargetInto, hashStr } from "../utils/math.js";
+import {
+  cloneVec3,
+  rotateRelInto,
+  faceTargetInto,
+  hashStr,
+} from "../utils/math.js";
 import { pullCamera } from "./block.js";
 import { buildSequence } from "./stateManager.js";
 import { framePool } from "./state.js";
+
+const safeRun = (player, command) => {
+  const p = player.runCommand(command);
+};
 
 export function startAfk(player, s, cinematicScheduler) {
   s.isAfk = true;
@@ -15,8 +24,8 @@ export function startAfk(player, s, cinematicScheduler) {
   s.waveClock = Math.random() * Math.PI * 2;
   s.warningShown = false;
 
-  player.runCommand("hud @s hide all");
-  player.runCommand(`camera @s fov_set ${CONFIG.cinematicFov}`);
+  safeRun(player, "hud @s hide all");
+  safeRun(player, `camera @s fov_set ${CONFIG.cinematicFov}`);
 
   cinematicScheduler.enqueue(player.id);
 }
@@ -28,9 +37,9 @@ export function stopAfk(player, s, cinematicScheduler) {
 
   cinematicScheduler.dequeue(player.id);
 
-  player.runCommand("camera @s clear");
-  player.runCommand("camera @s fov_clear 0.2 linear");
-  player.runCommand("hud @s reset");
+  safeRun(player, "camera @s clear");
+  safeRun(player, "camera @s fov_clear 0.2 linear");
+  safeRun(player, "hud @s reset");
 }
 
 export function getCameraFrame(player, s) {
@@ -41,7 +50,13 @@ export function getCameraFrame(player, s) {
 
   // Camera orbits the frozen anchor; target tracks the live player position.
   const desiredOff = framePool.desiredOff;
-  rotateRelInto(desiredOff, shot.yaw, shot.distance, drift * shot.slide, shot.height + breath * shot.bob);
+  rotateRelInto(
+    desiredOff,
+    shot.yaw,
+    shot.distance,
+    drift * shot.slide,
+    shot.height + breath * shot.bob,
+  );
 
   const desired = framePool.desired;
   desired.x = s.anchor.x + desiredOff.x;
@@ -49,7 +64,13 @@ export function getCameraFrame(player, s) {
   desired.z = s.anchor.z + desiredOff.z;
 
   const targetOff = framePool.targetOff;
-  rotateRelInto(targetOff, s.baseYaw, shot.targetForward, shot.targetRight, shot.targetUp);
+  rotateRelInto(
+    targetOff,
+    s.baseYaw,
+    shot.targetForward,
+    shot.targetRight,
+    shot.targetUp,
+  );
 
   const loc = player.location;
   const target = framePool.target;

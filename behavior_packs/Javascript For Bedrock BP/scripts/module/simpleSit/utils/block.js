@@ -1,4 +1,4 @@
-import { BREATHABLE_EXACT, BREATHABLE_PREFIX } from "../data/breathable";
+import { BREATHABLE_EXACT, BREATHABLE_PREFIX } from "../data/breathable.js";
 
 export const isBreathableBlock = (typeId) => {
   if (BREATHABLE_EXACT.has(typeId)) return true;

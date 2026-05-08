@@ -1,8 +1,8 @@
 import { ItemStack } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import { completeJob } from "./CompleteJob";
-import { createJob } from "./CreateJob";
-import { editJobs } from "./EditJob";
+import { completeJob } from "./CompleteJob.js";
+import { createJob } from "./CreateJob.js";
+import { editJobs } from "./EditJob.js";
 import {
   deleteJobData,
   hasOwnerNotify,
@@ -11,12 +11,13 @@ import {
   playerJobMap,
   saveData,
   showUI,
-} from "./Job";
-import { viewJobs } from "./ViewJob";
+} from "./Job.js";
+import { viewJobs } from "./ViewJob.js";
 
 export const giveItems = (player, items) => {
   if (!player.isValid) return;
-  const inv = player.getComponent("minecraft:inventory").container;
+  const inv = player.getComponent("minecraft:inventory")?.container;
+  if (!inv) return;
   const itemsLen = items.length;
   for (let i = 0; i < itemsLen; i++) {
     const item = items[i];

@@ -1,5 +1,5 @@
-import { registerCustomCommandTakeASeat } from "./commands/sit-command";
-import { initCleanup } from "./core/cleanup";
+import { registerCustomCommandTakeASeat } from "./commands/sit-command.js";
+import { initCleanup } from "./core/cleanup.js";
 
 initCleanup();
 

@@ -1,11 +1,11 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { setting } from "../config.js";
 import { pullItem } from "./puller.js";
 import {
   clearTimer,
   countUser,
   getTimer,
-  getUserEntries,
+  getUserIds,
   hasTimer,
   removeUser,
   setTimer,
@@ -28,12 +28,27 @@ export function startLoop() {
         return;
       }
 
-      for (const [id, player] of getUserEntries()) {
+      const allPlayers = world.getAllPlayers();
+      const playerMap = new Map();
+      for (let i = 0; i < allPlayers.length; i++) {
+        playerMap.set(allPlayers[i].id, allPlayers[i]);
+      }
+
+      const ids = getUserIds();
+      const toRemove = [];
+
+      for (let i = 0; i < ids.length; i++) {
+        const playerId = ids[i];
+        const player = playerMap.get(playerId);
         if (player && player.isValid) {
           pullItem(player);
         } else {
-          removeUser(id);
+          toRemove.push(playerId);
         }
+      }
+
+      for (let i = 0; i < toRemove.length; i++) {
+        removeUser(toRemove[i]);
       }
     } catch (err) {
       console.error("[Magnet] Loop Error:", err);
