@@ -1,10 +1,13 @@
 const tag = "bright";
 const effect = "night_vision";
 
-export const hasBright = (player) => player.hasTag(tag);
+export const hasBright = (player) => {
+  if (!player || !player.isValid) return false;
+  return player.hasTag(tag);
+};
 
 const apply = (player) => {
-  if (player.hasTag(tag)) return false;
+  if (!player || !player.isValid || player.hasTag(tag)) return false;
 
   player.addTag(tag);
   player.addEffect(effect, 20 * 60 * 20, {
@@ -16,7 +19,7 @@ const apply = (player) => {
 };
 
 const remove = (player) => {
-  if (!player.hasTag(tag)) return false;
+  if (!player || !player.isValid || !player.hasTag(tag)) return false;
 
   player.removeTag(tag);
 
@@ -27,13 +30,12 @@ const remove = (player) => {
   return true;
 };
 
-const toggleBright = (player) => {
+export const toggleBright = (player) => {
+  if (!player || !player.isValid) return false;
   return player.hasTag(tag) ? !remove(player) : apply(player);
 };
 
-const resetBright = (player) => {
-  if (!player || !player.hasTag(tag)) return;
-  remove(player);
+export const resetBright = (player) => {
+  if (!player || !player.isValid) return;
+  if (player.hasTag(tag)) remove(player);
 };
-
-export { toggleBright, resetBright };

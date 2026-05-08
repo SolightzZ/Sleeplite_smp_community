@@ -3,18 +3,17 @@ import { drop } from "./drop.js";
 import { add, init } from "./score.js";
 
 export function DathCounter(event) {
-  try {
-    const dead = event.deadEntity;
-    const ifPlayer = dead?.typeId === "minecraft:player";
-    if (!ifPlayer) return;
+  const dead = event.deadEntity;
+  if (dead?.typeId !== "minecraft:player") return;
 
-    system.run(() => {
-      drop(dead, event.damageSource);
+  const dmg = event.damageSource;
+
+  system.run(() => {
+    if (dead.isValid) {
+      drop(dead, dmg);
       add(dead);
-    });
-  } catch (error) {
-    console.error(" DathCounter: " + error);
-  }
+    }
+  });
 }
 
 system.run(init);

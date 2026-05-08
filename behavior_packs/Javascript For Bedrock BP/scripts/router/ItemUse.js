@@ -1,15 +1,17 @@
 import { Player, world } from "@minecraft/server";
 
 import { startEmote } from "../module/emotes/system.js";
-import { LligitemUse } from "../module/light/main.js";
-import { RewarditemUse } from "../module/rewards/system.js";
 import { FullBrightUseItem } from "../module/fullBright/events.js";
-import { MagnetonUseItem } from "../module/magNet/events.js";
-import { chatrankssitemUse } from "../plugin/NameTagRank.js";
-import { RUNREPORT } from "../plugin/Report.js";
-import { setting_main } from "../plugin/setting.js";
-import { ZoneProtection_OnItemUse } from "../module/protection/system.js";
 import { handleJob } from "../module/jobs/Job.js";
+import { LligitemUse } from "../module/light/main.js";
+import { MagnetonUseItem } from "../module/magNet/index.js";
+import { ZoneProtection_OnItemUse } from "../module/protection/index.js";
+import { RewarditemUse } from "../module/rewards/system.js";
+import { chatrankssitemUse } from "../plugin/NameTagRank.js";
+import { RUNREPORT } from "../module/report/index.js";
+import { setting_main } from "../plugin/setting.js";
+
+
 
 world.afterEvents.itemUse.subscribe((event) => {
   try {

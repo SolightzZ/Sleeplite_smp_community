@@ -47,3 +47,4 @@ function playerSpawnWelcome(event) {
 }
 
 export { playerSpawnWelcome };
+

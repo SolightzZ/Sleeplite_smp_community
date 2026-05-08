@@ -1,11 +1,11 @@
-const door = "minecraft:end_portal_frame";
-const inventorys = "minecraft:inventory";
-const key = "minecraft:ender_eye";
-const boss = "admin";
-const zone = 10;
-const team = 3;
+export const door = "minecraft:end_portal_frame";
+export const inventorys = "minecraft:inventory";
+export const key = "minecraft:ender_eye";
+export const boss = "admin";
+export const zone = 10;
+export const team = 3;
 
-const shop = [
+export const shop = [
   // Overworld
   { id: "minecraft:sniffer_egg", hp: 7 },
   { id: "minecraft:conduit", hp: 8 },
@@ -22,5 +22,3 @@ const shop = [
   { id: "minecraft:piglin_head", hp: 9 },
   { id: "minecraft:rib_armor_trim_smithing_template", hp: 9 },
 ];
-
-export { door, inventorys, key, boss, zone, team, shop };

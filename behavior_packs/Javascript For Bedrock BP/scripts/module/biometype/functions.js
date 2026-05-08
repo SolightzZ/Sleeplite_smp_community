@@ -1,32 +1,22 @@
 import { biomeIdList, EXCLUDED_BIOMES } from "./database.js";
 
 const getBiomeIdAtLocation = (player) => {
+  if (!player || !player.isValid) return null;
   try {
-    if (!player?.location || !player?.dimension) return null;
     return player.dimension.getBiome(player.location)?.id ?? null;
-    return null;
-  } catch (error) {
-    console.error("GetBiomeIdAtLocation: " + error);
+  } catch {
+    return null; // Chunk may be unloaded
   }
 };
 
 const getBiomeName = (biomeId) => {
-  try {
-    if (!biomeId) return null;
-    return EXCLUDED_BIOMES.includes(biomeId)
-      ? null
-      : biomeIdList[biomeId] || biomeId;
-  } catch (error) {
-    console.error("getBiomeName: " + error);
-  }
+  if (!biomeId || EXCLUDED_BIOMES.has(biomeId)) return null;
+  return biomeIdList[biomeId] || biomeId;
 };
 
 const getDimensionName = (dimensionId) => {
-  try {
-    return biomeIdList[dimensionId] || dimensionId || "Unknown Dimension";
-  } catch (error) {
-    console.error("getDimensionName: " + error);
-  }
+  return biomeIdList[dimensionId] || dimensionId || "Unknown Dimension";
 };
 
 export { getBiomeIdAtLocation, getBiomeName, getDimensionName };
+

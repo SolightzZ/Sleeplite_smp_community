@@ -1,92 +1,95 @@
+import { system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { emoteList, setting } from "./database.js";
 
 function playEmote(player, animName, emoteName) {
-  if (!player) return;
+  if (!player.isValid) return;
 
-  try {
-    const cmd = `playanimation @s animation.${animName} animation.${animName}`;
-    player.runCommand(cmd);
+  const cmd = `playanimation @s animation.${animName} animation.${animName}`;
+  player.runCommand(cmd);
 
-    if (player.onScreenDisplay) {
-      player.onScreenDisplay.setActionBar(`§aEmote: §f${emoteName}`);
-    }
-
-    if (setting.soundClick) {
-      player.playSound(setting.soundClick);
-    }
-  } catch (err) {
-    console.warn(`[Emote] Error: ${err}`);
-  }
+  player.onScreenDisplay?.setActionBar(`§aEmote: §f${emoteName}`);
+  if (setting.soundClick) player.playSound(setting.soundClick);
 }
 
 function stopEmote(player, animName) {
-  if (!player) return;
+  if (!player.isValid) return;
 
-  try {
-    const cmd = `playanimation @s animation.${animName}`;
-    player.runCommand(cmd);
+  const cmd = `playanimation @s animation.${animName}`;
+  player.runCommand(cmd);
 
-    if (player.onScreenDisplay) {
-      player.onScreenDisplay.setActionBar("§cEmote: §fSTOPPED");
-    }
-
-    if (setting.soundClick) {
-      player.playSound(setting.soundClick);
-    }
-  } catch (err) {
-    console.warn(`[Emote] Stop Error: ${err}`);
-  }
+  player.onScreenDisplay?.setActionBar("§cEmote: §fSTOPPED");
+  if (setting.soundClick) player.playSound(setting.soundClick);
 }
 
 function openSubMenu(player, group) {
+  if (!player.isValid) return;
+
   const menu = new ActionFormData()
     .title(group.title || "Emotes")
     .body("§7เลือกท่าทาง:");
-  try {
-    const items = group.items;
-    for (const item of items) {
-      menu.button(item.name, item.icon || setting.iconDefault);
-    }
 
-    menu.show(player).then((result) => {
-      if (result.canceled || result.selection === undefined) return;
-
-      const picked = items[result.selection];
-      if (picked) {
-        playEmote(player, picked.anim, picked.name);
-      }
-    });
-  } catch (e) {
-    console.warn("openSubMenu" + e);
+  const items = group.items;
+  const len = items.length;
+  for (let i = 0; i < len; i++) {
+    const item = items[i];
+    menu.button(item.name, item.icon || setting.iconDefault);
   }
+
+  menu.show(player).then((result) => {
+    if (!result || result.canceled) return;
+
+    const idx = result.selection;
+    if (idx === undefined) return;
+
+    const picked = items[idx];
+    if (picked) {
+      system.run(() => {
+        if (player.isValid) playEmote(player, picked.anim, picked.name);
+      });
+    }
+  }).catch((error) => {
+    if (error.message !== "User is busy") {
+      console.error("[Emote] SubMenu UI Error:", error);
+    }
+  });
 }
 
-function showMain(player) {
-  const menu = new ActionFormData().title("§eEmote Menu");
-  try {
-    for (const group of emoteList) {
-      menu.button(group.name, group.icon || setting.iconDefault);
-    }
+export function showMain(player) {
+  if (!player.isValid) return;
 
-    if (setting.soundOpen) {
-      player.playSound(setting.soundOpen);
-    }
+  const menu = new ActionFormData().title("Emote Menu");
 
-    menu.show(player).then((result) => {
-      if (result.canceled || result.selection === undefined) return;
+  const len = emoteList.length;
+  for (let i = 0; i < len; i++) {
+    const group = emoteList[i];
+    menu.button(group.name, group.icon || setting.iconDefault);
+  }
 
-      const picked = emoteList[result.selection];
+  if (setting.soundOpen) {
+    player.playSound(setting.soundOpen);
+  }
 
+  menu.show(player).then((result) => {
+    if (!result || result.canceled) return;
+
+    const idx = result.selection;
+    if (idx === undefined) return;
+
+    const picked = emoteList[idx];
+    if (!picked) return;
+
+    system.run(() => {
+      if (!player.isValid) return;
       if (picked.type === "BUTTON") {
         stopEmote(player, picked.cmd);
       } else if (picked.type === "GROUP") {
         openSubMenu(player, picked);
       }
     });
-  } catch (e) {
-    console.warn("openSubMenu" + e);
-  }
+  }).catch((error) => {
+    if (error.message !== "User is busy") {
+      console.error("[Emote] Main UI Error:", error);
+    }
+  });
 }
-
-export { showMain };

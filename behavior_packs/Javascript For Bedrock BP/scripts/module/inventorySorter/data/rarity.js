@@ -1,0 +1,62 @@
+// ─── Rarity tier: 0 = Common, 1 = Uncommon, 2 = Rare, 3 = Epic, 4 = Legendary (enchanted, handled in code)
+/** @type {Record<string, number>} */
+export const RARITY_ORDER = {
+  // Common (0)
+  "minecraft:dirt": 0,
+  "minecraft:gravel": 0,
+  "minecraft:sand": 0,
+  "minecraft:cobblestone": 0,
+  "minecraft:stone": 0,
+  "minecraft:oak_log": 0,
+  "minecraft:oak_planks": 0,
+  "minecraft:stick": 0,
+
+  // Uncommon (1)
+  "minecraft:iron_ingot": 1,
+  "minecraft:iron_nugget": 1,
+  "minecraft:coal": 1,
+  "minecraft:copper_ingot": 1,
+  "minecraft:redstone": 1,
+  "minecraft:lapis_lazuli": 1,
+  "minecraft:flint": 1,
+  "minecraft:string": 1,
+  "minecraft:feather": 1,
+  "minecraft:leather": 1,
+  "minecraft:bone": 1,
+  "minecraft:gunpowder": 1,
+  "minecraft:sugar_cane": 1,
+  "minecraft:wheat": 1,
+  "minecraft:egg": 1,
+  "minecraft:arrow": 1,
+
+  // Rare (2)
+  "minecraft:gold_ingot": 2,
+  "minecraft:gold_nugget": 2,
+  "minecraft:diamond": 2,
+  "minecraft:emerald": 2,
+  "minecraft:ender_pearl": 2,
+  "minecraft:blaze_rod": 2,
+  "minecraft:ghast_tear": 2,
+  "minecraft:nether_star": 2,
+  "minecraft:shulker_shell": 2,
+  "minecraft:prismarine_shard": 2,
+  "minecraft:heart_of_the_sea": 2,
+
+  // Epic (3)
+  "minecraft:netherite_ingot": 3,
+  "minecraft:netherite_scrap": 3,
+  "minecraft:ancient_debris": 3,
+  "minecraft:elytra": 3,
+  "minecraft:totem": 3,
+  "minecraft:trident": 3,
+};
+
+export const ITEM_CATEGORIES = {
+  weapon:   0,
+  tool:     1,
+  armor:    2,
+  food:     3,
+  block:    4,
+  material: 5,
+  misc:     6,
+};

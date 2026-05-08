@@ -1,4 +1,4 @@
-const SERVER_LIST = [
+export const SERVER_LIST = [
   {
     displayName: "The Hive",
     ipAddress: "geo.hivebedrock.network",
@@ -43,10 +43,8 @@ const SERVER_LIST = [
   },
 ];
 
-const MESSAGES = {
+export const MESSAGES = {
   INVALID_IP: "§cIP หรือ Port ไม่ถูกต้อง โปรดลองอีกครั้ง",
   TRANSFER_START: (ip, port) => `§aกำลังย้ายคุณไปยัง ${ip}:${port}...`,
-  TRANSFER_FAIL: "§cไม่สามารถย้ายผู้เล่นได้",
+  TRANSFER_FAIL: "§cไม่สามารถย้ายผู้เล่นได้ อาจเกิดจากข้อจำกัดของเครือข่าย",
 };
-
-export { MESSAGES, SERVER_LIST };

@@ -5,14 +5,14 @@ export let jobs = [];
 export let jobId = 0;
 export let ITEM_IDS = new Set();
 
-export const amountMap = new Map(); // playerId -> { [itemId]: { amount, diamond } }
-export const playerJobMap = new Map(); // playerId -> jobId (rider ที่รับงานอยู่)
-export const selectedMap = new Map(); // playerId -> string[]
-export const timerMap = new Map(); // Timer: playerId -> { intervalId, startTick }
-export const pendingDelivery = new Map(); // ของที่ rider ส่งแล้ว รอ owner มารับ: jobId -> { ownerName, items: [{id,amount}] }
-export const ownerNotifyMap = new Map(); // owner ที่มีของรอรับ: playerId -> Set<jobId>
+export const amountMap = new Map();
+export const playerJobMap = new Map();
+export const selectedMap = new Map();
+export const timerMap = new Map();
+export const pendingDelivery = new Map();
+export const ownerNotifyMap = new Map();
 
-const saveData = () => {
+export const saveData = () => {
   try {
     world.setDynamicProperty("jobs_data_jobs", JSON.stringify(jobs));
     world.setDynamicProperty("jobs_data_jobId", jobId);
@@ -41,177 +41,139 @@ const saveData = () => {
       JSON.stringify(notifyEntries),
     );
   } catch (e) {
-    console.warn("[Job] Save Error:", e);
+    console.error("[Job] Save Error:", e);
   }
 };
 
-const loadData = () => {
+export const loadData = () => {
   try {
     const j = world.getDynamicProperty("jobs_data_jobs");
-    console.log("jobs:", j);
     if (j) {
       jobs.length = 0;
       jobs.push(...JSON.parse(j));
     }
     const jId = world.getDynamicProperty("jobs_data_jobId");
-    console.log("jobId (auto increment id):", jId);
     if (jId !== undefined) jobId = jId;
 
     const pjm = world.getDynamicProperty("jobs_data_playerJobMap");
-    console.log("playerJobMap:", pjm);
     if (pjm) JSON.parse(pjm).forEach(([k, v]) => playerJobMap.set(k, v));
 
     const tm = world.getDynamicProperty("jobs_data_timerMap");
-    console.log("timerMap:", tm);
     if (tm) JSON.parse(tm).forEach(([k, v]) => timerMap.set(k, v));
 
     const pd = world.getDynamicProperty("jobs_data_pendingDelivery");
-    console.log("pendingDelivery:", pd);
     if (pd) JSON.parse(pd).forEach(([k, v]) => pendingDelivery.set(k, v));
 
     const onm = world.getDynamicProperty("jobs_data_ownerNotifyMap");
-    console.log("ownerNotifyMap:", onm);
     if (onm)
       JSON.parse(onm).forEach(([k, v]) => ownerNotifyMap.set(k, new Set(v)));
   } catch (e) {
-    console.warn("[Job] Load Error:", e);
+    console.error("[Job] Load Error:", e);
   }
 };
 
-const createJobData = (job) => {
-  try {
-    job.id = jobId++;
-    jobs.push(job);
-    saveData();
-  } catch (error) {
-    console.error(" createJobData: " + error);
-  }
+export const createJobData = (job) => {
+  job.id = jobId++;
+  jobs.push(job);
+  saveData();
 };
 
-const deleteJobData = (id) => {
-  try {
-    const index = jobs.findIndex((j) => j.id === id);
-    if (index !== -1) jobs.splice(index, 1);
-    saveData();
-  } catch (error) {
-    console.error(" deleteJobData: " + error);
-  }
-};
-
-const showUI = (player, form, callback) => {
-  try {
-    system.run(() => {
-      form
-        .show(player)
-        .then((res) => {
-          if (!res.canceled) callback(res);
-        })
-        .catch((err) => console.error("[UI Error]", err));
-    });
-  } catch (error) {
-    console.error(" showUI: " + error);
-  }
-};
-
-const countItem = (inv, typeId) => {
-  try {
-    let count = 0;
-    for (let i = 0; i < inv.size; i++) {
-      const it = inv.getItem(i);
-      if (it && it.typeId === typeId) count += it.amount;
+export const deleteJobData = (id) => {
+  const len = jobs.length;
+  for (let i = 0; i < len; i++) {
+    if (jobs[i].id === id) {
+      jobs.splice(i, 1);
+      break;
     }
-    return count;
-  } catch (error) {
-    console.error(" countItem: " + error);
   }
+  saveData();
 };
 
-const getInvMap = (inv) => {
-  try {
-    const map = new Map();
-    for (let i = 0; i < inv.size; i++) {
-      const it = inv.getItem(i);
-      if (!it) continue;
-      map.set(it.typeId, (map.get(it.typeId) ?? 0) + it.amount);
-    }
-    return map;
-  } catch (error) {
-    console.error(" getInvMap: " + error);
-  }
+export const showUI = (player, form, callback) => {
+  system.run(() => {
+    if (!player || !player.isValid) return;
+    form
+      .show(player)
+      .then((res) => {
+        if (!res || res.canceled) return;
+        callback(res);
+      })
+      .catch((err) => {
+        if (err.message !== "User is busy") {
+          console.error("[Job] UI Error:", err);
+        }
+      });
+  });
 };
 
-const findPlayerById = (id) => {
-  try {
-    world.getAllPlayers().find((p) => p.id === id) ?? null;
-  } catch (error) {
-    console.error(" findPlayerById: " + error);
+export const countItem = (inv, typeId) => {
+  let count = 0;
+  const size = inv.size;
+  for (let i = 0; i < size; i++) {
+    const it = inv.getItem(i);
+    if (it && it.typeId === typeId) count += it.amount;
   }
+  return count;
 };
 
-const totalDiamond = (job) => {
-  try {
-    job.items.reduce((sum, it) => sum + it.diamond, 0);
-  } catch (error) {
-    console.error(" totalDiamond: " + error);
+export const getInvMap = (inv) => {
+  const map = new Map();
+  const size = inv.size;
+  for (let i = 0; i < size; i++) {
+    const it = inv.getItem(i);
+    if (!it) continue;
+    map.set(it.typeId, (map.get(it.typeId) ?? 0) + it.amount);
   }
+  return map;
 };
 
-const stopTimer = (riderId) => {
-  try {
-    const t = timerMap.get(riderId);
-    if (!t) return;
-    system.clearRun(t.intervalId);
-    timerMap.delete(riderId);
-  } catch (error) {
-    console.error(" stopTimer: " + error);
+export const findPlayerById = (id) => {
+  const players = world.getAllPlayers();
+  const len = players.length;
+  for (let i = 0; i < len; i++) {
+    if (players[i].id === id) return players[i];
   }
+  return null;
 };
 
-const hasOwnerNotify = (ownerId) => {
-  try {
-    (ownerNotifyMap.get(ownerId)?.size ?? 0) > 0;
-  } catch (error) {
-    console.error(" hasOwnerNotify: " + error);
+export const totalDiamond = (job) => {
+  let sum = 0;
+  const len = job.items.length;
+  for (let i = 0; i < len; i++) {
+    sum += job.items[i].diamond;
   }
+  return sum;
 };
 
-function handleJob(event) {
-  try {
-    const { source } = event;
+export const stopTimer = (riderId) => {
+  const t = timerMap.get(riderId);
+  if (!t) return;
+  system.clearRun(t.intervalId);
+  timerMap.delete(riderId);
+};
+
+export const hasOwnerNotify = (ownerId) => {
+  return (ownerNotifyMap.get(ownerId)?.size ?? 0) > 0;
+};
+
+export function handleJob(event) {
+  const { source } = event;
+  if (source?.isValid) {
     showMainMenu(source);
-  } catch (error) {
-    console.error(" handleJob: " + error);
   }
 }
 
-function JobLeave(event) {
-  try {
-    const players = event.playerId;
-    console.log("players:", players);
-    selectedMap.delete(players);
-    amountMap.delete(players);
-  } catch (error) {
-    console.error(" JobLeave: " + error);
-  }
+export function JobLeave(event) {
+  const playerId = event.playerId;
+  selectedMap.delete(playerId);
+  amountMap.delete(playerId);
 }
 
 system.run(() => {
-  for (const type of ItemTypes.getAll()) ITEM_IDS.add(type.id);
+  const types = ItemTypes.getAll();
+  const len = types.length;
+  for (let i = 0; i < len; i++) {
+    ITEM_IDS.add(types[i].id);
+  }
   loadData();
 });
-
-export {
-  countItem,
-  createJobData,
-  deleteJobData,
-  findPlayerById,
-  getInvMap,
-  handleJob,
-  hasOwnerNotify,
-  JobLeave,
-  loadData,
-  saveData,
-  showUI,
-  stopTimer,
-  totalDiamond,
-};

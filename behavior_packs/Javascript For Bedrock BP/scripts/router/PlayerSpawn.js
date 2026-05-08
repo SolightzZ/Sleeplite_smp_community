@@ -1,6 +1,6 @@
 import { system, world } from "@minecraft/server";
+import { flashSpawn } from "../module/flashlight/core/engine";
 import { playerSpawnWelcome } from "../plugin/Welcome";
-import { flashSpawn } from "../plugin/Flashlight.js";
 
 const PLAYER_SPAWN = [playerSpawnWelcome, flashSpawn];
 
@@ -10,7 +10,6 @@ world.afterEvents.playerSpawn.subscribe((event) => {
       for (let i = 0; i < PLAYER_SPAWN.length; i++) {
         const fn = PLAYER_SPAWN[i];
         if (fn) fn(event);
-        event.cancel = true;
       }
     });
   } catch (error) {

@@ -1,5 +1,5 @@
 import { system, world } from "@minecraft/server";
-import { check, dig, shine } from "./act.js";
+import { check, dig, limit, shine } from "./act.js";
 
 const max = 3;
 const wait = 150;
@@ -76,4 +76,5 @@ function LligitemUse(evt) {
   run(boy);
 }
 
-export { LlightentityHitBlock, LligitemUse, list };
+export { list, LlightentityHitBlock, LligitemUse };
+

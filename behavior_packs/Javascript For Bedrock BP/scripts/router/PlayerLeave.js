@@ -1,11 +1,14 @@
 import { system, world } from "@minecraft/server";
 
-import { onLeaveFullBright } from "../module/fullBright/events.js";
-import { onLeave } from "../module/magNet/events.js";
-import { clearVisualStateForPlayers } from "../module/protection/system.js";
-import { flashLeave, handlerFlashlight } from "../plugin/Flashlight.js";
 import { playerLeaveAfk } from "../module/AFKCinematic/index.js";
+import { onLeaveFullBright } from "../module/fullBright/events.js";
 import { JobLeave } from "../module/jobs/Job.js";
+import { onLeave } from "../module/magNet/index.js";
+import { clearVisualStateForPlayers } from "../module/protection/index.js";
+import { flashLeave, handlerFlashlight } from "../module/flashlight/core/engine.js";
+
+
+
 
 const PLAYER_LEAVE = [
   onLeaveFullBright,

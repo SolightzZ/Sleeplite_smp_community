@@ -35,10 +35,4 @@ export const map = {
   red2535a: "addon:red2535a",
 };
 
-export const item = (name) => {
-  try {
-    return map?.[name] ?? null;
-  } catch (error) {
-    console.error("item: " + error);
-  }
-};
+export const item = (name) => map[name] ?? null;

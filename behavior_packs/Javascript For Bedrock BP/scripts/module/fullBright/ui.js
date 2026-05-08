@@ -1,7 +1,9 @@
 import { ActionFormData } from "@minecraft/server-ui";
 import { hasBright, toggleBright } from "./state.js";
 
-function showMenu(p) {
+export function showMenu(p) {
+  if (!p || !p.isValid) return;
+
   const isOn = hasBright(p);
 
   const form = new ActionFormData()
@@ -12,14 +14,18 @@ function showMenu(p) {
     );
 
   form.show(p).then((res) => {
-    if (res.canceled) return;
+    if (!res || res.canceled || res.selection !== 0) return;
 
     const next = toggleBright(p);
 
-    p.onScreenDisplay.setActionBar(
-      next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`,
-    );
+    if (p.isValid) {
+      p.onScreenDisplay.setActionBar(
+        next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`,
+      );
+    }
+  }).catch((error) => {
+    if (error.message !== "User is busy") {
+      console.error("[FullBright] UI Error:", error);
+    }
   });
 }
-
-export { showMenu };

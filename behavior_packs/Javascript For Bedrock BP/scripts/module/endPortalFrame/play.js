@@ -3,11 +3,11 @@ import { eat, hit, say, see } from "./hand.js";
 import { boss, door, key, team, zone } from "./rules.js";
 import { count, fix } from "./tools.js";
 
-function touch(event) {
+export function touch(event) {
   try {
     const { player, block, itemStack: item } = event;
 
-    if (!player || !block) return;
+    if (!player || !player.isValid || !block || !block.isValid) return;
     if (block.typeId !== door) return;
     if (item?.typeId !== key) return;
     if (player.hasTag(boss)) return;
@@ -15,10 +15,7 @@ function touch(event) {
     const friends = count(block);
     if (friends < team) {
       event.cancel = true;
-      say(
-        player,
-        `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`,
-      );
+      say(player, `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`);
       return;
     }
 
@@ -37,8 +34,6 @@ function touch(event) {
 
     player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${pain}`);
   } catch (error) {
-    console.warn("EndPortalFrame " + error.message);
+    console.error("[EndPortalFrame] Execution Error: ", error);
   }
 }
-
-export { touch };

@@ -1,19 +1,28 @@
 import { system } from "@minecraft/server";
 import { inventorys } from "./rules.js";
 
-const see = (player, thing) => {
-  const bag = player.getComponent(inventorys).container;
-  for (let i = 0; i < bag.size; i++) {
+export const see = (player, thing) => {
+  if (!player.isValid) return false;
+  const bag = player.getComponent(inventorys)?.container;
+  if (!bag) return false;
+
+  const size = bag.size;
+  for (let i = 0; i < size; i++) {
     const item = bag.getItem(i);
     if (item && item.typeId === thing) return true;
   }
   return false;
 };
 
-const eat = (player, thing) => {
+export const eat = (player, thing) => {
+  if (!player.isValid) return;
   system.run(() => {
-    const bag = player.getComponent(inventorys).container;
-    for (let i = 0; i < bag.size; i++) {
+    if (!player.isValid) return;
+    const bag = player.getComponent(inventorys)?.container;
+    if (!bag) return;
+
+    const size = bag.size;
+    for (let i = 0; i < size; i++) {
       const item = bag.getItem(i);
       if (item && item.typeId === thing) {
         if (item.amount > 1) {
@@ -28,17 +37,16 @@ const eat = (player, thing) => {
   });
 };
 
-const hit = (player, pain) => {
-  if (pain <= 0) return;
+export const hit = (player, pain) => {
+  if (pain <= 0 || !player.isValid) return;
   system.run(() => {
-    player.applyDamage(pain);
+    if (player.isValid) player.applyDamage(pain);
   });
 };
 
-const say = (player, msg) => {
+export const say = (player, msg) => {
+  if (!player.isValid) return;
   system.run(() => {
-    player.onScreenDisplay.setActionBar(msg);
+    if (player.isValid) player.onScreenDisplay?.setActionBar(msg);
   });
 };
-
-export { see, eat, hit, say };

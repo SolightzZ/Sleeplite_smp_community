@@ -1,10 +1,10 @@
 import { system } from "@minecraft/server";
-import { registerCustomCommandIventory } from "../module/inventorySorter/commands.js";
-import { registerCustomCommandTakeASeat } from "../module/simpleSit/index.js";
-import { registerCommands } from "../module/customCommands/Register.js";
-import { registerCommandAFK } from "../module/AFKCinematic/index.js";
-import { RegisterRewards } from "../module/rewards/system.js";
 import { RegisterHelp } from "../help/help.js";
+import { registerCommandAFK } from "../module/AFKCinematic/index.js";
+import { registerCommands } from "../module/customCommands/Register.js";
+import { registerCustomCommandIventory } from "../module/inventorySorter/index.js";
+import { RegisterRewards } from "../module/rewards/system.js";
+import { registerCustomCommandTakeASeat } from "../module/simpleSit/index.js";
 
 system.beforeEvents.startup.subscribe((init) => {
   try {

@@ -91,7 +91,7 @@ const biomeIdList = {
   "minecraft:basalt_deltas": "Basalt Deltas",
 };
 
-const EXCLUDED_BIOMES = ["minecraft:the_end"];
+const EXCLUDED_BIOMES = new Set(["minecraft:the_end"]);
 const Colors = {
   gold: "§6",
   white: "§f",

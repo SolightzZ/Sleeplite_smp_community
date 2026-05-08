@@ -3,6 +3,7 @@
 // ==========================
 import "./router/Startup.js";
 import "./router/System.RunInterval.js";
+import "./plugin/RuntimeInfo.js"
 
 // ==========================
 // Player Lifecycle
@@ -37,3 +38,4 @@ import "./router/EntityDie.js";
 // World Events
 // ==========================
 import "./router/Explosion.js";
+

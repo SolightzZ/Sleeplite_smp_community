@@ -9,7 +9,8 @@ import { load, reset } from "./database.js";
 import { menu } from "./logic.js";
 
 function RewarditemUse(event) {
-  menu(event);
+  const player = event.source || event;
+  menu(player);
 }
 
 function RegisterRewards(init) {

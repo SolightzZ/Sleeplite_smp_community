@@ -1,4 +1,3 @@
-import { world } from "@minecraft/server";
 
 const dirs = [
   (b) => b.east(),
@@ -36,3 +35,4 @@ function openDoor(event) {
 }
 
 export { openDoor };
+

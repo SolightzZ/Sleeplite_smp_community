@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 
 const findSpongeSlot = (inv) => {
   for (let i = 0; i < inv.size; i++) {
@@ -54,3 +54,4 @@ function handleSpongeAbsorption(event) {
 }
 
 export { handleSpongeAbsorption };
+

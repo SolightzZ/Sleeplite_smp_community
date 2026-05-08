@@ -1,8 +1,9 @@
 import { world } from "@minecraft/server";
 import { touch } from "../module/endPortalFrame/play";
-import { handleBlockEditPreEvent } from "../module/protection/system";
+import { handleBlockEditPreEvent } from "../module/protection/core/events";
 import { handleRepairAnvil } from "../plugin/AnvilRepair";
 import { openDoor } from "../plugin/OpenDoor";
+
 
 const beforeHandlers = [touch, handleBlockEditPreEvent, handleRepairAnvil];
 const afterHandlers = [openDoor];

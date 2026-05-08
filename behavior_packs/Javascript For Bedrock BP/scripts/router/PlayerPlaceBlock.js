@@ -1,5 +1,5 @@
 import { world } from "@minecraft/server";
-import { handleBlockEditPreEvent } from "../module/protection/system";
+import { handleBlockEditPreEvent } from "../module/protection/index";
 
 const handlers = [handleBlockEditPreEvent];
 

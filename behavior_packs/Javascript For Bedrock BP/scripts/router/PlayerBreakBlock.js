@@ -1,8 +1,9 @@
 import { world } from "@minecraft/server";
-import { handleBlockEditPreEvent } from "../module/protection/system";
-import { handleAutoReplant } from "../plugin/AutoReplant";
-import { VeinMiner } from "../module/veinMiner/index";
+
 import { TreeCapitatorBreakBlock } from "../module/treeCapitator/index";
+import { VeinMiner } from "../module/veinMiner/index";
+import { handleAutoReplant } from "../plugin/AutoReplant";
+import { handleBlockEditPreEvent } from "../module/protection/core/events";
 
 const handlerAfterEvents = [
   handleBlockEditPreEvent,

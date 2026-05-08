@@ -93,4 +93,5 @@ function give(player, id, count) {
   }
 }
 
-export { time, name, give };
+export { give, name, time };
+

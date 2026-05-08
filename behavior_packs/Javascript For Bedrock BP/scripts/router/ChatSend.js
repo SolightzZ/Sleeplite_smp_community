@@ -2,7 +2,9 @@ import { world } from "@minecraft/server";
 import { helpmain } from "../help/help";
 import { xz_main } from "../plugin/nether";
 import { RewardchatSend } from "../module/rewards/system";
-import { ZoneProtection_OnChat } from "../module/protection/system";
+import { ZoneProtection_OnChat } from "../module/protection/index";
+
+
 
 const CHAT_HANDLERS = [
   helpmain,

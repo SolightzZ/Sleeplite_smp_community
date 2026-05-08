@@ -1,6 +1,7 @@
 import { world } from "@minecraft/server";
-import { onGravestoneInteract } from "../module/graveStones/gravestones_entity";
-import { handleEntityInteractPreEvent } from "../module/protection/system";
+
+import { handleEntityInteractPreEvent } from "../module/protection/index";
+import { onGravestoneInteract } from "../module/graveStones/index";
 
 const handlers = [onGravestoneInteract, handleEntityInteractPreEvent];
 
