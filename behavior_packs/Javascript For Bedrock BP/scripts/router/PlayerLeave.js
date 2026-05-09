@@ -1,14 +1,15 @@
 import { system, world } from "@minecraft/server";
 
 import { playerLeaveAfk } from "../module/AFKCinematic/index.js";
-import { onLeaveFullBright } from "../module/fullBright/events.js";
-import { JobLeave } from "../module/jobs/Job.js";
-import { onLeave } from "../module/magNet/index.js";
-import { clearVisualStateForPlayers } from "../module/protection/index.js";
 import {
   flashLeave,
   handlerFlashlight,
 } from "../module/flashlight/core/engine.js";
+import { onLeaveFullBright } from "../module/fullBright/events.js";
+import { JobLeave } from "../module/jobs/Job.js";
+import { onLeave } from "../module/magNet/index.js";
+import { chatRankPlayerLeave } from "../module/nameteg/index.js";
+import { clearVisualStateForPlayers } from "../module/protection/index.js";
 
 const PLAYER_LEAVE = [
   onLeaveFullBright,
@@ -18,6 +19,7 @@ const PLAYER_LEAVE = [
   handlerFlashlight,
   flashLeave,
   JobLeave,
+  chatRankPlayerLeave,
 ];
 
 world.afterEvents.playerLeave.subscribe((event) => {

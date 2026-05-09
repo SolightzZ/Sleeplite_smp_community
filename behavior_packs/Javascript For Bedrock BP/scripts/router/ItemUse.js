@@ -7,7 +7,7 @@ import { LligitemUse } from "../module/light/main.js";
 import { MagnetonUseItem } from "../module/magNet/index.js";
 import { ZoneProtection_OnItemUse } from "../module/protection/index.js";
 import { RewarditemUse } from "../module/rewards/system.js";
-import { chatrankssitemUse } from "../module/nameteg/index.js";
+import { chatRankItemUse } from "../module/nameteg/index.js";
 import { RUNREPORT } from "../module/report/index.js";
 import { setting_main } from "../plugin/setting.js";
 
@@ -31,7 +31,7 @@ world.afterEvents.itemUse.subscribe((event) => {
     } else if (Items === "minecraft:paper") {
       return RUNREPORT(event);
     } else if (Items === "minecraft:command_block") {
-      return chatrankssitemUse(event);
+      return chatRankItemUse(event);
     } else if (Items === "addon:magnet_") {
       return MagnetonUseItem(event);
     } else if (Items === "addon:fullbright_") {
