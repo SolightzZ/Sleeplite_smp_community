@@ -1,18 +1,14 @@
-import { showMenu } from "./ui/menu.js";
-import { removeUser } from "./core/state.js";
+import { removeMagnetUser } from "./core/state.js";
+import { showMagnetMenu } from "./ui/menu.js";
 
-export function MagnetonUseItem({ source }) {
-  if (source && source.isValid) {
-    showMenu(source);
-  }
-}
+export const onMagnetUse = ({ source }) => {
+  if (source && source.isValid) showMagnetMenu(source);
+};
 
-export function onLeave(event) {
-  removeUser(event.playerId);
-}
+export const onMagnetPlayerLeave = (event) => removeMagnetUser(event.playerId);
 
-export function magnetDie(event) {
+export const onMagnetPlayerDie = (event) => {
   if (event.deadEntity?.typeId === "minecraft:player") {
-    removeUser(event.deadEntity.id);
+    removeMagnetUser(event.deadEntity.id);
   }
-}
+};

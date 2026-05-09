@@ -1,15 +1,20 @@
 import { world } from "@minecraft/server";
-import { handleBlockEditPreEvent } from "../module/protection/index";
+import { onBlockEdit } from "../module/protection/index.js";
 
-const handlers = [handleBlockEditPreEvent];
+const handlers = [onBlockEdit];
 
-world.beforeEvents.playerPlaceBlock.subscribe((event) => {
+world.beforeEvents.playerPlaceBlock.subscribe((ev) => {
   try {
-    for (let i = 0; i < handlers.length; i++) {
-      handlers[i](event);
-      if (event.cancel) return;
+    const player = ev.player;
+    const block = ev.block;
+    if (!player || !player.isValid || !block) return;
+
+    const len = handlers.length;
+    for (let i = 0; i < len; i++) {
+      handlers[i](ev);
+      if (ev.cancel) return;
     }
-  } catch (error) {
-    console.warn("player_place_block", error.message);
+  } catch (e) {
+    console.warn("place_block", e.message);
   }
 });

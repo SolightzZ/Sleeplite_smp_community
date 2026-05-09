@@ -1,4 +1,4 @@
-import { ItemComponentTypes, EnchantmentTypes } from "@minecraft/server";
+import { ItemComponentTypes } from "@minecraft/server";
 import { getPlayerAxe } from "./inventory.js";
 
 export const applyDurabilityDamage = (player, amount) => {
@@ -10,27 +10,28 @@ export const applyDurabilityDamage = (player, amount) => {
   const dur = item.getComponent(ItemComponentTypes.Durability);
   if (!dur) return;
 
-  const enchantable = item.getComponent(ItemComponentTypes.Enchantable);
-  const unbreakingLevel = enchantable?.getEnchantment("unbreaking")?.level ?? 0;
+  const enchant = item.getComponent(ItemComponentTypes.Enchantable);
+  const unbreakLevel = enchant?.getEnchantment("unbreaking")?.level || 0;
 
-  let actualDamage = 0;
+  let actual = 0;
   for (let i = 0; i < amount; i++) {
-    if (Math.random() * 100 <= 100 / (unbreakingLevel + 1)) {
-      actualDamage++;
+    if (Math.random() * 100 <= 100 / (unbreakLevel + 1)) {
+      actual++;
     }
   }
 
-  if (actualDamage <= 0) return;
+  if (actual <= 0) return;
 
-  const newDamage = dur.damage + actualDamage;
-  dur.damage = Math.min(newDamage, dur.maxDurability);
+  dur.damage = Math.min(dur.damage + actual, dur.maxDurability);
 
   const inv = player.getComponent("minecraft:inventory");
-  if (!inv?.container) return;
+  if (!inv || !inv.container) return;
 
   if (dur.damage >= dur.maxDurability) {
     inv.container.setItem(player.selectedSlotIndex, undefined);
-    try { player.dimension.playSound("random.break", player.location); } catch { }
+    try {
+      player.dimension.playSound("random.break", player.location);
+    } catch {}
   } else {
     inv.container.setItem(player.selectedSlotIndex, item);
   }

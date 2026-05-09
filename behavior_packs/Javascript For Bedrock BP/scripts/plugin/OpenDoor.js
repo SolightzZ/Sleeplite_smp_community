@@ -1,4 +1,3 @@
-
 const dirs = [
   (b) => b.east(),
   (b) => b.west(),
@@ -6,17 +5,16 @@ const dirs = [
   (b) => b.south(),
 ];
 
-// Open doors
-function openDoor(event) {
+export const openDoor = (ev) => {
   try {
-    const block = event.block;
+    const block = ev.block;
     const typeId = block.typeId;
 
     if (!typeId.endsWith("_door") || typeId.includes("trap")) return;
 
     const perm = block.permutation;
-    const direction = perm.getState("minecraft:cardinal_direction");
-    const open_bit = perm.getState("open_bit");
+    const dir = perm.getState("minecraft:cardinal_direction");
+    const open = perm.getState("open_bit");
 
     for (let i = 0; i < 4; i++) {
       const door = dirs[i](block);
@@ -25,14 +23,11 @@ function openDoor(event) {
       if (!t.endsWith("_door") || t.includes("trap")) continue;
 
       const p = door.permutation;
-      if (p.getState("minecraft:cardinal_direction") !== direction) continue;
+      if (p.getState("minecraft:cardinal_direction") !== dir) continue;
 
-      door.setPermutation(p.withState("open_bit", open_bit));
+      door.setPermutation(p.withState("open_bit", open));
     }
-  } catch (error) {
-    console.error("openDoor: " + error);
+  } catch (e) {
+    console.error("openDoor", e.message);
   }
-}
-
-export { openDoor };
-
+};

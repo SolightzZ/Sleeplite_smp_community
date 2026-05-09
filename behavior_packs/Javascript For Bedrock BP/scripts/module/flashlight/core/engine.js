@@ -1,67 +1,59 @@
 import { world } from "@minecraft/server";
-import {
-  RECONCILE_INTERVAL,
-  TARGET_LATENCY_TICKS,
-  BATCH_MIN,
-  BATCH_MAX,
-} from "../config.js";
-import { playersQueue, queueState } from "./queue.js";
-import { activeLights } from "./state.js";
-import { updatePlayer, clearLight } from "./light-manager.js";
+import { TICK_RECONCILE, TICK_TARGET_LATENCY, BATCH_MIN_SIZE, BATCH_MAX_SIZE } from "../config.js";
+import { processQueue, queueCursor } from "./queue.js";
+import { playerLights } from "./state.js";
+import { placeLightForPlayer, removeLightBlock } from "./light-manager.js";
 
-export function reconcilePlayers() {
-  const players = world.getAllPlayers();
-  const playersLen = players.length;
+export function syncPlayerQueue() {
+  const allPlayers = world.getAllPlayers();
+  const allCount = allPlayers.length;
   const liveIds = new Set();
-  for (let i = 0; i < playersLen; i++) {
-    liveIds.add(players[i].id);
+  for (let i = 0; i < allCount; i++) {
+    liveIds.add(allPlayers[i].id);
   }
-  const activeIds = Array.from(activeLights.keys());
-  const activeLen = activeIds.length;
-  for (let i = 0; i < activeLen; i++) {
-    const id = activeIds[i];
+  const trackedIds = Array.from(playerLights.keys());
+  const trackedCount = trackedIds.length;
+  for (let i = 0; i < trackedCount; i++) {
+    const id = trackedIds[i];
     if (!liveIds.has(id)) {
-      clearLight(id);
+      removeLightBlock(id);
     }
   }
-  playersQueue.length = 0;
-  for (let i = 0; i < playersLen; i++) {
-    const p = players[i];
+  processQueue.length = 0;
+  for (let i = 0; i < allCount; i++) {
+    const p = allPlayers[i];
     if (p && p.isValid) {
-      playersQueue.push(p);
+      processQueue.push(p);
     }
   }
-  if (queueState.index >= playersQueue.length) {
-    queueState.index = 0;
+  if (queueCursor.idx >= processQueue.length) {
+    queueCursor.idx = 0;
   }
 }
 
 export function FlashlightRunInterval() {
-  queueState.tick++;
-  if (queueState.tick % RECONCILE_INTERVAL === 0) {
-    reconcilePlayers();
+  queueCursor.tick++;
+  if (queueCursor.tick % TICK_RECONCILE === 0) {
+    syncPlayerQueue();
   }
-  if (playersQueue.length === 0) return;
-  const activeCount = activeLights.size || 1;
-  const batchSize = Math.min(
-    BATCH_MAX,
-    Math.max(BATCH_MIN, Math.ceil(activeCount / TARGET_LATENCY_TICKS)),
-  );
+  if (processQueue.length === 0) return;
+  const activeCount = playerLights.size || 1;
+  const batchSize = Math.min(BATCH_MAX_SIZE, Math.max(BATCH_MIN_SIZE, Math.ceil(activeCount / TICK_TARGET_LATENCY)));
   for (let i = 0; i < batchSize; i++) {
-    if (playersQueue.length === 0) break;
-    if (queueState.index >= playersQueue.length) {
-      queueState.index = 0;
+    if (processQueue.length === 0) break;
+    if (queueCursor.idx >= processQueue.length) {
+      queueCursor.idx = 0;
     }
-    const player = playersQueue[queueState.index];
+    const player = processQueue[queueCursor.idx];
     if (player && player.isValid) {
-      updatePlayer(player);
-      queueState.index++;
+      placeLightForPlayer(player);
+      queueCursor.idx++;
     } else {
-      const last = playersQueue.pop();
-      if (queueState.index < playersQueue.length) {
-        playersQueue[queueState.index] = last;
+      const last = processQueue.pop();
+      if (queueCursor.idx < processQueue.length) {
+        processQueue[queueCursor.idx] = last;
       } else {
-        queueState.index = 0;
+        queueCursor.idx = 0;
       }
     }
   }
@@ -71,38 +63,33 @@ export function flashSpawn(event) {
   const player = event.player;
   if (!player || !player.isValid) return;
   const playerId = player.id;
-  const qLen = playersQueue.length;
-  let isExist = false;
+  const qLen = processQueue.length;
   for (let i = 0; i < qLen; i++) {
-    if (playersQueue[i].id === playerId) {
-      isExist = true;
-      break;
-    }
+    if (processQueue[i].id === playerId) return;
   }
-  if (!isExist) {
-    playersQueue.push(player);
-  }
+  processQueue.push(player);
 }
 
 export function flashLeave(playerId) {
-  clearLight(playerId);
-  for (let i = 0; i < playersQueue.length; i++) {
-    if (playersQueue[i].id === playerId) {
-      const last = playersQueue.pop();
-      if (i < playersQueue.length) {
-        playersQueue[i] = last;
+  removeLightBlock(playerId);
+  const qLen = processQueue.length;
+  for (let i = 0; i < qLen; i++) {
+    if (processQueue[i].id === playerId) {
+      const last = processQueue.pop();
+      if (i < processQueue.length) {
+        processQueue[i] = last;
       }
-      if (queueState.index > i) {
-        queueState.index--;
+      if (queueCursor.idx > i) {
+        queueCursor.idx--;
       }
       break;
     }
   }
-  if (queueState.index >= playersQueue.length) {
-    queueState.index = 0;
+  if (queueCursor.idx >= processQueue.length) {
+    queueCursor.idx = 0;
   }
 }
 
-export function handlerFlashlight({ playerId, dimension }) {
-  clearLight(playerId, dimension);
+export function handlerFlashlight(data) {
+  removeLightBlock(data.playerId, data.dimension);
 }

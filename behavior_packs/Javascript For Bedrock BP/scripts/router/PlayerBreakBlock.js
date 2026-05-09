@@ -1,45 +1,31 @@
 import { world } from "@minecraft/server";
+import { TreeCapitatorBreakBlock } from "../module/treeCapitator/index.js";
+import { VeinMiner } from "../module/veinMiner/index.js";
+import { handleAutoReplant } from "../plugin/AutoReplant.js";
+import { onBlockEdit } from "../module/protection/index.js";
 
-import { TreeCapitatorBreakBlock } from "../module/treeCapitator/index";
-import { VeinMiner } from "../module/veinMiner/index";
-import { handleAutoReplant } from "../plugin/AutoReplant";
-import { handleBlockEditPreEvent } from "../module/protection/core/events";
+const beforeHandlers = [onBlockEdit, VeinMiner];
+const afterHandlers = [handleAutoReplant, TreeCapitatorBreakBlock];
 
-const handlerAfterEvents = [
-  handleBlockEditPreEvent,
-  handleAutoReplant,
-  TreeCapitatorBreakBlock,
-];
-
-const handlerBeforeEvents = [VeinMiner];
-
-function beforeEventsBreak(event) {
+const runHandlers = (handlers, ev) => {
   try {
-    if (!event.player || !event.block) return;
-    const length = handlerBeforeEvents.length;
-    for (let i = 0; i < length; i++) {
-      const handler = handlerBeforeEvents[i];
-      handler(event);
-      if (event.cancel) return;
-    }
-  } catch (error) {
-    console.warn("beforeEventsBreak", error.message);
-  }
-}
+    const player = ev.player;
+    const block = ev.block;
+    if (!player || !player.isValid || !block) return;
 
-function afterEventsBreak(event) {
-  try {
-    if (!event.player || !event.block) return;
-    const length = handlerAfterEvents.length;
-    for (let i = 0; i < length; i++) {
-      const handler = handlerAfterEvents[i];
-      handler(event);
-      if (event.cancel) return;
+    const len = handlers.length;
+    for (let i = 0; i < len; i++) {
+      handlers[i](ev);
+      if (ev.cancel) return;
     }
-  } catch (error) {
-    console.warn("afterEventsBreak", error.message);
+  } catch (e) {
+    console.warn("break_block", e.message);
   }
-}
+};
 
-world.beforeEvents.playerBreakBlock.subscribe(beforeEventsBreak);
-world.afterEvents.playerBreakBlock.subscribe(afterEventsBreak);
+world.beforeEvents.playerBreakBlock.subscribe((ev) =>
+  runHandlers(beforeHandlers, ev),
+);
+world.afterEvents.playerBreakBlock.subscribe((ev) =>
+  runHandlers(afterHandlers, ev),
+);

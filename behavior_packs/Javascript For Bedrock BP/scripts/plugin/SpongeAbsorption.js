@@ -1,16 +1,20 @@
 import { system } from "@minecraft/server";
 
+const SPONGE = "minecraft:sponge";
+const WATER = "minecraft:water";
+
 const findSpongeSlot = (inv) => {
-  for (let i = 0; i < inv.size; i++) {
+  const size = inv.size;
+  for (let i = 0; i < size; i++) {
     const it = inv.getItem(i);
-    if (it && it.typeId === "minecraft:sponge") return i;
+    if (it && it.typeId === SPONGE) return i;
   }
   return -1;
 };
 
-const consumeAndPlaceSponge = (player, inv, slot, targetBlock) => {
+const placeSponge = (player, inv, slot, block) => {
   system.run(() => {
-    targetBlock.setType("minecraft:sponge");
+    block.setType(SPONGE);
 
     const it = inv.getItem(slot);
     if (!it) return;
@@ -24,12 +28,14 @@ const consumeAndPlaceSponge = (player, inv, slot, targetBlock) => {
   });
 };
 
-function handleSpongeAbsorption(event) {
+export const handleSpongeAbsorption = (ev) => {
   try {
-    const item = event.itemStack;
-    if (!item || item.typeId !== "minecraft:sponge") return;
+    const item = ev.itemStack;
+    if (!item || item.typeId !== SPONGE) return;
 
-    const player = event.source;
+    const player = ev.source;
+    if (!player || !player.isValid) return;
+
     const inv = player.getComponent("inventory")?.container;
     if (!inv) return;
 
@@ -46,12 +52,10 @@ function handleSpongeAbsorption(event) {
     };
 
     const block = player.dimension.getBlock(target);
-    if (!block || block.typeId !== "minecraft:water") return;
-    consumeAndPlaceSponge(player, inv, slot, block);
-  } catch (error) {
-    console.error("handleSpongeAbsorption:: " + error);
+    if (!block || block.typeId !== WATER) return;
+
+    placeSponge(player, inv, slot, block);
+  } catch (e) {
+    console.error("handleSpongeAbsorption", e.message);
   }
-}
-
-export { handleSpongeAbsorption };
-
+};

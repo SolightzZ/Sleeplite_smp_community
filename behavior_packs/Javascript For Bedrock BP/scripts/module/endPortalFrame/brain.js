@@ -1,33 +1,30 @@
 import { shop } from "./rules.js";
 
 const memory = new Map();
-let count = 1;
+let counter = 1;
 
 export const ask = (block) => {
   if (!block || !block.isValid) return shop[0];
 
-  const place = `${block.dimension.id}_${block.location.x}_${block.location.y}_${block.location.z}`;
+  const loc = block.location;
+  const key = `${block.dimension.id}_${loc.x}_${loc.y}_${loc.z}`;
 
-  if (memory.has(place)) {
-    return memory.get(place);
-  }
+  if (memory.has(key)) return memory.get(key);
 
-  const index = (count - 1) % shop.length;
-  const gift = shop[index];
+  const idx = (counter - 1) % shop.length;
+  const gift = shop[idx];
+  const data = { id: gift.id, hp: gift.hp };
 
-  const data = {
-    id: gift.id,
-    hp: gift.hp,
-  };
-
-  memory.set(place, data);
-  count++;
+  memory.set(key, data);
+  counter++;
 
   return data;
 };
 
 export const forget = (block) => {
   if (!block || !block.isValid) return;
-  const place = `${block.dimension.id}_${block.location.x}_${block.location.y}_${block.location.z}`;
-  memory.delete(place);
+
+  const loc = block.location;
+  const key = `${block.dimension.id}_${loc.x}_${loc.y}_${loc.z}`;
+  memory.delete(key);
 };

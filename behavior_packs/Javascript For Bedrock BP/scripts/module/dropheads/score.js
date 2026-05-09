@@ -3,28 +3,28 @@ import { boardA, boardB } from "./data.js";
 
 let objA, objB;
 
-const board = (name) => {
+const getBoard = (name) => {
   return (
-    world.scoreboard.getObjective(name) ??
+    world.scoreboard.getObjective(name) ||
     world.scoreboard.addObjective(name, name)
   );
 };
 
-export const add = (player) => {
+export const addDeath = (player) => {
   if (!player || !player.isValid) return;
   try {
     objA.addScore(player, 1);
     objB.addScore(`*${player.name}`, 1);
-  } catch (error) {
-    console.warn(`Error add: ${error}`);
+  } catch (e) {
+    console.warn("addDeath", e.message);
   }
 };
 
-export const init = () => {
+export const initBoards = () => {
   try {
-    objA = board(boardA);
-    objB = board(boardB);
-  } catch (error) {
-    console.warn(`Error init: ${error}`);
+    objA = getBoard(boardA);
+    objB = getBoard(boardB);
+  } catch (e) {
+    console.warn("initBoards", e.message);
   }
 };

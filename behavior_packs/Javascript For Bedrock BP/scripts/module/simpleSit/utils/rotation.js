@@ -1,4 +1,5 @@
-export const weirdoToRotation = (direction) => {
-  const yaw = [90, 270, 180, 0];
-  return { x: 0, y: yaw[direction] ?? 0 };
+const yawTable = [90, 270, 180, 0];
+
+export const weirdoToRotation = (dir) => {
+  return { x: 0, y: yawTable[dir] || 0 };
 };

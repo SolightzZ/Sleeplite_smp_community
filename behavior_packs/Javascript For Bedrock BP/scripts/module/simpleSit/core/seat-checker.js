@@ -3,72 +3,79 @@ import { activeSeats } from "./seat-manager.js";
 import { isRemovedBlock } from "../utils/block.js";
 import { seatHasMoved } from "../utils/location.js";
 
-export let globalSeatCheckInterval = null;
+let checkInterval = null;
 
-export function startGlobalSeatCheck() {
-  if (globalSeatCheckInterval !== null) return;
+const WATER = "minecraft:water";
+const FLOWING_WATER = "minecraft:flowing_water";
 
-  globalSeatCheckInterval = system.runInterval(() => {
+export const startGlobalSeatCheck = () => {
+  if (checkInterval !== null) return;
+
+  checkInterval = system.runInterval(() => {
     const entries = Array.from(activeSeats.entries());
     const entriesLen = entries.length;
 
     for (let i = 0; i < entriesLen; i++) {
-      const [seatId, seatData] = entries[i];
-      const { seatEntity, dimension, spawnLocation, blockLocation } = seatData;
+      const seatId = entries[i][0];
+      const data = entries[i][1];
+      const entity = data.seatEntity;
+      const dim = data.dimension;
+      const spawnLoc = data.spawnLocation;
+      const blockLoc = data.blockLocation;
 
-      if (!seatEntity || !seatEntity.isValid) {
+      if (!entity || !entity.isValid) {
         activeSeats.delete(seatId);
         continue;
       }
 
-      let isBlockRemoved = false;
-      if (blockLocation) {
+      let blockRemoved = false;
+      if (blockLoc) {
         try {
-          const block = dimension.getBlock(blockLocation);
-          isBlockRemoved = block ? isRemovedBlock(block.typeId) : true;
+          const block = dim.getBlock(blockLoc);
+          blockRemoved = block ? isRemovedBlock(block.typeId) : true;
         } catch {
-          isBlockRemoved = true;
+          blockRemoved = true;
         }
       } else {
-        const underLocation = {
-          x: Math.floor(seatEntity.location.x),
-          y: Math.floor(seatEntity.location.y) - 1,
-          z: Math.floor(seatEntity.location.z),
+        const underLoc = {
+          x: Math.floor(entity.location.x),
+          y: Math.floor(entity.location.y) - 1,
+          z: Math.floor(entity.location.z),
         };
         try {
-          const underBlock = dimension.getBlock(underLocation);
-          isBlockRemoved = underBlock ? isRemovedBlock(underBlock.typeId) : true;
+          const underBlock = dim.getBlock(underLoc);
+          blockRemoved = underBlock ? isRemovedBlock(underBlock.typeId) : true;
         } catch {
-          isBlockRemoved = true;
+          blockRemoved = true;
         }
       }
 
-      let isSeatInWater = false;
+      let inWater = false;
       try {
-        const seatBlock = dimension.getBlock(seatEntity.location);
-        isSeatInWater = seatBlock?.typeId === "minecraft:water" || seatBlock?.typeId === "minecraft:flowing_water";
-      } catch { }
+        const seatBlock = dim.getBlock(entity.location);
+        inWater = seatBlock?.typeId === WATER || seatBlock?.typeId === FLOWING_WATER;
+      } catch {}
 
-      const hasMoved = seatHasMoved(seatEntity.location, spawnLocation);
+      const moved = seatHasMoved(entity.location, spawnLoc);
 
-      const rideable = seatEntity.getComponent("minecraft:rideable");
+      const rideable = entity.getComponent("minecraft:rideable");
       let hasRider = false;
       if (rideable) {
         const riders = rideable.getRiders();
         hasRider = riders.length > 0;
       }
 
-      if (isBlockRemoved || isSeatInWater || hasMoved || !hasRider) {
+      if (blockRemoved || inWater || moved || !hasRider) {
         try {
-          seatEntity.remove();
-        } catch { }
+          entity.remove();
+        } catch {}
         activeSeats.delete(seatId);
       }
     }
 
     if (activeSeats.size === 0) {
-      system.clearRun(globalSeatCheckInterval);
-      globalSeatCheckInterval = null;
+      system.clearRun(checkInterval);
+      checkInterval = null;
     }
   }, 10);
-}
+};

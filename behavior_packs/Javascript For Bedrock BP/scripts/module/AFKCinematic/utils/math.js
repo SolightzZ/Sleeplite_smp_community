@@ -5,7 +5,9 @@ export const normalizeYaw = (y) => ((((y + 180) % 360) + 360) % 360) - 180;
 export const angleDiff = (a, b) => Math.abs(normalizeYaw(a - b));
 
 export const dist3 = (a, b) => {
-  const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
+  const dx = a.x - b.x,
+    dy = a.y - b.y,
+    dz = a.z - b.z;
   return Math.sqrt(dx * dx + dy * dy + dz * dz);
 };
 
@@ -46,7 +48,9 @@ export const hashStr = (s) => {
 };
 
 export const faceTargetInto = (rot, from, to) => {
-  const dx = to.x - from.x, dy = to.y - from.y, dz = to.z - from.z;
+  const dx = to.x - from.x,
+    dy = to.y - from.y,
+    dz = to.z - from.z;
   const horiz = Math.max(0.001, Math.sqrt(dx * dx + dz * dz));
   rot.pitch = -((Math.atan2(dy, horiz) * 180) / Math.PI);
   rot.yaw = normalizeYaw(-((Math.atan2(dx, dz) * 180) / Math.PI));
@@ -54,7 +58,9 @@ export const faceTargetInto = (rot, from, to) => {
 };
 
 export const faceTarget = (from, to) => {
-  const dx = to.x - from.x, dy = to.y - from.y, dz = to.z - from.z;
+  const dx = to.x - from.x,
+    dy = to.y - from.y,
+    dz = to.z - from.z;
   const horiz = Math.max(0.001, Math.sqrt(dx * dx + dz * dz));
   return {
     pitch: -((Math.atan2(dy, horiz) * 180) / Math.PI),

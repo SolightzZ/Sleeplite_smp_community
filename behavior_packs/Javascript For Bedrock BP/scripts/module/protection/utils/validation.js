@@ -1,27 +1,31 @@
 import { ItemStack } from "@minecraft/server";
-import {
-  Configuration,
-  EdgeOffsets,
-  HalfZone,
-  UserMessages,
-} from "../config.js";
+import { Config, EdgeOffsets, HalfZoneSize } from "../config.js";
 
-export const playerHasAccessToZone = (player, ownerName, zoneByOwnerName) =>
-  player.name === ownerName ||
-  zoneByOwnerName[ownerName]?.friends.includes(player.name) ||
-  player.hasTag(Configuration.AdministratorTag);
+export const hasAccess = (player, owner, zones) => {
+  if (player.name === owner) return true;
+  if (player.hasTag(Config.AdminTag)) return true;
 
-export const validateZoneCreation = (player, zoneByOwnerName) => {
-  if (
-    Object.keys(zoneByOwnerName).length >= Configuration.MaximumZonesInServer
-  ) {
-    return { isValid: false, reason: UserMessages.ServerZoneLimitReached };
+  const zone = zones[owner];
+  if (!zone || !zone.friends) return false;
+
+  const friends = zone.friends;
+  const friendsLen = friends.length;
+  for (let i = 0; i < friendsLen; i++) {
+    if (friends[i] === player.name) return true;
   }
-  if (zoneByOwnerName[player.name]) {
-    return { isValid: false, reason: UserMessages.PlayerAlreadyHasZone };
+  return false;
+};
+
+export const validateZoneCreate = (player, zones) => {
+  const zoneCount = Object.keys(zones).length;
+  if (zoneCount >= Config.MaxZones) {
+    return { ok: false, reason: `[x] ถึงขีดจำกัด ${Config.MaxZones} โซน!` };
+  }
+  if (zones[player.name]) {
+    return { ok: false, reason: `[x] มีโซนแล้ว!` };
   }
   if (player.dimension.id !== "minecraft:overworld") {
-    return { isValid: false, reason: UserMessages.OnlyOverworld };
+    return { ok: false, reason: `[x] ใช้ได้เฉพาะ Overworld!` };
   }
 
   const base = {
@@ -29,32 +33,32 @@ export const validateZoneCreation = (player, zoneByOwnerName) => {
     y: Math.floor(player.location.y) - 1,
     z: Math.floor(player.location.z),
   };
-  const bottom = base.y - HalfZone;
-  const top = base.y + HalfZone;
+
+  const bottom = base.y - HalfZoneSize;
+  const top = base.y + HalfZoneSize;
 
   if (bottom < -63 || top > 319) {
-    return { isValid: false, reason: UserMessages.HeightOutOfRange };
+    return { ok: false, reason: `[x] เกินขอบเขตความสูง!` };
   }
-  return { isValid: true, baseCenter: base };
+
+  return { ok: true, center: base };
 };
 
-export const consumeRequiredBlockFromInventory = (player) => {
+export const consumeBlock = (player) => {
   const container = player.getComponent("minecraft:inventory")?.container;
   if (!container) return false;
 
-  for (let slot = 0; slot < container.size; slot++) {
-    const item = container.getItem(slot);
-    if (item?.typeId === Configuration.RequiredBlockToCreateZone) {
+  const size = container.size;
+  for (let i = 0; i < size; i++) {
+    const item = container.getItem(i);
+    if (item && item.typeId === Config.RequiredBlock) {
       if (item.amount > 1) {
         container.setItem(
-          slot,
-          new ItemStack(
-            Configuration.RequiredBlockToCreateZone,
-            item.amount - 1,
-          ),
+          i,
+          new ItemStack(Config.RequiredBlock, item.amount - 1),
         );
       } else {
-        container.setItem(slot, undefined);
+        container.setItem(i, undefined);
       }
       return true;
     }
@@ -62,42 +66,41 @@ export const consumeRequiredBlockFromInventory = (player) => {
   return false;
 };
 
-export const isBoxOverlapping = (a, b) =>
-  a.start.x <= b.end.x &&
-  a.end.x >= b.start.x &&
-  a.start.y <= b.end.y &&
-  a.end.y >= b.start.y &&
-  a.start.z <= b.end.z &&
-  a.end.z >= b.start.z;
+export const isOverlapping = (a, b) => {
+  return (
+    a.start.x <= b.end.x &&
+    a.end.x >= b.start.x &&
+    a.start.y <= b.end.y &&
+    a.end.y >= b.start.y &&
+    a.start.z <= b.end.z &&
+    a.end.z >= b.start.z
+  );
+};
 
-export const isNewZoneOverlappingAny = (newZone, zoneByOwnerName) => {
-  for (const zone of Object.values(zoneByOwnerName)) {
-    if (isBoxOverlapping(newZone, zone)) return true;
+export const isZoneOverlap = (newZone, zones) => {
+  const owners = Object.keys(zones);
+  const ownersLen = owners.length;
+  for (let i = 0; i < ownersLen; i++) {
+    if (isOverlapping(newZone, zones[owners[i]])) return true;
   }
   return false;
 };
 
-export const buildNewZoneFromCenter = (center) => ({
-  start: {
-    x: center.x - HalfZone,
-    y: center.y - HalfZone,
-    z: center.z - HalfZone,
-  },
-  end: {
-    x: center.x + HalfZone,
-    y: center.y + HalfZone,
-    z: center.z + HalfZone,
-  },
-  friends: [],
-});
+export const buildZone = (center) => {
+  const h = HalfZoneSize;
+  return {
+    start: { x: center.x - h, y: center.y - h, z: center.z - h },
+    end: { x: center.x + h, y: center.y + h, z: center.z + h },
+    friends: [],
+  };
+};
 
-export const isFormOk = (player, response) => {
+export const isFormValid = (player, response) => {
   if (response.canceled) return false;
-  if (
-    "formValues" in response &&
-    (!response.formValues || !Array.isArray(response.formValues))
-  ) {
-    player.sendMessage(UserMessages.InvalidForm);
+  const hasValues = "formValues" in response;
+  const valuesOk = response.formValues && Array.isArray(response.formValues);
+  if (hasValues && !valuesOk) {
+    player.sendMessage(`[x] ฟอร์มไม่ถูกต้อง!`);
     return false;
   }
   return true;
@@ -105,9 +108,16 @@ export const isFormOk = (player, response) => {
 
 export const buildBorderPoints = (start, step) => {
   const points = [];
-  const distance = step;
-  for (const [axis, offX, offY, offZ] of EdgeOffsets) {
-    for (let d = 0; d <= Configuration.ZoneSideLength; d += distance) {
+  const offsetsLen = EdgeOffsets.length;
+
+  for (let i = 0; i < offsetsLen; i++) {
+    const offset = EdgeOffsets[i];
+    const axis = offset[0];
+    const offX = offset[1];
+    const offY = offset[2];
+    const offZ = offset[3];
+
+    for (let d = 0; d <= Config.ZoneSize; d += step) {
       const p = { x: start.x + offX, y: start.y + offY, z: start.z + offZ };
       if (axis === "x") p.x += d;
       if (axis === "y") p.y += d;
@@ -115,5 +125,6 @@ export const buildBorderPoints = (start, step) => {
       points.push({ x: p.x + 0.5, y: p.y + 0.5, z: p.z + 0.5 });
     }
   }
+
   return points;
 };

@@ -1,7 +1,4 @@
-// ─── Rarity tier: 0 = Common, 1 = Uncommon, 2 = Rare, 3 = Epic, 4 = Legendary (enchanted, handled in code)
-/** @type {Record<string, number>} */
-export const RARITY_ORDER = {
-  // Common (0)
+export const RarityTiers = {
   "minecraft:dirt": 0,
   "minecraft:gravel": 0,
   "minecraft:sand": 0,
@@ -10,8 +7,6 @@ export const RARITY_ORDER = {
   "minecraft:oak_log": 0,
   "minecraft:oak_planks": 0,
   "minecraft:stick": 0,
-
-  // Uncommon (1)
   "minecraft:iron_ingot": 1,
   "minecraft:iron_nugget": 1,
   "minecraft:coal": 1,
@@ -28,8 +23,6 @@ export const RARITY_ORDER = {
   "minecraft:wheat": 1,
   "minecraft:egg": 1,
   "minecraft:arrow": 1,
-
-  // Rare (2)
   "minecraft:gold_ingot": 2,
   "minecraft:gold_nugget": 2,
   "minecraft:diamond": 2,
@@ -41,8 +34,6 @@ export const RARITY_ORDER = {
   "minecraft:shulker_shell": 2,
   "minecraft:prismarine_shard": 2,
   "minecraft:heart_of_the_sea": 2,
-
-  // Epic (3)
   "minecraft:netherite_ingot": 3,
   "minecraft:netherite_scrap": 3,
   "minecraft:ancient_debris": 3,
@@ -51,12 +42,12 @@ export const RARITY_ORDER = {
   "minecraft:trident": 3,
 };
 
-export const ITEM_CATEGORIES = {
-  weapon:   0,
-  tool:     1,
-  armor:    2,
-  food:     3,
-  block:    4,
+export const ItemCategories = {
+  weapon: 0,
+  tool: 1,
+  armor: 2,
+  food: 3,
+  block: 4,
   material: 5,
-  misc:     6,
+  misc: 6,
 };

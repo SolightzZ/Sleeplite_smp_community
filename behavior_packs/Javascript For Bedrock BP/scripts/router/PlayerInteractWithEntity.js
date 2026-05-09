@@ -1,17 +1,21 @@
 import { world } from "@minecraft/server";
+import { onGravestoneInteract } from "../module/graveStones/index.js";
+import { onEntityInteract } from "../module/protection/index.js";
 
-import { handleEntityInteractPreEvent } from "../module/protection/index";
-import { onGravestoneInteract } from "../module/graveStones/index";
+const handlers = [onGravestoneInteract, onEntityInteract];
 
-const handlers = [onGravestoneInteract, handleEntityInteractPreEvent];
-
-world.beforeEvents.playerInteractWithEntity.subscribe((event) => {
+world.beforeEvents.playerInteractWithEntity.subscribe((ev) => {
   try {
-    for (let i = 0; i < handlers.length; i++) {
-      handlers[i](event);
-      if (event.cancel) return;
+    const player = ev.player;
+    const target = ev.target;
+    if (!player || !player.isValid || !target) return;
+
+    const len = handlers.length;
+    for (let i = 0; i < len; i++) {
+      handlers[i](ev);
+      if (ev.cancel) return;
     }
-  } catch (error) {
-    console.warn("player_interact_with_entity", error.message);
+  } catch (e) {
+    console.warn("interact_entity", e.message);
   }
 });

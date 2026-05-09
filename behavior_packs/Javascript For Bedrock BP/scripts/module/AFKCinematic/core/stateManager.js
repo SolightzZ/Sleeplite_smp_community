@@ -1,6 +1,11 @@
 import { CONFIG, SHOT_LIBRARY } from "../config.js";
 import { playerStates, blockCache } from "./state.js";
-import { cloneVec3, cloneVec2, angleDiff, normalizeYaw } from "../utils/math.js";
+import {
+  cloneVec3,
+  cloneVec2,
+  angleDiff,
+  normalizeYaw,
+} from "../utils/math.js";
 
 export function ensureState(player) {
   let s = playerStates.get(player.id);

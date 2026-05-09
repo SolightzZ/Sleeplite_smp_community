@@ -1,16 +1,17 @@
 import { BlockPermutation } from "@minecraft/server";
 
-let AIR_PERM = null;
-export function getAirPerm() {
-  if (!AIR_PERM) AIR_PERM = BlockPermutation.resolve("minecraft:air");
-  return AIR_PERM;
-}
+let airPerm = null;
+
+export const getAirPerm = () => {
+  if (!airPerm) airPerm = BlockPermutation.resolve("minecraft:air");
+  return airPerm;
+};
 
 export const getLocKey = (x, y, z) => `${x},${y},${z}`;
 
-export const getBlockSafe = (dimension, loc) => {
+export const getBlockSafe = (dim, loc) => {
   try {
-    return dimension.getBlock(loc);
+    return dim.getBlock(loc);
   } catch {
     return undefined;
   }

@@ -1,26 +1,27 @@
 import { system, world } from "@minecraft/server";
-import { itile_main } from "../plugin/title";
+import { itile_main } from "../plugin/title.js";
 
-const SPAWN_ACTIONS = {
-  "minecraft:ender_dragon": [itile_main],
-  "minecraft:wither": [itile_main],
-};
+const spawnHandlers = new Map([
+  ["minecraft:ender_dragon", [itile_main]],
+  ["minecraft:wither", [itile_main]],
+]);
 
-world.afterEvents.entitySpawn.subscribe((event) => {
+world.afterEvents.entitySpawn.subscribe((ev) => {
   try {
-    const entity = event.entity;
-    if (!entity) return;
+    const entity = ev.entity;
+    if (!entity || !entity.isValid) return;
 
-    const actions = SPAWN_ACTIONS[entity.typeId];
-    if (!actions || actions.length === 0) return;
+    const handlers = spawnHandlers.get(entity.typeId);
+    if (!handlers || handlers.length === 0) return;
 
     system.run(() => {
-      for (let i = 0; i < actions.length; i++) {
-        const fn = actions[i];
-        if (fn) fn(event);
+      const len = handlers.length;
+      for (let i = 0; i < len; i++) {
+        const fn = handlers[i];
+        if (fn) fn(ev);
       }
     });
-  } catch (error) {
-    console.warn("entity_spawn", error.message);
+  } catch (e) {
+    console.warn("entity_spawn", e.message);
   }
 });

@@ -19,16 +19,18 @@ export const processVeinJobs = () => {
   const loadFactor = Math.max(1, Math.floor(totalJobs / 4));
   const blocksPerTick = Math.max(1, Math.ceil(CFG.blocksPerTickBase / loadFactor));
 
-  let jobsProcessedThisTick = 0;
-  const maxJobsThisTick = Math.min(totalJobs, 4);
+  let jobsDone = 0;
+  const maxJobs = Math.min(totalJobs, 4);
 
-  while (jobsProcessedThisTick < maxJobsThisTick && state.jobQueue.length > 0) {
-    if (state.lastProcessedIndex >= state.jobQueue.length) state.lastProcessedIndex = 0;
+  while (jobsDone < maxJobs && state.jobQueue.length > 0) {
+    if (state.lastProcessedIndex >= state.jobQueue.length) {
+      state.lastProcessedIndex = 0;
+    }
 
     const job = state.jobQueue[state.lastProcessedIndex];
-    const currentTick = system.currentTick;
+    const curTick = system.currentTick;
 
-    if (!job.player.isValid || (currentTick - job.startTick) > CFG.jobTimeoutTicks) {
+    if (!job.player.isValid || (curTick - job.startTick) > CFG.jobTimeoutTicks) {
       finalizeAndCleanupState(job);
       popJob(state.lastProcessedIndex);
       continue;
@@ -41,22 +43,22 @@ export const processVeinJobs = () => {
       continue;
     }
 
-    let brokenThisTick = 0;
-    while (brokenThisTick < blocksPerTick && job.index < job.locations.length) {
+    let broken = 0;
+    while (broken < blocksPerTick && job.index < job.locations.length) {
       const loc = job.locations[job.index++];
       const block = getBlockSafe(job.player.dimension, loc);
 
       if (block && block.typeId === job.targetId) {
-        const dropAmount = (job.fortuneLevel > 0) ? (Math.floor(Math.random() * job.fortuneLevel) + 2) : 1;
+        const dropAmt = job.fortuneLevel > 0 ? Math.floor(Math.random() * job.fortuneLevel) + 2 : 1;
         const xpChoices = ORE_XP[job.targetId] || [0];
-        const xpAmount = xpChoices[Math.floor(Math.random() * xpChoices.length)];
+        const xpAmt = xpChoices[Math.floor(Math.random() * xpChoices.length)];
 
         try {
           block.setPermutation(getAirPerm());
-          job.brokenCount += dropAmount;
-          job.xpAccumulated += xpAmount;
-          brokenThisTick++;
-        } catch { }
+          job.brokenCount += dropAmt;
+          job.xpAccumulated += xpAmt;
+          broken++;
+        } catch {}
       }
     }
 
@@ -67,6 +69,6 @@ export const processVeinJobs = () => {
       state.lastProcessedIndex++;
     }
 
-    jobsProcessedThisTick++;
+    jobsDone++;
   }
 };

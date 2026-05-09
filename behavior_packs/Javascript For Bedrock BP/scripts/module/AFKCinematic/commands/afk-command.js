@@ -1,4 +1,8 @@
-import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
+import {
+  CommandPermissionLevel,
+  CustomCommandStatus,
+  system,
+} from "@minecraft/server";
 import { startCinematicNow } from "../core/poller.js";
 
 const quickCommandAFK = (origin) => {

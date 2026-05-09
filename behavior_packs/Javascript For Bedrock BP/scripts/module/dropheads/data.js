@@ -1,7 +1,7 @@
 export const boardA = "Deaths";
 export const boardB = "DeathsPlus";
 
-export const map = {
+export const headMap = {
   SolightzZ: "bluefirefroggy:player_head_16",
   Cxnthiaz: "addon:cxnthiaz",
   DAM0NZ17: "addon:dam0nz17",
@@ -19,13 +19,9 @@ export const map = {
   winosata2009: "addon:winosata2009",
   XxsomponxX: "addon:xxsomponxx",
   zeerza22: "addon:zeerza22",
-
-  // rename
-  SoulSkyCraft: "addon:sekpongpipat258", //sekpongpipat258
-  NamaewaHenry: "addon:henry_tv_chanel", //MyNameHenry8037
-  yuyuKw: "addon:kwanxd009", //KwanXD009
-
-  // mew
+  SoulSkyCraft: "addon:sekpongpipat258",
+  NamaewaHenry: "addon:henry_tv_chanel",
+  yuyuKw: "addon:kwanxd009",
   maewsanCH8: "addon:maewsanch8",
   Bank5273: "addon:bank5273",
   Ironbongbang951: "addon:ironbongbang951",
@@ -35,4 +31,4 @@ export const map = {
   red2535a: "addon:red2535a",
 };
 
-export const item = (name) => map[name] ?? null;
+export const getHead = (name) => headMap[name] || null;

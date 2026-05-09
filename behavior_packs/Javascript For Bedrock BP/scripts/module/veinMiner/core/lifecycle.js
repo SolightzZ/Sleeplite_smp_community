@@ -3,20 +3,20 @@ import { applyDurabilityDamage } from "../utils/durability.js";
 import { getPlayerPickaxe } from "../utils/player.js";
 import { state } from "./queue.js";
 
-export const finalizeJobDrops = (dimension, location, dropTypeId, amount, xpTotal) => {
-  if (dropTypeId && amount > 0) {
-    let remaining = amount;
+export const finalizeJobDrops = (dim, loc, dropId, amt, xpTotal) => {
+  if (dropId && amt > 0) {
+    let remaining = amt;
     while (remaining > 0) {
-      const stackSize = Math.min(remaining, 64);
-      dimension.spawnItem(new ItemStack(dropTypeId, stackSize), location);
-      remaining -= stackSize;
+      const stack = Math.min(remaining, 64);
+      dim.spawnItem(new ItemStack(dropId, stack), loc);
+      remaining -= stack;
     }
   }
 
   if (xpTotal > 0) {
     let remainingXp = xpTotal;
     while (remainingXp > 0) {
-      dimension.spawnEntity("minecraft:xp_orb", location);
+      dim.spawnEntity("minecraft:xp_orb", loc);
       remainingXp -= 5;
     }
   }
@@ -26,18 +26,19 @@ export const finalizeAndCleanupState = (job) => {
   if (job.brokenCount > 0 || job.xpAccumulated > 0) {
     finalizeJobDrops(job.player.dimension, job.player.location, job.dropTypeId, job.brokenCount, job.xpAccumulated);
 
-    const blocksActuallyBroken = job.index;
+    const blocksBroken = job.index;
     const item = getPlayerPickaxe(job.player);
     if (item) {
-      applyDurabilityDamage(job.player, item, blocksActuallyBroken, job.unbreakingLevel);
+      applyDurabilityDamage(job.player, item, blocksBroken, job.unbreakingLevel);
     }
   }
 
-  for (let i = 0; i < job.visitedKeys.length; i++) {
+  const keysLen = job.visitedKeys.length;
+  for (let i = 0; i < keysLen; i++) {
     state.pendingBlocks.delete(job.visitedKeys[i]);
   }
 
-  const count = state.playerJobCount.get(job.playerId) ?? 1;
+  const count = state.playerJobCount.get(job.playerId) || 1;
   if (count <= 1) {
     state.playerJobCount.delete(job.playerId);
   } else {

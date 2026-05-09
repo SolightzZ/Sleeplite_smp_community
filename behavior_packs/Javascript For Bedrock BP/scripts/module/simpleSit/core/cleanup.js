@@ -1,22 +1,26 @@
 import { world, system } from "@minecraft/server";
 import { SEAT_ENTITY_ID } from "../constants.js";
 
-export function clearSeatsInDimension(dimensionName) {
+const dims = ["minecraft:overworld", "minecraft:nether", "minecraft:the_end"];
+
+export const clearSeatsInDimension = (dimName) => {
   try {
-    const dimension = world.getDimension(dimensionName);
-    const entities = dimension.getEntities({ type: SEAT_ENTITY_ID });
-    for (let i = 0; i < entities.length; i++) {
+    const dim = world.getDimension(dimName);
+    const entities = dim.getEntities({ type: SEAT_ENTITY_ID });
+    const len = entities.length;
+    for (let i = 0; i < len; i++) {
       entities[i].remove();
     }
-  } catch { }
-}
+  } catch {}
+};
 
-export function initCleanup() {
+export const initCleanup = () => {
   system.run(() => {
     system.runTimeout(() => {
-      clearSeatsInDimension("minecraft:overworld");
-      clearSeatsInDimension("minecraft:nether");
-      clearSeatsInDimension("minecraft:the_end");
+      const len = dims.length;
+      for (let i = 0; i < len; i++) {
+        clearSeatsInDimension(dims[i]);
+      }
     }, 1);
   });
-}
+};

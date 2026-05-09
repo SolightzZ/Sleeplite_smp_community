@@ -3,7 +3,7 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { giveDiamond } from "./CompleteJob.js";
 import {
   deleteJobData,
-  findPlayerById,
+  getPlayerById,
   jobs,
   playerJobMap,
   showUI,
@@ -14,13 +14,11 @@ import {
 import { showMainMenu } from "./Menu.js";
 
 const refundOwner = (job) => {
-  const owner = findPlayerById(job.owner);
+  const owner = getPlayerById(job.owner);
   const total = totalDiamond(job);
   if (owner && owner.isValid) {
     giveDiamond(owner, total);
-    owner.sendMessage(
-      `[Job] ได้ทำการคืน ${total} เพชรแล้ว เนื่องจากยกเลิกงาน`,
-    );
+    owner.sendMessage(`[Job] ได้ทำการคืน ${total} เพชรแล้ว เนื่องจากยกเลิกงาน`);
   }
 };
 
@@ -79,11 +77,7 @@ const openManageJobDetail = (player, job) => {
   if (!player.isValid) return;
 
   const statusText =
-    job.status === "open"
-      ? "Open"
-      : job.status === "taken"
-        ? "Taken"
-        : "Done";
+    job.status === "open" ? "Open" : job.status === "taken" ? "Taken" : "Done";
 
   let body = `Status: ${statusText}\n\n`;
   const itemsLen = job.items.length;
@@ -93,7 +87,7 @@ const openManageJobDetail = (player, job) => {
   }
 
   if (job.status === "taken") {
-    const rider = findPlayerById(job.takenBy);
+    const rider = getPlayerById(job.takenBy);
     const t = timerMap.get(job.takenBy);
     let timeLeft = "";
     if (t) {
@@ -121,15 +115,17 @@ const openManageJobDetail = (player, job) => {
   showUI(player, form, (res) => {
     if (canDelete && res.selection === 0) {
       if (job.status === "taken" && job.takenBy) {
-        const rider = findPlayerById(job.takenBy);
-        if (rider && rider.isValid) rider.sendMessage("[Job] งานนี้ถูกยกเลิกโดยเจ้าของแล้ว");
+        const rider = getPlayerById(job.takenBy);
+        if (rider && rider.isValid)
+          rider.sendMessage("[Job] งานนี้ถูกยกเลิกโดยเจ้าของแล้ว");
         stopTimer(job.takenBy);
         playerJobMap.delete(job.takenBy);
       }
 
       refundOwner(job);
       deleteJobData(job.id);
-      if (player.isValid) player.sendMessage("[Job] คำสั่งถูกยกเลิกเรียบร้อยแล้ว");
+      if (player.isValid)
+        player.sendMessage("[Job] คำสั่งถูกยกเลิกเรียบร้อยแล้ว");
       editJobs(player);
     } else {
       editJobs(player);

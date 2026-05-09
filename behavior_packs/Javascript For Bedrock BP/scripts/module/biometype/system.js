@@ -8,7 +8,8 @@ import {
 
 function handlePlayerDimensionChange(event) {
   const player = event.player;
-  if (!player || player.typeId !== "minecraft:player" || !player.isValid) return;
+  if (!player || player.typeId !== "minecraft:player" || !player.isValid)
+    return;
 
   const dimensionId = player.dimension.id;
   const dimensionName = getDimensionName(dimensionId);
@@ -29,10 +30,12 @@ function handlePlayerDimensionChange(event) {
     }
 
     try {
-      player.onScreenDisplay.setTitle(`${Colors.gold}${dimensionName}`, options);
-    } catch { }
+      player.onScreenDisplay.setTitle(
+        `${Colors.gold}${dimensionName}`,
+        options,
+      );
+    } catch {}
   }, 60);
 }
 
 export { handlePlayerDimensionChange };
-

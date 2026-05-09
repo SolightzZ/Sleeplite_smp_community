@@ -1,41 +1,39 @@
 import { system, world } from "@minecraft/server";
-
 import { playerLeaveAfk } from "../module/AFKCinematic/index.js";
 import {
   flashLeave,
   handlerFlashlight,
 } from "../module/flashlight/core/engine.js";
 import { onLeaveFullBright } from "../module/fullBright/events.js";
-import { JobLeave } from "../module/jobs/Job.js";
-import { onLeave } from "../module/magNet/index.js";
+import { onJobPlayerLeave } from "../module/jobs/Job.js";
+import { onMagnetPlayerLeave } from "../module/magNet/index.js";
 import { chatRankPlayerLeave } from "../module/nameteg/index.js";
-import { clearVisualStateForPlayers } from "../module/protection/index.js";
+import { onPlayerLeave } from "../module/protection/index.js";
 
-const PLAYER_LEAVE = [
+const handlers = [
   onLeaveFullBright,
-  onLeave,
-  clearVisualStateForPlayers,
+  onMagnetPlayerLeave,
+  onPlayerLeave,
   playerLeaveAfk,
   handlerFlashlight,
   flashLeave,
-  JobLeave,
+  onJobPlayerLeave,
   chatRankPlayerLeave,
 ];
 
-world.afterEvents.playerLeave.subscribe((event) => {
+world.afterEvents.playerLeave.subscribe((ev) => {
   try {
-    const playerId = event.playerId;
-    if (!playerId) return;
+    const id = ev.playerId;
+    if (!id) return;
 
     system.run(() => {
-      for (let i = 0; i < PLAYER_LEAVE.length; i++) {
-        const fn = PLAYER_LEAVE[i];
-        if (!fn) continue;
-
-        fn(playerId);
+      const len = handlers.length;
+      for (let i = 0; i < len; i++) {
+        const fn = handlers[i];
+        if (fn) fn(id);
       }
     });
-  } catch (error) {
-    console.warn("player_leave", error.message);
+  } catch (e) {
+    console.warn("player_leave", e.message);
   }
 });

@@ -1,5 +1,4 @@
 import { world } from "@minecraft/server";
-import { handleExplosionPreEvent } from "../module/protection/index";
+import { onExplosion } from "../module/protection/index.js";
 
-
-world.beforeEvents.explosion.subscribe(handleExplosionPreEvent);
+world.beforeEvents.explosion.subscribe(onExplosion);

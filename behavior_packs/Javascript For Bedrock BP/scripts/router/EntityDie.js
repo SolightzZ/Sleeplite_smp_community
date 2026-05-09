@@ -2,25 +2,26 @@ import { world } from "@minecraft/server";
 import { DathCounter } from "../module/dropheads/event.js";
 import { onDeadFullBright } from "../module/fullBright/events.js";
 import { gravestone_main } from "../module/graveStones/index.js";
-import { magnetDie } from "../module/magNet/index.js";
+import { onMagnetPlayerDie } from "../module/magNet/index.js";
 
-
-const PLAYER_ACTIONS = [
+const handlers = [
   gravestone_main,
   DathCounter,
-  magnetDie,
+  onMagnetPlayerDie,
   onDeadFullBright,
 ];
+const PLAYER_TYPE = "minecraft:player";
 
-world.afterEvents.entityDie.subscribe((event) => {
+world.afterEvents.entityDie.subscribe((ev) => {
   try {
-    const entity = event.deadEntity;
-    if (!entity || entity.typeId !== "minecraft:player") return;
+    const entity = ev.deadEntity;
+    if (!entity || !entity.isValid || entity.typeId !== PLAYER_TYPE) return;
 
-    for (let i = 0; i < PLAYER_ACTIONS.length; i++) {
-      PLAYER_ACTIONS[i](event);
+    const len = handlers.length;
+    for (let i = 0; i < len; i++) {
+      handlers[i](ev);
     }
-  } catch (error) {
-    console.warn("entity_die", error.message);
+  } catch (e) {
+    console.warn("entity_die", e.message);
   }
 });

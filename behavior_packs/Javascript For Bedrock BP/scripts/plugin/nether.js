@@ -3,8 +3,8 @@ import { system } from "@minecraft/server";
 const DIM_OVERWORLD = "minecraft:overworld";
 const DIM_NETHER = "minecraft:nether";
 
-const MSG_PREFIX = "§7[§l\u00BB§r§7] ";
-const MSG_INVALID_NUM = "§c[x] กรุณาป้อนพิกัดเป็นตัวเลขที่ถูกต้อง";
+const PREFIX = "§7[§l\u00BB§r§7] ";
+const MSG_INVALID = "§c[x] กรุณาป้อนพิกัดเป็นตัวเลขที่ถูกต้อง";
 const MSG_USAGE = "§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ตัวอย่าง: !xz 200 200";
 const MSG_UNSUPPORTED = "§eไม่สามารถคำนวณได้ในมิตินี้";
 
@@ -19,11 +19,11 @@ const sendCalculated = (player, x, z) => {
   if (dimId === DIM_OVERWORLD) {
     const nx = Math.floor(x * 0.125);
     const nz = Math.floor(z * 0.125);
-    msg = `${MSG_PREFIX}§aOverworld: <x${rx}> <z${rz}> §cNether: <x${nx}> <z${nz}>`;
+    msg = `${PREFIX}§aOverworld: <x${rx}> <z${rz}> §cNether: <x${nx}> <z${nz}>`;
   } else if (dimId === DIM_NETHER) {
     const ox = Math.floor(x * 8);
     const oz = Math.floor(z * 8);
-    msg = `${MSG_PREFIX}§cNether: X=${rx}, Z=${rz} §aOverworld: X=${ox}, Z=${oz}`;
+    msg = `${PREFIX}§cNether: X=${rx}, Z=${rz} §aOverworld: X=${ox}, Z=${oz}`;
   } else {
     msg = MSG_UNSUPPORTED;
   }
@@ -31,14 +31,14 @@ const sendCalculated = (player, x, z) => {
   player.sendMessage(msg);
 };
 
-export const xz_main = (event) => {
-  const raw = event.message;
+export const xz_main = (ev) => {
+  const raw = ev.message;
   if (raw.charCodeAt(0) !== 33 || !raw.startsWith("!xz")) return;
 
-  const player = event.sender;
-  if (!player?.isValid) return;
+  const player = ev.sender;
+  if (!player || !player.isValid) return;
 
-  event.cancel = true;
+  ev.cancel = true;
 
   const trimmed = raw.trim();
   const sp1 = trimmed.indexOf(" ");
@@ -59,7 +59,7 @@ export const xz_main = (event) => {
   const argZ = parseFloat(trimmed.slice(sp2 + 1));
 
   if (isNaN(argX) || isNaN(argZ)) {
-    player.sendMessage(MSG_INVALID_NUM);
+    player.sendMessage(MSG_INVALID);
     return;
   }
 

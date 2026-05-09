@@ -1,2 +1,2 @@
-export const activeLights = new Map();
-export const movementCache = new Map();
+export const playerLights = new Map();
+export const playerLastPos = new Map();

@@ -1,7 +1,7 @@
 import { DisplaySlotId, ObjectiveSortOrder, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 
-const config = {
+const cfg = {
   xyz: false,
   day: false,
   sidebarDeath: false,
@@ -9,114 +9,104 @@ const config = {
   locatorbar: false,
 };
 
-const MainMenu = async (player) => {
-  const form = new ActionFormData();
-  form.title("Settings Menu");
-  form.button("Server Settings", "textures/ui/sidebar_icons/categories");
-  form.button("HUD Settings", "textures/ui/sidebar_icons/my_characters");
+const mainMenu = async (player) => {
+  const form = new ActionFormData()
+    .title("Settings Menu")
+    .button("Server Settings", "textures/ui/sidebar_icons/categories")
+    .button("HUD Settings", "textures/ui/sidebar_icons/my_characters");
 
-  const response = await form.show(player);
-  if (response.canceled) return;
-  if (response.selection === 0) {
-    await Settings(player);
-  } else if (response.selection === 1) {
-    await Hud(player);
-  }
+  const res = await form.show(player);
+  if (res.canceled) return;
+
+  if (res.selection === 0) await serverSettings(player);
+  else if (res.selection === 1) await hudSettings(player);
 };
 
-const Settings = async (player) => {
-  let DeathsObjective = world.scoreboard.getObjective("Deaths");
-  let DeathsPlus = world.scoreboard.getObjective("DeathsPlus");
+const serverSettings = async (player) => {
+  let objDeaths = world.scoreboard.getObjective("Deaths");
+  let objDeathsPlus = world.scoreboard.getObjective("DeathsPlus");
 
-  if (!DeathsObjective) {
+  if (!objDeaths) {
     try {
-      DeathsObjective = world.scoreboard.addObjective("Deaths");
+      objDeaths = world.scoreboard.addObjective("Deaths");
     } catch (e) {
       player.sendMessage("§c[x] ไม่สามารถสร้าง Scoreboard 'Deaths' ได้");
-      console.warn("Scoreboard creation error: " + e);
+      console.warn("Scoreboard error", e.message);
       return;
     }
   }
 
-  if (!DeathsPlus) {
+  if (!objDeathsPlus) {
     try {
-      DeathsPlus = world.scoreboard.addObjective("DeathsPlus");
+      objDeathsPlus = world.scoreboard.addObjective("DeathsPlus");
     } catch (e) {
       player.sendMessage("§c[x] ไม่สามารถสร้าง Scoreboard 'DeathsPlus' ได้");
-      console.warn("Scoreboard creation error: " + e);
+      console.warn("Scoreboard error", e.message);
       return;
     }
   }
 
   try {
-    const form = new ModalFormData();
-    form.title("Server Setting");
-    form.toggle("Show XYZ", { defaultValue: config.xyz });
-    form.toggle("Show Day", { defaultValue: config.day });
-    form.toggle("Sidebar Death Count", { defaultValue: config.sidebarDeath });
-    form.toggle("Belowname Death Count", {
-      defaultValue: config.belowNameDeath,
-    });
-    form.toggle("Locator Bar", { defaultValue: config.locatorbar });
+    const form = new ModalFormData()
+      .title("Server Setting")
+      .toggle("Show XYZ", { defaultValue: cfg.xyz })
+      .toggle("Show Day", { defaultValue: cfg.day })
+      .toggle("Sidebar Death Count", { defaultValue: cfg.sidebarDeath })
+      .toggle("Belowname Death Count", { defaultValue: cfg.belowNameDeath })
+      .toggle("Locator Bar", { defaultValue: cfg.locatorbar });
 
-    const response = await form.show(player);
-    if (response.canceled) return;
+    const res = await form.show(player);
+    if (res.canceled) return;
 
-    const [xyz, day, sidebarDeath, belowNameDeath, locatorbar] =
-      response.formValues;
+    const [xyz, day, sidebar, belowName, locator] = res.formValues;
 
-    config.xyz = xyz;
-    config.day = day;
-    config.sidebarDeath = sidebarDeath;
-    config.belowNameDeath = belowNameDeath;
-    config.locatorbar = locatorbar;
+    cfg.xyz = xyz;
+    cfg.day = day;
+    cfg.sidebarDeath = sidebar;
+    cfg.belowNameDeath = belowName;
+    cfg.locatorbar = locator;
 
     world.gameRules.showCoordinates = xyz;
     world.gameRules.showDaysPlayed = day;
-    world.gameRules.locatorBar = locatorbar;
+    world.gameRules.locatorBar = locator;
 
-    if (sidebarDeath) {
+    if (sidebar) {
       world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.Sidebar, {
-        objective: DeathsObjective,
+        objective: objDeaths,
         sortOrder: ObjectiveSortOrder.Descending,
       });
     } else {
       world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.Sidebar);
     }
 
-    if (belowNameDeath) {
+    if (belowName) {
       world.scoreboard.setObjectiveAtDisplaySlot(DisplaySlotId.BelowName, {
-        objective: DeathsPlus,
+        objective: objDeathsPlus,
         sortOrder: ObjectiveSortOrder.Descending,
       });
     } else {
       world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.BelowName);
     }
-  } catch (error) {
-    console.warn("Error Server Setting: " + error);
+  } catch (e) {
+    console.warn("Server Setting error", e.message);
   }
 };
 
-const Hud = async (player) => {
+const hudSettings = async (player) => {
   try {
-    const getTagState = (tag) => player.hasTag(`hud.${tag}`);
-    const form = new ModalFormData();
-    form.title("HUD Setting");
+    const hasTag = (tag) => player.hasTag(`hud.${tag}`);
 
-    form.toggle("Item Text", { defaultValue: getTagState("item_text") });
-    form.toggle("Status Effects", {
-      defaultValue: getTagState("status_effects"),
-    });
-    form.toggle("ToolTips", { defaultValue: getTagState("tooltips") });
-    form.toggle("Touch Controls", {
-      defaultValue: getTagState("touch_controls"),
-    });
+    const form = new ModalFormData()
+      .title("HUD Setting")
+      .toggle("Item Text", { defaultValue: hasTag("item_text") })
+      .toggle("Status Effects", { defaultValue: hasTag("status_effects") })
+      .toggle("ToolTips", { defaultValue: hasTag("tooltips") })
+      .toggle("Touch Controls", { defaultValue: hasTag("touch_controls") });
 
-    const response = await form.show(player);
-    if (response.canceled) return;
+    const res = await form.show(player);
+    if (res.canceled) return;
 
-    const [item_text, statusEffects, toolTips, touchControls] =
-      response.formValues;
+    const [itemText, statusEffects, toolTips, touchControls] = res.formValues;
 
     const toggleHud = async (element, enabled) => {
       const action = enabled ? "hide" : "reset";
@@ -125,21 +115,21 @@ const Hud = async (player) => {
         const tag = `hud.${element}`;
         if (enabled) player.addTag(tag);
         else player.removeTag(tag);
-      } catch (cmdError) {
-        console.warn(`Failed to run HUD command for ${element}: ${cmdError}`);
+      } catch (e) {
+        console.warn(`HUD command error ${element}`, e.message);
         player.sendMessage(`§c[x] ไม่สามารถปรับ HUD ${element} ได้`);
       }
     };
 
-    await toggleHud("item_text", item_text);
+    await toggleHud("item_text", itemText);
     await toggleHud("status_effects", statusEffects);
     await toggleHud("tooltips", toolTips);
     await toggleHud("touch_controls", touchControls);
-  } catch (error) {
-    console.warn("HUD Update Error:", error);
+  } catch (e) {
+    console.warn("HUD error", e.message);
   }
 };
 
-export function setting_main({ source }) {
-  MainMenu(source);
-}
+export const setting_main = ({ source }) => {
+  mainMenu(source);
+};

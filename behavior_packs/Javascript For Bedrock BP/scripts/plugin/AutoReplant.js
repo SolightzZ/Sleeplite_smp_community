@@ -15,14 +15,15 @@ const getPerm = (id) => {
   try {
     perm = BlockPermutation.resolve(id).withState("growth", 0);
   } catch (e) {
-    console.error("getPerm: " + e);
+    console.error("getPerm", e.message);
   }
   permCache[id] = perm;
   return perm;
 };
 
 const consumeSeed = (container, seedId) => {
-  for (let i = 0; i < container.size; i++) {
+  const size = container.size;
+  for (let i = 0; i < size; i++) {
     const item = container.getItem(i);
     if (!item || item.typeId !== seedId) continue;
 
@@ -37,11 +38,11 @@ const consumeSeed = (container, seedId) => {
   return false;
 };
 
-export const handleAutoReplant = (event) => {
-  const player = event.player;
-  if (!player?.isValid) return;
+export const handleAutoReplant = (ev) => {
+  const player = ev.player;
+  if (!player || !player.isValid) return;
 
-  const perm = event.brokenBlockPermutation;
+  const perm = ev.brokenBlockPermutation;
   if (!perm) return;
 
   const id = perm.type?.id;
@@ -49,7 +50,6 @@ export const handleAutoReplant = (event) => {
 
   const seedId = CROP_MAP[id];
   if (!seedId) return;
-
   if (perm.getState("growth") !== 7) return;
 
   const container = player.getComponent("minecraft:inventory")?.container;
@@ -57,6 +57,6 @@ export const handleAutoReplant = (event) => {
 
   if (consumeSeed(container, seedId)) {
     const newPerm = getPerm(id);
-    if (newPerm) event.block.setPermutation(newPerm);
+    if (newPerm) ev.block.setPermutation(newPerm);
   }
 };

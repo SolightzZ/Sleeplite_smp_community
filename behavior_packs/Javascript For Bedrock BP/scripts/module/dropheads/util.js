@@ -4,13 +4,24 @@ const dimNames = {
   "minecraft:the_end": "The End",
 };
 
+const upperFirst = (str) => {
+  if (!str) return "";
+  return str[0].toUpperCase() + str.slice(1);
+};
+
 export const worldName = (id) => {
   if (dimNames[id]) return dimNames[id];
-  return id
-    .replace("minecraft:", "")
-    .split("_")
-    .map((w) => w[0].toUpperCase() + w.slice(1))
-    .join(" ");
+
+  const clean = id.replace("minecraft:", "");
+  const parts = clean.split("_");
+  const len = parts.length;
+  const result = [];
+
+  for (let i = 0; i < len; i++) {
+    result.push(upperFirst(parts[i]));
+  }
+
+  return result.join(" ");
 };
 
 export const posInt = (p) => ({

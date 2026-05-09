@@ -7,59 +7,58 @@ import { scanVein } from "./core/scanner.js";
 import { getEnchantData } from "./utils/enchant.js";
 import { processVeinJobs } from "./core/processor.js";
 
-/**
- * Vein Miner - Production SMP Edition
- * Highly optimized for performance, network traffic, and TPS stability.
- */
+export const VeinMiner = (ev) => {
+  const player = ev.player;
+  const block = ev.block;
+  const stack = ev.itemStack;
 
-export function VeinMiner(event) {
-  const { player, block, itemStack } = event;
-
-  if (!player?.isValid) return;
-  if (!player?.isSneaking) return;
+  if (!player || !player.isValid) return;
+  if (!player.isSneaking) return;
   if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
 
-  const pCount = state.playerJobCount.get(player.id) ?? 0;
+  const pCount = state.playerJobCount.get(player.id) || 0;
   if (pCount >= CFG.maxJobsPerPlayer) return;
 
-  const lastEnd = state.playerLastJobEnd.get(player.id) ?? 0;
+  const lastEnd = state.playerLastJobEnd.get(player.id) || 0;
   if (Date.now() - lastEnd < CFG.playerCooldownMs) return;
 
   const targetId = block.typeId;
-  const validOres = PICKAXE_BREAKS[itemStack?.typeId];
+  const validOres = PICKAXE_BREAKS[stack?.typeId];
   if (!validOres || !validOres.has(targetId)) return;
 
-  const startKey = getLocKey(block.location.x, block.location.y, block.location.z);
+  const loc = block.location;
+  const startKey = getLocKey(loc.x, loc.y, loc.z);
   if (state.pendingBlocks.has(startKey)) return;
 
-  const { locations, visitedKeys } = scanVein(block, targetId);
-  if (locations.length <= 1) return;
+  const res = scanVein(block, targetId);
+  if (res.locations.length <= 1) return;
 
-  for (let i = 0; i < visitedKeys.length; i++) {
-    state.pendingBlocks.add(visitedKeys[i]);
+  const keysLen = res.visitedKeys.length;
+  for (let i = 0; i < keysLen; i++) {
+    state.pendingBlocks.add(res.visitedKeys[i]);
   }
 
-  const enchants = getEnchantData(itemStack);
-  const dropTypeId = enchants.silk ? targetId : ORE_DROP[targetId];
+  const enc = getEnchantData(stack);
+  const dropId = enc.silk ? targetId : ORE_DROP[targetId];
 
   state.playerJobCount.set(player.id, pCount + 1);
 
   state.jobQueue.push({
-    player,
+    player: player,
     playerId: player.id,
-    targetId,
-    dropTypeId,
-    locations,
+    targetId: targetId,
+    dropTypeId: dropId,
+    locations: res.locations,
     index: 1,
     startTick: system.currentTick,
-    fortuneLevel: enchants.fortune,
-    unbreakingLevel: enchants.unbreaking,
+    fortuneLevel: enc.fortune,
+    unbreakingLevel: enc.unbreaking,
     brokenCount: 0,
     xpAccumulated: 0,
-    visitedKeys
+    visitedKeys: res.visitedKeys,
   });
 
   if (state.runHandle === null) {
     state.runHandle = system.runInterval(processVeinJobs, 1);
   }
-}
+};

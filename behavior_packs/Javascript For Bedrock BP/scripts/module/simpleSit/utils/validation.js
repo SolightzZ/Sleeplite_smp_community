@@ -1,19 +1,21 @@
 export const validatePlayerForSit = (player) => {
-  const velocity = player.getVelocity();
-  if (Math.hypot(velocity.x, velocity.z) > 0.01) {
-    player.onScreenDisplay.setActionBar("§cYou must be standing still to sit!");
+  if (!player || !player.isValid) return false;
+
+  const v = player.getVelocity();
+  if (Math.hypot(v.x, v.z) > 0.01) {
+    player.onScreenDisplay.setActionBar("§cStand still!");
     return false;
   }
   if (!player.isOnGround) {
-    player.onScreenDisplay.setActionBar("§cYou must be on the ground to sit!");
+    player.onScreenDisplay.setActionBar("§cMust be on ground!");
     return false;
   }
   if (player.isCrawling) {
-    player.onScreenDisplay.setActionBar("§cYou cannot sit while crawling!");
+    player.onScreenDisplay.setActionBar("§cCannot sit while crawling!");
     return false;
   }
   if (player.isSwimming) {
-    player.onScreenDisplay.setActionBar("§cYou cannot sit while swimming!");
+    player.onScreenDisplay.setActionBar("§cCannot sit while swimming!");
     return false;
   }
   return true;

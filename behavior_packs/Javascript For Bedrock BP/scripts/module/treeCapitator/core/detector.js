@@ -2,8 +2,8 @@ import { getBlockSafe } from "../utils/block.js";
 import { LEAF_OFFSETS } from "../constants.js";
 import { CFG } from "../config.js";
 
-export const detectTree = (startBlock, logTypeId, leafTypeId) => {
-  const dimension = startBlock.dimension;
+export const detectTree = (startBlock, logId, leafId) => {
+  const dim = startBlock.dimension;
   const locations = [];
   const visited = new Set();
   const queue = [startBlock.location];
@@ -11,42 +11,46 @@ export const detectTree = (startBlock, logTypeId, leafTypeId) => {
   let head = 0;
   let foundLeaf = false;
 
-  const getKey = (x, y, z) => `${x},${y},${z}`;
-  visited.add(getKey(startBlock.location.x, startBlock.location.y, startBlock.location.z));
+  const makeKey = (x, y, z) => `${x},${y},${z}`;
+  const startLoc = startBlock.location;
+  visited.add(makeKey(startLoc.x, startLoc.y, startLoc.z));
 
   while (head < queue.length && locations.length < CFG.maxBlocksPerTree) {
-    const currentLoc = queue[head++];
-    const { x: cx, y: cy, z: cz } = currentLoc;
-    const block = getBlockSafe(dimension, currentLoc);
+    const curLoc = queue[head++];
+    const cx = curLoc.x;
+    const cy = curLoc.y;
+    const cz = curLoc.z;
 
-    if (!block || block.typeId !== logTypeId) continue;
+    const block = getBlockSafe(dim, curLoc);
+    if (!block || block.typeId !== logId) continue;
 
-    locations.push(currentLoc);
+    locations.push(curLoc);
 
     if (!foundLeaf) {
-      for (let i = 0; i < LEAF_OFFSETS.length; i++) {
+      const offsetsLen = LEAF_OFFSETS.length;
+      for (let i = 0; i < offsetsLen; i++) {
         const off = LEAF_OFFSETS[i];
-        if (getBlockSafe(dimension, { x: cx + off.x, y: cy + off.y, z: cz + off.z })?.typeId === leafTypeId) {
+        const checkLoc = { x: cx + off.x, y: cy + off.y, z: cz + off.z };
+        const checkBlock = getBlockSafe(dim, checkLoc);
+        if (checkBlock && checkBlock.typeId === leafId) {
           foundLeaf = true;
           break;
         }
       }
     }
 
-    const nextLocs = [
-      { x: cx, y: cy + 1, z: cz },
-      { x: cx, y: cy - 1, z: cz },
-    ];
+    const upKey = makeKey(cx, cy + 1, cz);
+    const downKey = makeKey(cx, cy - 1, cz);
 
-    for (let i = 0; i < nextLocs.length; i++) {
-      const loc = nextLocs[i];
-      const key = getKey(loc.x, loc.y, loc.z);
-      if (!visited.has(key)) {
-        visited.add(key);
-        queue.push(loc);
-      }
+    if (!visited.has(upKey)) {
+      visited.add(upKey);
+      queue.push({ x: cx, y: cy + 1, z: cz });
+    }
+    if (!visited.has(downKey)) {
+      visited.add(downKey);
+      queue.push({ x: cx, y: cy - 1, z: cz });
     }
   }
 
-  return { locations, foundLeaf };
+  return { locations: locations, foundLeaf: foundLeaf };
 };

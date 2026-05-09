@@ -1,21 +1,23 @@
 import { system } from "@minecraft/server";
 import { zoneDatabase } from "./core/database.js";
 import {
-  handleBlockEditPreEvent,
-  handleEntityInteractPreEvent,
-  handleExplosionPreEvent,
-  ZoneProtection_OnItemUse,
-  ZoneProtection_OnChat,
-  clearVisualStateForPlayers
+  onBlockEdit,
+  onChat,
+  onEntityHurt,
+  onEntityInteract,
+  onExplosion,
+  onItemUse,
+  onPlayerLeave,
 } from "./core/events.js";
 
-system.run(() => zoneDatabase.loadAllZonesFromStorage());
+system.run(() => zoneDatabase.load());
 
 export {
-  handleBlockEditPreEvent,
-  handleEntityInteractPreEvent,
-  handleExplosionPreEvent,
-  ZoneProtection_OnItemUse,
-  ZoneProtection_OnChat,
-  clearVisualStateForPlayers
+  onBlockEdit,
+  onChat,
+  onEntityHurt,
+  onEntityInteract,
+  onExplosion,
+  onItemUse,
+  onPlayerLeave,
 };

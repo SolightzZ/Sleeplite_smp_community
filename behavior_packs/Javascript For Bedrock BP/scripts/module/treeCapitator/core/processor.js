@@ -20,16 +20,18 @@ export const processJobs = () => {
   const loadFactor = Math.max(1, Math.floor(totalJobs / 4));
   const blocksPerTick = Math.max(1, Math.ceil(CFG.blocksPerTickBase / loadFactor));
 
-  let jobsProcessedThisTick = 0;
-  const maxJobsThisTick = Math.min(totalJobs, 4);
+  let jobsDone = 0;
+  const maxJobs = Math.min(totalJobs, 4);
 
-  while (jobsProcessedThisTick < maxJobsThisTick && state.jobQueue.length > 0) {
-    if (state.lastProcessedIndex >= state.jobQueue.length) state.lastProcessedIndex = 0;
+  while (jobsDone < maxJobs && state.jobQueue.length > 0) {
+    if (state.lastProcessedIndex >= state.jobQueue.length) {
+      state.lastProcessedIndex = 0;
+    }
 
     const job = state.jobQueue[state.lastProcessedIndex];
-    const currentTick = system.currentTick;
+    const curTick = system.currentTick;
 
-    if (!job.player.isValid || currentTick - job.startTick > CFG.jobTimeoutTicks) {
+    if (!job.player.isValid || curTick - job.startTick > CFG.jobTimeoutTicks) {
       cleanupJobState(job);
       popJob(state.lastProcessedIndex);
       continue;
@@ -43,8 +45,8 @@ export const processJobs = () => {
       continue;
     }
 
-    let brokenThisTick = 0;
-    while (brokenThisTick < blocksPerTick && job.index < job.locations.length) {
+    let broken = 0;
+    while (broken < blocksPerTick && job.index < job.locations.length) {
       const loc = job.locations[job.index++];
       const block = getBlockSafe(job.dimension, loc);
 
@@ -52,9 +54,9 @@ export const processJobs = () => {
         try {
           block.setPermutation(getAirPerm());
           job.brokenCount++;
-          brokenThisTick++;
-        } catch (error) {
-          console.log("brokenThisTick" + error);
+          broken++;
+        } catch (e) {
+          console.log("breakError", e.message);
         }
       }
     }
@@ -68,6 +70,6 @@ export const processJobs = () => {
       state.lastProcessedIndex++;
     }
 
-    jobsProcessedThisTick++;
+    jobsDone++;
   }
 };

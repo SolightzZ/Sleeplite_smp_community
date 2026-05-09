@@ -26,6 +26,6 @@ export function registerCommands(init) {
       description: "§7Quick Server - เข้าร่วมเซิร์ฟเวอร์อื่นๆ",
       permissionLevel: CommandPermissionLevel.Any,
     },
-    quickServersCommand
+    quickServersCommand,
   );
 }

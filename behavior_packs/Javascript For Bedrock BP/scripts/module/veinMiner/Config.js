@@ -3,6 +3,6 @@ export const CFG = {
   blocksPerTickBase: 12,
   maxGlobalJobs: 16,
   maxJobsPerPlayer: 1,
-  jobTimeoutTicks: 400, // 20 seconds
+  jobTimeoutTicks: 400,
   playerCooldownMs: 300,
 };

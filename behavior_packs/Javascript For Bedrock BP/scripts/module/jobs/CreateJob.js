@@ -3,7 +3,7 @@ import {
   amountMap,
   countItem,
   createJobData,
-  getInvMap,
+  buildInventoryMap,
   ITEM_IDS,
   jobs,
   selectedMap,
@@ -26,7 +26,7 @@ export const searchBlock = (player) => {
   if (!player.isValid) return;
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) return;
-  const invMap = getInvMap(inv);
+  const invMap = buildInventoryMap(inv);
 
   if (invMap.size === 0) {
     player.sendMessage("[Job] ไม่พบไอเท็มในคลัง");
@@ -137,7 +137,7 @@ export function createJob(player) {
       }
       const inv = player.getComponent("minecraft:inventory")?.container;
       if (!inv) return;
-      const invMap = getInvMap(inv);
+      const invMap = buildInventoryMap(inv);
 
       let missing = null;
       const sLen2 = selected.length;
@@ -198,9 +198,15 @@ export const openAmountForm = (player) => {
     modal.textField(
       `${displayName} จำนวนไอเทมที่ต้องการ (1-2000)`,
       "ระบุจำนวน...",
-      String(current.amount ?? 1)
+      String(current.amount ?? 1),
     );
-    modal.slider(`${displayName} จำนวนเพชรที่ต้องการ  (1-64)`, 1, 64, 1, current.diamond ?? 1);
+    modal.slider(
+      `${displayName} จำนวนเพชรที่ต้องการ  (1-64)`,
+      1,
+      64,
+      1,
+      current.diamond ?? 1,
+    );
   }
 
   modal.submitButton("Next > Confirm");
@@ -281,8 +287,8 @@ export const openConfirmForm = (player) => {
       warnForm.title("Not Enough Diamond");
       warnForm.body(
         `Need: ${total} diamond\n` +
-        `Have: ${haveDiam2} diamond\n` +
-        `Missing: ${total - haveDiam2} diamond`,
+          `Have: ${haveDiam2} diamond\n` +
+          `Missing: ${total - haveDiam2} diamond`,
       );
       warnForm.button("Back (edit reward)");
       warnForm.button("Cancel Order");
@@ -311,7 +317,11 @@ export const openConfirmForm = (player) => {
     const mapItems = [];
     for (let i = 0; i < sLen; i++) {
       const data = amounts[i] ?? {};
-      mapItems.push({ id: selected[i], amount: data.amount ?? 1, diamond: data.diamond ?? 1 });
+      mapItems.push({
+        id: selected[i],
+        amount: data.amount ?? 1,
+        diamond: data.diamond ?? 1,
+      });
     }
 
     createJobData({

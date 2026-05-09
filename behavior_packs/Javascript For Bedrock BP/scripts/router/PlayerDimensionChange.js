@@ -1,4 +1,12 @@
 import { world } from "@minecraft/server";
-import { handlePlayerDimensionChange } from "../module/biometype/system";
+import { handlePlayerDimensionChange } from "../module/biometype/system.js";
 
-world.afterEvents.playerDimensionChange.subscribe(handlePlayerDimensionChange);
+world.afterEvents.playerDimensionChange.subscribe((ev) => {
+  try {
+    const player = ev.player;
+    if (!player || !player.isValid) return;
+    handlePlayerDimensionChange(ev);
+  } catch (e) {
+    console.warn("dimension_change", e.message);
+  }
+});

@@ -5,76 +5,79 @@ import { weirdoToRotation } from "../utils/rotation.js";
 import { validatePlayerForSit } from "../utils/validation.js";
 import { spawnSeat } from "./seat-manager.js";
 
-export function handleSitCommand(player) {
+const SLAB = "slab";
+const STAIRS = "stairs";
+const VERTICAL_HALF = "minecraft:vertical_half";
+const UPSIDE_DOWN = "upside_down_bit";
+const WEIRDO_DIR = "weirdo_direction";
+const TOP = "top";
+
+export const handleSitCommand = (player) => {
+  if (!player || !player.isValid) return;
   if (!validatePlayerForSit(player)) return;
 
-  const dimension = player.dimension;
-  const { x: px, y: py, z: pz } = player.location;
+  const dim = player.dimension;
+  const loc = player.location;
+  const px = Math.floor(loc.x);
+  const py = loc.y;
+  const pz = Math.floor(loc.z);
 
-  const underLocation = {
-    x: Math.floor(px),
-    y: Math.floor(py - 0.1),
-    z: Math.floor(pz),
-  };
-
+  const underLoc = { x: px, y: Math.floor(py - 0.1), z: pz };
   let underBlock;
   try {
-    underBlock = dimension.getBlock(underLocation);
+    underBlock = dim.getBlock(underLoc);
   } catch {
     return;
   }
 
-  const isSlab = underBlock?.typeId.includes("slab");
-  const isStairs = underBlock?.typeId.includes("stairs");
-  const isUnderStairOrSlab = underBlock && (isSlab || isStairs);
+  const isSlab = underBlock?.typeId.includes(SLAB);
+  const isStairs = underBlock?.typeId.includes(STAIRS);
+  const isSpecial = underBlock && (isSlab || isStairs);
 
-  let useSpecialSit = false;
-  let specialSpawnY = py - 1;
-  let specialRotation = { x: 0, y: player.getRotation().y };
+  let useSpecial = false;
+  let spawnY = py - 1;
+  let rot = { x: 0, y: player.getRotation().y };
 
-  if (isUnderStairOrSlab) {
-    const blockStates = underBlock.permutation.getAllStates();
-    const verticalHalf = blockStates["minecraft:vertical_half"];
-    const upsideDownBit = blockStates["upside_down_bit"];
-    const weirdoDirection = isStairs ? blockStates["weirdo_direction"] : null;
+  if (isSpecial) {
+    const states = underBlock.permutation.getAllStates();
+    const vertHalf = states[VERTICAL_HALF];
+    const upsideDown = states[UPSIDE_DOWN];
+    const weirdoDir = isStairs ? states[WEIRDO_DIR] : null;
 
-    const isFlipped = (isSlab && verticalHalf === "top") || (isStairs && upsideDownBit === true);
+    const flipped = (isSlab && vertHalf === TOP) || (isStairs && upsideDown === true);
 
-    if (!isFlipped) {
-      useSpecialSit = true;
-      specialSpawnY = underBlock.location.y;
-      if (isStairs) {
-        specialRotation = weirdoToRotation(weirdoDirection);
-      }
+    if (!flipped) {
+      useSpecial = true;
+      spawnY = underBlock.location.y;
+      if (isStairs) rot = weirdoToRotation(weirdoDir);
     }
   }
 
-  const headCheckY = useSpecialSit ? Math.floor(specialSpawnY) + 1 : Math.floor(py - 0.1) + 1;
-  let blockAboveHead;
+  const headY = useSpecial ? Math.floor(spawnY) + 1 : Math.floor(py - 0.1) + 1;
+  let blockAbove;
   try {
-    blockAboveHead = dimension.getBlock({ x: Math.floor(px), y: headCheckY, z: Math.floor(pz) });
+    blockAbove = dim.getBlock({ x: px, y: headY, z: pz });
   } catch {
     return;
   }
 
-  if (!blockAboveHead || !isBreathableBlock(blockAboveHead.typeId)) {
-    player.onScreenDisplay.setActionBar("§7Not enough headroom to sit!");
+  if (!blockAbove || !isBreathableBlock(blockAbove.typeId)) {
+    player.onScreenDisplay.setActionBar("§7Not enough headroom!");
     return;
   }
 
-  const nearbySeat = dimension.getEntities({
+  const nearby = dim.getEntities({
     type: SEAT_ENTITY_ID,
-    location: player.location,
+    location: loc,
     maxDistance: SEAT_NEAR_RADIUS,
   });
-  if (nearbySeat.length > 0) return;
+  if (nearby.length > 0) return;
 
-  const spawnLocation = {
-    x: Math.floor(px) + 0.5,
-    y: useSpecialSit ? specialSpawnY : py - 0.5,
-    z: Math.floor(pz) + 0.5,
+  const spawnLoc = {
+    x: px + 0.5,
+    y: useSpecial ? spawnY : py - 0.5,
+    z: pz + 0.5,
   };
-  const rotation = useSpecialSit ? specialRotation : { x: 0, y: player.getRotation().y };
 
-  spawnSeat(dimension, spawnLocation, rotation, player, undefined);
-}
+  spawnSeat(dim, spawnLoc, rot, player, undefined);
+};

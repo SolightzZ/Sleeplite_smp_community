@@ -1,29 +1,33 @@
-import { setting } from "../config.js";
-import { startLoop } from "./loop.js";
-import { addUser, countUser, hasUser, removeUser } from "./state.js";
+import { MagnetConfig, MagnetText } from "../config.js";
+import { startMagnetLoop } from "./loop.js";
+import {
+  addMagnetUser,
+  countMagnetUsers,
+  hasMagnetUser,
+  removeMagnetUser,
+} from "./state.js";
 
-export function canUse(player) {
-  return player && player.isValid && player.location && player.dimension;
-}
+export const canUseMagnet = (player) =>
+  player && player.isValid && player.location && player.dimension;
 
-export function toggle(player, turnOn) {
-  if (!canUse(player)) return;
+export const toggleMagnet = (player, turnOn) => {
+  if (!canUseMagnet(player)) return;
   const id = player.id;
 
   if (turnOn) {
-    if (countUser() >= setting.maxPeople && !hasUser(id)) {
-      player.onScreenDisplay?.setActionBar(`§c${setting.text.full}`);
+    if (countMagnetUsers() >= MagnetConfig.MAX_USERS && !hasMagnetUser(id)) {
+      player.onScreenDisplay?.setActionBar(`§c${MagnetText.FULL}`);
       player.playSound("note.bass");
       return;
     }
 
-    addUser(player);
-    player.onScreenDisplay?.setActionBar(`§a${setting.text.on}`);
+    addMagnetUser(player);
+    player.onScreenDisplay?.setActionBar(`§a${MagnetText.ON}`);
     player.playSound("random.orb", { pitch: 1.0 });
-    startLoop();
+    startMagnetLoop();
   } else {
-    removeUser(id);
-    player.onScreenDisplay?.setActionBar(`§c${setting.text.off}`);
+    removeMagnetUser(id);
+    player.onScreenDisplay?.setActionBar(`§c${MagnetText.OFF}`);
     player.playSound("random.orb", { pitch: 0.5 });
   }
-}
+};

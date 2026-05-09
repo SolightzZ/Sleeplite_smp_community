@@ -1,32 +1,24 @@
 import { world } from "@minecraft/server";
-import { helpmain } from "../help/help";
-import { xz_main } from "../plugin/nether";
-import { RewardchatSend } from "../module/rewards/system";
-import { ZoneProtection_OnChat } from "../module/protection/index";
+import { helpmain } from "../help/help.js";
+import { xz_main } from "../plugin/nether.js";
+import { RewardchatSend } from "../module/rewards/system.js";
+import { onChat } from "../module/protection/index.js";
 
+const handlers = [helpmain, xz_main, RewardchatSend, onChat];
 
-
-const CHAT_HANDLERS = [
-  helpmain,
-  xz_main,
-  RewardchatSend,
-  ZoneProtection_OnChat,
-];
-
-world.beforeEvents.chatSend.subscribe((event) => {
+world.beforeEvents.chatSend.subscribe((ev) => {
   try {
-    const sender = event.sender;
-    if (!sender) return;
+    const sender = ev.sender;
+    if (!sender || !sender.isValid) return;
 
-    for (let i = 0; i < CHAT_HANDLERS.length; i++) {
-      const handler = CHAT_HANDLERS[i];
-      if (!handler) continue;
-
-      handler(event);
-
-      if (event.cancel === true) break;
+    const len = handlers.length;
+    for (let i = 0; i < len; i++) {
+      const fn = handlers[i];
+      if (!fn) continue;
+      fn(ev);
+      if (ev.cancel) break;
     }
-  } catch (error) {
-    console.warn("onChatMessage", error.message);
+  } catch (e) {
+    console.warn("chat_send", e.message);
   }
 });

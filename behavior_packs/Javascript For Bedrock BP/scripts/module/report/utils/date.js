@@ -1,14 +1,16 @@
 export const getTime = () => {
-  try {
-    return new Date().toLocaleString("th-TH", {
-      timeZone: "Asia/Bangkok",
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-  } catch (e) {
-    return new Date().toLocaleString();
-  }
+  const now = new Date();
+
+  // UTC+7 Thailand
+  now.setHours(now.getHours() + 7);
+
+  const pad = (n) => String(n).padStart(2, "0");
+
+  return (
+    `${pad(now.getDate())}/` +
+    `${pad(now.getMonth() + 1)}/` +
+    `${now.getFullYear()} ` +
+    `${pad(now.getHours())}:` +
+    `${pad(now.getMinutes())}`
+  );
 };

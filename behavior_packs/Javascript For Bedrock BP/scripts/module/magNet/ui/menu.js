@@ -1,40 +1,37 @@
 import { ActionFormData } from "@minecraft/server-ui";
-import { setting } from "../config.js";
-import { countUser, hasUser } from "../core/state.js";
-import { canUse, toggle } from "../core/toggle.js";
+import { MagnetConfig, MagnetIcons, MagnetText } from "../config.js";
+import { countMagnetUsers, hasMagnetUser } from "../core/state.js";
+import { canUseMagnet, toggleMagnet } from "../core/toggle.js";
 
-export function showMenu(player) {
-  if (!canUse(player)) return;
-
-  const isOn = hasUser(player.id);
-  const current = countUser();
-  const isFull = current >= setting.maxPeople;
-
-  let btnText = isOn ? `§a${setting.text.on}` : `§c${setting.text.off}`;
-  let btnIcon = isOn ? setting.icon.on : setting.icon.off;
+export const showMagnetMenu = (player) => {
+  if (!canUseMagnet(player)) return;
+  const isOn = hasMagnetUser(player.id);
+  const current = countMagnetUsers();
+  const isFull = current >= MagnetConfig.MAX_USERS;
+  let btnText = isOn ? `§a${MagnetText.ON}` : `§c${MagnetText.OFF}`;
+  let btnIcon = isOn ? MagnetIcons.ON : MagnetIcons.OFF;
 
   if (!isOn && isFull) {
-    btnText = `§c${setting.text.full} (${current}/${setting.maxPeople})`;
-    btnIcon = setting.icon.full;
+    btnText = `§c${MagnetText.FULL} (${current}/${MagnetConfig.MAX_USERS})`;
+    btnIcon = MagnetIcons.FULL;
   }
 
   const form = new ActionFormData()
     .title("Magnet System")
     .body(`§7Status: ${isOn ? "§aActive" : "§cInactive"}`)
-    .label(`§7Player: ${current}/${setting.maxPeople}`)
+    .label(`§7Players: ${current}/${MagnetConfig.MAX_USERS}`)
     .button(btnText, btnIcon)
     .label("                 @Sleeplite SMP");
-
   form
     .show(player)
     .then((res) => {
       if (!res || res.canceled || res.selection !== 0) return;
       if (!player.isValid) return;
-      toggle(player, !isOn);
+      toggleMagnet(player, !isOn);
     })
     .catch((error) => {
       if (error.message !== "User is busy") {
         console.error("[Magnet] UI Error:", error);
       }
     });
-}
+};

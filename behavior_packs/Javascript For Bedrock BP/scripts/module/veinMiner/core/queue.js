@@ -4,12 +4,12 @@ export const state = {
   playerJobCount: new Map(),
   playerLastJobEnd: new Map(),
   runHandle: null,
-  lastProcessedIndex: 0
+  lastProcessedIndex: 0,
 };
 
-export const popJob = (index) => {
+export const popJob = (idx) => {
   const last = state.jobQueue.pop();
-  if (index < state.jobQueue.length) {
-    state.jobQueue[index] = last;
+  if (idx < state.jobQueue.length) {
+    state.jobQueue[idx] = last;
   }
 };

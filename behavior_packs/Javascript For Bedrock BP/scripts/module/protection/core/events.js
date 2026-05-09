@@ -1,108 +1,135 @@
 import { system } from "@minecraft/server";
-import { Configuration, TextColorCodes, UserMessages } from "../config.js";
+import { Config } from "../config.js";
+import { MenuLocks, openMenu } from "../ui/menu.js";
+import { hasAccess } from "../utils/validation.js";
 import { zoneDatabase } from "./database.js";
-import { playerHasAccessToZone } from "../utils/validation.js";
-import { clearVisualStateForPlayer } from "./protection.js";
-import { openMainMenuForPlayer, userInterfaceLockByPlayer } from "../ui/menu.js";
+import { clearVisuals, uiLocks } from "./protection.js";
 
-export function handleBlockEditPreEvent(event) {
-  const { player, block } = event;
-  const zone = zoneDatabase.findZoneByLocation(block.location);
-  if (
-    zone &&
-    !playerHasAccessToZone(player, zone.ownerName, zoneDatabase.zoneByOwnerName)
-  ) {
-    event.cancel = true;
+const isPlayer = (entity) => entity?.typeId?.startsWith("minecraft:player");
+
+export const onBlockEdit = (ev) => {
+  const player = ev.player;
+  const block = ev.block;
+  if (!player || !block) return;
+
+  const zone = zoneDatabase.findByLocation(block.location);
+  if (!zone) return;
+
+  if (!hasAccess(player, zone.owner, zoneDatabase.zones)) {
+    ev.cancel = true;
   }
-}
+};
 
-export function handleEntityInteractPreEvent(event) {
-  const { player, target } = event;
-  if (!target?.typeId?.startsWith("minecraft:player")) return;
+export const onEntityInteract = (ev) => {
+  const player = ev.player;
+  const target = ev.target;
+  if (!player || !target) return;
+  if (!isPlayer(target)) return;
 
-  const zone = zoneDatabase.findZoneByLocation(target.location);
-  if (
-    zone &&
-    !playerHasAccessToZone(player, zone.ownerName, zoneDatabase.zoneByOwnerName)
-  ) {
-    event.cancel = true;
+  const zone = zoneDatabase.findByLocation(target.location);
+  if (!zone) return;
+
+  if (!hasAccess(player, zone.owner, zoneDatabase.zones)) {
+    ev.cancel = true;
   }
-}
+};
 
-export function handleExplosionPreEvent(event) {
-  const loc = event.location;
+export const onEntityHurt = (ev) => {
+  const attacker = ev.damageSource?.damagingEntity;
+  if (!attacker || !isPlayer(attacker)) return;
 
-  const zoneValues = Object.values(zoneDatabase.zoneByOwnerName);
-  const zonesLen = zoneValues.length;
-  if (zonesLen === 0) return;
+  const zone = zoneDatabase.findByLocation(attacker.location);
+  if (!zone) return;
 
-  let nearZone = false;
+  if (!hasAccess(attacker, zone.owner, zoneDatabase.zones)) {
+    ev.cancel = true;
+  }
+};
+
+export const onExplosion = (ev) => {
+  const loc = ev.source?.location;
+  if (!loc) return;
+
+  const zones = zoneDatabase.zones;
+  const owners = Object.keys(zones);
+  const ownersLen = owners.length;
+  if (ownersLen === 0) return;
+
+  let near = false;
   const radius = 8;
 
-  for (let i = 0; i < zonesLen; i++) {
-    const zone = zoneValues[i];
+  for (let i = 0; i < ownersLen; i++) {
+    const z = zones[owners[i]];
     if (
-      loc.x >= zone.start.x - radius &&
-      loc.x <= zone.end.x + radius &&
-      loc.y >= zone.start.y - radius &&
-      loc.y <= zone.end.y + radius &&
-      loc.z >= zone.start.z - radius &&
-      loc.z <= zone.end.z + radius
+      loc.x >= z.start.x - radius &&
+      loc.x <= z.end.x + radius &&
+      loc.y >= z.start.y - radius &&
+      loc.y <= z.end.y + radius &&
+      loc.z >= z.start.z - radius &&
+      loc.z <= z.end.z + radius
     ) {
-      nearZone = true;
+      near = true;
       break;
     }
   }
 
-  if (!nearZone) return;
+  if (!near) return;
 
-  const impacted = event.getImpactedBlocks();
-  const impactedLen = impacted.length;
-  for (let i = 0; i < impactedLen; i++) {
-    if (zoneDatabase.findZoneByLocation(impacted[i].location)) {
-      event.cancel = true;
+  const impacted = ev.getImpactedBlocks();
+  const len = impacted.length;
+  for (let i = 0; i < len; i++) {
+    if (zoneDatabase.findByLocation(impacted[i].location)) {
+      ev.cancel = true;
       return;
     }
   }
-}
+};
 
-export const ZoneProtection_OnItemUse = ({ source }) => {
+export const onItemUse = (ev) => {
+  const source = ev.source;
   if (source && source.isValid) {
-    openMainMenuForPlayer(source);
+    openMenu(source);
   }
 };
 
-export const ZoneProtection_OnChat = (event) => {
-  const { sender: player, message } = event;
-  if (message !== "!json") return;
+export const onChat = (ev) => {
+  const player = ev.sender;
+  const msg = ev.message;
+  if (msg !== "!json") return;
 
-  event.cancel = true;
+  ev.cancel = true;
   system.run(() => {
-    try {
-      if (!player.hasTag(Configuration.AdministratorTag))
-        return player.sendMessage(UserMessages.AdministratorOnly);
-      if (!Object.keys(zoneDatabase.zoneByOwnerName).length)
-        return player.sendMessage(UserMessages.NoZonesInServer);
-
-      const zoneData = Object.entries(zoneDatabase.zoneByOwnerName).map(
-        ([owner, { start, end, friends }]) => ({
-          owner,
-          start: { x: start.x, y: start.y, z: start.z },
-          end: { x: end.x, y: end.y, z: end.z },
-          friends: friends.length ? friends : [],
-        }),
-      );
-      console.warn(`[/] DataZone: ${JSON.stringify(zoneData, null, 2)}`);
-    } catch (error) {
-      player.sendMessage(`[x] Failed to load zone data`);
-      console.warn(`${TextColorCodes.Error}Error !json: ${error}`);
+    if (!player.isValid) return;
+    if (!player.hasTag(Config.AdminTag)) {
+      player.sendMessage(`[x] เฉพาะแอดมิน!`);
+      return;
     }
+
+    const owners = Object.keys(zoneDatabase.zones);
+    if (owners.length === 0) {
+      player.sendMessage(`[x] ไม่มีโซน!`);
+      return;
+    }
+
+    const data = [];
+    const ownersLen = owners.length;
+    for (let i = 0; i < ownersLen; i++) {
+      const owner = owners[i];
+      const z = zoneDatabase.zones[owner];
+      data.push({
+        owner: owner,
+        start: { x: z.start.x, y: z.start.y, z: z.start.z },
+        end: { x: z.end.x, y: z.end.y, z: z.end.z },
+        friends: z.friends,
+      });
+    }
+
+    console.warn(`[/] Zones: ${JSON.stringify(data, null, 2)}`);
   });
 };
 
-export function clearVisualStateForPlayers(event) {
-  const playerName = event;
-  clearVisualStateForPlayer(playerName);
-  userInterfaceLockByPlayer.delete(playerName);
-  console.log("playerName:", playerName);
-}
+export const onPlayerLeave = (playerName) => {
+  clearVisuals(playerName);
+  uiLocks.delete(playerName);
+  MenuLocks.delete(playerName);
+};

@@ -3,7 +3,12 @@
 // ==========================
 import "./router/Startup.js";
 import "./router/System.RunInterval.js";
-import "./plugin/RuntimeInfo.js"
+import "./index.js";
+
+// ==========================
+// World Events
+// ==========================
+import "./router/Explosion.js";
 
 // ==========================
 // Player Lifecycle
@@ -26,16 +31,10 @@ import "./router/PlayerInteractWithEntity.js";
 // ==========================
 import "./router/PlayerPlaceBlock.js";
 import "./router/PlayerBreakBlock.js";
-import "./router/EntityHitBlock.js";
 
 // ==========================
 // Entity Lifecycle
 // ==========================
 import "./router/EntitySpawn.js";
 import "./router/EntityDie.js";
-
-// ==========================
-// World Events
-// ==========================
-import "./router/Explosion.js";
-
+import "./router/EntityHurt.js";

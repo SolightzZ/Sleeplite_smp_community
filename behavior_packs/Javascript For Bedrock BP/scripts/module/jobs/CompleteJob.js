@@ -1,8 +1,8 @@
 import { ItemStack, system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import {
-  findPlayerById,
-  getInvMap,
+  getPlayerById,
+  buildInventoryMap,
   jobs,
   ownerNotifyMap,
   pendingDelivery,
@@ -16,7 +16,7 @@ import {
 import { showMainMenu } from "./Menu.js";
 
 export const checkJobItems = (inv, job) => {
-  const invMap = getInvMap(inv);
+  const invMap = buildInventoryMap(inv);
   const len = job.items.length;
   for (let i = 0; i < len; i++) {
     const item = job.items[i];
@@ -61,7 +61,11 @@ export const giveDiamond = (player, amount) => {
   }
 
   if (freeSpace < amount) {
-    player.sendMessage("§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับรางวัล (ต้องการที่ว่าง " + amount + " เม็ด)");
+    player.sendMessage(
+      "§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับรางวัล (ต้องการที่ว่าง " +
+        amount +
+        " เม็ด)",
+    );
     return false;
   }
 
@@ -120,7 +124,7 @@ export function completeJob(player) {
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) return;
   const total = totalDiamond(job);
-  const invMap = getInvMap(inv);
+  const invMap = buildInventoryMap(inv);
 
   const t = timerMap.get(player.id);
   let timeStr = "N/A";
@@ -209,7 +213,7 @@ export function showActiveJobForm(player, job, body, total) {
 
     player.sendMessage(`[Job] งานเสร็จสมบูรณ์ ได้รับ ${total} เพชร`);
 
-    const owner = findPlayerById(job.owner);
+    const owner = getPlayerById(job.owner);
     if (owner && owner.isValid) {
       owner.sendMessage(
         `[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “My Orders” เพื่อรับไอเท็มของคุณ`,
@@ -224,8 +228,8 @@ export function showCancelConfirmForm(player, job) {
   form.title("Cancel Delivery?");
   form.body(
     "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\n" +
-    "คำสั่งซื้อจะถูกส่งกลับไปยังคิว\n" +
-    "คุณจะ ไม่ได้รับเพชรใดๆ",
+      "คำสั่งซื้อจะถูกส่งกลับไปยังคิว\n" +
+      "คุณจะ ไม่ได้รับเพชรใดๆ",
   );
   form.button("Yes, Cancel");
   form.button("No, Keep");
@@ -249,7 +253,7 @@ export function showCancelConfirmForm(player, job) {
       );
     }
 
-    const owner = findPlayerById(job.owner);
+    const owner = getPlayerById(job.owner);
     if (owner && owner.isValid) {
       owner.sendMessage(
         `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยังคิว`,

@@ -6,7 +6,6 @@ export const zone = 10;
 export const team = 2;
 
 export const shop = [
-  // Overworld
   { id: "minecraft:sniffer_egg", hp: 7 },
   { id: "minecraft:conduit", hp: 8 },
   { id: "minecraft:enchanted_golden_apple", hp: 10 },
@@ -15,8 +14,6 @@ export const shop = [
   { id: "minecraft:wild_armor_trim_smithing_template", hp: 9 },
   { id: "minecraft:mace", hp: 9 },
   { id: "minecraft:netherite_nautilus_armor", hp: 8 },
-
-  // Nether
   { id: "minecraft:beacon", hp: 10 },
   { id: "minecraft:netherite_upgrade_smithing_template", hp: 9 },
   { id: "minecraft:piglin_head", hp: 9 },

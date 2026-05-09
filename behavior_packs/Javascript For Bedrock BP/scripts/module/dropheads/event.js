@@ -1,19 +1,20 @@
 import { system } from "@minecraft/server";
-import { drop } from "./drop.js";
-import { add, init } from "./score.js";
+import { dropHead } from "./drop.js";
+import { addDeath, initBoards } from "./score.js";
 
-export function DathCounter(event) {
-  const dead = event.deadEntity;
-  if (dead?.typeId !== "minecraft:player") return;
+const PLAYER_TYPE = "minecraft:player";
 
-  const dmg = event.damageSource;
+export const DathCounter = (ev) => {
+  const dead = ev.deadEntity;
+  if (!dead || dead.typeId !== PLAYER_TYPE) return;
+
+  const dmg = ev.damageSource;
 
   system.run(() => {
-    if (dead.isValid) {
-      drop(dead, dmg);
-      add(dead);
-    }
+    if (!dead.isValid) return;
+    dropHead(dead, dmg);
+    addDeath(dead);
   });
-}
+};
 
-system.run(init);
+system.run(initBoards);

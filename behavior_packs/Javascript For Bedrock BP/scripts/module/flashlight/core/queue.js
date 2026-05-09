@@ -1,2 +1,2 @@
-export const playersQueue = [];
-export let queueState = { index: 0, tick: 0 };
+export const processQueue = [];
+export const queueCursor = { idx: 0, tick: 0 };

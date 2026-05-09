@@ -1,4 +1,3 @@
-// Pickaxe / Ore data
 const PICKAXE_BREAKS = {
   "minecraft:wooden_pickaxe": new Set([
     "minecraft:coal_ore",

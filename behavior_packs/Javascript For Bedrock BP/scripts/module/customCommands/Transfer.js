@@ -14,24 +14,33 @@ export function showServerMenu(player) {
   }
   form.button("กรอก IP ด้วยตัวเอง");
 
-  form.show(player).then((response) => {
-    if (!response || response.canceled) return;
+  form
+    .show(player)
+    .then((response) => {
+      if (!response || response.canceled) return;
 
-    const idx = response.selection;
-    if (idx === undefined) return;
+      const idx = response.selection;
+      if (idx === undefined) return;
 
-    if (idx >= SERVER_LIST.length) {
+      if (idx >= SERVER_LIST.length) {
+        system.run(() => {
+          if (player.isValid) showCustomServerInput(player);
+        });
+        return;
+      }
+
+      const server = SERVER_LIST[idx];
       system.run(() => {
-        if (player.isValid) showCustomServerInput(player);
+        if (player.isValid)
+          showConfirmationMenu(
+            player,
+            server.displayName,
+            server.ipAddress,
+            server.portNumber,
+          );
       });
-      return;
-    }
-
-    const server = SERVER_LIST[idx];
-    system.run(() => {
-      if (player.isValid) showConfirmationMenu(player, server.displayName, server.ipAddress, server.portNumber);
-    });
-  }).catch(() => { });
+    })
+    .catch(() => {});
 }
 
 function showCustomServerInput(player) {
@@ -42,24 +51,33 @@ function showCustomServerInput(player) {
     .textField("IP Address:", "เช่น 192.168.0.1 หรือ zeqa.net")
     .textField("Port Number:", "เช่น 19132");
 
-  form.show(player).then((response) => {
-    if (!response || response.canceled) return;
+  form
+    .show(player)
+    .then((response) => {
+      if (!response || response.canceled) return;
 
-    const values = response.formValues;
-    if (!values) return;
+      const values = response.formValues;
+      if (!values) return;
 
-    const ipAddress = values[0];
-    const portNumber = Number(values[1]);
+      const ipAddress = values[0];
+      const portNumber = Number(values[1]);
 
-    if (!ipAddress || !Number.isInteger(portNumber)) {
-      player.sendMessage(MESSAGES.INVALID_IP);
-      return;
-    }
+      if (!ipAddress || !Number.isInteger(portNumber)) {
+        player.sendMessage(MESSAGES.INVALID_IP);
+        return;
+      }
 
-    system.run(() => {
-      if (player.isValid) showConfirmationMenu(player, "เซิร์ฟเวอร์ที่กำหนดเอง", ipAddress, portNumber);
-    });
-  }).catch(() => { });
+      system.run(() => {
+        if (player.isValid)
+          showConfirmationMenu(
+            player,
+            "เซิร์ฟเวอร์ที่กำหนดเอง",
+            ipAddress,
+            portNumber,
+          );
+      });
+    })
+    .catch(() => {});
 }
 
 function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
@@ -67,22 +85,27 @@ function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
 
   const form = new ActionFormData()
     .title("ยืนยันการเชื่อมต่อ")
-    .body(`§7ชื่อเซิร์ฟเวอร์: ${serverName}\nIP Address: ${ipAddress}\n§7Port Number: ${portNumber}`)
+    .body(
+      `§7ชื่อเซิร์ฟเวอร์: ${serverName}\nIP Address: ${ipAddress}\n§7Port Number: ${portNumber}`,
+    )
     .button("ตกลง")
     .button("กลับ");
 
-  form.show(player).then((response) => {
-    if (!response || response.canceled) return;
+  form
+    .show(player)
+    .then((response) => {
+      if (!response || response.canceled) return;
 
-    if (response.selection !== 0) {
-      system.run(() => {
-        if (player.isValid) showServerMenu(player);
-      });
-      return;
-    }
+      if (response.selection !== 0) {
+        system.run(() => {
+          if (player.isValid) showServerMenu(player);
+        });
+        return;
+      }
 
-    transferPlayerToServer(player, ipAddress, portNumber);
-  }).catch(() => { });
+      transferPlayerToServer(player, ipAddress, portNumber);
+    })
+    .catch(() => {});
 }
 
 function transferPlayerToServer(player, ipAddress, portNumber) {

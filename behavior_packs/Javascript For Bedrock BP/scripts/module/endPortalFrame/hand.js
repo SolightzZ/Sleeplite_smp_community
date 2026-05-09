@@ -2,7 +2,8 @@ import { system } from "@minecraft/server";
 import { inventorys } from "./rules.js";
 
 export const see = (player, thing) => {
-  if (!player.isValid) return false;
+  if (!player || !player.isValid) return false;
+
   const bag = player.getComponent(inventorys)?.container;
   if (!bag) return false;
 
@@ -11,13 +12,16 @@ export const see = (player, thing) => {
     const item = bag.getItem(i);
     if (item && item.typeId === thing) return true;
   }
+
   return false;
 };
 
 export const eat = (player, thing) => {
-  if (!player.isValid) return;
+  if (!player || !player.isValid) return;
+
   system.run(() => {
     if (!player.isValid) return;
+
     const bag = player.getComponent(inventorys)?.container;
     if (!bag) return;
 
@@ -26,7 +30,7 @@ export const eat = (player, thing) => {
       const item = bag.getItem(i);
       if (item && item.typeId === thing) {
         if (item.amount > 1) {
-          item.amount -= 1;
+          item.amount--;
           bag.setItem(i, item);
         } else {
           bag.setItem(i, undefined);
@@ -38,15 +42,18 @@ export const eat = (player, thing) => {
 };
 
 export const hit = (player, pain) => {
-  if (pain <= 0 || !player.isValid) return;
+  if (!player || !player.isValid || pain <= 0) return;
+
   system.run(() => {
     if (player.isValid) player.applyDamage(pain);
   });
 };
 
 export const say = (player, msg) => {
-  if (!player.isValid) return;
+  if (!player || !player.isValid) return;
+
   system.run(() => {
-    if (player.isValid) player.onScreenDisplay?.setActionBar(msg);
+    if (!player.isValid) return;
+    player.onScreenDisplay?.setActionBar(msg);
   });
 };

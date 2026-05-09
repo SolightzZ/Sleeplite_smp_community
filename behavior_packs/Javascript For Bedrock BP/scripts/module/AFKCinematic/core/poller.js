@@ -46,7 +46,9 @@ export function handleIdlePoller() {
         s.warningShown = true;
       }
       if (s.warningShown && remaining > 0) {
-        player.onScreenDisplay.setActionBar(`§eAFK Cinematic in §c${remainingSeconds}s`);
+        player.onScreenDisplay.setActionBar(
+          `§eAFK Cinematic in §c${remainingSeconds}s`,
+        );
       }
 
       if (remaining <= 0) {
@@ -78,7 +80,10 @@ export function setPlayerIdleTime(player, seconds) {
     s.idleSeconds = clamped;
     s.idleTicks = 0;
     s.idleSecondsCache = clamped;
-    s.warningSecondsCache = Math.min(CONFIG.warningSeconds, Math.max(1, clamped - 1));
+    s.warningSecondsCache = Math.min(
+      CONFIG.warningSeconds,
+      Math.max(1, clamped - 1),
+    );
     s.warningShown = false;
     refreshBaseline(player, s);
     player.sendMessage(`§7[AFK] Start time set to §e${clamped}§7 seconds.`);

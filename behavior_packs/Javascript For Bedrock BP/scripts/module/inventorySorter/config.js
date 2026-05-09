@@ -1,4 +1,4 @@
-export const Colors = {
+export const ColorCodes = {
   gold: "§6",
   white: "§f",
   gray: "§7",
@@ -8,22 +8,23 @@ export const Colors = {
   yellow: "§e",
 };
 
-export const SETTINGS = {
-  HOTBAR_SIZE: 9,
+export const INVENTORY_SLOTS = {
+  HOTBAR: 9,
+  ROW: 9,
 };
 
-export const SORTING_MODES = {
-  type: "type",             // เรียงตามชนิดของไอเท็ม (ค่าเริ่มต้น)
-  low: "asc",               // เรียงตามจำนวน: น้อย -> มาก
-  max: "desc",              // เรียงตามจำนวน: มาก -> น้อย
-  rarity: "rarity",         // เรียงตามความหายาก (legendary -> common)
-  stack: "stack",           // เรียงตามความจุต่อช่อง (กองได้ 64 -> 16 -> 1)
-  tool: "tool",             // เรียงตามหมวดหมู่ (อาวุธ -> เครื่องมือ -> ชุดเกราะ -> อาหาร -> บล็อก)
-  name: "name",             // เรียงตามตัวอักษรชื่อภาษาอังกฤษ (A -> Z)
-  durability: "durability", // เรียงตามความทนทาน (ของใหม่ 100% -> ของใกล้พัง, ไม่มี dur ไว้ท้าย)
-  enchant: "enchant",       // เรียงตาม enchantment (มาก -> น้อย -> ไม่มี)
-  material: "material",     // เรียงตามวัสดุ (netherite -> diamond -> iron -> gold -> stone -> wood -> leather)
-  chess: "chess",           // จัดลาย: แบบตารางหมากรุก (ใส่ 1 ช่อง เว้น 1 ช่อง)
-  line: "line",             // จัดลาย: แบบแถวแนวนอน (ใส่ 1 แถว เว้น 1 แถว)
-  column: "column",         // จัดลาย: แบบแถวแนวตั้ง (ใส่ 1 คอลัมน์ เว้น 1 คอลัมน์)
+export const SortModes = {
+  type: "type",
+  low: "asc",
+  max: "desc",
+  rarity: "rarity",
+  stack: "stack",
+  tool: "tool",
+  name: "name",
+  durability: "durability",
+  enchant: "enchant",
+  material: "material",
+  chess: "chess",
+  line: "line",
+  column: "column",
 };

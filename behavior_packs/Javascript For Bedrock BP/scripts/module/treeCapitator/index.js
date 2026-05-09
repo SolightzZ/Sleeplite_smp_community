@@ -7,59 +7,51 @@ import { getBlockSafe } from "./utils/block.js";
 import { detectTree } from "./core/detector.js";
 import { processJobs } from "./core/processor.js";
 
-/**
- * Tree Capitator - Production SMP Edition
- * Optimized for 20-50 players, high performance, and TPS stability.
- */
-
-function onBlockBreak(event) {
-  const { player, block, brokenBlockPermutation } = event;
+export const TreeCapitatorBreakBlock = (ev) => {
+  const player = ev.player;
+  const block = ev.block;
+  const perm = ev.brokenBlockPermutation;
 
   if (!player || !player.isValid) return;
   if (!player.isSneaking) return;
-
   if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
 
-  const pCount = state.playerJobCount.get(player.id) ?? 0;
+  const pCount = state.playerJobCount.get(player.id) || 0;
   if (pCount >= CFG.maxJobsPerPlayer) return;
 
-  const lastEnd = state.playerLastJobEnd.get(player.id) ?? 0;
+  const lastEnd = state.playerLastJobEnd.get(player.id) || 0;
   if (Date.now() - lastEnd < CFG.playerCooldownMs) return;
 
   const axe = getPlayerAxe(player);
   if (!axe) return;
 
-  const logTypeId = brokenBlockPermutation.type.id;
-  const leafTypeId = LOG_TO_LEAF.get(logTypeId);
-  if (!leafTypeId) return;
+  const logId = perm.type.id;
+  const leafId = LOG_TO_LEAF.get(logId);
+  if (!leafId) return;
 
   const dim = player.dimension;
-  const treeKey = `${dim.id}:${block.location.x},${block.location.y},${block.location.z}`;
+  const loc = block.location;
+  const treeKey = `${dim.id}:${loc.x},${loc.y},${loc.z}`;
 
   if (state.pendingTrees.has(treeKey)) return;
 
-  const above = getBlockSafe(dim, {
-    x: block.location.x,
-    y: block.location.y + 1,
-    z: block.location.z,
-  });
-  if (!above || above.typeId !== logTypeId) return;
+  const above = getBlockSafe(dim, { x: loc.x, y: loc.y + 1, z: loc.z });
+  if (!above || above.typeId !== logId) return;
 
-  const { locations, foundLeaf } = detectTree(above, logTypeId, leafTypeId);
-
-  if (!foundLeaf || locations.length === 0) return;
+  const res = detectTree(above, logId, leafId);
+  if (!res.foundLeaf || res.locations.length === 0) return;
 
   state.pendingTrees.add(treeKey);
   state.playerJobCount.set(player.id, pCount + 1);
 
   state.jobQueue.push({
-    player,
+    player: player,
     dimension: dim,
-    typeId: logTypeId,
-    locations,
+    typeId: logId,
+    locations: res.locations,
     index: 0,
     startTick: system.currentTick,
-    treeKey,
+    treeKey: treeKey,
     playerId: player.id,
     brokenCount: 0,
   });
@@ -67,6 +59,4 @@ function onBlockBreak(event) {
   if (state.runHandle === null) {
     state.runHandle = system.runInterval(processJobs, 1);
   }
-}
-
-export { onBlockBreak as TreeCapitatorBreakBlock };
+};

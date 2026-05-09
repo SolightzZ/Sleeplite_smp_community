@@ -1,22 +1,19 @@
-const setting = {
-  range: 12,
-  maxPeople: 8,
-  maxItem: 32,
-  speed: 15,
-
-  canPull: ["minecraft:item", "minecraft:xp_orb"],
-
-  icon: {
-    on: "textures/items/magnet_",
-    off: "textures/ui/icon_none",
-    full: "textures/ui/Ping_Offline_Red",
-  },
-
-  text: {
-    on: "Magnet : ON",
-    off: "Magnet : OFF",
-    full: "Full System",
-  },
+export const MagnetConfig = {
+  RANGE: 12,
+  MAX_USERS: 8,
+  MAX_ITEMS: 32,
+  TICK_SPEED: 15,
+  PULLABLE_TYPES: ["minecraft:item", "minecraft:xp_orb"],
 };
 
-export { setting };
+export const MagnetText = {
+  ON: "Magnet : ON",
+  OFF: "Magnet : OFF",
+  FULL: "Full System",
+};
+
+export const MagnetIcons = {
+  ON: "textures/items/magnet_",
+  OFF: "textures/ui/icon_none",
+  FULL: "textures/ui/Ping_Offline_Red",
+};

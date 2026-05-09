@@ -19,4 +19,3 @@ const getDimensionName = (dimensionId) => {
 };
 
 export { getBiomeIdAtLocation, getBiomeName, getDimensionName };
-
