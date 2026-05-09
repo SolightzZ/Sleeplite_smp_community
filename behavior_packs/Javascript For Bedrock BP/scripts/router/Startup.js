@@ -22,6 +22,6 @@ system.beforeEvents.startup.subscribe((init) => {
       startupHandlers[i](init);
     }
   } catch (e) {
-    console.error("[Startup]", e.message);
+    console.error("[ Startup ] error: ", e.message);
   }
 });

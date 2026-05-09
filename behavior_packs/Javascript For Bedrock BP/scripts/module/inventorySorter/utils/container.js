@@ -2,65 +2,85 @@ import { cloneWithAmountLike, compareItemsByMode } from "./item.js";
 
 const buildStackKey = (item) => {
   if (!item?.typeId) return null;
+
   const enchComp = item.getComponent("minecraft:enchantable");
   const enchants = enchComp?.getEnchantments?.();
+
   let enchStr = "";
   if (enchants && enchants.length > 0) {
     const parts = new Array(enchants.length);
+
     for (let i = 0; i < enchants.length; i++) {
       parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
     }
+
     parts.sort();
     enchStr = parts.join(",");
   }
+
   const lore = item.getLore?.();
   const loreStr = lore && lore.length > 0 ? JSON.stringify(lore) : "";
+
   if (!item.nameTag && !loreStr && !enchStr) return item.typeId;
+
   return `${item.typeId}\x00${item.nameTag || ""}\x00${loreStr}\x00${enchStr}`;
 };
 
 export const countTotalItems = (items) => {
   if (!items) return 0;
+
   let total = 0;
+
   for (let i = 0; i < items.length; i++) {
     if (items[i]) total += items[i].amount;
   }
+
   return total;
 };
 
 export const sortAndMergeItems = (items, maxSize) => {
   const buckets = new Map();
+
   for (let i = 0; i < items.length; i++) {
     const it = items[i];
     if (!it?.typeId) continue;
+
     const key = buildStackKey(it);
     if (!key) continue;
+
     const entry = buckets.get(key);
+
     if (entry) {
       entry.total += it.amount;
     } else {
       buckets.set(key, { ref: it, total: it.amount });
     }
   }
+
   const out = [];
   const maxAmountCache = new Map();
   const bucketValues = Array.from(buckets.values());
+
   for (let i = 0; i < bucketValues.length; i++) {
     const group = bucketValues[i];
     const typeId = group.ref.typeId;
     let maxAmt = maxAmountCache.get(typeId);
+
     if (maxAmt === undefined) {
       maxAmt = group.ref.maxAmount ?? 64;
       maxAmountCache.set(typeId, maxAmt);
     }
+
     let remain = group.total;
     while (remain > 0 && out.length < maxSize) {
       const take = remain > maxAmt ? maxAmt : remain;
       out.push(cloneWithAmountLike(group.ref, take));
       remain -= take;
     }
+
     if (out.length >= maxSize) break;
   }
+
   const outLen = out.length;
   for (let i = outLen; i < maxSize; i++) {
     out.push(undefined);
@@ -72,6 +92,7 @@ export const isContainerSorted = (container, mode = "type", startSlot = 0) => {
   let prev = null;
   let foundEmpty = false;
   const size = container.size;
+
   for (let i = startSlot; i < size; i++) {
     const cur = container.getItem(i);
     if (!cur) {
@@ -97,11 +118,14 @@ const buildEnchantFingerprint = (item) => {
   const enchants = item
     .getComponent("minecraft:enchantable")
     ?.getEnchantments?.();
+
   if (!enchants || enchants.length === 0) return "";
+
   const parts = new Array(enchants.length);
   for (let i = 0; i < enchants.length; i++) {
     parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
   }
+
   parts.sort();
   return parts.join(",");
 };
@@ -109,6 +133,7 @@ const buildEnchantFingerprint = (item) => {
 export const writeContainerDiff = (container, newItems, startSlot = 0) => {
   const maxWrite = container.size - startSlot;
   const len = newItems.length < maxWrite ? newItems.length : maxWrite;
+
   for (let i = 0; i < len; i++) {
     const cur = container.getItem(startSlot + i);
     const nxt = newItems[i];

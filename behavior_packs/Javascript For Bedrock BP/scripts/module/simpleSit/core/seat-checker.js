@@ -33,8 +33,9 @@ export const startGlobalSeatCheck = () => {
         try {
           const block = dim.getBlock(blockLoc);
           blockRemoved = block ? isRemovedBlock(block.typeId) : true;
-        } catch {
+        } catch (error) {
           blockRemoved = true;
+          console.error("[ simpleSit ] block: " + error);
         }
       } else {
         const underLoc = {
@@ -45,16 +46,21 @@ export const startGlobalSeatCheck = () => {
         try {
           const underBlock = dim.getBlock(underLoc);
           blockRemoved = underBlock ? isRemovedBlock(underBlock.typeId) : true;
-        } catch {
+        } catch (error) {
           blockRemoved = true;
+          console.error("[ simpleSit ] underBlock: " + error);
         }
       }
 
       let inWater = false;
       try {
         const seatBlock = dim.getBlock(entity.location);
-        inWater = seatBlock?.typeId === WATER || seatBlock?.typeId === FLOWING_WATER;
-      } catch {}
+        inWater =
+          seatBlock?.typeId === WATER || seatBlock?.typeId === FLOWING_WATER;
+      } catch (error) {
+        inWater = true;
+        console.error("[ simpleSit ] seatBlock: " + error);
+      }
 
       const moved = seatHasMoved(entity.location, spawnLoc);
 
@@ -68,7 +74,10 @@ export const startGlobalSeatCheck = () => {
       if (blockRemoved || inWater || moved || !hasRider) {
         try {
           entity.remove();
-        } catch {}
+        } catch (error) {
+          console.error("[ simpleSit ] entity.remove: " + error);
+        }
+
         activeSeats.delete(seatId);
       }
     }

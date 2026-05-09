@@ -36,4 +36,4 @@ const text = `
 
   `;
 
-console.warn(text);
+console.log(text);

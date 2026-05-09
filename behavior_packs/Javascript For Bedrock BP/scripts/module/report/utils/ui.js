@@ -17,6 +17,6 @@ export const sure = (player, onConfirm, onCancel) => {
       else if (onCancel) onCancel();
     });
   } catch (e) {
-    console.warn("System Error (Sure): " + e);
+    console.warn("[ Report ] System Error (Sure): " + e);
   }
 };

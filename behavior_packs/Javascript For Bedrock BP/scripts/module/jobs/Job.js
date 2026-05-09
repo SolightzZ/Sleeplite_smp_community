@@ -58,22 +58,33 @@ export const loadJobData = () => {
       jobs.length = 0;
       jobs.push(...JSON.parse(jobsData));
     }
+
     const jobIdData = world.getDynamicProperty(STORAGE_KEYS.JOB_ID);
-    if (jobIdData !== undefined) nextJobId = jobIdData;
+    if (jobIdData !== undefined) {
+      nextJobId = jobIdData;
+    }
+
     const riderData = world.getDynamicProperty(STORAGE_KEYS.RIDER_MAP);
-    if (riderData)
+    if (riderData) {
       JSON.parse(riderData).forEach(([k, v]) => playerJobMap.set(k, v));
+    }
+
     const timerData = world.getDynamicProperty(STORAGE_KEYS.TIMERS);
-    if (timerData)
+    if (timerData) {
       JSON.parse(timerData).forEach(([k, v]) => timerMap.set(k, v));
+    }
+
     const pendingData = world.getDynamicProperty(STORAGE_KEYS.PENDING);
-    if (pendingData)
+    if (pendingData) {
       JSON.parse(pendingData).forEach(([k, v]) => pendingDelivery.set(k, v));
+    }
+
     const notifyData = world.getDynamicProperty(STORAGE_KEYS.NOTIFY);
-    if (notifyData)
+    if (notifyData) {
       JSON.parse(notifyData).forEach(([k, v]) =>
         ownerNotifyMap.set(k, new Set(v)),
       );
+    }
   } catch (e) {
     console.error("[Job] Load Error:", e);
   }

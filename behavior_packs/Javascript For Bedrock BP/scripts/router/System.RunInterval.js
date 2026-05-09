@@ -1,10 +1,10 @@
 import { system } from "@minecraft/server";
-import { handleAFKSpawn } from "../module/AFKCinematic/index.js";
+import { handleIdlePoller } from "../module/AFKCinematic/index.js";
 import { FlashlightRunInterval } from "../module/flashlight/core/engine.js";
 
 const tasks = [
   { fn: FlashlightRunInterval, rate: 2, next: 0 },
-  { fn: handleAFKSpawn, rate: 20, next: 0 },
+  { fn: handleIdlePoller, rate: 20, next: 0 },
 ];
 
 let tick = 0;

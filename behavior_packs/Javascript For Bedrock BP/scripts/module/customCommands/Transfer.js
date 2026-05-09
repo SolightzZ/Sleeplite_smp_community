@@ -40,7 +40,13 @@ export function showServerMenu(player) {
           );
       });
     })
-    .catch(() => {});
+    .catch((error) => {
+      console.error("[ CustomCommands ] showServerMenu: " + error);
+      system.run(() => {
+        if (player.isValid) showCustomServerInput(player);
+      });
+      return;
+    });
 }
 
 function showCustomServerInput(player) {
@@ -77,7 +83,13 @@ function showCustomServerInput(player) {
           );
       });
     })
-    .catch(() => {});
+    .catch((error) => {
+      console.error("[ CustomCommands ] showCustomServerInput: " + error);
+      system.run(() => {
+        if (player.isValid) showServerMenu(player);
+      });
+      return;
+    });
 }
 
 function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
@@ -105,7 +117,13 @@ function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
 
       transferPlayerToServer(player, ipAddress, portNumber);
     })
-    .catch(() => {});
+    .catch((error) => {
+      console.error("[ CustomCommands ] showConfirmationMenu: " + error);
+      system.run(() => {
+        if (player.isValid) showServerMenu(player);
+      });
+      return;
+    });
 }
 
 function transferPlayerToServer(player, ipAddress, portNumber) {
@@ -114,6 +132,7 @@ function transferPlayerToServer(player, ipAddress, portNumber) {
     transferPlayer(player, { hostname: ipAddress, port: portNumber });
     player.sendMessage(MESSAGES.TRANSFER_START(ipAddress, portNumber));
   } catch (error) {
+    console.error("[ CustomCommands ] transferPlayerToServer: " + error);
     player.sendMessage(MESSAGES.TRANSFER_FAIL);
   }
 }

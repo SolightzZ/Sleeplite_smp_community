@@ -1,6 +1,12 @@
 import { SortModes } from "../config.js";
 
 export const normalizeMode = (mode) => {
-  const m = (mode ?? "type").toLowerCase();
-  return SortModes[m] ?? "type";
+  let m = mode;
+  if (typeof mode === "number") {
+    const keys = Object.keys(SortModes);
+    m = keys[mode] ?? "type";
+  }
+  
+  const key = (m ?? "type").toString().toLowerCase();
+  return SortModes[key] ?? "type";
 };

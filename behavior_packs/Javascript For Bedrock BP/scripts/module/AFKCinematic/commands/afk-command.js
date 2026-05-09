@@ -12,7 +12,7 @@ const quickCommandAFK = (origin) => {
     system.run(() => startCinematicNow(player));
     return { status: CustomCommandStatus.Success };
   } catch (error) {
-    console.error("quickCommandAFK: " + error);
+    console.error("[ AFKCinematic ] quickCommandAFK: " + error);
     return { status: CustomCommandStatus.Failure };
   }
 };
@@ -29,6 +29,6 @@ export function registerCommandAFK(init) {
       quickCommandAFK,
     );
   } catch (error) {
-    console.error("registerCommandAFK: " + error);
+    console.error("[ AFKCinematic ] registerCommandAFK: " + error);
   }
 }

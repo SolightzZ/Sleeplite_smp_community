@@ -129,7 +129,7 @@ export const openMenu = async (player) => {
     }
   } catch (e) {
     player.sendMessage(`[x] เมนูผิดพลาด!`);
-    console.warn(`${Colors.Error}openMenu: ${e}`);
+    console.warn(`[ Protection ] openMenu: ${e}`);
   } finally {
     MenuLocks.delete(player.name);
     uiLocks.delete(player.name);

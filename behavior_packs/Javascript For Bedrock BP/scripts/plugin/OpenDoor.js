@@ -28,6 +28,6 @@ export const openDoor = (ev) => {
       door.setPermutation(p.withState("open_bit", open));
     }
   } catch (e) {
-    console.error("openDoor", e.message);
+    console.error("[ OpenDoor ]  openDoor: ", e.message);
   }
 };

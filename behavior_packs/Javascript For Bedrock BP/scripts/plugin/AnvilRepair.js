@@ -1,56 +1,54 @@
 import { ItemStack, system } from "@minecraft/server";
 
-const IRON_INGOT = "minecraft:iron_ingot";
-const CHIPPED_ANVIL = "minecraft:chipped_anvil";
-const DAMAGED_ANVIL = "minecraft:damaged_anvil";
+const applyAnvilRepair = (block, permutation, damage, player, item) => {
+  system.run(() => {
+    let newDamage;
 
-const applyRepair = (block, perm, damage, player, item) => {
-  try {
-    system.run(() => {
-      let newDamage;
-      if (damage === "very_damaged") newDamage = "slightly_damaged";
-      else if (damage === "slightly_damaged") newDamage = "undamaged";
-      else return;
+    if (damage === "very_damaged") newDamage = "slightly_damaged";
+    else if (damage === "slightly_damaged") newDamage = "undamaged";
+    else return;
 
-      block.setPermutation(perm.withState("damage", newDamage));
-      player.playSound("random.anvil_use", { volume: 1, pitch: 1 });
+    block.setPermutation(permutation.withState("damage", newDamage));
 
-      const inv = player.getComponent("inventory")?.container;
-      if (!inv) return;
-
-      const slot = player.selectedSlotIndex;
-      const amt = item.amount;
-
-      if (amt > 1) {
-        inv.setItem(slot, new ItemStack(item.typeId, amt - 1));
-      } else {
-        inv.setItem(slot, undefined);
-      }
+    player.playSound("random.anvil_use", {
+      volume: 1.0,
+      pitch: 1.0,
     });
-  } catch (e) {
-    console.error("applyRepair", e.message);
-  }
+
+    const inv = player.getComponent("inventory")?.container;
+    if (!inv) return;
+
+    const slot = player.selectedSlotIndex;
+    const amount = item.amount;
+
+    if (amount > 1) {
+      inv.setItem(slot, new ItemStack(item.typeId, amount - 1));
+    } else {
+      inv.setItem(slot, undefined);
+    }
+  });
 };
 
-export const handleRepairAnvil = (ev) => {
-  try {
-    const block = ev.block;
-    const player = ev.player;
-    const item = ev.item;
+export function handleRepairAnvil(event) {
+  const { block, player, itemStack: item } = event;
 
-    if (!player || !player.isValid) return;
-    if (!item || item.typeId !== IRON_INGOT || player.isSneaking) return;
+  if (!item || item.typeId !== "minecraft:iron_ingot" || player.isSneaking)
+    return;
 
-    const typeId = block.typeId;
-    if (typeId !== CHIPPED_ANVIL && typeId !== DAMAGED_ANVIL) return;
+  const typeId = block.typeId;
 
-    const perm = block.permutation;
-    const damage = perm.getState("damage");
-    if (damage === "undamaged") return;
+  if (
+    typeId !== "minecraft:chipped_anvil" &&
+    typeId !== "minecraft:damaged_anvil"
+  )
+    return;
 
-    ev.cancel = true;
-    applyRepair(block, perm, damage, player, item);
-  } catch (e) {
-    console.warn("handleRepairAnvil", e.message);
-  }
-};
+  const permutation = block.permutation;
+  const damage = permutation.getState("damage");
+
+  if (damage === "undamaged") return;
+
+  event.cancel = true;
+
+  applyAnvilRepair(block, permutation, damage, player, item);
+}

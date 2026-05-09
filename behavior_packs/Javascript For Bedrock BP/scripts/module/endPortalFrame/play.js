@@ -1,7 +1,31 @@
+import { system } from "@minecraft/server";
+import { ActionFormData } from "@minecraft/server-ui";
 import { ask, forget } from "./brain.js";
-import { eat, hit, say, see } from "./hand.js";
-import { boss, door, key, team, zone } from "./rules.js";
+import { eat, hit, say, see, sound } from "./hand.js";
+import { boss, door, key, shop, team, zone } from "./rules.js";
 import { count, fix } from "./tools.js";
+
+function showiconstest(player, title, message, icon) {
+  const form = new ActionFormData();
+  form.title(title);
+  form.body(message);
+
+  if (icon) {
+    form.button(message, icon);
+  } else {
+    form.button(message);
+  }
+
+  form.button("Close");
+  form.label("                 @Sleeplite SMP");
+
+  system.run(() => {
+    form
+      .show(player)
+      .then(() => {})
+      .catch((e) => console.error("[ EndPortalFrame ] showiconstest: " + e));
+  });
+}
 
 export const touch = (ev) => {
   try {
@@ -14,11 +38,15 @@ export const touch = (ev) => {
     if (block.typeId !== door) return;
     if (!item || item.typeId !== key) return;
     if (player.hasTag(boss)) return;
+    if (block.permutation.getState("end_portal_eye_bit")) return;
 
     const friends = count(block);
     if (friends < team) {
       ev.cancel = true;
-      say(player, `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`);
+      say(
+        player,
+        `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`,
+      );
       return;
     }
 
@@ -27,16 +55,21 @@ export const touch = (ev) => {
 
     if (!see(player, gift.id)) {
       ev.cancel = true;
-      say(player, `§d[Portal] §7Need: ${name}`);
+      const itemData = shop.find((i) => i.id === gift.id);
+      sound(player, "random.click");
+      showiconstest(player, "Portal Frame", `Need: ${name}`, itemData?.icon);
       return;
     }
 
     eat(player, gift.id);
     hit(player, gift.hp);
     forget(block);
+    sound(player, "block.end_portal_frame.fill");
 
-    player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`);
+    player.sendMessage(
+      `§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`,
+    );
   } catch (e) {
-    console.error("[EndPortalFrame]", e.message);
+    console.error("[EndPortalFrame]  touch: ", e.message);
   }
 };

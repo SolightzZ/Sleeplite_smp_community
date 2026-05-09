@@ -57,3 +57,11 @@ export const say = (player, msg) => {
     player.onScreenDisplay?.setActionBar(msg);
   });
 };
+
+export const sound = (player, soundId, options) => {
+  if (!player || !player.isValid) return;
+
+  system.run(() => {
+    if (player.isValid) player.playSound(soundId, options);
+  });
+};

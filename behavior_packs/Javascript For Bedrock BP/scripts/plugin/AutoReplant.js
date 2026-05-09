@@ -15,7 +15,7 @@ const getPerm = (id) => {
   try {
     perm = BlockPermutation.resolve(id).withState("growth", 0);
   } catch (e) {
-    console.error("getPerm", e.message);
+    console.error("[ AutoReplant ] getPerm", e.message);
   }
   permCache[id] = perm;
   return perm;

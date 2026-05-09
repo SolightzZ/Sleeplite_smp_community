@@ -68,7 +68,7 @@ export const adminact = (player, targetName, index) => {
       }
     });
   } catch (e) {
-    console.warn("System Error (AdminAct): " + e);
+    console.warn("[Report] System Error (AdminAct): " + e);
     adminmsg(player, targetName);
   }
 };
@@ -101,7 +101,7 @@ export const adminmsg = (player, targetName) => {
       adminact(player, targetName, res.selection);
     });
   } catch (e) {
-    console.warn("System Error (AdminMsg): " + e);
+    console.warn("[ Report ] System Error (AdminMsg): " + e);
     adminpanel(player);
   }
 };
@@ -141,7 +141,7 @@ export const adminpanel = (player) => {
       }
     });
   } catch (e) {
-    console.warn("System Error (AdminPanel): " + e);
+    console.warn("[ Report ] System Error (AdminPanel): " + e);
     menu(player);
   }
 };

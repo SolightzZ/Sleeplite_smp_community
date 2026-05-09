@@ -39,7 +39,7 @@ export class ZoneDatabase {
       if (json.length > MAX_STORAGE_SIZE) throw new Error("Data exceeds 32KB");
       world.setDynamicProperty(STORAGE_KEY, json);
     } catch (err) {
-      console.warn(`${Colors.Error}Zone save failed: ${err}`);
+      console.warn(`[ Protection ] Zone save failed: ${err}`);
     }
   }
 
@@ -55,12 +55,14 @@ export class ZoneDatabase {
       if (!Array.isArray(parsed)) return;
 
       const parsedLen = parsed.length;
+
       for (let i = 0; i < parsedLen; i++) {
         const entry = parsed[i];
         if (!Array.isArray(entry) || entry.length < 2) continue;
 
         const owner = entry[0];
         const packed = entry[1];
+
         if (
           typeof owner !== "string" ||
           !Array.isArray(packed) ||
@@ -100,7 +102,7 @@ export class ZoneDatabase {
         };
       }
     } catch (err) {
-      console.warn(`${Colors.Error}Zone load failed: ${err}`);
+      console.warn(`[ Protection ] Zone load failed: ${err}`);
       this.zones = {};
       this.cache.clear();
     }

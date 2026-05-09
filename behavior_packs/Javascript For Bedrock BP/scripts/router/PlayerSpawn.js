@@ -17,6 +17,6 @@ world.afterEvents.playerSpawn.subscribe((ev) => {
       }
     });
   } catch (e) {
-    console.warn("player_spawn", e.message);
+    console.warn("[ PlayerSpawn ] player_spawn", e.message);
   }
 });

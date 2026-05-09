@@ -30,6 +30,6 @@ export const note = (player) => {
       if (res.selection === 0) menu(player);
     });
   } catch (e) {
-    console.warn("System Error (Note): " + e);
+    console.warn("[ Report ] System Error (Note): " + e);
   }
 };

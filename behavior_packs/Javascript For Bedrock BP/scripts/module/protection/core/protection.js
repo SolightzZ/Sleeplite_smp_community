@@ -67,7 +67,7 @@ const renderBorders = () => {
         }
         state.ticks += 1;
       } catch (e) {
-        console.warn(`${Colors.Error}Border error ${name}: ${e}`);
+        console.warn(` [ Protection ] Border error ${name}: ${e}`);
         toRemove.push(name);
       }
     }
@@ -78,7 +78,7 @@ const renderBorders = () => {
     }
     stopParticlesIfIdle();
   } catch (e) {
-    console.warn(`${Colors.Error}Particle loop: ${e}`);
+    console.warn(`[ Protection ] Particle loop: ${e}`);
     forceStopParticles();
     activeBorders.clear();
   }
@@ -98,7 +98,7 @@ export const showBorder = async (player) => {
     startParticles();
   } catch (e) {
     player.sendMessage(`[x] ขอบเขตผิดพลาด!`);
-    console.warn(`${Colors.Error}showBorder: ${e}`);
+    console.warn(`[ Protection ] showBorder: ${e}`);
   }
 };
 
@@ -106,14 +106,22 @@ export const createZone = async (player) => {
   try {
     const result = validateZoneCreate(player, zoneDatabase.zones);
     if (!result.ok) return player.sendMessage(result.reason);
-
-    if (!consumeBlock(player)) {
-      return player.sendMessage(`[x] ต้องมี Diamond Block!`);
-    }
-
     const newZone = buildZone(result.center);
     if (isZoneOverlap(newZone, zoneDatabase.zones)) {
       return player.sendMessage(`[x] โซนทับกับโซนอื่น!`);
+    }
+
+    const cForm = new ActionFormData()
+      .title("ยืนยันการสร้างโซน")
+      .body(`คุณแน่ใจหรือไม่ที่จะสร้างโซนป้องกันขนาด ${Config.ZoneSize}x${Config.ZoneSize} ที่นี่?\nการสร้างโซนจะต้องใช้ Diamond Block 1 บล็อก`)
+      .button("ตกลง", "textures/ui/check")
+      .button("ยกเลิก", "textures/ui/cancel");
+
+    const res = await cForm.show(player);
+    if (!isFormValid(player, res) || res.selection !== 0) return;
+
+    if (!consumeBlock(player)) {
+      return player.sendMessage(`[x] ต้องมี Diamond Block ในตัวก่อน`);
     }
 
     zoneDatabase.zones[player.name] = newZone;
@@ -125,7 +133,7 @@ export const createZone = async (player) => {
     );
   } catch (e) {
     player.sendMessage(`[x] สร้างโซนผิดพลาด!`);
-    console.warn(`${Colors.Error}createZone: ${e}`);
+    console.warn(`[ Protection ] createZone: ${e}`);
   }
 };
 
@@ -163,7 +171,7 @@ export const deleteZone = async (player) => {
     player.sendMessage(`${Colors.Success}ลบโซนเรียบร้อย!`);
   } catch (e) {
     player.sendMessage(`[x] ลบโซนผิดพลาด!`);
-    console.warn(`${Colors.Error}deleteZone: ${e}`);
+    console.warn(`[ Protection ] deleteZone: ${e}`);
   }
 };
 
@@ -240,7 +248,7 @@ export const manageFriends = async (player) => {
     zoneDatabase.cache.clear();
   } catch (e) {
     player.sendMessage(`[x] จัดการเพื่อนผิดพลาด!`);
-    console.warn(`${Colors.Error}manageFriends: ${e}`);
+    console.warn(`[ Protection ] manageFriends: ${e}`);
   }
 };
 
@@ -286,7 +294,7 @@ export const adminDeleteZone = async (player) => {
     }
   } catch (e) {
     player.sendMessage(`[x] ลบโซนแอดมินผิดพลาด!`);
-    console.warn(`${Colors.Error}adminDelete: ${e}`);
+    console.warn(`[ Protection ] adminDelete: ${e}`);
   }
 };
 
@@ -324,7 +332,7 @@ export const adminTeleport = async (player) => {
     player.sendMessage(`${Colors.Success}[/] เทเลพอร์ตไป ${owner}`);
   } catch (e) {
     player.sendMessage(`[x] เทเลพอร์ตผิดพลาด!`);
-    console.warn(`${Colors.Error}adminTeleport: ${e}`);
+    console.warn(`[ Protection ] adminTeleport: ${e}`);
   }
 };
 

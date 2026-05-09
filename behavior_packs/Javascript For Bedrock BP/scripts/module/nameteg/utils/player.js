@@ -3,6 +3,7 @@ export const isValidPlayer = (player) =>
 
 export const safePlayerOp = (player, operation, defaultValue) => {
   if (!isValidPlayer(player)) return defaultValue;
+
   try {
     return operation(player);
   } catch (error) {

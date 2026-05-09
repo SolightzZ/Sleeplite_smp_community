@@ -29,9 +29,7 @@ export const applyDurabilityDamage = (player, amount) => {
 
   if (dur.damage >= dur.maxDurability) {
     inv.container.setItem(player.selectedSlotIndex, undefined);
-    try {
-      player.dimension.playSound("random.break", player.location);
-    } catch {}
+    player.dimension.playSound("random.break", player.location);
   } else {
     inv.container.setItem(player.selectedSlotIndex, item);
   }

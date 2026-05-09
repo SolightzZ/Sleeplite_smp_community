@@ -16,6 +16,9 @@ world.beforeEvents.playerInteractWithEntity.subscribe((ev) => {
       if (ev.cancel) return;
     }
   } catch (e) {
-    console.warn("interact_entity", e.message);
+    console.warn(
+      "[ PlayerInteractWithEntity ] player_interact_entity",
+      e.message,
+    );
   }
 });

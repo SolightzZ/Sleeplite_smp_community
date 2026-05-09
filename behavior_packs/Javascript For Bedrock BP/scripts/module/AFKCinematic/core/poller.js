@@ -56,7 +56,7 @@ export function handleIdlePoller() {
       }
     }
   } catch (error) {
-    console.error("handleIdlePoller: " + error);
+    console.error("[ AFKCinematic ] handleIdlePoller: " + error);
   }
 }
 
@@ -66,7 +66,7 @@ export function playerLeaveAfk(playerId) {
     cinematicScheduler.dequeue(playerId);
     playerStates.delete(playerId);
   } catch (error) {
-    console.error("playerLeaveAfk: " + error);
+    console.error("[ AFKCinematic ] playerLeaveAfk: " + error);
   }
 }
 
@@ -88,7 +88,7 @@ export function setPlayerIdleTime(player, seconds) {
     refreshBaseline(player, s);
     player.sendMessage(`§7[AFK] Start time set to §e${clamped}§7 seconds.`);
   } catch (error) {
-    console.error("setPlayerIdleTime: " + error);
+    console.error("[ AFKCinematic ] setPlayerIdleTime: " + error);
   }
 }
 
@@ -103,6 +103,6 @@ export function startCinematicNow(player) {
     refreshBaseline(player, s);
     startAfk(player, s, cinematicScheduler);
   } catch (error) {
-    console.error("startCinematicNow: " + error);
+    console.error(" [ AFKCinematic ] startCinematicNow: " + error);
   }
 }

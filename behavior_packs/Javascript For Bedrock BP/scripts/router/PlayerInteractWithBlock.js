@@ -5,29 +5,33 @@ import { handleRepairAnvil } from "../plugin/AnvilRepair.js";
 import { openDoor } from "../plugin/OpenDoor.js";
 
 const beforeHandlers = [touch, onBlockEdit, handleRepairAnvil];
+
 const afterHandlers = [openDoor];
 
-const runHandlers = (handlers, ev) => {
+const runHandlers = (handlers, ev, name) => {
   try {
     const player = ev.player;
-    const block = ev.block;
-    if (!player || !player.isValid || !block) return false;
 
-    const len = handlers.length;
-    for (let i = 0; i < len; i++) {
-      const res = handlers[i](ev);
-      if (res === false || ev.cancel) return false;
+    if (!player?.isValid) return;
+
+    for (let i = 0; i < handlers.length; i++) {
+      const handler = handlers[i];
+      if (typeof handler !== "function") {
+        console.error(`[ Router ] ${name}: handler ${i} is not a function`);
+        continue;
+      }
+      handler(ev);
+      if (ev.cancel) break;
     }
-    return true;
   } catch (e) {
-    console.warn("interact_block", e.message);
-    return false;
+    console.error(`[ Router ] ${name}:`, e);
   }
 };
 
-world.beforeEvents.playerInteractWithBlock.subscribe((ev) =>
-  runHandlers(beforeHandlers, ev),
-);
-world.afterEvents.playerInteractWithBlock.subscribe((ev) =>
-  runHandlers(afterHandlers, ev),
-);
+world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
+  runHandlers(beforeHandlers, ev, "BeforeInteract");
+});
+
+world.afterEvents.playerInteractWithBlock.subscribe((ev) => {
+  runHandlers(afterHandlers, ev, "AfterInteract");
+});

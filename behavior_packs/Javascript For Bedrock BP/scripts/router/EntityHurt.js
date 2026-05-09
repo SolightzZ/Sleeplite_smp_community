@@ -7,6 +7,6 @@ world.beforeEvents.entityHurt.subscribe((ev) => {
     if (!hurtEntity || !hurtEntity.isValid) return;
     onEntityHurt(ev);
   } catch (e) {
-    console.warn("entity_hurt", e.message);
+    console.warn("[  EntityHurt ] entity_hurt", e.message);
   }
 });

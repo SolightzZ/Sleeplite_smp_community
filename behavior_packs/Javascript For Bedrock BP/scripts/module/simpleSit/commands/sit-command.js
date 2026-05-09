@@ -1,4 +1,8 @@
-import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
+import {
+  CommandPermissionLevel,
+  CustomCommandStatus,
+  system,
+} from "@minecraft/server";
 import { handleSitCommand } from "../core/sit-handler.js";
 
 const PLAYER_TYPE = "minecraft:player";

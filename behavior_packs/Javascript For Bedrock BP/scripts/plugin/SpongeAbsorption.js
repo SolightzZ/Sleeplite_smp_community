@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 
 const SPONGE = "minecraft:sponge";
 const WATER = "minecraft:water";
@@ -56,6 +56,6 @@ export const handleSpongeAbsorption = (ev) => {
 
     placeSponge(player, inv, slot, block);
   } catch (e) {
-    console.error("handleSpongeAbsorption", e.message);
+    console.error("[ SpongeAbsorption ] handleSpongeAbsorption", e.message);
   }
 };

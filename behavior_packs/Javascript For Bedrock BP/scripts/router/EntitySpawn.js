@@ -22,6 +22,6 @@ world.afterEvents.entitySpawn.subscribe((ev) => {
       }
     });
   } catch (e) {
-    console.warn("entity_spawn", e.message);
+    console.warn("[ EntitySpawn ] entity_spawn", e.message);
   }
 });

@@ -26,6 +26,6 @@ export const menu = (player) => {
       if (res.selection === 3 && isAdmin(player)) adminpanel(player);
     });
   } catch (e) {
-    console.warn("System Error (Menu): " + e);
+    console.warn("[ Report ] System Error (Menu): " + e);
   }
 };

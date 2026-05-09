@@ -2,6 +2,7 @@ export const ITEM = "minecraft:command_block";
 export const PREFIX_RANK = "rank:";
 export const PREFIX_ACTIVE = "active:";
 export const DEFAULT_RANK = "";
+export const ADMIN = "admin";
 
 export const PREDEFINED_RANKS = Object.freeze({
   JUNIOR: "",

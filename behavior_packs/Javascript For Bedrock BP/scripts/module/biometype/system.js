@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { Colors } from "./database.js";
 import {
   getBiomeIdAtLocation,
@@ -34,7 +34,9 @@ function handlePlayerDimensionChange(event) {
         `${Colors.gold}${dimensionName}`,
         options,
       );
-    } catch {}
+    } catch (error) {
+      console.error("[ BiomeType ]   handlePlayerDimensionChange: " + error);
+    }
   }, 60);
 }
 

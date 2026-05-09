@@ -21,6 +21,8 @@ export const spawnSeat = (dim, spawnLoc, rot, player, blockLoc) => {
       seat.setRotation(rot);
       seat.getComponent("minecraft:rideable")?.addRider(player);
       registerSeat(seat, spawnLoc, dim, blockLoc);
-    } catch {}
+    } catch (e) {
+      console.error("[ simpleSit ] spawnSeat: " + e);
+    }
   }, 5);
 };

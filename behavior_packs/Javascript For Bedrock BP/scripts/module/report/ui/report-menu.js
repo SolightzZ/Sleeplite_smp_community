@@ -1,4 +1,8 @@
-import { ActionFormData, ModalFormData, MessageFormData } from "@minecraft/server-ui";
+import {
+  ActionFormData,
+  ModalFormData,
+  MessageFormData,
+} from "@minecraft/server-ui";
 import { system } from "@minecraft/server";
 import { CONFIG } from "../config.js";
 import { Database } from "../core/database.js";
@@ -34,8 +38,8 @@ export const sendform = (player) => {
         if (!t || !b || t.trim() === "" || b.trim() === "") {
           player.sendMessage("§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน");
           system.runTimeout(() => {
-          if (player.isValid) sendform(player);
-        }, 20);
+            if (player.isValid) sendform(player);
+          }, 20);
           return;
         }
 
@@ -43,13 +47,13 @@ export const sendform = (player) => {
         player.sendMessage("§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว");
         reportmenu(player);
       } catch (innerError) {
-        console.warn("Logic Error (SendForm): " + innerError);
+        console.warn("[ Report ] Logic Error (SendForm): " + innerError);
         player.sendMessage("§cเกิดข้อผิดพลาดในการบันทึกข้อมูล");
         reportmenu(player);
       }
     });
   } catch (e) {
-    console.warn("System Error (SendForm): " + e);
+    console.warn("[ Report ] System Error (SendForm): " + e);
     reportmenu(player);
   }
 };
@@ -102,7 +106,7 @@ export const mylist = (player, mode) => {
             player.sendMessage("§e[Report] แก้ไขข้อมูลสำเร็จ");
             mylist(player, mode);
           } catch (e) {
-            console.warn("Update Error: " + e);
+            console.warn("[ Report ] Update Error: " + e);
             mylist(player, mode);
           }
         });
@@ -119,7 +123,7 @@ export const mylist = (player, mode) => {
       }
     });
   } catch (e) {
-    console.warn("System Error (MyList): " + e);
+    console.warn("[ Report ] System Error (MyList): " + e);
     reportmenu(player);
   }
 };
@@ -172,7 +176,7 @@ export const inbox = (player) => {
       });
     });
   } catch (e) {
-    console.warn("System Error (Inbox): " + e);
+    console.warn("[ Report ] System Error (Inbox): " + e);
     menu(player);
   }
 };
@@ -196,7 +200,7 @@ export const reportmenu = (player) => {
       if (res.selection === 3) menu(player);
     });
   } catch (e) {
-    console.warn("System Error (ReportMenu): " + e);
+    console.warn("[ Report ] System Error (ReportMenu): " + e);
     menu(player);
   }
 };

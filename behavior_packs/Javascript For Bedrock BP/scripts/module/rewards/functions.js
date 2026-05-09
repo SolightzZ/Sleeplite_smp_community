@@ -88,10 +88,9 @@ function give(player, id, count) {
 
     return true;
   } catch (e) {
-    console.warn("Give Error: " + e);
+    console.warn("[ Give ] Give Error: " + e);
     return false;
   }
 }
 
 export { give, name, time };
-

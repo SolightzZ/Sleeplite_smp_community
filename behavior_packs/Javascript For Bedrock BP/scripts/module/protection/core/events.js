@@ -35,13 +35,19 @@ export const onEntityInteract = (ev) => {
 };
 
 export const onEntityHurt = (ev) => {
-  const attacker = ev.damageSource?.damagingEntity;
-  if (!attacker || !isPlayer(attacker)) return;
+  const target = ev.hurtEntity;
+  if (!target) return;
 
-  const zone = zoneDatabase.findByLocation(attacker.location);
+  const zone = zoneDatabase.findByLocation(target.location);
   if (!zone) return;
 
-  if (!hasAccess(attacker, zone.owner, zoneDatabase.zones)) {
+  const attacker = ev.damageSource?.damagingEntity;
+
+  if (attacker && isPlayer(attacker)) {
+    if (!hasAccess(attacker, zone.owner, zoneDatabase.zones)) {
+      ev.cancel = true;
+    }
+  } else if (attacker) {
     ev.cancel = true;
   }
 };

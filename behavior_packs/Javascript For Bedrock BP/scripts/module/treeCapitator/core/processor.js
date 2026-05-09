@@ -18,7 +18,10 @@ export const processJobs = () => {
 
   const totalJobs = state.jobQueue.length;
   const loadFactor = Math.max(1, Math.floor(totalJobs / 4));
-  const blocksPerTick = Math.max(1, Math.ceil(CFG.blocksPerTickBase / loadFactor));
+  const blocksPerTick = Math.max(
+    1,
+    Math.ceil(CFG.blocksPerTickBase / loadFactor),
+  );
 
   let jobsDone = 0;
   const maxJobs = Math.min(totalJobs, 4);
@@ -39,7 +42,12 @@ export const processJobs = () => {
 
     const axe = getPlayerAxe(job.player);
     if (!axe) {
-      spawnBatchedDrops(job.dimension, job.player.location, job.typeId, job.brokenCount);
+      spawnBatchedDrops(
+        job.dimension,
+        job.player.location,
+        job.typeId,
+        job.brokenCount,
+      );
       cleanupJobState(job);
       popJob(state.lastProcessedIndex);
       continue;
@@ -56,13 +64,18 @@ export const processJobs = () => {
           job.brokenCount++;
           broken++;
         } catch (e) {
-          console.log("breakError", e.message);
+          console.log("[ treeCapitator ] breakError", e.message);
         }
       }
     }
 
     if (job.index >= job.locations.length) {
-      spawnBatchedDrops(job.dimension, job.player.location, job.typeId, job.brokenCount);
+      spawnBatchedDrops(
+        job.dimension,
+        job.player.location,
+        job.typeId,
+        job.brokenCount,
+      );
       applyDurabilityDamage(job.player, job.brokenCount);
       cleanupJobState(job);
       popJob(state.lastProcessedIndex);

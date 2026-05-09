@@ -19,6 +19,6 @@ world.beforeEvents.chatSend.subscribe((ev) => {
       if (ev.cancel) break;
     }
   } catch (e) {
-    console.warn("chat_send", e.message);
+    console.warn("[ ChatSend ] chat_send", e.message);
   }
 });

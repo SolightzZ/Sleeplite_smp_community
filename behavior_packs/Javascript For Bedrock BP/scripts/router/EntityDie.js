@@ -22,6 +22,6 @@ world.afterEvents.entityDie.subscribe((ev) => {
       handlers[i](ev);
     }
   } catch (e) {
-    console.warn("entity_die", e.message);
+    console.warn("[ EntityDie ] entity_die", e.message);
   }
 });

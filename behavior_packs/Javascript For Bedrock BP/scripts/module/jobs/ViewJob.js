@@ -16,6 +16,7 @@ const startTimer = (riderId, jobId_, savedStartTick) => {
   stopTimer(riderId);
 
   const startTick = savedStartTick ?? system.currentTick;
+
   const intervalId = system.runInterval(() => {
     const rider = getPlayerById(riderId);
 
@@ -55,6 +56,7 @@ const expireJob = (riderId) => {
 
   let job = null;
   const len = jobs.length;
+
   for (let i = 0; i < len; i++) {
     if (jobs[i].id === jobId_) {
       job = jobs[i];
@@ -93,24 +95,24 @@ export function viewJobs(player) {
   }
 
   const form = new ActionFormData();
-  form.title("Available Deliveries");
+  form.title("งานจัดส่งที่พร้อมรับ");
 
   if (openJobs.length === 0) {
-    form.body("No deliveries available.");
-    form.button("Back");
+    form.body("ไม่มีงานจัดส่งในขณะนี้");
+    form.button("ย้อนกลับ");
     showUI(player, form, () => showMainMenu(player));
     return;
   }
 
-  form.body(`${openJobs.length} delivery(ies) available:`);
+  form.body(`มีงานจัดส่งที่พร้อมรับ ${openJobs.length} งาน:`);
   const openLen = openJobs.length;
   for (let i = 0; i < openLen; i++) {
     const job = openJobs[i];
     form.button(
-      `${job.ownerName}\n${job.items.length} items  ${totalDiamond(job)} diamond`,
+      `${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  |  รางวัล ${totalDiamond(job)} เพชร`, "textures/ui/icon_deals"
     );
   }
-  form.button("Back");
+  form.button("ย้อนกลับ");
 
   showUI(player, form, (res) => {
     if (res.selection === openJobs.length) {
@@ -126,19 +128,19 @@ export const openJobDetail = (player, job) => {
   if (!player.isValid) return;
 
   const total = totalDiamond(job);
-  let body = `Owner: ${job.ownerName}\nReward: ${total} diamond\n\nItems required:\n`;
+  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nรางวัล: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
 
   const itemsLen = job.items.length;
   for (let i = 0; i < itemsLen; i++) {
     const it = job.items[i];
-    body += `- ${it.id.replace("minecraft:", "")} x${it.amount} (${it.diamond} diamond)\n`;
+    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น (รางวัล ${it.diamond} เพชร)\n`;
   }
 
   const form = new ActionFormData();
-  form.title("Delivery Detail");
+  form.title("รายละเอียดงานจัดส่ง");
   form.body(body);
-  form.button("Accept Delivery");
-  form.button("Back");
+  form.button("รับงานจัดส่ง", "textures/ui/New_confirm_Hover");
+  form.button("ย้อนกลับ");
 
   showUI(player, form, (res) => {
     if (res.selection === 1) {
@@ -179,7 +181,10 @@ export const openJobDetail = (player, job) => {
 };
 
 system.runTimeout(() => {
-  for (const [riderId, data] of timerMap.entries()) {
+  const snapshot = Array.from(timerMap.entries());
+  const len = snapshot.length;
+  for (let i = 0; i < len; i++) {
+    const [riderId, data] = snapshot[i];
     if (data.startTick)
       startTimer(riderId, playerJobMap.get(riderId), data.startTick);
   }

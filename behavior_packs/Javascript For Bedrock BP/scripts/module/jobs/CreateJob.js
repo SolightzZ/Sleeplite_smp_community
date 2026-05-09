@@ -19,13 +19,16 @@ export const getIcon = (typeId) => {
 
 export const formatName = (id) => {
   const parts = id.split(":");
+
   return (parts.length > 1 ? parts[1] : id).replace(/_/g, " ");
 };
 
 export const searchBlock = (player) => {
   if (!player.isValid) return;
+
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) return;
+
   const invMap = buildInventoryMap(inv);
 
   if (invMap.size === 0) {
@@ -35,22 +38,26 @@ export const searchBlock = (player) => {
   }
 
   const selectedList = selectedMap.get(player.id) ?? [];
+
   const found = Array.from(invMap.keys())
     .sort((a, b) => formatName(a).localeCompare(formatName(b)))
     .slice(0, 50);
 
   const form = new ActionFormData();
-  form.title(`Select Item (${selectedList.length}/5)`);
-  form.button("Back");
+  form.title(`เลือกไอเทม (${selectedList.length}/5)`);
+  form.button("ย้อนกลับ");
 
   const foundLen = found.length;
+
   for (let i = 0; i < foundLen; i++) {
     const id = found[i];
     let count = 0;
     const selLen = selectedList.length;
+
     for (let j = 0; j < selLen; j++) {
       if (selectedList[j] === id) count++;
     }
+
     form.button(
       `${count > 0 ? `§9[${count}] ` : ""}${id.replace("minecraft:", "")}`,
       getIcon(id),
@@ -68,6 +75,7 @@ export const searchBlock = (player) => {
 
     const list = [];
     const slen = selectedList.length;
+
     for (let i = 0; i < slen; i++) list.push(selectedList[i]);
 
     if (list.length >= 5) {
@@ -75,11 +83,27 @@ export const searchBlock = (player) => {
       searchBlock(player);
       return;
     }
+
     if ((invMap.get(chosen) ?? 0) === 0) {
       if (player.isValid) player.sendMessage("[Job] คุณไม่มีไอเท็มนี้");
       searchBlock(player);
       return;
     }
+
+    let isDuplicate = false;
+    for (let i = 0; i < slen; i++) {
+      if (list[i] === chosen) {
+        isDuplicate = true;
+        break;
+      }
+    }
+
+    if (isDuplicate) {
+      if (player.isValid) player.sendMessage("[Job] คุณได้เลือกไอเท็มนี้ไปแล้ว");
+      searchBlock(player);
+      return;
+    }
+
     list.push(chosen);
 
     selectedMap.set(player.id, list);
@@ -89,11 +113,14 @@ export const searchBlock = (player) => {
 
 export function createJob(player) {
   if (!player.isValid) return;
+
   const activeJobs = [];
   const jLen = jobs.length;
+
   for (let i = 0; i < jLen; i++) {
     if (jobs[i].owner === player.id) activeJobs.push(jobs[i]);
   }
+
   if (activeJobs.length >= 5) {
     player.sendMessage("[Job] จำนวนงานสูงสุดที่สร้างได้คือ 5 งาน");
     showMainMenu(player);
@@ -104,16 +131,17 @@ export function createJob(player) {
   const itemCount = selected.length === 0 ? 1 : selected.length;
 
   const form = new ActionFormData();
-  form.title("Request Delivery");
-  form.body("Press item to remove  |  Search to add");
-  form.button("Search Item");
+  form.title("สร้างคำสั่งจัดส่ง");
+  form.body("กดที่ไอเทมเพื่อนำออก  |  กดค้นหาเพื่อเพิ่มไอเทม");
+  form.button("ค้นหาไอเทม");
 
   if (selected.length === 0) {
-    form.label("Selected (0/5)");
-    form.button("No items selected", "textures/ui/icon_none");
+    form.label("เลือกแล้ว (0/5)");
+    form.button("ยังไม่ได้เลือกไอเทม", "textures/ui/icon_none");
   } else {
-    form.label(`Selected (${selected.length}/5)  press to remove`);
+    form.label(`เลือกแล้ว (${selected.length}/5)  กดเพื่อนำออก`);
     const sLen = selected.length;
+
     for (let i = 0; i < sLen; i++) {
       form.button(selected[i].replace("minecraft:", ""), getIcon(selected[i]));
     }
@@ -121,9 +149,9 @@ export function createJob(player) {
 
   const nextIndex = 1 + itemCount;
   const backIndex = nextIndex + 1;
-  form.button("Next > Amount");
+  form.button("ถัดไป > กำหนดจำนวน");
   form.divider();
-  form.button("Back");
+  form.button("ย้อนกลับ");
 
   showUI(player, form, (res) => {
     if (!player.isValid) return;
@@ -188,7 +216,7 @@ export const openAmountForm = (player) => {
 
   const currentAmounts = amountMap.get(player.id) ?? [];
   const modal = new ModalFormData();
-  modal.title("Set Amount");
+  modal.title("กำหนดจำนวน");
 
   const sLen = selected.length;
   for (let i = 0; i < sLen; i++) {
@@ -196,20 +224,22 @@ export const openAmountForm = (player) => {
     const displayName = id.replace("minecraft:", "");
     const current = currentAmounts[i] ?? {};
     modal.textField(
-      `${displayName} จำนวนไอเทมที่ต้องการ (1-2000)`,
+      `${displayName} จำนวนไอเทมที่ต้องการ (1-420)`,
       "ระบุจำนวน...",
-      String(current.amount ?? 1),
+      { defaultValue: String(current.amount ?? 1) },
     );
     modal.slider(
-      `${displayName} จำนวนเพชรที่ต้องการ  (1-64)`,
+      `Diamond จำนวนเพชรที่ต้องการ  (1-64)`,
       1,
       64,
-      1,
-      current.diamond ?? 1,
+      {
+        valueStep: 1,
+        defaultValue: current.diamond ?? 1,
+      },
     );
   }
 
-  modal.submitButton("Next > Confirm");
+  modal.submitButton("ถัดไป > ยืนยัน");
 
   showUI(player, modal, (res) => {
     const values = res.formValues ?? [];
@@ -222,7 +252,7 @@ export const openAmountForm = (player) => {
       let diamond = values[idx++];
 
       if (!Number.isFinite(amount) || amount < 1) amount = 1;
-      if (amount > 2000) amount = 2000;
+      if (amount > 420) amount = 420;
       if (!Number.isFinite(diamond) || diamond < 1) diamond = 1;
       if (diamond > 64) diamond = 64;
 
@@ -240,7 +270,7 @@ export const openConfirmForm = (player) => {
   const amounts = amountMap.get(player.id) ?? [];
 
   let total = 0;
-  let body = "Confirm Job:\n\n";
+  let body = "ยืนยันคำสั่งจัดส่ง:\n\n";
 
   const sLen = selected.length;
   for (let i = 0; i < sLen; i++) {
@@ -249,21 +279,21 @@ export const openConfirmForm = (player) => {
     const amount = data.amount ?? 1;
     const diamond = data.diamond ?? 1;
     total += diamond;
-    body += `- ${id.replace("minecraft:", "")}: x${amount}  (${diamond} diamond)\n`;
+    body += `- ${id.replace("minecraft:", "")} จำนวน ${amount} ชิ้น (รางวัล ${diamond} เพชร)\n`;
   }
 
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) return;
   const haveDiam = countItem(inv, "minecraft:diamond");
-  body += `\nTotal reward: ${total} diamond`;
-  body += `\nYour diamond: ${haveDiam} / ${total}`;
+  body += `\nรางวัลทั้งหมด: ${total} เพชร`;
+  body += `\nเพชรของคุณ: ${haveDiam} / ${total}`;
 
   const form = new ActionFormData();
-  form.title("Confirm Delivery");
+  form.title("ยืนยันคำสั่งจัดส่ง");
   form.body(body);
-  form.button("Confirm Order");
-  form.button("Back (edit)");
-  form.button("Cancel");
+  form.button("ยืนยันคำสั่ง", "textures/ui/confirm");
+  form.button("ย้อนกลับ (แก้ไข)", "textures/ui/debug_glyph_color");
+  form.button("ยกเลิก", "textures/ui/cancel");
 
   showUI(player, form, (res) => {
     if (!player.isValid) return;
@@ -284,14 +314,14 @@ export const openConfirmForm = (player) => {
 
     if (haveDiam2 < total) {
       const warnForm = new ActionFormData();
-      warnForm.title("Not Enough Diamond");
+      warnForm.title("เพชรไม่เพียงพอ");
       warnForm.body(
-        `Need: ${total} diamond\n` +
-          `Have: ${haveDiam2} diamond\n` +
-          `Missing: ${total - haveDiam2} diamond`,
+        `ต้องการ: ${total} เพชร\n` +
+        `มีอยู่: ${haveDiam2} เพชร\n` +
+        `ขาดอีก: ${total - haveDiam2} เพชร`,
       );
-      warnForm.button("Back (edit reward)");
-      warnForm.button("Cancel Order");
+      warnForm.button("ย้อนกลับ (แก้ไขรางวัล)", "textures/ui/debug_glyph_color");
+      warnForm.button("ยกเลิกคำสั่ง", "textures/ui/cancel");
       showUI(player, warnForm, (r) => {
         if (r.selection === 0) openAmountForm(player);
         else {
@@ -309,9 +339,14 @@ export const openConfirmForm = (player) => {
       const it = inv2.getItem(i);
       if (!it || it.typeId !== "minecraft:diamond") continue;
       const take = Math.min(it.amount, need);
-      it.amount -= take;
-      need -= take;
-      inv2.setItem(i, it.amount <= 0 ? undefined : it);
+      if (take >= it.amount) {
+        need -= it.amount;
+        inv2.setItem(i, undefined);
+      } else {
+        it.amount -= take;
+        need -= take;
+        inv2.setItem(i, it);
+      }
     }
 
     const mapItems = [];

@@ -11,7 +11,9 @@ export const clearSeatsInDimension = (dimName) => {
     for (let i = 0; i < len; i++) {
       entities[i].remove();
     }
-  } catch {}
+  } catch (error) {
+    console.error("[ simpleSit ] clearSeatsInDimension: " + error);
+  }
 };
 
 export const initCleanup = () => {

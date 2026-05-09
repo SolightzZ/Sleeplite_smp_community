@@ -3,7 +3,13 @@ import { applyDurabilityDamage } from "../utils/durability.js";
 import { getPlayerPickaxe } from "../utils/player.js";
 import { state } from "./queue.js";
 
-export const finalizeJobDrops = (dim, loc, dropId, amt, xpTotal) => {
+export const finalizeJobDrops = (job) => {
+  const dim = job.player.dimension;
+  const loc = job.player.location;
+  const dropId = job.dropTypeId;
+  const amt = job.brokenCount;
+  const xpTotal = job.xpAccumulated;
+
   if (dropId && amt > 0) {
     let remaining = amt;
     while (remaining > 0) {
@@ -13,23 +19,25 @@ export const finalizeJobDrops = (dim, loc, dropId, amt, xpTotal) => {
     }
   }
 
-  if (xpTotal > 0) {
-    let remainingXp = xpTotal;
-    while (remainingXp > 0) {
-      dim.spawnEntity("minecraft:xp_orb", loc);
-      remainingXp -= 5;
-    }
+  if (xpTotal > 0 && job.player.isValid) {
+    job.player.addExperience(xpTotal);
+    job.player.playSound("random.orb", { pitch: 1.0, volume: 0.5 });
   }
 };
 
 export const finalizeAndCleanupState = (job) => {
   if (job.brokenCount > 0 || job.xpAccumulated > 0) {
-    finalizeJobDrops(job.player.dimension, job.player.location, job.dropTypeId, job.brokenCount, job.xpAccumulated);
+    finalizeJobDrops(job);
 
     const blocksBroken = job.index;
     const item = getPlayerPickaxe(job.player);
     if (item) {
-      applyDurabilityDamage(job.player, item, blocksBroken, job.unbreakingLevel);
+      applyDurabilityDamage(
+        job.player,
+        item,
+        blocksBroken,
+        job.unbreakingLevel,
+      );
     }
   }
 

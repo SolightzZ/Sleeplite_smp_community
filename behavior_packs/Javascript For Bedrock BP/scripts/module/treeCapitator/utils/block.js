@@ -10,7 +10,8 @@ export const getAirPerm = () => {
 export const getBlockSafe = (dim, loc) => {
   try {
     return dim.getBlock(loc);
-  } catch {
+  } catch (e) {
+    console.error("[ treeCapitator ] block: " + e);
     return undefined;
   }
 };

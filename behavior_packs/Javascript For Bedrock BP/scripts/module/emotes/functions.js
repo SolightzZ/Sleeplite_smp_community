@@ -62,12 +62,14 @@ export function showMain(player) {
   if (!player.isValid) return;
 
   const menu = new ActionFormData().title("Emote Menu");
-
+  menu.body("§7เลือกท่าทาง:");
   const len = emoteList.length;
   for (let i = 0; i < len; i++) {
     const group = emoteList[i];
     menu.button(group.name, group.icon || setting.iconDefault);
   }
+
+  menu.label("                 @Sleeplite SMP");
 
   if (setting.soundOpen) {
     player.playSound(setting.soundOpen);

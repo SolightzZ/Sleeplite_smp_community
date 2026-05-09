@@ -1,11 +1,11 @@
+import { world } from "@minecraft/server";
 import {
   ActionFormData,
   MessageFormData,
   ModalFormData,
 } from "@minecraft/server-ui";
-import { world } from "@minecraft/server";
 import { ITEM, PREDEFINED_RANKS } from "../constants/index.js";
-import { isValidPlayer } from "../utils/player.js";
+import { refreshNameTag } from "../core/nametag.js";
 import {
   addRank,
   getActiveRank,
@@ -15,7 +15,7 @@ import {
   renameRank,
   setActiveRank,
 } from "../core/tagManager.js";
-import { refreshNameTag } from "../core/nametag.js";
+import { isValidPlayer } from "../utils/player.js";
 
 const getPredefinedRankList = () => {
   const entries = Object.entries(PREDEFINED_RANKS);
@@ -106,8 +106,8 @@ const showConfirmDelete = (admin, target, ranks) => {
   new MessageFormData()
     .title("ยืนยันลบยศ")
     .body(`ยศที่จะลบ:\n${ranks.join("\n")}`)
-    .button1("§cลบ")
-    .button2("§aยกเลิก")
+    .button1("Confirm (ลบ)")
+    .button2("Cancel (ยกเลิก)")
     .show(admin)
     .then((res) => {
       if (res.selection === 0) {
@@ -151,9 +151,9 @@ const showActions = (admin, target) => {
   new ActionFormData()
     .title(`จัดการ: ${target.name}`)
     .body(`ยศที่ใช้อยู่: ${current}\nจำนวนยศที่มี: ${count}`)
-    .button("§aเพิ่ม / เปลี่ยนยศ")
-    .button("§eแก้ไขชื่อยศ")
-    .button("§cลบยศ")
+    .button("เพิ่ม / เปลี่ยนยศ", "textures/ui/sidebar_icons/categories")
+    .button("แก้ไขชื่อยศ", "textures/ui/sidebar_icons/classic_skins")
+    .button("ลบยศ", "textures/ui/icons/icon_trending")
     .show(admin)
     .then((res) => {
       if (res.canceled) return;

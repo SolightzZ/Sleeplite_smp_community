@@ -22,9 +22,7 @@ export const applyDurabilityDamage = (player, item, amt, unbreakLevel) => {
 
   if (dur.damage >= dur.maxDurability) {
     equip.setEquipment(EquipmentSlot.Mainhand, undefined);
-    try {
-      player.dimension.playSound("random.break", player.location);
-    } catch {}
+    player.dimension.playSound("random.break", player.location);
   } else {
     equip.setEquipment(EquipmentSlot.Mainhand, item);
   }

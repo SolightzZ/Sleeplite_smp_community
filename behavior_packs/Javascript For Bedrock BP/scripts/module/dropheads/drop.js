@@ -1,6 +1,6 @@
 import { ItemStack } from "@minecraft/server";
 import { getHead } from "./data.js";
-import { posInt, worldName } from "./util.js";
+import { posInt, worldName, getKillerName } from "./util.js";
 
 export const dropHead = (player, dmg) => {
   try {
@@ -19,18 +19,7 @@ export const dropHead = (player, dmg) => {
     const headId = getHead(name);
     if (!headId) return;
 
-    let killer = "Unknown";
-    const src = dmg?.damagingEntity;
-
-    if (src && src.isValid) {
-      if (src.typeId === "minecraft:player") {
-        killer = src.name;
-      } else {
-        killer = src.typeId.replace("minecraft:", "");
-      }
-    } else if (dmg?.cause) {
-      killer = String(dmg.cause);
-    }
+    const killer = getKillerName(player, dmg);
 
     const item = new ItemStack(headId, 1);
     item.setLore([
@@ -50,6 +39,6 @@ export const dropHead = (player, dmg) => {
 
     dim.spawnItem(item, pos);
   } catch (e) {
-    console.error("dropHead", e.message);
+    console.error("[ Drophead ] dropHead", e.message);
   }
 };

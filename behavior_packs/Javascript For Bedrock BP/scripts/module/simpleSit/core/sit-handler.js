@@ -26,7 +26,8 @@ export const handleSitCommand = (player) => {
   let underBlock;
   try {
     underBlock = dim.getBlock(underLoc);
-  } catch {
+  } catch (error) {
+    console.error("[ simpleSit ] block: " + error);
     return;
   }
 
@@ -44,7 +45,8 @@ export const handleSitCommand = (player) => {
     const upsideDown = states[UPSIDE_DOWN];
     const weirdoDir = isStairs ? states[WEIRDO_DIR] : null;
 
-    const flipped = (isSlab && vertHalf === TOP) || (isStairs && upsideDown === true);
+    const flipped =
+      (isSlab && vertHalf === TOP) || (isStairs && upsideDown === true);
 
     if (!flipped) {
       useSpecial = true;
@@ -57,7 +59,8 @@ export const handleSitCommand = (player) => {
   let blockAbove;
   try {
     blockAbove = dim.getBlock({ x: px, y: headY, z: pz });
-  } catch {
+  } catch (error) {
+    console.error("[ simpleSit ] block: " + error);
     return;
   }
 

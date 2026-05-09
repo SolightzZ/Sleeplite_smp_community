@@ -7,6 +7,6 @@ world.afterEvents.playerSpawn.subscribe((ev) => {
     if (!player || !player.isValid) return;
     chatRankplayerJoin(ev);
   } catch (e) {
-    console.warn("player_join", e.message);
+    console.warn("[ PlayerJoin ] player_join", e.message);
   }
 });

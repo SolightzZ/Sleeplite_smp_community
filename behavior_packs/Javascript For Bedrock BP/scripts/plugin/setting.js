@@ -31,7 +31,7 @@ const serverSettings = async (player) => {
       objDeaths = world.scoreboard.addObjective("Deaths");
     } catch (e) {
       player.sendMessage("§c[x] ไม่สามารถสร้าง Scoreboard 'Deaths' ได้");
-      console.warn("Scoreboard error", e.message);
+      console.warn("[serverSettings] Scoreboard error", e.message);
       return;
     }
   }
@@ -41,7 +41,7 @@ const serverSettings = async (player) => {
       objDeathsPlus = world.scoreboard.addObjective("DeathsPlus");
     } catch (e) {
       player.sendMessage("§c[x] ไม่สามารถสร้าง Scoreboard 'DeathsPlus' ได้");
-      console.warn("Scoreboard error", e.message);
+      console.warn("[serverSettings] Scoreboard error", e.message);
       return;
     }
   }
@@ -88,7 +88,7 @@ const serverSettings = async (player) => {
       world.scoreboard.clearObjectiveAtDisplaySlot(DisplaySlotId.BelowName);
     }
   } catch (e) {
-    console.warn("Server Setting error", e.message);
+    console.warn("[serverSettings] Server Setting error", e.message);
   }
 };
 
@@ -116,7 +116,7 @@ const hudSettings = async (player) => {
         if (enabled) player.addTag(tag);
         else player.removeTag(tag);
       } catch (e) {
-        console.warn(`HUD command error ${element}`, e.message);
+        console.warn(`[ HUD ] HUD command error ${element}`, e.message);
         player.sendMessage(`§c[x] ไม่สามารถปรับ HUD ${element} ได้`);
       }
     };
@@ -126,7 +126,7 @@ const hudSettings = async (player) => {
     await toggleHud("tooltips", toolTips);
     await toggleHud("touch_controls", touchControls);
   } catch (e) {
-    console.warn("HUD error", e.message);
+    console.warn("[ HUD ] HUD error", e.message);
   }
 };
 

@@ -38,7 +38,7 @@ function RegisterRewards(init) {
       },
     );
   } catch (error) {
-    console.error("[RegisterRewards] Failed to register commands: " + error);
+    console.error("[ Reward ] Failed to register commands: " + error);
   }
 }
 

@@ -30,36 +30,39 @@ export function editJobs(player) {
 
   const myJobs = [];
   const len = jobs.length;
+
   for (let i = 0; i < len; i++) {
     if (jobs[i].owner === player.id) myJobs.push(jobs[i]);
   }
 
   const form = new ActionFormData();
-  form.title("My Orders");
+  form.title("รายการคำสั่งของฉัน");
 
   if (myJobs.length === 0) {
-    form.body("You have no active orders.");
-    form.button("Back");
+    form.body("คุณไม่มีรายการคำสั่งที่กำลังดำเนินการ");
+    form.button("ย้อนกลับ");
     showUI(player, form, () => showMainMenu(player));
     return;
   }
 
-  form.body("Select an order to manage:");
+  form.body("เลือกรายการคำสั่งเพื่อจัดการ:");
 
   const myJobsLen = myJobs.length;
+
   for (let i = 0; i < myJobsLen; i++) {
     const job = myJobs[i];
     const statusText =
       job.status === "open"
-        ? "[Open]"
+        ? "[กำลังรับสมัคร]"
         : job.status === "taken"
-          ? "[Taken]"
-          : "[Done]";
+          ? "[มีผู้รับงานแล้ว]"
+          : "[เสร็จสิ้น]";
     form.button(
-      `${statusText} ${job.items.length} items  ${totalDiamond(job)} diamond`,
+      `${statusText} ${job.items.length} ชิ้น  |  รางวัล ${totalDiamond(job)} เพชร`,
     );
   }
-  form.button("Back");
+
+  form.button("ย้อนกลับ");
 
   showUI(player, form, (res) => {
     const backIdx = myJobs.length;
@@ -67,8 +70,10 @@ export function editJobs(player) {
       showMainMenu(player);
       return;
     }
+
     const jobIdx = res.selection;
     const job = myJobs[jobIdx];
+
     if (job) openManageJobDetail(player, job);
   });
 }
@@ -77,39 +82,43 @@ const openManageJobDetail = (player, job) => {
   if (!player.isValid) return;
 
   const statusText =
-    job.status === "open" ? "Open" : job.status === "taken" ? "Taken" : "Done";
+    job.status === "open" ? "กำลังรับสมัคร" : job.status === "taken" ? "มีผู้รับงานแล้ว" : "เสร็จสิ้น";
 
-  let body = `Status: ${statusText}\n\n`;
+  let body = `สถานะ: ${statusText}\n\n`;
+
   const itemsLen = job.items.length;
   for (let i = 0; i < itemsLen; i++) {
     const it = job.items[i];
-    body += `- ${it.id.replace("minecraft:", "")} x${it.amount}  (${it.diamond} diamond)\n`;
+    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น  (รางวัล ${it.diamond} เพชร)\n`;
   }
 
   if (job.status === "taken") {
     const rider = getPlayerById(job.takenBy);
     const t = timerMap.get(job.takenBy);
     let timeLeft = "";
+
     if (t) {
       const secs = Math.ceil(
         (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
       );
       const m = Math.floor(secs / 60),
         s = secs % 60;
-      timeLeft = ` (${m}:${String(s).padStart(2, "0")} left)`;
+      timeLeft = ` (เหลือเวลา ${m}:${String(s).padStart(2, "0")})`;
     }
-    body += `\nRider: ${rider ? rider.name : "Unknown (offline)"}${timeLeft}`;
+
+    body += `\nคนส่ง: ${rider ? rider.name : "ไม่ทราบชื่อ (ออฟไลน์)"}${timeLeft}`;
   }
 
   const canDelete = job.status === "open" || job.status === "taken";
   const form = new ActionFormData();
-  form.title("Manage Order");
+  form.title("จัดการคำสั่ง");
   form.body(body);
+
   if (canDelete) {
-    form.button("Cancel Order");
-    form.button("Back");
+    form.button("ยกเลิกคำสั่ง", "textures/ui/cancel");
+    form.button("ย้อนกลับ");
   } else {
-    form.button("Back");
+    form.button("ย้อนกลับ");
   }
 
   showUI(player, form, (res) => {

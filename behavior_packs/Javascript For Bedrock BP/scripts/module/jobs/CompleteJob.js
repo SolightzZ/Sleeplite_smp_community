@@ -18,41 +18,54 @@ import { showMainMenu } from "./Menu.js";
 export const checkJobItems = (inv, job) => {
   const invMap = buildInventoryMap(inv);
   const len = job.items.length;
+
   for (let i = 0; i < len; i++) {
     const item = job.items[i];
     const have = invMap.get(item.id) ?? 0;
+
     if (have < item.amount)
       return `${item.id.replace("minecraft:", "")} (${have}/${item.amount})`;
   }
+
   return null;
 };
 
 export const removeJobItems = (inv, job) => {
   const len = job.items.length;
+
   for (let idx = 0; idx < len; idx++) {
     const item = job.items[idx];
     let need = item.amount;
     const invSize = inv.size;
+
     for (let i = 0; i < invSize && need > 0; i++) {
       const it = inv.getItem(i);
+
       if (!it || it.typeId !== item.id) continue;
       const take = Math.min(it.amount, need);
-      it.amount -= take;
-      need -= take;
-      inv.setItem(i, it.amount <= 0 ? undefined : it);
+      if (take >= it.amount) {
+        need -= it.amount;
+        inv.setItem(i, undefined);
+      } else {
+        it.amount -= take;
+        need -= take;
+        inv.setItem(i, it);
+      }
     }
   }
 };
 
 export const giveDiamond = (player, amount) => {
   if (!player.isValid) return false;
+
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) return false;
-  const invSize = inv.size;
 
+  const invSize = inv.size;
   let freeSpace = 0;
   for (let i = 0; i < invSize; i++) {
     const it = inv.getItem(i);
+
     if (!it) {
       freeSpace += 64;
     } else if (it.typeId === "minecraft:diamond") {
@@ -63,17 +76,20 @@ export const giveDiamond = (player, amount) => {
   if (freeSpace < amount) {
     player.sendMessage(
       "§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับรางวัล (ต้องการที่ว่าง " +
-        amount +
-        " เม็ด)",
+      amount +
+      " เม็ด)",
     );
     return false;
   }
 
   let remaining = amount;
+
   for (let i = 0; i < invSize && remaining > 0; i++) {
     const it = inv.getItem(i);
+
     if (it && it.typeId === "minecraft:diamond") {
       const space = 64 - it.amount;
+
       if (space <= 0) continue;
       const add = Math.min(space, remaining);
       it.amount += add;
@@ -81,8 +97,10 @@ export const giveDiamond = (player, amount) => {
       inv.setItem(i, it);
     }
   }
+
   for (let i = 0; i < invSize && remaining > 0; i++) {
     if (inv.getItem(i)) continue;
+
     const size = Math.min(64, remaining);
     inv.setItem(i, new ItemStack("minecraft:diamond", size));
     remaining -= size;
@@ -97,6 +115,7 @@ export const addOwnerNotify = (ownerId, jobId_) => {
 
 export function completeJob(player) {
   if (!player.isValid) return;
+
   const activeJobId = playerJobMap.get(player.id);
 
   if (activeJobId === undefined) {
@@ -107,6 +126,7 @@ export function completeJob(player) {
 
   let job = null;
   const len = jobs.length;
+
   for (let i = 0; i < len; i++) {
     if (jobs[i].id === activeJobId) {
       job = jobs[i];
@@ -133,23 +153,26 @@ export function completeJob(player) {
     const secs = Math.ceil(
       (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
     );
+
     const m = Math.floor(secs / 60);
     const s = secs % 60;
+
     timeStr = `${m}:${String(s).padStart(2, "0")}`;
   }
 
-  let body = `Job from: ${job.ownerName}\nReward: ${total} diamond\nTime left: ${timeStr}\n\nItems:\n`;
+  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nรางวัล: ${total} เพชร\nเวลาที่เหลือ: ${timeStr}\n\nไอเทมที่ต้องการ:\n`;
 
   const itemsLen = job.items.length;
+
   for (let i = 0; i < itemsLen; i++) {
     const item = job.items[i];
     const have = invMap.get(item.id) ?? 0;
     const ok = have >= item.amount;
 
-    body += `${ok ? "[OK] " : "[MISSING] "}${item.id.replace(
+    body += `${ok ? "[ครบ] " : "[ขาด] "}${item.id.replace(
       "minecraft:",
       "",
-    )} ${have}/${item.amount} (${item.diamond} diamond)\n`;
+    )} ${have}/${item.amount} (รางวัล ${item.diamond} เพชร)\n`;
   }
 
   showActiveJobForm(player, job, body, total);
@@ -157,12 +180,13 @@ export function completeJob(player) {
 
 export function showActiveJobForm(player, job, body, total) {
   if (!player.isValid) return;
+
   const form = new ActionFormData();
-  form.title("Active Job");
+  form.title("งานที่กำลังดำเนินการ");
   form.body(body);
-  form.button("Submit");
-  form.button("Cancel Job");
-  form.button("Back");
+  form.button("ส่งงาน", "textures/ui/confirm");
+  form.button("ยกเลิกงาน", "textures/ui/cancel");
+  form.button("ย้อนกลับ");
 
   showUI(player, form, (res) => {
     if (res.selection === 2) {
@@ -224,15 +248,17 @@ export function showActiveJobForm(player, job, body, total) {
 
 export function showCancelConfirmForm(player, job) {
   if (!player.isValid) return;
+
   const form = new ActionFormData();
-  form.title("Cancel Delivery?");
+  form.title("ต้องการยกเลิกการจัดส่งหรือไม่?");
   form.body(
     "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\n" +
-      "คำสั่งซื้อจะถูกส่งกลับไปยังคิว\n" +
-      "คุณจะ ไม่ได้รับเพชรใดๆ",
+    "คำสั่งซื้อจะถูกส่งกลับไปยังคิว\n" +
+    "และคุณจะไม่ได้รับเพชรใดๆ",
   );
-  form.button("Yes, Cancel");
-  form.button("No, Keep");
+
+  form.button("ใช่, ยกเลิกเลย", "textures/ui/cancel");
+  form.button("ไม่, ทำงานต่อ", "textures/ui/confirm");
 
   showUI(player, form, (res) => {
     if (res.selection === 1) {

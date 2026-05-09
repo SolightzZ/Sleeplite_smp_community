@@ -20,12 +20,14 @@ export const stopMagnetLoop = () => {
 
 export const startMagnetLoop = () => {
   if (hasMagnetRunId()) return;
+
   const id = system.runInterval(() => {
     try {
       if (countMagnetUsers() === 0) {
         stopMagnetLoop();
         return;
       }
+
       const allPlayers = world.getAllPlayers();
       const playerMap = new Map();
 

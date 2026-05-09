@@ -34,6 +34,6 @@ world.afterEvents.playerLeave.subscribe((ev) => {
       }
     });
   } catch (e) {
-    console.warn("player_leave", e.message);
+    console.warn("[ PlayerLeave ] player_leave", e.message);
   }
 });

@@ -82,7 +82,8 @@ export class CinematicScheduler {
           player,
           `camera @s set minecraft:free pos ${p.x.toFixed(3)} ${p.y.toFixed(3)} ${p.z.toFixed(3)} rot ${r.pitch.toFixed(3)} ${r.yaw.toFixed(3)}`,
         );
-      } catch {
+      } catch (error) {
+        console.error(" [ AFKCinematic ] CinematicScheduler: " + error);
         toRemove.push(playerId);
         continue;
       }

@@ -1,5 +1,10 @@
 import { world } from "@minecraft/server";
-import { TICK_RECONCILE, TICK_TARGET_LATENCY, BATCH_MIN_SIZE, BATCH_MAX_SIZE } from "../config.js";
+import {
+  TICK_RECONCILE,
+  TICK_TARGET_LATENCY,
+  BATCH_MIN_SIZE,
+  BATCH_MAX_SIZE,
+} from "../config.js";
 import { processQueue, queueCursor } from "./queue.js";
 import { playerLights } from "./state.js";
 import { placeLightForPlayer, removeLightBlock } from "./light-manager.js";
@@ -8,17 +13,21 @@ export function syncPlayerQueue() {
   const allPlayers = world.getAllPlayers();
   const allCount = allPlayers.length;
   const liveIds = new Set();
+
   for (let i = 0; i < allCount; i++) {
     liveIds.add(allPlayers[i].id);
   }
+
   const trackedIds = Array.from(playerLights.keys());
   const trackedCount = trackedIds.length;
+
   for (let i = 0; i < trackedCount; i++) {
     const id = trackedIds[i];
     if (!liveIds.has(id)) {
       removeLightBlock(id);
     }
   }
+
   processQueue.length = 0;
   for (let i = 0; i < allCount; i++) {
     const p = allPlayers[i];
@@ -26,6 +35,7 @@ export function syncPlayerQueue() {
       processQueue.push(p);
     }
   }
+
   if (queueCursor.idx >= processQueue.length) {
     queueCursor.idx = 0;
   }
@@ -33,18 +43,27 @@ export function syncPlayerQueue() {
 
 export function FlashlightRunInterval() {
   queueCursor.tick++;
+
   if (queueCursor.tick % TICK_RECONCILE === 0) {
     syncPlayerQueue();
   }
+
   if (processQueue.length === 0) return;
   const activeCount = playerLights.size || 1;
-  const batchSize = Math.min(BATCH_MAX_SIZE, Math.max(BATCH_MIN_SIZE, Math.ceil(activeCount / TICK_TARGET_LATENCY)));
+
+  const batchSize = Math.min(
+    BATCH_MAX_SIZE,
+    Math.max(BATCH_MIN_SIZE, Math.ceil(activeCount / TICK_TARGET_LATENCY)),
+  );
+
   for (let i = 0; i < batchSize; i++) {
     if (processQueue.length === 0) break;
     if (queueCursor.idx >= processQueue.length) {
       queueCursor.idx = 0;
     }
+
     const player = processQueue[queueCursor.idx];
+
     if (player && player.isValid) {
       placeLightForPlayer(player);
       queueCursor.idx++;
@@ -64,6 +83,7 @@ export function flashSpawn(event) {
   if (!player || !player.isValid) return;
   const playerId = player.id;
   const qLen = processQueue.length;
+
   for (let i = 0; i < qLen; i++) {
     if (processQueue[i].id === playerId) return;
   }
@@ -73,6 +93,7 @@ export function flashSpawn(event) {
 export function flashLeave(playerId) {
   removeLightBlock(playerId);
   const qLen = processQueue.length;
+
   for (let i = 0; i < qLen; i++) {
     if (processQueue[i].id === playerId) {
       const last = processQueue.pop();
@@ -85,6 +106,7 @@ export function flashLeave(playerId) {
       break;
     }
   }
+
   if (queueCursor.idx >= processQueue.length) {
     queueCursor.idx = 0;
   }

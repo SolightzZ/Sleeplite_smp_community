@@ -5,6 +5,7 @@ import { canUseMagnet, toggleMagnet } from "../core/toggle.js";
 
 export const showMagnetMenu = (player) => {
   if (!canUseMagnet(player)) return;
+
   const isOn = hasMagnetUser(player.id);
   const current = countMagnetUsers();
   const isFull = current >= MagnetConfig.MAX_USERS;
@@ -28,10 +29,7 @@ export const showMagnetMenu = (player) => {
       if (!res || res.canceled || res.selection !== 0) return;
       if (!player.isValid) return;
       toggleMagnet(player, !isOn);
+    }).catch((error) => {
+      console.error("[magnet] showMagnetMenu" + error)
     })
-    .catch((error) => {
-      if (error.message !== "User is busy") {
-        console.error("[Magnet] UI Error:", error);
-      }
-    });
 };

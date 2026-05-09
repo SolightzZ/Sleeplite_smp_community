@@ -6,7 +6,7 @@ function load(player) {
     if (!raw) return { last: null, count: 0 };
     return JSON.parse(raw);
   } catch (e) {
-    console.warn("load Error: " + e);
+    console.warn("[ Rewards ] load Error: " + e);
     return { last: null, count: 0 };
   }
 }
@@ -17,7 +17,7 @@ function save(player, data) {
     player.setDynamicProperty(config.dbKey, text);
     return true;
   } catch (e) {
-    console.warn("Save Error: " + e);
+    console.warn("[ Rewards ] Save Error: " + e);
     return false;
   }
 }
