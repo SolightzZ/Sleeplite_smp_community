@@ -1,19 +1,20 @@
 import { EnchantmentTypes } from "@minecraft/server";
 
-let _protType = undefined;
+let protType = undefined;
 
 const getProtectionBonus = (enchants) => {
   if (!enchants) return { protectionBonus: 0, details: [] };
-  if (_protType === undefined) _protType = EnchantmentTypes.get("protection") ?? null;
-  if (!_protType) return { protectionBonus: 0, details: [] };
+  if (protType === undefined)
+    protType = EnchantmentTypes.get("protection") ?? null;
+  if (!protType) return { protectionBonus: 0, details: [] };
   let level = 0;
   for (let i = 0; i < enchants.length; i++) {
-    if (enchants[i].type.id === _protType.id) {
+    if (enchants[i].type.id === protType.id) {
       level = enchants[i].level;
       break;
     }
   }
-  if (level <= 0 || level > _protType.maxLevel) {
+  if (level <= 0 || level > protType.maxLevel) {
     return { protectionBonus: 0, details: [] };
   }
   const bonus = Math.min(20, level * 4);
@@ -36,6 +37,15 @@ export const getDamageReduction = (armor, toughness, enchants, damage) => {
     ) / 25;
   const { protectionBonus, details } = getProtectionBonus(enchants);
   const breachReduction = getBreachReduction(enchants);
-  const total = Math.max(0, Math.min(80, baseReduction * 100 + protectionBonus - breachReduction));
-  return { total, base: baseReduction * 100, protectionBonus, breachReduction, details };
+  const total = Math.max(
+    0,
+    Math.min(80, baseReduction * 100 + protectionBonus - breachReduction),
+  );
+  return {
+    total,
+    base: baseReduction * 100,
+    protectionBonus,
+    breachReduction,
+    details,
+  };
 };
