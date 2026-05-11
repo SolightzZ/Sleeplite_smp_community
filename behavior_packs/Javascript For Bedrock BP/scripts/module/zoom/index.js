@@ -19,7 +19,7 @@ export function enableZoom(player) {
 
   const config = getPlayerConfig(player);
 
-  applyZoom(player);
+  applyZoom(player, config);
 
   if (config.playSound) {
     playZoomSound(player);
@@ -32,9 +32,9 @@ export function disableZoom(player) {
 
   activeZoomPlayers.delete(player.id);
 
-  clearZoom(player);
-
   const config = getPlayerConfig(player);
+
+  clearZoom(player, config);
 
   if (config.playSound) {
     playZoomSound(player);

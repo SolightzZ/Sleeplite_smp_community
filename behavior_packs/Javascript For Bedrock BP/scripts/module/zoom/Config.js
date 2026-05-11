@@ -1,9 +1,10 @@
-import { EasingType } from "@minecraft/server";
+import { EasingType, HudElement } from "@minecraft/server";
 
 export const CONFIG_KEY = "zoom";
 
 export const DEFAULT_CONFIG = Object.freeze({
   playSound: true,
+  hideHud: true,
 });
 
 export const ZOOM_CONFIG = Object.freeze({
@@ -27,4 +28,6 @@ export const ZOOM_CONFIG = Object.freeze({
     duration: 20 * 60 * 60,
     showParticles: false,
   },
+
+  hud: [HudElement.Crosshair, HudElement.ToolTips, HudElement.ItemText],
 });

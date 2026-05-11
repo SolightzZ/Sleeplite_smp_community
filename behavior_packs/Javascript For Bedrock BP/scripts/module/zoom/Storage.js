@@ -13,6 +13,9 @@ export function getPlayerConfig(player) {
         if (typeof parsedConfig.playSound === "boolean") {
           config.playSound = parsedConfig.playSound;
         }
+        if (typeof parsedConfig.hideHud === "boolean") {
+          config.hideHud = parsedConfig.hideHud;
+        }
       }
     }
   } catch (e) {
