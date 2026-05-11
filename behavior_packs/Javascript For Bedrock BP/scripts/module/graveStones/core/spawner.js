@@ -29,7 +29,7 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
     z: pos.z - CENTER_OFFSET,
   });
 
-  grave.nameTag = `§c[${deadPlayer.nameTag || deadPlayer.name || "Player"}'s Gravestone]`;
+  grave.nameTag = `§cGraveStone\n${deadPlayer.nameTag || deadPlayer.name || "Player" || deadPlayer.id}`;
 
   const inventory = grave.getComponent(INVENTORY_COMPONENT);
   const container = inventory?.container;

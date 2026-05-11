@@ -1,7 +1,7 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Database } from "../core/database.js";
 import { menu } from "./main-menu.js";
-import { sure } from "../utils/ui.js";
+import { showForm, sure } from "../utils/ui.js";
 
 export const adminact = (player, targetName, index) => {
   try {
@@ -24,7 +24,7 @@ export const adminact = (player, targetName, index) => {
     ui.button("ลบทิ้ง (Delete)");
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "adminact", (res) => {
       if (res.canceled) return;
 
       if (res.selection === 0) {
@@ -35,13 +35,15 @@ export const adminact = (player, targetName, index) => {
         f.textField("หัวข้อ", "", { defaultValue: item.t });
         f.textField("เนื้อหา", "", { defaultValue: item.b });
         if (item.r) f.textField("§aคำตอบเดิม", "", { defaultValue: item.r });
-        f.show(player).then(() => adminact(player, targetName, index));
+        showForm(player, f, "adminact.detail", () =>
+          adminact(player, targetName, index),
+        );
       } else if (res.selection === 1) {
         const f = new ModalFormData();
         f.title("ตอบกลับผู้ใช้งาน");
         f.textField("ข้อความตอบกลับ", "", { defaultValue: item.r });
 
-        f.show(player).then((r) => {
+        showForm(player, f, "adminact.reply", (r) => {
           if (r.canceled) {
             adminact(player, targetName, index);
             return;
@@ -92,7 +94,7 @@ export const adminmsg = (player, targetName) => {
     }
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
-    ui.show(player).then((res) => {
+    showForm(player, ui, "adminmsg", (res) => {
       if (res.canceled) return;
       if (res.selection === list.length) {
         adminpanel(player);
@@ -125,7 +127,7 @@ export const adminpanel = (player) => {
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "adminpanel", (res) => {
       if (res.canceled) return;
 
       if (res.selection === 0) {

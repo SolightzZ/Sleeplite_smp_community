@@ -122,7 +122,9 @@ export const showUI = (player, form, callback, retries = 3) => {
             () => showUI(player, form, callback, retries - 1),
             10,
           );
+          player.sendMessage("[Job] โปรดรอสักครู่...");
         } else if (err?.message !== "User is busy") {
+          player.sendMessage("[Job] UI Error");
           console.error("[Job] UI Error:", err);
         }
       });

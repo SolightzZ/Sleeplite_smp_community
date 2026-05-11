@@ -121,7 +121,7 @@ export function receiveItems(player) {
     saveData();
 
     if (player.isValid)
-      player.sendMessage(`[Job] ได้รับไอเทม ${allItems.length} ประเภทเรียบร้อยแล้ว!`);
+      player.sendMessage(`[Job] ได้รับไอเทม ${allItems.length} เรียบร้อยแล้ว`);
     showMainMenu(player);
   });
 }
@@ -134,14 +134,11 @@ export const showMainMenu = (player) => {
 
   const form = new ActionFormData();
   form.title("ระบบจัดส่งงาน");
-  form.body(``);
+  form.body("เลือกรายการที่ต้องการ:");
   form.button("สร้างคำสั่งจัดส่ง", "textures/ui/MashupIcon");
   form.divider();
   hasPending
-    ? form.button(
-      "§e[!] §rรับไอเทมจัดส่ง",
-      "textures/ui/mute_off",
-    )
+    ? form.button("§e[!] §rรับไอเทมจัดส่ง", "textures/ui/mute_off")
     : form.button("รับไอเทมจัดส่ง", "textures/ui/mute_on");
   form.button("รายการคำสั่งของฉัน", "textures/ui/sidebar_icons/my_content");
   form.button("งานจัดส่งที่พร้อมรับ", "textures/ui/FriendsDiversity");

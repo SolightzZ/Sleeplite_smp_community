@@ -12,6 +12,9 @@ const getBoard = (name) => {
 
 export const addDeath = (player) => {
   if (!player || !player.isValid) return;
+  if (!objA || !objB) initBoards();
+  if (!objA || !objB) return;
+
   try {
     objA.addScore(player, 1);
     objB.addScore(`*${player.name}`, 1);

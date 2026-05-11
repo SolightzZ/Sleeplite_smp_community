@@ -6,7 +6,9 @@ export const normalizeMode = (mode) => {
     const keys = Object.keys(SortModes);
     m = keys[mode] ?? "type";
   }
-  
+
   const key = (m ?? "type").toString().toLowerCase();
-  return SortModes[key] ?? "type";
+  const entry = SortModes[key] ?? SortModes.type;
+
+  return entry?.value ?? "type";
 };

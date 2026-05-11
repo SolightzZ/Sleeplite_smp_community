@@ -6,6 +6,8 @@ import { zoneDatabase } from "./database.js";
 import { clearVisuals, uiLocks } from "./protection.js";
 
 const isPlayer = (entity) => entity?.typeId?.startsWith("minecraft:player");
+const isZoneMap = (zones) =>
+  zones && typeof zones === "object" && !Array.isArray(zones);
 
 export const onBlockEdit = (ev) => {
   const player = ev.player;
@@ -57,6 +59,8 @@ export const onExplosion = (ev) => {
   if (!loc) return;
 
   const zones = zoneDatabase.zones;
+  if (!isZoneMap(zones)) return;
+
   const owners = Object.keys(zones);
   const ownersLen = owners.length;
   if (ownersLen === 0) return;
@@ -66,6 +70,8 @@ export const onExplosion = (ev) => {
 
   for (let i = 0; i < ownersLen; i++) {
     const z = zones[owners[i]];
+    if (!z?.start || !z?.end) continue;
+
     if (
       loc.x >= z.start.x - radius &&
       loc.x <= z.end.x + radius &&
@@ -111,7 +117,13 @@ export const onChat = (ev) => {
       return;
     }
 
-    const owners = Object.keys(zoneDatabase.zones);
+    const zones = zoneDatabase.zones;
+    if (!isZoneMap(zones)) {
+      player.sendMessage(`[x] ไม่มีโซน!`);
+      return;
+    }
+
+    const owners = Object.keys(zones);
     if (owners.length === 0) {
       player.sendMessage(`[x] ไม่มีโซน!`);
       return;
@@ -121,7 +133,9 @@ export const onChat = (ev) => {
     const ownersLen = owners.length;
     for (let i = 0; i < ownersLen; i++) {
       const owner = owners[i];
-      const z = zoneDatabase.zones[owner];
+      const z = zones[owner];
+      if (!z?.start || !z?.end) continue;
+
       data.push({
         owner: owner,
         start: { x: z.start.x, y: z.start.y, z: z.start.z },

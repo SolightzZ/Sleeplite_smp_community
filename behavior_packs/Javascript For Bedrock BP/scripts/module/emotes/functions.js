@@ -25,18 +25,19 @@ function stopEmote(player, animName) {
 function openSubMenu(player, group) {
   if (!player.isValid) return;
 
-  const menu = new ActionFormData()
+  const form = new ActionFormData()
     .title(group.title || "Emotes")
     .body("§7เลือกท่าทาง:");
 
   const items = group.items;
   const len = items.length;
+
   for (let i = 0; i < len; i++) {
     const item = items[i];
-    menu.button(item.name, item.icon || setting.iconDefault);
+    form.button(item.name, item.icon || setting.iconDefault);
   }
 
-  menu
+  form
     .show(player)
     .then((result) => {
       if (!result || result.canceled) return;
@@ -52,8 +53,11 @@ function openSubMenu(player, group) {
       }
     })
     .catch((error) => {
-      if (error.message !== "User is busy") {
-        console.error("[Emote] SubMenu UI Error:", error);
+      if (error?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[Emote] เกิดข้อผิดพลาด");
+        }
+        console.error("[Emote] OpenSubMenu UI Error:", error);
       }
     });
 }
@@ -61,21 +65,21 @@ function openSubMenu(player, group) {
 export function showMain(player) {
   if (!player.isValid) return;
 
-  const menu = new ActionFormData().title("Emote Menu");
-  menu.body("§7เลือกท่าทาง:");
+  const form = new ActionFormData().title("Emote Menu");
+  form.body("§7เลือกท่าทาง:");
   const len = emoteList.length;
   for (let i = 0; i < len; i++) {
     const group = emoteList[i];
-    menu.button(group.name, group.icon || setting.iconDefault);
+    form.button(group.name, group.icon || setting.iconDefault);
   }
 
-  menu.label("                 @Sleeplite SMP");
+  form.label("                 @Sleeplite SMP");
 
   if (setting.soundOpen) {
     player.playSound(setting.soundOpen);
   }
 
-  menu
+  form
     .show(player)
     .then((result) => {
       if (!result || result.canceled) return;
@@ -96,8 +100,11 @@ export function showMain(player) {
       });
     })
     .catch((error) => {
-      if (error.message !== "User is busy") {
-        console.error("[Emote] Main UI Error:", error);
+      if (error?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[Emote] เกิดข้อผิดพลาด");
+        }
+        console.error("[Emote] ShowMain UI Error:", error);
       }
     });
 }

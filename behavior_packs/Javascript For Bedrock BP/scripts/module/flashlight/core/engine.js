@@ -95,7 +95,7 @@ export function flashLeave(playerId) {
   const qLen = processQueue.length;
 
   for (let i = 0; i < qLen; i++) {
-    if (processQueue[i].id === playerId) {
+    if (processQueue[i]?.id === playerId) {
       const last = processQueue.pop();
       if (i < processQueue.length) {
         processQueue[i] = last;

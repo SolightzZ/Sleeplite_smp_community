@@ -35,7 +35,7 @@ const PASS_THROUGH_BLOCKS = new Set([
 ]);
 
 const SHOT_LIBRARY = [
-  // ─── CLOSE-UP ──────────────────────────────────────────────────────────────
+  // CLOSE-UP
   {
     id: "close-low",
     yawOffset: 15,
@@ -97,7 +97,7 @@ const SHOT_LIBRARY = [
     targetUp: 1.5,
   },
 
-  // ─── HERO / MEDIUM ─────────────────────────────────────────────────────────
+  // HERO / MEDIUM
   {
     id: "hero-low",
     yawOffset: -18,
@@ -203,7 +203,7 @@ const SHOT_LIBRARY = [
     targetUp: 1.2,
   },
 
-  // ─── TRACKING / FOLLOW ─────────────────────────────────────────────────────
+  // TRACKING / FOLLOW
   {
     id: "tracking-follow",
     yawOffset: 0,
@@ -234,12 +234,12 @@ const SHOT_LIBRARY = [
     slide: 0.04,
     bob: 0.02,
     duration: 120,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     targetRight: 1.5,
     followVelocity: true,
   },
 
-  // ─── WIDE / ESTABLISHING ───────────────────────────────────────────────────
+  // WIDE / ESTABLISHING
   {
     id: "hero-wide",
     yawOffset: -40,
@@ -351,7 +351,7 @@ const SHOT_LIBRARY = [
     targetUp: 1.45,
   },
 
-  // ─── AERIAL / DRONE ────────────────────────────────────────────────────────
+  // AERIAL / DRONE
   {
     id: "tower-shot",
     yawOffset: 18,
@@ -360,16 +360,6 @@ const SHOT_LIBRARY = [
     slide: 0.04,
     bob: 0.03,
     duration: 105,
-    targetUp: 1.2,
-  },
-  {
-    id: "sky-orbit",
-    yawOffset: 90,
-    distance: 6.0,
-    height: 12.0,
-    slide: 0.08,
-    bob: 0.04,
-    duration: 120,
     targetUp: 1.2,
   },
   {
@@ -440,10 +430,10 @@ const SHOT_LIBRARY = [
     slide: 0.03,
     bob: 0.05,
     duration: 95,
-    targetUp: 1.1, // ✏️
+    targetUp: 1.1,
   },
 
-  // ─── CINEMATIC MOTION (arc / push / pull / rise) ───────────────────────────
+  // CINEMATIC MOTION (arc / push / pull / rise)
   {
     id: "dramatic-push",
     distance: 16,
@@ -452,7 +442,7 @@ const SHOT_LIBRARY = [
     slide: 0.04,
     bob: 0.02,
     duration: 120,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     yawOffset: 0,
     followVelocity: true,
   },
@@ -464,7 +454,7 @@ const SHOT_LIBRARY = [
     slide: 0.04,
     bob: 0.02,
     duration: 120,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     yawOffset: 0,
     followVelocity: true,
   },
@@ -477,7 +467,7 @@ const SHOT_LIBRARY = [
     slide: 0.05,
     bob: 0.02,
     duration: 120,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     followVelocity: true,
   },
   {
@@ -488,7 +478,7 @@ const SHOT_LIBRARY = [
     targetUp: 4,
     slide: 0.05,
     bob: 0.025,
-    duration: 120, // ✏️
+    duration: 120,
     followVelocity: true,
   },
   {
@@ -502,7 +492,7 @@ const SHOT_LIBRARY = [
     slide: 0.06,
     bob: 0.03,
     duration: 120,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     followVelocity: true,
   },
   {
@@ -515,11 +505,11 @@ const SHOT_LIBRARY = [
     slide: 0.06,
     bob: 0.03,
     duration: 120,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     followVelocity: true,
   },
 
-  // ─── MEGA / SIGNATURE ──────────────────────────────────────────────────────
+  // MEGA / SIGNATURE
   {
     id: "mega-establishing",
     yawOffset: 0,
@@ -528,7 +518,7 @@ const SHOT_LIBRARY = [
     slide: 0.3,
     bob: 0.04,
     duration: 260,
-    targetUp: 1.5, // ✏️
+    targetUp: 1.5,
     followVelocity: true,
   },
 ];

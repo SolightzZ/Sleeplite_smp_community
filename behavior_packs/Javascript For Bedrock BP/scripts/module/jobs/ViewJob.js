@@ -73,7 +73,7 @@ const expireJob = (riderId) => {
   const rider = getPlayerById(riderId);
   if (rider && rider.isValid) {
     rider.sendMessage(
-      "[Job] หมดเวลาแล้ว ระบบได้ยกเลิกการจัดส่งและนำกลับเข้าสู่คิว",
+      "[Job] หมดเวลาแล้ว ระบบได้ยกเลิกการจัดส่งและนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ”",
     );
     viewJobs(rider);
   }
@@ -109,7 +109,8 @@ export function viewJobs(player) {
   for (let i = 0; i < openLen; i++) {
     const job = openJobs[i];
     form.button(
-      `${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  |  รางวัล ${totalDiamond(job)} เพชร`, "textures/ui/icon_deals"
+      `${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`,
+      "textures/ui/icon_deals",
     );
   }
   form.button("ย้อนกลับ");
@@ -128,12 +129,12 @@ export const openJobDetail = (player, job) => {
   if (!player.isValid) return;
 
   const total = totalDiamond(job);
-  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nรางวัล: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
+  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของทีไ่ด้รับ: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
 
   const itemsLen = job.items.length;
   for (let i = 0; i < itemsLen; i++) {
     const it = job.items[i];
-    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น (รางวัล ${it.diamond} เพชร)\n`;
+    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น (ของที่ได้รับ ${it.diamond} เพชร)\n`;
   }
 
   const form = new ActionFormData();
@@ -168,7 +169,7 @@ export const openJobDetail = (player, job) => {
 
     if (player.isValid) {
       player.sendMessage(
-        "[Job] รับงานเรียบร้อยแล้ว คุณมีเวลา 20 นาที กรุณาเก็บไอเท็มให้ครบและกด Complete Delivery",
+        "[Job] รับงานเรียบร้อยแล้ว คุณมีเวลา 20 นาที กรุณาเก็บไอเท็มให้ครบและกด “ส่งมอบงาน”",
       );
     }
 

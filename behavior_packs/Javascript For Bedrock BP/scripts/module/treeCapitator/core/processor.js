@@ -4,7 +4,7 @@ import { state, popJob } from "./state.js";
 import { cleanupJobState } from "./lifecycle.js";
 import { getPlayerAxe } from "../utils/inventory.js";
 import { spawnBatchedDrops } from "../utils/drops.js";
-import { getBlockSafe, getAirPerm } from "../utils/block.js";
+import { getBlockSafe } from "../utils/block.js";
 import { applyDurabilityDamage } from "../utils/durability.js";
 
 export const processJobs = () => {
@@ -60,7 +60,7 @@ export const processJobs = () => {
 
       if (block && block.typeId === job.typeId) {
         try {
-          block.setPermutation(getAirPerm());
+          block.setType("minecraft:air");
           job.brokenCount++;
           broken++;
         } catch (e) {

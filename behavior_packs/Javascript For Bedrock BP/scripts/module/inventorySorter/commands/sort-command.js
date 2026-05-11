@@ -17,7 +17,11 @@ const cmdSortInventory = (origin, mode) => {
     if (!player.isValid) return;
 
     const res = sortPlayerInventory(player, mode);
-    if (res.msg) player.sendMessage(res.msg);
+    if (res.msg) {
+      const modeKey = mode?.toString().toLowerCase() ?? "type";
+      const description = SortModes[modeKey]?.description ?? SortModes.type.description;
+      player.sendMessage(`${res.msg} (${description})`);
+    }
   });
 
   return { status: CustomCommandStatus.Success };
@@ -31,7 +35,11 @@ const cmdSortContainer = (origin, mode) => {
     if (!player.isValid) return;
 
     const res = sortBlockContainer(player, mode);
-    if (res.msg) player.sendMessage(res.msg);
+    if (res.msg) {
+      const modeKey = mode?.toString().toLowerCase() ?? "type";
+      const description = SortModes[modeKey]?.description ?? SortModes.type.description;
+      player.sendMessage(`${res.msg} (${description})`);
+    }
   });
 
   return { status: CustomCommandStatus.Success };
@@ -43,7 +51,7 @@ export function registerSortCommands(init) {
   init.customCommandRegistry.registerCommand(
     {
       name: "addon:r",
-      description: "Sort player inventory",
+      description: "จัดเรียงช่องเก็บของส่วนตัว",
       permissionLevel: CommandPermissionLevel.Any,
       cheatsRequired: false,
       optionalParameters: [
@@ -60,7 +68,7 @@ export function registerSortCommands(init) {
   init.customCommandRegistry.registerCommand(
     {
       name: "addon:c",
-      description: "Sort container",
+      description: "จัดเรียงที่เก็บของในบล็อก",
       permissionLevel: CommandPermissionLevel.Any,
       cheatsRequired: false,
       optionalParameters: [

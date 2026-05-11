@@ -1,70 +1,72 @@
-// scripts/main.ts
 import { system, EntityDamageCause } from "@minecraft/server";
 
-// scripts/utils.ts
-var Utils = class {
-  static diceRoll(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) + min);
-  }
+const EFFECT_DURATION = 240;
+
+const randomInt = (min, max) => {
+  Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
-// scripts/main.ts
-system.beforeEvents.startup.subscribe(({ itemComponentRegistry }) => {
-  itemComponentRegistry.registerCustomComponent(
-    "vf_campfire_creations:eat_raw_cactus_skewer",
-    {
-      onConsume(event) {
-        const player = event.source;
-        player.applyDamage(4, { cause: EntityDamageCause.thorns });
-      },
-    },
-  );
-  itemComponentRegistry.registerCustomComponent(
-    "vf_campfire_creations:give_water_breating",
-    {
-      onConsume(event) {
-        const player = event.source;
-        player.addEffect("water_breathing", 240, { amplifier: 1 });
-      },
-    },
-  );
-  itemComponentRegistry.registerCustomComponent(
-    "vf_campfire_creations:eat_hearty_item",
-    {
-      onConsume(event) {
-        const player = event.source;
-        player.addEffect("absorption", 240, { amplifier: 2 });
-        player.addEffect("regeneration", 240, { amplifier: 1 });
-      },
-    },
-  );
-  itemComponentRegistry.registerCustomComponent(
-    "vf_campfire_creations:eat_raw_suspicious_skewer",
-    {
-      onConsume(event) {
-        const player = event.source;
-        player.addEffect("hunger", 240, { amplifier: 0 });
-        if (Utils.diceRoll(1, 10) <= 5) {
-          if (Utils.diceRoll(1, 10) <= 5) {
-            player.addEffect("poison", 240, { amplifier: 0 });
-          } else {
-            player.addEffect("nausea", 240, { amplifier: 0 });
-          }
-        }
-      },
-    },
-  );
-  itemComponentRegistry.registerCustomComponent(
-    "vf_campfire_creations:eat_cooked_suspicious_skewer",
-    {
-      onConsume(event) {
-        const player = event.source;
-        if (Utils.diceRoll(1, 10) <= 5) {
-          player.addEffect("hunger", 240, { amplifier: 0 });
-        }
-      },
-    },
-  );
-});
+const chance = (percent) => randomInt(1, 100) <= percent;
 
-//# sourceMappingURL=../debug/main.js.map
+const addEffect = (
+  player,
+  effectType,
+  amplifier = 0,
+  duration = EFFECT_DURATION,
+) => {
+  if (!player?.isValid()) return;
+
+  player.addEffect(effectType, duration, { amplifier });
+};
+
+const applyDamage = (player, amount, cause = EntityDamageCause.none) => {
+  if (!player?.isValid()) return;
+  player.applyDamage(amount, { cause });
+};
+
+const componentHandlers = {
+  "vf_campfire_creations:eat_raw_cactus_skewer"(player) {
+    applyDamage(player, 4, EntityDamageCause.thorns);
+  },
+
+  "vf_campfire_creations:give_water_breating"(player) {
+    addEffect(player, "water_breathing", 1);
+  },
+
+  "vf_campfire_creations:eat_hearty_item"(player) {
+    addEffect(player, "absorption", 2);
+    addEffect(player, "regeneration", 1);
+  },
+
+  "vf_campfire_creations:eat_raw_suspicious_skewer"(player) {
+    addEffect(player, "hunger");
+
+    if (!chance(50)) return;
+    if (chance(50)) {
+      addEffect(player, "poison");
+      return;
+    }
+
+    addEffect(player, "nausea");
+  },
+
+  "vf_campfire_creations:eat_cooked_suspicious_skewer"(player) {
+    if (!chance(50)) return;
+    addEffect(player, "hunger");
+  },
+};
+
+system.beforeEvents.startup.subscribe(({ itemComponentRegistry }) => {
+  const entries = Object.entries(componentHandlers);
+  for (let i = 0; i < entries.length; i++) {
+    const [componentId, handler] = entries[i];
+
+    itemComponentRegistry.registerCustomComponent(componentId, {
+      onConsume(event) {
+        const player = event.source;
+        if (!player?.isValid) return;
+        handler(player);
+      },
+    });
+  }
+});

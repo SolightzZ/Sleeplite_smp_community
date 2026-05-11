@@ -99,8 +99,8 @@
     "addon_water_bottle": {
       "textures": "textures/items/addon_water_bottle"
     },
-    "bank": {
-      "textures": "textures/items/bank.png"
+    "job": {
+      "textures": "textures/items/job"
     },
     "gao:flashlight": {
       "textures": "textures/items/flashlight"

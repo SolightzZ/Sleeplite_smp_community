@@ -75,9 +75,9 @@ export const giveDiamond = (player, amount) => {
 
   if (freeSpace < amount) {
     player.sendMessage(
-      "§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับรางวัล (ต้องการที่ว่าง " +
-      amount +
-      " เม็ด)",
+      "§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับของที่ได้ (ต้องการที่ว่าง " +
+        amount +
+        " เม็ด)",
     );
     return false;
   }
@@ -119,7 +119,7 @@ export function completeJob(player) {
   const activeJobId = playerJobMap.get(player.id);
 
   if (activeJobId === undefined) {
-    player.sendMessage("[Job] คุณไม่มีงานที่กำลังทำอยู่");
+    player.sendMessage("[Job] ไม่มีงานที่กำลังดำเนินการอยู่");
     showMainMenu(player);
     return;
   }
@@ -137,7 +137,7 @@ export function completeJob(player) {
   if (!job) {
     stopTimer(player.id);
     playerJobMap.delete(player.id);
-    player.sendMessage("[Job] ไม่พบงาน");
+    player.sendMessage("[Job] ไม่มีงานที่กำลังดำเนินการอยู่");
     return;
   }
 
@@ -160,7 +160,7 @@ export function completeJob(player) {
     timeStr = `${m}:${String(s).padStart(2, "0")}`;
   }
 
-  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nรางวัล: ${total} เพชร\nเวลาที่เหลือ: ${timeStr}\n\nไอเทมที่ต้องการ:\n`;
+  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของที่ได้: ${total} เพชร\nเวลาที่เหลือ: ${timeStr}\n\nไอเทมที่ต้องการ:\n`;
 
   const itemsLen = job.items.length;
 
@@ -172,7 +172,7 @@ export function completeJob(player) {
     body += `${ok ? "[ครบ] " : "[ขาด] "}${item.id.replace(
       "minecraft:",
       "",
-    )} ${have}/${item.amount} (รางวัล ${item.diamond} เพชร)\n`;
+    )} ${have}/${item.amount} (ของที่ได้ ${item.diamond} เพชร)\n`;
   }
 
   showActiveJobForm(player, job, body, total);
@@ -240,7 +240,7 @@ export function showActiveJobForm(player, job, body, total) {
     const owner = getPlayerById(job.owner);
     if (owner && owner.isValid) {
       owner.sendMessage(
-        `[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “My Orders” เพื่อรับไอเท็มของคุณ`,
+        `[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “รับไอเทมจัดส่ง” เพื่อรับไอเท็มของคุณ`,
       );
     }
   });
@@ -253,8 +253,7 @@ export function showCancelConfirmForm(player, job) {
   form.title("ต้องการยกเลิกการจัดส่งหรือไม่?");
   form.body(
     "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\n" +
-    "คำสั่งซื้อจะถูกส่งกลับไปยังคิว\n" +
-    "และคุณจะไม่ได้รับเพชรใดๆ",
+      "คำสั่งซื้อจะถูกส่งกลับไปยัง “งานจัดส่งที่พร้อมรับ”\n",
   );
 
   form.button("ใช่, ยกเลิกเลย", "textures/ui/cancel");
@@ -275,14 +274,14 @@ export function showCancelConfirmForm(player, job) {
 
     if (player.isValid) {
       player.sendMessage(
-        "[Job] คุณได้ยกเลิกการจัดส่งเรียบร้อยแล้ว งานถูกนำกลับเข้าสู่คิวอีกครั้ง",
+        "[Job] คุณได้ยกเลิกการจัดส่งเรียบร้อยแล้ว งานถูกนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ” อีกครั้ง",
       );
     }
 
     const owner = getPlayerById(job.owner);
     if (owner && owner.isValid) {
       owner.sendMessage(
-        `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยังคิว`,
+        `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยัง “งานจัดส่งที่พร้อมรับ”`,
       );
     }
   });

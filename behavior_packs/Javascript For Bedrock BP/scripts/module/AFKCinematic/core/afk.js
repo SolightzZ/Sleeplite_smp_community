@@ -10,7 +10,13 @@ import { buildSequence } from "./stateManager.js";
 import { framePool } from "./state.js";
 
 const safeRun = (player, command) => {
-  const p = player.runCommand(command);
+  if (!player || !player.isValid) return;
+
+  try {
+    player.runCommand(command);
+  } catch (e) {
+    console.warn(`[ AFKCinematic ] command failed: ${command} - ${e.message}`);
+  }
 };
 
 export function startAfk(player, s, cinematicScheduler) {
@@ -48,7 +54,6 @@ export function getCameraFrame(player, s) {
   const breath = Math.sin(s.waveClock + progress * Math.PI * 2);
   const drift = Math.cos(s.waveClock * 0.7 + progress * Math.PI * 2);
 
-  // Camera orbits the frozen anchor; target tracks the live player position.
   const desiredOff = framePool.desiredOff;
   rotateRelInto(
     desiredOff,

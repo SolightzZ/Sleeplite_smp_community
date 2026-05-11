@@ -30,12 +30,12 @@ const isAllEmpty = (arr) => {
 
 export function sortPlayerInventory(player, mode) {
   if (!player?.isValid) {
-    return { ok: false, msg: `${ColorCodes.red}[x] Player is no longer valid` };
+    return { ok: false, msg: `${ColorCodes.red}[x] ผู้เล่นไม่ถูกต้องแล้ว` };
   }
 
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) {
-    return { ok: false, msg: `${ColorCodes.red}[x] Inventory not found` };
+    return { ok: false, msg: `${ColorCodes.red}[x] ไม่พบช่องเก็บของ` };
   }
 
   const invSize = inv.size;
@@ -44,38 +44,62 @@ export function sortPlayerInventory(player, mode) {
   const sortMode = normalizeMode(mode);
   const mainItems = readContainerSlice(inv, hotbarEnd, mainLen);
 
-  if (isAllEmpty(mainItems)) {
-    return { ok: true, msg: `${ColorCodes.green}[/] Already sorted` };
+  const rawItems = [];
+  for (let i = 0; i < mainLen; i++) {
+    if (mainItems[i]) rawItems.push(mainItems[i]);
   }
 
-  if (isContainerSorted(inv, sortMode, hotbarEnd)) {
-    return { ok: true, msg: `${ColorCodes.green}[/] Already sorted` };
+  if (rawItems.length === 0) {
+    return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
   }
 
-  const merged = sortAndMergeItems(mainItems, mainLen);
-  merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
+  let merged;
+  if (sortMode === "chess" || sortMode === "line" || sortMode === "column") {
+    const sorted = sortAndMergeItems(rawItems, mainLen);
+    sorted.sort((a, b) => {
+      if (!a && !b) return 0;
+      if (!a) return 1;
+      if (!b) return -1;
+      if (a.amount !== b.amount) return a.amount - b.amount;
+      return a.typeId < b.typeId ? -1 : a.typeId > b.typeId ? 1 : 0;
+    });
+
+    if (sortMode === "chess") merged = applyChessPattern(sorted, mainLen);
+    else if (sortMode === "line") merged = applyLinePattern(sorted, mainLen);
+    else merged = applyColumnPattern(sorted, mainLen);
+  } else {
+    if (isContainerSorted(inv, sortMode, hotbarEnd)) {
+      return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
+    }
+    merged = sortAndMergeItems(rawItems, mainLen);
+    merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
+  }
+
   writeContainerDiff(inv, merged, hotbarEnd);
 
   return {
     ok: true,
-    msg: `${ColorCodes.yellow}[Inventory] ${ColorCodes.white}Sorted ${ColorCodes.gray}(${sortMode})`,
+    msg: `${ColorCodes.yellow}[inventory] ${ColorCodes.white}จัดเรียงเรียบร้อยแล้ว`,
   };
 }
 
 export function sortBlockContainer(player, mode) {
   if (!player?.isValid) {
-    return { ok: false, msg: `${ColorCodes.red}[x] Player is no longer valid` };
+    return { ok: false, msg: `${ColorCodes.red}[x] ผู้เล่นไม่ถูกต้องแล้ว` };
   }
 
   const bv = player.getBlockFromViewDirection?.();
   if (!bv?.block) {
-    return { ok: false, msg: `${ColorCodes.red}[!] No block in view` };
+    return {
+      ok: false,
+      msg: `${ColorCodes.red}[!] กรุณามองไปที่หีบที่ต้องการจัดเรียง`,
+    };
   }
 
   const block = bv.block;
   const container = block.getComponent("minecraft:inventory")?.container;
   if (!container) {
-    return { ok: false, msg: `${ColorCodes.red}[!] Block has no inventory` };
+    return { ok: false, msg: `${ColorCodes.red}[!] บล็อกนี้ไม่มีที่เก็บของ` };
   }
 
   const sortMode = normalizeMode(mode);
@@ -91,7 +115,7 @@ export function sortBlockContainer(player, mode) {
   const emptySlots = size - itemCount;
 
   if (itemCount === 0) {
-    return { ok: true, msg: `${ColorCodes.green}[/] Container is empty` };
+    return { ok: true, msg: `${ColorCodes.green}[/] ที่เก็บของว่างเปล่า` };
   }
 
   let merged;
@@ -109,7 +133,7 @@ export function sortBlockContainer(player, mode) {
     else merged = applyColumnPattern(sorted, size);
   } else {
     if (isContainerSorted(container, sortMode)) {
-      return { ok: true, msg: `${ColorCodes.green}[/] Already sorted` };
+      return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
     }
     merged = sortAndMergeItems(rawItems, size);
     merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
@@ -119,6 +143,6 @@ export function sortBlockContainer(player, mode) {
   const blockName = formatBlockName(block.typeId);
   return {
     ok: true,
-    msg: `${ColorCodes.yellow}[${blockName}] ${ColorCodes.white}Sorted ${ColorCodes.gray}${itemCount} items / ${emptySlots} empty (${sortMode})`,
+    msg: `${ColorCodes.yellow}[${blockName}] ${ColorCodes.white}จัดเรียงเรียบร้อยแล้ว ${ColorCodes.gray}${itemCount} ไอเทม / ${emptySlots} ช่องว่าง`,
   };
 }

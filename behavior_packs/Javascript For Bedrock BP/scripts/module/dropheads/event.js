@@ -4,7 +4,7 @@ import { addDeath, initBoards } from "./score.js";
 
 const PLAYER_TYPE = "minecraft:player";
 
-export const DathCounter = (ev) => {
+export const DeathCounter = (ev) => {
   const dead = ev.deadEntity;
   if (!dead || dead.typeId !== PLAYER_TYPE) return;
 

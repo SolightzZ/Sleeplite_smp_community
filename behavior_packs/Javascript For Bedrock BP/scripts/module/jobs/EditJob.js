@@ -22,9 +22,6 @@ const refundOwner = (job) => {
   }
 };
 
-// =========================================
-//  Manage Jobs
-// =========================================
 export function editJobs(player) {
   if (!player.isValid) return;
 
@@ -58,7 +55,7 @@ export function editJobs(player) {
           ? "[มีผู้รับงานแล้ว]"
           : "[เสร็จสิ้น]";
     form.button(
-      `${statusText} ${job.items.length} ชิ้น  |  รางวัล ${totalDiamond(job)} เพชร`,
+      `${statusText} ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`,
     );
   }
 
@@ -82,14 +79,18 @@ const openManageJobDetail = (player, job) => {
   if (!player.isValid) return;
 
   const statusText =
-    job.status === "open" ? "กำลังรับสมัคร" : job.status === "taken" ? "มีผู้รับงานแล้ว" : "เสร็จสิ้น";
+    job.status === "open"
+      ? "กำลังรับสมัคร"
+      : job.status === "taken"
+        ? "มีผู้รับงานแล้ว"
+        : "เสร็จสิ้น";
 
   let body = `สถานะ: ${statusText}\n\n`;
 
   const itemsLen = job.items.length;
   for (let i = 0; i < itemsLen; i++) {
     const it = job.items[i];
-    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น  (รางวัล ${it.diamond} เพชร)\n`;
+    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น  (ของที่ได้รับ ${it.diamond} เพชร)\n`;
   }
 
   if (job.status === "taken") {

@@ -28,9 +28,12 @@ export function showMenu(p) {
         );
       }
     })
-    .catch((error) => {
-      if (error.message !== "User is busy") {
-        console.error("[FullBright] UI Error:", error);
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[FullBright] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+        console.error("[FullBright] UI Error:", e);
       }
     });
 }

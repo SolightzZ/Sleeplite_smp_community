@@ -3,6 +3,7 @@ import { isAdmin } from "../utils/permission.js";
 import { note } from "./patch-note-menu.js";
 import { reportmenu, inbox } from "./report-menu.js";
 import { adminpanel } from "./admin-panel.js";
+import { showForm } from "../utils/ui.js";
 
 export const menu = (player) => {
   try {
@@ -18,7 +19,7 @@ export const menu = (player) => {
       ui.button("แผงควบคุม (Admin)");
     }
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "menu", (res) => {
       if (res.canceled) return;
       if (res.selection === 0) note(player);
       if (res.selection === 1) reportmenu(player);

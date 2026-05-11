@@ -1,12 +1,12 @@
 import { world } from "@minecraft/server";
-import { DathCounter } from "../module/dropheads/event.js";
+import { DeathCounter } from "../module/dropheads/event.js";
 import { onDeadFullBright } from "../module/fullBright/events.js";
 import { gravestone_main } from "../module/graveStones/index.js";
 import { onMagnetPlayerDie } from "../module/magNet/index.js";
 
 const handlers = [
   gravestone_main,
-  DathCounter,
+  DeathCounter,
   onMagnetPlayerDie,
   onDeadFullBright,
 ];

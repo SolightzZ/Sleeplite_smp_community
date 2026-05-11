@@ -2,7 +2,7 @@ export const boardA = "Deaths";
 export const boardB = "DeathsPlus";
 
 export const headMap = {
-  SolightzZ: "bluefirefroggy:player_head_16",
+  SolightzZ: "addon:test",
   Cxnthiaz: "addon:cxnthiaz",
   DAM0NZ17: "addon:dam0nz17",
   DeMonKung9987: "addon:demonkung9987",
@@ -31,4 +31,6 @@ export const headMap = {
   red2535a: "addon:red2535a",
 };
 
-export const getHead = (name) => headMap[name] || null;
+export const getHead = (name) => {
+  headMap[name] || null;
+};

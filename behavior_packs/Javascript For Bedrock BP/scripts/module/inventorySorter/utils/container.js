@@ -99,6 +99,7 @@ export const isContainerSorted = (container, mode = "type", startSlot = 0) => {
       foundEmpty = true;
       continue;
     }
+
     if (foundEmpty) return false;
     if (prev) {
       if (compareItemsByMode(prev, cur, mode) > 0) return false;
@@ -137,6 +138,7 @@ export const writeContainerDiff = (container, newItems, startSlot = 0) => {
   for (let i = 0; i < len; i++) {
     const cur = container.getItem(startSlot + i);
     const nxt = newItems[i];
+
     if (!cur && !nxt) continue;
     if (
       cur &&

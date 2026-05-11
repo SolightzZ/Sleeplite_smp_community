@@ -3,6 +3,10 @@ import { list } from "./constants.js";
 import { load, save } from "./database.js";
 import { give, name, time } from "./functions.js";
 
+const logFormError = (source, error) => {
+  console.warn(`[ rewards ] ${source}: ${error?.message ?? error}`);
+};
+
 function menu(player) {
   const today = time();
   const db = load(player);
@@ -44,21 +48,24 @@ function menu(player) {
     form.button(txt, icon);
   }
 
-  form.show(player).then((res) => {
-    if (res.canceled) return;
+  form
+    .show(player)
+    .then((res) => {
+      if (!player.isValid || res.canceled) return;
 
-    if (res.selection !== db.count) {
-      player.sendMessage("§c[x] กรุณารับของตามลำดับ");
-      return;
-    }
+      if (res.selection !== db.count) {
+        player.sendMessage("§c[x] กรุณารับของตามลำดับ");
+        return;
+      }
 
-    if (db.last === today) {
-      player.sendMessage("§c[x] คุณรับของวันนี้ไปแล้ว");
-      return;
-    }
+      if (db.last === today) {
+        player.sendMessage("§c[x] คุณรับของวันนี้ไปแล้ว");
+        return;
+      }
 
-    confirm(player, db, today);
-  });
+      confirm(player, db, today);
+    })
+    .catch((error) => logFormError("menu", error));
 }
 
 export { menu };
@@ -83,18 +90,23 @@ function confirm(player, db, today) {
   ui.button1("Cancel");
   ui.button2("Claim");
 
-  ui.show(player).then((res) => {
-    if (res.selection === 1) {
-      if (give(player, item.id, item.count)) {
-        db.last = today;
-        db.count = db.count + 1;
+  ui
+    .show(player)
+    .then((res) => {
+      if (!player.isValid) return;
 
-        save(player, db);
-        player.sendMessage(`§a[/] §aรับของสำเร็จ! ได้รับ ${name(item.id)}`);
-        player.playSound("random.levelup");
-      } else {
-        player.sendMessage("§c[x] §cช่องเก็บของเต็ม");
+      if (res.selection === 1) {
+        if (give(player, item.id, item.count)) {
+          db.last = today;
+          db.count = db.count + 1;
+
+          save(player, db);
+          player.sendMessage(`§a[/] §aรับของสำเร็จ! ได้รับ ${name(item.id)}`);
+          player.playSound("random.levelup");
+        } else {
+          player.sendMessage("§c[x] §cช่องเก็บของเต็ม");
+        }
       }
-    }
-  });
+    })
+    .catch((error) => logFormError("confirm", error));
 }

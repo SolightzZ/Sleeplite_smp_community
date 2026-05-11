@@ -39,12 +39,12 @@ export function ensureState(player) {
 export function refreshBaseline(player, s) {
   const newDimId = player.dimension.id;
   if (newDimId !== s.dimensionId) {
-    // Clear cached blocks from the old dimension to avoid stale memory
     const prefix = s.dimensionId + ":";
     for (const key of blockCache.keys()) {
       if (key.startsWith(prefix)) blockCache.delete(key);
     }
   }
+
   s.lastPosition = cloneVec3(player.location);
   s.lastRotation = cloneVec2(player.getRotation());
   s.dimensionId = newDimId;
@@ -55,6 +55,7 @@ export function hasMoved(player, s) {
   const loc = player.location;
   const rot = player.getRotation();
   const tol = CONFIG.movementTolerance;
+
   return (
     Math.abs(loc.x - s.lastPosition.x) > tol ||
     Math.abs(loc.y - s.lastPosition.y) > tol ||
@@ -67,6 +68,7 @@ export function hasMoved(player, s) {
 export function buildSequence(baseYaw, seed) {
   return SHOT_LIBRARY.map((t, i) => {
     const mirror = ((seed >> (i % 8)) & 1) === 1 ? -1 : 1;
+
     return {
       yaw: normalizeYaw(baseYaw + (t.yawOffset || 0) * mirror),
       distance: t.distance,

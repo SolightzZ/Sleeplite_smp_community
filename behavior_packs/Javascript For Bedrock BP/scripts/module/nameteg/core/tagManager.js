@@ -91,7 +91,7 @@ export const addRank = (player, rankName) => {
 };
 
 export const removeRanks = (player, ranks) => {
-  if (!isValidPlayer(player) || !ranks.length) return false;
+  if (!isValidPlayer(player) || !Array.isArray(ranks) || !ranks.length) return false;
 
   for (let i = 0; i < ranks.length; i++) {
     player.removeTag(PREFIX_RANK + ranks[i]);

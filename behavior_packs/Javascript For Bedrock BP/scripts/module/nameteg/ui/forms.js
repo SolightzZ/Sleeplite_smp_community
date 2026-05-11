@@ -36,32 +36,45 @@ export const showMenuAdd = (admin, target) => {
 
   const form = new ModalFormData()
     .title("เพิ่ม / เปลี่ยนยศ")
-    .dropdown("เลือกยศสำเร็จรูป:", ["-- ไม่เลือก --", ...predefinedLabels])
+    .dropdown("เลือกยศสำเร็จรูป:", ["-- เลือก --", ...predefinedLabels])
     .textField("หรือตั้งชื่อยศใหม่:", "เช่น [Admin]")
     .dropdown("หรือเลือกจากที่มีอยู่:", existingList);
 
-  form.show(admin).then((res) => {
-    if (res.canceled) return;
+  form
+    .show(admin)
+    .then((res) => {
+      if (res.canceled) return;
 
-    const predefinedIndex = Number(res.formValues[0] ?? 0);
-    const input = String(res.formValues[1] ?? "").trim();
-    const existingIndex = Number(res.formValues[2] ?? 0);
+      const predefinedIndex = Number(res.formValues[0] ?? 0);
+      const input = String(res.formValues[1] ?? "").trim();
+      const existingIndex = Number(res.formValues[2] ?? 0);
 
-    let rank = "";
-    if (predefinedIndex > 0) {
-      rank = predefined[predefinedIndex - 1].full;
-    } else if (input) {
-      rank = input;
-    } else if (existingList[existingIndex] !== "(ไม่มี)") {
-      rank = existingList[existingIndex];
-    }
+      let rank = "";
+      if (predefinedIndex > 0) {
+        rank = predefined[predefinedIndex - 1].full;
+      } else if (input) {
+        rank = input;
+      } else if (existingList[existingIndex] !== "(ไม่มี)") {
+        rank = existingList[existingIndex];
+      }
 
-    if (rank) {
-      addRank(target, rank);
-      refreshNameTag(target);
-      admin.sendMessage(`§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
-    }
-  });
+      if (rank) {
+        addRank(target, rank);
+        refreshNameTag(target);
+        admin.sendMessage(`§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
+      }
+    })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+
+        console.error("[NameTagRank] showMenuAdd: ", e);
+      } else {
+        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+      }
+    });
 };
 
 export const showMenuEdit = (admin, target) => {
@@ -79,27 +92,40 @@ export const showMenuEdit = (admin, target) => {
     .title("แก้ไขชื่อยศ")
     .dropdown("เลือกยศ:", owned, { defaultValue: Math.max(0, defaultIndex) });
 
-  form.show(admin).then((res) => {
-    if (res.canceled) return;
+  form
+    .show(admin)
+    .then((res) => {
+      if (res.canceled) return;
 
-    const oldName = owned[Number(res.formValues[0])];
+      const oldName = owned[Number(res.formValues[0])];
 
-    new ModalFormData()
-      .title("เปลี่ยนชื่อยศ")
-      .textField("ชื่อใหม่", oldName, { defaultValue: oldName })
-      .show(admin)
-      .then((r) => {
-        if (r.canceled) return;
+      new ModalFormData()
+        .title("เปลี่ยนชื่อยศ")
+        .textField("ชื่อใหม่", oldName, { defaultValue: oldName })
+        .show(admin)
+        .then((r) => {
+          if (r.canceled) return;
 
-        const newName = String(r.formValues[0] ?? "").trim();
-        if (newName && newName !== oldName) {
-          renameRank(target, oldName, newName);
-        } else {
-          setActiveRank(target, oldName);
+          const newName = String(r.formValues[0] ?? "").trim();
+          if (newName && newName !== oldName) {
+            renameRank(target, oldName, newName);
+          } else {
+            setActiveRank(target, oldName);
+          }
+          refreshNameTag(target);
+        });
+    })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
-        refreshNameTag(target);
-      });
-  });
+
+        console.error("[NameTagRank] showMenuEdit: ", e);
+      } else {
+        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+      }
+    });
 };
 
 const showConfirmDelete = (admin, target, ranks) => {
@@ -113,6 +139,17 @@ const showConfirmDelete = (admin, target, ranks) => {
       if (res.selection === 0) {
         removeRanks(target, ranks);
         refreshNameTag(target);
+      }
+    })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+
+        console.error("[NameTagRank] showConfirmDelete: ", e);
+      } else {
+        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };
@@ -128,18 +165,31 @@ export const showMenuRemove = (admin, target) => {
     form.toggle(owned[i], { defaultValue: false });
   }
 
-  form.show(admin).then((res) => {
-    if (res.canceled) return;
+  form
+    .show(admin)
+    .then((res) => {
+      if (res.canceled) return;
 
-    const toDelete = [];
-    for (let i = 0; i < owned.length; i++) {
-      if (res.formValues[i]) toDelete.push(owned[i]);
-    }
+      const toDelete = [];
+      for (let i = 0; i < owned.length; i++) {
+        if (res.formValues[i]) toDelete.push(owned[i]);
+      }
 
-    if (toDelete.length) {
-      showConfirmDelete(admin, target, toDelete);
-    }
-  });
+      if (toDelete.length) {
+        showConfirmDelete(admin, target, toDelete);
+      }
+    })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+
+        console.error("[NameTagRank] showMenuRemove: ", e);
+      } else {
+        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+      }
+    });
 };
 
 const showActions = (admin, target) => {
@@ -160,6 +210,17 @@ const showActions = (admin, target) => {
       if (res.selection === 0) showMenuAdd(admin, target);
       else if (res.selection === 1) showMenuEdit(admin, target);
       else if (res.selection === 2) showMenuRemove(admin, target);
+    })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+
+        console.error("[NameTagRank] showActions: ", e);
+      } else {
+        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+      }
     });
 };
 
@@ -175,11 +236,24 @@ export const showMainMenu = (admin) => {
     form.button(players[i].nameTag);
   }
 
-  form.show(admin).then((res) => {
-    if (res.canceled) return;
-    const target = players[res.selection];
-    if (target?.isValid) showActions(admin, target);
-  });
+  form
+    .show(admin)
+    .then((res) => {
+      if (res.canceled) return;
+      const target = players[res.selection];
+      if (target?.isValid) showActions(admin, target);
+    })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+
+        console.error("[NameTagRank] showMainMenu: ", e);
+      } else {
+        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+      }
+    });
 };
 
 export const isRankItem = (itemType) => itemType === ITEM;

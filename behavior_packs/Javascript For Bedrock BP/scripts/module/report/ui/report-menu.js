@@ -7,7 +7,7 @@ import { system } from "@minecraft/server";
 import { CONFIG } from "../config.js";
 import { Database } from "../core/database.js";
 import { menu } from "./main-menu.js";
-import { sure } from "../utils/ui.js";
+import { showForm, sure } from "../utils/ui.js";
 
 export const sendform = (player) => {
   try {
@@ -27,7 +27,7 @@ export const sendform = (player) => {
     ui.textField("หัวข้อเรื่อง", "เช่น: ฟาร์มบั๊ก, บล็อกหาย, ของหาย");
     ui.textField("รายละเอียด", "ระบุพิกัด และวิธีทำให้เกิดปัญหา");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "sendform", (res) => {
       try {
         if (res.canceled) {
           reportmenu(player);
@@ -80,7 +80,7 @@ export const mylist = (player, mode) => {
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "mylist", (res) => {
       if (res.canceled) return;
       if (res.selection === list.length) {
         reportmenu(player);
@@ -95,7 +95,7 @@ export const mylist = (player, mode) => {
         f.textField("หัวข้อเรื่อง", "", { defaultValue: list[idx].t });
         f.textField("รายละเอียด", "", { defaultValue: list[idx].b });
 
-        f.show(player).then((r) => {
+        showForm(player, f, "mylist.edit", (r) => {
           try {
             if (r.canceled) {
               mylist(player, mode);
@@ -142,7 +142,7 @@ export const inbox = (player) => {
       ui.title("กล่องจดหมาย (Inbox)");
       ui.body("§7[Report] ยังไม่มีการตอบกลับจากผู้ดูแลระบบ");
       ui.button("ย้อนกลับ", "textures/ui/arrow_left");
-      ui.show(player).then(() => menu(player));
+      showForm(player, ui, "inbox.empty", () => menu(player));
       return;
     }
 
@@ -157,7 +157,7 @@ export const inbox = (player) => {
 
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "inbox", (res) => {
       if (res.canceled) return;
       if (res.selection === replied.length) {
         menu(player);
@@ -171,7 +171,7 @@ export const inbox = (player) => {
       show.button1("ย้อนกลับ");
       show.button2("ปิดหน้าต่าง");
 
-      show.show(player).then((r) => {
+      showForm(player, show, "inbox.detail", (r) => {
         if (r.selection === 0) inbox(player);
       });
     });
@@ -192,7 +192,7 @@ export const reportmenu = (player) => {
     ui.button("ลบข้อความ");
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "reportmenu", (res) => {
       if (res.canceled) return;
       if (res.selection === 0) sendform(player);
       if (res.selection === 1) mylist(player, "edit");

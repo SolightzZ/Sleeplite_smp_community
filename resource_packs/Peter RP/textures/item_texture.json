@@ -1,9 +1,5 @@
 {
   "resource_pack_name": "Philosophyer's Agriculture Technology",
   "texture_name": "atlas.items",
-  "texture_data": {
-    "roach": {
-      "textures": "textures/items/roach_icon"
-    }
-  }
+  "texture_data": {}
 }

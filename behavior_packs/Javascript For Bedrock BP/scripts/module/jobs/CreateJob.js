@@ -99,7 +99,8 @@ export const searchBlock = (player) => {
     }
 
     if (isDuplicate) {
-      if (player.isValid) player.sendMessage("[Job] คุณได้เลือกไอเท็มนี้ไปแล้ว");
+      if (player.isValid)
+        player.sendMessage("[Job] คุณได้เลือกไอเท็มนี้ไปแล้ว");
       searchBlock(player);
       return;
     }
@@ -180,6 +181,7 @@ export function createJob(player) {
         player.sendMessage(
           `[Job] ไม่พบไอเท็มในคลังแล้ว: ${missing.replace("minecraft:", "")}`,
         );
+
         const filtered = [];
         for (let i = 0; i < sLen2; i++) {
           if (selected[i] !== missing) filtered.push(selected[i]);
@@ -188,6 +190,7 @@ export function createJob(player) {
         createJob(player);
         return;
       }
+
       openAmountForm(player);
     } else if (res.selection === backIndex) {
       selectedMap.delete(player.id);
@@ -197,9 +200,11 @@ export function createJob(player) {
       const filtered = [];
       const removeIdx = res.selection - 1;
       const sLen3 = selected.length;
+
       for (let i = 0; i < sLen3; i++) {
         if (i !== removeIdx) filtered.push(selected[i]);
       }
+
       selectedMap.set(player.id, filtered);
       createJob(player);
     }
@@ -208,6 +213,7 @@ export function createJob(player) {
 
 export const openAmountForm = (player) => {
   if (!player.isValid) return;
+
   const selected = selectedMap.get(player.id) ?? [];
   if (selected.length === 0) {
     createJob(player);
@@ -223,20 +229,17 @@ export const openAmountForm = (player) => {
     const id = selected[i];
     const displayName = id.replace("minecraft:", "");
     const current = currentAmounts[i] ?? {};
+
     modal.textField(
       `${displayName} จำนวนไอเทมที่ต้องการ (1-420)`,
       "ระบุจำนวน...",
       { defaultValue: String(current.amount ?? 1) },
     );
-    modal.slider(
-      `Diamond จำนวนเพชรที่ต้องการ  (1-64)`,
-      1,
-      64,
-      {
-        valueStep: 1,
-        defaultValue: current.diamond ?? 1,
-      },
-    );
+
+    modal.slider(`Diamond จำนวนเพชรที่ต้องการ  (1-64)`, 1, 64, {
+      valueStep: 1,
+      defaultValue: current.diamond ?? 1,
+    });
   }
 
   modal.submitButton("ถัดไป > ยืนยัน");
@@ -279,13 +282,13 @@ export const openConfirmForm = (player) => {
     const amount = data.amount ?? 1;
     const diamond = data.diamond ?? 1;
     total += diamond;
-    body += `- ${id.replace("minecraft:", "")} จำนวน ${amount} ชิ้น (รางวัล ${diamond} เพชร)\n`;
+    body += `- ${id.replace("minecraft:", "")} จำนวน ${amount} ชิ้น (ของที่ได้รับ ${diamond} เพชร)\n`;
   }
 
   const inv = player.getComponent("minecraft:inventory")?.container;
   if (!inv) return;
   const haveDiam = countItem(inv, "minecraft:diamond");
-  body += `\nรางวัลทั้งหมด: ${total} เพชร`;
+  body += `\nของที่ได้รับทั้งหมด: ${total} เพชร`;
   body += `\nเพชรของคุณ: ${haveDiam} / ${total}`;
 
   const form = new ActionFormData();
@@ -317,10 +320,14 @@ export const openConfirmForm = (player) => {
       warnForm.title("เพชรไม่เพียงพอ");
       warnForm.body(
         `ต้องการ: ${total} เพชร\n` +
-        `มีอยู่: ${haveDiam2} เพชร\n` +
-        `ขาดอีก: ${total - haveDiam2} เพชร`,
+          `มีอยู่: ${haveDiam2} เพชร\n` +
+          `ขาดอีก: ${total - haveDiam2} เพชร`,
       );
-      warnForm.button("ย้อนกลับ (แก้ไขรางวัล)", "textures/ui/debug_glyph_color");
+      warnForm.button(
+        "ย้อนกลับ (แก้ไขของที่ได้รับ)",
+        "textures/ui/debug_glyph_color",
+      );
+
       warnForm.button("ยกเลิกคำสั่ง", "textures/ui/cancel");
       showUI(player, warnForm, (r) => {
         if (r.selection === 0) openAmountForm(player);

@@ -23,7 +23,16 @@ function showiconstest(player, title, message, icon) {
     form
       .show(player)
       .then(() => {})
-      .catch((e) => console.error("[ EndPortalFrame ] showiconstest: " + e));
+      .catch((e) => {
+        if (e?.message !== "User is busy") {
+          if (player.isValid) {
+            player.sendMessage(
+              "§c[EndPortalFrame] เกิดข้อผิดพลาดในการเปิดเมนู",
+            );
+          }
+          console.error("[EndPortalFrame] showiconstest", e);
+        }
+      });
   });
 }
 
@@ -57,7 +66,7 @@ export const touch = (ev) => {
       ev.cancel = true;
       const itemData = shop.find((i) => i.id === gift.id);
       sound(player, "random.click");
-      showiconstest(player, "Portal Frame", `Need: ${name}`, itemData?.icon);
+      showiconstest(player, "Portal Frame", `${name}`, itemData?.icon);
       return;
     }
 

@@ -1,7 +1,7 @@
 import { system } from "@minecraft/server";
 import { state, popJob } from "./queue.js";
 import { CFG } from "../config.js";
-import { getBlockSafe, getAirPerm } from "../utils/block.js";
+import { getBlockSafe } from "../utils/block.js";
 import { getPlayerPickaxe } from "../utils/player.js";
 import { finalizeAndCleanupState } from "./lifecycle.js";
 import { ORE_XP } from "../data/ores.js";
@@ -60,7 +60,7 @@ export const processVeinJobs = () => {
         const xpAmt = xpChoices[Math.floor(Math.random() * xpChoices.length)];
 
         try {
-          block.setPermutation(getAirPerm());
+          block.setType("minecraft:air");
           job.brokenCount += dropAmt;
           job.xpAccumulated += xpAmt;
           broken++;

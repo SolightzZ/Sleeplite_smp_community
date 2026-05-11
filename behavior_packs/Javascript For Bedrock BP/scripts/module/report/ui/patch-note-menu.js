@@ -1,6 +1,7 @@
 import { ActionFormData } from "@minecraft/server-ui";
 import { patchNotesData } from "../data/patch-notes.js";
 import { menu } from "./main-menu.js";
+import { showForm } from "../utils/ui.js";
 
 export const note = (player) => {
   try {
@@ -25,7 +26,7 @@ export const note = (player) => {
     ui.body(bodyText);
     ui.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    ui.show(player).then((res) => {
+    showForm(player, ui, "note", (res) => {
       if (res.canceled) return;
       if (res.selection === 0) menu(player);
     });

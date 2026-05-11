@@ -29,7 +29,16 @@ export const showMagnetMenu = (player) => {
       if (!res || res.canceled || res.selection !== 0) return;
       if (!player.isValid) return;
       toggleMagnet(player, !isOn);
-    }).catch((error) => {
-      console.error("[magnet] showMagnetMenu" + error)
     })
+    .catch((e) => {
+      if (e?.message !== "User is busy") {
+        if (player.isValid) {
+          player.sendMessage("§c[Magnet] เกิดข้อผิดพลาดในการเปิดเมนู");
+        }
+
+        console.error("[Magnet] showMagnetMenu: ", e);
+      } else {
+        player.sendMessage("§c[Magnet] โปรดรอสักครู่...");
+      }
+    });
 };
