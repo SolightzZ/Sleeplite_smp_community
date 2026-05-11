@@ -9,6 +9,7 @@ import { onJobPlayerLeave } from "../module/jobs/Job.js";
 import { onMagnetPlayerLeave } from "../module/magNet/index.js";
 import { chatRankPlayerLeave } from "../module/nameteg/index.js";
 import { onPlayerLeave } from "../module/protection/index.js";
+import { zoomPlayerLeave } from "../module/zoom/index.js";
 
 const handlers = [
   onLeaveFullBright,
@@ -19,6 +20,7 @@ const handlers = [
   flashLeave,
   onJobPlayerLeave,
   chatRankPlayerLeave,
+  zoomPlayerLeave,
 ];
 
 world.afterEvents.playerLeave.subscribe((ev) => {

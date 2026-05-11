@@ -5,6 +5,7 @@ import { registerCommands } from "../module/customCommands/Register.js";
 import { registerSortCommands } from "../module/inventorySorter/index.js";
 import { RegisterRewards } from "../module/rewards/system.js";
 import { registerCustomCommandTakeASeat } from "../module/simpleSit/index.js";
+import { ZoomCommand } from "../module/zoom/Command.js";
 
 const startupHandlers = [
   registerCommands,
@@ -13,6 +14,7 @@ const startupHandlers = [
   registerCustomCommandTakeASeat,
   RegisterRewards,
   RegisterHelp,
+  ZoomCommand,
 ];
 
 system.beforeEvents.startup.subscribe((init) => {
