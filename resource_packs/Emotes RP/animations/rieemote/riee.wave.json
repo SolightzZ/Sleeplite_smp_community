@@ -1,0 +1,100 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.wave": {
+			"loop": true,
+			"animation_length": 1.9091,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5455": [0, 0, -15],
+						"1.6364": [0, 0, -15],
+						"1.9091": [0, 0, 0]
+					}
+				},
+				"leftArm": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5455": [0, 0, -135],
+						"0.8182": [0, 0, -117.5],
+						"1.0909": [0, 0, -140],
+						"1.3636": [0, 0, -122.5],
+						"1.6364": [0, 0, -135],
+						"1.9091": [0, 0, 0]
+					}
+				},
+				"rightArm": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5455": [0, 0, 22.5],
+						"1.0909": [0, 0, 15],
+						"1.6364": [0, 0, 22.5],
+						"1.9091": [0, 0, 0]
+					}
+				},
+				"leftLeg": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5455": [0, 0, -7.5],
+						"1.6364": [0, 0, -7.5],
+						"1.9091": [0, 0, 0]
+					}
+				}
+			}
+		},
+		"animation.riee.sit": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"position": [0, -10, 0]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -10],
+					"position": [0, -2.2, 0]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 10],
+					"position": [0, -1.7, 0]
+				},
+				"leftLeg": {
+					"rotation": [-90, -20, 0],
+					"position": [0, -9.8, 0]
+				},
+				"rightLeg": {
+					"rotation": [-90, 20, 0],
+					"position": [0, -9.8, 0]
+				}
+			}
+		},
+		"animation.riee.sleep": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-87.5, 0, 0],
+					"position": [0, -9.8, 0]
+				},
+				"head": {
+					"rotation": [27.5, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -7.5]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 7.5]
+				},
+				"leftLeg": {
+					"rotation": [-90, -7.5, 0],
+					"position": [0, -10, 0]
+				},
+				"rightLeg": {
+					"rotation": [-90, 7.5, 0],
+					"position": [0, -10.1, 0]
+				}
+			}
+		}
+	}
+}

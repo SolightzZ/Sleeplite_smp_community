@@ -1,0 +1,39 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.halflove2": {
+			"loop": true,
+			"animation_length": 0.25,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [1.29833, -3.06812, -32.36817]
+				},
+				"head": {
+					"rotation": [0, 0, -17.5]
+				},
+				"leftArm": {
+					"rotation": [-179.57602, -12.58924, -347.56489]
+				},
+				"ls": {
+					"rotation": [0, 0, 22.5]
+				},
+				"rightArm": {
+					"rotation": [0.90876, 3.70204, 70.5191]
+				},
+				"leftLeg": {
+					"rotation": [2.86437, -4.42118, -52.36444]
+				},
+				"Ll": {
+					"rotation": [17.5, 0, 0]
+				},
+				"La": {
+					"rotation": [4.09362, 0.94167, 24.62091]
+				},
+				"lp": {
+					"rotation": [17.5, 0, 0]
+				}
+			}
+		}
+	}
+}

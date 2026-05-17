@@ -1,0 +1,30 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.pointing2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"head": {
+					"rotation": [0, 72.5, 0]
+				},
+				"leftArm": {
+					"rotation": [26.66722, -2.0422, -6.96557],
+					"position": [0, -1.9, 0]
+				},
+				"La": {
+					"rotation": [-35, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-95.59803, 70.07931, -3.67177]
+				},
+				"leftLeg": {
+					"rotation": [0, -17.5, 0]
+				},
+				"rightLeg": {
+					"rotation": [0, 17.5, 0]
+				}
+			}
+		}
+	}
+}

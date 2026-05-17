@@ -1,0 +1,46 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.onearmcarry2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [0, -15, 0],
+					"position": [-10.2, 10, 0]
+				},
+				"Body": {
+					"position": [10, 1.8, 0]
+				},
+				"head": {
+					"rotation": [17.89807, -11.91276, -3.81397]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -82.5],
+					"position": [0, -0.7, 0]
+				},
+				"La": {
+					"rotation": [-45, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 10],
+					"position": [0, -1.6, 0]
+				},
+				"leftLeg": {
+					"rotation": [-26.50931, -11.00072, -10.26078],
+					"position": [0, 11.6, 2.4]
+				},
+				"Ll": {
+					"rotation": [27.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-49.99617, -24.00248, 16.1605],
+					"position": [-0.7, 11.4, 1.2]
+				},
+				"Rl": {
+					"rotation": [37.5, 0, 0]
+				}
+			}
+		}
+	}
+}

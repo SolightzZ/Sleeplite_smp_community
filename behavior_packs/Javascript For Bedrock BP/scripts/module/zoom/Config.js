@@ -8,8 +8,6 @@ export const DEFAULT_CONFIG = Object.freeze({
 });
 
 export const ZOOM_CONFIG = Object.freeze({
-  fov: 30,
-
   sound: {
     id: "item.spyglass.use",
     options: {
@@ -18,6 +16,7 @@ export const ZOOM_CONFIG = Object.freeze({
   },
 
   camera: {
+    fov: 30,
     easeTime: 0.25,
     easeType: EasingType.OutCubic,
   },

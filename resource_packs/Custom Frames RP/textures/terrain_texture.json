@@ -1,0 +1,48 @@
+{
+  "resource_pack_name": "custom_frames",
+  "texture_name": "atlas.terrain",
+  "padding": 8,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "custom_frame_default": {
+      "textures": "textures/blocks/default"
+    },
+    "custom_painting_1": {
+      "textures": "textures/blocks/custom_paintings/1"
+    },
+    "custom_painting_2": {
+      "textures": "textures/blocks/custom_paintings/2"
+    },
+    "custom_painting_3": {
+      "textures": "textures/blocks/custom_paintings/3"
+    },
+    "custom_painting_4": {
+      "textures": "textures/blocks/custom_paintings/4"
+    },
+
+    "custom_painting_5": {
+      "textures": "textures/blocks/custom_paintings/5"
+    },
+    "custom_painting_6": {
+      "textures": "textures/blocks/custom_paintings/6"
+    },
+    "custom_painting_7": {
+      "textures": "textures/blocks/custom_paintings/7"
+    },
+    "custom_painting_8": {
+      "textures": "textures/blocks/custom_paintings/8"
+    },
+    "custom_painting_9": {
+      "textures": "textures/blocks/custom_paintings/9"
+    },
+    "custom_painting_10": {
+      "textures": "textures/blocks/custom_paintings/10"
+    },
+    "custom_painting_sljr": {
+      "textures": "textures/blocks/custom_paintings/sljr"
+    },
+    "custom_painting_sl": {
+      "textures": "textures/blocks/custom_paintings/sl"
+    }
+  }
+}

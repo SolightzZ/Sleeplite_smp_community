@@ -1,0 +1,30 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.sleep1": {
+			"loop": true,
+			"animation_length": 0.4167,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -10, 0]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -12.5]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 17.5]
+				},
+				"leftLeg": {
+					"rotation": [-90, -12.5, 0],
+					"position": [0, -10, 0]
+				},
+				"rightLeg": {
+					"rotation": [-90, 10, 0],
+					"position": [0, -10, 0]
+				}
+			}
+		}
+	}
+}

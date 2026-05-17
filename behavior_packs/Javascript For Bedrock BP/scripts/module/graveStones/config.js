@@ -1,4 +1,4 @@
-export const GRAVESTONE_ENTITY = "true:gravestone_storage";
+export const GRAVESTONE_ENTITY = "addon:gravestone_storage";
 export const ITEM_ENTITY = "minecraft:item";
 export const INVENTORY_COMPONENT = "minecraft:inventory";
 export const MAX_ITEM_RADIUS = 4;

@@ -1,0 +1,45 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.relaxsleep2": {
+			"loop": true,
+			"animation_length": 10,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-62.5, 0, 0],
+					"position": [0, -10, 0]
+				},
+				"Body": {
+					"rotation": [0, -90, 0]
+				},
+				"head": {
+					"rotation": [0.00111, -2.38163, 1.08183]
+				},
+				"leftArm": {
+					"rotation": [-117.5, -87.5, 0]
+				},
+				"La": {
+					"rotation": [-95, 0, 0]
+				},
+				"ls": {
+					"rotation": [-95, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [-90.61311, 1.06182, 90.06902],
+					"position": [-2, -10, 0]
+				},
+				"rightLeg": {
+					"rotation": [-126.29099, -11.71796, 98.30936],
+					"position": [2, -6, 0]
+				},
+				"rp": {
+					"rotation": [15.62489, 7.98133, -26.40319]
+				},
+				"Rl": {
+					"rotation": [0, 0, -25]
+				}
+			}
+		}
+	}
+}

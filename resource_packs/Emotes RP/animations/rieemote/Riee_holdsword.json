@@ -1,0 +1,68 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.holdsword": {
+			"loop": true,
+			"animation_length": 4.875,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [43.02443, -3.42736, 2.23418],
+					"position": [0, -3, 0]
+				},
+				"head": {
+					"rotation": [-40.10753, 3.21154, -3.83424]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -25]
+				},
+				"La": {
+					"rotation": [-55, 0, 0]
+				},
+				"ls": {
+					"rotation": [-52.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [159.29043, 14.92893, -92.90261],
+					"position": [0, -1, 2]
+				},
+				"Ra": {
+					"rotation": [-52.5, 0, 0]
+				},
+				"rs": {
+					"rotation": [-61.13386, 45.02151, -1.45385]
+				},
+				"leftLeg": {
+					"rotation": [20.11071, 4.30725, -17.17971],
+					"position": [0, -3, 0]
+				},
+				"Ll": {
+					"rotation": [32.5, 0, 0]
+				},
+				"lp": {
+					"rotation": [30, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-42.5, 0, 30],
+					"position": [0, -4.25, 0]
+				},
+				"Rl": {
+					"rotation": [45, 0, 0]
+				},
+				"rp": {
+					"rotation": [29.97638, -1.2497, -27.83459]
+				},
+				"rightItem": {
+					"rotation": {
+						"0.0": [-32.5, 0, 0],
+						"4.875": [-37.5, 0, 0]
+					},
+					"position": {
+						"0.0": [0, -1.9, -0.5],
+						"4.875": [0, -0.8, -1.8]
+					}
+				}
+			}
+		}
+	}
+}

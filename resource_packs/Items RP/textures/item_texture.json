@@ -104,6 +104,9 @@
     },
     "gao:flashlight": {
       "textures": "textures/items/flashlight"
+    },
+    "addon:gravestone_storage": {
+      "textures": "textures/items/gravestone"
     }
   }
 }

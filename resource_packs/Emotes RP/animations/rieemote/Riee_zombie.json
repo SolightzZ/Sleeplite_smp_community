@@ -1,0 +1,42 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.zombie": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-10, 0, 0]
+				},
+				"Bodysea": {
+					"rotation": [12.5, 0, 0],
+					"position": [0, -0.4, 0]
+				},
+				"head": {
+					"rotation": [0, 0, -10]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -7.5],
+					"position": [0, -1.3, 0]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 7.5],
+					"position": [0, -1.7, 0]
+				},
+				"leftLeg": {
+					"rotation": [-9.76905, 9.41152, -3.22034]
+				},
+				"Ll": {
+					"rotation": [12.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-9.81218, -11.25303, 6.97182]
+				},
+				"Rl": {
+					"rotation": [25, 0, 0],
+					"scale": [1, 1.14, 1]
+				}
+			}
+		}
+	}
+}

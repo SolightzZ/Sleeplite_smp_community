@@ -1,0 +1,50 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.cutiestand": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [40.43246, -7.64427, -6.46635]
+				},
+				"head": {
+					"rotation": [-36.8894, -28.1768, 7.70548]
+				},
+				"leftArm": {
+					"rotation": [-26.90842, 6.21271, 10.86815],
+					"position": [0, -1, -1]
+				},
+				"La": {
+					"rotation": [0, 0, 32.5]
+				},
+				"ls": {
+					"rotation": [-14.45237, 9.14367, 14.87041]
+				},
+				"rightArm": {
+					"rotation": [-72.81262, 5.36985, 15.75167],
+					"position": [0, -2.9, -3.2]
+				},
+				"Ra": {
+					"rotation": [-90, 0, 0],
+					"position": [0, 0, -3.6]
+				},
+				"rs": {
+					"rotation": [-82.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [12.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-15, 0, 0]
+				},
+				"Rl": {
+					"rotation": [12.5, 0, 0]
+				},
+				"rp": {
+					"rotation": [12.5, 0, 0]
+				}
+			}
+		}
+	}
+}

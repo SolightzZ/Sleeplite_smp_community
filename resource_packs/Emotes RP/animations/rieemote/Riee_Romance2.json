@@ -1,0 +1,46 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.romance2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-60, 0, 0],
+					"position": [0, -1, -0.8]
+				},
+				"head": {
+					"rotation": [26.05573, -15.81499, -7.59001]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -72.5]
+				},
+				"La": {
+					"rotation": [-37.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-30, 0, 0],
+					"position": [0, -2.1, 0]
+				},
+				"Ra": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -2.3, 0],
+					"scale": [1, 1.33, 1]
+				},
+				"leftLeg": {
+					"rotation": [-47.5, 0, 0]
+				},
+				"Ll": {
+					"rotation": [10, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-15, 0, 0]
+				},
+				"Rl": {
+					"rotation": [5, 0, 0],
+					"scale": [1, 1.06, 1]
+				}
+			}
+		}
+	}
+}

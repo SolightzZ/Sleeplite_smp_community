@@ -1,0 +1,53 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.smoker2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-12.5, 0, 0]
+				},
+				"Bodysea": {
+					"rotation": [10, 0, 0],
+					"position": [0, -0.4, 0]
+				},
+				"head": {
+					"rotation": [12.31594, -2.15393, 9.76758]
+				},
+				"leftArm": {
+					"rotation": [-28.71697, 66.42268, -13.18959],
+					"position": [0.3, -1.8, -0.8]
+				},
+				"La": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -2.3, 0],
+					"scale": [1, 1.27, 1]
+				},
+				"rightArm": {
+					"rotation": [-93.31613, -34.48881, 34.19441],
+					"position": [0, -1.7, -0.8]
+				},
+				"Ra": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -2.3, 0],
+					"scale": [1, 1.22, 1]
+				},
+				"leftLeg": {
+					"rotation": [-12.39638, -1.61888, -7.32417]
+				},
+				"Ll": {
+					"rotation": [12.5, 0, 0],
+					"scale": [1, 1.06, 1]
+				},
+				"rightLeg": {
+					"rotation": [-20.2614, 14.8687, -2.00307]
+				},
+				"Rl": {
+					"rotation": [30, 0, 0],
+					"scale": [1, 1.12, 1]
+				}
+			}
+		}
+	}
+}

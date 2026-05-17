@@ -1,0 +1,44 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.kiss": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [17.5, 0, 0]
+				},
+				"head": {
+					"rotation": [-17.10967, 3.73171, 11.93845]
+				},
+				"leftArm": {
+					"rotation": [-97.67995, -12.39135, -8.3425]
+				},
+				"La": {
+					"rotation": [-15, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-55.21547, 5.21634, 2.87514]
+				},
+				"Ra": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -1.9, 0],
+					"scale": [1, 1.26, 1]
+				},
+				"leftLeg": {
+					"rotation": [-10, 0, 0]
+				},
+				"Ll": {
+					"rotation": [12.5, 0, 0],
+					"scale": [1, 1.07, 1]
+				},
+				"rightLeg": {
+					"rotation": [25, 0, 0]
+				},
+				"Rl": {
+					"rotation": [12.5, 0, 0]
+				}
+			}
+		}
+	}
+}

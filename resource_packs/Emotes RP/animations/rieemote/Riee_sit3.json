@@ -1,0 +1,41 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.sit3": {
+			"loop": true,
+			"animation_length": 463.125,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"position": [0, -7, 0]
+				},
+				"leftArm": {
+					"rotation": [-31.52504, 9.57658, 11.59948]
+				},
+				"rightArm": {
+					"rotation": [-38.66901, -11.14485, -13.57875]
+				},
+				"leftLeg": {
+					"rotation": [55, 0, 0],
+					"position": [0, -7, -5]
+				},
+				"Ll": {
+					"rotation": [37.5, 0, 0]
+				},
+				"lp": {
+					"rotation": [37.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [55, 0, 0],
+					"position": [0, -7, -5]
+				},
+				"Rl": {
+					"rotation": [35, 0, 0]
+				},
+				"rp": {
+					"rotation": [35, 0, 0]
+				}
+			}
+		}
+	}
+}

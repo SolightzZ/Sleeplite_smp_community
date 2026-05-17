@@ -1,2 +1,2 @@
 entity.ph:roach.name=Roach
-item.ph:roach=Roach Spawn Egg
+item.spawn_egg.entity.addon:roach.name=Roach Spawn Egg

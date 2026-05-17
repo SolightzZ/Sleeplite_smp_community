@@ -77,7 +77,7 @@ export const giveDiamond = (player, amount) => {
     player.sendMessage(
       "§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับของที่ได้ (ต้องการที่ว่าง " +
         amount +
-        " เม็ด)",
+        " ช่อง)",
     );
     return false;
   }

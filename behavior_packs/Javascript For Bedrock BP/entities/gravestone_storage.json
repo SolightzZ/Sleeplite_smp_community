@@ -2,7 +2,7 @@
   "format_version": "1.21.0",
   "minecraft:entity": {
     "description": {
-      "identifier": "true:gravestone_storage",
+      "identifier": "addon:gravestone_storage",
       "spawn_category": "creature",
       "is_spawnable": true,
       "is_summonable": true

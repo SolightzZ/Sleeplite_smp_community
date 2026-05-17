@@ -1,6 +1,8 @@
 
 ## BLOCKS
-tile.true:gravestone.name=Gravestone 
+tile.addon:gravestone.name=Gravestone 
+item.spawn_egg.entity.addon:gravestone_storage.name=Gravestone 
+
 
 ## Avanced Crafting Table
 tile.addon:avanced_crafting.name=Avanced Crafting Table
@@ -49,7 +51,7 @@ item.addon:su1.name=Tamago Sushi 
 item.addon:su2.name=Salmon Sushi 
 item.addon:the_coffee_bean.name=The coffee bean 
 addon.water_bottle=Water Bottle 
-item.addon:bank=Jobs 
+item.addon:job=Jobs 
 
 ## Emotes
 item.addon:e1=Emotes 

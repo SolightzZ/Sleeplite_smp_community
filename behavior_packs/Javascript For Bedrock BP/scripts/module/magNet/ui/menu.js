@@ -19,7 +19,7 @@ export const showMagnetMenu = (player) => {
 
   const form = new ActionFormData()
     .title("Magnet System")
-    .body(`§7Status: ${isOn ? "§aActive" : "§cInactive"}`)
+    .body(`§7Status: ${isOn ? "§aEnabled" : "§cDisabled"}`)
     .label(`§7Players: ${current}/${MagnetConfig.MAX_USERS}`)
     .button(btnText, btnIcon)
     .label("                 @Sleeplite SMP");

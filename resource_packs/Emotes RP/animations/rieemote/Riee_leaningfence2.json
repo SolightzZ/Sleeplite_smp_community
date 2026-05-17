@@ -1,0 +1,54 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.leaningfence2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"position": [0, -1, 2]
+				},
+				"bone": {
+					"rotation": [-20, 0, 0],
+					"position": [0, 0.25, -2.25]
+				},
+				"leftArm": {
+					"rotation": [60.47054, -35.67509, -69.94179]
+				},
+				"La": {
+					"rotation": [-65, 0, 0],
+					"scale": [1, 1.32, 1]
+				},
+				"ls": {
+					"rotation": [-67.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [48.54668, 41.39255, 70.18112]
+				},
+				"Ra": {
+					"rotation": [-65, 0, 0],
+					"scale": [1, 1.32, 1]
+				},
+				"rs": {
+					"rotation": [-65, 0, 0]
+				},
+				"j": {
+					"rotation": [-20, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [-29.9055, 2.49762, 4.33287]
+				},
+				"rightLeg": {
+					"rotation": [-46.50931, -11.00072, -10.26078]
+				},
+				"Body": {
+					"rotation": [-22.5, 0, 0]
+				},
+				"Bodysea": {
+					"rotation": [27.5, 0, 0],
+					"position": [0, -1, 0.3]
+				}
+			}
+		}
+	}
+}

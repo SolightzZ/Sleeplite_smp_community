@@ -1,0 +1,36 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.liedown": {
+			"loop": true,
+			"animation_length": 1000.25,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-90, 0, 0],
+					"position": [0, -10, 0]
+				},
+				"Body": {
+					"rotation": [0, 180, 0]
+				},
+				"leftArm": {
+					"rotation": [0, 0, -17.5]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 12.5]
+				},
+				"leftLeg": {
+					"rotation": [-88.52587, -8.87929, 179.86953],
+					"position": [-4, -10, 0]
+				},
+				"rightLeg": {
+					"rotation": [-90.10892, 11.22142, 180.05465],
+					"position": [4, -10, 0]
+				},
+				"head": {
+					"rotation": [0, -362.5, 0]
+				}
+			}
+		}
+	}
+}

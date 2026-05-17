@@ -45,7 +45,6 @@ export function editJobs(player) {
   form.body("เลือกรายการคำสั่งเพื่อจัดการ:");
 
   const myJobsLen = myJobs.length;
-
   for (let i = 0; i < myJobsLen; i++) {
     const job = myJobs[i];
     const statusText =
@@ -86,7 +85,6 @@ const openManageJobDetail = (player, job) => {
         : "เสร็จสิ้น";
 
   let body = `สถานะ: ${statusText}\n\n`;
-
   const itemsLen = job.items.length;
   for (let i = 0; i < itemsLen; i++) {
     const it = job.items[i];

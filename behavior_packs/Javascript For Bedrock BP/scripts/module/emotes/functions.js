@@ -25,9 +25,7 @@ function stopEmote(player, animName) {
 function openSubMenu(player, group) {
   if (!player.isValid) return;
 
-  const form = new ActionFormData()
-    .title(group.title || "Emotes")
-    .body("§7เลือกท่าทาง:");
+  const form = new ActionFormData().title("§e§m§o§t§e§f" + "§r§8" + group.title || "Emotes").body("§7เลือกท่าทาง:");
 
   const items = group.items;
   const len = items.length;

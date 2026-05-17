@@ -1,0 +1,65 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.pose2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [34.56662, -3.47615, 3.60607],
+					"position": [0, -3.1, 2]
+				},
+				"head": {
+					"rotation": [-17.5, -15, -10]
+				},
+				"leftArm": {
+					"rotation": [-28.25005, 15.31382, -20.36929],
+					"position": [0, -1, 0]
+				},
+				"La": {
+					"rotation": [-4.8859, -0.89409, 1.93408]
+				},
+				"ls": {
+					"rotation": [-2.3859, -0.89409, 1.93408]
+				},
+				"rightArm": {
+					"rotation": [-9.37296, -46.48264, 32.70417],
+					"position": [0, -1.4, -1]
+				},
+				"leftLeg": {
+					"rotation": [-46.20318, -39.76255, -3.83679],
+					"position": [0, -3.4, 0]
+				},
+				"rightLeg": {
+					"rotation": [-52.31723, 20.47094, 7.08391],
+					"position": [0, -4.4, -1]
+				},
+				"Rl": {
+					"rotation": [57.5, 0, 0]
+				},
+				"rp": {
+					"rotation": [53.18781, 2.71434, 2.80048]
+				},
+				"Ra": {
+					"rotation": [-50, 0, 0],
+					"scale": [1, 1.25, 1]
+				},
+				"rs": {
+					"rotation": [-62.43603, 7.43547, 0.98448]
+				},
+				"j": {
+					"rotation": [-2.42381, 1.48457, 0.16144]
+				},
+				"Ll": {
+					"rotation": [45, 0, 0]
+				},
+				"lp": {
+					"rotation": [45, 0, 0]
+				},
+				"Body": {
+					"rotation": [-10.06522, 0.93566, -0.26119]
+				}
+			}
+		}
+	}
+}

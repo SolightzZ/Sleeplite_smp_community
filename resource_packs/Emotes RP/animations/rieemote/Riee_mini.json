@@ -1,0 +1,26 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.mini": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"position": [0, -11.9, 0],
+					"scale": [0.98, 0.99, 0.99]
+				},
+				"Body": {
+					"scale": [0.99, 1, 1]
+				},
+				"leftArm": {
+					"position": [-3.4, 0, 0],
+					"scale": [1, 1, 0.8]
+				},
+				"rightArm": {
+					"position": [3.5, 0, 0],
+					"scale": [1, 1, 0.8]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,58 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.bosssit": {
+			"loop": true,
+			"bones": {
+				"waist": {
+					"position": [0, -9, 0]
+				},
+				"head": {
+					"rotation": [47.5, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [-20, 0, 0]
+				},
+				"La": {
+					"rotation": [-5, 0, 0]
+				},
+				"ls": {
+					"rotation": [-34.3569, 7.13136, 10.29284]
+				},
+				"rightArm": {
+					"rotation": [-32.76139, -5.99314, 65.5714]
+				},
+				"Ra": {
+					"rotation": [-47.5, 0, 0]
+				},
+				"rs": {
+					"rotation": [-47.5, 0, 0]
+				},
+				"rightItem": {
+					"rotation": [-174.94426, -70.22915, -164.82923],
+					"position": [3.55, -1, -2.65]
+				},
+				"leftLeg": {
+					"rotation": [-105.18455, 0.5853, 90.03656],
+					"position": [2, -10, 0]
+				},
+				"Ll": {
+					"rotation": [70, 0, 0]
+				},
+				"lp": {
+					"rotation": [67.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-127.5, 0, 0],
+					"position": [0, -10, 0]
+				},
+				"Rl": {
+					"rotation": [87.5, 0, 0]
+				},
+				"rp": {
+					"rotation": [102.5, 0, 0]
+				}
+			}
+		}
+	}
+}

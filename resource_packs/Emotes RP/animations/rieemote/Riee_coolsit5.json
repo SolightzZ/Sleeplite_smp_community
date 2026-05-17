@@ -1,0 +1,40 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.coolsit5": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"root": {
+					"position": [0, -9.5, 0]
+				},
+				"leftArm": {
+					"rotation": [-70, 0, 0],
+					"position": [0, -1, 0],
+					"scale": [1, 1.2, 1]
+				},
+				"La": {
+					"rotation": [0, 0, 57.5],
+					"scale": [0.8, 1.3, 1]
+				},
+				"rightArm": {
+					"rotation": [15, 0, 0],
+					"position": [0, -1, 0]
+				},
+				"leftLeg": {
+					"rotation": [-123.12598, 10.51794, -6.79286]
+				},
+				"Ll": {
+					"rotation": [60, 0, 0],
+					"scale": [1, 1.2, 1]
+				},
+				"rightLeg": {
+					"rotation": [-64.30001, -22.39279, -17.93053]
+				},
+				"Rl": {
+					"rotation": [40, 0, 0]
+				}
+			}
+		}
+	}
+}

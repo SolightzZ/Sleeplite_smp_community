@@ -7,7 +7,7 @@ export function playZoomSound(player) {
 
 export function applyZoom(player, config) {
   player.camera.setFov({
-    fov: ZOOM_CONFIG.fov,
+    fov: ZOOM_CONFIG.camera.fov,
     easeOptions: ZOOM_CONFIG.camera,
   });
 
@@ -17,7 +17,10 @@ export function applyZoom(player, config) {
   });
 
   if (config.hideHud) {
-    player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, ZOOM_CONFIG.hud);
+    player.onScreenDisplay.setHudVisibility(
+      HudVisibility.Hide,
+      ZOOM_CONFIG.hud,
+    );
   }
 }
 

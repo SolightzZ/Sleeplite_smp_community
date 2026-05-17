@@ -1,0 +1,28 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.stand2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"leftArm": {
+					"rotation": [-81.53415, 71.45914, -68.99368],
+					"position": [0, -2, -1]
+				},
+				"La": {
+					"rotation": [-30, 0, 0],
+					"scale": [1, 1.3, 1]
+				},
+				"rightArm": {
+					"rotation": [-26.83683, -73.40211, 17.48615],
+					"position": [0, -2, -1]
+				},
+				"Ra": {
+					"rotation": [-40, 0, 0],
+					"position": [0, 0, 0],
+					"scale": [1, 1.4, 1]
+				}
+			}
+		}
+	}
+}

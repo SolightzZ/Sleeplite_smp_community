@@ -1,0 +1,35 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.creepystand2": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-20, 0, 0]
+				},
+				"head": {
+					"rotation": [-65.48396, -45.05075, 57.20219]
+				},
+				"leftArm": {
+					"rotation": [45, 0, 0]
+				},
+				"La": {
+					"rotation": [-17.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [52.5, 0, 0]
+				},
+				"Ra": {
+					"rotation": [-15, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [-60, 0, 0]
+				},
+				"Ll": {
+					"rotation": [32.5, 0, 0]
+				}
+			}
+		}
+	}
+}

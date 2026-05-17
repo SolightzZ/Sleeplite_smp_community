@@ -1,0 +1,45 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.pose8": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-21.17283, -18.74724, 7.09597],
+					"position": [0, 0, 0.9]
+				},
+				"Body": {
+					"rotation": [0, 12.5, 0]
+				},
+				"Bodysea": {
+					"rotation": [15, 0, 0]
+				},
+				"head": {
+					"rotation": [6.95279, -18.8505, -9.95711]
+				},
+				"leftArm": {
+					"rotation": [10.32206, 2.7632, -6.66108]
+				},
+				"rightArm": {
+					"rotation": [-35.47229, 17.89422, 10.95233],
+					"position": [1, -1.4, -1.2]
+				},
+				"leftLeg": {
+					"rotation": [-13.32562, -13.51094, -1.03909],
+					"position": [0, 0, 1.1]
+				},
+				"Ll": {
+					"rotation": [15, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-92.88614, 29.96852, -1.44261]
+				},
+				"Rl": {
+					"rotation": [77.5, 0, 0],
+					"scale": [1, 1.2, 1]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,59 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.demonsit": {
+			"loop": true,
+			"animation_length": 1000.25,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [-12.5, 0, 0],
+					"position": [0, -12, 0]
+				},
+				"head": {
+					"rotation": [24.60967, 3.73171, -11.93845]
+				},
+				"leftArm": {
+					"rotation": [-29.62165, 4.98092, 8.6822]
+				},
+				"La": {
+					"rotation": [-52.5, 0, 0]
+				},
+				"ls": {
+					"rotation": [-39.56869, 6.40865, 7.69263]
+				},
+				"rightArm": {
+					"rotation": [-77.91319, -3.21132, 14.65993],
+					"position": [0, -3, -1]
+				},
+				"Ra": {
+					"rotation": [-87.5, 0, 0]
+				},
+				"rs": {
+					"rotation": [-87.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [-87.29431, 22.47741, 1.03509],
+					"position": [0, -10, -1]
+				},
+				"Ll": {
+					"rotation": [52.5, 0, 0],
+					"scale": [1, 1.28, 1]
+				},
+				"lp": {
+					"rotation": [52.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-118.93802, -29.14089, 15.06885],
+					"position": [0, -10, -1]
+				},
+				"Rl": {
+					"rotation": [25, 0, 0]
+				},
+				"rp": {
+					"rotation": [38.25563, 12.70001, -15.57939]
+				}
+			}
+		}
+	}
+}

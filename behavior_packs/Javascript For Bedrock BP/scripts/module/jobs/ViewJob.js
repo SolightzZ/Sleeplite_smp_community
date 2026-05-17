@@ -113,6 +113,7 @@ export function viewJobs(player) {
       "textures/ui/icon_deals",
     );
   }
+
   form.button("ย้อนกลับ");
 
   showUI(player, form, (res) => {
@@ -154,6 +155,7 @@ export const openJobDetail = (player, job) => {
         player.sendMessage("[Job] คุณมีงานจัดส่งที่กำลังดำเนินการอยู่แล้ว");
       return;
     }
+
     if (job.status !== "open") {
       if (player.isValid)
         player.sendMessage("[Job] งานนี้ไม่อยู่ในสถานะที่สามารถรับได้แล้ว");

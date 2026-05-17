@@ -1,0 +1,52 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.leaningfence3": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [37.53716, 0.27182, -0.33845]
+				},
+				"head": {
+					"rotation": [-25, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [-89.91242, -27.15522, -83.51032],
+					"position": [0, -1, -1]
+				},
+				"La": {
+					"rotation": [-60, 0, 0]
+				},
+				"ls": {
+					"rotation": [-68.97739, 4.44262, -2.11137]
+				},
+				"rightArm": {
+					"rotation": [-98.71698, 20.40225, 81.90342],
+					"position": [0, -0.5, -3]
+				},
+				"Ra": {
+					"rotation": [-82.5, 0, 0]
+				},
+				"rs": {
+					"rotation": [-82.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [12.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [-15, 0, 0]
+				},
+				"Rl": {
+					"rotation": [12.5, 0, 0]
+				},
+				"rp": {
+					"rotation": [12.5, 0, 0]
+				},
+				"leftSleeve": {
+					"rotation": [0, -10, 0]
+				}
+			}
+		}
+	}
+}

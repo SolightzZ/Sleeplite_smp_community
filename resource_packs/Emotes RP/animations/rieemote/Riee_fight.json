@@ -1,0 +1,56 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.fight": {
+			"loop": true,
+			"override_previous_animation": true,
+			"anim_time_update": 100000,
+			"blend_weight": 1,
+			"start_delay": 2,
+			"bones": {
+				"waist": {
+					"rotation": [22.5, 0, 0],
+					"position": [0, 0, 1.8]
+				},
+				"Body": {
+					"rotation": [-15, 0, 0]
+				},
+				"Bodysea": {
+					"rotation": [15, 0, 0],
+					"position": [0, -0.4, 0]
+				},
+				"head": {
+					"rotation": [0, 0, -10]
+				},
+				"leftArm": {
+					"rotation": [-76.42125, 11.14485, -38.66901],
+					"position": [0, 0.3, -1.3]
+				},
+				"La": {
+					"rotation": [-62.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-36.09281, -19.26585, 39.48856],
+					"position": [0, -2, -1]
+				},
+				"Ra": {
+					"rotation": [-52.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [-16.81472, -9.18229, -8.51814],
+					"position": [0, -1, 0]
+				},
+				"Ll": {
+					"rotation": [70, 0, 0],
+					"scale": [1, 1.41, 1]
+				},
+				"rightLeg": {
+					"rotation": [-6.8011, 16.55819, 1.43483]
+				},
+				"Rl": {
+					"rotation": [10, 0, 0]
+				}
+			}
+		}
+	}
+}

@@ -1,0 +1,43 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.cutiestand3": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"Jacket": {
+					"rotation": [0, 0, 0]
+				},
+				"root": {
+					"rotation": [362.88614, -29.96852, -1.44261]
+				},
+				"Bodysea": {
+					"rotation": [5, 0, 0]
+				},
+				"head": {
+					"rotation": [0.50915, 42.02514, 1.96033]
+				},
+				"leftArm": {
+					"rotation": [32.92616, -20.24569, 12.91466]
+				},
+				"rightArm": {
+					"rotation": [-333.83482, 10.25016, -37.95118]
+				},
+				"leftLeg": {
+					"rotation": [-27.5, 0, 0]
+				},
+				"Ll": {
+					"rotation": [55, 0, 0],
+					"scale": [1, 1.2, 1]
+				},
+				"rightLeg": {
+					"rotation": [-12.5, 0, 0]
+				},
+				"Rl": {
+					"rotation": [25, 0, 0],
+					"scale": [1, 1.1, 1]
+				}
+			}
+		}
+	}
+}

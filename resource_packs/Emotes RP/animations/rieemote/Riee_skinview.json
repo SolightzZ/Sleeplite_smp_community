@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.skinview": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"leftArm": {
+					"rotation": [0, 0, -12.5],
+					"position": [0, -1.2, 0]
+				},
+				"rightArm": {
+					"rotation": [0, 0, 12.5],
+					"position": [0, -1.7, 0]
+				},
+				"leftLeg": {
+					"rotation": [0, 0, -7.5]
+				},
+				"rightLeg": {
+					"rotation": [0, 0, 5]
+				}
+			}
+		}
+	}
+}

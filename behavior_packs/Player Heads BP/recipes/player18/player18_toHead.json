@@ -1,0 +1,29 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "bluefirefroggy:player_head_18"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "group": "itemGroup.name.skull",
+        "pattern": [
+            "#"
+        ],
+        "key": {
+            "#": {
+                "item": "bluefirefroggy:player_head_18_block"
+            }
+        },
+        "unlock": [
+            {
+                "item": "bluefirefroggy:player_head_18_block"
+            }
+        ],
+        "result": {
+            "item": "bluefirefroggy:player_head_18",
+            "count": 1
+        }
+    }
+}

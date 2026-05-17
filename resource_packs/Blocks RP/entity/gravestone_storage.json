@@ -1,20 +1,22 @@
 {
-   "format_version":"1.20.80",
-   "minecraft:client_entity":{
-      "description":{
-         "identifier":"true:gravestone_storage",
-         "materials":{
-            "default":"entity_alphatest"
-         },
-         "textures":{
-            "default":"textures/entity/gravestone_storage"
-         },
-         "geometry":{
-            "default":"geometry.gravestone_storage"
-         },
-         "render_controllers":[
-            "controller.render.default"
-         ]
+  "format_version": "1.20.80",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "addon:gravestone_storage",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/gravestone_storage"
+      },
+      "geometry": {
+        "default": "geometry.gravestone_storage"
+      },
+      "render_controllers": ["controller.render.default"],
+      "spawn_egg": {
+        "base_color": "#8f8f8f",
+        "overlay_color": "#505050"
       }
-   }
+    }
+  }
 }

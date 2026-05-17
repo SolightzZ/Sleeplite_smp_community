@@ -1,0 +1,51 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.itachipose": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [30, 0, 0],
+					"position": [-0.6, -5.8, 5.4]
+				},
+				"head": {
+					"rotation": [-10, 0, 0],
+					"position": [0, -1.2, 0]
+				},
+				"leftArm": {
+					"rotation": [-29.24916, 4.75077, 18.29064],
+					"position": [-1, -2.1, -2.6]
+				},
+				"rightArm": {
+					"rotation": [-27.90096, -11.47123, -19.30155],
+					"position": [0.7, -1.9, -3.1]
+				},
+				"leftLeg": {
+					"rotation": [-92.30958, -44.60792, 28.31722],
+					"position": [0, -4.9, 4.6]
+				},
+				"Ll": {
+					"rotation": [90, 0, 0],
+					"position": [0, -2, 0],
+					"scale": [1, 1.36, 1]
+				},
+				"rightLeg": {
+					"rotation": [-82.87819, 46.76832, -23.68726],
+					"position": [-1.2, -4.7, 5.1]
+				},
+				"Rl": {
+					"rotation": [90, 0, 0],
+					"position": [0, -2, 0],
+					"scale": [1, 1.26, 1]
+				},
+				"La": {
+					"scale": [1, 1.34, 1]
+				},
+				"Ra": {
+					"scale": [1, 1.26, 1]
+				}
+			}
+		}
+	}
+}

@@ -20,14 +20,14 @@
         "ac": "controller.animation.roach"
       },
       "scripts": {
-        "pre_animation": [
-          "v.fly=!query.is_on_ground;",
-          "v.walk=q.modified_move_speed>0.01;"
-        ],
+        "pre_animation": ["v.fly=!query.is_on_ground;", "v.walk=q.modified_move_speed>0.01;"],
         "animate": ["ac"]
       },
       "render_controllers": ["controller.render.zombie"],
-      "spawn_egg": {}
+      "spawn_egg": {
+        "base_color": "#ff6600",
+        "overlay_color": "#ff0000"
+      }
     }
   }
 }

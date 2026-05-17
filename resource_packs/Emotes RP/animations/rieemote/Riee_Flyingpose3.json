@@ -1,0 +1,44 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.riee.flyingpose3": {
+			"loop": true,
+			"override_previous_animation": true,
+			"bones": {
+				"waist": {
+					"rotation": [122.5, 0, 0],
+					"position": [0, 18.8, 0]
+				},
+				"head": {
+					"rotation": [-67.5, 0, 0]
+				},
+				"leftArm": {
+					"rotation": [40, 0, -27.5]
+				},
+				"La": {
+					"rotation": [-27.5, 0, 0]
+				},
+				"rightArm": {
+					"rotation": [-60.93096, 0.67427, 34.97538]
+				},
+				"Ra": {
+					"rotation": [-42.5, 0, 0]
+				},
+				"leftLeg": {
+					"rotation": [140.17407, 1.97679, 0.91739],
+					"position": [0, 18.6, 0]
+				},
+				"Ll": {
+					"rotation": [17.5, 0, 0]
+				},
+				"rightLeg": {
+					"rotation": [152.5, 0, 0],
+					"position": [0, 18.6, 0]
+				},
+				"Rl": {
+					"rotation": [40, 0, 0]
+				}
+			}
+		}
+	}
+}

@@ -323,6 +323,7 @@ export const openConfirmForm = (player) => {
           `มีอยู่: ${haveDiam2} เพชร\n` +
           `ขาดอีก: ${total - haveDiam2} เพชร`,
       );
+
       warnForm.button(
         "ย้อนกลับ (แก้ไขของที่ได้รับ)",
         "textures/ui/debug_glyph_color",
