@@ -19,7 +19,7 @@ const itemHandlers = new Map([
   ["minecraft:command_block", chatRankItemUse],
   ["addon:magnet_", onMagnetUse],
   ["addon:fullbright_", FullBrightUseItem],
-  ["addon:bank", onJobItemUse],
+  ["addon:job", onJobItemUse],
   ["minecraft:sponge", handleSpongeAbsorption],
 ]);
 

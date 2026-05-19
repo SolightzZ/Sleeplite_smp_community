@@ -5,7 +5,7 @@
       "identifier": "addon:wolf_chestplate",
       "menu_category": {
         "category": "equipment",
-        "group": "minecraft:itemGroup.name.boots"
+        "group": "minecraft:itemGroup.name.chestplate"
       }
     },
     "components": {

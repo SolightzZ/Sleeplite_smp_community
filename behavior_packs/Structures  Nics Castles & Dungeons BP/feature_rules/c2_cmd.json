@@ -11,7 +11,22 @@
         {
           "test": "has_biome_tag",
           "operator": "==",
-          "value": "plains"
+          "value": "overworld"
+        },
+        {
+          "test": "has_biome_tag",
+          "operator": "!=",
+          "value": "frozen"
+        },
+        {
+          "test": "has_biome_tag",
+          "operator": "!=",
+          "value": "ocean"
+        },
+        {
+          "test": "has_biome_tag",
+          "operator": "!=",
+          "value": "river"
         }
       ]
     },

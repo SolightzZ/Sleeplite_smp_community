@@ -2,101 +2,143 @@ import { system, world } from "@minecraft/server";
 
 const BOSS_IDS = new Set(["minecraft:ender_dragon", "minecraft:wither"]);
 const BOSS_TAG = "boss";
-
 const TICK_DELAY = 5;
 const TITLE_TICKS = 80;
 const RADIUS = 100;
 const RADIUS_SQ = RADIUS * RADIUS;
-
 const SND_DEATH = "mob.warden.death";
 const SND_THUNDER = "ambient.weather.thunder";
 const SND_SHOOT = "mob.wither.shoot";
+const SUBTITLE_SPAWN = "Spawn";
+
+const activeAnimations = [];
+let animationIntervalId;
 
 const formatName = (id) => {
-  const raw = id.replace("minecraft:", "");
-  const parts = raw.split("_");
-  const len = parts.length;
-  let out = "";
-  for (let i = 0; i < len; i++) {
-    if (i > 0) out += " ";
-    out += parts[i][0].toUpperCase() + parts[i].slice(1);
+  const parts = id.replace("minecraft:", "").split("_");
+  let text = "";
+  for (let i = 0; i < parts.length; i++) {
+    const part = parts[i];
+    if (!part) continue;
+    if (text) text += " ";
+    text += part[0].toUpperCase() + part.slice(1);
   }
-  return out;
+  return text;
 };
 
-const getNearbyPlayers = (entity, out) => {
+const collectPlayersByDimension = (players) => {
+  const playersByDimension = new Map();
+  for (let i = 0; i < players.length; i++) {
+    const player = players[i];
+    if (!player || !player.isValid) continue;
+    const dimId = player.dimension.id;
+    let bucket = playersByDimension.get(dimId);
+    if (!bucket) {
+      bucket = [];
+      playersByDimension.set(dimId, bucket);
+    }
+    bucket.push(player);
+  }
+  return playersByDimension;
+};
+
+const getNearbyPlayers = (entity, candidates, out) => {
+  if (!candidates || candidates.length === 0) return;
   const ex = entity.location.x;
   const ey = entity.location.y;
   const ez = entity.location.z;
-  const dimId = entity.dimension.id;
-  const all = world.getPlayers();
-  const allLen = all.length;
-
-  for (let i = 0; i < allLen; i++) {
-    const p = all[i];
-    if (p.dimension.id !== dimId) continue;
-    const dx = p.location.x - ex;
-    const dy = p.location.y - ey;
-    const dz = p.location.z - ez;
-    if (dx * dx + dy * dy + dz * dz <= RADIUS_SQ) out.push(p);
+  for (let i = 0; i < candidates.length; i++) {
+    const player = candidates[i];
+    const dx = player.location.x - ex;
+    const dy = player.location.y - ey;
+    const dz = player.location.z - ez;
+    if (dx * dx + dy * dy + dz * dz <= RADIUS_SQ) out.push(player);
   }
 };
 
-const displayBossTitle = (entity, name, subtitle, isDeath) => {
-  const finalSound = isDeath ? SND_DEATH : SND_THUNDER;
-  const opts = {
+const createAnimation = (entity, bossName, subtitle, isDeath) => ({
+  entity,
+  bossName,
+  subtitle,
+  finalSound: isDeath ? SND_DEATH : SND_THUNDER,
+  finalText: `${isDeath ? "§c" : "§e"}- ${bossName} -`,
+  charIndex: 0,
+  maxCharIndex: bossName.length,
+});
+
+const playAnimationStep = (animation, playersByDimension, recipients) => {
+  const { entity, bossName, subtitle, finalSound, finalText, charIndex, maxCharIndex } = animation;
+  if (!entity || !entity.isValid || charIndex > maxCharIndex) return false;
+
+  const options = {
     fadeInDuration: 0,
     fadeOutDuration: 50,
     stayDuration: TITLE_TICKS,
-    subtitle: subtitle,
+    subtitle,
   };
 
-  let idx = 0;
-  const nameLen = name.length;
-  const players = [];
+  const dimId = entity.dimension.id;
 
-  const animate = () => {
-    if (!entity || !entity.isValid) return;
+  recipients.length = 0;
 
-    players.length = 0;
-    getNearbyPlayers(entity, players);
+  getNearbyPlayers(entity, playersByDimension.get(dimId), recipients);
 
-    if (players.length === 0) {
-      system.runTimeout(animate, TICK_DELAY);
-      return;
-    }
+  if (recipients.length === 0) return true;
 
-    if (idx > nameLen) return;
+  const isFinal = charIndex === maxCharIndex;
+  const titleText = isFinal ? finalText : bossName.slice(0, charIndex + 1);
 
-    const isFinal = idx === nameLen;
-    const title = isFinal
-      ? isDeath
-        ? `§c- ${name} -`
-        : `§e- ${name} -`
-      : name.slice(0, idx + 1);
+  for (let i = 0; i < recipients.length; i++) {
+    const player = recipients[i];
+    player.onScreenDisplay.setTitle(titleText, options);
+    player.playSound(SND_SHOOT);
+    if (isFinal) player.playSound(finalSound, { volume: 0.5, pitch: 1 });
+  }
 
-    const playersLen = players.length;
-    for (let i = 0; i < playersLen; i++) {
-      const p = players[i];
-      if (!p.isValid) continue;
-      p.onScreenDisplay.setTitle(title, opts);
-      p.playSound(SND_SHOOT);
-      if (isFinal) p.playSound(finalSound, { volume: 0.5, pitch: 1 });
-    }
-
-    idx++;
-    system.runTimeout(animate, TICK_DELAY);
-  };
-
-  animate();
+  animation.charIndex++;
+  return animation.charIndex <= maxCharIndex;
 };
 
-export const itile_main = (ev) => {
-  const entity = ev.entity;
-  if (!entity || !entity.isValid) return;
-  if (!BOSS_IDS.has(entity.typeId)) return;
-  if (entity.hasTag(BOSS_TAG)) return;
+const processActiveAnimations = () => {
+  if (activeAnimations.length === 0) {
+    if (animationIntervalId !== undefined) {
+      system.clearRun(animationIntervalId);
+      animationIntervalId = undefined;
+    }
+    return;
+  }
 
+  const onlinePlayers = world.getPlayers();
+  const playersByDimension = collectPlayersByDimension(onlinePlayers);
+  const recipients = [];
+
+  for (let i = 0; i < activeAnimations.length; i++) {
+    const animation = activeAnimations[i];
+    const keepRunning = playAnimationStep(animation, playersByDimension, recipients);
+
+    if (keepRunning) continue;
+    const lastIndex = activeAnimations.length - 1;
+    activeAnimations[i] = activeAnimations[lastIndex];
+
+    activeAnimations.pop();
+
+    i--;
+  }
+};
+
+const ensureAnimationLoop = () => {
+  if (animationIntervalId !== undefined) return;
+  animationIntervalId = system.runInterval(processActiveAnimations, TICK_DELAY);
+};
+
+const enqueueBossTitle = (entity, subtitle, isDeath) => {
+  activeAnimations.push(createAnimation(entity, formatName(entity.typeId), subtitle, isDeath));
+  ensureAnimationLoop();
+};
+
+export const itile_main = (event) => {
+  const entity = event.entity;
+  if (!entity || !entity.isValid || !BOSS_IDS.has(entity.typeId) || entity.hasTag(BOSS_TAG)) return;
   entity.addTag(BOSS_TAG);
-  displayBossTitle(entity, formatName(entity.typeId), "Spawn", false);
+  enqueueBossTitle(entity, SUBTITLE_SPAWN, false);
 };

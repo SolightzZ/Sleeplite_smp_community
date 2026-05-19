@@ -25,27 +25,12 @@ export const saveData = () => {
   try {
     world.setDynamicProperty(STORAGE_KEYS.JOBS, JSON.stringify(jobs));
     world.setDynamicProperty(STORAGE_KEYS.JOB_ID, nextJobId);
-    world.setDynamicProperty(
-      STORAGE_KEYS.RIDER_MAP,
-      JSON.stringify(Array.from(playerJobMap.entries())),
-    );
-    const timerEntries = Array.from(timerMap.entries()).map(([k, v]) => [
-      k,
-      { startTick: v.startTick },
-    ]);
+    world.setDynamicProperty(STORAGE_KEYS.RIDER_MAP, JSON.stringify(Array.from(playerJobMap.entries())));
+    const timerEntries = Array.from(timerMap.entries()).map(([k, v]) => [k, { startTick: v.startTick }]);
     world.setDynamicProperty(STORAGE_KEYS.TIMERS, JSON.stringify(timerEntries));
-    world.setDynamicProperty(
-      STORAGE_KEYS.PENDING,
-      JSON.stringify(Array.from(pendingDelivery.entries())),
-    );
-    const notifyEntries = Array.from(ownerNotifyMap.entries()).map(([k, v]) => [
-      k,
-      Array.from(v),
-    ]);
-    world.setDynamicProperty(
-      STORAGE_KEYS.NOTIFY,
-      JSON.stringify(notifyEntries),
-    );
+    world.setDynamicProperty(STORAGE_KEYS.PENDING, JSON.stringify(Array.from(pendingDelivery.entries())));
+    const notifyEntries = Array.from(ownerNotifyMap.entries()).map(([k, v]) => [k, Array.from(v)]);
+    world.setDynamicProperty(STORAGE_KEYS.NOTIFY, JSON.stringify(notifyEntries));
   } catch (e) {
     console.error("[Job] Save Error:", e);
   }
@@ -81,9 +66,7 @@ export const loadJobData = () => {
 
     const notifyData = world.getDynamicProperty(STORAGE_KEYS.NOTIFY);
     if (notifyData) {
-      JSON.parse(notifyData).forEach(([k, v]) =>
-        ownerNotifyMap.set(k, new Set(v)),
-      );
+      JSON.parse(notifyData).forEach(([k, v]) => ownerNotifyMap.set(k, new Set(v)));
     }
   } catch (e) {
     console.error("[Job] Load Error:", e);
@@ -118,10 +101,7 @@ export const showUI = (player, form, callback, retries = 3) => {
       })
       .catch((err) => {
         if (err?.message === "User is busy" && retries > 0) {
-          system.runTimeout(
-            () => showUI(player, form, callback, retries - 1),
-            10,
-          );
+          system.runTimeout(() => showUI(player, form, callback, retries - 1), 10);
           player.sendMessage("[Job] โปรดรอสักครู่...");
         } else if (err?.message !== "User is busy") {
           player.sendMessage("[Job] UI Error");

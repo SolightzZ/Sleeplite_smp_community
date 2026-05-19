@@ -3,76 +3,35 @@
   "minecraft:entity": {
     "description": {
       "identifier": "addon:roach",
+      "is_experimental": false,
       "is_summonable": true,
-      "is_spawnable": true
-    },
-    "component_groups": {
-      "break": {
-        "minecraft:instant_despawn": {
-          "remove_child_entities": true
-        },
-        "minecraft:despawn": {}
-      }
+      "is_spawnable": true,
+      "spawn_category": "ambient"
     },
     "components": {
       "minecraft:damage_sensor": {
         "triggers": [
-          {
-            "cause": "fall",
-            "deals_damage": "no"
-          },
-          {
-            "cause": "contact",
-            "deals_damage": "no"
-          },
-          {
-            "cause": "fly_into_wall",
-            "deals_damage": "no"
-          },
-          {
-            "cause": "piston",
-            "deals_damage": "no"
-          },
-          {
-            "cause": "starve",
-            "deals_damage": "no"
-          },
-          {
-            "cause": "stalagmite",
-            "deals_damage": "no"
-          }
+          { "cause": "fall", "deals_damage": "no" },
+          { "cause": "contact", "deals_damage": "no" },
+          { "cause": "fly_into_wall", "deals_damage": "no" },
+          { "cause": "piston", "deals_damage": "no" },
+          { "cause": "starve", "deals_damage": "no" },
+          { "cause": "stalagmite", "deals_damage": "no" }
         ]
+      },
+      "minecraft:despawn": {
+        "despawn_from_distance": {}
       },
       "minecraft:is_hidden_when_invisible": {},
       "minecraft:renders_when_invisible": {},
       "minecraft:nameable": {},
-      "minecraft:health": {
-        "max": 1,
-        "value": 1
-      },
-      "minecraft:collision_box": {
-        "height": 0.25,
-        "width": 0.25
-      },
-      "minecraft:scale": {
-        "value": 0.5
-      },
-      "minecraft:loot": {
-        "table": "loot_tables/roach.json"
-      },
+      "minecraft:health": { "max": 3, "value": 3 },
+      "minecraft:attack": { "damage": 1 },
+      "minecraft:collision_box": { "height": 0.25, "width": 0.25 },
+      "minecraft:scale": { "value": 0.5 },
+      "minecraft:loot": { "table": "loot_tables/empty.json" },
       "minecraft:hurt_on_condition": {
-        "damage_conditions": [
-          {
-            "filters": {
-              "test": "in_lava",
-              "subject": "self",
-              "operator": "==",
-              "value": true
-            },
-            "cause": "lava",
-            "damage_per_tick": 4
-          }
-        ]
+        "damage_conditions": [{ "filters": { "test": "in_lava", "subject": "self", "operator": "==", "value": true }, "cause": "lava", "damage_per_tick": 4 }]
       },
       "minecraft:movement": {
         "max": 3,
@@ -81,7 +40,9 @@
       "minecraft:jump.static": {
         "jump_power": 1
       },
-      "minecraft:behavior.float": {},
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
       "minecraft:can_climb": {},
       "minecraft:navigation.climb": {
         "can_path_over_water": true
@@ -114,14 +75,22 @@
           }
         ]
       },
+      "minecraft:behavior.hurt_by_target": {
+        "priority": 1
+      },
+      "minecraft:behavior.melee_attack": {
+        "priority": 2,
+        "speed_multiplier": 1.2,
+        "track_target": true
+      },
       "minecraft:behavior.mount_pathing": {
-        "priority": 3,
+        "priority": 4,
         "speed_multiplier": 1.25,
         "target_dist": 0,
         "track_target": true
       },
       "minecraft:behavior.random_stroll": {
-        "priority": 6,
+        "priority": 7,
         "speed_multiplier": 0.8
       },
       "minecraft:behavior.look_at_player": {
@@ -130,7 +99,7 @@
         "probability": 0.02
       },
       "minecraft:behavior.random_look_around": {
-        "priority": 6
+        "priority": 7
       },
       "minecraft:physics": {},
       "minecraft:pushable": {
@@ -139,12 +108,6 @@
       },
       "minecraft:conditional_bandwidth_optimization": {}
     },
-    "events": {
-      "break": {
-        "add": {
-          "component_groups": ["break"]
-        }
-      }
-    }
+    "events": {}
   }
 }

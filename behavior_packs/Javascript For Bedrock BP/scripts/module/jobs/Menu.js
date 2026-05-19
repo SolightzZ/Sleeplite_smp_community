@@ -3,15 +3,7 @@ import { ActionFormData } from "@minecraft/server-ui";
 import { completeJob } from "./CompleteJob.js";
 import { createJob } from "./CreateJob.js";
 import { editJobs } from "./EditJob.js";
-import {
-  deleteJobData,
-  hasOwnerNotify,
-  ownerNotifyMap,
-  pendingDelivery,
-  playerJobMap,
-  saveData,
-  showUI,
-} from "./Job.js";
+import { deleteJobData, hasOwnerNotify, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI } from "./Job.js";
 import { viewJobs } from "./ViewJob.js";
 
 export const giveItems = (player, items) => {
@@ -120,8 +112,7 @@ export function receiveItems(player) {
     ownerNotifyMap.delete(player.id);
     saveData();
 
-    if (player.isValid)
-      player.sendMessage(`[Job] ได้รับไอเทม ${allItems.length} เรียบร้อยแล้ว`);
+    if (player.isValid) player.sendMessage(`[Job] ได้รับไอเทม ${allItems.length} เรียบร้อยแล้ว`);
     showMainMenu(player);
   });
 }
@@ -137,15 +128,11 @@ export const showMainMenu = (player) => {
   form.body("เลือกรายการที่ต้องการ:");
   form.button("สร้างคำสั่งจัดส่ง", "textures/ui/MashupIcon");
   form.divider();
-  hasPending
-    ? form.button("§e[!] §rรับไอเทมจัดส่ง", "textures/ui/mute_off")
-    : form.button("รับไอเทมจัดส่ง", "textures/ui/mute_on");
+  hasPending ? form.button("§e[!] §rรับไอเทมจัดส่ง", "textures/ui/mute_off") : form.button("รับไอเทมจัดส่ง", "textures/ui/mute_on");
   form.button("รายการคำสั่งของฉัน", "textures/ui/sidebar_icons/my_content");
   form.button("งานจัดส่งที่พร้อมรับ", "textures/ui/FriendsDiversity");
   form.divider();
-  activeJobId
-    ? form.button("งานที่กำลังดำเนินการ", "textures/ui/Envelope")
-    : form.button("ส่งมอบงาน", "textures/ui/how_to_play_button_default_light");
+  activeJobId ? form.button("งานที่กำลังดำเนินการ", "textures/ui/Envelope") : form.button("ส่งมอบงาน", "textures/ui/how_to_play_button_default_light");
   form.label("                  @Sleeplite");
 
   showUI(player, form, (res) => {

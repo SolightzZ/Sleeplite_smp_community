@@ -1,60 +1,76 @@
-import { system, world } from "@minecraft/server";
+import { system } from "@minecraft/server";
 
 const SPONGE = "minecraft:sponge";
 const WATER = "minecraft:water";
+const MAX_DISTANCE = 5;
 
-const findSpongeSlot = (inv) => {
-  const size = inv.size;
+const findSpongeSlot = (container) => {
+  const size = container.size;
   for (let i = 0; i < size; i++) {
-    const it = inv.getItem(i);
-    if (it && it.typeId === SPONGE) return i;
+    const item = container.getItem(i);
+    if (item && item.typeId === SPONGE) return i;
   }
   return -1;
 };
 
-const placeSponge = (player, inv, slot, block) => {
-  system.run(() => {
-    block.setType(SPONGE);
-
-    const it = inv.getItem(slot);
-    if (!it) return;
-
-    if (it.amount > 1) {
-      it.amount--;
-      inv.setItem(slot, it);
-    } else {
-      inv.setItem(slot, undefined);
-    }
-  });
+const getSpongeSlot = (player, container) => {
+  const selectedSlot = player.selectedSlotIndex;
+  if (selectedSlot >= 0 && selectedSlot < container.size) {
+    const selectedItem = container.getItem(selectedSlot);
+    if (selectedItem && selectedItem.typeId === SPONGE) return selectedSlot;
+  }
+  return findSpongeSlot(container);
 };
 
-export const handleSpongeAbsorption = (ev) => {
+const getTargetWaterBlock = (player) => {
+  const hit = player.getBlockFromViewDirection({
+    maxDistance: MAX_DISTANCE,
+    includeLiquidBlocks: true,
+    includePassableBlocks: true,
+  });
+  if (!hit || !hit.block || !hit.block.isValid) return undefined;
+  if (hit.block.typeId !== WATER) return undefined;
+  return hit.block;
+};
+
+const consumeSponge = (container, slot) => {
+  const item = container.getItem(slot);
+  if (!item || item.typeId !== SPONGE) return false;
+  if (item.amount > 1) {
+    item.amount--;
+    container.setItem(slot, item);
+    return true;
+  }
+  container.setItem(slot, undefined);
+  return true;
+};
+
+const absorbWaterWithSponge = (container, slot, block) => {
+  if (!consumeSponge(container, slot)) return;
+  block.setType(SPONGE);
+};
+
+export const handleSpongeAbsorption = (event) => {
   try {
-    const item = ev.itemStack;
+    const item = event.itemStack;
     if (!item || item.typeId !== SPONGE) return;
 
-    const player = ev.source;
+    const player = event.source;
     if (!player || !player.isValid) return;
 
-    const inv = player.getComponent("inventory")?.container;
-    if (!inv) return;
+    const container = player.getComponent("inventory")?.container;
+    if (!container) return;
 
-    const slot = findSpongeSlot(inv);
+    const slot = getSpongeSlot(player, container);
     if (slot === -1) return;
 
-    const head = player.getHeadLocation();
-    const view = player.getViewDirection();
+    const waterBlock = getTargetWaterBlock(player);
+    if (!waterBlock) return;
 
-    const target = {
-      x: (head.x + view.x * 5) | 0,
-      y: (head.y + view.y * 5) | 0,
-      z: (head.z + view.z * 5) | 0,
-    };
-
-    const block = player.dimension.getBlock(target);
-    if (!block || block.typeId !== WATER) return;
-
-    placeSponge(player, inv, slot, block);
+    system.run(() => {
+      if (!player.isValid || !waterBlock.isValid) return;
+      absorbWaterWithSponge(container, slot, waterBlock);
+    });
   } catch (e) {
     console.error("[ SpongeAbsorption ] handleSpongeAbsorption", e.message);
   }
