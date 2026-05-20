@@ -25,14 +25,17 @@
       ]
     },
     "distribution": {
-      "iterations": 1,
+      "iterations": 50,
       "x": {
         "extent": [0, 16],
         "distribution": "uniform"
       },
       "y": {
         "distribution": "uniform",
-        "extent": ["query.heightmap(variable.worldx, variable.worldz)+1", "query.heightmap(variable.worldx, variable.worldz) * 3"]
+        "extent": [
+          "query.heightmap(variable.worldx, variable.worldz)+1",
+          "query.heightmap(variable.worldx, variable.worldz) * 3"
+        ]
       },
       "z": {
         "extent": [0, 16],

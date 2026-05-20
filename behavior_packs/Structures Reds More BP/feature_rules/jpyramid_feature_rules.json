@@ -21,10 +21,10 @@
     },
     "distribution": {
       "iterations": 1,
-      "scatter_chance": 0.5,
-      "x": 28,
+      "scatter_chance": 0.3,
+      "x": 16,
       "y": "query.heightmap(variable.worldx, variable.worldz) + -15",
-      "z": 28
+      "z": 16
     }
   }
 }

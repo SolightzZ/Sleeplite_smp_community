@@ -575,33 +575,7 @@ entity.animal:tiger.name=Tiger
 entity.animal:ender_creeper.name=Ender Creeper
 entity.animal:ender_skeleton.name=Ender Skeleton
 
-## new furni
-action.hint.exit.cat=Now you can rotate it	#
-action.hint.exit.unknown=Now you can rotate it	#
-action.interact.rotar=Rotate	#
-action.interact.patitas=Open#
-action.interact.conducir=Dive	#
-action.interact.sit = Sit	#
-
 entity.unknown.name=PA inventory
-item.spawn_egg.entity.pa:sillagamer.name=PA-Colorful gamer chair
-item.spawn_egg.entity.pa:pc.name=PA-Pc Gamer
-item.spawn_egg.entity.pa:estufa.name=PA-Stove
-item.spawn_egg.entity.pa:nevera.name=PA-Fridge
-item.spawn_egg.entity.pa:lavadero.name=PA-Laundry
-item.spawn_egg.entity.pa:pacman.name=PA-Pacman recreational machine
-item.spawn_egg.entity.pa:tivi.name=PA-Tivi
-item.spawn_egg.entity.pa:retrete.name=PA-Toilet
-item.spawn_egg.entity.pa:regadera.name=PA-Watering can
-item.spawn_egg.entity.pa:christmas_tree.name=PA-Christmas tree
-item.spawn_egg.entity.pa:piano.name=PA-Piano
-item.spawn_egg.entity.pa:closet.name=PA-Closet
-item.spawn_egg.entity.pa:banca.name=PA-Park Bench
-item.spawn_egg.entity.pa:bench.name=PA-Bench
-item.spawn_egg.entity.pa:billar.name=PA-Pool Table
-item.spawn_egg.entity.pa:fuente.name=PA-Water Source
-item.spawn_egg.entity.pa:tumbanormal.name=PA-Normal Grave
-item.spawn_egg.entity.pa:tumbacruz.name=PA-Cross Grave
 item.spawn_egg.entity.pa:tumbacreeper.name=PA-Creeper Grave
 item.spawn_egg.entity.pa:banera.name=PA-Bath
 item.spawn_egg.entity.pa:robertcup.name=PA-Robert Trophy

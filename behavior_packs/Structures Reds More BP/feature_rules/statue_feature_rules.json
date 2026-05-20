@@ -24,12 +24,12 @@
       "scatter_chance": 0.02,
       "x": {
         "distribution": "fixed_grid",
-        "extent": [0, 15]
+        "extent": [0, 16]
       },
-      "y": "query.heightmap(variable.worldx, variable.worldz) + 0",
+      "y": "query.heightmap(variable.worldx, variable.worldz)",
       "z": {
         "distribution": "fixed_grid",
-        "extent": [0, 15]
+        "extent": [0, 16]
       }
     }
   }

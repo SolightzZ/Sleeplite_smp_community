@@ -26,12 +26,12 @@
         "denominator": 1250
       },
       "x": {
-        "extent": [-16, -15],
+        "extent": [0, 15],
         "distribution": "uniform"
       },
       "y": "query.heightmap(variable.worldx, variable.worldz) + -1",
       "z": {
-        "extent": [-16, -15],
+        "extent": [0, 15],
         "distribution": "uniform"
       }
     }

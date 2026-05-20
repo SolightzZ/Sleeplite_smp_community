@@ -1,14 +1,14 @@
 {
-	"format_version": "1.21.0",
-	"minecraft:structure_template_feature": {
-		"description": {
-			"identifier": "tayi:alocasia_zebrina_cuatro"
-		},
-		"structure_name": "mystructure:alocasia_v_c",
-		"adjustment_radius": 2,
-		"facing_direction": "random",
-		"constraints": {
-			"grounded": {}
-		}
-	}
+  "format_version": "1.21.0",
+  "minecraft:structure_template_feature": {
+    "description": {
+      "identifier": "tayi:alocasia_zebrina_cuatro"
+    },
+    "structure_name": "mystructure:alocasia_v_c",
+    "adjustment_radius": 2,
+    "facing_direction": "random",
+    "constraints": {
+      "grounded": {}
+    }
+  }
 }
