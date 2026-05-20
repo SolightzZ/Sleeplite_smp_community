@@ -16,7 +16,7 @@
       ]
     },
     "distribution": {
-      "iterations": "math.random_integer(8, 14)",
+      "iterations": 2,
       "coordinate_eval_order": "zxy",
       "x": {
         "distribution": "uniform",

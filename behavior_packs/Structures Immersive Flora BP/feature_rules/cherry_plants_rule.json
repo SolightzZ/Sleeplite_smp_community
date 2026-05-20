@@ -20,7 +20,7 @@
       ]
     },
     "distribution": {
-      "iterations": "math.random_integer(2, 8)",
+      "iterations": 2,
       "coordinate_eval_order": "zxy",
       "x": {
         "distribution": "uniform",

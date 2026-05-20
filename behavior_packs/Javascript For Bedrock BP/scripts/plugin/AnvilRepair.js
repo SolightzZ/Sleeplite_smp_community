@@ -15,7 +15,7 @@ const applyAnvilRepair = (block, permutation, damage, player, item) => {
       pitch: 1.0,
     });
 
-    const inv = player.getComponent("inventory")?.container;
+    const inv = player.getComponent("minecraft:inventory")?.container;
     if (!inv) return;
 
     const slot = player.selectedSlotIndex;

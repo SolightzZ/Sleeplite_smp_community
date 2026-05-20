@@ -2,7 +2,7 @@ import { system } from "@minecraft/server";
 
 const SPONGE = "minecraft:sponge";
 const WATER = "minecraft:water";
-const MAX_DISTANCE = 5;
+const MAX_DISTANCE = 6;
 
 const findSpongeSlot = (container) => {
   const size = container.size;
@@ -58,7 +58,7 @@ export const handleSpongeAbsorption = (event) => {
     const player = event.source;
     if (!player || !player.isValid) return;
 
-    const container = player.getComponent("inventory")?.container;
+    const container = player.getComponent("minecraft:inventory")?.container;
     if (!container) return;
 
     const slot = getSpongeSlot(player, container);

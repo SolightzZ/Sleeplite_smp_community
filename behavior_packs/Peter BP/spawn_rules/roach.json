@@ -3,7 +3,7 @@
   "minecraft:spawn_rules": {
     "description": {
       "identifier": "addon:roach",
-      "population_control": "animal"
+      "population_control": "ambient"
     },
     "conditions": [
       {

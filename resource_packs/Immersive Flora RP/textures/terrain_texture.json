@@ -74,16 +74,16 @@
       "textures": "textures/blocks/alocacia_zebrina.png"
     },
     "caladium_lima_grande": {
-      "textures": "textures/blocks/caladium_lima_grande.png"
+      "textures": "textures/blocks/caladium_lima"
     },
     "caladium_blanco_grande": {
-      "textures": "textures/blocks/caladium_blanco_grande.png"
+      "textures": "textures/blocks/caladium_blanco"
     },
     "caladium_grande": {
-      "textures": "textures/blocks/caladium_grande.png"
+      "textures": "textures/blocks/caladium"
     },
     "caladium_rojo_grande": {
-      "textures": "textures/blocks/caladium_rojo_grande.png"
+      "textures": "textures/blocks/caladium_rojo"
     },
     "caladium_lima": {
       "textures": "textures/blocks/caladium_lima.png"
@@ -110,28 +110,28 @@
       "textures": "textures/blocks/follage_de_roble.png"
     },
     "hongo_rojo_oeste": {
-      "textures": "textures/blocks/hongo_rojo_oeste.png"
+      "textures": "textures/blocks/hongo_rojo_lateral"
     },
     "hongo_rojo_este": {
-      "textures": "textures/blocks/hongo_rojo_este.png"
+      "textures": "textures/blocks/hongo_rojo_lateral.png"
     },
     "hongo_rojo_sur": {
-      "textures": "textures/blocks/hongo_rojo_sur.png"
+      "textures": "textures/blocks/hongo_rojo_lateral"
     },
     "hongo_rojo_norte": {
-      "textures": "textures/blocks/hongo_rojo_norte.png"
+      "textures": "textures/blocks/hongo_rojo_lateral"
     },
     "hongo_marron_oeste": {
-      "textures": "textures/blocks/hongo_marron_oeste.png"
+      "textures": "textures/blocks/hongo_marron_lateral"
     },
     "hongo_marron_este": {
-      "textures": "textures/blocks/hongo_marron_este.png"
+      "textures": "textures/blocks/hongo_marron_lateral"
     },
     "hongo_marron_sur": {
-      "textures": "textures/blocks/hongo_marron_sur.png"
+      "textures": "textures/blocks/hongo_marron_lateral"
     },
     "hongo_marron_norte": {
-      "textures": "textures/blocks/hongo_marron_norte.png"
+      "textures": "textures/blocks/hongo_marron_lateral"
     },
     "hongo_rojo_lateral": {
       "textures": "textures/blocks/hongo_rojo_lateral.png"
@@ -140,25 +140,25 @@
       "textures": "textures/blocks/hongo_marron_lateral.png"
     },
     "seta_deformada_oeste": {
-      "textures": "textures/blocks/seta_deformada_oeste.png"
+      "textures": "textures/blocks/seta_deformada_lateral"
     },
     "seta_deformada_este": {
-      "textures": "textures/blocks/seta_deformada_este.png"
+      "textures": "textures/blocks/seta_deformada_lateral"
     },
     "seta_deformada_sur": {
-      "textures": "textures/blocks/seta_deformada_sur.png"
+      "textures": "textures/blocks/seta_deformada_lateral"
     },
     "seta_deformada_norte": {
-      "textures": "textures/blocks/seta_deformada_norte.png"
+      "textures": "textures/blocks/seta_deformada_lateral"
     },
     "seta_deformada_lateral": {
       "textures": "textures/blocks/seta_deformada_lateral.png"
     },
     "hongo_carmesi_oeste": {
-      "textures": "textures/blocks/hongo_carmesi_oeste.png"
+      "textures": "textures/blocks/hongo_carmesi_lateral.png"
     },
     "hongo_carmesi_este": {
-      "textures": "textures/blocks/hongo_carmesi_este.png"
+      "textures": "textures/blocks/hongo_carmesi_lateral.png"
     },
     "hongo_carmesi_lateral": {
       "textures": "textures/blocks/hongo_carmesi_lateral.png"
