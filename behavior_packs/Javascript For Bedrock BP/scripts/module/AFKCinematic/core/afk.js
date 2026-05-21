@@ -1,3 +1,4 @@
+import { HudVisibility } from "@minecraft/server";
 import { CONFIG } from "../config.js";
 import {
   cloneVec3,
@@ -30,10 +31,11 @@ export function startAfk(player, s, cinematicScheduler) {
   s.waveClock = Math.random() * Math.PI * 2;
   s.warningShown = false;
 
-  safeRun(player, "hud @s hide all");
+  player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
   safeRun(player, `camera @s fov_set ${CONFIG.cinematicFov}`);
 
   cinematicScheduler.enqueue(player.id);
+  player.camera.clear();
 }
 
 export function stopAfk(player, s, cinematicScheduler) {
@@ -43,9 +45,15 @@ export function stopAfk(player, s, cinematicScheduler) {
 
   cinematicScheduler.dequeue(player.id);
 
-  safeRun(player, "camera @s clear");
-  safeRun(player, "camera @s fov_clear 0.2 linear");
-  safeRun(player, "hud @s reset");
+  player.camera.setCamera("minecraft:first_person", {
+    easeOptions: {
+      easeType: "Linear",
+      time: 0.2,
+    },
+  });
+
+  player.onScreenDisplay.setHudVisibility(HudVisibility.Reset);
+  player.camera.clear();
 }
 
 export function getCameraFrame(player, s) {
