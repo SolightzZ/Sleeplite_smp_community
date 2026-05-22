@@ -1,14 +1,8 @@
 import { MagnetConfig, MagnetText } from "../config.js";
 import { startMagnetLoop } from "./loop.js";
-import {
-  addMagnetUser,
-  countMagnetUsers,
-  hasMagnetUser,
-  removeMagnetUser,
-} from "./state.js";
+import { addMagnetUser, countMagnetUsers, hasMagnetUser, removeMagnetUser } from "./state.js";
 
-export const canUseMagnet = (player) =>
-  player && player.isValid && player.location && player.dimension;
+export const canUseMagnet = (player) => player && player.isValid && player.location && player.dimension;
 
 export const toggleMagnet = (player, turnOn) => {
   if (!canUseMagnet(player)) return;

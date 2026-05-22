@@ -1,14 +1,5 @@
 import { EntityComponentTypes, EquipmentSlot, world } from "@minecraft/server";
-import {
-  FLASHLIGHT_ITEM,
-  RAYCAST_DISTANCE,
-  THRESHOLD_HEAD_MOVE,
-  THRESHOLD_VIEW_DIR,
-  BLOCK_LIGHT,
-  BLOCK_AIR,
-  WORLD_Y_MIN,
-  WORLD_Y_MAX,
-} from "../config.js";
+import { FLASHLIGHT_ITEM, RAYCAST_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, BLOCK_LIGHT, BLOCK_AIR, WORLD_Y_MIN, WORLD_Y_MAX } from "../config.js";
 import { playerLights, playerLastPos } from "./state.js";
 
 export function calcLightPos(headPos, viewDir, dimension) {
@@ -28,10 +19,7 @@ export function isFlashlightHeld(player) {
 
   const main = equippable.getEquipment(EquipmentSlot.Mainhand);
   const off = equippable.getEquipment(EquipmentSlot.Offhand);
-  return (
-    (main && main.typeId === FLASHLIGHT_ITEM) ||
-    (off && off.typeId === FLASHLIGHT_ITEM)
-  );
+  return (main && main.typeId === FLASHLIGHT_ITEM) || (off && off.typeId === FLASHLIGHT_ITEM);
 }
 
 export function hasPlayerMoved(playerId, headPos, viewDir) {
@@ -56,14 +44,7 @@ export function hasPlayerMoved(playerId, headPos, viewDir) {
   const ddy = Math.abs(last.dy - viewDir.y);
   const ddz = Math.abs(last.dz - viewDir.z);
 
-  if (
-    dx < THRESHOLD_HEAD_MOVE &&
-    dy < THRESHOLD_HEAD_MOVE &&
-    dz < THRESHOLD_HEAD_MOVE &&
-    ddx < THRESHOLD_VIEW_DIR &&
-    ddy < THRESHOLD_VIEW_DIR &&
-    ddz < THRESHOLD_VIEW_DIR
-  ) {
+  if (dx < THRESHOLD_HEAD_MOVE && dy < THRESHOLD_HEAD_MOVE && dz < THRESHOLD_HEAD_MOVE && ddx < THRESHOLD_VIEW_DIR && ddy < THRESHOLD_VIEW_DIR && ddz < THRESHOLD_VIEW_DIR) {
     return false;
   }
 
@@ -91,10 +72,7 @@ export function removeLightBlock(playerId, fallbackDim) {
   if (!dim) return;
   try {
     const block = dim.getBlock(light);
-    if (
-      block &&
-      (block.typeId === BLOCK_LIGHT || block.typeId === "minecraft:light_block")
-    ) {
+    if (block && (block.typeId === BLOCK_LIGHT || block.typeId === "minecraft:light_block")) {
       block.setType(BLOCK_AIR);
     }
   } catch (e) {
@@ -123,14 +101,7 @@ export function placeLightForPlayer(player) {
   const newPos = calcLightPos(headPos, viewDir, currentDim);
   const oldLight = playerLights.get(playerId);
 
-  if (
-    oldLight &&
-    newPos &&
-    oldLight.x === newPos.x &&
-    oldLight.y === newPos.y &&
-    oldLight.z === newPos.z &&
-    oldLight.dimId === currentDim.id
-  ) {
+  if (oldLight && newPos && oldLight.x === newPos.x && oldLight.y === newPos.y && oldLight.z === newPos.z && oldLight.dimId === currentDim.id) {
     return;
   }
 
@@ -139,11 +110,7 @@ export function placeLightForPlayer(player) {
       const oldDim = world.getDimension(oldLight.dimId);
       if (oldDim) {
         const oldBlock = oldDim.getBlock(oldLight);
-        if (
-          oldBlock &&
-          (oldBlock.typeId === BLOCK_LIGHT ||
-            oldBlock.typeId === "minecraft:light_block")
-        ) {
+        if (oldBlock && (oldBlock.typeId === BLOCK_LIGHT || oldBlock.typeId === "minecraft:light_block")) {
           oldBlock.setType(BLOCK_AIR);
         }
       }
@@ -165,10 +132,7 @@ export function placeLightForPlayer(player) {
     }
 
     const typeId = targetBlock.typeId;
-    const isReplaceable =
-      typeId === BLOCK_AIR ||
-      typeId === BLOCK_LIGHT ||
-      typeId === "minecraft:light_block";
+    const isReplaceable = typeId === BLOCK_AIR || typeId === BLOCK_LIGHT || typeId === "minecraft:light_block";
     if (!isReplaceable) {
       playerLights.delete(playerId);
       return;

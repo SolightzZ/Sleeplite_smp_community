@@ -17,10 +17,7 @@ export function applyZoom(player, config) {
   });
 
   if (config.hideHud) {
-    player.onScreenDisplay.setHudVisibility(
-      HudVisibility.Hide,
-      ZOOM_CONFIG.hud,
-    );
+    player.onScreenDisplay.setHudVisibility(HudVisibility.Hide, ZOOM_CONFIG.hud);
   }
 }
 
@@ -31,9 +28,6 @@ export function clearZoom(player, config) {
   player.removeEffect(ZOOM_CONFIG.effect.id);
 
   if (config.hideHud) {
-    player.onScreenDisplay.setHudVisibility(
-      HudVisibility.Reset,
-      ZOOM_CONFIG.hud,
-    );
+    player.onScreenDisplay.setHudVisibility(HudVisibility.Reset, ZOOM_CONFIG.hud);
   }
 }

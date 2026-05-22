@@ -5,11 +5,10 @@ import { showForm } from "../utils/ui.js";
 
 export const note = (player) => {
   try {
-    const ui = new ActionFormData();
-    ui.title("บันทึกการอัปเดตระบบ");
+    const form = new ActionFormData();
+    form.title("บันทึกการอัปเดตระบบ");
 
-    let bodyText =
-      "§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n";
+    let bodyText = "§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n";
 
     const sectionsLen = patchNotesData.length;
     for (let i = 0; i < sectionsLen; i++) {
@@ -23,10 +22,10 @@ export const note = (player) => {
       }
     }
 
-    ui.body(bodyText);
-    ui.button("ย้อนกลับ", "textures/ui/arrow_left");
+    form.body(bodyText);
+    form.button("ย้อนกลับ", "textures/ui/arrow_left");
 
-    showForm(player, ui, "note", (res) => {
+    showForm(player, form, "note", (res) => {
       if (res.canceled) return;
       if (res.selection === 0) menu(player);
     });

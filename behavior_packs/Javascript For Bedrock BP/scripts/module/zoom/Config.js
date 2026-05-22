@@ -23,7 +23,7 @@ export const ZOOM_CONFIG = Object.freeze({
 
   effect: {
     id: "slowness",
-    amplifier: 1,
+    amplifier: 5,
     duration: 20 * 60 * 60,
     showParticles: false,
   },

@@ -35,9 +35,7 @@ export const adminact = (player, targetName, index) => {
         f.textField("หัวข้อ", "", { defaultValue: item.t });
         f.textField("เนื้อหา", "", { defaultValue: item.b });
         if (item.r) f.textField("§aคำตอบเดิม", "", { defaultValue: item.r });
-        showForm(player, f, "adminact.detail", () =>
-          adminact(player, targetName, index),
-        );
+        showForm(player, f, "adminact.detail", () => adminact(player, targetName, index));
       } else if (res.selection === 1) {
         const f = new ModalFormData();
         f.title("ตอบกลับผู้ใช้งาน");

@@ -33,8 +33,7 @@ export function getBlockTypeId(dimension, pos) {
   return typeId;
 }
 
-export const isPassable = (dim, pos) =>
-  PASS_THROUGH_BLOCKS.has(getBlockTypeId(dim, pos) ?? "");
+export const isPassable = (dim, pos) => PASS_THROUGH_BLOCKS.has(getBlockTypeId(dim, pos) ?? "");
 
 export function liftAbove(dim, pos, skipLift = false) {
   const p = framePool.lifted;
@@ -53,10 +52,7 @@ export function pullCamera(dim, focus, desired, shotH = 0) {
   const travel = dist3(focus, desired);
   if (travel <= 0.001) return liftAbove(dim, desired, shotH > 5);
 
-  const steps = Math.min(
-    24,
-    Math.max(2, Math.ceil(travel / CONFIG.collisionStep)),
-  );
+  const steps = Math.min(24, Math.max(2, Math.ceil(travel / CONFIG.collisionStep)));
   const safe = framePool.safe;
   safe.x = focus.x;
   safe.y = focus.y;

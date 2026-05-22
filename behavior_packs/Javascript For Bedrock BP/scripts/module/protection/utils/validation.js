@@ -18,12 +18,15 @@ export const hasAccess = (player, owner, zones) => {
 
 export const validateZoneCreate = (player, zones) => {
   const zoneCount = Object.keys(zones).length;
+
   if (zoneCount >= Config.MaxZones) {
     return { ok: false, reason: `[x] ถึงขีดจำกัด ${Config.MaxZones} โซน!` };
   }
+
   if (zones[player.name]) {
     return { ok: false, reason: `[x] มีโซนแล้ว!` };
   }
+
   if (player.dimension.id !== "minecraft:overworld") {
     return { ok: false, reason: `[x] ใช้ได้เฉพาะ Overworld!` };
   }
@@ -53,10 +56,7 @@ export const consumeBlock = (player) => {
     const item = container.getItem(i);
     if (item && item.typeId === Config.RequiredBlock) {
       if (item.amount > 1) {
-        container.setItem(
-          i,
-          new ItemStack(Config.RequiredBlock, item.amount - 1),
-        );
+        container.setItem(i, new ItemStack(Config.RequiredBlock, item.amount - 1));
       } else {
         container.setItem(i, undefined);
       }
@@ -67,14 +67,7 @@ export const consumeBlock = (player) => {
 };
 
 export const isOverlapping = (a, b) => {
-  return (
-    a.start.x <= b.end.x &&
-    a.end.x >= b.start.x &&
-    a.start.y <= b.end.y &&
-    a.end.y >= b.start.y &&
-    a.start.z <= b.end.z &&
-    a.end.z >= b.start.z
-  );
+  return a.start.x <= b.end.x && a.end.x >= b.start.x && a.start.y <= b.end.y && a.end.y >= b.start.y && a.start.z <= b.end.z && a.end.z >= b.start.z;
 };
 
 export const isZoneOverlap = (newZone, zones) => {

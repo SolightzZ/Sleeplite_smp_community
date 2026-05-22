@@ -1,8 +1,4 @@
-import {
-  CommandPermissionLevel,
-  CustomCommandStatus,
-  system,
-} from "@minecraft/server";
+import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
 import { showServerMenu } from "./Transfer.js";
 
 const quickServersCommand = (origin) => {

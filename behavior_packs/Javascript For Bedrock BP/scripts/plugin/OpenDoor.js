@@ -1,9 +1,4 @@
-const dirs = [
-  (b) => b.east(),
-  (b) => b.west(),
-  (b) => b.north(),
-  (b) => b.south(),
-];
+const dirs = [(b) => b.east(), (b) => b.west(), (b) => b.north(), (b) => b.south()];
 
 export const openDoor = (ev) => {
   try {

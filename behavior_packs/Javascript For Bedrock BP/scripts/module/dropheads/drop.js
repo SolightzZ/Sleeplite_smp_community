@@ -12,9 +12,7 @@ export const dropHead = (player, dmg) => {
     const pos = posInt(loc);
     const dimName = worldName(dim.id);
 
-    player.sendMessage(
-      `§7[/] ${name} died at §c${pos.x} ${pos.y} ${pos.z} §7in ${dimName}`,
-    );
+    player.sendMessage(`§7[/] ${name} died at §c${pos.x} ${pos.y} ${pos.z} §7in ${dimName}`);
 
     const headId = getHead(name);
     if (!headId) return;
@@ -22,11 +20,7 @@ export const dropHead = (player, dmg) => {
     const killer = getKillerName(player, dmg);
 
     const item = new ItemStack(headId, 1);
-    item.setLore([
-      `§r§8Killer: §9${killer}`,
-      `§r§8Location: §9${pos.x} ${pos.y} ${pos.z}`,
-      `§r§8Dimension: §9${dimName}`,
-    ]);
+    item.setLore([`§r§8Killer: §9${killer}`, `§r§8Location: §9${pos.x} ${pos.y} ${pos.z}`, `§r§8Dimension: §9${dimName}`]);
 
     if (dmg?.cause === "void") {
       const minY = dim.heightRange.min + 1;

@@ -1,10 +1,5 @@
 const PICKAXE_BREAKS = {
-  "minecraft:wooden_pickaxe": new Set([
-    "minecraft:coal_ore",
-    "minecraft:deepslate_coal_ore",
-    "minecraft:quartz_ore",
-    "minecraft:nether_gold_ore",
-  ]),
+  "minecraft:wooden_pickaxe": new Set(["minecraft:coal_ore", "minecraft:deepslate_coal_ore", "minecraft:quartz_ore", "minecraft:nether_gold_ore"]),
   "minecraft:stone_pickaxe": new Set([
     "minecraft:coal_ore",
     "minecraft:deepslate_coal_ore",
@@ -83,12 +78,7 @@ const PICKAXE_BREAKS = {
     "minecraft:deepslate_emerald_ore",
     "minecraft:nether_gold_ore",
   ]),
-  "minecraft:golden_pickaxe": new Set([
-    "minecraft:coal_ore",
-    "minecraft:deepslate_coal_ore",
-    "minecraft:quartz_ore",
-    "minecraft:nether_gold_ore",
-  ]),
+  "minecraft:golden_pickaxe": new Set(["minecraft:coal_ore", "minecraft:deepslate_coal_ore", "minecraft:quartz_ore", "minecraft:nether_gold_ore"]),
   "minecraft:copper_pickaxe": new Set([
     "minecraft:coal_ore",
     "minecraft:deepslate_coal_ore",

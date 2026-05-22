@@ -90,8 +90,7 @@ function confirm(player, db, today) {
   ui.button1("Cancel");
   ui.button2("Claim");
 
-  ui
-    .show(player)
+  ui.show(player)
     .then((res) => {
       if (!player.isValid) return;
 

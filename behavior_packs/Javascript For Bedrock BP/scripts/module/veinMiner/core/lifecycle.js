@@ -12,6 +12,7 @@ export const finalizeJobDrops = (job) => {
 
   if (dropId && amt > 0) {
     let remaining = amt;
+
     while (remaining > 0) {
       const stack = Math.min(remaining, 64);
       dim.spawnItem(new ItemStack(dropId, stack), loc);
@@ -32,12 +33,7 @@ export const finalizeAndCleanupState = (job) => {
     const blocksBroken = job.index;
     const item = getPlayerPickaxe(job.player);
     if (item) {
-      applyDurabilityDamage(
-        job.player,
-        item,
-        blocksBroken,
-        job.unbreakingLevel,
-      );
+      applyDurabilityDamage(job.player, item, blocksBroken, job.unbreakingLevel);
     }
   }
 

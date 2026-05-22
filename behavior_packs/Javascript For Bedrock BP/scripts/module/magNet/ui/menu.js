@@ -17,12 +17,13 @@ export const showMagnetMenu = (player) => {
     btnIcon = MagnetIcons.FULL;
   }
 
-  const form = new ActionFormData()
-    .title("Magnet System")
-    .body(`§7Status: ${isOn ? "§aEnabled" : "§cDisabled"}`)
-    .label(`§7Players: ${current}/${MagnetConfig.MAX_USERS}`)
-    .button(btnText, btnIcon)
-    .label("                 @Sleeplite SMP");
+  const form = new ActionFormData();
+  form.title("Magnet System");
+  form.body(`§7Status: ${isOn ? "§aEnabled" : "§cDisabled"}`);
+  form.label(`§7Players: ${current}/${MagnetConfig.MAX_USERS}`);
+  form.button(btnText, btnIcon);
+  form.label("                 @Sleeplite SMP");
+
   form
     .show(player)
     .then((res) => {
@@ -35,7 +36,6 @@ export const showMagnetMenu = (player) => {
         if (player.isValid) {
           player.sendMessage("§c[Magnet] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
-
         console.error("[Magnet] showMagnetMenu: ", e);
       } else {
         player.sendMessage("§c[Magnet] โปรดรอสักครู่...");

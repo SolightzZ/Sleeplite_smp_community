@@ -1,10 +1,5 @@
 import { world } from "@minecraft/server";
-import {
-  TICK_RECONCILE,
-  TICK_TARGET_LATENCY,
-  BATCH_MIN_SIZE,
-  BATCH_MAX_SIZE,
-} from "../config.js";
+import { TICK_RECONCILE, TICK_TARGET_LATENCY, BATCH_MIN_SIZE, BATCH_MAX_SIZE } from "../config.js";
 import { processQueue, queueCursor } from "./queue.js";
 import { playerLights } from "./state.js";
 import { placeLightForPlayer, removeLightBlock } from "./light-manager.js";
@@ -51,10 +46,7 @@ export function FlashlightRunInterval() {
   if (processQueue.length === 0) return;
   const activeCount = playerLights.size || 1;
 
-  const batchSize = Math.min(
-    BATCH_MAX_SIZE,
-    Math.max(BATCH_MIN_SIZE, Math.ceil(activeCount / TICK_TARGET_LATENCY)),
-  );
+  const batchSize = Math.min(BATCH_MAX_SIZE, Math.max(BATCH_MIN_SIZE, Math.ceil(activeCount / TICK_TARGET_LATENCY)));
 
   for (let i = 0; i < batchSize; i++) {
     if (processQueue.length === 0) break;

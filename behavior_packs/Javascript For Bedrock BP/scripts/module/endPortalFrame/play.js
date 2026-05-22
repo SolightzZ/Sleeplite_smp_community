@@ -26,9 +26,7 @@ function showiconstest(player, title, message, icon) {
       .catch((e) => {
         if (e?.message !== "User is busy") {
           if (player.isValid) {
-            player.sendMessage(
-              "§c[EndPortalFrame] เกิดข้อผิดพลาดในการเปิดเมนู",
-            );
+            player.sendMessage("§c[EndPortalFrame] เกิดข้อผิดพลาดในการเปิดเมนู");
           }
           console.error("[EndPortalFrame] showiconstest", e);
         }
@@ -52,10 +50,7 @@ export const touch = (ev) => {
     const friends = count(block);
     if (friends < team) {
       ev.cancel = true;
-      say(
-        player,
-        `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`,
-      );
+      say(player, `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`);
       return;
     }
 
@@ -75,9 +70,7 @@ export const touch = (ev) => {
     forget(block);
     sound(player, "block.end_portal_frame.fill");
 
-    player.sendMessage(
-      `§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`,
-    );
+    player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`);
   } catch (e) {
     console.error("[EndPortalFrame]  touch: ", e.message);
   }

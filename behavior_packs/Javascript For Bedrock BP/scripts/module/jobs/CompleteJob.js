@@ -1,18 +1,6 @@
 import { ItemStack, system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import {
-  getPlayerById,
-  buildInventoryMap,
-  jobs,
-  ownerNotifyMap,
-  pendingDelivery,
-  playerJobMap,
-  saveData,
-  showUI,
-  stopTimer,
-  timerMap,
-  totalDiamond,
-} from "./Job.js";
+import { getPlayerById, buildInventoryMap, jobs, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from "./Job.js";
 import { showMainMenu } from "./Menu.js";
 
 export const checkJobItems = (inv, job) => {
@@ -23,8 +11,7 @@ export const checkJobItems = (inv, job) => {
     const item = job.items[i];
     const have = invMap.get(item.id) ?? 0;
 
-    if (have < item.amount)
-      return `${item.id.replace("minecraft:", "")} (${have}/${item.amount})`;
+    if (have < item.amount) return `${item.id.replace("minecraft:", "")} (${have}/${item.amount})`;
   }
 
   return null;
@@ -74,11 +61,7 @@ export const giveDiamond = (player, amount) => {
   }
 
   if (freeSpace < amount) {
-    player.sendMessage(
-      "§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับของที่ได้ (ต้องการที่ว่าง " +
-        amount +
-        " ช่อง)",
-    );
+    player.sendMessage("§c[x] ช่องเก็บของไม่เพียงพอสำหรับรับของที่ได้ (ต้องการที่ว่าง " + amount + " ช่อง)");
     return false;
   }
 
@@ -150,9 +133,7 @@ export function completeJob(player) {
   let timeStr = "N/A";
 
   if (t) {
-    const secs = Math.ceil(
-      (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
-    );
+    const secs = Math.ceil((20 * 60 * 20 - (system.currentTick - t.startTick)) / 20);
 
     const m = Math.floor(secs / 60);
     const s = secs % 60;
@@ -169,10 +150,7 @@ export function completeJob(player) {
     const have = invMap.get(item.id) ?? 0;
     const ok = have >= item.amount;
 
-    body += `${ok ? "[ครบ] " : "[ขาด] "}${item.id.replace(
-      "minecraft:",
-      "",
-    )} ${have}/${item.amount} (ของที่ได้ ${item.diamond} เพชร)\n`;
+    body += `${ok ? "[ครบ] " : "[ขาด] "}${item.id.replace("minecraft:", "")} ${have}/${item.amount} (ของที่ได้ ${item.diamond} เพชร)\n`;
   }
 
   showActiveJobForm(player, job, body, total);
@@ -239,9 +217,7 @@ export function showActiveJobForm(player, job, body, total) {
 
     const owner = getPlayerById(job.owner);
     if (owner && owner.isValid) {
-      owner.sendMessage(
-        `[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “รับไอเทมจัดส่ง” เพื่อรับไอเท็มของคุณ`,
-      );
+      owner.sendMessage(`[Job] ${player.name} จัดส่งงานของคุณเรียบร้อยแล้ว! ไปที่ “รับไอเทมจัดส่ง” เพื่อรับไอเท็มของคุณ`);
     }
   });
 }
@@ -251,10 +227,7 @@ export function showCancelConfirmForm(player, job) {
 
   const form = new ActionFormData();
   form.title("ต้องการยกเลิกการจัดส่งหรือไม่?");
-  form.body(
-    "คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\n" +
-      "คำสั่งซื้อจะถูกส่งกลับไปยัง “งานจัดส่งที่พร้อมรับ”\n",
-  );
+  form.body("คุณแน่ใจหรือไม่ว่าต้องการยกเลิกการจัดส่งนี้?\n" + "คำสั่งซื้อจะถูกส่งกลับไปยัง “งานจัดส่งที่พร้อมรับ”\n");
 
   form.button("ใช่, ยกเลิกเลย", "textures/ui/cancel");
   form.button("ไม่, ทำงานต่อ", "textures/ui/confirm");
@@ -273,16 +246,12 @@ export function showCancelConfirmForm(player, job) {
     saveData();
 
     if (player.isValid) {
-      player.sendMessage(
-        "[Job] คุณได้ยกเลิกการจัดส่งเรียบร้อยแล้ว งานถูกนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ” อีกครั้ง",
-      );
+      player.sendMessage("[Job] คุณได้ยกเลิกการจัดส่งเรียบร้อยแล้ว งานถูกนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ” อีกครั้ง");
     }
 
     const owner = getPlayerById(job.owner);
     if (owner && owner.isValid) {
-      owner.sendMessage(
-        `[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยัง “งานจัดส่งที่พร้อมรับ”`,
-      );
+      owner.sendMessage(`[Job] ${player.name} คุณได้ยกเลิกการจัดส่งแล้ว งานถูกส่งกลับไปยัง “งานจัดส่งที่พร้อมรับ”`);
     }
   });
 }

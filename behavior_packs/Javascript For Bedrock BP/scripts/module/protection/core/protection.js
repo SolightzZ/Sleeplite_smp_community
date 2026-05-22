@@ -1,14 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 import { Colors, Config, HalfZoneSize } from "../config.js";
-import {
-  buildBorderPoints,
-  buildZone,
-  consumeBlock,
-  isFormValid,
-  isZoneOverlap,
-  validateZoneCreate,
-} from "../utils/validation.js";
+import { buildBorderPoints, buildZone, consumeBlock, isFormValid, isZoneOverlap, validateZoneCreate } from "../utils/validation.js";
 import { zoneDatabase } from "./database.js";
 
 export const uiLocks = new Set();
@@ -128,9 +121,7 @@ export const createZone = async (player) => {
     zoneDatabase.save();
     zoneDatabase.cache.clear();
 
-    player.sendMessage(
-      `${Colors.Success}สร้างโซน ${Config.ZoneSize}x${Config.ZoneSize} สำเร็จ!`,
-    );
+    player.sendMessage(`${Colors.Success}สร้างโซน ${Config.ZoneSize}x${Config.ZoneSize} สำเร็จ!`);
   } catch (e) {
     player.sendMessage(`[x] สร้างโซนผิดพลาด!`);
     console.warn(`[ Protection ] createZone: ${e}`);
@@ -143,20 +134,20 @@ export const deleteZone = async (player) => {
       return player.sendMessage(`[x] ไม่มีโซน!`);
     }
 
-    const c1 = new ActionFormData()
-      .title("ยืนยันลบโซน")
-      .body("แน่ใจว่าจะลบโซน?")
-      .button("ตกลง", "textures/ui/check")
-      .button("ยกเลิก", "textures/ui/cancel");
+    const c1 = new ActionFormData();
+    c1.title("ยืนยันลบโซน");
+    c1.body("แน่ใจว่าจะลบโซน?");
+    c1.button("ตกลง", "textures/ui/check");
+    c1.button("ยกเลิก", "textures/ui/cancel");
 
     const r1 = await c1.show(player);
     if (!isFormValid(player, r1) || r1.selection !== 0) return;
 
-    const c2 = new ActionFormData()
-      .title("ยืนยันครั้งสุดท้าย")
-      .body("ยืนยันอีกครั้งเพื่อลบโซน")
-      .button("ตกลง", "textures/ui/check")
-      .button("ยกเลิก", "textures/ui/cancel");
+    const c2 = new ActionFormData();
+    c2.title("ยืนยันครั้งสุดท้าย");
+    c2.body("ยืนยันอีกครั้งเพื่อลบโซน");
+    c2.button("ตกลง", "textures/ui/check");
+    c2.button("ยกเลิก", "textures/ui/cancel");
 
     const r2 = await c2.show(player);
     if (!isFormValid(player, r2) || r2.selection !== 0) return;
@@ -188,14 +179,14 @@ export const manageFriends = async (player) => {
       if (n !== player.name) otherNames.push(n);
     }
 
-    const form = new ModalFormData()
-      .title("จัดการเพื่อน")
-      .dropdown("การดำเนินการ", ["เพิ่มเพื่อน", "ลบเพื่อน"], {
-        defaultValueIndex: 0,
-      })
-      .dropdown("ผู้เล่น", otherNames.length ? otherNames : [`ไม่มีผู้เล่น`], {
-        defaultValueIndex: 0,
-      });
+    const form = new ModalFormData();
+    form.title("จัดการเพื่อน");
+    form.dropdown("การดำเนินการ", ["เพิ่มเพื่อน", "ลบเพื่อน"], {
+      defaultValueIndex: 0,
+    });
+    form.dropdown("ผู้เล่น", otherNames.length ? otherNames : [`ไม่มีผู้เล่น`], {
+      defaultValueIndex: 0,
+    });
 
     const res = await form.show(player);
     if (!isFormValid(player, res)) return;
@@ -203,11 +194,7 @@ export const manageFriends = async (player) => {
     const actionIdx = res.formValues[0];
     const playerIdx = res.formValues[1];
 
-    if (
-      typeof playerIdx !== "number" ||
-      playerIdx < 0 ||
-      playerIdx >= otherNames.length
-    ) {
+    if (typeof playerIdx !== "number" || playerIdx < 0 || playerIdx >= otherNames.length) {
       return player.sendMessage(`[x] ฟอร์มไม่ถูกต้อง!`);
     }
 
@@ -218,13 +205,16 @@ export const manageFriends = async (player) => {
       if (zone.friends.length >= Config.MaxFriends) {
         return player.sendMessage(`[x] เพื่อนครบ ${Config.MaxFriends} คนแล้ว!`);
       }
+
       const friends = zone.friends;
       const friendsLen = friends.length;
+
       for (let i = 0; i < friendsLen; i++) {
         if (friends[i] === targetName) {
           return player.sendMessage(`[x] เป็นเพื่อนแล้ว!`);
         }
       }
+
       zone.friends.push(targetName);
       player.sendMessage(`${Colors.Success}[/] เพิ่ม ${targetName} แล้ว!`);
     } else {
@@ -232,6 +222,7 @@ export const manageFriends = async (player) => {
       const friendsLen = friends.length;
       let found = false;
       const newFriends = [];
+
       for (let i = 0; i < friendsLen; i++) {
         if (friends[i] === targetName) {
           found = true;
@@ -239,6 +230,7 @@ export const manageFriends = async (player) => {
           newFriends.push(friends[i]);
         }
       }
+
       if (!found) return player.sendMessage(`[x] ไม่ได้เป็นเพื่อน!`);
       zone.friends = newFriends;
       player.sendMessage(`${Colors.Warning}[/] ลบ ${targetName} แล้ว!`);
@@ -254,15 +246,12 @@ export const manageFriends = async (player) => {
 
 export const adminDeleteZone = async (player) => {
   try {
-    if (!player.hasTag(Config.AdminTag))
-      return player.sendMessage(`[x] เฉพาะแอดมิน!`);
+    if (!player.hasTag(Config.AdminTag)) return player.sendMessage(`[x] เฉพาะแอดมิน!`);
 
     const owners = Object.keys(zoneDatabase.zones);
     if (owners.length === 0) return player.sendMessage(`[x] ไม่มีโซน!`);
 
-    const form = new ModalFormData()
-      .title("ลบโซน (แอดมิน)")
-      .dropdown("เลือกโซน", owners, { defaultValueIndex: 0 });
+    const form = new ModalFormData().title("ลบโซน (แอดมิน)").dropdown("เลือกโซน", owners, { defaultValueIndex: 0 });
 
     const res = await form.show(player);
     if (!isFormValid(player, res)) return;
@@ -300,15 +289,12 @@ export const adminDeleteZone = async (player) => {
 
 export const adminTeleport = async (player) => {
   try {
-    if (!player.hasTag(Config.AdminTag))
-      return player.sendMessage(`[x] เฉพาะแอดมิน!`);
+    if (!player.hasTag(Config.AdminTag)) return player.sendMessage(`[x] เฉพาะแอดมิน!`);
 
     const owners = Object.keys(zoneDatabase.zones);
     if (owners.length === 0) return player.sendMessage(`[x] ไม่มีโซน!`);
 
-    const form = new ModalFormData()
-      .title("เทเลพอร์ต (แอดมิน)")
-      .dropdown("เลือกโซน", owners, { defaultValueIndex: 0 });
+    const form = new ModalFormData().title("เทเลพอร์ต (แอดมิน)").dropdown("เลือกโซน", owners, { defaultValueIndex: 0 });
 
     const res = await form.show(player);
     if (!isFormValid(player, res)) return;

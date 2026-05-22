@@ -1,9 +1,4 @@
-import {
-  CommandPermissionLevel,
-  CustomCommandStatus,
-  system,
-  world,
-} from "@minecraft/server";
+import { CommandPermissionLevel, CustomCommandStatus, system, world } from "@minecraft/server";
 import { config } from "./constants.js";
 import { load, reset } from "./database.js";
 import { menu } from "./logic.js";

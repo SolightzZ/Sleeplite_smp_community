@@ -23,9 +23,5 @@ const runHandlers = (handlers, ev) => {
   }
 };
 
-world.beforeEvents.playerBreakBlock.subscribe((ev) =>
-  runHandlers(beforeHandlers, ev),
-);
-world.afterEvents.playerBreakBlock.subscribe((ev) =>
-  runHandlers(afterHandlers, ev),
-);
+world.beforeEvents.playerBreakBlock.subscribe((ev) => runHandlers(beforeHandlers, ev));
+world.afterEvents.playerBreakBlock.subscribe((ev) => runHandlers(afterHandlers, ev));

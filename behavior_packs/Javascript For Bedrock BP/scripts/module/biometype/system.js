@@ -1,15 +1,10 @@
 import { system, world } from "@minecraft/server";
 import { Colors } from "./database.js";
-import {
-  getBiomeIdAtLocation,
-  getBiomeName,
-  getDimensionName,
-} from "./functions.js";
+import { getBiomeIdAtLocation, getBiomeName, getDimensionName } from "./functions.js";
 
 function handlePlayerDimensionChange(event) {
   const player = event.player;
-  if (!player || player.typeId !== "minecraft:player" || !player.isValid)
-    return;
+  if (!player || player.typeId !== "minecraft:player" || !player.isValid) return;
 
   const dimensionId = player.dimension.id;
   const dimensionName = getDimensionName(dimensionId);
@@ -30,10 +25,7 @@ function handlePlayerDimensionChange(event) {
     }
 
     try {
-      player.onScreenDisplay.setTitle(
-        `${Colors.gold}${dimensionName}`,
-        options,
-      );
+      player.onScreenDisplay.setTitle(`${Colors.gold}${dimensionName}`, options);
     } catch (error) {
       console.error("[ BiomeType ]   handlePlayerDimensionChange: " + error);
     }

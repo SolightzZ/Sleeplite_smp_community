@@ -17,10 +17,7 @@ export const processVeinJobs = () => {
 
   const totalJobs = state.jobQueue.length;
   const loadFactor = Math.max(1, Math.floor(totalJobs / 4));
-  const blocksPerTick = Math.max(
-    1,
-    Math.ceil(CFG.blocksPerTickBase / loadFactor),
-  );
+  const blocksPerTick = Math.max(1, Math.ceil(CFG.blocksPerTickBase / loadFactor));
 
   let jobsDone = 0;
   const maxJobs = Math.min(totalJobs, 4);
@@ -52,10 +49,7 @@ export const processVeinJobs = () => {
       const block = getBlockSafe(job.player.dimension, loc);
 
       if (block && block.typeId === job.targetId) {
-        const dropAmt =
-          job.fortuneLevel > 0
-            ? Math.floor(Math.random() * job.fortuneLevel) + 2
-            : 1;
+        const dropAmt = job.fortuneLevel > 0 ? Math.floor(Math.random() * job.fortuneLevel) + 2 : 1;
         const xpChoices = ORE_XP[job.targetId] || [0];
         const xpAmt = xpChoices[Math.floor(Math.random() * xpChoices.length)];
 

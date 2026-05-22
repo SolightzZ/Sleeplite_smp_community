@@ -45,9 +45,7 @@ function give(player, id, count) {
     }
 
     if (freeSpace < amountToAdd) {
-      console.warn(
-        `[Give] Failed: Not enough space. Needed: ${amountToAdd}, Free: ${freeSpace}`,
-      );
+      console.warn(`[Give] Failed: Not enough space. Needed: ${amountToAdd}, Free: ${freeSpace}`);
       return false;
     }
 

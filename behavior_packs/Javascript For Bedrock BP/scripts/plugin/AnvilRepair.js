@@ -32,16 +32,11 @@ const applyAnvilRepair = (block, permutation, damage, player, item) => {
 export function handleRepairAnvil(event) {
   const { block, player, itemStack: item } = event;
 
-  if (!item || item.typeId !== "minecraft:iron_ingot" || player.isSneaking)
-    return;
+  if (!item || item.typeId !== "minecraft:iron_ingot" || player.isSneaking) return;
 
   const typeId = block.typeId;
 
-  if (
-    typeId !== "minecraft:chipped_anvil" &&
-    typeId !== "minecraft:damaged_anvil"
-  )
-    return;
+  if (typeId !== "minecraft:chipped_anvil" && typeId !== "minecraft:damaged_anvil") return;
 
   const permutation = block.permutation;
   const damage = permutation.getState("damage");

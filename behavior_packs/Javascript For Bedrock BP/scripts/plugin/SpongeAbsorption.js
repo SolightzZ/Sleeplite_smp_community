@@ -6,19 +6,24 @@ const MAX_DISTANCE = 6;
 
 const findSpongeSlot = (container) => {
   const size = container.size;
+
   for (let i = 0; i < size; i++) {
     const item = container.getItem(i);
     if (item && item.typeId === SPONGE) return i;
   }
+
   return -1;
 };
 
 const getSpongeSlot = (player, container) => {
   const selectedSlot = player.selectedSlotIndex;
+
   if (selectedSlot >= 0 && selectedSlot < container.size) {
     const selectedItem = container.getItem(selectedSlot);
+
     if (selectedItem && selectedItem.typeId === SPONGE) return selectedSlot;
   }
+
   return findSpongeSlot(container);
 };
 
@@ -28,6 +33,7 @@ const getTargetWaterBlock = (player) => {
     includeLiquidBlocks: true,
     includePassableBlocks: true,
   });
+
   if (!hit || !hit.block || !hit.block.isValid) return undefined;
   if (hit.block.typeId !== WATER) return undefined;
   return hit.block;
@@ -41,6 +47,7 @@ const consumeSponge = (container, slot) => {
     container.setItem(slot, item);
     return true;
   }
+
   container.setItem(slot, undefined);
   return true;
 };

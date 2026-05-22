@@ -42,27 +42,15 @@ export const patchNotesData = [
   },
   {
     category: "3. อุปกรณ์สวมใส่ (Armor & Tools)",
-    items: [
-      "Wolf Armor: ชุดเกราะหมาป่า",
-      "Wolf Tool: เครื่องมือหมาป่า",
-      "Demon Armor: ชุดเกราะปีศาจ",
-      "Demon Sword: ดาบปีศาจ",
-    ],
+    items: ["Wolf Armor: ชุดเกราะหมาป่า", "Wolf Tool: เครื่องมือหมาป่า", "Demon Armor: ชุดเกราะปีศาจ", "Demon Sword: ดาบปีศาจ"],
   },
   {
     category: "4. ระบบการตาย (Death System)",
-    items: [
-      "Gravestones: หลุมศพเก็บของเมื่อตาย",
-      "Death Location: แจ้งพิกัดจุดตายในแชท",
-      "Player Heads: ดรอปหัวผู้เล่นเมื่อถูกฆ่า",
-    ],
+    items: ["Gravestones: หลุมศพเก็บของเมื่อตาย", "Death Location: แจ้งพิกัดจุดตายในแชท", "Player Heads: ดรอปหัวผู้เล่นเมื่อถูกฆ่า"],
   },
   {
     category: "5. เครื่องมือผู้ดูแล (Admin Tools)",
-    items: [
-      "Ban Player: ระบบแบนและปลดแบน",
-      "View Inventory: ดูของในตัวผู้เล่นอื่น",
-    ],
+    items: ["Ban Player: ระบบแบนและปลดแบน", "View Inventory: ดูของในตัวผู้เล่นอื่น"],
   },
   {
     category: "6. การสร้างของ (Crafting)",

@@ -1,20 +1,8 @@
 import { world } from "@minecraft/server";
-import {
-  ActionFormData,
-  MessageFormData,
-  ModalFormData,
-} from "@minecraft/server-ui";
+import { ActionFormData, MessageFormData, ModalFormData } from "@minecraft/server-ui";
 import { ITEM, PREDEFINED_RANKS } from "../constants/index.js";
 import { refreshNameTag } from "../core/nametag.js";
-import {
-  addRank,
-  getActiveRank,
-  getAllServerRanks,
-  getOwnedRanks,
-  removeRanks,
-  renameRank,
-  setActiveRank,
-} from "../core/tagManager.js";
+import { addRank, getActiveRank, getAllServerRanks, getOwnedRanks, removeRanks, renameRank, setActiveRank } from "../core/tagManager.js";
 import { isValidPlayer } from "../utils/player.js";
 
 const getPredefinedRankList = () => {
@@ -88,9 +76,7 @@ export const showMenuEdit = (admin, target) => {
   const activeRank = getActiveRank(target);
   const defaultIndex = activeRank ? owned.indexOf(activeRank) : 0;
 
-  const form = new ModalFormData()
-    .title("แก้ไขชื่อยศ")
-    .dropdown("เลือกยศ:", owned, { defaultValue: Math.max(0, defaultIndex) });
+  const form = new ModalFormData().title("แก้ไขชื่อยศ").dropdown("เลือกยศ:", owned, { defaultValue: Math.max(0, defaultIndex) });
 
   form
     .show(admin)
@@ -228,9 +214,7 @@ export const showMainMenu = (admin) => {
   if (!isValidPlayer(admin)) return;
 
   const players = world.getPlayers();
-  const form = new ActionFormData()
-    .title("§lระบบจัดการยศ")
-    .body("§7เลือกผู้เล่นที่ต้องการจัดการ:");
+  const form = new ActionFormData().title("§lระบบจัดการยศ").body("§7เลือกผู้เล่นที่ต้องการจัดการ:");
 
   for (let i = 0; i < players.length; i++) {
     form.button(players[i].nameTag);

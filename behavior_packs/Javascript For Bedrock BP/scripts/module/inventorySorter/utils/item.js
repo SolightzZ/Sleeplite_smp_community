@@ -111,9 +111,7 @@ export const getItemRarity = (item) => {
 const getEnchantCount = (item) => {
   if (!item) return 0;
 
-  return (
-    item.getComponent("minecraft:enchantable")?.getEnchantments?.()?.length ?? 0
-  );
+  return item.getComponent("minecraft:enchantable")?.getEnchantments?.()?.length ?? 0;
 };
 
 export const compareItemsByMode = (a, b, mode) => {

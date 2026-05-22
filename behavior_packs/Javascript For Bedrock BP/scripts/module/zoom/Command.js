@@ -1,10 +1,4 @@
-import {
-  CommandPermissionLevel,
-  CustomCommandStatus,
-  Player,
-  system,
-} from "@minecraft/server";
-
+import { CommandPermissionLevel, CustomCommandStatus, Player, system } from "@minecraft/server";
 import { toggleZoom } from "./index.js";
 
 export function ZoomCommand(init) {

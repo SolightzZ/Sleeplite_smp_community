@@ -1,20 +1,9 @@
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
-import {
-  amountMap,
-  countItem,
-  createJobData,
-  buildInventoryMap,
-  ITEM_IDS,
-  jobs,
-  selectedMap,
-  showUI,
-} from "./Job.js";
+import { amountMap, countItem, createJobData, buildInventoryMap, ITEM_IDS, jobs, selectedMap, showUI } from "./Job.js";
 import { showMainMenu } from "./Menu.js";
 
 export const getIcon = (typeId) => {
-  return ITEM_IDS.has(typeId)
-    ? `textures/items/${typeId.replace("minecraft:", "")}`
-    : "textures/ui/icon_none";
+  return ITEM_IDS.has(typeId) ? `textures/items/${typeId.replace("minecraft:", "")}` : "textures/ui/icon_none";
 };
 
 export const formatName = (id) => {
@@ -58,10 +47,7 @@ export const searchBlock = (player) => {
       if (selectedList[j] === id) count++;
     }
 
-    form.button(
-      `${count > 0 ? `§9[${count}] ` : ""}${id.replace("minecraft:", "")}`,
-      getIcon(id),
-    );
+    form.button(`${count > 0 ? `§9[${count}] ` : ""}${id.replace("minecraft:", "")}`, getIcon(id));
   }
 
   showUI(player, form, (res) => {
@@ -99,8 +85,7 @@ export const searchBlock = (player) => {
     }
 
     if (isDuplicate) {
-      if (player.isValid)
-        player.sendMessage("[Job] คุณได้เลือกไอเท็มนี้ไปแล้ว");
+      if (player.isValid) player.sendMessage("[Job] คุณได้เลือกไอเท็มนี้ไปแล้ว");
       searchBlock(player);
       return;
     }
@@ -178,9 +163,7 @@ export function createJob(player) {
       }
 
       if (missing) {
-        player.sendMessage(
-          `[Job] ไม่พบไอเท็มในคลังแล้ว: ${missing.replace("minecraft:", "")}`,
-        );
+        player.sendMessage(`[Job] ไม่พบไอเท็มในคลังแล้ว: ${missing.replace("minecraft:", "")}`);
 
         const filtered = [];
         for (let i = 0; i < sLen2; i++) {
@@ -230,11 +213,7 @@ export const openAmountForm = (player) => {
     const displayName = id.replace("minecraft:", "");
     const current = currentAmounts[i] ?? {};
 
-    modal.textField(
-      `${displayName} จำนวนไอเทมที่ต้องการ (1-420)`,
-      "ระบุจำนวน...",
-      { defaultValue: String(current.amount ?? 1) },
-    );
+    modal.textField(`${displayName} จำนวนไอเทมที่ต้องการ (1-420)`, "ระบุจำนวน...", { defaultValue: String(current.amount ?? 1) });
 
     modal.slider(`Diamond จำนวนเพชรที่ต้องการ  (1-64)`, 1, 64, {
       valueStep: 1,
@@ -318,16 +297,9 @@ export const openConfirmForm = (player) => {
     if (haveDiam2 < total) {
       const warnForm = new ActionFormData();
       warnForm.title("เพชรไม่เพียงพอ");
-      warnForm.body(
-        `ต้องการ: ${total} เพชร\n` +
-          `มีอยู่: ${haveDiam2} เพชร\n` +
-          `ขาดอีก: ${total - haveDiam2} เพชร`,
-      );
+      warnForm.body(`ต้องการ: ${total} เพชร\n` + `มีอยู่: ${haveDiam2} เพชร\n` + `ขาดอีก: ${total - haveDiam2} เพชร`);
 
-      warnForm.button(
-        "ย้อนกลับ (แก้ไขของที่ได้รับ)",
-        "textures/ui/debug_glyph_color",
-      );
+      warnForm.button("ย้อนกลับ (แก้ไขของที่ได้รับ)", "textures/ui/debug_glyph_color");
 
       warnForm.button("ยกเลิกคำสั่ง", "textures/ui/cancel");
       showUI(player, warnForm, (r) => {
@@ -376,8 +348,6 @@ export const openConfirmForm = (player) => {
     });
     selectedMap.delete(player.id);
     amountMap.delete(player.id);
-    player.sendMessage(
-      `[Job] สร้างคำสั่งจัดส่งสำเร็จแล้ว ระบบได้หัก ${total} เพชร`,
-    );
+    player.sendMessage(`[Job] สร้างคำสั่งจัดส่งสำเร็จแล้ว ระบบได้หัก ${total} เพชร`);
   });
 };

@@ -5,13 +5,7 @@ import { gravestone_main } from "../module/graveStones/index.js";
 import { onMagnetPlayerDie } from "../module/magNet/index.js";
 import { zoomEntityDie } from "../module/zoom/index.js";
 
-const handlers = [
-  gravestone_main,
-  DeathCounter,
-  onMagnetPlayerDie,
-  onDeadFullBright,
-  zoomEntityDie,
-];
+const handlers = [gravestone_main, DeathCounter, onMagnetPlayerDie, onDeadFullBright, zoomEntityDie];
 const PLAYER_TYPE = "minecraft:player";
 
 world.afterEvents.entityDie.subscribe((ev) => {

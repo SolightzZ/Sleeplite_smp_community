@@ -6,14 +6,11 @@ export function showMenu(p) {
 
   const isOn = hasBright(p);
 
-  const form = new ActionFormData()
-    .title("Full Bright")
-    .header(isOn ? `§aBright ON` : `§cBright OFF`)
-    .button(
-      isOn ? "Turn Off" : "Turn On",
-      isOn ? "textures/items/fullbright" : "textures/ui/icon_none",
-    )
-    .label("                 @Sleeplite SMP");
+  const form = new ActionFormData();
+  form.title("Full Bright");
+  form.header(isOn ? `§aBright ON` : `§cBright OFF`);
+  form.button(isOn ? "Turn Off" : "Turn On", isOn ? "textures/items/fullbright" : "textures/ui/icon_none");
+  form.label("                 @Sleeplite SMP");
 
   form
     .show(p)
@@ -23,9 +20,7 @@ export function showMenu(p) {
       const next = toggleBright(p);
 
       if (p.isValid) {
-        p.onScreenDisplay.setActionBar(
-          next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`,
-        );
+        p.onScreenDisplay.setActionBar(next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`);
       }
     })
     .catch((e) => {

@@ -1,15 +1,6 @@
 import { system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
-import {
-  getPlayerById,
-  jobs,
-  playerJobMap,
-  saveData,
-  showUI,
-  stopTimer,
-  timerMap,
-  totalDiamond,
-} from "./Job.js";
+import { getPlayerById, jobs, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from "./Job.js";
 import { showMainMenu } from "./Menu.js";
 
 const startTimer = (riderId, jobId_, savedStartTick) => {
@@ -38,9 +29,7 @@ const startTimer = (riderId, jobId_, savedStartTick) => {
     const sec2 = secs % 60;
     const pad = sec2 < 10 ? "0" : "";
 
-    rider.onScreenDisplay?.setActionBar(
-      `[Job] Time left: ${mins}:${pad}${sec2}`,
-    );
+    rider.onScreenDisplay?.setActionBar(`[Job] Time left: ${mins}:${pad}${sec2}`);
   }, 20);
 
   timerMap.set(riderId, { intervalId, startTick });
@@ -72,17 +61,12 @@ const expireJob = (riderId) => {
 
   const rider = getPlayerById(riderId);
   if (rider && rider.isValid) {
-    rider.sendMessage(
-      "[Job] หมดเวลาแล้ว ระบบได้ยกเลิกการจัดส่งและนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ”",
-    );
+    rider.sendMessage("[Job] หมดเวลาแล้ว ระบบได้ยกเลิกการจัดส่งและนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ”");
     viewJobs(rider);
   }
 
   const owner = getPlayerById(job.owner);
-  if (owner && owner.isValid)
-    owner.sendMessage(
-      "[Job] ผู้ส่งงานหมดเวลา การจัดส่งถูกรีเซ็ตและเปิดรับใหม่",
-    );
+  if (owner && owner.isValid) owner.sendMessage("[Job] ผู้ส่งงานหมดเวลา การจัดส่งถูกรีเซ็ตและเปิดรับใหม่");
 };
 
 export function viewJobs(player) {
@@ -108,10 +92,7 @@ export function viewJobs(player) {
   const openLen = openJobs.length;
   for (let i = 0; i < openLen; i++) {
     const job = openJobs[i];
-    form.button(
-      `${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`,
-      "textures/ui/icon_deals",
-    );
+    form.button(`${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`, "textures/ui/icon_deals");
   }
 
   form.button("ย้อนกลับ");
@@ -151,14 +132,12 @@ export const openJobDetail = (player, job) => {
     }
 
     if (playerJobMap.has(player.id)) {
-      if (player.isValid)
-        player.sendMessage("[Job] คุณมีงานจัดส่งที่กำลังดำเนินการอยู่แล้ว");
+      if (player.isValid) player.sendMessage("[Job] คุณมีงานจัดส่งที่กำลังดำเนินการอยู่แล้ว");
       return;
     }
 
     if (job.status !== "open") {
-      if (player.isValid)
-        player.sendMessage("[Job] งานนี้ไม่อยู่ในสถานะที่สามารถรับได้แล้ว");
+      if (player.isValid) player.sendMessage("[Job] งานนี้ไม่อยู่ในสถานะที่สามารถรับได้แล้ว");
       return;
     }
 
@@ -170,16 +149,11 @@ export const openJobDetail = (player, job) => {
     saveData();
 
     if (player.isValid) {
-      player.sendMessage(
-        "[Job] รับงานเรียบร้อยแล้ว คุณมีเวลา 20 นาที กรุณาเก็บไอเท็มให้ครบและกด “ส่งมอบงาน”",
-      );
+      player.sendMessage("[Job] รับงานเรียบร้อยแล้ว คุณมีเวลา 20 นาที กรุณาเก็บไอเท็มให้ครบและกด “ส่งมอบงาน”");
     }
 
     const owner = getPlayerById(job.owner);
-    if (owner && owner.isValid)
-      owner.sendMessage(
-        `[Job] ${player.name} ได้รับงานจัดส่งของคุณแล้ว ระบบเริ่มจับเวลา 20 นาที`,
-      );
+    if (owner && owner.isValid) owner.sendMessage(`[Job] ${player.name} ได้รับงานจัดส่งของคุณแล้ว ระบบเริ่มจับเวลา 20 นาที`);
   });
 };
 
@@ -188,7 +162,6 @@ system.runTimeout(() => {
   const len = snapshot.length;
   for (let i = 0; i < len; i++) {
     const [riderId, data] = snapshot[i];
-    if (data.startTick)
-      startTimer(riderId, playerJobMap.get(riderId), data.startTick);
+    if (data.startTick) startTimer(riderId, playerJobMap.get(riderId), data.startTick);
   }
 }, 10);

@@ -6,8 +6,7 @@ import { zoneDatabase } from "./database.js";
 import { clearVisuals, uiLocks } from "./protection.js";
 
 const isPlayer = (entity) => entity?.typeId?.startsWith("minecraft:player");
-const isZoneMap = (zones) =>
-  zones && typeof zones === "object" && !Array.isArray(zones);
+const isZoneMap = (zones) => zones && typeof zones === "object" && !Array.isArray(zones);
 
 export const onBlockEdit = (ev) => {
   const player = ev.player;
@@ -72,14 +71,7 @@ export const onExplosion = (ev) => {
     const z = zones[owners[i]];
     if (!z?.start || !z?.end) continue;
 
-    if (
-      loc.x >= z.start.x - radius &&
-      loc.x <= z.end.x + radius &&
-      loc.y >= z.start.y - radius &&
-      loc.y <= z.end.y + radius &&
-      loc.z >= z.start.z - radius &&
-      loc.z <= z.end.z + radius
-    ) {
+    if (loc.x >= z.start.x - radius && loc.x <= z.end.x + radius && loc.y >= z.start.y - radius && loc.y <= z.end.y + radius && loc.z >= z.start.z - radius && loc.z <= z.end.z + radius) {
       near = true;
       break;
     }

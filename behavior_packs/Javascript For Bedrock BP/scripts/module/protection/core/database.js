@@ -21,18 +21,7 @@ export class ZoneDatabase {
       for (let i = 0; i < ownersLen; i++) {
         const owner = owners[i];
         const zone = this.zones[owner];
-        compressed.push([
-          owner,
-          [
-            zone.start.x,
-            zone.start.y,
-            zone.start.z,
-            zone.end.x,
-            zone.end.y,
-            zone.end.z,
-            ...zone.friends,
-          ],
-        ]);
+        compressed.push([owner, [zone.start.x, zone.start.y, zone.start.z, zone.end.x, zone.end.y, zone.end.z, ...zone.friends]]);
       }
 
       const json = JSON.stringify(compressed);
@@ -63,12 +52,7 @@ export class ZoneDatabase {
         const owner = entry[0];
         const packed = entry[1];
 
-        if (
-          typeof owner !== "string" ||
-          !Array.isArray(packed) ||
-          packed.length < 6
-        )
-          continue;
+        if (typeof owner !== "string" || !Array.isArray(packed) || packed.length < 6) continue;
 
         const sx = packed[0];
         const sy = packed[1];
@@ -77,15 +61,7 @@ export class ZoneDatabase {
         const ey = packed[4];
         const ez = packed[5];
 
-        if (
-          !isValidNumber(sx) ||
-          !isValidNumber(sy) ||
-          !isValidNumber(sz) ||
-          !isValidNumber(ex) ||
-          !isValidNumber(ey) ||
-          !isValidNumber(ez)
-        )
-          continue;
+        if (!isValidNumber(sx) || !isValidNumber(sy) || !isValidNumber(sz) || !isValidNumber(ex) || !isValidNumber(ey) || !isValidNumber(ez)) continue;
 
         const friends = [];
         const friendsStart = 6;
@@ -121,14 +97,7 @@ export class ZoneDatabase {
 
     for (let i = 0; i < ownersLen; i++) {
       const zone = this.zones[owners[i]];
-      if (
-        loc.x >= zone.start.x &&
-        loc.x <= zone.end.x &&
-        loc.y >= zone.start.y &&
-        loc.y <= zone.end.y &&
-        loc.z >= zone.start.z &&
-        loc.z <= zone.end.z
-      ) {
+      if (loc.x >= zone.start.x && loc.x <= zone.end.x && loc.y >= zone.start.y && loc.y <= zone.end.y && loc.z >= zone.start.z && loc.z <= zone.end.z) {
         if (this.cache.size > Config.CacheLimit) this.cache.clear();
         const result = { owner: owners[i], ...zone };
         this.cache.set(key, result);

@@ -78,10 +78,7 @@ export class CinematicScheduler {
 
       try {
         const { position: p, rotation: r } = getCameraFrame(player, s);
-        safeRun(
-          player,
-          `camera @s set minecraft:free pos ${p.x.toFixed(3)} ${p.y.toFixed(3)} ${p.z.toFixed(3)} rot ${r.pitch.toFixed(3)} ${r.yaw.toFixed(3)}`,
-        );
+        safeRun(player, `camera @s set minecraft:free pos ${p.x.toFixed(3)} ${p.y.toFixed(3)} ${p.z.toFixed(3)} rot ${r.pitch.toFixed(3)} ${r.yaw.toFixed(3)}`);
       } catch (error) {
         console.error(" [ AFKCinematic ] CinematicScheduler: " + error);
         toRemove.push(playerId);

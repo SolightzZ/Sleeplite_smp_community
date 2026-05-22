@@ -1,11 +1,6 @@
 import { HudVisibility } from "@minecraft/server";
 import { CONFIG } from "../config.js";
-import {
-  cloneVec3,
-  rotateRelInto,
-  faceTargetInto,
-  hashStr,
-} from "../utils/math.js";
+import { cloneVec3, rotateRelInto, faceTargetInto, hashStr } from "../utils/math.js";
 import { pullCamera } from "./block.js";
 import { buildSequence } from "./stateManager.js";
 import { framePool } from "./state.js";
@@ -63,13 +58,7 @@ export function getCameraFrame(player, s) {
   const drift = Math.cos(s.waveClock * 0.7 + progress * Math.PI * 2);
 
   const desiredOff = framePool.desiredOff;
-  rotateRelInto(
-    desiredOff,
-    shot.yaw,
-    shot.distance,
-    drift * shot.slide,
-    shot.height + breath * shot.bob,
-  );
+  rotateRelInto(desiredOff, shot.yaw, shot.distance, drift * shot.slide, shot.height + breath * shot.bob);
 
   const desired = framePool.desired;
   desired.x = s.anchor.x + desiredOff.x;
@@ -77,13 +66,7 @@ export function getCameraFrame(player, s) {
   desired.z = s.anchor.z + desiredOff.z;
 
   const targetOff = framePool.targetOff;
-  rotateRelInto(
-    targetOff,
-    s.baseYaw,
-    shot.targetForward,
-    shot.targetRight,
-    shot.targetUp,
-  );
+  rotateRelInto(targetOff, s.baseYaw, shot.targetForward, shot.targetRight, shot.targetUp);
 
   const loc = player.location;
   const target = framePool.target;

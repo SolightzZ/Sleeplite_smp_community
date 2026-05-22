@@ -1,8 +1,4 @@
-import {
-  ActionFormData,
-  ModalFormData,
-  MessageFormData,
-} from "@minecraft/server-ui";
+import { ActionFormData, ModalFormData, MessageFormData } from "@minecraft/server-ui";
 import { system } from "@minecraft/server";
 import { CONFIG } from "../config.js";
 import { Database } from "../core/database.js";
@@ -15,9 +11,7 @@ export const sendform = (player) => {
     const list = Database.get(name);
 
     if (list.length >= CONFIG.maxReports) {
-      player.sendMessage(
-        `§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`,
-      );
+      player.sendMessage(`§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
       reportmenu(player);
       return;
     }

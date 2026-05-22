@@ -1,16 +1,7 @@
 import { system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { giveDiamond } from "./CompleteJob.js";
-import {
-  deleteJobData,
-  getPlayerById,
-  jobs,
-  playerJobMap,
-  showUI,
-  stopTimer,
-  timerMap,
-  totalDiamond,
-} from "./Job.js";
+import { deleteJobData, getPlayerById, jobs, playerJobMap, showUI, stopTimer, timerMap, totalDiamond } from "./Job.js";
 import { showMainMenu } from "./Menu.js";
 
 const refundOwner = (job) => {
@@ -47,15 +38,8 @@ export function editJobs(player) {
   const myJobsLen = myJobs.length;
   for (let i = 0; i < myJobsLen; i++) {
     const job = myJobs[i];
-    const statusText =
-      job.status === "open"
-        ? "[กำลังรับสมัคร]"
-        : job.status === "taken"
-          ? "[มีผู้รับงานแล้ว]"
-          : "[เสร็จสิ้น]";
-    form.button(
-      `${statusText} ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`,
-    );
+    const statusText = job.status === "open" ? "[กำลังรับสมัคร]" : job.status === "taken" ? "[มีผู้รับงานแล้ว]" : "[เสร็จสิ้น]";
+    form.button(`${statusText} ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`);
   }
 
   form.button("ย้อนกลับ");
@@ -77,12 +61,7 @@ export function editJobs(player) {
 const openManageJobDetail = (player, job) => {
   if (!player.isValid) return;
 
-  const statusText =
-    job.status === "open"
-      ? "กำลังรับสมัคร"
-      : job.status === "taken"
-        ? "มีผู้รับงานแล้ว"
-        : "เสร็จสิ้น";
+  const statusText = job.status === "open" ? "กำลังรับสมัคร" : job.status === "taken" ? "มีผู้รับงานแล้ว" : "เสร็จสิ้น";
 
   let body = `สถานะ: ${statusText}\n\n`;
   const itemsLen = job.items.length;
@@ -97,9 +76,7 @@ const openManageJobDetail = (player, job) => {
     let timeLeft = "";
 
     if (t) {
-      const secs = Math.ceil(
-        (20 * 60 * 20 - (system.currentTick - t.startTick)) / 20,
-      );
+      const secs = Math.ceil((20 * 60 * 20 - (system.currentTick - t.startTick)) / 20);
       const m = Math.floor(secs / 60),
         s = secs % 60;
       timeLeft = ` (เหลือเวลา ${m}:${String(s).padStart(2, "0")})`;
@@ -124,16 +101,14 @@ const openManageJobDetail = (player, job) => {
     if (canDelete && res.selection === 0) {
       if (job.status === "taken" && job.takenBy) {
         const rider = getPlayerById(job.takenBy);
-        if (rider && rider.isValid)
-          rider.sendMessage("[Job] งานนี้ถูกยกเลิกโดยเจ้าของแล้ว");
+        if (rider && rider.isValid) rider.sendMessage("[Job] งานนี้ถูกยกเลิกโดยเจ้าของแล้ว");
         stopTimer(job.takenBy);
         playerJobMap.delete(job.takenBy);
       }
 
       refundOwner(job);
       deleteJobData(job.id);
-      if (player.isValid)
-        player.sendMessage("[Job] คำสั่งถูกยกเลิกเรียบร้อยแล้ว");
+      if (player.isValid) player.sendMessage("[Job] คำสั่งถูกยกเลิกเรียบร้อยแล้ว");
       editJobs(player);
     } else {
       editJobs(player);

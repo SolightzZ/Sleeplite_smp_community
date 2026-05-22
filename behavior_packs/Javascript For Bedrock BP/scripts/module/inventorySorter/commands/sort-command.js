@@ -1,9 +1,4 @@
-import {
-  CommandPermissionLevel,
-  CustomCommandParamType,
-  CustomCommandStatus,
-  system,
-} from "@minecraft/server";
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system } from "@minecraft/server";
 import { SortModes } from "../config.js";
 import { sortBlockContainer, sortPlayerInventory } from "../core/sorter.js";
 

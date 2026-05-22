@@ -16,29 +16,35 @@ const HUD_ELEMENT_BY_KEY = new Map([
 ]);
 
 const mainMenu = async (player) => {
-  const response = await new ActionFormData()
-    .title("Settings Menu")
-    .button("Server Settings", "textures/ui/sidebar_icons/categories")
-    .button("HUD Settings", "textures/ui/sidebar_icons/my_characters")
-    .show(player);
+  const response = await new ActionFormData();
+  response.title("Settings Menu");
+  response.button("Server Settings", "textures/ui/sidebar_icons/categories");
+  response.button("HUD Settings", "textures/ui/sidebar_icons/my_characters");
+  response.show(player);
+
   if (response.canceled) return;
 
   if (response.selection === 0) {
     await serverSettings(player);
     return;
   }
-  if (response.selection === 1) await hudSettings(player);
+
+  if (response.selection === 1) {
+    await hudSettings(player);
+  }
 };
 
 const hasDisplayObjective = (slotId, objectiveId) => {
   const slot = world.scoreboard.getObjectiveAtDisplaySlot(slotId);
   if (!slot || !slot.objective) return false;
+
   return slot.objective.id === objectiveId;
 };
 
 const getOrCreateObjective = (id, player) => {
   let objective = world.scoreboard.getObjective(id);
   if (objective) return objective;
+
   try {
     objective = world.scoreboard.addObjective(id);
     return objective;
@@ -82,14 +88,15 @@ const serverSettings = async (player) => {
   if (!deathsPlusObjective) return;
 
   try {
-    const response = await new ModalFormData()
-      .title("Server Setting")
-      .toggle("Show XYZ", { defaultValue: world.gameRules.showCoordinates })
-      .toggle("Show Day", { defaultValue: world.gameRules.showDaysPlayed })
-      .toggle("Sidebar Death Count", { defaultValue: hasDisplayObjective(DisplaySlotId.Sidebar, OBJECTIVE_DEATHS) })
-      .toggle("Belowname Death Count", { defaultValue: hasDisplayObjective(DisplaySlotId.BelowName, OBJECTIVE_DEATHS_PLUS) })
-      .toggle("Locator Bar", { defaultValue: world.gameRules.locatorBar })
-      .show(player);
+    const response = await new ModalFormData();
+    response.title("Server Setting");
+    response.toggle("Show XYZ", { defaultValue: world.gameRules.showCoordinates });
+    response.toggle("Show Day", { defaultValue: world.gameRules.showDaysPlayed });
+    response.toggle("Sidebar Death Count", { defaultValue: hasDisplayObjective(DisplaySlotId.Sidebar, OBJECTIVE_DEATHS) });
+    response.toggle("Belowname Death Count", { defaultValue: hasDisplayObjective(DisplaySlotId.BelowName, OBJECTIVE_DEATHS_PLUS) });
+    response.toggle("Locator Bar", { defaultValue: world.gameRules.locatorBar });
+    response.show(player);
+
     if (response.canceled || !response.formValues) return;
     updateServerSettings(response.formValues, deathsObjective, deathsPlusObjective);
   } catch (e) {
@@ -104,11 +111,14 @@ const setHudElement = (player, element, hideElement) => {
   try {
     const hudElement = HUD_ELEMENT_BY_KEY.get(element);
     if (hudElement === undefined) return;
+
     player.onScreenDisplay.setHudVisibility(hideElement ? HudVisibility.Hide : HudVisibility.Reset, [hudElement]);
+
     if (hideElement) {
       player.addTag(getHudTag(element));
       return;
     }
+
     player.removeTag(getHudTag(element));
   } catch (e) {
     console.warn("[ setting ] hud_command_error", element, e.message);
@@ -118,13 +128,14 @@ const setHudElement = (player, element, hideElement) => {
 
 const hudSettings = async (player) => {
   try {
-    const response = await new ModalFormData()
-      .title("HUD Setting")
-      .toggle("Item Text", { defaultValue: hasHudTag(player, HUD_ITEM_TEXT) })
-      .toggle("Status Effects", { defaultValue: hasHudTag(player, HUD_STATUS_EFFECTS) })
-      .toggle("ToolTips", { defaultValue: hasHudTag(player, HUD_TOOLTIPS) })
-      .toggle("Touch Controls", { defaultValue: hasHudTag(player, HUD_TOUCH_CONTROLS) })
-      .show(player);
+    const response = await new ModalFormData();
+    response.title("HUD Setting");
+    response.toggle("Item Text", { defaultValue: hasHudTag(player, HUD_ITEM_TEXT) });
+    response.toggle("Status Effects", { defaultValue: hasHudTag(player, HUD_STATUS_EFFECTS) });
+    response.toggle("ToolTips", { defaultValue: hasHudTag(player, HUD_TOOLTIPS) });
+    response.toggle("Touch Controls", { defaultValue: hasHudTag(player, HUD_TOUCH_CONTROLS) });
+    response.show(player);
+
     if (response.canceled || !response.formValues) return;
 
     const [hideItemText, hideStatusEffects, hideTooltips, hideTouchControls] = response.formValues;

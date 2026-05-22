@@ -55,8 +55,7 @@ export const startGlobalSeatCheck = () => {
       let inWater = false;
       try {
         const seatBlock = dim.getBlock(entity.location);
-        inWater =
-          seatBlock?.typeId === WATER || seatBlock?.typeId === FLOWING_WATER;
+        inWater = seatBlock?.typeId === WATER || seatBlock?.typeId === FLOWING_WATER;
       } catch (error) {
         inWater = true;
         console.error("[ simpleSit ] seatBlock: " + error);

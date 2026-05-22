@@ -1,8 +1,4 @@
-import {
-  CommandPermissionLevel,
-  CustomCommandStatus,
-  system,
-} from "@minecraft/server";
+import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
 import { dy } from "./help_Durability.js";
 
 const HELP_TEXT = `§8--------- §eHelper §8---------
@@ -47,9 +43,10 @@ export const helpmain = (event) => {
   if (command === "!d") {
     event.cancel = true;
     const player = event.sender;
-    if (player?.isValid) system.runTimeout(() => {
-      if (player.isValid) dy(player);
-    }, 20);
+    if (player?.isValid)
+      system.runTimeout(() => {
+        if (player.isValid) dy(player);
+      }, 20);
   }
 };
 
@@ -66,6 +63,7 @@ export const RegisterHelp = (init) => {
       if (!player?.isValid) {
         return { status: CustomCommandStatus.Failure, message: "§cใช้ได้เฉพาะผู้เล่น" };
       }
+
       showHelp(player);
       return { status: CustomCommandStatus.Success };
     },

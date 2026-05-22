@@ -7,19 +7,18 @@ import { showForm } from "../utils/ui.js";
 
 export const menu = (player) => {
   try {
-    const ui = new ActionFormData();
-    ui.title("เมนูหลัก (Main Menu)");
-    ui.body("แจ้งปัญหาต่างได้ที่นี้เลย!!");
-
-    ui.button("บันทึกการอัปเดต (Patch Note)");
-    ui.button("แจ้งปัญหา (Report)");
-    ui.button("กล่องตอบกลับ (Inbox)");
+    const form = new ActionFormData();
+    form.title("เมนูหลัก (Main Menu)");
+    form.body("แจ้งปัญหาต่างได้ที่นี้เลย!!");
+    form.button("บันทึกการอัปเดต (Patch Note)");
+    form.button("แจ้งปัญหา (Report)");
+    form.button("กล่องตอบกลับ (Inbox)");
 
     if (isAdmin(player)) {
-      ui.button("แผงควบคุม (Admin)");
+      form.button("แผงควบคุม (Admin)");
     }
 
-    showForm(player, ui, "menu", (res) => {
+    showForm(player, form, "menu", (res) => {
       if (res.canceled) return;
       if (res.selection === 0) note(player);
       if (res.selection === 1) reportmenu(player);

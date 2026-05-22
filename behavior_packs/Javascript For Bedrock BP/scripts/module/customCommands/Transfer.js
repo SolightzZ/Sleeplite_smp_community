@@ -31,13 +31,7 @@ export function showServerMenu(player) {
 
       const server = SERVER_LIST[idx];
       system.run(() => {
-        if (player.isValid)
-          showConfirmationMenu(
-            player,
-            server.displayName,
-            server.ipAddress,
-            server.portNumber,
-          );
+        if (player.isValid) showConfirmationMenu(player, server.displayName, server.ipAddress, server.portNumber);
       });
     })
     .catch((error) => {
@@ -52,10 +46,10 @@ export function showServerMenu(player) {
 function showCustomServerInput(player) {
   if (!player.isValid) return;
 
-  const form = new ModalFormData()
-    .title("กรอกเซิร์ฟเวอร์")
-    .textField("IP Address:", "เช่น 192.168.0.1 หรือ zeqa.net")
-    .textField("Port Number:", "เช่น 19132");
+  const form = new ModalFormData();
+  form.title("กรอกเซิร์ฟเวอร์");
+  form.textField("IP Address:", "เช่น 192.168.0.1 หรือ zeqa.net");
+  form.textField("Port Number:", "เช่น 19132");
 
   form
     .show(player)
@@ -74,13 +68,7 @@ function showCustomServerInput(player) {
       }
 
       system.run(() => {
-        if (player.isValid)
-          showConfirmationMenu(
-            player,
-            "เซิร์ฟเวอร์ที่กำหนดเอง",
-            ipAddress,
-            portNumber,
-          );
+        if (player.isValid) showConfirmationMenu(player, "เซิร์ฟเวอร์ที่กำหนดเอง", ipAddress, portNumber);
       });
     })
     .catch((error) => {
@@ -95,13 +83,11 @@ function showCustomServerInput(player) {
 function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
   if (!player.isValid) return;
 
-  const form = new ActionFormData()
-    .title("ยืนยันการเชื่อมต่อ")
-    .body(
-      `§7ชื่อเซิร์ฟเวอร์: ${serverName}\nIP Address: ${ipAddress}\n§7Port Number: ${portNumber}`,
-    )
-    .button("ตกลง")
-    .button("กลับ");
+  const form = new ActionFormData();
+  form.title("ยืนยันการเชื่อมต่อ");
+  form.body(`§7ชื่อเซิร์ฟเวอร์: ${serverName}\nIP Address: ${ipAddress}\n§7Port Number: ${portNumber}`);
+  form.button("ตกลง");
+  form.button("กลับ");
 
   form
     .show(player)

@@ -103,12 +103,7 @@ export const isContainerSorted = (container, mode = "type", startSlot = 0) => {
     if (foundEmpty) return false;
     if (prev) {
       if (compareItemsByMode(prev, cur, mode) > 0) return false;
-      if (
-        prev.typeId === cur.typeId &&
-        prev.amount < (prev.maxAmount ?? 64) &&
-        cur.isStackableWith?.(prev)
-      )
-        return false;
+      if (prev.typeId === cur.typeId && prev.amount < (prev.maxAmount ?? 64) && cur.isStackableWith?.(prev)) return false;
     }
     prev = cur;
   }
@@ -116,9 +111,7 @@ export const isContainerSorted = (container, mode = "type", startSlot = 0) => {
 };
 
 const buildEnchantFingerprint = (item) => {
-  const enchants = item
-    .getComponent("minecraft:enchantable")
-    ?.getEnchantments?.();
+  const enchants = item.getComponent("minecraft:enchantable")?.getEnchantments?.();
 
   if (!enchants || enchants.length === 0) return "";
 
@@ -140,24 +133,11 @@ export const writeContainerDiff = (container, newItems, startSlot = 0) => {
     const nxt = newItems[i];
 
     if (!cur && !nxt) continue;
-    if (
-      cur &&
-      nxt &&
-      cur.typeId === nxt.typeId &&
-      cur.amount === nxt.amount &&
-      cur.nameTag === nxt.nameTag
-    ) {
+    if (cur && nxt && cur.typeId === nxt.typeId && cur.amount === nxt.amount && cur.nameTag === nxt.nameTag) {
       const curLore = cur.getLore?.();
       const nxtLore = nxt.getLore?.();
-      const loreMatch =
-        curLore && nxtLore
-          ? JSON.stringify(curLore) === JSON.stringify(nxtLore)
-          : !curLore?.length && !nxtLore?.length;
-      if (
-        loreMatch &&
-        buildEnchantFingerprint(cur) === buildEnchantFingerprint(nxt)
-      )
-        continue;
+      const loreMatch = curLore && nxtLore ? JSON.stringify(curLore) === JSON.stringify(nxtLore) : !curLore?.length && !nxtLore?.length;
+      if (loreMatch && buildEnchantFingerprint(cur) === buildEnchantFingerprint(nxt)) continue;
     }
     container.setItem(startSlot + i, nxt);
   }

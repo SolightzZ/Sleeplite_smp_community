@@ -11,6 +11,7 @@ const getDeathObjective = () => world.scoreboard.getObjective(OBJECTIVE);
 
 const getPlayerDeaths = (player, objective) => {
   if (!objective) return 0;
+
   const identity = player.scoreboardIdentity;
   if (!identity) return 0;
 
@@ -19,6 +20,7 @@ const getPlayerDeaths = (player, objective) => {
       objective.setScore(identity, 0);
       return 0;
     }
+
     return objective.getScore(identity) || 0;
   } catch {
     return 0;
@@ -51,8 +53,10 @@ const processWelcomeQueue = () => {
 
   for (let i = 0; i < pendingWelcomes.length; i++) {
     const pending = pendingWelcomes[i];
+
     if (pending.runAtTick > now) continue;
     const player = pending.player;
+
     if (player && player.isValid) showWelcome(player, objective);
     const lastIndex = pendingWelcomes.length - 1;
     pendingWelcomes[i] = pendingWelcomes[lastIndex];

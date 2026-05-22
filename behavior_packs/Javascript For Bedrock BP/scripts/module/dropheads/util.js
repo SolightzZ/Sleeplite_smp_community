@@ -12,12 +12,7 @@ const upperFirst = (str) => {
 export const formatName = (id) => {
   if (!id) return "Unknown";
 
-  return id
-    .replace("minecraft:", "")
-    .replace(/_/g, " ")
-    .split(" ")
-    .map(upperFirst)
-    .join(" ");
+  return id.replace("minecraft:", "").replace(/_/g, " ").split(" ").map(upperFirst).join(" ");
 };
 
 export const worldName = (id) => {

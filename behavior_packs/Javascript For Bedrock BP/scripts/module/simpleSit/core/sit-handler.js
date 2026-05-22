@@ -45,8 +45,7 @@ export const handleSitCommand = (player) => {
     const upsideDown = states[UPSIDE_DOWN];
     const weirdoDir = isStairs ? states[WEIRDO_DIR] : null;
 
-    const flipped =
-      (isSlab && vertHalf === TOP) || (isStairs && upsideDown === true);
+    const flipped = (isSlab && vertHalf === TOP) || (isStairs && upsideDown === true);
 
     if (!flipped) {
       useSpecial = true;

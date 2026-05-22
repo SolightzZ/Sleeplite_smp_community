@@ -1,15 +1,7 @@
 import { system, world } from "@minecraft/server";
 import { MagnetConfig } from "../config.js";
 import { pullItemsToPlayer } from "./puller.js";
-import {
-  clearMagnetRunId,
-  countMagnetUsers,
-  getMagnetRunId,
-  getMagnetUserIds,
-  hasMagnetRunId,
-  removeMagnetUser,
-  setMagnetRunId,
-} from "./state.js";
+import { clearMagnetRunId, countMagnetUsers, getMagnetRunId, getMagnetUserIds, hasMagnetRunId, removeMagnetUser, setMagnetRunId } from "./state.js";
 
 export const stopMagnetLoop = () => {
   if (hasMagnetRunId()) {

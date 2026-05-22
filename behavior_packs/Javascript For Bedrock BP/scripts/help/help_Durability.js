@@ -2,13 +2,7 @@ import { EntityComponentTypes, EquipmentSlot, ItemComponentTypes } from "@minecr
 import { armorData } from "./help_ armorData";
 import { getDamageReduction } from "./help_function";
 
-const ARMOR_SLOTS = [
-  EquipmentSlot.Head,
-  EquipmentSlot.Chest,
-  EquipmentSlot.Legs,
-  EquipmentSlot.Feet,
-  EquipmentSlot.Offhand,
-];
+const ARMOR_SLOTS = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand];
 const ARMOR_SLOTS_LEN = ARMOR_SLOTS.length;
 
 const getEnchants = (item) => {
@@ -26,21 +20,23 @@ const buildLore = (item, playerTag, stats, enchants, damage) => {
 
   if (stats) {
     line += `§r§7Armor: §a+${stats.armor}\n`;
+
     if (hasDur) line += `§r§7Armor Durability: ${curDur}/${maxDur}\n`;
     if (stats.toughness > 0) line += `§r§7Armor Toughness: §a+${stats.toughness}\n`;
 
-    const { total, protectionBonus, breachReduction } =
-      getDamageReduction(stats.armor, stats.toughness, enchants, damage);
+    const { total, protectionBonus, breachReduction } = getDamageReduction(stats.armor, stats.toughness, enchants, damage);
 
     let reductionText = `§r§7Damage Reduction: §a+${total.toFixed(1)}%`;
 
     if (protectionBonus > 0 || breachReduction > 0) {
       let combo = "";
+
       if (protectionBonus > 0) combo += `+${protectionBonus.toFixed(1)}%`;
       if (breachReduction > 0) {
         if (combo) combo += ", ";
         combo += `-${breachReduction.toFixed(1)}%`;
       }
+
       if (combo) reductionText += ` §8(${combo})`;
     }
 
@@ -50,18 +46,19 @@ const buildLore = (item, playerTag, stats, enchants, damage) => {
   } else {
     return null;
   }
-
   return line;
 };
 
 const updateInventoryLore = (container, playerTag, damage) => {
   const size = container.size;
+
   for (let i = 0; i < size; i++) {
     const item = container.getItem(i);
     if (!item) continue;
 
     const enchants = getEnchants(item);
     const stats = armorData[item.typeId];
+
     const lore = buildLore(item, playerTag, stats, enchants, damage);
     if (!lore) continue;
 
@@ -80,6 +77,7 @@ const updateEquipmentLore = (equippable, playerTag, damage) => {
 
     const enchants = getEnchants(item);
     const stats = armorData[item.typeId];
+
     const lore = buildLore(item, playerTag, stats, enchants, damage);
     if (!lore) continue;
 
@@ -87,10 +85,12 @@ const updateEquipmentLore = (equippable, playerTag, damage) => {
     if (currentLore && currentLore.length > 0) {
       let hasTag = false;
       let hasMatch = false;
+
       for (let j = 0; j < currentLore.length; j++) {
         if (currentLore[j].includes("§8@")) hasTag = true;
         if (currentLore[j] === lore) hasMatch = true;
       }
+
       if (hasTag && !currentLore.some((l) => l.includes(playerTag))) continue;
       if (hasMatch) continue;
     }

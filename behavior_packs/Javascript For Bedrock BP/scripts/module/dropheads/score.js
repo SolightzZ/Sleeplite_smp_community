@@ -4,10 +4,7 @@ import { boardA, boardB } from "./data.js";
 let objA, objB;
 
 const getBoard = (name) => {
-  return (
-    world.scoreboard.getObjective(name) ||
-    world.scoreboard.addObjective(name, name)
-  );
+  return world.scoreboard.getObjective(name) || world.scoreboard.addObjective(name, name);
 };
 
 export const addDeath = (player) => {

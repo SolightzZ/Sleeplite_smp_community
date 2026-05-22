@@ -17,41 +17,51 @@ let animationIntervalId;
 const formatName = (id) => {
   const parts = id.replace("minecraft:", "").split("_");
   let text = "";
+
   for (let i = 0; i < parts.length; i++) {
     const part = parts[i];
     if (!part) continue;
     if (text) text += " ";
     text += part[0].toUpperCase() + part.slice(1);
   }
+
   return text;
 };
 
 const collectPlayersByDimension = (players) => {
   const playersByDimension = new Map();
+
   for (let i = 0; i < players.length; i++) {
     const player = players[i];
+
     if (!player || !player.isValid) continue;
     const dimId = player.dimension.id;
     let bucket = playersByDimension.get(dimId);
+
     if (!bucket) {
       bucket = [];
       playersByDimension.set(dimId, bucket);
     }
+
     bucket.push(player);
   }
+
   return playersByDimension;
 };
 
 const getNearbyPlayers = (entity, candidates, out) => {
   if (!candidates || candidates.length === 0) return;
+
   const ex = entity.location.x;
   const ey = entity.location.y;
   const ez = entity.location.z;
+
   for (let i = 0; i < candidates.length; i++) {
     const player = candidates[i];
     const dx = player.location.x - ex;
     const dy = player.location.y - ey;
     const dz = player.location.z - ez;
+
     if (dx * dx + dy * dy + dz * dz <= RADIUS_SQ) out.push(player);
   }
 };

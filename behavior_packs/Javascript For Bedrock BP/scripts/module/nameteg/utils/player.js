@@ -1,5 +1,4 @@
-export const isValidPlayer = (player) =>
-  player?.typeId === "minecraft:player" && player.isValid;
+export const isValidPlayer = (player) => player?.typeId === "minecraft:player" && player.isValid;
 
 export const safePlayerOp = (player, operation, defaultValue) => {
   if (!isValidPlayer(player)) return defaultValue;

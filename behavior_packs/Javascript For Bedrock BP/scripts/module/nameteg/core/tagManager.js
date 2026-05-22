@@ -1,10 +1,5 @@
 import { world } from "@minecraft/server";
-import {
-  PREFIX_RANK,
-  PREFIX_ACTIVE,
-  RANK_PREFIX_LENGTH,
-  ACTIVE_PREFIX_LENGTH,
-} from "../constants/index.js";
+import { PREFIX_RANK, PREFIX_ACTIVE, RANK_PREFIX_LENGTH, ACTIVE_PREFIX_LENGTH } from "../constants/index.js";
 import { isValidPlayer } from "../utils/player.js";
 
 export const getOwnedRanks = (player) => {
