@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "8signpbm"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:bamboo_mosaic",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:bamboo_sign",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

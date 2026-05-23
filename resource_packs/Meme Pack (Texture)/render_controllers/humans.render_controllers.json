@@ -1,0 +1,69 @@
+{
+  "format_version": "1.8.0",
+  "render_controllers": {
+    "controller.render.humans": {
+      "arrays": {
+        "textures": {
+          "Array.skins": [
+            "Texture.default",
+            "Texture.default1",
+            "Texture.default2",
+            "Texture.default3",
+            "Texture.default4",
+            "Texture.default5",
+            "Texture.default6",
+            "Texture.default7",
+            "Texture.default8",
+            "Texture.default9",
+            "Texture.default10",
+            "Texture.default11",
+            "Texture.default12",
+            "Texture.default13",
+            "Texture.default14",
+            "Texture.default15",
+            "Texture.default16",
+            "Texture.default17",
+            "Texture.default18",
+            "Texture.default19",
+            "Texture.default20",
+            "Texture.default21",
+            "Texture.default22",
+            "Texture.default23",
+            "Texture.default24",
+            "Texture.default25",
+            "Texture.default26",
+            "Texture.default27",
+            "Texture.default28",
+            "Texture.default29",
+            "Texture.default30",
+            "Texture.default31",
+            "Texture.default32",
+            "Texture.default33",
+            "Texture.default34",
+            "Texture.default35",
+            "Texture.default36",
+            "Texture.default37",
+            "Texture.default38",
+            "Texture.default39",
+            "Texture.default40"
+          ]
+        }
+      },
+      "is_hurt_color": {
+        "r": "1.0",
+        "g": "0.0",
+        "b": "0.0",
+        "a": "0.35"
+      },
+      "on_fire_color": {
+        "r": "0.0",
+        "g": "0.0",
+        "b": "0.0",
+        "a": "0.0"
+      },
+      "geometry": "Geometry.default",
+      "materials": [{ "*": "Material.default" }],
+      "textures": ["Array.skins[query.variant]"]
+    }
+  }
+}

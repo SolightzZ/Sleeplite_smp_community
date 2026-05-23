@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "frecipes_e0342186jch26"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:cherry_wood",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:cherry_button",
+      "count": 16,
+      "data": 0
+    }
+  }
+}

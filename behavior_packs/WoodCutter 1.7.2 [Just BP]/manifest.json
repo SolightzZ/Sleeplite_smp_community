@@ -1,0 +1,36 @@
+{
+  "format_version": 1,
+  "header": {
+    "description": "You can craft wooden stuff in stonecutter",
+    "name": "§l§gWood§fCutter §e[§f1§e.§f7.2§e]",
+    "uuid": "0937612f-d3bd-49bd-98aa-04114d97bc0b",
+    "version": [
+      0,
+      0,
+      1
+    ],
+    "min_engine_version": [
+      1,
+      8,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "description": "You can craft wooden stuff in stonecutter",
+      "type": "data",
+      "uuid": "7ec3cbce-b465-4302-94c7-ae59b731a5b7",
+      "version": [
+        0,
+        0,
+        1
+      ]
+    }
+  ],
+  "metadata": {
+      "authors": [
+      "Nuve Zall"
+    ],
+      "product_type": "addon"
+  }
+}

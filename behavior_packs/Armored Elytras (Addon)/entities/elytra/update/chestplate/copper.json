@@ -1,0 +1,69 @@
+{
+   "format_version": "1.21.30",
+   "minecraft:entity": {
+      "description": {
+         "identifier": "rme:copper_chestplate",
+         "is_summonable": true,
+         "is_spawnable": false
+      },
+      "component_groups": {
+         "remove_entity": {
+            "minecraft:instant_despawn": {}
+         }
+      },
+      "components": {
+         "minecraft:timer": {
+            "time": 0,
+            "looping": true,
+            "time_down_event": { "event": "remove_entity" }
+         },
+         "minecraft:leashable": {
+            "on_unleash": { "event": "unleash" },
+            "hard_distance": 100000,
+            "max_distance": 100000,
+            "soft_distance": 100000,
+            "can_be_cut": false,
+            "can_be_stolen": false,
+            "on_unleash_interact_only": false
+         },
+         "minecraft:custom_hit_test": {
+            "hitboxes": [
+               {
+                  "pivot": [0, 1000, 0],
+                  "width": 0,
+                  "height": 0
+               }
+            ]
+         },
+         "minecraft:damage_sensor": {
+            "triggers": [
+               {
+                  "cause": "all",
+                  "deals_damage": false
+               }
+            ]
+         },
+         "minecraft:collision_box": {
+            "width": 0,
+            "height": 0
+         },
+         "minecraft:physics": {
+            "has_collision": false,
+            "has_gravity": false
+         },
+         "minecraft:scale": {
+            "value": 0
+         },
+         "minecraft:nameable": {
+            "always_show": false,
+            "allow_name_tag_renaming": false
+         }
+      },
+      "events": {
+         "remove_entity": {
+            "add": { "component_groups": ["remove_entity"] }
+         },
+         "unleash": {}
+      }
+   }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "rme:wolf_chestplate_p"
+    },
+
+    "tags": ["crafting_table"],
+    "ingredients": [
+      {
+        "item": "addon:wolf_chestplate"
+      },
+      {
+        "item": "minecraft:elytra"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:elytra"
+      }
+    ],
+    "result": {
+      "item": "rme:wolf_chestplate_p"
+    }
+  }
+}

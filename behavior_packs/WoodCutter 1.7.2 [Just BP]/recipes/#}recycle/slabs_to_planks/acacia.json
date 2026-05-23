@@ -1,0 +1,26 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "recipes_d5ed1dgy"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 4
+      },
+      {
+        "item": "minecraft:wooden_slab",
+        "data": 4
+      }
+    ],
+    "result": {
+      "item": "minecraft:planks",
+      "count": 1,
+      "data": 4
+    }
+  }
+}

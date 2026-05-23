@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "6trapdoorlch"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:cherry_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:cherry_trapdoor",
+      "count": 8,
+      "data": 0
+    }
+  }
+}

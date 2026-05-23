@@ -1,0 +1,15 @@
+{
+  "resource_pack_name": "Ruby Addon",
+  "texture_name": "atlas.terrain",
+  "texture_data": {
+    "deepslate_ruby_ore": {
+      "textures": "textures/blocks/deepslate_ruby_ore"
+    },
+    "ruby_ore": {
+      "textures": "textures/blocks/ruby_ore"
+    },
+    "ruby_block": {
+      "textures": "textures/blocks/ruby_block"
+    }
+  }
+}

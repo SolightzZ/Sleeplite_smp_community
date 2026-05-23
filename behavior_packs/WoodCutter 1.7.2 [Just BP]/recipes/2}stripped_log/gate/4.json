@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "2recipes_e0342150s"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_acacia_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:acacia_fence_gate",
+      "count": 4,
+      "data": 0
+    }
+  }
+}

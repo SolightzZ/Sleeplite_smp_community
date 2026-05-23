@@ -1,0 +1,714 @@
+{
+  "tiers": [
+    {
+      "groups": [
+        {
+          "num_to_select": 7,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 32,
+              "wants": [
+                {
+                  "item": "minecraft:sand",
+                  "quantity": 32
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 24,
+              "wants": [
+                {
+                  "item": "minecraft:sandstone",
+                  "quantity": 16
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:smooth_sandstone",
+                  "quantity": 16
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 28,
+              "wants": [
+                {
+                  "item": "minecraft:rabbit",
+                  "quantity": 6
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 30,
+              "wants": [
+                {
+                  "item": "minecraft:rabbit_hide",
+                  "quantity": 6
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:leather",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 20,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:sandstone",
+                  "quantity": 16
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 25,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:glass",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 18,
+              "wants": [
+                {
+                  "item": "minecraft:sand",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:glass",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 22,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 3
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:cooked_rabbit",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 24,
+              "wants": [
+                {
+                  "item": "minecraft:rotten_flesh",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "num_to_select": 6,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:cut_sandstone",
+                  "quantity": 16
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 5
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:chiseled_sandstone",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 6
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:tnt",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 10,
+              "wants": [
+                {
+                  "item": "minecraft:husk_spawn_egg",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 12
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 14,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:suspicious_stew",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 3
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:tinted_glass",
+                  "quantity": 8
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 6
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:yellow_dye",
+                  "quantity": 16
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 6
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:orange_dye",
+                  "quantity": 16
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 10,
+              "wants": [
+                {
+                  "item": "minecraft:gold_ingot",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:golden_carrot",
+                  "quantity": 12
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 8,
+              "wants": [
+                {
+                  "item": "minecraft:gunpowder",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:tnt",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 14,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:leather",
+                  "quantity": 6
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "num_to_select": 5,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 8,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 10
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:saddle",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 6,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 12
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:enchanted_book",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "thorns",
+                          "level": 3
+                        }
+                      ]
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 4,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 16
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:enchanted_book",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "infinity",
+                          "level": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 32
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:vex_armor_trim_smithing_template",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 32
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:dune_armor_trim_smithing_template",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 6,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:golden_apple",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 5,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 14
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:totem_of_undying",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 10,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 5
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:experience_bottle",
+                  "quantity": 3
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 4,
+              "wants": [
+                {
+                  "item": "minecraft:rabbit_foot",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 10
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "num_to_select": 2,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:golden_pickaxe",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:golden_pickaxe",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "efficiency",
+                          "level": 5
+                        },
+                        {
+                          "id": "fortune",
+                          "level": 3
+                        },
+                        {
+                          "id": "unbreaking",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§6Mesa Miner"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:leather_helmet",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:leather_helmet",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "protection",
+                          "level": 4
+                        },
+                        {
+                          "id": "unbreaking",
+                          "level": 3
+                        },
+                        {
+                          "id": "mending",
+                          "level": 1
+                        },
+                        {
+                          "id": "thorns",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§eDesert Wanderer's Hood"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:leather_boots",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:leather_boots",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "protection",
+                          "level": 4
+                        },
+                        {
+                          "id": "feather_falling",
+                          "level": 4
+                        },
+                        {
+                          "id": "depth_strider",
+                          "level": 3
+                        },
+                        {
+                          "id": "unbreaking",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§eDune Runner Boots"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 48
+                },
+                {
+                  "item": "minecraft:rabbit_foot",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:enchanted_golden_apple",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:golden_axe",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:golden_axe",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "efficiency",
+                          "level": 5
+                        },
+                        {
+                          "id": "sharpness",
+                          "level": 5
+                        },
+                        {
+                          "id": "unbreaking",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§6Mesa Axe"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

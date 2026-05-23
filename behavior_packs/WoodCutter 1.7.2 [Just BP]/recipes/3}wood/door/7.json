@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "4recipes_e0342ssj"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:warped_hyphae",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:warped_door",
+      "count": 4,
+      "data": 0
+    }
+  }
+}

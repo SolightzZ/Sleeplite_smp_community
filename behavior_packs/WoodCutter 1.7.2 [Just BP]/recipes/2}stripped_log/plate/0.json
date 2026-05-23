@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "grecipes_e0342146s"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_oak_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:wooden_pressure_plate",
+      "count": 12,
+      "data": 0
+    }
+  }
+}

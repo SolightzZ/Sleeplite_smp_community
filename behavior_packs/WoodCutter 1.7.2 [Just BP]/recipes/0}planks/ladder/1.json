@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "5ladderp1"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:planks",
+        "data": 1
+      }
+    ],
+    "result": {
+      "item": "minecraft:ladder",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

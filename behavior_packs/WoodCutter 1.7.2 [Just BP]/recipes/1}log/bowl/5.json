@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "fbowll5"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:log2",
+        "data": 1
+      }
+    ],
+    "result": {
+      "item": "minecraft:bowl",
+      "count": 4,
+      "data": 0
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "drecipes_e0342132s"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_crimson_stem",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:crimson_sign",
+      "count": 4,
+      "data": 0
+    }
+  }
+}

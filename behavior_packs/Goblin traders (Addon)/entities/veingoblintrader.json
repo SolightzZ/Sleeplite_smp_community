@@ -1,0 +1,107 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "goblin:veingoblintrader",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false,
+      "spawn_category": "ambient"
+    },
+    "component_groups": {
+      "move": {
+        "minecraft:movement": {
+          "value": 0.3
+        },
+        "minecraft:movement.basic": {},
+        "minecraft:navigation.walk": {
+          "can_path_over_water": true,
+          "avoid_damage_blocks": true
+        },
+        "minecraft:behavior.random_stroll": {
+          "priority": 6,
+          "speed_multiplier": 1
+        }
+      },
+      "look": {
+        "minecraft:behavior.look_at_target": {
+          "priority": 4,
+          "look_distance": 7,
+          "probability": 1
+        },
+        "minecraft:behavior.look_at_player": {
+          "priority": 4,
+          "look_distance": 7
+        }
+      }
+    },
+    "components": {
+      "minecraft:equipment": {
+        "table": "loot_tables/equipment/goblin_equipment_random.json"
+      },
+      "minecraft:economy_trade_table": {
+        "display_name": "entity.veingoblintrader.name",
+        "table": "trading/vein_globin_trades/trades.json",
+        "new_screen": true,
+        "persist_trades": true
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/veingoblintrader.json"
+      },
+      "minecraft:health": {
+        "value": 20
+      },
+      "minecraft:behavior.tempt": {
+        "priority": 0,
+        "speed_multiplier": 1,
+        "items": ["carrot"]
+      },
+      "minecraft:behavior.pickup_items": {
+        "priority": 1,
+        "max_dist": 16,
+        "goal_radius": 1,
+        "speed_multiplier": 0.9
+      },
+      "minecraft:shareables": {
+        "all_items_max_amount": 1,
+        "items": [
+          {
+            "item": "minecraft:carrot",
+            "priority": 0,
+            "max_amount": 1
+          }
+        ]
+      },
+      "minecraft:leashable": {
+        "soft_distance": 4,
+        "hard_distance": 6,
+        "max_distance": 10
+      },
+      "minecraft:type_family": {
+        "family": ["goblin", "player"]
+      },
+      "minecraft:collision_box": {
+        "width": 0.5,
+        "height": 0.5
+      },
+      "minecraft:jump.static": {},
+      "minecraft:can_climb": {},
+      "minecraft:behavior.float": {
+        "priority": 0
+      },
+      "minecraft:nameable": {},
+      "minecraft:physics": {},
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      }
+    },
+    "events": {
+      "minecraft:entity_spawned": {
+        "add": {
+          "component_groups": ["move", "look"]
+        }
+      }
+    }
+  }
+}

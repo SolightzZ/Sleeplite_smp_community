@@ -1,0 +1,26 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "recipes_d5ed1mpoe"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:pale_oak_slab",
+        "data": 0
+      },
+      {
+        "item": "minecraft:pale_oak_slab",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:pale_oak_planks",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

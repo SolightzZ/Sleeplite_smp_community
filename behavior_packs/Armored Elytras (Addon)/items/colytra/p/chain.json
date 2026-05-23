@@ -1,0 +1,55 @@
+{
+   "format_version": "1.21.100",
+   "minecraft:item": {
+      "description": {
+         "identifier": "rme:chain_chestplate_p",
+         "menu_category": {
+            "category": "equipment",
+            "group": "rme:itemGroup.name.colytras"
+         }
+      },
+      "components": {
+         "rme:custom_elytra": {
+            "type": "placeholder",
+            "equip_sound": "armor.equip_chain",
+            "armor_data": {
+               "armor": 5
+            }
+         },
+         "minecraft:wearable": {
+            "slot": "slot.armor.chest"
+         },
+         "minecraft:durability": {
+            "max_durability": 241
+         },
+         "minecraft:tags": {
+            "tags": ["minecraft:is_armor"]
+         },
+         "minecraft:max_stack_size": 1,
+         "minecraft:enchantable": {
+            "value": 12,
+            "slot": "armor_torso"
+         },
+         "minecraft:display_name": {
+            "value": "%item.rms_chain_chestplate.name\n\n§7%slot.armor.chest.when_equipped\n§9+5 %attribute.name.generic.armor"
+         },
+         "minecraft:repairable": {
+            "repair_items": [
+               {
+                  "items": ["rme:chain_chestplate"],
+                  "repair_amount": "context.other-> q.remaining_durability + 0.05 * context.other->q.max_durability"
+               },
+               {
+                  "items": ["minecraft:phantom_membrane"],
+                  "repair_amount": "q.max_durability * 0.5"
+               }
+            ]
+         },
+         "minecraft:icon": {
+            "textures": {
+               "default": "rme_chain_chestplate"
+            }
+         }
+      }
+   }
+}

@@ -1,0 +1,7 @@
+item.rms_copper_chestplate.name=Colytra en Cuivre
+item.rms_iron_chestplate.name=Colytra en Fer
+item.rms_chain_chestplate.name=§eColytra en Mailles
+item.rms_gold_chestplate.name=Colytra en Or
+item.rms_diamond_chestplate.name=Colytra en Diamant
+item.rms_netherite_chestplate.name=Colytra en Netherite
+rme:itemGroup.name.colytras=Élytres blindées

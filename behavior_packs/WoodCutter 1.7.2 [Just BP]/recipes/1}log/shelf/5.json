@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "sh-dol"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:log2",
+        "data": 1
+      }
+    ],
+    "result": {
+      "item": "minecraft:dark_oak_shelf",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

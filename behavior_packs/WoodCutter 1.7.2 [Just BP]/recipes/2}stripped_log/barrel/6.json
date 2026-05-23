@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "crecipes_e0342182sjkl"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_crimson_stem",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:barrel",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

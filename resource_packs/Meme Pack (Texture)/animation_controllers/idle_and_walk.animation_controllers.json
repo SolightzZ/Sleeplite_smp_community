@@ -1,0 +1,38 @@
+{
+  "format_version": "1.10.0",
+  "animation_controllers": {
+    "controller.animation.idle_and_walk": {
+      "states": {
+        "default": {
+          "transitions": [
+            {
+              "idle": "query.ground_speed <= 1"
+            },
+            {
+              "walking": "query.ground_speed >= 1"
+            }
+          ],
+          "blend_transition": 0.2
+        },
+        "idle": {
+          "animations": ["idle"],
+          "transitions": [
+            {
+              "walking": "query.ground_speed >= 1"
+            }
+          ],
+          "blend_transition": 0.2
+        },
+        "walking": {
+          "animations": ["walking"],
+          "transitions": [
+            {
+              "idle": "query.ground_speed <= 1"
+            }
+          ],
+          "blend_transition": 0.2
+        }
+      }
+    }
+  }
+}

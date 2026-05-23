@@ -1,0 +1,52 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:attachable": {
+    "description": {
+      "materials": {
+        "default": "elytra",
+        "enchanted": "elytra_glint"
+      },
+      "textures": {
+        "default": "textures/models/armor/elytra",
+        "enchanted": "textures/misc/enchanted_item_glint",
+        "copper_chestplate": "textures/models/armor/elytra/chestplate/copper_1",
+        "gold_chestplate": "textures/models/armor/elytra/chestplate/gold_1",
+        "chain_chestplate": "textures/models/armor/elytra/chestplate/chain_1",
+        "iron_chestplate": "textures/models/armor/elytra/chestplate/iron_1",
+        "diamond_chestplate": "textures/models/armor/elytra/chestplate/diamond_1",
+        "netherite_chestplate": "textures/models/armor/elytra/chestplate/netherite_1",
+        "demon_chestplate": "textures/models/armor/elytra/chestplate/demon_1",
+        "wolf_chestplate": "textures/models/armor/elytra/chestplate/wolf_1"
+      },
+      "geometry": {
+        "default": "geometry.rme.elytra",
+        "chestplate": "geometry.rme.player.armor.chestplate"
+      },
+      "animations": {
+        "default_controller": "controller.animation.rme.elytra.default",
+        "default": "animation.rme.elytra.default",
+        "gliding": "animation.rme.elytra.gliding",
+        "sneaking": "animation.rme.elytra.sneaking",
+        "sleeping": "animation.rme.elytra.sleeping",
+        "swimming": "animation.rme.elytra.swimming",
+        "offset": "animation.rme.armor.chestplate.offset"
+      },
+      "scripts": {
+        "animate": ["default_controller", "offset"],
+        "pre_animation": [
+          "v.mode = (q.has_any_leashed_entity_of_type('rme:default') ? 0 : (q.has_any_leashed_entity_of_type('rme:copper_chestplate') ? 1 : (q.has_any_leashed_entity_of_type('rme:gold_chestplate') ? 2 : (q.has_any_leashed_entity_of_type('rme:chain_chestplate') ? 3 : (q.has_any_leashed_entity_of_type('rme:iron_chestplate') ? 4 : (q.has_any_leashed_entity_of_type('rme:diamond_chestplate') ? 5 : (q.has_any_leashed_entity_of_type('rme:netherite_chestplate') ? 6 : (v.mode ?? 0))))))));"
+        ],
+        "initialize": ["v.mode = 0;"],
+        "parent_setup": "v.chest_layer_visible = 0.0;"
+      },
+      "render_controllers": [
+        "controller.render.armor",
+        { "controller.render.rme_elytra_chestplate_mode": "v.mode > 0" }
+      ],
+      "identifier": "rme:elytra",
+      "item": {
+        "minecraft:elytra": "query.owner_identifier == 'minecraft:player'"
+      }
+    }
+  }
+}

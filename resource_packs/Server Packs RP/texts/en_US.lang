@@ -3,7 +3,7 @@
 tile.addon:gravestone.name=Gravestone 
 item.spawn_egg.entity.addon:gravestone_storage.name=Gravestone 
 
-# Exit Action
+## ExitAction
 action.hint.exit.xassassin:sit=
 
 ## Avanced Crafting Table

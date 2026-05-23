@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.100",
+  "minecraft:block": {
+    "description": {
+      "identifier": "rme:colytra_creative_icon"
+    },
+    "components": {
+      "minecraft:material_instances": {
+        "*": {
+          "texture": "rme_colytra_creative_icon",
+          "render_method": "alpha_test",
+          "ambient_occlusion": false,
+          "face_dimming": false
+        }
+      },
+      "minecraft:geometry": "geometry.raiyon_2d_item"
+    }
+  }
+}

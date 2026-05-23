@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "frecipes_e0342186jpo20"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:pale_oak_wood",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:pale_oak_button",
+      "count": 16,
+      "data": 0
+    }
+  }
+}

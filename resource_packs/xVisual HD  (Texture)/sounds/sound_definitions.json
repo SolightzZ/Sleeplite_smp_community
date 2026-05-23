@@ -1,0 +1,7 @@
+{
+    "format_version":"1.20.30",
+    "sound_definitions":{
+        "x.visuals.ear_ring.0":{"category":"player","sounds":["sounds/explosion/ear_ring0"]},
+        "x.visuals.ear_ring.1":{"category":"player","sounds":["sounds/explosion/ear_ring1"]}
+    }
+}

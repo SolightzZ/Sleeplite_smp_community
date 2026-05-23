@@ -1,0 +1,40 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "goblin:veingoblintrader_blue",
+      "materials": {
+        "default": "skeleton"
+      },
+      "textures": {
+        "default": "textures/vein_goblin_trader_blue"
+      },
+      "geometry": {
+        "default": "geometry.goblintrader"
+      },
+      "sound_effects": {
+        "eat": "random.eat"
+      },
+      "animations": {
+        "walk": "animation.goblintrader.move",
+        "static": "animation.goblintrader.static",
+        "eat": "animation.goblintrader.eat_carrot",
+        "fall_down": "animation.goblintrader.fall_down",
+        "fall_down_2": "animation.goblintrader.fall_down_2",
+        "controller": "controller.animation.goblintrader",
+        "particle": "controller.animation.particle_emitter"
+      },
+      "scripts": {
+        "animate": ["controller", "particle"]
+      },
+      "render_controllers": ["controller.render.default"],
+      "spawn_egg": {
+        "base_color": "#fca035",
+        "overlay_color": "#932800"
+      },
+      "particle_effects": {
+        "particle": "goblin_traders_ov:goblin_fire_blue_particles"
+      }
+    }
+  }
+}

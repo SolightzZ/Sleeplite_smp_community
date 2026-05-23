@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cdctslcr"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_crimson_stem",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:composter",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+   "format_version": "1.20.10",
+   "minecraft:recipe_shapeless": {
+      "description": {
+         "identifier": "rme:diamond_chestplate_p"
+      },
+
+      "tags": ["crafting_table"],
+      "ingredients": [
+         {
+            "item": "minecraft:diamond_chestplate"
+         },
+         {
+            "item": "minecraft:elytra"
+         }
+      ],
+      "unlock": [
+         {
+            "item": "minecraft:elytra"
+         }
+      ],
+      "result": {
+         "item": "rme:diamond_chestplate_p"
+      }
+   }
+}

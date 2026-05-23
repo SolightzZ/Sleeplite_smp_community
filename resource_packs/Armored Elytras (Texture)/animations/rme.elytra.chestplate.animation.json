@@ -1,0 +1,43 @@
+{
+   "format_version": "1.8.0",
+   "animations": {
+      "animation.rme.armor.chestplate.offset": {
+         "loop": true,
+         "bones": {
+            "leftArm": {
+               "position": [
+                  "query.get_root_locator_offset('armor_offset.left_arm', 0)",
+                  "query.get_root_locator_offset('armor_offset.left_arm', 1)",
+                  "query.get_root_locator_offset('armor_offset.left_arm', 2)"
+               ]
+            },
+            "rightArm": {
+               "position": [
+                  "query.get_root_locator_offset('armor_offset.right_arm', 0)",
+                  "query.get_root_locator_offset('armor_offset.right_arm', 1)",
+                  "query.get_root_locator_offset('armor_offset.right_arm', 2)"
+               ]
+            },
+            "chestplate": {
+               "position": [
+                  "query.get_root_locator_offset('armor_offset.chestplate', 0)",
+                  "query.get_root_locator_offset('armor_offset.chestplate', 1)",
+                  "query.get_root_locator_offset('armor_offset.chestplate', 2)"
+               ]
+            }
+         }
+      },
+      "animation.rme.armor.chestplate.hide": {
+         "loop": "hold_on_last_frame",
+         "animation_length": 2.75,
+         "bones": {
+            "chestplate": {
+               "scale": {
+                  "0.0": [0, 0, 0],
+                  "2.75": { "pre": [0, 0, 0], "post": [1, 1, 1] }
+               }
+            }
+         }
+      }
+   }
+}

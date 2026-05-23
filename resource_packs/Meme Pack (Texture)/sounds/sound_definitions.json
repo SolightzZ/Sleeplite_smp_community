@@ -1,0 +1,44 @@
+{
+  "mob.girl.idle": {
+    "category": "neutral",
+    "sounds": ["sounds/mob/human/idle"],
+    "subtitle": "subtitles.entity.girl.idle"
+  },
+  "mob.girl.idle_night": {
+    "category": "neutral",
+    "sounds": ["sounds/mob/human/idle"],
+    "subtitle": "subtitles.entity.girl.idle_night"
+  },
+  "mob.girl.hit": {
+    "category": "neutral",
+    "sounds": ["sounds/mob/human/hit"],
+    "subtitle": "subtitles.entity.girl.hit"
+  },
+  "mob.girl.death": {
+    "category": "neutral",
+    "sounds": ["sounds/mob/human/death"],
+    "subtitle": "subtitles.entity.girl.die"
+  },
+  "mob.girl.attack": {
+    "__use_legacy_max_distance": "true",
+    "category": "neutral",
+    "sounds": ["sounds/mob/human/hit"],
+    "subtitle": "subtitles.entity.girl.attack"
+  },
+  "mob.human.hit": {
+    "category": "neutral",
+    "sounds": ["sounds/mob/human/hit"],
+    "subtitle": "subtitles.entity.human.hit"
+  },
+  "player.death": {
+    "category": "ui",
+    "sounds": [
+      {
+        "name": "sounds/mob/ooh/ooh1",
+        "volume": 1.5,
+        "load_on_low_memory": true
+      }
+    ],
+    "subtitle": "subtitles.entity.player.dies"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "cb-bcw"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:wood",
+        "data": 2
+      }
+    ],
+    "result": {
+      "item": "minecraft:chiseled_bookshelf",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

@@ -1,0 +1,4800 @@
+/*
+ - Special thanks to @bakedpotato~ for being a very massive part of this new stable system!
+*/
+{
+  "namespace": "hud",
+
+  "chat_grid_item/chat_background": {
+    // Used to hide specific messages from the hud screen chat.
+    "bindings": [
+      {
+        "binding_type": "collection",
+        "binding_name": "#chat_text",
+        "binding_name_override": "#text",
+        "binding_collection_name": "chat_text_grid"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "(§z + #text)",
+        "target_property_name": "#new_text"
+      },
+      {
+        "binding_type": "view",
+        "source_property_name": "((#text = '') or ((#new_text - 'xVisWeakDamage' - 'xVisHardDamage' - 'xVisStrongDamage' - 'xVisImpact0' - 'xVisImpactFixed1' - 'xVisImpactFixed2' - 'xVisImpactFixed3' - 'xVisImpact4' - 'xVisImpact5' - 'xVisImpact6' - 'xVisImpact7' - 'xVisImpact8' - 'xVisImpact9' - 'xVisImpact10' - 'xVisImpact11' - 'xVisImpact12' - 'xVisImpact13' - 'xVisImpact14' - 'xVisImpact15' - 'xVisImpact16' - 'xVisImpact17' - 'xVisImpact18' - 'xVisImpact19' - 'xVisImpact20' - 'xVisImpact21' - 'xVisImpact22' - 'xVisImpact23' - 'xVisImpact24' - 'xVisImpact25' - 'xVisImpact26' - 'xVisImpact27' - 'xVisImpact28' - 'xVisImpact29' - 'xVisImpact30' - 'xVisImpact31' - 'xVisImpact32' - 'xVisImpact33' - 'xVisFlameImpact0' - 'xVisFlameImpact1' - 'xVisFlameImpact2' - 'xVisFlameImpact3' - 'xVisFlameImpact4' - 'xVisFlameImpact5' - 'xVisFlameImpact6' - 'xVisFlameImpact7' - 'xVisDrowning0' - 'xVisDrowningFixed1' - 'xVisDrowning2' - 'xVisDrowning3' - 'xVisDrowning4' - 'xVisDrowning5' - 'xVisDrowning6' - 'xVisDrowning7' - 'xVisDrowning8' - 'xVisDrowning9' - 'xVisDrowning10' - 'xVisDrowning11' - 'xVisDrowning12' - 'xVisDrowning13' - 'xVisDrowning14' - 'xVisDrowning15' - 'xVisDrowning16' - 'xVisWeakExplosion' - 'xVisHardExplosion' - 'xVisStrongExplosion' - 'xVisLowHealth0Blur' - 'xVisFalseLowHealth0Blur' - 'xVisLowHealth1Blur' - 'xVisFalseLowHealth1Blur' - 'xVisPoison' - 'xVisFireResistance' - 'xVisResistance' - 'xVisRegeneration' - 'xVisSlowFalling' - 'xVisSpeed' - 'xVisStrength' - 'xVisSlowness' - 'xVisJumpBoost' - 'xVisNightVision' - 'xVisInvisibility' - 'xVisWaterBreathing' - 'xVisWeakness' - 'xVisWither' - 'xVisLevitation' - 'xVisWindCharged' - 'xVisWeaving' - 'xVisOozing' - 'xVisInfested') = #new_text))",
+        "target_property_name": "#visible" // The message will not be visible if it was included here.
+      }
+    ]
+  },
+
+  "loop_offset": { "anim_type": "offset", "duration": 1, "from": [0, "-100%c"], "to": [0, "-100%c"], "next": "@hud.loop_offset" }, // Required to make the stack factory works.
+
+  "loop_size0": { "anim_type": "size", "duration": 0.05, "from": ["100%", 0], "to": ["100%", 0], "next": "@hud.loop_size1" },
+  "loop_size1": { "anim_type": "size", "duration": 0, "from": ["100%", 0], "to": ["100%", "100%"] },
+
+  "image_hider_anim": { "anim_type": "wait", "duration": 0, "destroy_at_end": "chat_grid_item" }, // Used to hide the images by destroying the Chat-Message.
+  "image_hider_panel": { "type": "panel", "anims": ["@image_hider_anim"] }, // Used to run the image hider animation.
+
+  "weak_damage_in": {
+    // Making the image fade in.
+    "anim_type": "alpha", // Changing the image transparency.
+    "easing": "linear", // Making the animation smoother and more stable.
+    "duration": 0.1, // In 0.1s.
+    "from": 0,
+    "to": 0.5,
+    "next": "@hud.weak_damage_out"
+  },
+  "weak_damage_out": {
+    // Making the image fade out.
+    "anim_type": "alpha",
+    "easing": "linear",
+    "duration": 0.3,
+    "from": 0.5,
+    "to": 0,
+    "destroy_at_end": "chat_grid_item" // Destroy the image when the animation is finished.
+  },
+  "hard_damage_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 0.7, "next": "@hud.hard_damage_out" },
+  "hard_damage_out": { "anim_type": "alpha", "easing": "linear", "duration": 0.4, "from": 0.7, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "strong_damage_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 1, "next": "@hud.strong_damage_out" },
+  "strong_damage_out": { "anim_type": "alpha", "easing": "linear", "duration": 0.5, "from": 1, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "impact0_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.2, "from": 0, "to": 0.9, "next": "@hud.impact0_out" },
+  "impact0_out": { "anim_type": "alpha", "easing": "linear", "duration": 17.4, "from": 0.9, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "impact1_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.2, "from": 0, "to": 0.9, "next": "@hud.impact1_out" },
+  "impact1_out": { "anim_type": "alpha", "easing": "linear", "duration": 26.1, "from": 0.9, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "flame_impact_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.2, "from": 0, "to": 1, "next": "@hud.flame_impact_out" },
+  "flame_impact_out": { "anim_type": "alpha", "easing": "linear", "duration": 16.2, "from": 1, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "drowning_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.2, "from": 0, "to": 0.8, "next": "@hud.drowning_out" },
+  "drowning_out": { "anim_type": "alpha", "easing": "linear", "duration": 11.8, "from": 0.8, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "weak_explosion_blur_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 0.7, "next": "@hud.weak_explosion_blur_out" },
+  "weak_explosion_blur_out": { "anim_type": "alpha", "easing": "linear", "duration": 3.8, "from": 0.7, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "hard_explosion_blur_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 0.8, "next": "@hud.hard_explosion_blur_out" },
+  "hard_explosion_blur_out": { "anim_type": "alpha", "easing": "linear", "duration": 5.1, "from": 0.8, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "strong_explosion_blur_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 0.9, "next": "@hud.strong_explosion_blur_out" },
+  "strong_explosion_blur_out": { "anim_type": "alpha", "easing": "linear", "duration": 8.4, "from": 0.9, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "weak_explosion_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 0.3, "next": "@hud.weak_explosion_out" },
+  "weak_explosion_out": { "anim_type": "alpha", "easing": "linear", "duration": 17.3, "from": 0.3, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "hard_explosion_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.1, "from": 0, "to": 0.5, "next": "@hud.hard_explosion_out" },
+  "hard_explosion_out": { "anim_type": "alpha", "easing": "linear", "duration": 21.5, "from": 0.5, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "strong_explosion_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.3, "from": 0, "to": 0.7, "next": "@hud.strong_explosion_out" },
+  "strong_explosion_out": { "anim_type": "alpha", "easing": "linear", "duration": 29.7, "from": 0.7, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "low_health0_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.4, "from": 0, "to": 0.4 },
+
+  "low_health0_blur_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.8, "from": 0, "to": 0, "next": "@hud.low_health0_blur_loop" },
+  "low_health0_blur_loop": { "anim_type": "alpha", "easing": "linear", "duration": 0.7, "from": 0.5, "to": 0, "next": "@hud.low_health0_blur_in" },
+
+  "low_health0_out": { "anim_type": "alpha", "easing": "linear", "duration": 2, "from": 0.6, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "low_health1_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.4, "from": 0, "to": 0.6 },
+
+  "low_health1_blur_in": { "anim_type": "alpha", "easing": "linear", "duration": 1, "from": 0, "to": 0, "next": "@hud.low_health1_blur_b0" },
+  "low_health1_blur_b0": { "anim_type": "alpha", "easing": "linear", "duration": 0.4, "from": 0.9, "to": 0.4, "next": "@hud.low_health1_blur_loop" },
+  "low_health1_blur_loop": { "anim_type": "alpha", "easing": "linear", "duration": 0.6, "from": 0.9, "to": 0, "next": "@hud.low_health1_blur_in" },
+
+  "low_health1_out": { "anim_type": "alpha", "easing": "linear", "duration": 2, "from": 0.6, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "effected_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.3, "from": 0, "to": 0.7, "next": "@hud.effected_out" },
+  "effected_out": { "anim_type": "alpha", "easing": "linear", "duration": 6, "from": 0.7, "to": 0, "destroy_at_end": "chat_grid_item" },
+  "positive_effects_in": { "anim_type": "alpha", "easing": "linear", "duration": 0.3, "from": 0, "to": 0.4, "next": "@hud.positive_effects_out" },
+  "positive_effects_out": { "anim_type": "alpha", "easing": "linear", "duration": 6, "from": 0.4, "to": 0, "destroy_at_end": "chat_grid_item" },
+
+  "slowness_arrows_in": { "anim_type": "uv", "easing": "linear", "duration": 1.6, "from": [0, 2048], "to": [0, 0], "destroy_at_end": "chat_grid_item" },
+  "levitation_arrows_in": { "anim_type": "uv", "easing": "linear", "duration": 1.6, "from": [0, 0], "to": [0, 2048], "destroy_at_end": "chat_grid_item" },
+
+  "weak_damage_panel": {
+    // All other images use the same method as this one.
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 12,
+    "size": "@hud.loop_size0", // Applying the size via animations to fix the flickering issue.
+    "controls": [
+      {
+        "weak_damage_image": {
+          "type": "image",
+          "texture": "textures/ui/damaged/damaged",
+          "alpha": "@weak_damage_in", // Applying the alpha (transparency) animation.
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_property_name": "('@' + #text - 'xVisWeakDamageHider:unused' - 'xVisWeakDamage' = '@' + #text)",
+              "target_property_name": "#destroy" // Hiding the image only when the sent Chat-Message matches 'xVisWeakDamageHider:unused', since this image is temporary, we don't have to hide it because the animations will do that by default.
+            },
+            {
+              "binding_type": "view",
+              "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWeakDamage' = '@' + #text))",
+              "target_property_name": "#visible" // The image is not visible by default, and it will be visible only when the sent Chat-Message matches 'xVisWeakDamage'.
+            }
+          ]
+        }
+      },
+      {
+        "weak_damage_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" }, // Triggering the image hider panel.
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "weak_damage_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "weak_damage_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "weak_damage_sfactory": {
+          "type": "stack_panel", // Making the factory stack the same image instead of generate a new one (better performance).
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset", // Requred to make the stack factory work.
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.weak_damage_panel" } } // Max children size is used to limit the amount of images the factory can generate.
+        }
+      }
+    ]
+  },
+
+  "hard_damage_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 12,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "hard_damage_image": {
+          "type": "image",
+          "texture": "textures/ui/damaged/damaged",
+          "alpha": "@hard_damage_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisHardDamage' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisHardDamage' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "hard_damage_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "hard_damage_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "hard_damage_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "hard_damage_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.hard_damage_panel" } }
+        }
+      }
+    ]
+  },
+
+  "strong_damage_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 12,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "strong_damage_image": {
+          "type": "image",
+          "texture": "textures/ui/damaged/damaged",
+          "alpha": "@strong_damage_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisStrongDamage' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisStrongDamage' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "strong_damage_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "strong_damage_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "strong_damage_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "strong_damage_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.strong_damage_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact0_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact0_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-0",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact0' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact0' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact0_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact0_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact0_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact0_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact0_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact1_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact1_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-1",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpactFixed1' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpactFixed1' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact1_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact1_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact1_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact1_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact1_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact2_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact2_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-2",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpactFixed2' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpactFixed2' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact2_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact2_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact2_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact2_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact2_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact3_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact3_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-3",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpactFixed3' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpactFixed3' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact3_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact3_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact3_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact3_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact3_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact4_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact4_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-4",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact4' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact4' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact4_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact4_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact4_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact4_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact4_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact5_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact5_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-5",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact5' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact5' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact5_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact5_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact5_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact5_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact5_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact6_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact6_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-6",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact6' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact6' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact6_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact6_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact6_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact6_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact6_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact7_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact7_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-7",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact7' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact7' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact7_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact7_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact7_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact7_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact7_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact8_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact8_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-8",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact8' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact8' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact8_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact8_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact8_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact8_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact8_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact9_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact9_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-9",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact9' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact9' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact9_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact9_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact9_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact9_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact9_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact10_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact10_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-10",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact10' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact10' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact10_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact10_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact10_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact10_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact10_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact11_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact11_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-11",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact11' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact11' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact11_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact11_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact11_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact11_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact11_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact12_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact12_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-12",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact12' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact12' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact12_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact12_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact12_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact12_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact12_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact13_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact13_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-13",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact13' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact13' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact13_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact13_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact13_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact13_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact13_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact14_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact14_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-14",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact14' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact14' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact14_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact14_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact14_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact14_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact14_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact15_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact15_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-15",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact15' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact15' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact15_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact15_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact15_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact15_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact15_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact16_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact16_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-16",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact16' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact16' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact16_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact16_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact16_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact16_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact16_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact17_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact17_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-17",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact17' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact17' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact17_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact17_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact17_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact17_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact17_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact18_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact18_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-18",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact18' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact18' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact18_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact18_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact18_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact18_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact18_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact19_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact19_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-19",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact19' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact19' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact19_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact19_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact19_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact19_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact19_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact20_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact20_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-20",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact20' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact20' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact20_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact20_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact20_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact20_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact20_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact21_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact21_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-21",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact21' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact21' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact21_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact21_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact21_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact21_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact21_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact22_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact22_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-22",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact22' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact22' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact22_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact22_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact22_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact22_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact22_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact23_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact23_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-23",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact23' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact23' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact23_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact23_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact23_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact23_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact23_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact24_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact24_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-24",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact24' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact24' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact24_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact24_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact24_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact24_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact24_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact25_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact25_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-25",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact25' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact25' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact25_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact25_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact25_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact25_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact25_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact26_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact26_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-26",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact26' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact26' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact26_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact26_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact26_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact26_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact26_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact27_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact27_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-27",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact27' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact27' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact27_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact27_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact27_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact27_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact27_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact28_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact28_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-28",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact28' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact28' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact28_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact28_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact28_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact28_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact28_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact29_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact29_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-29",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact29' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact29' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact29_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact29_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact29_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact29_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact29_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact30_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact30_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-30",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact30' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact30' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact30_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact30_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact30_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact30_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact30_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact31_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact31_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-31",
+          "alpha": "@impact0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact31' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact31' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact31_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact31_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact31_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact31_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact31_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact32_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact32_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-32",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact32' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact32' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact32_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact32_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact32_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact32_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact32_panel" } }
+        }
+      }
+    ]
+  },
+
+  "impact33_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 6,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "impact33_image": {
+          "type": "image",
+          "texture": "textures/ui/impact/impact-33",
+          "alpha": "@impact1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisImpact33' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisImpact33' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "impact33_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "impact33_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "impact33_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "impact33_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.impact33_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact0_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact0_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-0",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact0' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact0' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact0_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact0_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact0_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact0_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact0_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact1_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact1_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-1",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact1' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact1' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact1_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact1_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact1_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact1_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact1_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact2_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact2_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-2",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact2' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact2' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact2_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact2_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact2_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact2_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact2_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact3_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact3_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-3",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact3' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact3' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact3_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact3_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact3_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact3_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact3_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact4_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact4_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-4",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact4' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact4' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact4_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact4_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact4_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact4_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact4_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact5_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact5_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-5",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact5' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact5' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact5_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact5_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact5_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact5_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact5_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact6_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact6_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-6",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact6' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact6' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact6_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact6_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact6_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact6_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact6_panel" } }
+        }
+      }
+    ]
+  },
+
+  "flame_impact7_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 5,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "flame_impact7_image": {
+          "type": "image",
+          "texture": "textures/ui/flame/flame-impact-7",
+          "alpha": "@flame_impact_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFlameImpact7' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFlameImpact7' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "flame_impact7_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "flame_impact7_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "flame_impact7_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "flame_impact7_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.flame_impact7_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning0_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning0_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-0",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning0' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning0' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning0_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning0_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning0_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning0_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning0_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning1_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning1_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-1",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowningFixed1' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowningFixed1' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning1_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning1_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning1_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning1_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning1_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning2_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning2_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-2",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning2' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning2' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning2_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning2_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning2_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning2_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning2_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning3_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning3_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-3",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning3' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning3' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning3_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning3_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning3_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning3_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning3_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning4_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning4_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-4",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning4' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning4' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning4_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning4_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning4_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning4_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning4_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning5_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning5_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-5",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning5' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning5' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning5_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning5_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning5_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning5_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning5_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning6_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning6_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-6",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning6' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning6' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning6_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning6_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning6_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning6_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning6_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning7_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning7_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-7",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning7' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning7' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning7_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning7_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning7_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning7_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning7_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning8_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning8_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-8",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning8' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning8' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning8_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning8_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning8_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning8_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning8_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning9_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning9_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-9",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning9' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning9' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning9_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning9_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning9_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning9_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning9_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning10_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning10_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-10",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning10' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning10' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning10_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning10_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning10_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning10_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning10_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning11_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning11_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-11",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning11' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning11' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning11_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning11_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning11_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning11_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning11_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning12_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning12_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-12",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning12' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning12' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning12_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning12_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning12_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning12_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning12_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning13_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning13_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-13",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning13' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning13' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning13_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning13_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning13_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning13_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning13_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning14_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning14_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-14",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning14' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning14' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning14_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning14_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning14_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning14_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning14_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning15_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning15_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-15",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning15' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning15' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning15_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning15_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning15_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning15_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning15_panel" } }
+        }
+      }
+    ]
+  },
+
+  "drowning16_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 4,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "drowning16_image": {
+          "type": "image",
+          "texture": "textures/ui/drowning/drowning-16",
+          "alpha": "@drowning_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisDrowning16' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisDrowning16' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "drowning16_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "drowning16_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "drowning16_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "drowning16_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.drowning16_panel" } }
+        }
+      }
+    ]
+  },
+
+  "weak_explosion_blur_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 900,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "weak_explosion_blur_image": {
+          "type": "image",
+          "texture": "textures/ui/blur",
+          "alpha": "@weak_explosion_blur_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWeakExplosion' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWeakExplosion' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "weak_explosion_blur_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "weak_explosion_blur_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "weak_explosion_blur_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "weak_explosion_blur_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.weak_explosion_blur_panel" } }
+        }
+      }
+    ]
+  },
+
+  "hard_explosion_blur_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 900,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "hard_explosion_blur_image": {
+          "type": "image",
+          "texture": "textures/ui/blur",
+          "alpha": "@hard_explosion_blur_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisHardExplosion' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisHardExplosion' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "hard_explosion_blur_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "hard_explosion_blur_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "hard_explosion_blur_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "hard_explosion_blur_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.hard_explosion_blur_panel" } }
+        }
+      }
+    ]
+  },
+
+  "strong_explosion_blur_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 900,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "strong_explosion_blur_image": {
+          "type": "image",
+          "texture": "textures/ui/blur",
+          "alpha": "@strong_explosion_blur_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisStrongExplosion' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisStrongExplosion' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "strong_explosion_blur_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "strong_explosion_blur_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "strong_explosion_blur_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "strong_explosion_blur_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.strong_explosion_blur_panel" } }
+        }
+      }
+    ]
+  },
+
+  "weak_explosion_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 901,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "weak_explosion_image": {
+          "type": "image",
+          "texture": "textures/ui/explosion/explosion-blur",
+          "alpha": "@weak_explosion_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWeakExplosion' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWeakExplosion' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "weak_explosion_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "weak_explosion_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "weak_explosion_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "weak_explosion_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.weak_explosion_panel" } }
+        }
+      }
+    ]
+  },
+
+  "hard_explosion_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 901,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "hard_explosion_image": {
+          "type": "image",
+          "texture": "textures/ui/explosion/explosion-blur",
+          "alpha": "@hard_explosion_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisHardExplosion' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisHardExplosion' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "hard_explosion_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "hard_explosion_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "hard_explosion_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "hard_explosion_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.hard_explosion_panel" } }
+        }
+      }
+    ]
+  },
+
+  "strong_explosion_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 901,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "strong_explosion_image": {
+          "type": "image",
+          "texture": "textures/ui/explosion/explosion-blur",
+          "alpha": "@strong_explosion_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisStrongExplosion' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisStrongExplosion' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "strong_explosion_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "strong_explosion_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "strong_explosion_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "strong_explosion_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.strong_explosion_panel" } }
+        }
+      }
+    ]
+  },
+
+  "low_health0_in_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 9,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "low_health0_in_image": {
+          "type": "image",
+          "texture": "textures/ui/low-health/low-health",
+          "alpha": "@low_health0_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFalseLowHealth0Blur' - 'xVisLowHealth0Blur' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisLowHealth0Blur' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "low_health0_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "low_health0_in_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "low_health0_in_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "low_health0_in_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.low_health0_in_panel" } }
+        }
+      }
+    ]
+  },
+
+  "low_health0_blur_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 9,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "low_health0_blur_image": {
+          "type": "image",
+          "texture": "textures/ui/low-health/low-health",
+          "alpha": "@low_health0_blur_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFalseLowHealth0Blur' - 'xVisLowHealth0Blur' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisLowHealth0Blur' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "low_health0_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "low_health0_blur_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "low_health0_blur_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "low_health0_blur_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.low_health0_blur_panel" } }
+        }
+      }
+    ]
+  },
+
+  "low_health0_out_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 9,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "low_health0_out_image": {
+          "type": "image",
+          "texture": "textures/ui/low-health/low-health",
+          "alpha": "@low_health0_out",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFalseLowHealth0Blur' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFalseLowHealth0Blur' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "low_health0_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "low_health0_out_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "low_health0_out_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "low_health0_out_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.low_health0_out_panel" } }
+        }
+      }
+    ]
+  },
+
+  "low_health1_in_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 9,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "low_health1_in_image": {
+          "type": "image",
+          "texture": "textures/ui/low-health/low-health",
+          "alpha": "@low_health1_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFalseLowHealth1Blur' - 'xVisLowHealth1Blur' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisLowHealth1Blur' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "low_health1_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "low_health1_in_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "low_health1_in_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "low_health1_in_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.low_health1_in_panel" } }
+        }
+      }
+    ]
+  },
+
+  "low_health1_blur_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 9,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "low_health1_blur_image": {
+          "type": "image",
+          "texture": "textures/ui/low-health/low-health",
+          "alpha": "@low_health1_blur_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFalseLowHealth1Blur' - 'xVisLowHealth1Blur' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisLowHealth1Blur' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "low_health1_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "low_health1_blur_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "low_health1_blur_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "low_health1_blur_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.low_health1_blur_panel" } }
+        }
+      }
+    ]
+  },
+
+  "low_health1_out_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 9,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "low_health1_out_image": {
+          "type": "image",
+          "texture": "textures/ui/low-health/low-health",
+          "alpha": "@low_health1_out",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFalseLowHealth1Blur' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFalseLowHealth1Blur' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "low_health1_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "low_health1_out_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "low_health1_out_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "low_health1_out_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.low_health1_out_panel" } }
+        }
+      }
+    ]
+  },
+
+  "poison_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "poison_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/poison",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisPoison' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisPoison' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "poison_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "poison_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "poison_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "poison_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.poison_panel" } }
+        }
+      }
+    ]
+  },
+
+  "fire_resistance_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "fire_resistance_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/fire_resistance",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisFireResistance' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisFireResistance' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "fire_resistance_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "fire_resistance_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "fire_resistance_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "fire_resistance_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.fire_resistance_panel" } }
+        }
+      }
+    ]
+  },
+
+  "resistance_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "resistance_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/resistance",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisResistance' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisResistance' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "resistance_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "resistance_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "resistance_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "resistance_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.resistance_panel" } }
+        }
+      }
+    ]
+  },
+
+  "regeneration_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "regeneration_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/regeneration",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisRegeneration' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisRegeneration' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "regeneration_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "regeneration_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "regeneration_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "regeneration_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.regeneration_panel" } }
+        }
+      }
+    ]
+  },
+
+  "slow_falling_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "slow_falling_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/slow_falling",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisSlowFalling' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisSlowFalling' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "slow_falling_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "slow_falling_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "slow_falling_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "slow_falling_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.slow_falling_panel" } }
+        }
+      }
+    ]
+  },
+
+  "speed_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "speed_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/speed",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisSpeed' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisSpeed' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "speed_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "speed_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "speed_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "speed_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.speed_panel" } }
+        }
+      }
+    ]
+  },
+
+  "strength_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "strength_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/strength",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisStrength' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisStrength' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "strength_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "strength_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "strength_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "strength_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.strength_panel" } }
+        }
+      }
+    ]
+  },
+
+  "slowness_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "slowness_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/slowness",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisSlowness' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisSlowness' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "slowness_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "slowness_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "slowness_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "slowness_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.slowness_panel" } }
+        }
+      }
+    ]
+  },
+
+  "slowness_arrows_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 11,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "slowness_arrows_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/slowness_arrows",
+          "alpha": 0.3,
+          "uv": "@slowness_arrows_in",
+          "uv_size": [512, 512],
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisSlowness' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisSlowness' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "slowness_arrows_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "slowness_arrows_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "slowness_arrows_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "slowness_arrows_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.slowness_arrows_panel" } }
+        }
+      }
+    ]
+  },
+
+  "jump_boost_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "jump_boost_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/jump_boost",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisJumpBoost' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisJumpBoost' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "jump_boost_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "jump_boost_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "jump_boost_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "jump_boost_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.jump_boost_panel" } }
+        }
+      }
+    ]
+  },
+
+  "night_vision_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "night_vision_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/night_vision",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisNightVision' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisNightVision' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "night_vision_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "night_vision_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "night_vision_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "night_vision_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.night_vision_panel" } }
+        }
+      }
+    ]
+  },
+
+  "invisibility_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "invisibility_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/invisibility",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisInvisibility' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisInvisibility' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "invisibility_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "invisibility_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "invisibility_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "invisibility_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.invisibility_panel" } }
+        }
+      }
+    ]
+  },
+
+  "water_breathing_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "water_breathing_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/water_breathing",
+          "alpha": "@positive_effects_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWaterBreathing' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWaterBreathing' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "water_breathing_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "water_breathing_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "water_breathing_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "water_breathing_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.water_breathing_panel" } }
+        }
+      }
+    ]
+  },
+
+  "weakness_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "weakness_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/weakness",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWeakness' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWeakness' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "weakness_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "weakness_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "weakness_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "weakness_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.weakness_panel" } }
+        }
+      }
+    ]
+  },
+
+  "wither_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "wither_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/wither",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWither' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWither' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "wither_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "wither_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "wither_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "wither_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.wither_panel" } }
+        }
+      }
+    ]
+  },
+
+  "levitation_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "levitation_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/levitation",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisLevitation' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisLevitation' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "levitation_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "levitation_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "levitation_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "levitation_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.levitation_panel" } }
+        }
+      }
+    ]
+  },
+
+  "levitation_arrows_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 11,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "levitation_arrows_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/levitation_arrows",
+          "alpha": 0.3,
+          "uv": "@levitation_arrows_in",
+          "uv_size": [512, 512],
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisLevitation' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisLevitation' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "levitation_arrows_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "levitation_arrows_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "levitation_arrows_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "levitation_arrows_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.levitation_arrows_panel" } }
+        }
+      }
+    ]
+  },
+
+  "wind_charged_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "wind_charged_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/wind_charged",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWindCharged' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWindCharged' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "wind_charged_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            {
+              "binding_type": "view",
+              "source_control_name": "wind_charged_image",
+              "source_property_name": "(#destroy * 1)",
+              "target_property_name": "#collection_length",
+              "resolve_sibling_scope": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "wind_charged_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "wind_charged_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.wind_charged_panel" } }
+        }
+      }
+    ]
+  },
+
+  "weaving_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "weaving_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/weaving",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisWeaving' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisWeaving' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "weaving_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "weaving_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "weaving_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "weaving_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.weaving_panel" } }
+        }
+      }
+    ]
+  },
+
+  "oozing_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "oozing_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/oozing",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisOozing' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisOozing' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "oozing_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "oozing_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "oozing_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "oozing_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.oozing_panel" } }
+        }
+      }
+    ]
+  },
+
+  "infested_panel": {
+    "type": "panel",
+    "anchor_from": "center",
+    "anchor_to": "center",
+    "layer": 10,
+    "size": "@hud.loop_size0",
+    "controls": [
+      {
+        "infested_image": {
+          "type": "image",
+          "texture": "textures/ui/effected/infested",
+          "alpha": "@effected_in",
+          "bindings": [
+            { "binding_type": "view", "source_property_name": "('@' + #text - 'xVisInfested' = '@' + #text)", "target_property_name": "#destroy" },
+            { "binding_type": "view", "source_property_name": "(not #destroy and not ('@' + #text - 'xVisInfested' = '@' + #text))", "target_property_name": "#visible" }
+          ]
+        }
+      },
+      {
+        "infested_hide": {
+          "type": "collection_panel",
+          "size": [0, 0],
+          "factory": { "name": "empty", "control_name": "hud.image_hider_panel" },
+          "bindings": [
+            { "binding_type": "view", "source_control_name": "infested_image", "source_property_name": "(#destroy * 1)", "target_property_name": "#collection_length", "resolve_sibling_scope": true }
+          ]
+        }
+      }
+    ]
+  },
+  "infested_factory": {
+    "type": "panel",
+    "controls": [
+      {
+        "infested_sfactory": {
+          "type": "stack_panel",
+          "size": ["100%", "100%"],
+          "offset": "@hud.loop_offset",
+          "anchor_from": "bottom_middle",
+          "anchor_to": "top_middle",
+          "factory": { "name": "chat_item_factory", "max_children_size": 6, "control_ids": { "chat_item": "hud.infested_panel" } }
+        }
+      }
+    ]
+  },
+
+  "visuals_renderer": {
+    "type": "panel",
+    "size": ["112.5%", "112.5%"], // Making it fill the whole screen even in the 'Safe Area' mode.
+    "bindings": [{ "binding_name": "#show_survival_ui", "binding_name_override": "#visible" }], // This will make the images visible only on survival.
+    "controls": [
+      { "weak_damage_factory@hud.weak_damage_factory": {} },
+      { "hard_damage_factory@hud.hard_damage_factory": {} },
+      { "strong_damage_factory@hud.strong_damage_factory": {} },
+
+      { "impact0_factory@hud.impact0_factory": {} },
+      { "impact1_factory@hud.impact1_factory": {} },
+      { "impact2_factory@hud.impact2_factory": {} },
+      { "impact3_factory@hud.impact3_factory": {} },
+      { "impact4_factory@hud.impact4_factory": {} },
+      { "impact5_factory@hud.impact5_factory": {} },
+      { "impact6_factory@hud.impact6_factory": {} },
+      { "impact7_factory@hud.impact7_factory": {} },
+      { "impact8_factory@hud.impact8_factory": {} },
+      { "impact9_factory@hud.impact9_factory": {} },
+      { "impact10_factory@hud.impact10_factory": {} },
+      { "impact11_factory@hud.impact11_factory": {} },
+      { "impact12_factory@hud.impact12_factory": {} },
+      { "impact13_factory@hud.impact13_factory": {} },
+      { "impact14_factory@hud.impact14_factory": {} },
+      { "impact15_factory@hud.impact15_factory": {} },
+      { "impact16_factory@hud.impact16_factory": {} },
+      { "impact17_factory@hud.impact17_factory": {} },
+      { "impact18_factory@hud.impact18_factory": {} },
+      { "impact19_factory@hud.impact19_factory": {} },
+      { "impact20_factory@hud.impact20_factory": {} },
+      { "impact21_factory@hud.impact21_factory": {} },
+      { "impact22_factory@hud.impact22_factory": {} },
+      { "impact23_factory@hud.impact23_factory": {} },
+      { "impact24_factory@hud.impact24_factory": {} },
+      { "impact25_factory@hud.impact25_factory": {} },
+      { "impact26_factory@hud.impact26_factory": {} },
+      { "impact27_factory@hud.impact27_factory": {} },
+      { "impact28_factory@hud.impact28_factory": {} },
+      { "impact29_factory@hud.impact29_factory": {} },
+      { "impact30_factory@hud.impact30_factory": {} },
+      { "impact31_factory@hud.impact31_factory": {} },
+      { "impact32_factory@hud.impact32_factory": {} },
+      { "impact33_factory@hud.impact33_factory": {} },
+
+      { "flame_impact0_factory@hud.flame_impact0_factory": {} },
+      { "flame_impact1_factory@hud.flame_impact1_factory": {} },
+      { "flame_impact2_factory@hud.flame_impact2_factory": {} },
+      { "flame_impact3_factory@hud.flame_impact3_factory": {} },
+      { "flame_impact4_factory@hud.flame_impact4_factory": {} },
+      { "flame_impact5_factory@hud.flame_impact5_factory": {} },
+      { "flame_impact6_factory@hud.flame_impact6_factory": {} },
+      { "flame_impact7_factory@hud.flame_impact7_factory": {} },
+
+      { "drowning0_factory@hud.drowning0_factory": {} },
+      { "drowning1_factory@hud.drowning1_factory": {} },
+      { "drowning2_factory@hud.drowning2_factory": {} },
+      { "drowning3_factory@hud.drowning3_factory": {} },
+      { "drowning4_factory@hud.drowning4_factory": {} },
+      { "drowning5_factory@hud.drowning5_factory": {} },
+      { "drowning6_factory@hud.drowning6_factory": {} },
+      { "drowning7_factory@hud.drowning7_factory": {} },
+      { "drowning8_factory@hud.drowning8_factory": {} },
+      { "drowning9_factory@hud.drowning9_factory": {} },
+      { "drowning10_factory@hud.drowning10_factory": {} },
+      { "drowning11_factory@hud.drowning11_factory": {} },
+      { "drowning12_factory@hud.drowning12_factory": {} },
+      { "drowning13_factory@hud.drowning13_factory": {} },
+      { "drowning14_factory@hud.drowning14_factory": {} },
+      { "drowning15_factory@hud.drowning15_factory": {} },
+      { "drowning16_factory@hud.drowning16_factory": {} },
+
+      { "weak_explosion_blur_factory@hud.weak_explosion_blur_factory": {} },
+      { "hard_explosion_blur_factory@hud.hard_explosion_blur_factory": {} },
+      { "strong_explosion_blur_factory@hud.strong_explosion_blur_factory": {} },
+
+      { "weak_explosion_factory@hud.weak_explosion_factory": {} },
+      { "hard_explosion_factory@hud.hard_explosion_factory": {} },
+      { "strong_explosion_factory@hud.strong_explosion_factory": {} },
+
+      { "low_health0_in_factory@hud.low_health0_in_factory": {} },
+      { "low_health0_blur_factory@hud.low_health0_blur_factory": {} },
+      { "low_health0_out_factory@hud.low_health0_out_factory": {} },
+
+      { "low_health1_in_factory@hud.low_health1_in_factory": {} },
+      { "low_health1_blur_factory@hud.low_health1_blur_factory": {} },
+      { "low_health1_out_factory@hud.low_health1_out_factory": {} },
+
+      { "poison_factory@hud.poison_factory": {} },
+      { "fire_resistance_factory@hud.fire_resistance_factory": {} },
+      { "resistance_factory@hud.resistance_factory": {} },
+      { "regeneration_factory@hud.regeneration_factory": {} },
+      { "slow_falling_factory@hud.slow_falling_factory": {} },
+      { "speed_factory@hud.speed_factory": {} },
+      { "strength_factory@hud.strength_factory": {} },
+      { "slowness_factory@hud.slowness_factory": {} },
+      { "slowness_arrows_factory@hud.slowness_arrows_factory": {} },
+      { "jump_boost_factory@hud.jump_boost_factory": {} },
+      { "night_vision_factory@hud.night_vision_factory": {} },
+      { "invisibility_factory@hud.invisibility_factory": {} },
+      { "water_breathing_factory@hud.water_breathing_factory": {} },
+      { "weakness_factory@hud.weakness_factory": {} },
+      { "wither_factory@hud.wither_factory": {} },
+      { "levitation_factory@hud.levitation_factory": {} },
+      { "levitation_arrows_factory@hud.levitation_arrows_factory": {} },
+      { "wind_charged_factory@hud.wind_charged_factory": {} },
+      { "weaving_factory@hud.weaving_factory": {} },
+      { "oozing_factory@hud.oozing_factory": {} },
+      { "infested_factory@hud.infested_factory": {} }
+    ]
+  },
+  "root_panel": { "modifications": [{ "array_name": "controls", "operation": "insert_front", "value": [{ "visuals_renderer@hud.visuals_renderer": {} }] }] } // Required to render the images.
+}

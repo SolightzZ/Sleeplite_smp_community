@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "rme:demon_chestplate_p"
+    },
+
+    "tags": ["crafting_table"],
+    "ingredients": [
+      {
+        "item": "addon:demon_chestplate"
+      },
+      {
+        "item": "minecraft:elytra"
+      }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:elytra"
+      }
+    ],
+    "result": {
+      "item": "rme:demon_chestplate_p"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "bsjjesesr_e0342163sjk"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:wood",
+        "data": 5
+      }
+    ],
+    "result": {
+      "item": "minecraft:crafting_table",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

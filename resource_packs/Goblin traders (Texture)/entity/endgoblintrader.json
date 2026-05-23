@@ -1,0 +1,40 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "goblin:endgoblintrader",
+      "materials": {
+        "default": "skeleton"
+      },
+      "textures": {
+        "default": "textures/end_goblin_trader"
+      },
+      "geometry": {
+        "default": "geometry.goblintrader"
+      },
+      "sound_effects": {
+        "eat": "random.eat"
+      },
+      "animations": {
+        "walk": "animation.goblintrader.move",
+        "static": "animation.goblintrader.static",
+        "eat": "animation.goblintrader.eat_apple",
+        "fall_down": "animation.goblintrader.fall_down",
+        "fall_down_2": "animation.goblintrader.fall_down_2",
+        "controller": "controller.animation.goblintrader",
+        "particle": "controller.animation.particle_emitter"
+      },
+      "scripts": {
+        "animate": ["controller", "particle"]
+      },
+      "render_controllers": ["controller.render.default"],
+      "spawn_egg": {
+        "base_color": "#0e0e10",
+        "overlay_color": "#8f8c9b"
+      },
+      "particle_effects": {
+        "particle": "goblin_traders_ov:goblin_end_particles"
+      }
+    }
+  }
+}

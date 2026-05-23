@@ -1,0 +1,26 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "recipes_ce06sushdh"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:mangrove_stairs",
+        "data": 0
+      },
+      {
+        "item": "minecraft:mangrove_stairs",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:mangrove_slab",
+      "count": 3,
+      "data": 0
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "namespace": "chat",
+
+  "messages_text": {
+    // Used to hide specific messages from the chat screen.
+    "modifications": [
+      {
+        "array_name": "bindings",
+        "operation": "remove",
+        "where": {
+          "binding_name": "#chat_visible",
+          "binding_name_override": "#visible"
+        }
+      },
+      {
+        "array_name": "bindings",
+        "operation": "insert_front",
+        "value": [
+          {
+            "binding_type": "global",
+            "binding_name": "#chat_visible"
+          },
+          { "binding_type": "global", "binding_name": "#text" },
+          {
+            "binding_type": "view",
+            "source_property_name": "(§z + #text)",
+            "target_property_name": "#new_text"
+          },
+          {
+            "binding_type": "view",
+            "source_property_name": "(#chat_visible and ((#new_text - 'xVisWeakDamage' - 'xVisHardDamage' - 'xVisStrongDamage' - 'xVisImpact0' - 'xVisImpactFixed1' - 'xVisImpactFixed2' - 'xVisImpactFixed3' - 'xVisImpact4' - 'xVisImpact5' - 'xVisImpact6' - 'xVisImpact7' - 'xVisImpact8' - 'xVisImpact9' - 'xVisImpact10' - 'xVisImpact11' - 'xVisImpact12' - 'xVisImpact13' - 'xVisImpact14' - 'xVisImpact15' - 'xVisImpact16' - 'xVisImpact17' - 'xVisImpact18' - 'xVisImpact19' - 'xVisImpact20' - 'xVisImpact21' - 'xVisImpact22' - 'xVisImpact23' - 'xVisImpact24' - 'xVisImpact25' - 'xVisImpact26' - 'xVisImpact27' - 'xVisImpact28' - 'xVisImpact29' - 'xVisImpact30' - 'xVisImpact31' - 'xVisImpact32' - 'xVisImpact33' - 'xVisFlameImpact0' - 'xVisFlameImpact1' - 'xVisFlameImpact2' - 'xVisFlameImpact3' - 'xVisFlameImpact4' - 'xVisFlameImpact5' - 'xVisFlameImpact6' - 'xVisFlameImpact7' - 'xVisDrowning0' - 'xVisDrowningFixed1' - 'xVisDrowning2' - 'xVisDrowning3' - 'xVisDrowning4' - 'xVisDrowning5' - 'xVisDrowning6' - 'xVisDrowning7' - 'xVisDrowning8' - 'xVisDrowning9' - 'xVisDrowning10' - 'xVisDrowning11' - 'xVisDrowning12' - 'xVisDrowning13' - 'xVisDrowning14' - 'xVisDrowning15' - 'xVisDrowning16' - 'xVisWeakExplosion' - 'xVisHardExplosion' - 'xVisStrongExplosion' - 'xVisLowHealth0Blur' - 'xVisFalseLowHealth0Blur' - 'xVisLowHealth1Blur' - 'xVisFalseLowHealth1Blur' - 'xVisPoison' - 'xVisFireResistance' - 'xVisResistance' - 'xVisRegeneration' - 'xVisSlowFalling' - 'xVisSpeed' - 'xVisStrength' - 'xVisSlowness' - 'xVisJumpBoost' - 'xVisNightVision' - 'xVisInvisibility' - 'xVisWaterBreathing' - 'xVisWeakness' - 'xVisWither' - 'xVisLevitation' - 'xVisWindCharged' - 'xVisWeaving' - 'xVisOozing' - 'xVisInfested') = #new_text))",
+            "target_property_name": "#visible" // The message will not be visible if it was included here.
+          }
+        ]
+      }
+    ]
+  }
+}

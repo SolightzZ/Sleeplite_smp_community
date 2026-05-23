@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "4recipes_e0342176s"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_oak_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:wooden_door",
+      "count": 4,
+      "data": 0
+    }
+  }
+}

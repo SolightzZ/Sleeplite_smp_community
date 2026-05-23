@@ -1,0 +1,40 @@
+{
+  "format_version": "1.10.0",
+  "render_controllers": {
+    "controller.render.rme_elytra_chestplate_mode": {
+      "geometry": "Geometry.chestplate",
+      "materials": [
+        { "*": "variable.is_enchanted ? material.enchanted : material.default" }
+      ],
+      "textures": ["return Array.skins[v.mode - 1];", "Texture.enchanted"],
+      "arrays": {
+        "textures": {
+          "Array.skins": [
+            "Texture.copper_chestplate",
+            "Texture.gold_chestplate",
+            "Texture.chain_chestplate",
+            "Texture.iron_chestplate",
+            "Texture.diamond_chestplate",
+            "Texture.netherite_chestplate",
+            "Texture.demon_chestplate",
+            "Texture.wolf_chestplate"
+          ]
+        }
+      }
+    },
+    "controller.render.rme_elytra_chestplate": {
+      "geometry": "Geometry.chestplate",
+      "materials": [
+        { "*": "variable.is_enchanted ? material.enchanted : material.default" }
+      ],
+      "textures": ["texture.chestplate", "texture.enchanted"]
+    },
+    "controller.render.rme_default.item": {
+      "geometry": "Geometry.default",
+      "materials": [
+        { "*": "variable.is_enchanted ? material.enchanted : material.default" }
+      ],
+      "textures": ["texture.default", "texture.enchanted"]
+    }
+  }
+}

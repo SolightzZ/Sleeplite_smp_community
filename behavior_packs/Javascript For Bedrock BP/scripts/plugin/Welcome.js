@@ -34,7 +34,7 @@ const showWelcome = (player, objective) => {
     fadeInDuration: 0,
     fadeOutDuration: 50,
     stayDuration: 160,
-    subtitle: `Deaths: ${deaths}`,
+    subtitle: ` ${deaths}`,
   });
   player.playSound("random.toast", { pitch: 1, volume: 1.5 });
 };

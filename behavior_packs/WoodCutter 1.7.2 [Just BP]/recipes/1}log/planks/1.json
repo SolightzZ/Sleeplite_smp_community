@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "1planksl1"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:log",
+        "data": 1
+      }
+    ],
+    "result": {
+      "item": "minecraft:planks",
+      "count": 4,
+      "data": 1
+    }
+  }
+}

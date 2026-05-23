@@ -1,0 +1,59 @@
+{
+  "resource_pack_name": "bridgeRP",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "rme_copper_chestplate": {
+      "textures": ["textures/items/elytra/colytra/copper_chestplate"]
+    },
+    "rme_copper_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/copper_chestplate"]
+    },
+
+    "rme_chain_chestplate": {
+      "textures": ["textures/items/elytra/colytra/chainmail_chestplate"]
+    },
+    "rme_chain_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/chainmail_chestplate"]
+    },
+
+    "rme_iron_chestplate": {
+      "textures": ["textures/items/elytra/colytra/iron_chestplate"]
+    },
+    "rme_iron_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/iron_chestplate"]
+    },
+
+    "rme_gold_chestplate": {
+      "textures": ["textures/items/elytra/colytra/gold_chestplate"]
+    },
+    "rme_gold_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/gold_chestplate"]
+    },
+
+    "rme_diamond_chestplate": {
+      "textures": ["textures/items/elytra/colytra/diamond_chestplate"]
+    },
+    "rme_diamond_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/diamond_chestplate"]
+    },
+
+    "rme_netherite_chestplate": {
+      "textures": ["textures/items/elytra/colytra/netherite_chestplate"]
+    },
+    "rme_netherite_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/netherite_chestplate"]
+    },
+    "rme_wolf_chestplate": {
+      "textures": ["textures/items/elytra/colytra/wolf_chestplate"]
+    },
+    "rme_wolf_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/wolf_chestplate"]
+    },
+    "rme_demon_chestplate": {
+      "textures": ["textures/items/elytra/colytra/demon_chestplate"]
+    },
+    "rme_demon_chestplate_b": {
+      "textures": ["textures/items/elytra/colytra/broken/demon_chestplate"]
+    }
+  }
+}

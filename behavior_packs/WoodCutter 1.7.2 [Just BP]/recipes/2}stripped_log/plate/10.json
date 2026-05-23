@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "grecipes_e0342145chsjkss"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_cherry_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:cherry_pressure_plate",
+      "count": 12,
+      "data": 0
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "4stairslwa"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:warped_stem",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:warped_stairs",
+      "count": 4,
+      "data": 0
+    }
+  }
+}

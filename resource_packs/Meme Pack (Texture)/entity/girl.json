@@ -1,0 +1,116 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "meme:girl",
+      "materials": {
+        "default": "skeleton"
+      },
+      "textures": {
+        "default": "textures/entity/girl/girlfriend0",
+        "default1": "textures/entity/girl/girlfriend1",
+        "default2": "textures/entity/girl/girlfriend2",
+        "default3": "textures/entity/girl/girlfriend3",
+        "default4": "textures/entity/girl/girlfriend4",
+        "default5": "textures/entity/girl/girlfriend5",
+        "default6": "textures/entity/girl/girlfriend6",
+        "default7": "textures/entity/girl/girlfriend7",
+        "default8": "textures/entity/girl/girlfriend8",
+        "default9": "textures/entity/girl/girlfriend9",
+        "default10": "textures/entity/girl/girlfriend10",
+        "default11": "textures/entity/girl/girlfriend11",
+        "default12": "textures/entity/girl/girlfriend12",
+        "default13": "textures/entity/girl/girlfriend13",
+        "default14": "textures/entity/girl/girlfriend14",
+        "default15": "textures/entity/girl/girlfriend15",
+        "default16": "textures/entity/girl/girlfriend16",
+        "default17": "textures/entity/girl/girlfriend17",
+        "default18": "textures/entity/girl/girlfriend18",
+        "default19": "textures/entity/girl/girlfriend19",
+        "default20": "textures/entity/girl/girlfriend20",
+        "default21": "textures/entity/girl/girlfriend21",
+        "default22": "textures/entity/girl/girlfriend22",
+        "default23": "textures/entity/girl/girlfriend23",
+        "default24": "textures/entity/girl/girlfriend24",
+        "default25": "textures/entity/girl/girlfriend25",
+        "default26": "textures/entity/girl/girlfriend26",
+        "default27": "textures/entity/girl/girlfriend27",
+        "default28": "textures/entity/girl/girlfriend28",
+        "default29": "textures/entity/girl/girlfriend29",
+        "default30": "textures/entity/girl/girlfriend30",
+        "default31": "textures/entity/girl/girlfriend31",
+        "default32": "textures/entity/girl/girlfriend32",
+        "default33": "textures/entity/girl/girlfriend33",
+        "default34": "textures/entity/girl/girlfriend34",
+        "default35": "textures/entity/girl/girlfriend35",
+        "default36": "textures/entity/girl/girlfriend36",
+        "default37": "textures/entity/girl/girlfriend37",
+        "default38": "textures/entity/girl/girlfriend38",
+        "default39": "textures/entity/girl/girlfriend39",
+        "default40": "textures/entity/girl/girlfriend40"
+      },
+      "geometry": {
+        "default": "geometry.human_old"
+      },
+      "scripts": {
+        "pre_animation": ["variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;"]
+      },
+      "scripts": {
+        "scale": "0.9375",
+        "pre_animation": [
+          "variable.tcos0 = (Math.cos(query.modified_distance_moved * 38.17) * query.modified_move_speed / variable.gliding_speed_value) * 57.3;",
+          "variable.tcos1 = -variable.tcos0;",
+          "variable.attack_body_rot_y = Math.sin(Math.sqrt(variable.attack_time) * 360.0) * 11.46;",
+          "variable.cos_attack_body_rot_y = Math.cos(variable.attack_body_rot_y);",
+          "variable.sin_attack_body_rot_y = Math.sin(variable.attack_body_rot_y);",
+          "variable.internal_swim_pos = Math.mod(query.modified_distance_moved, 26.0);",
+          "variable.attack = Math.sin((1.0 - (1.0 - variable.attack_time) * (1.0 - variable.attack_time)) * 180.0) * 57.3;",
+          "variable.attack2 = Math.sin(variable.attack_time * 180.0) * 57.3;",
+          "variable.z_bob = Math.cos(query.life_time * 103.13244) * 2.865 + 2.865;",
+          "variable.x_bob = Math.sin(query.life_time * 76.776372) * 2.865;"
+        ]
+      },
+      "animations": {
+        "look_at_target_default": "animation.humanoid.look_at_target.default.v1.0",
+        "look_at_target_gliding": "animation.humanoid.look_at_target.gliding.v1.0",
+        "look_at_target_swimming": "animation.humanoid.look_at_target.swimming.v1.0",
+        "move": "animation.humanoid.move",
+        "walking": "animation.humanoid.move",
+        "riding.arms": "animation.humanoid.riding.arms.v1.0",
+        "riding.legs": "animation.humanoid.riding.legs.v1.0",
+        "holding": "animation.humanoid.holding.v1.0",
+        "brandish_spear": "animation.humanoid.brandish_spear.v1.0",
+        "charging": "animation.humanoid.charging.v1.0",
+        "attack.rotations": "animation.player.attack.rotations",
+        "sneaking": "animation.humanoid.sneaking.v1.0",
+        "bob": "animation.humanoid.bob.v1.0",
+        "humanoid_big_head": "animation.humanoid.big_head",
+        "damage_nearby_mobs": "animation.humanoid.damage_nearby_mobs.v1.0",
+        "swimming": "animation.humanoid.swimming.v1.0",
+        "use_item_progress": "animation.humanoid.use_item_progress.v1.0",
+        "crossbow_hold": "animation.pillager.crossbow.hold",
+        "crossbow_charge": "animation.pillager.crossbow.charge"
+      },
+      "animation_controllers": [
+        { "look_at_target": "controller.animation.humanoid.look_at_target" },
+        { "move": "controller.animation.humanoid.move" },
+        { "holding": "controller.animation.humanoid.holding" },
+        { "brandish_spear": "controller.animation.humanoid.brandish_spear" },
+        { "charging": "controller.animation.humanoid.charging" },
+        { "attack": "controller.animation.humanoid.attack" },
+        { "sneaking": "controller.animation.humanoid.sneaking" },
+        { "bob": "controller.animation.humanoid.bob" },
+        { "humanoid_baby_big_head": "controller.animation.humanoid.baby_big_head" },
+        { "damage_nearby_mobs": "controller.animation.humanoid.damage_nearby_mobs" },
+        { "swimming": "controller.animation.humanoid.swimming" },
+        { "use_item_progress": "controller.animation.humanoid.use_item_progress" }
+      ],
+      "spawn_egg": {
+        "base_color": "#ffb37d",
+        "overlay_color": "#ff46b2"
+      },
+      "render_controllers": ["controller.render.humans"],
+      "enable_attachables": true
+    }
+  }
+}

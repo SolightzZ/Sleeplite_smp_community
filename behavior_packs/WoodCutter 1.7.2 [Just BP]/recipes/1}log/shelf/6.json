@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "sh-crs"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:crimson_stem",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:crimson_shelf",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

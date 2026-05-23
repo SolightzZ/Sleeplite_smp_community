@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "frecipes_e034218w"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_acacia_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:acacia_button",
+      "count": 16,
+      "data": 0
+    }
+  }
+}

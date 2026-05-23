@@ -1,0 +1,48 @@
+{
+   "format_version": "1.21.100",
+   "minecraft:item": {
+      "description": {
+         "identifier": "rme:netherite_chestplate_p",
+         "menu_category": {
+            "category": "equipment",
+            "group": "rme:itemGroup.name.colytras"
+         }
+      },
+      "components": {
+         "rme:custom_elytra": {
+            "type": "placeholder",
+            "equip_sound": "armor.equip_netherite",
+            "armor_data": {
+               "armor": 8,
+               "toughness": 3,
+               "knockback_resistance": 1
+            }
+         },
+         "minecraft:fire_resistant": {
+            "value": true
+         },
+         "minecraft:wearable": {
+            "slot": "slot.armor.chest"
+         },
+         "minecraft:durability": {
+            "max_durability": 593
+         },
+         "minecraft:tags": {
+            "tags": ["minecraft:is_armor"]
+         },
+         "minecraft:max_stack_size": 1,
+         "minecraft:enchantable": {
+            "value": 15,
+            "slot": "armor_torso"
+         },
+         "minecraft:display_name": {
+            "value": "%item.rms_netherite_chestplate.name\n\n§7%slot.armor.chest.when_equipped\n§9+8 %attribute.name.generic.armor\n+3 %attribute.name.generic.armorToughness\n+1 %attribute.name.generic.knockbackResistance"
+         },
+         "minecraft:icon": {
+            "textures": {
+               "default": "rme_netherite_chestplate"
+            }
+         }
+      }
+   }
+}

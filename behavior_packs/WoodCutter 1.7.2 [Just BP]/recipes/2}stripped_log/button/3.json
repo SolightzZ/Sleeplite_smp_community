@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "frecipes_e0342185s"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_jungle_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:jungle_button",
+      "count": 16,
+      "data": 0
+    }
+  }
+}

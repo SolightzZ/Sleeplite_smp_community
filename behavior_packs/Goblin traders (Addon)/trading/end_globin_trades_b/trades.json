@@ -1,0 +1,554 @@
+{
+  "tiers": [
+    {
+      "groups": [
+        {
+          // Common (Superior End Goblin)
+          "num_to_select": 6,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:ender_pearl",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 20,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_flower",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:purpur_block",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 24,
+              "wants": [
+                {
+                  "item": "minecraft:end_stone",
+                  "quantity": 16
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:popped_chorus_fruit",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 20,
+              "wants": [
+                {
+                  "item": "minecraft:end_rod",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:glowstone_dust",
+                  "quantity": 6
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 18,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit_popcorn",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 14,
+              "wants": [
+                {
+                  "item": "minecraft:purpur_slab",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:chorus_flower",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 10,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:ender_chest",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:purpur_pillar",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:end_rod",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 22,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // Uncommon (Superior End Goblin)
+          "num_to_select": 5,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:obsidian",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:beacon",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 20,
+              "wants": [
+                {
+                  "item": "minecraft:purpur_block",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:dragon_breath",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:ender_pearl",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:shulker_shell",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 14,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit",
+                  "quantity": 16
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:ender_eye",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 10,
+              "wants": [
+                {
+                  "item": "minecraft:shulker_shell",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:shulker_box",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:end_rod",
+                  "quantity": 6
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 18,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_flower",
+                  "quantity": 3
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:purpur_stairs",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 8,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 5
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:dragon_head",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // Rare (Superior End Goblin)
+          "num_to_select": 4,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 8,
+              "wants": [
+                {
+                  "item": "minecraft:ender_eye",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:elytra",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 4,
+              "wants": [
+                {
+                  "item": "minecraft:nether_star",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:dragon_head",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:netherite_ingot",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:enchanted_book",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "mending",
+                          "level": 1
+                        }
+                      ]
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 6,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit",
+                  "quantity": 32
+                },
+                {
+                  "item": "minecraft:ender_pearl",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:endurite_ingot",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 5,
+              "wants": [
+                {
+                  "item": "minecraft:shulker_shell",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:spyglass",
+                  "functions": [
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§5Endview Spyglass"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 7,
+              "wants": [
+                {
+                  "item": "minecraft:chorus_fruit_popcorn",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:beacon",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // Legendary (Superior End Goblin)
+          "num_to_select": 3,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:dragon_head",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:elytra",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:elytra",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "unbreaking",
+                          "level": 3
+                        },
+                        {
+                          "id": "mending",
+                          "level": 1
+                        },
+                        {
+                          "id": "protection",
+                          "level": 4
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§5Wing of the End"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:nether_star",
+                  "quantity": 2
+                },
+                {
+                  "item": "minecraft:shulker_box",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:beacon",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "efficiency",
+                          "level": 5
+                        }
+                      ]
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:phantom_membrane",
+                  "quantity": 4
+                },
+                {
+                  "item": "minecraft:ender_pearl",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:elytra",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "mending",
+                          "level": 1
+                        },
+                        {
+                          "id": "unbreaking",
+                          "level": 3
+                        },
+                        {
+                          "id": "thorns",
+                          "level": 2
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§dPhantom Wing"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

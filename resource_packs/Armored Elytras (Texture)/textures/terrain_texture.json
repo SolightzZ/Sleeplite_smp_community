@@ -1,0 +1,11 @@
+{
+   "num_mip_levels": 4,
+   "padding": 8,
+   "resource_pack_name": "ArmoredElytrasAddon",
+   "texture_name": "atlas.terrain",
+   "texture_data": {
+      "rme_colytra_creative_icon": {
+         "textures": "textures/blocks/rme_colytra_creative_icon"
+      }
+   }
+}

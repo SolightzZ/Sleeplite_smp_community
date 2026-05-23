@@ -1,0 +1,26 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "recipes_ce06supo"
+    },
+    "tags": [
+      "crafting_table"
+    ],
+    "ingredients": [
+      {
+        "item": "minecraft:pale_oak_stairs",
+        "data": 0
+      },
+      {
+        "item": "minecraft:pale_oak_stairs",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:pale_oak_slab",
+      "count": 3,
+      "data": 0
+    }
+  }
+}

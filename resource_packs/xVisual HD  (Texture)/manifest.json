@@ -1,0 +1,27 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "xVisuals Texture [v1.2]",
+    "description": "By @t17x",
+    "min_engine_version": [1, 21, 80],
+    "uuid": "f569ed3b-cfe2-4f33-adee-15dc3a85676e",
+    "version": [1, 0, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "6f249c53-aa4e-4244-99c6-5d9c968ab897",
+      "version": [1, 0, 0]
+    }
+  ],
+  "dependencies": [
+    {
+      "uuid": "c16dc13b-ef9b-4c1b-9fd3-cc2300722259",
+      "version": [1, 0, 0]
+    }
+  ],
+  "metadata": {
+    "authors": ["xVisuals"],
+    "product_type": "addon"
+  }
+}

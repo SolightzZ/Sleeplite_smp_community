@@ -1,0 +1,23 @@
+{
+  "format_version": "1.12",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "sh-chls"
+    },
+    "tags": [
+      "stonecutter"
+    ],
+    "priority": 1,
+    "ingredients": [
+      {
+        "item": "minecraft:stripped_cherry_log",
+        "data": 0
+      }
+    ],
+    "result": {
+      "item": "minecraft:cherry_shelf",
+      "count": 1,
+      "data": 0
+    }
+  }
+}

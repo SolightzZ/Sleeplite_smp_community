@@ -1,0 +1,21 @@
+{
+  "entity_sounds": {
+    "entities": {
+      "gt:goblintrader": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      },
+      "gt:endgoblintrader": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      },
+      "gt:veingoblintrader": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      }
+    }
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "equipment",
+        "groups": [
+          {
+            "group_identifier": {
+              "icon": "rme:colytra_creative_icon",
+              "name": "rme:itemGroup.name.colytras"
+            },
+            "items": [
+              "rme:copper_chestplate_p",
+              "rme:chain_chestplate_p",
+              "rme:iron_chestplate_p",
+              "rme:gold_chestplate_p",
+              "rme:diamond_chestplate_p",
+              "rme:netherite_chestplate_p",
+              "rme:demon_chestplate_p",
+              "rme:wolf_chestplate_p"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

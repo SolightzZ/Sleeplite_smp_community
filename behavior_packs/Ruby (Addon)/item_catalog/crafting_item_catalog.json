@@ -1,0 +1,19 @@
+{
+  "format_version": "1.21.60",
+  "minecraft:crafting_items_catalog": {
+    "categories": [
+      {
+        "category_name": "nature",
+        "groups": [
+          {
+            "group_identifier": {
+              "name": "minecraft:itemGroup.name.ore",
+              "icon": "minecraft:iron_ore"
+            },
+            "items": ["misc:ruby_ore", "misc:deepslate_ruby_ore"]
+          }
+        ]
+      }
+    ]
+  }
+}

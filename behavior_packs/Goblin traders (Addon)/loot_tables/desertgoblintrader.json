@@ -1,0 +1,12 @@
+{
+  "pools": [
+    {
+      "rolls": 1,
+      "entries": [
+        { "type": "item", "name": "rabbit", "weight": 3 },
+        { "type": "item", "name": "sand", "weight": 2 },
+        { "type": "item", "name": "emerald", "weight": 1 }
+      ]
+    }
+  ]
+}
