@@ -1,0 +1,53 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.jsart_creeper.move": {
+      "loop": true,
+      "bones": {
+        "section_0": {
+          "rotation": [
+            0,
+            "(math.cos(query.life_time * 928.26) * 10) - this",
+            0
+          ],
+          "position": [
+            "(math.cos(-query.life_time * 928.26) * 1.26) - this",
+            0,
+            0
+          ]
+        },
+        "section_1": {
+          "rotation": [
+            0,
+            "(math.cos(query.life_time * 928.26) * 10) - this",
+            0
+          ],
+          "position": [
+            "(math.sin(query.life_time * 900) * 0.2) - this",
+            0,
+            0
+          ]
+        },
+        "section_2": {
+          "rotation": [
+            0,
+            "(math.cos(query.life_time * 928.26) * 9.17) - this",
+            0
+          ],
+          "position": [
+            0,
+            0,
+            0
+          ]
+        },
+        "section_3": {
+          "position": [
+            "(math.cos(query.life_time * 928.26) * 0.8) - this",
+            0,
+            0
+          ]
+        }
+      }
+    }
+  }
+}

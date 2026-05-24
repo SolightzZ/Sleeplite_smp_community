@@ -1,0 +1,54 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:asphyxia",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_asphyxia",
+        "cracked_high": "textures/entity/pamobile/jsart_asphyxia",
+        "cracked_med": "textures/entity/pamobile/jsart_asphyxia",
+        "cracked_low": "textures/entity/pamobile/jsart_asphyxia",
+        "cracked_none": "textures/entity/pamobile/jsart_asphyxia"
+      },
+      "geometry": {
+        "default": "geometry.jsart_asphyxia_default"
+      },
+      "animations": {
+        "walk": "animation.jsart_asphyxia.walk",
+        "move": "animation.jsart_asphyxia.idle",
+        "attack": "animation.jsart_asphyxia.idle",
+        "flower": "animation.jsart_asphyxia.idle",
+        "look_at_target": "animation.jsart_asphyxia.look_at_target",
+        "walk_to_target": "animation.jsart_asphyxia.walk",
+        "move_to_target": "animation.jsart_asphyxia.idle",
+        "move_controller": "controller.animation.jsart_asphyxia.move",
+        "arm_controller": "controller.animation.jsart_asphyxia.arm_movement",
+        "1": "animation.jsart_asphyxia.idle",
+        "2": "animation.jsart_asphyxia.idle",
+        "3": "animation.jsart_asphyxia.idle",
+        "4": "animation.jsart_asphyxia.idle"
+      },
+      "render_controllers": [
+        "controller.render.iron_golem",
+        "controller.render.iron_golem_cracks"
+      ],
+      "scripts": {
+        "pre_animation": [
+          "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);"
+        ],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "arm_controller"
+        ]
+      },
+      "spawn_egg": {
+        "texture": "jsart:asphyxia_spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

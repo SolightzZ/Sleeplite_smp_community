@@ -1,0 +1,1 @@
+damage @s 1 entity_attack entity @e[type=player]

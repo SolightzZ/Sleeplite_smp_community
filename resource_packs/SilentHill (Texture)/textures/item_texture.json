@@ -1,0 +1,87 @@
+{
+  "resource_pack_name": "vanilla",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "jsart:arare": {
+      "textures": "textures/items/pamobile/jsart_arare"
+    },
+    "jsart:bloodsucker_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_bloodsucker_spawn_egg"
+    },
+    "jsart:air_screamer_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_air_screamer_spawn_egg"
+    },
+    "jsart:creeper_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_creeper_spawn_egg"
+    },
+    "jsart:asphyxia_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_asphyxia_spawn_egg"
+    },
+    "jsart:divine_water": {
+      "textures": "textures/items/pamobile/jsart_divine_water"
+    },
+    "jsart:kashimashi_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_kashimashi_spawn_egg"
+    },
+    "jsart:lyingfigure_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_lyingfigure_spawn_egg"
+    },
+    "jsart:cryinggirl_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_cryinggirl_spawn_egg"
+    },
+    "jsart:doublehead_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_doublehead_spawn_egg"
+    },
+    "jsart:ladyfukuro_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_ladyfukuro_spawn_egg"
+    },
+    "jsart:lyingfigure3_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_lyingfigure3_spawn_egg"
+    },
+    "jsart:mannequin_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_mannequin_spawn_egg"
+    },
+    "jsart:nurse1_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_nurse1_spawn_egg"
+    },
+    "jsart:nurse3_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_nurse3_spawn_egg"
+    },
+    "jsart:mandarindamage_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_mandarindamage_spawn_egg"
+    },
+    "jsart:lyingfigure2_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_lyingfigure2_spawn_egg"
+    },
+    "jsart:mandarin_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_mandarin_spawn_egg"
+    },
+    "jsart:nurse2_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_nurse2_spawn_egg"
+    },
+    "jsart:pyramidhead_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_pyramidhead_spawn_egg"
+    },
+    "jsart:silent_food_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_silent_food_spawn_egg"
+    },
+    "jsart_steel_pipe": {
+      "textures": "textures/items/pamobile/jsart_steel_pipe"
+    },
+    "jsart_sledgehammer": {
+      "textures": "textures/items/pamobile/jsart_sledgehammer"
+    },
+    "jsart:yokan": {
+      "textures": "textures/items/pamobile/jsart_yokan"
+    },
+    "jsart:wormhead_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_wormhead_spawn_egg"
+    },
+    "jsart:straightjacket_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_straightjacket_spawn_egg"
+    },
+    "jsart:victism16_spawn_egg": {
+      "textures": "textures/items/pamobile/jsart_victism16_spawn_egg"
+    }
+  }
+}

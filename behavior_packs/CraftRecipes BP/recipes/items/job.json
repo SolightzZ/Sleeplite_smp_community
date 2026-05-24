@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:job"
+    },
+    "tags": ["avanced"],
+    "pattern": ["", " #", ""],
+    "key": {
+      "#": {
+        "item": "minecraft:emerald"
+      }
+    },
+    "result": {
+      "item": "addon:job"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:emerald"
+      }
+    ]
+  }
+}

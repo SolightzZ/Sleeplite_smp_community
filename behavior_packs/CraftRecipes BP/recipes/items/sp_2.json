@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.0",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:sp_2"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#PE", "DQD", "QQQ"],
+    "key": {
+      "#": {
+        "item": "minecraft:breeze_rod"
+      },
+      "P": {
+        "item": "minecraft:phantom_membrane"
+      },
+      "E": {
+        "item": "minecraft:echo_shard"
+      },
+      "D": {
+        "item": "minecraft:diamond"
+      },
+      "Q": {
+        "item": "minecraft:quartz"
+      }
+    },
+    "result": {
+      "item": "addon:sp_2"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:breeze_rod"
+      }
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:silent_food",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_silent_food"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_silent_food_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:silent_food_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_silent_food.walk",
+        "idle": "animation.jsart_silent_food.idle",
+        "mad": "animation.jsart_silent_food.mad",
+        "new1": "animation.jsart_silent_food.new1",
+        "new2": "animation.jsart_silent_food.new2",
+        "new3": "animation.jsart_silent_food.new3",
+        "new4": "animation.jsart_silent_food.new4"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

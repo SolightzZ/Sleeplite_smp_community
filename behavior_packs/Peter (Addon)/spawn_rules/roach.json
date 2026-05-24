@@ -7,58 +7,33 @@
     },
     "conditions": [
       {
-        "minecraft:spawns_on_surface": {},
         "minecraft:spawns_underground": {},
-        "minecraft:spawns_on_block_filter": [
-          "minecraft:grass",
-          "minecraft:dirt",
-          "minecraft:stone",
-          "minecraft:granite",
-          "minecraft:diorite",
-          "minecraft:andesite",
-          "minecraft:tuff",
-          "minecraft:cobblestone",
-          "minecraft:deepslate",
-          "minecraft:oak_planks",
-          "minecraft:spruce_planks",
-          "minecraft:birch_planks",
-          "minecraft:jungle_planks",
-          "minecraft:acacia_planks",
-          "minecraft:dark_oak_planks",
-          "minecraft:mangrove_planks",
-          "minecraft:cherry_planks",
-          "minecraft:bamboo_planks"
-        ],
+
+        "minecraft:spawns_on_block_filter": ["minecraft:cobblestone", "minecraft:stone", "minecraft:deepslate"],
+
         "minecraft:brightness_filter": {
           "min": 0,
-          "max": 15,
+          "max": 7,
           "adjust_for_weather": true
         },
+
         "minecraft:weight": {
-          "default": 70
+          "default": 30
         },
+
         "minecraft:herd": {
           "min_size": 1,
           "max_size": 3
         },
+
+        "minecraft:density_limit": {
+          "underground": 10
+        },
+
         "minecraft:biome_filter": {
-          "any_of": [
-            {
-              "test": "has_biome_tag",
-              "operator": "==",
-              "value": "caves"
-            },
-            {
-              "test": "has_biome_tag",
-              "operator": "==",
-              "value": "animal"
-            },
-            {
-              "test": "has_biome_tag",
-              "operator": "==",
-              "value": "monster"
-            }
-          ]
+          "test": "has_biome_tag",
+          "operator": "==",
+          "value": "caves"
         }
       }
     ]

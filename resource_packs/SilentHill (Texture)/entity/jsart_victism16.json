@@ -1,0 +1,48 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:victism16",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_victism16"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_victism16_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:victism16_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_victism16.walk",
+        "stand": "animation.jsart_victism16.idle",
+        "run": "animation.jsart_victism16.run",
+        "new1": "animation.jsart_victism16.idle",
+        "new2": "animation.jsart_victism16.idle",
+        "new3": "animation.jsart_victism16.idle",
+        "new4": "animation.jsart_victism16.idle",
+        "new5": "animation.jsart_victism16.idle",
+        "fall": "animation.jsart_victism16.idle"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving && query.modified_move_speed < 0.3"
+          },
+          {
+            "run": "query.modified_move_speed > 0.3"
+          },
+          {
+            "stand": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

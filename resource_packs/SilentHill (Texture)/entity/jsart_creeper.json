@@ -1,0 +1,32 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:creeper",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_creeper"
+      },
+      "geometry": {
+        "default": "geometry.jsart_creeper_default"
+      },
+      "animations": {
+        "move": "animation.jsart_creeper.move"
+      },
+      "animation_controllers": [
+        {
+          "move": "controller.animation.jsart_creeper.move"
+        }
+      ],
+      "render_controllers": [
+        "controller.render.endermite"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:creeper_spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

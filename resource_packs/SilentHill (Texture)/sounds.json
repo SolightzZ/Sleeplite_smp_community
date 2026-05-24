@@ -1,0 +1,1843 @@
+{
+  "entity_sounds": {
+    "entities": {
+      "jsart:bloodsucker": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_bloodsucker.say",
+            "volume": [
+              0.2404255319148936,
+              0.8723404255319149
+            ],
+            "pitch": [
+              0.20691489361702126,
+              0.43705673758865243
+            ]
+          },
+          "death": "mob.endermite.kill",
+          "hurt": {
+            "sound": "mob.jsart_bloodsucker.hit",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.35859929078014185,
+              0.5939716312056736
+            ]
+          },
+          "step": {
+            "pitch": 1.0,
+            "sound": "mob.endermite.step",
+            "volume": 0.15
+          }
+        }
+      },
+      "jsart:creeper": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_creeper.say",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              1.0124113475177305,
+              1.2
+            ]
+          },
+          "death": "mob.endermite.kill",
+          "hurt": {
+            "sound": "mob.jsart_creeper.hit",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.5939716312056724,
+              0.698581560283688
+            ]
+          },
+          "step": {
+            "pitch": 1.0,
+            "sound": "mob.endermite.step",
+            "volume": 0.15
+          }
+        }
+      },
+      "jsart:air_screamer": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_air_screamer.idle",
+            "volume": [
+              1.7324468085106381,
+              2.013297872340426
+            ],
+            "pitch": [
+              0.7090425531914888,
+              0.9234929078014185
+            ]
+          },
+          "ambient.tame": "mob.allay.idle_holding",
+          "death": {
+            "sound": "mob.jsart_air_screamer.death",
+            "volume": [
+              0.6617021276595744,
+              1.381382978723404
+            ],
+            "pitch": [
+              0.8031914893617021,
+              1.0333333333333334
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_air_screamer.hurt",
+            "volume": [
+              0.5388297872340426,
+              1.0
+            ],
+            "pitch": [
+              0.6148936170212767,
+              0.8659574468085106
+            ]
+          }
+        }
+      },
+      "jsart:asphyxia": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": "mob.irongolem.say",
+          "death": {
+            "sound": "mob.jsart_asphyxia.death",
+            "volume": [
+              2.2765957446808516,
+              2.6627659574468083
+            ],
+            "pitch": [
+              0.9705673758865249,
+              1.1745567375886528
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_asphyxia.hit",
+            "volume": [
+              1.6271276595744681,
+              2.4872340425531916
+            ],
+            "pitch": [
+              0.9601063829787226,
+              1.1170212765957448
+            ]
+          },
+          "irongolem.crack": {
+            "sound": "mob.jsart_asphyxia.crack",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.9444148936170214,
+              1.0647163120567376
+            ]
+          },
+          "irongolem.repair": "mob.irongolem.repair",
+          "step": {
+            "sound": "mob.jsart_asphyxia.walk",
+            "volume": [
+              1.5744680851063828,
+              2.2239361702127662
+            ],
+            "pitch": [
+              0.7285,
+              0.994
+            ]
+          },
+          "throw": {
+            "sound": "mob.jsart_asphyxia.throw",
+            "volume": [
+              1.6797872340425533,
+              2.0835106382978723
+            ],
+            "pitch": [
+              0.758,
+              0.994
+            ]
+          }
+        }
+      },
+      "jsart:kashimashi": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": "mob.irongolem.say",
+          "death": {
+            "sound": "mob.jsart_kashimashi.death",
+            "volume": [
+              3.873936170212766,
+              4.769148936170213
+            ],
+            "pitch": [
+              0.8,
+              1.0
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_kashimashi.hit",
+            "volume": [
+              6.436702127659574,
+              8.121808510638296
+            ],
+            "pitch": [
+              0.6828900709219856,
+              1.1536347517730496
+            ]
+          },
+          "irongolem.crack": {
+            "sound": "mob.jsart_kashimashi.crack",
+            "volume": [
+              2.7680851063829786,
+              3.4526595744680852
+            ],
+            "pitch": [
+              0.3167553191489362,
+              0.40044326241134753
+            ]
+          },
+          "irongolem.repair": {
+            "sound": "mob.jsart_kashimashi.repair",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.3429078014184397,
+              0.42659574468085104
+            ]
+          },
+          "step": {
+            "sound": "mob.jsart_kashimashi.walk",
+            "volume": [
+              0.1,
+              0.7845744680851064
+            ],
+            "pitch": [
+              1.4360815602836878,
+              1.6453014184397163
+            ]
+          },
+          "throw": {
+            "sound": "mob.jsart_kashimashi.throw",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              1.5145390070921985,
+              1.6766843971631205
+            ]
+          }
+        }
+      },
+      "jsart:lyingfigure": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_lyingfigure.idle",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.9644999999999999,
+              1.053
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_lyingfigure.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_lyingfigure.hit",
+            "volume": [
+              0.1,
+              0.496
+            ],
+            "pitch": [
+              0.9054999999999999,
+              1.2005
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_lyingfigure.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.jsart_lyingfigure.leather",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "armor": {
+            "sound": "mob.jsart_lyingfigure.armor",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.jsart_lyingfigure.breathe",
+            "volume": [
+              0.6,
+              0.6
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "jump": {
+            "sound": "mob.jsart_lyingfigure.jump",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "land": {
+            "sound": "mob.jsart_lyingfigure.land",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "eat": {
+            "sound": "mob.jsart_lyingfigure.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:cryinggirl": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_cryinggirl.idle",
+            "volume": [
+              0.1,
+              1.387
+            ],
+            "pitch": [
+              0.8465,
+              1.053
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_cryinggirl.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_cryinggirl.hit",
+            "volume": [
+              0.1,
+              0.496
+            ],
+            "pitch": [
+              0.9054999999999999,
+              1.2005
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": "mob.horse.angry",
+          "saddle": {
+            "sound": "mob.jsart_lyingfigure.leather",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "armor": {
+            "sound": "mob.jsart_lyingfigure.armor",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.jsart_lyingfigure.breathe",
+            "volume": [
+              0.6,
+              0.6
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "jump": {
+            "sound": "mob.jsart_lyingfigure.jump",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "land": {
+            "sound": "mob.jsart_lyingfigure.land",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "eat": {
+            "sound": "mob.jsart_lyingfigure.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:doublehead": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_doublehead.idle",
+            "volume": [
+              0.1,
+              0.694
+            ],
+            "pitch": [
+              0.7979609929078015,
+              0.897340425531915
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_doublehead.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_doublehead.hit",
+            "volume": [
+              0.1,
+              0.496
+            ],
+            "pitch": [
+              0.9054999999999999,
+              1.2005
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_doublehead.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.9967198581560284,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.jsart_lyingfigure.leather",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "armor": {
+            "sound": "mob.jsart_lyingfigure.armor",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.jsart_doublehead.breathe",
+            "volume": [
+              0.6,
+              0.6
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "jump": {
+            "sound": "mob.jsart_lyingfigure.jump",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "land": {
+            "sound": "mob.jsart_lyingfigure.land",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "eat": {
+            "sound": "mob.jsart_lyingfigure.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:ladyfukuro": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_ladyfukuro.ambient",
+            "volume": [
+              1.0303191489361703,
+              1.3111702127659577
+            ],
+            "pitch": [
+              1.127482269503546,
+              1.2111702127659576
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_ladyfukuro.hurt",
+            "volume": [
+              0.7845744680851066,
+              1.0654255319148938
+            ],
+            "pitch": [
+              1.2425531914893595,
+              1.3262411347517706
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_ladyfukuro.death",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              1.3210106382978721,
+              1.4046985815602837
+            ]
+          },
+          "step": {
+            "sound": "mob.jsart_ladyfukuro.step",
+            "volume": [
+              1.9430851063829788,
+              2.2239361702127662
+            ],
+            "pitch": [
+              1.0071808510638298,
+              1.0908687943262412
+            ]
+          },
+          "attack.strong": "mob.ravager.bite",
+          "roar": "mob.ravager.roar",
+          "stun": "mob.ravager.stun",
+          "ambient.in.raid": {
+            "sound": "mob.ravager.ambient",
+            "volume": 3.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "celebrate": "mob.ravager.celebrate"
+        }
+      },
+      "jsart:lyingfigure3": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_lyingfigure3.idle",
+            "volume": [
+              0.1,
+              1.189
+            ],
+            "pitch": [
+              0.9644999999999999,
+              1.053
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_lyingfigure3.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_lyingfigure3.hit",
+            "volume": [
+              0.1,
+              0.496
+            ],
+            "pitch": [
+              0.9054999999999999,
+              1.2005
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_lyingfigure3.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.jsart_lyingfigure.leather",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "armor": {
+            "sound": "mob.jsart_lyingfigure.armor",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.jsart_lyingfigure.breathe",
+            "volume": [
+              0.6,
+              0.6
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "jump": {
+            "sound": "mob.jsart_lyingfigure.jump",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "land": {
+            "sound": "mob.jsart_lyingfigure.land",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "eat": {
+            "sound": "mob.jsart_lyingfigure.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:nurse3": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.pa_creakingkanother.ambient",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.8760000000000001,
+              1.0235
+            ]
+          },
+          "hurt": {
+            "sound": "mob.pa_creakingkanother.hurt",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.9349999999999999,
+              1.112
+            ]
+          },
+          "death": {
+            "sound": "mob.pa_creakingkanother.death",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "step": {
+            "sound": "mob.pa_creakingk.step",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "attack.strong": "mob.ravager.bite",
+          "roar": "mob.ravager.roar",
+          "stun": "mob.ravager.stun",
+          "ambient.in.raid": {
+            "sound": "mob.ravager.ambient",
+            "volume": 3.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "celebrate": "mob.ravager.celebrate"
+        }
+      },
+      "jsart:mannequin": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_mannequin.idle",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.7999999999999995,
+              1.0437943262411347
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_mannequin.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_mannequin.hit",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.7999999999999995,
+              0.9757978723404255
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_mannequin.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.horse.leather",
+            "volume": 0.5,
+            "pitch": 1.0
+          },
+          "armor": {
+            "sound": "mob.horse.armor",
+            "volume": 0.5,
+            "pitch": 1.0
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.horse.breathe",
+            "volume": 0.6,
+            "pitch": 1.0
+          },
+          "jump": {
+            "sound": "mob.horse.jump",
+            "volume": 0.4,
+            "pitch": 1.0
+          },
+          "land": {
+            "sound": "mob.horse.land",
+            "volume": 0.4,
+            "pitch": 1.0
+          },
+          "eat": {
+            "sound": "mob.horse.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:mandarindamage": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "add.chest": {
+            "pitch": [
+              0.8,
+              1.2
+            ],
+            "sound": "mob.horse.armor",
+            "volume": 1.0
+          },
+          "ambient": {
+            "sound": "mob.jsart_mandarindamage.idle",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "armor": {
+            "pitch": 1.0,
+            "sound": "mob.horse.armor",
+            "volume": 0.6
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "breathe": {
+            "sound": "mob.jsart_mandarindamage.breathe",
+            "volume": [
+              0.7,
+              0.7
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_mandarindamage.death",
+            "volume": [
+              1.2409574468085107,
+              1.8202127659574463
+            ],
+            "pitch": [
+              1.001950354609929,
+              1.2
+            ]
+          },
+          "eat": {
+            "pitch": [
+              0.8,
+              1.2
+            ],
+            "sound": "mob.horse.eat",
+            "volume": [
+              0.5,
+              1.5
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_mandarindamage.hit",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "jump": {
+            "pitch": 1.0,
+            "sound": "mob.horse.jump",
+            "volume": 0.4
+          },
+          "land": {
+            "pitch": 1.0,
+            "sound": "mob.horse.land",
+            "volume": 0.4
+          },
+          "mad": "mob.horse.angry",
+          "saddle": {
+            "pitch": 1.0,
+            "sound": "mob.horse.leather",
+            "volume": 0.6
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:nurse2": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.pa_creakingk2.ambient",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.8760000000000001,
+              1.0235
+            ]
+          },
+          "hurt": {
+            "sound": "mob.pa_creakingk2.hurt",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.9349999999999999,
+              1.112
+            ]
+          },
+          "death": {
+            "sound": "mob.pa_creakingk2.death",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "step": {
+            "sound": "mob.pa_creakingk.step",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "attack.strong": "mob.ravager.bite",
+          "roar": "mob.ravager.roar",
+          "stun": "mob.ravager.stun",
+          "ambient.in.raid": {
+            "sound": "mob.ravager.ambient",
+            "volume": 3.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "celebrate": "mob.ravager.celebrate"
+        }
+      },
+      "jsart:nurse1": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.pa_creakingk.ambient",
+            "volume": [
+              0.9952127659574468,
+              1.5920212765957447
+            ],
+            "pitch": [
+              0.8760000000000001,
+              1.0235
+            ]
+          },
+          "hurt": {
+            "sound": "mob.pa_creakingk.hurt",
+            "volume": [
+              1.0,
+              1.5042553191489363
+            ],
+            "pitch": [
+              0.8031914893617021,
+              0.9339539007092199
+            ]
+          },
+          "death": {
+            "sound": "mob.pa_creakingk.death",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "step": {
+            "sound": "mob.pa_creakingk.step",
+            "volume": [
+              0.1,
+              1.0
+            ],
+            "pitch": [
+              0.8345744680851064,
+              1.4465425531914895
+            ]
+          },
+          "attack.strong": "mob.ravager.bite",
+          "roar": "mob.ravager.roar",
+          "stun": "mob.ravager.stun",
+          "ambient.in.raid": {
+            "sound": "mob.ravager.ambient",
+            "volume": 3.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "celebrate": "mob.ravager.celebrate"
+        }
+      },
+      "jsart:mandarin": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_mandarin.idle",
+            "volume": [
+              0.1,
+              1.09
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_mandarin.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_mandarin.hit",
+            "volume": [
+              0.1,
+              0.793
+            ],
+            "pitch": [
+              0.7875,
+              1.0235
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_mandarin.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.horse.leather",
+            "volume": 0.5,
+            "pitch": 1.0
+          },
+          "armor": {
+            "sound": "mob.horse.armor",
+            "volume": 0.5,
+            "pitch": 1.0
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.horse.breathe",
+            "volume": 0.6,
+            "pitch": 1.0
+          },
+          "jump": {
+            "sound": "mob.horse.jump",
+            "volume": 0.4,
+            "pitch": 1.0
+          },
+          "land": {
+            "sound": "mob.horse.land",
+            "volume": 0.4,
+            "pitch": 1.0
+          },
+          "eat": {
+            "sound": "mob.horse.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:lyingfigure2": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_lyingfigure2.idle",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.7875,
+              0.9054999999999999
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_lyingfigure2.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_lyingfigure2.hit",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_lyingfigure2.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.horse.leather",
+            "volume": 0.5,
+            "pitch": 1.0
+          },
+          "armor": {
+            "sound": "mob.horse.armor",
+            "volume": 0.5,
+            "pitch": 1.0
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.horse.breathe",
+            "volume": 0.6,
+            "pitch": 1.0
+          },
+          "jump": {
+            "sound": "mob.horse.jump",
+            "volume": 0.4,
+            "pitch": 1.0
+          },
+          "land": {
+            "sound": "mob.horse.land",
+            "volume": 0.4,
+            "pitch": 1.0
+          },
+          "eat": {
+            "sound": "mob.horse.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:silent_food": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "add.chest": {
+            "pitch": [
+              0.8,
+              1.2
+            ],
+            "sound": "mob.horse.armor",
+            "volume": 1.0
+          },
+          "ambient": {
+            "sound": "mob.jsart_mandarindamage.idle",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "armor": {
+            "pitch": 1.0,
+            "sound": "mob.horse.armor",
+            "volume": 0.6
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "breathe": {
+            "sound": "mob.jsart_mandarindamage.breathe",
+            "volume": [
+              0.7,
+              0.7
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_mandarindamage.death",
+            "volume": [
+              1.2409574468085107,
+              1.8202127659574463
+            ],
+            "pitch": [
+              1.001950354609929,
+              1.2
+            ]
+          },
+          "eat": {
+            "pitch": [
+              0.8,
+              1.2
+            ],
+            "sound": "mob.horse.eat",
+            "volume": [
+              0.5,
+              1.5
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_mandarindamage.hit",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "jump": {
+            "pitch": 1.0,
+            "sound": "mob.horse.jump",
+            "volume": 0.4
+          },
+          "land": {
+            "pitch": 1.0,
+            "sound": "mob.horse.land",
+            "volume": 0.4
+          },
+          "mad": "mob.horse.angry",
+          "saddle": {
+            "pitch": 1.0,
+            "sound": "mob.horse.leather",
+            "volume": 0.6
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      },
+      "jsart:pyramidhead": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": "mob.irongolem.say",
+          "death": {
+            "sound": "mob.jsart_pyramidhead.death",
+            "volume": [
+              3.169,
+              5.446000000000001
+            ],
+            "pitch": [
+              0.522,
+              1.289
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_pyramidhead.hit",
+            "volume": [
+              0.1,
+              1.09
+            ],
+            "pitch": [
+              0.6105,
+              1.2005
+            ]
+          },
+          "irongolem.crack": {
+            "sound": "mob.jsart_pyramidhead.crack",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "irongolem.repair": "mob.irongolem.repair",
+          "step": {
+            "sound": "mob.jsart_pyramidhead.walk",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.7285,
+              0.994
+            ]
+          },
+          "throw": {
+            "sound": "mob.jsart_pyramidhead.throw",
+            "volume": [
+              0.496,
+              1.288
+            ],
+            "pitch": [
+              0.758,
+              0.994
+            ]
+          }
+        }
+      },
+      "jsart:straightjacket": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_straightjacket.ambient",
+            "volume": [
+              1.0303191489361703,
+              1.3111702127659577
+            ],
+            "pitch": [
+              1.127482269503546,
+              1.2111702127659576
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_straightjacket.hurt",
+            "volume": [
+              0.7845744680851066,
+              1.0654255319148938
+            ],
+            "pitch": [
+              1.2425531914893595,
+              1.3262411347517706
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_straightjacket.death",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              1.3210106382978721,
+              1.4046985815602837
+            ]
+          },
+          "step": {
+            "sound": "mob.jsart_ladyfukuro.step",
+            "volume": [
+              1.9430851063829788,
+              2.2239361702127662
+            ],
+            "pitch": [
+              1.0071808510638298,
+              1.0908687943262412
+            ]
+          },
+          "attack.strong": "mob.ravager.bite",
+          "roar": "mob.ravager.roar",
+          "stun": "mob.ravager.stun",
+          "ambient.in.raid": {
+            "sound": "mob.ravager.ambient",
+            "volume": 3.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "celebrate": "mob.ravager.celebrate"
+        }
+      },
+      "jsart:victism16": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_victism16.ambient",
+            "volume": [
+              0.1,
+              0.9909999999999999
+            ],
+            "pitch": [
+              0.8760000000000001,
+              1.0235
+            ]
+          },
+          "hurt": {
+            "sound": "mob.pa_creakingk.hurt",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.9349999999999999,
+              1.112
+            ]
+          },
+          "death": {
+            "sound": "mob.pa_creakingk.death",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "step": {
+            "sound": "mob.pa_creakingk.step",
+            "volume": [
+              1.0,
+              1.0
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "attack.strong": "mob.ravager.bite",
+          "roar": "mob.ravager.roar",
+          "stun": "mob.ravager.stun",
+          "ambient.in.raid": {
+            "sound": "mob.ravager.ambient",
+            "volume": 3.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "celebrate": "mob.ravager.celebrate"
+        }
+      },
+      "jsart:wormhead": {
+        "volume": 1.0,
+        "pitch": [
+          0.8,
+          1.2
+        ],
+        "events": {
+          "ambient": {
+            "sound": "mob.jsart_wormhead.idle",
+            "volume": [
+              0.1,
+              0.694
+            ],
+            "pitch": [
+              0.9644999999999999,
+              1.053
+            ]
+          },
+          "death": {
+            "sound": "mob.jsart_doublehead.death",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "hurt": {
+            "sound": "mob.jsart_doublehead.hit",
+            "volume": [
+              0.1,
+              0.496
+            ],
+            "pitch": [
+              0.9054999999999999,
+              1.2005
+            ]
+          },
+          "armor.unequip_generic": "mob.horse.horse_armor_unequip",
+          "mad": {
+            "sound": "mob.jsart_wormhead.angry",
+            "volume": [
+              0.8,
+              0.8
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "saddle": {
+            "sound": "mob.jsart_lyingfigure.leather",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "armor": {
+            "sound": "mob.jsart_lyingfigure.armor",
+            "volume": [
+              0.5,
+              0.5
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "add.chest": {
+            "sound": "mob.horse.armor",
+            "volume": 1.0,
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "breathe": {
+            "sound": "mob.jsart_doublehead.breathe",
+            "volume": [
+              0.6,
+              0.6
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "jump": {
+            "sound": "mob.jsart_lyingfigure.jump",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "land": {
+            "sound": "mob.jsart_lyingfigure.land",
+            "volume": [
+              0.4,
+              0.4
+            ],
+            "pitch": [
+              1.0,
+              1.0
+            ]
+          },
+          "eat": {
+            "sound": "mob.jsart_lyingfigure.eat",
+            "volume": [
+              0.5,
+              1.5
+            ],
+            "pitch": [
+              0.8,
+              1.2
+            ]
+          },
+          "unsaddle": "mob.unsaddle"
+        }
+      }
+    }
+  }
+}

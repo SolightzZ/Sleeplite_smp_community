@@ -1,0 +1,87 @@
+{
+  "format_version": "1.16.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.jsart_sledgehammer",
+        "texture_width": 40.0,
+        "texture_height": 40.0,
+        "visible_bounds_height": 4.0,
+        "visible_bounds_offset": [
+          0.0,
+          1.0,
+          0.0
+        ],
+        "visible_bounds_width": 3.0
+      },
+      "bones": [
+        {
+          "name": "rightitem",
+          "pivot": [
+            0,
+            23,
+            0
+          ],
+          "rotation": [
+            91.58144,
+            -24.96602,
+            87.28406
+          ],
+          "binding": "q.item_slot_to_bone_name(c.item_slot)",
+          "cubes": [
+            {
+              "origin": [
+                -0.5,
+                20.39539,
+                -0.58243
+              ],
+              "size": [
+                2,
+                26,
+                2
+              ],
+              "inflate": -0.1,
+              "uv": [
+                0,
+                12
+              ]
+            },
+            {
+              "origin": [
+                -3.5,
+                42.39539,
+                -2.58243
+              ],
+              "size": [
+                8,
+                6,
+                6
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -4.5,
+                43.39539,
+                -1.58243
+              ],
+              "size": [
+                10,
+                4,
+                4
+              ],
+              "inflate": 0.3,
+              "uv": [
+                8,
+                12
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

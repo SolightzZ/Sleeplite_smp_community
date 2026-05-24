@@ -1,0 +1,47 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:ladyfukuro",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_ladyfukuro"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_ladyfukuro_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:ladyfukuro_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_ladyfukuro.walk",
+        "stand": "animation.jsart_ladyfukuro.idle",
+        "run": "animation.jsart_ladyfukuro.walk",
+        "new1": "animation.jsart_ladyfukuro.new",
+        "new2": "animation.jsart_ladyfukuro.new",
+        "new3": "animation.jsart_ladyfukuro.new",
+        "new4": "animation.jsart_ladyfukuro.new4",
+        "new5": "animation.jsart_ladyfukuro.new5"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving && query.modified_move_speed < 0.3"
+          },
+          {
+            "run": "query.modified_move_speed > 0.3"
+          },
+          {
+            "stand": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

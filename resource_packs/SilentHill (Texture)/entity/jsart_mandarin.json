@@ -1,0 +1,46 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:mandarin",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_mandarin"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_mandarin_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:mandarin_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_mandarin.walk",
+        "idle": "animation.jsart_mandarin.idle",
+        "mad": "animation.jsart_mandarin.mad",
+        "new1": "animation.jsart_mandarin.new1",
+        "new2": "animation.jsart_mandarin.new2",
+        "new3": "animation.jsart_mandarin.new3",
+        "new4": "animation.jsart_mandarin.new4"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@
       },
       "minecraft:destructible_by_mining": {
         "seconds_to_destroy": 3.0,
-		"item_specific_speeds": [
+        "item_specific_speeds": [
           {
             "destroy_speed": 0.75,
             "item": {

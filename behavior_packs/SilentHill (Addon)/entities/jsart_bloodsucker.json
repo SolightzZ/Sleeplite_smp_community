@@ -1,0 +1,207 @@
+{
+  "format_version": "1.17.10",
+  "minecraft:entity": {
+    "description": {
+      "identifier": "jsart:bloodsucker",
+      "spawn_category": "monster",
+      "is_spawnable": true,
+      "is_summonable": true,
+      "is_experimental": false
+    },
+    "components": {
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:experience_reward": {
+        "on_death": "query.last_hit_by_player ? 1 : 0"
+      },
+      "minecraft:nameable": {
+        "allow_name_tag_renaming": true,
+        "always_show": false
+      },
+      "minecraft:type_family": {
+        "family": [
+          "arthropod"
+        ]
+      },
+      "minecraft:collision_box": {
+        "height": 0.4,
+        "width": 0.6
+      },
+      "minecraft:movement": {
+        "value": 0.16
+      },
+      "minecraft:movement.basic": {
+        "max_turn": 5.0
+      },
+      "minecraft:jump.static": {
+        "jump_power": 0.7
+      },
+      "minecraft:can_climb": {},
+      "minecraft:health": {
+        "value": 5,
+        "max": 5
+      },
+      "minecraft:hurt_on_condition": {
+        "damage_conditions": [
+          {
+            "filters": {
+              "test": "in_lava",
+              "subject": "self",
+              "operator": "==",
+              "value": true
+            },
+            "cause": "lava",
+            "damage_per_tick": 4
+          }
+        ]
+      },
+      "minecraft:attack": {
+        "damage": 2,
+        "effect_duration": 3.0,
+        "effect_name": "hunger"
+      },
+      "minecraft:despawn": {
+        "despawn_from_distance": {
+          "min_distance": 20,
+          "max_distance": 60
+        }
+      },
+      "minecraft:behavior.melee_box_attack": {
+        "priority": 3,
+        "track_target": true
+      },
+      "minecraft:behavior.nearest_attackable_target": {
+        "priority": 5,
+        "must_see": true,
+        "within_radius": 0,
+        "entity_types": [
+          {
+            "filters": {
+              "any_of": [
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "value": "player"
+                },
+                {
+                  "test": "is_family",
+                  "subject": "other",
+                  "value": "enderman"
+                }
+              ]
+            },
+            "must_see": true,
+            "max_dist": 7.0
+          }
+        ],
+        "attack_owner": false,
+        "must_reach": false,
+        "must_see_forget_duration": 10.0,
+        "persist_time": 6.0,
+        "reselect_targets": false,
+        "scan_interval": 10,
+        "set_persistent": false,
+        "target_invisible_multiplier": 0.7,
+        "target_search_height": -1.0,
+        "target_sneak_visibility_multiplier": 0.8
+      },
+      "minecraft:behavior.random_stroll": {
+        "priority": 3,
+        "speed_multiplier": 1
+      },
+      "minecraft:physics": {
+        "has_collision": true,
+        "has_gravity": true,
+        "push_towards_closest_space": false
+      },
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:block_climber": {},
+      "minecraft:navigation.climb": {
+        "can_path_over_water": false,
+        "avoid_damage_blocks": false,
+        "avoid_portals": false,
+        "avoid_sun": false,
+        "avoid_water": false,
+        "can_breach": false,
+        "can_break_doors": false,
+        "can_jump": true,
+        "can_open_doors": false,
+        "can_open_iron_doors": false,
+        "can_pass_doors": true,
+        "can_path_from_air": false,
+        "can_path_over_lava": false,
+        "can_sink": true,
+        "can_swim": true,
+        "can_walk": true,
+        "can_walk_in_lava": false,
+        "is_amphibious": true,
+        "blocks_to_avoid": []
+      },
+      "minecraft:scale": {
+        "value": 1.0
+      },
+      "minecraft:on_death": {
+        "event": "on:death",
+        "target": "self"
+      },
+      "minecraft:on_hurt_by_player": {
+        "event": "on:hurt_by_player",
+        "target": "self"
+      },
+      "minecraft:underwater_movement": {
+        "value": 2.0
+      },
+      "minecraft:behavior.float": {
+        "sink_with_passengers": false
+      },
+      "minecraft:loot": {
+        "table": "loot_tables/entities/jsart_bloodsucker.json"
+      }
+    },
+    "events": {
+      "on:death": {
+        "queue_command": {
+          "command": [
+            "function silent_sangue"
+          ]
+        }
+      },
+      "on:hurt": {
+        "queue_command": {
+          "command": []
+        }
+      },
+      "on:hurt_by_player": {
+        "queue_command": {
+          "command": [
+            "function silent_sangue"
+          ]
+        }
+      },
+      "on:ignite": {
+        "queue_command": {
+          "command": []
+        }
+      },
+      "on:target_acquired": {
+        "queue_command": {
+          "command": []
+        }
+      },
+      "on:target_escape": {
+        "queue_command": {
+          "command": []
+        }
+      },
+      "on:wake_with_owner": {
+        "queue_command": {
+          "command": []
+        }
+      }
+    },
+    "component_groups": {}
+  }
+}

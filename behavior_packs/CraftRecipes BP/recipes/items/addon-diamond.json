@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:diamond"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#"],
+    "key": {
+      "#": {
+        "item": "addon:dr"
+      }
+    },
+    "result": {
+      "item": "minecraft:diamond"
+    },
+    "unlock": [
+      {
+        "item": "addon:dr"
+      }
+    ]
+  }
+}

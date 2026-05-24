@@ -1,0 +1,46 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:mandarindamage",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_mandarindamage"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_mandarindamage_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:mandarindamage_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_mandarindamage.walk",
+        "idle": "animation.jsart_mandarindamage.idle",
+        "mad": "animation.jsart_mandarindamage.mad",
+        "new1": "animation.jsart_mandarindamage.new1",
+        "new2": "animation.jsart_mandarindamage.new2",
+        "new3": "animation.jsart_mandarindamage.new3",
+        "new4": "animation.jsart_mandarindamage.new4"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "format_version":  "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:game1"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "RR", "RR"],
+    "key": {
+      "#": {
+        "item": "minecraft:white_wool"
+      },
+      "R": {
+        "item": "minecraft:red_wool"
+      }
+    },
+    "result": {
+      "item": "addon:game1"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:white_wool"
+      }
+    ]
+  }
+}

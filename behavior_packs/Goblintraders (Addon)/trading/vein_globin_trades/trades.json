@@ -1,0 +1,662 @@
+{
+  "tiers": [
+    {
+      "groups": [
+        {
+          // Common
+          "num_to_select": 4,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 16,
+              "wants": [
+                {
+                  "item": "minecraft:carrot",
+                  "quantity": 8
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 32,
+              "wants": [
+                {
+                  "item": "minecraft:glowstone",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:glowstone_dust",
+                  "quantity": 4
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 64,
+              "wants": [
+                {
+                  "item": "minecraft:netherrack",
+                  "quantity": 64
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:nether_wart",
+                  "quantity": 2
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // Uncommon
+          "num_to_select": 3,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:netherite_ingot",
+                  "quantity": 2
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:totem_of_undying",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 20,
+              "wants": [
+                {
+                  "item": "minecraft:ancient_debris",
+                  "quantity": 4
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_scrap",
+                  "quantity": 5
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 128,
+              "wants": [
+                {
+                  "item": "minecraft:nether_wart",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:nether_brick",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:red_nether_brick",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 8,
+              "wants": [
+                {
+                  "item": "minecraft:golden_carrot",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:emerald",
+                  "quantity": 2
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 32,
+              "wants": [
+                {
+                  "item": "minecraft:quartz_ore",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:experience_bottle",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // Rare
+          "num_to_select": 3,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 12,
+              "wants": [
+                {
+                  "item": "minecraft:golden_carrot",
+                  "quantity": 16
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:golden_apple",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:diamond_block",
+                  "quantity": 64
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_upgrade_smithing_template",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:diamond_block",
+                  "quantity": 32
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:rib_armor_trim_smithing_template",
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:diamond_block",
+                  "quantity": 64
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:music_disc_pigstep",
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        },
+        {
+          // legendary
+          "num_to_select": 1,
+          "trades": [
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_pickaxe",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_pickaxe",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "efficiency",
+                          "level": 5
+                        },
+                        {
+                          "id": "fortune",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Pickaxe"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_axe",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_axe",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "efficiency",
+                          "level": 5
+                        },
+                        {
+                          "id": "sharpness",
+                          "level": 5
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Axe"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_shovel",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_shovel",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "efficiency",
+                          "level": 5
+                        },
+                        {
+                          "id": "silk_touch",
+                          "level": 1
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Shovel"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_hoe",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_hoe",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "fortune",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Hoe"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_sword",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_sword",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "knockback",
+                          "level": 2
+                        },
+                        {
+                          "id": "looting",
+                          "level": 3
+                        },
+                        {
+                          "id": "sharpness",
+                          "level": 5
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Sword"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:bow",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:bow",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "flame",
+                          "level": 1
+                        },
+                        {
+                          "id": "infinity",
+                          "level": 1
+                        },
+                        {
+                          "id": "power",
+                          "level": 5
+                        },
+                        {
+                          "id": "punch",
+                          "level": 2
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Bow"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_helmet",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_helmet",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "aqua_affinity",
+                          "level": 1
+                        },
+                        {
+                          "id": "protection",
+                          "level": 4
+                        },
+                        {
+                          "id": "respiration",
+                          "level": 3
+                        },
+                        {
+                          "id": "thorns",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Helmet"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_chestplate",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_chestplate",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "protection",
+                          "level": 4
+                        },
+                        {
+                          "id": "thorns",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Chestplate"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_leggings",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_leggings",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "protection",
+                          "level": 4
+                        },
+                        {
+                          "id": "thorns",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Leggings"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            },
+            {
+              "reward_xp": true,
+              "max_uses": 1,
+              "wants": [
+                {
+                  "item": "minecraft:skull:5",
+                  "quantity": 1
+                },
+                {
+                  "item": "minecraft:netherite_boots",
+                  "quantity": 1
+                }
+              ],
+              "gives": [
+                {
+                  "item": "minecraft:netherite_boots",
+                  "functions": [
+                    {
+                      "function": "specific_enchants",
+                      "enchants": [
+                        {
+                          "id": "depth_strider",
+                          "level": 3
+                        },
+                        {
+                          "id": "feather_falling",
+                          "level": 4
+                        },
+                        {
+                          "id": "protection",
+                          "level": 4
+                        },
+                        {
+                          "id": "soul_speed",
+                          "level": 3
+                        },
+                        {
+                          "id": "thorns",
+                          "level": 3
+                        }
+                      ]
+                    },
+                    {
+                      "function": "set_name",
+                      "name": "§r§l§8Ancient Boots"
+                    }
+                  ],
+                  "quantity": 1
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

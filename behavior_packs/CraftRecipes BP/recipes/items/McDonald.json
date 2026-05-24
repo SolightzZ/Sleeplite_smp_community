@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:McDonald"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#P", "P "],
+    "key": {
+      "#": {
+        "item": "minecraft:poisonous_potato"
+      },
+      "P": {
+        "item": "minecraft:paper"
+      }
+    },
+    "result": {
+      "item": "addon:McDonald"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:poisonous_potato"
+      }
+    ]
+  }
+}

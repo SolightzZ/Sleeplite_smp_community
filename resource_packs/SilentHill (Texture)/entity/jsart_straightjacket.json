@@ -1,0 +1,47 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:straightjacket",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_straightjacket"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_straightjacket_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:straightjacket_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_straightjacket.walk",
+        "stand": "animation.jsart_straightjacket.idle",
+        "run": "animation.jsart_straightjacket.walk",
+        "new1": "animation.jsart_straightjacket.new",
+        "new2": "animation.jsart_straightjacket.new",
+        "new3": "animation.jsart_straightjacket.new",
+        "new4": "animation.jsart_straightjacket.new4",
+        "new5": "animation.jsart_straightjacket.new6"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving && query.modified_move_speed < 0.3"
+          },
+          {
+            "run": "query.modified_move_speed > 0.3"
+          },
+          {
+            "stand": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

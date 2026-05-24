@@ -1,0 +1,32 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:bloodsucker",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_bloodsucker"
+      },
+      "geometry": {
+        "default": "geometry.jsart_bloodsucker_default"
+      },
+      "animations": {
+        "move": "animation.jsart_bloodsucker.move"
+      },
+      "animation_controllers": [
+        {
+          "move": "controller.animation.jsart_bloodsucker.move"
+        }
+      ],
+      "render_controllers": [
+        "controller.render.endermite"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:bloodsucker_spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

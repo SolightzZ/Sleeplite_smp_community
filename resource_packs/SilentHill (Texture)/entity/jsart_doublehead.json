@@ -1,0 +1,47 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:doublehead",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_doublehead"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_doublehead_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:doublehead_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_doublehead.walk",
+        "idle": "animation.jsart_doublehead.idle",
+        "mad": "animation.jsart_doublehead.mad",
+        "new1": "animation.jsart_doublehead.new1",
+        "new2": "animation.jsart_doublehead.new2",
+        "new3": "animation.jsart_doublehead.new3",
+        "new4": "animation.jsart_doublehead.new4",
+        "new5": "animation.jsart_doublehead.new5"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

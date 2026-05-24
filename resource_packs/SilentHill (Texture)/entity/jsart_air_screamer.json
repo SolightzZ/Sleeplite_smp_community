@@ -1,0 +1,53 @@
+{
+  "format_version": "1.8.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:air_screamer",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_air_screamer"
+      },
+      "geometry": {
+        "default": "geometry.jsart_air_screamer_default"
+      },
+      "spawn_egg": {
+        "texture": "jsart:air_screamer_spawn_egg",
+        "texture_index": 0
+      },
+      "scripts": {
+        "pre_animation": [
+          "variable.holding_trident = query.is_item_name_any('slot.weapon.mainhand', 'minecraft:trident');"
+        ]
+      },
+      "animations": {
+        "idle": "animation.jsart_air_screamer.idle",
+        "fly": "animation.jsart_air_screamer.fly",
+        "hold_item": "animation.jsart_air_screamer.new",
+        "hold_item_fly": "animation.jsart_air_screamer.fly",
+        "look_at_target_default": "animation.jsart_air_screamer.look_at_target.default",
+        "dance": "animation.jsart_air_screamer.new"
+      },
+      "animation_controllers": [
+        {
+          "general": "controller.animation.jsart_air_screamer.general"
+        },
+        {
+          "look_at_target": "controller.animation.jsart_air_screamer.look_at_target"
+        },
+        {
+          "holding": "controller.animation.jsart_air_screamer.holding"
+        },
+        {
+          "dancing": "controller.animation.jsart_air_screamer.dancing"
+        }
+      ],
+      "render_controllers": [
+        "controller.render.allay"
+      ],
+      "enable_attachables": true,
+      "held_item_ignores_lighting": true
+    }
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.jsart_sledgehammer.first_person": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "rotation": [
+            -52.987070127,
+            -0.024544387,
+            53.701460326
+          ],
+          "position": [
+            0,
+            12,
+            16
+          ],
+          "scale": [
+            1.4,
+            1.4,
+            1.7
+          ]
+        }
+      }
+    },
+    "animation.jsart_sledgehammer.third_person": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "rotation": [
+            -13.559176699,
+            32.619276945,
+            -1.102680941
+          ],
+          "position": [
+            -1,
+            -2,
+            6
+          ]
+        }
+      }
+    }
+  }
+}

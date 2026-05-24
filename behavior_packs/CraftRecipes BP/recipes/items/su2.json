@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:su2"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#", "D"],
+    "key": {
+      "#": {
+        "item": "minecraft:salmon"
+      },
+      "D": {
+        "item": "minecraft:dried_kelp"
+      }
+    },
+    "result": {
+      "item": "addon:su2"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:salmon"
+      }
+    ]
+  }
+}

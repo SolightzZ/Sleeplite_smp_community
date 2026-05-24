@@ -1,0 +1,23 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:gif"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#"],
+    "key": {
+      "#": {
+        "item": "minecraft:oak_planks"
+      }
+    },
+    "result": {
+      "item": "addon:gif"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:oak_planks"
+      }
+    ]
+  }
+}

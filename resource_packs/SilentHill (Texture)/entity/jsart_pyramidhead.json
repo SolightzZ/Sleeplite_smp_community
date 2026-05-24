@@ -1,0 +1,51 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:pyramidhead",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_pyramidhead",
+        "cracked_high": "textures/entity/pamobile/jsart_pyramidhead",
+        "cracked_med": "textures/entity/pamobile/jsart_pyramidhead",
+        "cracked_low": "textures/entity/pamobile/jsart_pyramidhead",
+        "cracked_none": "textures/entity/pamobile/jsart_pyramidhead"
+      },
+      "geometry": {
+        "default": "geometry.jsart_pyramidhead_default"
+      },
+      "animations": {
+        "walk_to_target": "animation.jsart_pyramidhead.move_to_target",
+        "attack": "animation.jsart_pyramidhead.attack",
+        "flower": "animation.jsart_pyramidhead.flower",
+        "look_at_target": "animation.jsart_pyramidhead.look_at_target",
+        "move_to_target": "animation.jsart_pyramidhead.walk_to_target",
+        "move": "animation.jsart_pyramidhead.move",
+        "move_controller": "controller.animation.jsart_pyramidhead.move",
+        "arm_controller": "controller.animation.jsart_pyramidhead.arm_movement",
+        "walk": "animation.jsart_pyramidhead.move_to_target",
+        "new1": "animation.jsart_pyramidhead.new"
+      },
+      "render_controllers": [
+        "controller.render.iron_golem",
+        "controller.render.iron_golem_cracks"
+      ],
+      "scripts": {
+        "pre_animation": [
+          "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);"
+        ],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "arm_controller"
+        ]
+      },
+      "spawn_egg": {
+        "texture": "jsart:pyramidhead_spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

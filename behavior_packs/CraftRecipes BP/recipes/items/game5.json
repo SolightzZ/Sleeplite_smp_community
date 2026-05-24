@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:game5"
+    },
+    "tags": ["avanced"],
+    "pattern": ["##", "OO", "OO"],
+    "key": {
+      "#": {
+        "item": "minecraft:white_wool"
+      },
+      "O": {
+        "item": "minecraft:orange_wool"
+      }
+    },
+    "result": {
+      "item": "addon:game5"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:white_wool"
+      }
+    ]
+  }
+}

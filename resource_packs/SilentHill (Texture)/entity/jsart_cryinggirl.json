@@ -1,0 +1,47 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:cryinggirl",
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_cryinggirl"
+      },
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "geometry": {
+        "default": "geometry.jsart_cryinggirl_default"
+      },
+      "render_controllers": [
+        "controller.render.translucence"
+      ],
+      "spawn_egg": {
+        "texture": "jsart:cryinggirl_spawn_egg",
+        "texture_index": 0
+      },
+      "animations": {
+        "walk": "animation.jsart_cryinggirl.walk",
+        "idle": "animation.jsart_cryinggirl.idle",
+        "mad": "animation.jsart_cryinggirl.mad",
+        "new1": "animation.jsart_cryinggirl.new1",
+        "new2": "animation.jsart_cryinggirl.new2",
+        "new3": "animation.jsart_cryinggirl.new3",
+        "new4": "animation.jsart_cryinggirl.new4",
+        "new5": "animation.jsart_cryinggirl.new5"
+      },
+      "scripts": {
+        "animate": [
+          {
+            "walk": "query.is_moving"
+          },
+          {
+            "mad": "query.is_moving && query.is_angry"
+          },
+          {
+            "idle": "!query.is_moving"
+          }
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,1 @@
+playanimation @s animation.jsart_lyingfigure.new2 a 5

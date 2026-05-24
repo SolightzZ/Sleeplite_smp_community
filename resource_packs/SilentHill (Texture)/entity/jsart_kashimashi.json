@@ -1,0 +1,52 @@
+{
+  "format_version": "1.10.0",
+  "minecraft:client_entity": {
+    "description": {
+      "identifier": "jsart:kashimashi",
+      "materials": {
+        "default": "entity_alphatest"
+      },
+      "textures": {
+        "default": "textures/entity/pamobile/jsart_kashimashi",
+        "cracked_high": "textures/entity/pamobile/jsart_kashimashi",
+        "cracked_med": "textures/entity/pamobile/jsart_kashimashi",
+        "cracked_low": "textures/entity/pamobile/jsart_kashimashi",
+        "cracked_none": "textures/entity/pamobile/jsart_kashimashi"
+      },
+      "geometry": {
+        "default": "geometry.jsart_kashimashi_default"
+      },
+      "animations": {
+        "walk": "animation.jsart_kashimashi.walk",
+        "move": "animation.jsart_kashimashi.move",
+        "attack": "animation.jsart_kashimashi.attack",
+        "flower": "animation.jsart_kashimashi.flower",
+        "look_at_target": "animation.jsart_kashimashi.look_at_target",
+        "walk_to_target": "animation.jsart_kashimashi.walk",
+        "move_to_target": "animation.jsart_kashimashi.move_to_target",
+        "move_controller": "controller.animation.jsart_kashimashi.move",
+        "arm_controller": "controller.animation.jsart_kashimashi.arm_movement",
+        "new1": "animation.jsart_kashimashi.new1",
+        "new2": "animation.jsart_kashimashi.new2"
+      },
+      "render_controllers": [
+        "controller.render.iron_golem",
+        "controller.render.iron_golem_cracks"
+      ],
+      "scripts": {
+        "pre_animation": [
+          "variable.modified_tcos0 = Math.clamp(((Math.cos(query.modified_distance_moved * 13.5) * Math.min(query.modified_move_speed, 0.6) / variable.gliding_speed_value) * 25.0), -12.5, 12.5);"
+        ],
+        "animate": [
+          "look_at_target",
+          "move_controller",
+          "arm_controller"
+        ]
+      },
+      "spawn_egg": {
+        "texture": "jsart:kashimashi_spawn_egg",
+        "texture_index": 0
+      }
+    }
+  }
+}

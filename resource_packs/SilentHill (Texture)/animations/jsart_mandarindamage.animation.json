@@ -1,0 +1,195 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.jsart_mandarindamage.idle": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.jsart_mandarindamage.walk": {
+      "loop": true,
+      "animation_length": 1,
+      "bones": {
+        "bone3": {
+          "rotation": {
+            "0.0": [
+              0,
+              0,
+              12.5
+            ],
+            "0.5": [
+              0,
+              0,
+              -10
+            ],
+            "1.0": [
+              0,
+              0,
+              12.5
+            ]
+          },
+          "position": {
+            "0.0": [
+              1,
+              -1,
+              0
+            ],
+            "0.25": [
+              0,
+              0.5,
+              0
+            ],
+            "0.5": [
+              -1,
+              0,
+              0
+            ],
+            "0.5417": [
+              -0.83,
+              -1,
+              0
+            ],
+            "0.8333": [
+              0.33,
+              0.64,
+              0
+            ],
+            "1.0": [
+              1,
+              -1,
+              0
+            ]
+          }
+        },
+        "RightLeg3": {
+          "rotation": {
+            "0.125": [
+              0,
+              0,
+              20
+            ],
+            "0.625": [
+              0,
+              0,
+              -22.5
+            ],
+            "1.0": [
+              0,
+              0,
+              20
+            ]
+          }
+        },
+        "LeftLeg3": {
+          "rotation": {
+            "0.125": [
+              0,
+              0,
+              12.5
+            ],
+            "0.625": [
+              0,
+              0,
+              -42.5
+            ],
+            "1.0": [
+              0,
+              0,
+              12.5
+            ]
+          }
+        }
+      }
+    },
+    "animation.jsart_mandarindamage.mad": {
+      "loop": true,
+      "animation_length": 0.5,
+      "bones": {
+        "bone3": {
+          "rotation": {
+            "0.0": [
+              137.5,
+              0,
+              -180
+            ],
+            "0.25": [
+              202.5,
+              0,
+              -180
+            ],
+            "0.5": [
+              202.5,
+              0,
+              -180
+            ]
+          },
+          "position": {
+            "0.0": [
+              0,
+              -2,
+              2
+            ],
+            "0.25": [
+              0,
+              1,
+              1
+            ],
+            "0.3333": [
+              0,
+              0,
+              -1
+            ],
+            "0.5": [
+              0,
+              -1,
+              -1
+            ]
+          }
+        },
+        "RightLeg3": {
+          "rotation": {
+            "0.0": [
+              -56.64742626402813,
+              7.435472226132333,
+              13.064313429508275
+            ],
+            "0.25": [
+              45,
+              0,
+              0
+            ]
+          }
+        },
+        "LeftLeg3": {
+          "rotation": {
+            "0.0": [
+              5.591956513165314,
+              -3.404867321160509,
+              -19.71974641445877
+            ],
+            "0.3333": [
+              45,
+              0,
+              0
+            ]
+          }
+        }
+      }
+    },
+    "animation.jsart_mandarindamage.new1": {
+      "loop": true,
+      "animation_length": 1
+    },
+    "animation.jsart_mandarindamage.new2": {
+      "loop": true,
+      "animation_length": 4
+    },
+    "animation.jsart_mandarindamage.new3": {
+      "loop": true,
+      "animation_length": 3
+    },
+    "animation.jsart_mandarindamage.new4": {
+      "loop": true,
+      "animation_length": 5
+    }
+  }
+}

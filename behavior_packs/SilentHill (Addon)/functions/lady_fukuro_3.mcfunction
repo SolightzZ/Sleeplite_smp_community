@@ -1,0 +1,1 @@
+playanimation @s animation.jsart_ladyfukuro.new6 a 8

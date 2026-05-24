@@ -1,0 +1,26 @@
+{
+  "format_version": "1.20.10",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:su1"
+    },
+    "tags": ["avanced"],
+    "pattern": ["#", "D"],
+    "key": {
+      "#": {
+        "item": "minecraft:cod"
+      },
+      "D": {
+        "item": "minecraft:dried_kelp"
+      }
+    },
+    "result": {
+      "item": "addon:su1"
+    },
+    "unlock": [
+      {
+        "item": "minecraft:cod"
+      }
+    ]
+  }
+}

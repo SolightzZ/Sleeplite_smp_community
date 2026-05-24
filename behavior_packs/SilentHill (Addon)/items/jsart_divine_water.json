@@ -1,0 +1,35 @@
+{
+  "format_version": "1.21.120",
+  "minecraft:item": {
+    "description": {
+      "identifier": "jsart:divine_water",
+      "menu_category": {
+        "category": "nature"
+      }
+    },
+    "components": {
+      "minecraft:hand_equipped": false,
+      "minecraft:max_stack_size": 1,
+      "minecraft:glint": false,
+      "minecraft:food": {
+        "saturation_modifier": 0.6,
+        "nutrition": 10,
+        "can_always_eat": true
+      },
+      "minecraft:use_modifiers": {
+        "emit_vibrations": true,
+        "movement_modifier": 0.35,
+        "use_duration": 0.2
+      },
+      "minecraft:tags": {
+        "tags": [
+          "minecraft:is_food"
+        ]
+      },
+      "minecraft:allow_off_hand": false,
+      "minecraft:use_animation": "drink",
+      "minecraft:icon": "jsart:divine_water",
+      "jsart_divine_water:trigger": {}
+    }
+  }
+}

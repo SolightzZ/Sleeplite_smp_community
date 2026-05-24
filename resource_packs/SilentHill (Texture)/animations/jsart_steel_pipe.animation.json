@@ -1,0 +1,44 @@
+{
+  "format_version": "1.8.0",
+  "animations": {
+    "animation.jsart_steel_pipe.first_person": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "rotation": [
+            -48.494410875,
+            19.345893639,
+            74.066836248
+          ],
+          "position": [
+            0,
+            7,
+            8
+          ],
+          "scale": [
+            1.2,
+            1,
+            1.5
+          ]
+        }
+      }
+    },
+    "animation.jsart_steel_pipe.third_person": {
+      "loop": true,
+      "bones": {
+        "rightitem": {
+          "rotation": [
+            11.208982737,
+            35.657614553,
+            6.274356457
+          ],
+          "position": [
+            1,
+            -2,
+            3
+          ]
+        }
+      }
+    }
+  }
+}
