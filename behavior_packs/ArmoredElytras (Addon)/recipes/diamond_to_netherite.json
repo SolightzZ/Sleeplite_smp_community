@@ -1,13 +1,13 @@
 {
-   "format_version": "1.20.10",
-   "minecraft:recipe_smithing_transform": {
-      "description": {
-         "identifier": "rme:netherite_chestplate_p_smithing"
-      },
-      "tags": ["smithing_table"],
-      "template": "minecraft:netherite_upgrade_smithing_template",
-      "base": "rme:diamond_chestplate",
-      "addition": "minecraft:netherite_ingot",
-      "result": "rme:netherite_chestplate_p"
-   }
+  "format_version": "1.20.10",
+  "minecraft:recipe_smithing_transform": {
+    "description": {
+      "identifier": "rme:netherite_chestplate_p_smithing"
+    },
+    "tags": ["smithing_table"],
+    "template": "minecraft:netherite_upgrade_smithing_template",
+    "base": "rme:diamond_chestplate",
+    "addition": "minecraft:netherite_ingot",
+    "result": "rme:netherite_chestplate_p"
+  }
 }

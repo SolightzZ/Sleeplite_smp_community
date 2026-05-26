@@ -1,26 +1,26 @@
 {
-   "format_version": "1.20.10",
-   "minecraft:recipe_shapeless": {
-      "description": {
-         "identifier": "rme:copper_chestplate_p"
-      },
+  "format_version": "1.20.10",
+  "minecraft:recipe_shapeless": {
+    "description": {
+      "identifier": "rme:copper_chestplate_p"
+    },
 
-      "tags": ["crafting_table"],
-      "ingredients": [
-         {
-            "item": "minecraft:copper_chestplate"
-         },
-         {
-            "item": "minecraft:elytra"
-         }
-      ],
-      "unlock": [
-         {
-            "item": "minecraft:elytra"
-         }
-      ],
-      "result": {
-         "item": "rme:copper_chestplate_p"
+    "tags": ["avanced"],
+    "ingredients": [
+      {
+        "item": "minecraft:copper_chestplate"
+      },
+      {
+        "item": "minecraft:elytra"
       }
-   }
+    ],
+    "unlock": [
+      {
+        "item": "minecraft:elytra"
+      }
+    ],
+    "result": {
+      "item": "rme:copper_chestplate_p"
+    }
+  }
 }

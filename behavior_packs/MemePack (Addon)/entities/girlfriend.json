@@ -1,925 +1,931 @@
 {
-  "format_version": "1.10.0",
-  "minecraft:entity": {
-    "description": {
-      "identifier": "meme:girl",
-      "is_spawnable": true,
-      "is_summonable": true,
-      "is_experimental": false
-    },
-    "component_groups": {
-      "default0": {
-        "minecraft:variant": { "value": 0 }
-      },
-      "default1": {
-        "minecraft:variant": { "value": 1 }
-      },
-      "default2": {
-        "minecraft:variant": { "value": 2 }
-      },
-      "default3": {
-        "minecraft:variant": { "value": 3 }
-      },
-      "default4": {
-        "minecraft:variant": { "value": 4 }
-      },
-      "default5": {
-        "minecraft:variant": { "value": 5 }
-      },
-      "default6": {
-        "minecraft:variant": { "value": 6 }
-      },
-      "default7": {
-        "minecraft:variant": { "value": 7 }
-      },
-      "default8": {
-        "minecraft:variant": { "value": 8 }
-      },
-      "default9": {
-        "minecraft:variant": { "value": 9 }
-      },
-      "default10": {
-        "minecraft:variant": { "value": 10 }
-      },
-      "default11": {
-        "minecraft:variant": { "value": 11 }
-      },
-      "default12": {
-        "minecraft:variant": { "value": 12 }
-      },
-      "default13": {
-        "minecraft:variant": { "value": 13 }
-      },
-      "default14": {
-        "minecraft:variant": { "value": 14 }
-      },
-      "default15": {
-        "minecraft:variant": { "value": 15 }
-      },
-      "default16": {
-        "minecraft:variant": { "value": 16 }
-      },
-      "default17": {
-        "minecraft:variant": { "value": 17 }
-      },
-      "default18": {
-        "minecraft:variant": { "value": 18 }
-      },
-      "default19": {
-        "minecraft:variant": { "value": 19 }
-      },
-      "default20": {
-        "minecraft:variant": { "value": 20 }
-      },
-      "default21": {
-        "minecraft:variant": { "value": 21 }
-      },
-      "default22": {
-        "minecraft:variant": { "value": 22 }
-      },
-      "default23": {
-        "minecraft:variant": { "value": 23 }
-      },
-      "default24": {
-        "minecraft:variant": { "value": 24 }
-      },
-      "default25": {
-        "minecraft:variant": { "value": 25 }
-      },
-      "default26": {
-        "minecraft:variant": { "value": 26 }
-      },
-      "default27": {
-        "minecraft:variant": { "value": 27 }
-      },
-      "default28": {
-        "minecraft:variant": { "value": 28 }
-      },
-      "default29": {
-        "minecraft:variant": { "value": 29 }
-      },
-      "default30": {
-        "minecraft:variant": { "value": 30 }
-      },
-      "default31": {
-        "minecraft:variant": { "value": 31 }
-      },
-      "default32": {
-        "minecraft:variant": { "value": 32 }
-      },
-      "default33": {
-        "minecraft:variant": { "value": 33 }
-      },
-      "default34": {
-        "minecraft:variant": { "value": 34 }
-      },
-      "default35": {
-        "minecraft:variant": { "value": 35 }
-      },
-      "default36": {
-        "minecraft:variant": { "value": 36 }
-      },
-      "default37": {
-        "minecraft:variant": { "value": 37 }
-      },
-      "default38": {
-        "minecraft:variant": { "value": 38 }
-      },
-      "default39": {
-        "minecraft:variant": { "value": 39 }
-      },
-      "default40": {
-        "minecraft:variant": { "value": 40 }
-      },
-      "become_zombie": {
-        "minecraft:transformation": {
-          "into": "minecraft:zombie_villager"
-        }
-      },
-      "baby": {
-        "minecraft:is_baby": {},
-        "minecraft:scale": {
-          "value": 0.5
+    "format_version": "1.10.0",
+    "minecraft:entity": {
+        "description": {
+            "identifier": "meme:girl",
+            "is_spawnable": true,
+            "is_summonable": true,
+            "is_experimental": false
         },
-        "minecraft:ageable": {
-          "duration": 1200,
-          "grow_up": {
-            "event": "minecraft:ageable_grow_up",
-            "target": "self"
-          }
-        },
-        "minecraft:behavior.take_flower": {
-          "priority": 7
-        },
-        "minecraft:behavior.play": {
-          "priority": 8,
-          "speed_multiplier": 0.32
-        }
-      },
-      "adult": {
-        "minecraft:behavior.take_flower": {
-          "priority": 7
-        }
-      },
-      "minecraft:pig_zombie_angry": {
-        "minecraft:on_target_escape": {
-          "event": "minecraft:on_calm",
-          "target": "self"
-        },
-        "minecraft:angry": {
-          "duration": 1,
-          "broadcast_anger": true,
-          "broadcast_range": 20,
-          "angry_sound": "mad",
-          "sound_interval": {
-            "range_min": 20.0,
-            "range_max": 30.0
-          }
-        }
-      },
-      "minecraft:pig_zombie_calm": {
-        "minecraft:on_target_acquired": {
-          "event": "minecraft:become_angry",
-          "target": "self"
-        }
-      },
-      "minecraft:pig_transform": {
-        "minecraft:transformation": {
-          "into": "minecraft:zombie_villager"
-        }
-      }
-    },
-    "components": {
-      "minecraft:type_family": {
-        "family": ["player"]
-      },
-      "minecraft:breathable": {
-        "totalSupply": 15,
-        "suffocateTime": 0
-      },
-      "minecraft:health": {
-        "value": 20,
-        "max": 20
-      },
-      "minecraft:collision_box": {
-        "width": 0.6,
-        "height": 1.8
-      },
-      "minecraft:nameable": {
-        "alwaysShow": false,
-        "allowNameTagRenaming": false
-      },
-      "minecraft:movement": {
-        "value": 0.5
-      },
-      "minecraft:navigation.walk": {
-        "is_amphibious": true,
-        "can_path_over_water": true,
-        "can_pass_doors": true,
-        "can_open_doors": true,
-        "can_walk": true,
-        "avoid_water": true
-      },
-      "minecraft:equip_item": {},
-      "minecraft:shareables": {
-        "items": [
-          {
-            "item": "minecraft:netherite_sword",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 0
-          },
-          {
-            "item": "minecraft:diamond_sword",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 1
-          },
-          {
-            "item": "minecraft:iron_sword",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 2
-          },
-          {
-            "item": "minecraft:stone_sword",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 3
-          },
-          {
-            "item": "minecraft:golden_sword",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 4
-          },
-          {
-            "item": "minecraft:wooden_sword",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 5
-          },
-          {
-            "item": "minecraft:netherite_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 0
-          },
-          {
-            "item": "minecraft:diamond_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 1
-          },
-          {
-            "item": "minecraft:iron_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 2
-          },
-          {
-            "item": "minecraft:chainmail_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 3
-          },
-          {
-            "item": "minecraft:golden_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 4
-          },
-          {
-            "item": "minecraft:leather_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 5
-          },
-          {
-            "item": "minecraft:turtle_helmet",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 6
-          },
-          {
-            "item": "minecraft:skull:0",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 7
-          },
-          {
-            "item": "minecraft:skull:1",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 7
-          },
-          {
-            "item": "minecraft:carved_pumpkin",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 7
-          },
-          {
-            "item": "minecraft:netherite_chestplate",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 0
-          },
-          {
-            "item": "minecraft:diamond_chestplate",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 1
-          },
-          {
-            "item": "minecraft:iron_chestplate",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 2
-          },
-          {
-            "item": "minecraft:chainmail_chestplate",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 3
-          },
-          {
-            "item": "minecraft:golden_chestplate",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 4
-          },
-          {
-            "item": "minecraft:leather_chestplate",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 5
-          },
-          {
-            "item": "minecraft:netherite_leggings",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 0
-          },
-          {
-            "item": "minecraft:diamond_leggings",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 1
-          },
-          {
-            "item": "minecraft:iron_leggings",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 2
-          },
-          {
-            "item": "minecraft:chainmail_leggings",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 3
-          },
-          {
-            "item": "minecraft:golden_leggings",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 4
-          },
-          {
-            "item": "minecraft:leather_leggings",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 5
-          },
-          {
-            "item": "minecraft:netherite_boots",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 0
-          },
-          {
-            "item": "minecraft:diamond_boots",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 1
-          },
-          {
-            "item": "minecraft:iron_boots",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 2
-          },
-          {
-            "item": "minecraft:chainmail_boots",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 3
-          },
-          {
-            "item": "minecraft:golden_boots",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 4
-          },
-          {
-            "item": "minecraft:leather_boots",
-            "want_amount": 1,
-            "surplus_amount": 1,
-            "priority": 5
-          }
-        ]
-      },
-      "minecraft:annotation.open_door": {},
-      "minecraft:movement.basic": {},
-      "minecraft:jump.static": {},
-      "minecraft:can_climb": {},
-      "minecraft:behavior.tempt": {
-        "items": ["emerald", "diamond", "poppy"],
-        "priority": 4,
-        "speed_multiplier": 1.25
-      },
-      "minecraft:behavior.pickup_items": {
-        "priority": 6,
-        "max_dist": 3,
-        "goal_radius": 2,
-        "speed_multiplier": 1.0,
-        "pickup_based_on_chance": true,
-        "can_pickup_any_item": true
-      },
-      "minecraft:damage_sensor": [
-        {
-          "on_damage": {
-            "filters": {
-              "test": "is_family",
-              "subject": "other",
-              "value": "lightning"
+        "component_groups": {
+            "default0": {
+                "minecraft:variant": { "value": 0 }
             },
-            "event": "become_witch"
-          },
-          "deals_damage": false
-        },
-        {
-          "on_damage": {
-            "filters": {
-              "test": "is_family",
-              "subject": "other",
-              "value": "lightning"
+            "default1": {
+                "minecraft:variant": { "value": 1 }
             },
-            "event": "become_zombie"
-          },
-          "deals_damage": true
-        }
-      ],
-      "minecraft:behavior.float": {
-        "priority": 0
-      },
-      "minecraft:behavior.panic": {
-        "priority": 3,
-        "speed_multiplier": 0.6
-      },
-      "minecraft:behavior.avoid_mob_type": {
-        "priority": 3,
-        "entity_types": [
-          {
-            "filters": {
-              "any_of": [
+            "default2": {
+                "minecraft:variant": { "value": 2 }
+            },
+            "default3": {
+                "minecraft:variant": { "value": 3 }
+            },
+            "default4": {
+                "minecraft:variant": { "value": 4 }
+            },
+            "default5": {
+                "minecraft:variant": { "value": 5 }
+            },
+            "default6": {
+                "minecraft:variant": { "value": 6 }
+            },
+            "default7": {
+                "minecraft:variant": { "value": 7 }
+            },
+            "default8": {
+                "minecraft:variant": { "value": 8 }
+            },
+            "default9": {
+                "minecraft:variant": { "value": 9 }
+            },
+            "default10": {
+                "minecraft:variant": { "value": 10 }
+            },
+            "default11": {
+                "minecraft:variant": { "value": 11 }
+            },
+            "default12": {
+                "minecraft:variant": { "value": 12 }
+            },
+            "default13": {
+                "minecraft:variant": { "value": 13 }
+            },
+            "default14": {
+                "minecraft:variant": { "value": 14 }
+            },
+            "default15": {
+                "minecraft:variant": { "value": 15 }
+            },
+            "default16": {
+                "minecraft:variant": { "value": 16 }
+            },
+            "default17": {
+                "minecraft:variant": { "value": 17 }
+            },
+            "default18": {
+                "minecraft:variant": { "value": 18 }
+            },
+            "default19": {
+                "minecraft:variant": { "value": 19 }
+            },
+            "default20": {
+                "minecraft:variant": { "value": 20 }
+            },
+            "default21": {
+                "minecraft:variant": { "value": 21 }
+            },
+            "default22": {
+                "minecraft:variant": { "value": 22 }
+            },
+            "default23": {
+                "minecraft:variant": { "value": 23 }
+            },
+            "default24": {
+                "minecraft:variant": { "value": 24 }
+            },
+            "default25": {
+                "minecraft:variant": { "value": 25 }
+            },
+            "default26": {
+                "minecraft:variant": { "value": 26 }
+            },
+            "default27": {
+                "minecraft:variant": { "value": 27 }
+            },
+            "default28": {
+                "minecraft:variant": { "value": 28 }
+            },
+            "default29": {
+                "minecraft:variant": { "value": 29 }
+            },
+            "default30": {
+                "minecraft:variant": { "value": 30 }
+            },
+            "default31": {
+                "minecraft:variant": { "value": 31 }
+            },
+            "default32": {
+                "minecraft:variant": { "value": 32 }
+            },
+            "default33": {
+                "minecraft:variant": { "value": 33 }
+            },
+            "default34": {
+                "minecraft:variant": { "value": 34 }
+            },
+            "default35": {
+                "minecraft:variant": { "value": 35 }
+            },
+            "default36": {
+                "minecraft:variant": { "value": 36 }
+            },
+            "default37": {
+                "minecraft:variant": { "value": 37 }
+            },
+            "default38": {
+                "minecraft:variant": { "value": 38 }
+            },
+            "default39": {
+                "minecraft:variant": { "value": 39 }
+            },
+            "default40": {
+                "minecraft:variant": { "value": 40 }
+            },
+            "become_zombie": {
+                "minecraft:transformation": {
+                    "into": "minecraft:zombie_villager"
+                }
+            },
+            "baby": {
+                "minecraft:is_baby": {},
+                "minecraft:scale": {
+                    "value": 0.5
+                },
+                "minecraft:ageable": {
+                    "duration": 1200,
+                    "grow_up": {
+                        "event": "minecraft:ageable_grow_up",
+                        "target": "self"
+                    }
+                },
+                "minecraft:behavior.take_flower": {
+                    "priority": 7
+                },
+                "minecraft:behavior.play": {
+                    "priority": 8,
+                    "speed_multiplier": 0.32
+                }
+            },
+            "adult": {
+                "minecraft:behavior.take_flower": {
+                    "priority": 7
+                }
+            },
+            "minecraft:pig_zombie_angry": {
+                "minecraft:on_target_escape": {
+                    "event": "minecraft:on_calm",
+                    "target": "self"
+                },
+                "minecraft:angry": {
+                    "duration": 1,
+                    "broadcast_anger": true,
+                    "broadcast_range": 20,
+                    "angry_sound": "mad",
+                    "sound_interval": {
+                        "range_min": 20.0,
+                        "range_max": 30.0
+                    }
+                }
+            },
+            "minecraft:pig_zombie_calm": {
+                "minecraft:on_target_acquired": {
+                    "event": "minecraft:become_angry",
+                    "target": "self"
+                }
+            },
+            "minecraft:pig_transform": {
+                "minecraft:transformation": {
+                    "into": "minecraft:zombie_villager"
+                }
+            }
+        },
+        "components": {
+            "minecraft:type_family": {
+                "family": ["player"]
+            },
+            "minecraft:breathable": {
+                "totalSupply": 15,
+                "suffocateTime": 0
+            },
+            "minecraft:health": {
+                "value": 20,
+                "max": 20
+            },
+            "minecraft:collision_box": {
+                "width": 0.6,
+                "height": 1.8
+            },
+            "minecraft:nameable": {
+                "alwaysShow": false,
+                "allowNameTagRenaming": false
+            },
+            "minecraft:movement": {
+                "value": 0.5
+            },
+            "minecraft:navigation.walk": {
+                "is_amphibious": true,
+                "can_path_over_water": true,
+                "can_pass_doors": true,
+                "can_open_doors": true,
+                "can_walk": true,
+                "avoid_water": true
+            },
+            "minecraft:equip_item": {},
+            "minecraft:shareables": {
+                "items": [
+                    {
+                        "item": "minecraft:netherite_sword",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 0
+                    },
+                    {
+                        "item": "minecraft:diamond_sword",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 1
+                    },
+                    {
+                        "item": "minecraft:iron_sword",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 2
+                    },
+                    {
+                        "item": "minecraft:stone_sword",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 3
+                    },
+                    {
+                        "item": "minecraft:golden_sword",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 4
+                    },
+                    {
+                        "item": "minecraft:wooden_sword",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 5
+                    },
+                    {
+                        "item": "minecraft:netherite_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 0
+                    },
+                    {
+                        "item": "minecraft:diamond_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 1
+                    },
+                    {
+                        "item": "minecraft:iron_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 2
+                    },
+                    {
+                        "item": "minecraft:chainmail_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 3
+                    },
+                    {
+                        "item": "minecraft:golden_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 4
+                    },
+                    {
+                        "item": "minecraft:leather_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 5
+                    },
+                    {
+                        "item": "minecraft:turtle_helmet",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 6
+                    },
+                    {
+                        "item": "minecraft:skull:0",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 7
+                    },
+                    {
+                        "item": "minecraft:skull:1",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 7
+                    },
+                    {
+                        "item": "minecraft:carved_pumpkin",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 7
+                    },
+                    {
+                        "item": "minecraft:netherite_chestplate",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 0
+                    },
+                    {
+                        "item": "minecraft:diamond_chestplate",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 1
+                    },
+                    {
+                        "item": "minecraft:iron_chestplate",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 2
+                    },
+                    {
+                        "item": "minecraft:chainmail_chestplate",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 3
+                    },
+                    {
+                        "item": "minecraft:golden_chestplate",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 4
+                    },
+                    {
+                        "item": "minecraft:leather_chestplate",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 5
+                    },
+                    {
+                        "item": "minecraft:netherite_leggings",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 0
+                    },
+                    {
+                        "item": "minecraft:diamond_leggings",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 1
+                    },
+                    {
+                        "item": "minecraft:iron_leggings",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 2
+                    },
+                    {
+                        "item": "minecraft:chainmail_leggings",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 3
+                    },
+                    {
+                        "item": "minecraft:golden_leggings",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 4
+                    },
+                    {
+                        "item": "minecraft:leather_leggings",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 5
+                    },
+                    {
+                        "item": "minecraft:netherite_boots",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 0
+                    },
+                    {
+                        "item": "minecraft:diamond_boots",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 1
+                    },
+                    {
+                        "item": "minecraft:iron_boots",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 2
+                    },
+                    {
+                        "item": "minecraft:chainmail_boots",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 3
+                    },
+                    {
+                        "item": "minecraft:golden_boots",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 4
+                    },
+                    {
+                        "item": "minecraft:leather_boots",
+                        "want_amount": 1,
+                        "surplus_amount": 1,
+                        "priority": 5
+                    }
+                ]
+            },
+            "minecraft:annotation.open_door": {},
+            "minecraft:movement.basic": {},
+            "minecraft:jump.static": {},
+            "minecraft:can_climb": {},
+            "minecraft:behavior.tempt": {
+                "items": ["emerald", "diamond", "poppy"],
+                "priority": 4,
+                "speed_multiplier": 1.25
+            },
+            "minecraft:behavior.pickup_items": {
+                "priority": 6,
+                "max_dist": 3,
+                "goal_radius": 2,
+                "speed_multiplier": 1.0,
+                "pickup_based_on_chance": true,
+                "can_pickup_any_item": true
+            },
+            "minecraft:damage_sensor": [
                 {
-                  "test": "is_family",
-                  "subject": "other",
-                  "value": "creeper"
+                    "on_damage": {
+                        "filters": {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "lightning"
+                        },
+                        "event": "become_witch"
+                    },
+                    "deals_damage": false
+                },
+                {
+                    "on_damage": {
+                        "filters": {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "lightning"
+                        },
+                        "event": "become_zombie"
+                    },
+                    "deals_damage": true
                 }
-              ]
+            ],
+            "minecraft:behavior.float": {
+                "priority": 0
             },
-            "max_dist": 8,
-            "walk_speed_multiplier": 0.6,
-            "sprint_speed_multiplier": 0.6
-          }
-        ]
-      },
-      "minecraft:behavior.move_indoors": {
-        "priority": 4,
-        "speed_multiplier": 0.8
-      },
-      "minecraft:behavior.restrict_open_door": {
-        "priority": 5
-      },
-      "minecraft:behavior.open_door": {
-        "priority": 6,
-        "close_door_after": true
-      },
-      "minecraft:behavior.move_towards_restriction": {
-        "priority": 7,
-        "speed_multiplier": 0.6
-      },
-      "minecraft:behavior.share_items": {
-        "priority": 8,
-        "max_dist": 3,
-        "goal_radius": 2.0,
-        "speed_multiplier": 0.5,
-        "entity_types": [
-          {
-            "filters": {
-              "test": "is_family",
-              "subject": "other",
-              "value": "player"
-            }
-          }
-        ]
-      },
-      "minecraft:behavior.random_stroll": {
-        "priority": 11,
-        "speed_multiplier": 0.6
-      },
-      "minecraft:behavior.look_at_player": {
-        "priority": 12,
-        "look_distance": 8,
-        "probability": 0.02
-      },
-      "minecraft:attack": {
-        "damage": 2
-      },
-      "minecraft:behavior.hurt_by_target": {
-        "priority": 1,
-        "alert_same_type": true
-      },
-      "minecraft:behavior.melee_attack": {
-        "priority": 2,
-        "speed_multiplier": 1.0,
-        "target_dist": 0.0,
-        "max_dist": 3,
-        "random_stop_interval": 100,
-        "track_target": false,
-        "reach_multiplier": 1.4
-      },
-      "minecraft:behavior.nearest_attackable_target": {
-        "priority": 0,
-        "within_radius": 16.0,
-        "persist_time": 2.0,
-        "reselect_targets": true,
-        "entity_types": [
-          {
-            "filters": {
-              "all_of": [
-                { "test": "is_family", "subject": "other", "value": "monster" },
-                { "test": "is_family", "subject": "other", "operator": "!=", "value": "creeper" }
-              ]
+            "minecraft:behavior.panic": {
+                "priority": 3,
+                "speed_multiplier": 0.6
             },
-            "max_dist": 10
-          }
-        ],
-        "must_see": true
-      },
-      "minecraft:physics": {},
-      "minecraft:experience_reward": {
-        "on_death": "query.last_hit_by_player ? 0 : 0"
-      },
-      "minecraft:scale": {
-        "value": 1
-      }},
-    "events": {
-      "become_zombie": {
-        "remove": {},
-        "add": {
-          "component_groups": ["minecraft:pig_transform"]
-        }
-      },
-      "minecraft:entity_spawned": {
-        "sequence": [
-          {
-            "add": {
-              "component_groups": ["minecraft:pig_zombie_calm"]
-            }
-          },
-          {
-            "randomize": [
-              {
-                "weight": 95,
-                "add": {
-                  "component_groups": ["adult"]
-                }
-              },
-              {
-                "weight": 5,
-                "add": {
-                  "component_groups": ["baby"]
-                }
-              }
-            ]
-          },
-          {
-            "randomize": [
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default0"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default1"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default2"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default3"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default4"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default5"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default6"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default7"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default8"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default9"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default10"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default11"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default12"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default13"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default14"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default15"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default16"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default17"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default18"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default19"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default20"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default21"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default22"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default23"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default24"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default25"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default26"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default27"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default28"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default29"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default30"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default31"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default32"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default33"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default34"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default35"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default36"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default37"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default38"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default39"]
-                }
-              },
-              {
-                "weight": 1,
-                "add": {
-                  "component_groups": ["default40"]
-                }
-              }
-            ]
-          }
-        ]
-      },
-      "minecraft:entity_transformed": {
-        "sequence": [
-          {
-            "filters": {
-              "test": "has_component",
-              "subject": "other",
-              "value": "minecraft:is_baby"
+            "minecraft:behavior.avoid_mob_type": {
+                "priority": 3,
+                "entity_types": [
+                    {
+                        "filters": {
+                            "any_of": [
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "value": "creeper"
+                                }
+                            ]
+                        },
+                        "max_dist": 8,
+                        "walk_speed_multiplier": 0.6,
+                        "sprint_speed_multiplier": 0.6
+                    }
+                ]
             },
-            "add": {
-              "component_groups": ["baby", "minecraft:pig_zombie_calm"]
-            }
-          },
-          {
-            "filters": {
-              "test": "has_component",
-              "subject": "other",
-              "operator": "!=",
-              "value": "minecraft:is_baby"
+            "minecraft:behavior.move_indoors": {
+                "priority": 4,
+                "speed_multiplier": 0.8
             },
-            "add": {
-              "component_groups": ["adult", "minecraft:pig_zombie_calm"]
+            "minecraft:behavior.restrict_open_door": {
+                "priority": 5
+            },
+            "minecraft:behavior.open_door": {
+                "priority": 6,
+                "close_door_after": true
+            },
+            "minecraft:behavior.move_towards_restriction": {
+                "priority": 7,
+                "speed_multiplier": 0.6
+            },
+            "minecraft:behavior.share_items": {
+                "priority": 8,
+                "max_dist": 3,
+                "goal_radius": 2.0,
+                "speed_multiplier": 0.5,
+                "entity_types": [
+                    {
+                        "filters": {
+                            "test": "is_family",
+                            "subject": "other",
+                            "value": "player"
+                        }
+                    }
+                ]
+            },
+            "minecraft:behavior.random_stroll": {
+                "priority": 11,
+                "speed_multiplier": 0.6
+            },
+            "minecraft:behavior.look_at_player": {
+                "priority": 12,
+                "look_distance": 8,
+                "probability": 0.02
+            },
+            "minecraft:attack": {
+                "damage": 2
+            },
+            "minecraft:behavior.hurt_by_target": {
+                "priority": 1,
+                "alert_same_type": true
+            },
+            "minecraft:behavior.melee_attack": {
+                "priority": 2,
+                "speed_multiplier": 1.0,
+                "target_dist": 0.0,
+                "max_dist": 3,
+                "random_stop_interval": 100,
+                "track_target": false,
+                "reach_multiplier": 1.4
+            },
+            "minecraft:behavior.nearest_attackable_target": {
+                "priority": 0,
+                "within_radius": 16.0,
+                "persist_time": 2.0,
+                "reselect_targets": true,
+                "entity_types": [
+                    {
+                        "filters": {
+                            "all_of": [
+                                { "test": "is_family", "subject": "other", "value": "monster" },
+                                {
+                                    "test": "is_family",
+                                    "subject": "other",
+                                    "operator": "!=",
+                                    "value": "creeper"
+                                }
+                            ]
+                        },
+                        "max_dist": 10
+                    }
+                ],
+                "must_see": true
+            },
+            "minecraft:physics": {},
+            "minecraft:experience_reward": {
+                "on_death": "query.last_hit_by_player ? 0 : 0"
+            },
+            "minecraft:scale": {
+                "value": 1
             }
-          }
-        ]
-      },
-      "minecraft:entity_born": {
-        "sequence": [
-          {
-            "add": {
-              "component_groups": ["baby"]
-            }
-          }
-        ]
-      },
-      "minecraft:on_calm": {
-        "remove": {
-          "component_groups": ["minecraft:pig_zombie_angry"]
         },
-        "add": {
-          "component_groups": ["minecraft:pig_zombie_calm"]
-        }
-      },
-      "minecraft:become_angry": {
-        "remove": {
-          "component_groups": ["minecraft:pig_zombie_calm"]
-        },
-        "add": {
-          "component_groups": ["minecraft:pig_zombie_angry"]
-        }
-      },
-      "minecraft:ageable_grow_up": {
-        "sequence": [
-          {
-            "remove": {
-              "component_groups": ["baby"]
+        "events": {
+            "become_zombie": {
+                "remove": {},
+                "add": {
+                    "component_groups": ["minecraft:pig_transform"]
+                }
             },
-            "add": {
-              "component_groups": ["adult"]
+            "minecraft:entity_spawned": {
+                "sequence": [
+                    {
+                        "add": {
+                            "component_groups": ["minecraft:pig_zombie_calm"]
+                        }
+                    },
+                    {
+                        "randomize": [
+                            {
+                                "weight": 95,
+                                "add": {
+                                    "component_groups": ["adult"]
+                                }
+                            },
+                            {
+                                "weight": 5,
+                                "add": {
+                                    "component_groups": ["baby"]
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        "randomize": [
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default0"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default1"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default2"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default3"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default4"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default5"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default6"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default7"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default8"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default9"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default10"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default11"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default12"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default13"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default14"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default15"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default16"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default17"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default18"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default19"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default20"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default21"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default22"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default23"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default24"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default25"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default26"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default27"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default28"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default29"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default30"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default31"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default32"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default33"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default34"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default35"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default36"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default37"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default38"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default39"]
+                                }
+                            },
+                            {
+                                "weight": 1,
+                                "add": {
+                                    "component_groups": ["default40"]
+                                }
+                            }
+                        ]
+                    }
+                ]
+            },
+            "minecraft:entity_transformed": {
+                "sequence": [
+                    {
+                        "filters": {
+                            "test": "has_component",
+                            "subject": "other",
+                            "value": "minecraft:is_baby"
+                        },
+                        "add": {
+                            "component_groups": ["baby", "minecraft:pig_zombie_calm"]
+                        }
+                    },
+                    {
+                        "filters": {
+                            "test": "has_component",
+                            "subject": "other",
+                            "operator": "!=",
+                            "value": "minecraft:is_baby"
+                        },
+                        "add": {
+                            "component_groups": ["adult", "minecraft:pig_zombie_calm"]
+                        }
+                    }
+                ]
+            },
+            "minecraft:entity_born": {
+                "sequence": [
+                    {
+                        "add": {
+                            "component_groups": ["baby"]
+                        }
+                    }
+                ]
+            },
+            "minecraft:on_calm": {
+                "remove": {
+                    "component_groups": ["minecraft:pig_zombie_angry"]
+                },
+                "add": {
+                    "component_groups": ["minecraft:pig_zombie_calm"]
+                }
+            },
+            "minecraft:become_angry": {
+                "remove": {
+                    "component_groups": ["minecraft:pig_zombie_calm"]
+                },
+                "add": {
+                    "component_groups": ["minecraft:pig_zombie_angry"]
+                }
+            },
+            "minecraft:ageable_grow_up": {
+                "sequence": [
+                    {
+                        "remove": {
+                            "component_groups": ["baby"]
+                        },
+                        "add": {
+                            "component_groups": ["adult"]
+                        }
+                    }
+                ]
             }
-          }
-        ]
-      }
+        }
     }
-  }
 }

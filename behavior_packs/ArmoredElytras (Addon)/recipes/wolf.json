@@ -5,7 +5,7 @@
       "identifier": "rme:wolf_chestplate_p"
     },
 
-    "tags": ["crafting_table"],
+    "tags": ["avanced"],
     "ingredients": [
       {
         "item": "addon:wolf_chestplate"

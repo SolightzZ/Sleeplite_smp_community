@@ -1,43 +1,43 @@
 {
-  "format_version": "1.8.0",
-  "minecraft:spawn_rules": {
-    "description": {
-      "identifier": "meme:girl",
-      "population_control": "animal"
-    },
-    "conditions": [
-      {
-        "minecraft:player_in_village_filter": {},
-        "minecraft:spawns_on_surface": {},
-        "minecraft:brightness_filter": {
-          "min": 12,
-          "max": 15,
-          "adjust_for_weather": false
+    "format_version": "1.8.0",
+    "minecraft:spawn_rules": {
+        "description": {
+            "identifier": "meme:girl",
+            "population_control": "animal"
         },
-        "minecraft:weight": {
-          "default": 1
-        },
+        "conditions": [
+            {
+                "minecraft:player_in_village_filter": {},
+                "minecraft:spawns_on_surface": {},
+                "minecraft:brightness_filter": {
+                    "min": 13,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
+                "minecraft:weight": {
+                    "default": 1
+                },
 
-        "minecraft:herd": {
-          "min_size": 1,
-          "max_size": 1
-        },
+                "minecraft:herd": {
+                    "min_size": 1,
+                    "max_size": 1
+                },
 
-        "minecraft:density_limit": {
-          "surface": 1,
-          "underground": 1
-        },
+                "minecraft:density_limit": {
+                    "surface": 1,
+                    "underground": 1
+                },
 
-        "minecraft:distance_filter": {
-          "min": 32,
-          "max": 64
-        },
-        "minecraft:biome_filter": {
-          "test": "has_biome_tag",
-          "operator": "==",
-          "value": "animal"
-        }
-      }
-    ]
-  }
+                "minecraft:distance_filter": {
+                    "min": 32,
+                    "max": 64
+                },
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "operator": "==",
+                    "value": "animal"
+                }
+            }
+        ]
+    }
 }

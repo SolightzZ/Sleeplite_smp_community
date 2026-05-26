@@ -1,44 +1,44 @@
 {
-  "format_version": "1.13.0",
-  "minecraft:feature_rules": {
-    "description": {
-      "identifier": "misc:overworld_underground_ruby_ore_feature",
-      "places_feature": "misc:ruby_ore_feature"
-    },
-    "conditions": {
-      "placement_pass": "underground_pass",
-      "minecraft:biome_filter": [
-        {
-          "any_of": [
-            {
-              "test": "has_biome_tag",
-              "operator": "==",
-              "value": "savanna"
+    "format_version": "1.13.0",
+    "minecraft:feature_rules": {
+        "description": {
+            "identifier": "misc:overworld_underground_ruby_ore_feature",
+            "places_feature": "misc:ruby_ore_feature"
+        },
+        "conditions": {
+            "placement_pass": "underground_pass",
+            "minecraft:biome_filter": [
+                {
+                    "any_of": [
+                        {
+                            "test": "has_biome_tag",
+                            "operator": "==",
+                            "value": "savanna"
+                        },
+                        {
+                            "test": "has_biome_tag",
+                            "operator": "==",
+                            "value": "desert"
+                        }
+                    ]
+                }
+            ]
+        },
+        "distribution": {
+            "iterations": 30,
+            "coordinate_eval_order": "zyx",
+            "x": {
+                "distribution": "uniform",
+                "extent": [0, 16]
             },
-            {
-              "test": "has_biome_tag",
-              "operator": "==",
-              "value": "desert"
+            "y": {
+                "distribution": "triangle",
+                "extent": [-64, 50]
+            },
+            "z": {
+                "distribution": "uniform",
+                "extent": [0, 16]
             }
-          ]
         }
-      ]
-    },
-    "distribution": {
-      "iterations": 40,
-      "coordinate_eval_order": "zyx",
-      "x": {
-        "distribution": "uniform",
-        "extent": [0, 16]
-      },
-      "y": {
-        "distribution": "triangle",
-        "extent": [-16, 480]
-      },
-      "z": {
-        "distribution": "uniform",
-        "extent": [0, 16]
-      }
     }
-  }
 }

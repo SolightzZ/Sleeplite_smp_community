@@ -1,27 +1,28 @@
 {
-  "format_version": "1.13.0",
-  "minecraft:ore_feature": {
-    "description": {
-      "identifier": "misc:ruby_ore_feature"
-    },
-    "count": 8,
-    "replace_rules": [
-      {
-        "places_block": "misc:ruby_ore",
-        "may_replace": [
-          {
-            "name": "minecraft:stone"
-          }
+    "format_version": "1.13.0",
+    "minecraft:ore_feature": {
+        "description": {
+            "identifier": "misc:ruby_ore_feature"
+        },
+        "count": 6,
+        "discard_chance_on_air_exposure": 0.3,
+        "replace_rules": [
+            {
+                "places_block": "misc:ruby_ore",
+                "may_replace": [
+                    {
+                        "name": "minecraft:stone"
+                    }
+                ]
+            },
+            {
+                "places_block": "misc:deepslate_ruby_ore",
+                "may_replace": [
+                    {
+                        "name": "minecraft:deepslate"
+                    }
+                ]
+            }
         ]
-      },
-      {
-        "places_block": "misc:deepslate_ruby_ore",
-        "may_replace": [
-          {
-            "name": "minecraft:deepslate"
-          }
-        ]
-      }
-    ]
-  }
+    }
 }

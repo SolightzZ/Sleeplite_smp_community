@@ -1,45 +1,44 @@
 {
-  "format_version": "1.8.0",
-  "minecraft:spawn_rules": {
-    "description": {
-      "identifier": "meme:roblox_user",
-      "population_control": "animal"
-    },
-    "conditions": [
-      {
-        "minecraft:spawns_on_surface": {},
-        "minecraft:spawns_underground": {},
-        "minecraft:brightness_filter": {
-          "min": 12,
-          "max": 15,
-          "adjust_for_weather": false
+    "format_version": "1.8.0",
+    "minecraft:spawn_rules": {
+        "description": {
+            "identifier": "meme:roblox_user",
+            "population_control": "animal"
         },
+        "conditions": [
+            {
+                "minecraft:spawns_on_surface": {},
+                "minecraft:brightness_filter": {
+                    "min": 13,
+                    "max": 15,
+                    "adjust_for_weather": false
+                },
 
-        "minecraft:weight": {
-          "default": 1
-        },
+                "minecraft:weight": {
+                    "default": 1
+                },
 
-        "minecraft:herd": {
-          "min_size": 1,
-          "max_size": 1
-        },
+                "minecraft:herd": {
+                    "min_size": 1,
+                    "max_size": 1
+                },
 
-        "minecraft:density_limit": {
-          "surface": 1,
-          "underground": 1
-        },
+                "minecraft:density_limit": {
+                    "surface": 1,
+                    "underground": 1
+                },
 
-        "minecraft:distance_filter": {
-          "min": 32,
-          "max": 64
-        },
+                "minecraft:distance_filter": {
+                    "min": 32,
+                    "max": 64
+                },
 
-        "minecraft:biome_filter": {
-          "test": "has_biome_tag",
-          "operator": "==",
-          "value": "animal"
-        }
-      }
-    ]
-  }
+                "minecraft:biome_filter": {
+                    "test": "has_biome_tag",
+                    "operator": "==",
+                    "value": "animal"
+                }
+            }
+        ]
+    }
 }

@@ -1,0 +1,27 @@
+{
+  "format_version": "1.17.41",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "misc:ruby_block"
+    },
+    "tags": ["avanced"],
+    "pattern": ["RRR", "RRR", "RRR"],
+    "key": {
+      "R": {
+        "item": "misc:ruby"
+      }
+    },
+    "result": {
+      "item": "misc:ruby_block",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "misc:ruby"
+      },
+      {
+        "item": "misc:ruby_block"
+      }
+    ]
+  }
+}

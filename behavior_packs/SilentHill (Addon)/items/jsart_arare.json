@@ -22,9 +22,7 @@
         "use_duration": 1.6
       },
       "minecraft:tags": {
-        "tags": [
-          "minecraft:is_food"
-        ]
+        "tags": ["minecraft:is_food"]
       },
       "minecraft:allow_off_hand": false,
       "minecraft:use_animation": "eat",
