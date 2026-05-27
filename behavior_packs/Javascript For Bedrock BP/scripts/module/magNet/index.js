@@ -5,7 +5,7 @@ export const onMagnetUse = ({ source }) => {
   if (source && source.isValid) showMagnetMenu(source);
 };
 
-export const onMagnetPlayerLeave = (event) => removeMagnetUser(event.playerId);
+export const onMagnetPlayerLeave = (playerId) => removeMagnetUser(playerId);
 
 export const onMagnetPlayerDie = (event) => {
   if (event.deadEntity?.typeId === "minecraft:player") {

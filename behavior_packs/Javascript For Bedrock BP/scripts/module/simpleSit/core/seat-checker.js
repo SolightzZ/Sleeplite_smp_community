@@ -12,12 +12,7 @@ export const startGlobalSeatCheck = () => {
   if (checkInterval !== null) return;
 
   checkInterval = system.runInterval(() => {
-    const entries = Array.from(activeSeats.entries());
-    const entriesLen = entries.length;
-
-    for (let i = 0; i < entriesLen; i++) {
-      const seatId = entries[i][0];
-      const data = entries[i][1];
+    for (const [seatId, data] of activeSeats) {
       const entity = data.seatEntity;
       const dim = data.dimension;
       const spawnLoc = data.spawnLocation;

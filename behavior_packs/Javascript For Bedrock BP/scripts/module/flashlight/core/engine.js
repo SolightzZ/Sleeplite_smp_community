@@ -103,7 +103,3 @@ export function flashLeave(playerId) {
     queueCursor.idx = 0;
   }
 }
-
-export function handlerFlashlight(data) {
-  removeLightBlock(data.playerId, data.dimension);
-}

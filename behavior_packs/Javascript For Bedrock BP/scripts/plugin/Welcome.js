@@ -7,7 +7,8 @@ const LOOP_DELAY = 5;
 const pendingWelcomes = [];
 let welcomeLoopId;
 
-const getDeathObjective = () => world.scoreboard.getObjective(OBJECTIVE);
+let _objective;
+const getDeathObjective = () => _objective ??= world.scoreboard.getObjective(OBJECTIVE);
 
 const getPlayerDeaths = (player, objective) => {
   if (!objective) return 0;
@@ -36,7 +37,7 @@ const showWelcome = (player, objective) => {
     stayDuration: 160,
     subtitle: ` ${deaths}`,
   });
-  player.playSound("random.toast", { pitch: 1, volume: 1.5 });
+  player.playSound("random.toast", { pitch: 1, volume: 1.0 });
 };
 
 const processWelcomeQueue = () => {

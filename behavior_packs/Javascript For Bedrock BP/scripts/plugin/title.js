@@ -52,9 +52,10 @@ const collectPlayersByDimension = (players) => {
 const getNearbyPlayers = (entity, candidates, out) => {
   if (!candidates || candidates.length === 0) return;
 
-  const ex = entity.location.x;
-  const ey = entity.location.y;
-  const ez = entity.location.z;
+  const eloc = entity.location;
+  const ex = eloc.x;
+  const ey = eloc.y;
+  const ez = eloc.z;
 
   for (let i = 0; i < candidates.length; i++) {
     const player = candidates[i];
@@ -101,8 +102,9 @@ const playAnimationStep = (animation, playersByDimension, recipients) => {
   for (let i = 0; i < recipients.length; i++) {
     const player = recipients[i];
     player.onScreenDisplay.setTitle(titleText, options);
-    player.playSound(SND_SHOOT);
-    if (isFinal) player.playSound(finalSound, { volume: 0.5, pitch: 1 });
+    if (isFinal) {
+      player.playSound(finalSound, { volume: 0.5, pitch: 1 });
+    }
   }
 
   animation.charIndex++;

@@ -30,8 +30,7 @@ export const startMagnetLoop = () => {
       const ids = getMagnetUserIds();
       const toRemove = [];
 
-      for (let i = 0; i < ids.length; i++) {
-        const playerId = ids[i];
+      for (const playerId of ids) {
         const player = playerMap.get(playerId);
 
         if (player && player.isValid) {

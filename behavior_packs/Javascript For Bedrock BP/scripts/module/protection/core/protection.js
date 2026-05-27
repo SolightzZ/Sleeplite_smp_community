@@ -33,22 +33,17 @@ const renderBorders = () => {
     if (activeBorders.size === 0) return;
 
     const players = world.getPlayers();
-    const playerMap = new Map();
+    const onlineNames = new Set();
     const playersLen = players.length;
     for (let i = 0; i < playersLen; i++) {
-      playerMap.set(players[i].name, players[i]);
+      onlineNames.add(players[i].name);
     }
 
     const toRemove = [];
-    const entries = Array.from(activeBorders.entries());
-    const entriesLen = entries.length;
 
-    for (let i = 0; i < entriesLen; i++) {
-      const name = entries[i][0];
-      const state = entries[i][1];
+    for (const [name, state] of activeBorders) {
       try {
-        const p = playerMap.get(name);
-        if (!p || state.ticks >= Config.BorderDuration) {
+        if (!onlineNames.has(name) || state.ticks >= Config.BorderDuration) {
           toRemove.push(name);
           continue;
         }

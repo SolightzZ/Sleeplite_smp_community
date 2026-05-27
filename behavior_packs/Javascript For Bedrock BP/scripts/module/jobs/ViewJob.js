@@ -1,28 +1,68 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { getPlayerById, jobs, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from "./Job.js";
 import { showMainMenu } from "./Menu.js";
+
+const JOB_DURATION_TICKS = 20 * 60 * 20;
+const TIMER_INTERVAL_TICKS = 20;
+
+let timerLoopId = null;
+
+const stopTimerLoopIfIdle = () => {
+  if (timerMap.size === 0 && timerLoopId !== null) {
+    system.clearRun(timerLoopId);
+    timerLoopId = null;
+  }
+};
+
+const buildPlayerMap = () => {
+  const map = new Map();
+  const players = world.getAllPlayers();
+  const len = players.length;
+
+  for (let i = 0; i < len; i++) {
+    map.set(players[i].id, players[i]);
+  }
+
+  return map;
+};
 
 const startTimer = (riderId, jobId_, savedStartTick) => {
   stopTimer(riderId);
 
   const startTick = savedStartTick ?? system.currentTick;
 
-  const intervalId = system.runInterval(() => {
-    const rider = getPlayerById(riderId);
+  timerMap.set(riderId, { startTick });
 
-    if (!rider || !rider.isValid || !playerJobMap.has(riderId)) {
+  if (timerLoopId === null) {
+    timerLoopId = system.runInterval(processTimers, TIMER_INTERVAL_TICKS);
+  }
+};
+
+const processTimers = () => {
+  if (timerMap.size === 0) {
+    stopTimerLoopIfIdle();
+    return;
+  }
+
+  const playerMap = buildPlayerMap();
+
+  for (const [riderId, data] of timerMap) {
+    if (!playerJobMap.has(riderId)) {
       stopTimer(riderId);
-      return;
+      continue;
     }
 
-    const elapsed = system.currentTick - startTick;
-    const remaining = 20 * 60 * 20 - elapsed;
+    const elapsed = system.currentTick - data.startTick;
+    const remaining = JOB_DURATION_TICKS - elapsed;
 
     if (remaining <= 0) {
       expireJob(riderId);
-      return;
+      continue;
     }
+
+    const rider = playerMap.get(riderId);
+    if (!rider || !rider.isValid) continue;
 
     const secs = Math.ceil(remaining / 20);
     const mins = Math.floor(secs / 60);
@@ -30,9 +70,9 @@ const startTimer = (riderId, jobId_, savedStartTick) => {
     const pad = sec2 < 10 ? "0" : "";
 
     rider.onScreenDisplay?.setActionBar(`[Job] Time left: ${mins}:${pad}${sec2}`);
-  }, 20);
+  }
 
-  timerMap.set(riderId, { intervalId, startTick });
+  stopTimerLoopIfIdle();
 };
 
 const expireJob = (riderId) => {
@@ -162,6 +202,6 @@ system.runTimeout(() => {
   const len = snapshot.length;
   for (let i = 0; i < len; i++) {
     const [riderId, data] = snapshot[i];
-    if (data.startTick) startTimer(riderId, playerJobMap.get(riderId), data.startTick);
+    if (typeof data.startTick === "number") startTimer(riderId, playerJobMap.get(riderId), data.startTick);
   }
 }, 10);

@@ -2,11 +2,18 @@ import { system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { emoteList, setting } from "./database.js";
 
+const BUSY_ERROR = "User is busy";
+
 function playEmote(player, animName, emoteName) {
   if (!player.isValid) return;
 
-  const cmd = `playanimation @s animation.${animName} animation.${animName}`;
-  player.runCommand(cmd);
+  const cmd = `playanimation "${player.name}" animation.${animName} animation.${animName}`;
+  try {
+    player.dimension.runCommand(cmd);
+  } catch (error) {
+    console.warn(`[Emote] play command failed: ${error?.message ?? error}`);
+    return;
+  }
 
   player.onScreenDisplay?.setActionBar(`§aEmote: §f${emoteName}`);
   if (setting.soundClick) player.playSound(setting.soundClick);
@@ -15,8 +22,13 @@ function playEmote(player, animName, emoteName) {
 function stopEmote(player, animName) {
   if (!player.isValid) return;
 
-  const cmd = `playanimation @s animation.${animName}`;
-  player.runCommand(cmd);
+  const cmd = `playanimation "${player.name}" animation.${animName}`;
+  try {
+    player.dimension.runCommand(cmd);
+  } catch (error) {
+    console.warn(`[Emote] stop command failed: ${error?.message ?? error}`);
+    return;
+  }
 
   player.onScreenDisplay?.setActionBar("§cEmote: §fSTOPPED");
   if (setting.soundClick) player.playSound(setting.soundClick);
@@ -25,7 +37,8 @@ function stopEmote(player, animName) {
 function openSubMenu(player, group) {
   if (!player.isValid) return;
 
-  const form = new ActionFormData().title("§e§m§o§t§e§f" + "§r§8" + group.title || "Emotes").body("§7เลือกท่าทาง:");
+  const title = group.title ? `§e§m§o§t§e§f§r§8${group.title}` : "Emotes";
+  const form = new ActionFormData().title(title).body("§7เลือกท่าทาง:");
 
   const items = group.items;
   const len = items.length;
@@ -51,7 +64,7 @@ function openSubMenu(player, group) {
       }
     })
     .catch((error) => {
-      if (error?.message !== "User is busy") {
+      if (error?.message !== BUSY_ERROR) {
         if (player.isValid) {
           player.sendMessage("§c[Emote] เกิดข้อผิดพลาด");
         }
@@ -98,7 +111,7 @@ export function showMain(player) {
       });
     })
     .catch((error) => {
-      if (error?.message !== "User is busy") {
+      if (error?.message !== BUSY_ERROR) {
         if (player.isValid) {
           player.sendMessage("§c[Emote] เกิดข้อผิดพลาด");
         }

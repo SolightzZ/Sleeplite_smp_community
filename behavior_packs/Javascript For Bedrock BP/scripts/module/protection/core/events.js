@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, world } from "@minecraft/server";
 import { Config } from "../config.js";
 import { MenuLocks, openMenu } from "../ui/menu.js";
 import { hasAccess } from "../utils/validation.js";
@@ -140,8 +140,10 @@ export const onChat = (ev) => {
   });
 };
 
-export const onPlayerLeave = (playerName) => {
-  clearVisuals(playerName);
-  uiLocks.delete(playerName);
-  MenuLocks.delete(playerName);
-};
+world.beforeEvents.playerLeave.subscribe((event) => {
+  const player = event.player;
+  if (!player?.isValid) return;
+  clearVisuals(player.name);
+  uiLocks.delete(player.name);
+  MenuLocks.delete(player.name);
+});

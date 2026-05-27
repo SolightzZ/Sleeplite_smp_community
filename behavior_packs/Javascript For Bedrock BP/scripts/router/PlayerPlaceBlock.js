@@ -15,6 +15,6 @@ world.beforeEvents.playerPlaceBlock.subscribe((ev) => {
       if (ev.cancel) return;
     }
   } catch (e) {
-    console.warn("[ PlayerPlaceBlock ] player_place_block", e.message);
+    console.warn("[ PlayerPlaceBlock ] player_place_block", String(e));
   }
 });

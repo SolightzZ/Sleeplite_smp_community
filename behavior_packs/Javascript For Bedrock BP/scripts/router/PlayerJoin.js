@@ -1,12 +1,13 @@
 import { world } from "@minecraft/server";
-import { chatRankplayerJoin } from "../module/nameteg/index.js";
+import { chatRankPlayerJoin } from "../module/nametag/index.js";
 
 world.afterEvents.playerSpawn.subscribe((ev) => {
   try {
+    if (!ev.initialSpawn) return;
     const player = ev.player;
     if (!player || !player.isValid) return;
-    chatRankplayerJoin(ev);
+    chatRankPlayerJoin(ev);
   } catch (e) {
-    console.warn("[ PlayerJoin ] player_join", e.message);
+    console.warn("[ PlayerJoin ] player_join", String(e));
   }
 });

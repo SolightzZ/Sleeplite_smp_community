@@ -1,6 +1,8 @@
 import { system } from "@minecraft/server";
 import { ActionFormData } from "@minecraft/server-ui";
 import { ask, forget } from "./brain.js";
+
+const BUSY_ERROR = "User is busy";
 import { eat, hit, say, see, sound } from "./hand.js";
 import { boss, door, key, shop, team, zone } from "./rules.js";
 import { count, fix } from "./tools.js";
@@ -24,7 +26,7 @@ function showiconstest(player, title, message, icon) {
       .show(player)
       .then(() => {})
       .catch((e) => {
-        if (e?.message !== "User is busy") {
+        if (e?.message !== BUSY_ERROR) {
           if (player.isValid) {
             player.sendMessage("§c[EndPortalFrame] เกิดข้อผิดพลาดในการเปิดเมนู");
           }

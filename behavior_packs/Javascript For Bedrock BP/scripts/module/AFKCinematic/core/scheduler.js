@@ -4,15 +4,26 @@ import { playerStates } from "./state.js";
 import { getCameraFrame } from "./afk.js";
 import { tickBlockCache } from "./block.js";
 
-function safeRun(player, command) {
-  const p = player.runCommand(command);
+function getPlayerById(playerId) {
+  try {
+    const entity = world.getEntity(playerId);
+    return entity?.typeId === "minecraft:player" ? entity : undefined;
+  } catch {
+    return undefined;
+  }
+}
+
+function setCinematicCamera(player, position, rotation) {
+  player.camera.setCamera("minecraft:free", {
+    location: position,
+    rotation: { x: rotation.pitch, y: rotation.yaw },
+  });
 }
 
 export class CinematicScheduler {
   constructor() {
     this._ids = [];
     this._cursor = 0;
-    this._playerMap = new Map();
     this.intervalId = undefined;
   }
 
@@ -38,14 +49,6 @@ export class CinematicScheduler {
     if (this._ids.length === 0) this.stop();
   }
 
-  _rebuildPlayerMap() {
-    this._playerMap.clear();
-    const players = world.getAllPlayers();
-    for (let i = 0; i < players.length; i++) {
-      this._playerMap.set(players[i].id, players[i]);
-    }
-  }
-
   tick() {
     if (this._ids.length === 0) {
       this.stop();
@@ -53,7 +56,6 @@ export class CinematicScheduler {
     }
 
     tickBlockCache();
-    this._rebuildPlayerMap();
 
     const budget = Math.min(CONFIG.schedulerBudget, this._ids.length);
     const toRemove = [];
@@ -63,7 +65,7 @@ export class CinematicScheduler {
       if (this._cursor >= this._ids.length) this._cursor = 0;
 
       const playerId = this._ids[this._cursor++];
-      const player = this._playerMap.get(playerId);
+      const player = getPlayerById(playerId);
 
       if (!player?.isValid) {
         toRemove.push(playerId);
@@ -78,7 +80,7 @@ export class CinematicScheduler {
 
       try {
         const { position: p, rotation: r } = getCameraFrame(player, s);
-        safeRun(player, `camera @s set minecraft:free pos ${p.x.toFixed(3)} ${p.y.toFixed(3)} ${p.z.toFixed(3)} rot ${r.pitch.toFixed(3)} ${r.yaw.toFixed(3)}`);
+        setCinematicCamera(player, p, r);
       } catch (error) {
         console.error(" [ AFKCinematic ] CinematicScheduler: " + error);
         toRemove.push(playerId);
@@ -106,6 +108,5 @@ export class CinematicScheduler {
     }
     this._ids.length = 0;
     this._cursor = 0;
-    this._playerMap.clear();
   }
 }

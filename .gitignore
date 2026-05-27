@@ -5,7 +5,22 @@ level.dat_old
 levelname.txt
 world_icon.jpeg
 mc.log
+
+
+# AI
+AGENTS.md
 .agents
 SKILL.md
 README.md
 skills
+ARCHITECTURE.md
+CODEX.md
+CLAUDE.md
+CONTEXT.md
+LOCAL.SKILL.md
+SCRIPT_PERFORMANCE_AUDIT.md
+SCHEMA.md
+WORKFLOW.md
+.codex
+.claude
+skills/

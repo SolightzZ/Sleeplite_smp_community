@@ -1,4 +1,4 @@
-import { system, world } from "@minecraft/server";
+import { world } from "@minecraft/server";
 import { itile_main } from "../plugin/title.js";
 
 const spawnHandlers = new Map([
@@ -14,13 +14,11 @@ world.afterEvents.entitySpawn.subscribe((ev) => {
     const handlers = spawnHandlers.get(entity.typeId);
     if (!handlers || handlers.length === 0) return;
 
-    system.run(() => {
-      const len = handlers.length;
-      for (let i = 0; i < len; i++) {
-        const fn = handlers[i];
-        if (fn) fn(ev);
-      }
-    });
+    const len = handlers.length;
+    for (let i = 0; i < len; i++) {
+      const fn = handlers[i];
+      if (fn) fn(ev);
+    }
   } catch (e) {
     console.warn("[ EntitySpawn ] entity_spawn", e.message);
   }

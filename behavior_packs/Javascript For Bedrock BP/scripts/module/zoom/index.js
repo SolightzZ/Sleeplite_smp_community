@@ -41,8 +41,8 @@ export function disableZoom(player) {
   }
 }
 
-export function zoomPlayerLeave(event) {
-  activeZoomPlayers.delete(event.playerId);
+export function zoomPlayerLeave(playerId) {
+  activeZoomPlayers.delete(playerId);
 }
 
 export function zoomEntityDie(event) {

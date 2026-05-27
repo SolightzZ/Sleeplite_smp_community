@@ -1,5 +1,3 @@
-import { system } from "@minecraft/server";
-
 const DIM_OVERWORLD = "minecraft:overworld";
 const DIM_NETHER = "minecraft:nether";
 
@@ -33,7 +31,7 @@ const sendCalculated = (player, x, z) => {
 
 export const xz_main = (ev) => {
   const raw = ev.message;
-  if (raw.charCodeAt(0) !== 33 || !raw.startsWith("!xz")) return;
+  if (!raw.startsWith("!xz")) return;
 
   const player = ev.sender;
   if (!player || !player.isValid) return;
@@ -45,7 +43,7 @@ export const xz_main = (ev) => {
 
   if (sp1 === -1) {
     const loc = player.location;
-    system.run(() => sendCalculated(player, loc.x, loc.z));
+    sendCalculated(player, loc.x, loc.z);
     return;
   }
 
@@ -63,5 +61,5 @@ export const xz_main = (ev) => {
     return;
   }
 
-  system.run(() => sendCalculated(player, argX, argZ));
+  sendCalculated(player, argX, argZ);
 };

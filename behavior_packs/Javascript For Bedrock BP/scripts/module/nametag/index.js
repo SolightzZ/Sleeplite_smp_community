@@ -1,5 +1,4 @@
 export {
-  chatRankplayerJoin,
+  chatRankPlayerJoin,
   chatRankItemUse,
-  chatRankPlayerLeave,
 } from "./events.js";

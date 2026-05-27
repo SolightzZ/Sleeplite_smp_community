@@ -7,6 +7,6 @@ world.afterEvents.playerDimensionChange.subscribe((ev) => {
     if (!player || !player.isValid) return;
     handlePlayerDimensionChange(ev);
   } catch (e) {
-    console.warn("[ PlayerDimensionChange ] player_dimension_change", e.message);
+    console.warn("[ PlayerDimensionChange ] player_dimension_change", String(e));
   }
 });

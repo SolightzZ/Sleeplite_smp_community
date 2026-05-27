@@ -17,76 +17,41 @@ function name(id) {
 function give(player, id, count) {
   try {
     const inv = player.getComponent("minecraft:inventory");
-    if (!inv || !inv.container) return false;
+    if (!inv?.container) return false;
 
     const container = inv.container;
     const size = container.size;
-
-    let amountToAdd = count;
-    if (player.hasTag(config.vipTag)) {
-      amountToAdd = count * config.vipMul;
-    }
-
-    const dummyItem = new ItemStack(id, 1);
-    const maxStack = dummyItem.maxAmount;
-
-    let freeSpace = 0;
-
-    for (let i = 0; i < size; i++) {
-      const slotItem = container.getItem(i);
-
-      if (!slotItem) {
-        freeSpace += maxStack;
-      } else if (slotItem.typeId === id) {
-        if (slotItem.amount < maxStack) {
-          freeSpace += maxStack - slotItem.amount;
-        }
-      }
-    }
-
-    if (freeSpace < amountToAdd) {
-      console.warn(`[Give] Failed: Not enough space. Needed: ${amountToAdd}, Free: ${freeSpace}`);
-      return false;
-    }
+    const amountToAdd = player.hasTag(config.vipTag) ? count * config.vipMul : count;
+    const maxStack = new ItemStack(id, 1).maxAmount;
 
     let remaining = amountToAdd;
 
-    for (let i = 0; i < size; i++) {
-      if (remaining <= 0) break;
-
+    for (let i = 0; i < size && remaining > 0; i++) {
       const slotItem = container.getItem(i);
-
-      if (slotItem && slotItem.typeId === id && slotItem.amount < maxStack) {
-        const spaceInSlot = maxStack - slotItem.amount;
-        const toAdd = Math.min(remaining, spaceInSlot);
-
+      if (slotItem?.typeId === id && slotItem.amount < maxStack) {
+        const toAdd = Math.min(remaining, maxStack - slotItem.amount);
         slotItem.amount += toAdd;
         container.setItem(i, slotItem);
+        remaining -= toAdd;
+      }
+    }
 
+    for (let i = 0; i < size && remaining > 0; i++) {
+      const slotItem = container.getItem(i);
+      if (!slotItem) {
+        const toAdd = Math.min(remaining, maxStack);
+        container.setItem(i, new ItemStack(id, toAdd));
         remaining -= toAdd;
       }
     }
 
     if (remaining > 0) {
-      for (let i = 0; i < size; i++) {
-        if (remaining <= 0) break;
-
-        const slotItem = container.getItem(i);
-
-        if (!slotItem) {
-          const toAdd = Math.min(remaining, maxStack);
-
-          const newItem = new ItemStack(id, toAdd);
-          container.setItem(i, newItem);
-
-          remaining -= toAdd;
-        }
-      }
+      console.warn(`[Give] Not enough space. ${remaining} items could not be given.`);
     }
 
     return true;
   } catch (e) {
-    console.warn("[ Give ] Give Error: " + e);
+    console.warn("[Give] Error:", e);
     return false;
   }
 }

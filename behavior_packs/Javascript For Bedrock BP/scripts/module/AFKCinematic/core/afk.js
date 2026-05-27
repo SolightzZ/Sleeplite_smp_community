@@ -5,13 +5,23 @@ import { pullCamera } from "./block.js";
 import { buildSequence } from "./stateManager.js";
 import { framePool } from "./state.js";
 
-const safeRun = (player, command) => {
+const safeCameraClear = (player) => {
   if (!player || !player.isValid) return;
 
   try {
-    player.runCommand(command);
+    player.camera.clear();
   } catch (e) {
-    console.warn(`[ AFKCinematic ] command failed: ${command} - ${e.message}`);
+    console.warn(`[ AFKCinematic ] camera clear failed: ${e.message}`);
+  }
+};
+
+const safeSetFov = (player, fov) => {
+  if (!player || !player.isValid) return;
+
+  try {
+    player.camera.setFov({ fov });
+  } catch (e) {
+    console.warn(`[ AFKCinematic ] set fov failed: ${e.message}`);
   }
 };
 
@@ -27,10 +37,10 @@ export function startAfk(player, s, cinematicScheduler) {
   s.warningShown = false;
 
   player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
-  safeRun(player, `camera @s fov_set ${CONFIG.cinematicFov}`);
+  safeCameraClear(player);
+  safeSetFov(player, CONFIG.cinematicFov);
 
   cinematicScheduler.enqueue(player.id);
-  player.camera.clear();
 }
 
 export function stopAfk(player, s, cinematicScheduler) {
@@ -40,15 +50,19 @@ export function stopAfk(player, s, cinematicScheduler) {
 
   cinematicScheduler.dequeue(player.id);
 
-  player.camera.setCamera("minecraft:first_person", {
-    easeOptions: {
-      easeType: "Linear",
-      time: 0.2,
-    },
-  });
+  try {
+    player.camera.setCamera("minecraft:first_person", {
+      easeOptions: {
+        easeType: "Linear",
+        time: 0.2,
+      },
+    });
+  } catch (e) {
+    console.warn(`[ AFKCinematic ] reset camera failed: ${e.message}`);
+  }
 
   player.onScreenDisplay.setHudVisibility(HudVisibility.Reset);
-  player.camera.clear();
+  safeCameraClear(player);
 }
 
 export function getCameraFrame(player, s) {

@@ -30,7 +30,7 @@ export const finalizeAndCleanupState = (job) => {
   if (job.brokenCount > 0 || job.xpAccumulated > 0) {
     finalizeJobDrops(job);
 
-    const blocksBroken = job.index;
+    const blocksBroken = job.brokenCount;
     const item = getPlayerPickaxe(job.player);
     if (item) {
       applyDurabilityDamage(job.player, item, blocksBroken, job.unbreakingLevel);

@@ -1,57 +1,51 @@
 # AGENTS.md
 
-This is a **Minecraft Bedrock world save** (Sleeplite SMP 2026) that is also the live add-on development workspace. Git root is the world folder itself.
+Minecraft Bedrock world save (Sleeplite SMP 2026) + live add-on workspace. Git root is the world folder.
 
-## Project structure
+## Before editing — read these
 
-- `behavior_packs/` — 21 raw (unarchived) behavior packs
-- `resource_packs/` — 20 raw resource packs
-- `skills/` — AI knowledge base (gitignored via `.gitignore`), see below
-- `db/` — LevelDB world data (gitignored)
+Each is concise and answers a specific need:
 
-No `package.json`, no bundler, no TypeScript, no linter, no test framework, no CI.
+| File | What it covers |
+|------|----------------|
+| `CODEX.md` | Workspace rules, git safety, coding conventions, pack structure |
+| `ARCHITECTURE.md` | JS wiring, 8 scripting packs, import-side-effect pattern, event routing |
+| `WORKFLOW.md` | Dev loop, how to add features, multiplayer rules, `/reload all` |
+| `SCHEMA.md` | Dynamic properties, commands, custom components, data shapes |
+| `CONTEXT.md` | Complete file tree of every `.js` file in the workspace |
 
-## Script API
+## Facts an agent is likely to miss
 
-All JS is **vanilla ESModules** run directly by Minecraft's script engine — no build step.
+- **No build/test/lint/CI.** Edit `.js` or `.json`, then `/reload all` in-game (or rejoin world). Check Content Log or `mc.log` for errors.
+- **`node --check <file>`** catches JS syntax errors. **`python skills/validate_json.py`** validates JSON.
+- **All JS registers via import side-effects.** `main.js` is an import-only file — no `start()`/`init()` called from outside. Every router/plugin/module subscribes itself on import.
+- **Main pack has a single `system.runInterval`** (`router/System.RunInterval.js`) with a rate-limited task queue. Other packs (VisualHD, ArmoredElytras) have their own `runInterval`.
+- **Router handler pattern** (16 files): each subscribes one event, forwards to an array of handlers inside `try-catch` + `console.warn`. Standard guard: `if (!player || !player.isValid()) return;`.
+- **Modules** (20 subdirs under `module/`) use a consistent layout: `{index,config,constants,core/,utils/,commands/}`. **Plugins** (8 single-file features under `plugin/`) wire directly to router events.
+- **ArmoredElytras is the only obfuscated pack** (string shuffling + var renaming in `system.js`, `utils.js`). All other packs are plain readable JS.
+- **Performance target: 20–30 players.** High-risk patterns: per-player intervals, every-tick `runCommand`, broad `dimension.getEntities()`, `world.getAllPlayers()` in hot loops, unbounded dynamic-property JSON.
 
-**Main scripting pack:** `behavior_packs/Javascript For Bedrock BP/`
-- Entry: `scripts/main.js` — imports 15+ router modules
-- Modules: router/, plugin/, module/ (zoom, veinMiner, treeCapitator, simpleSit, rewards, report, inventorySorter, emotes, dropheads)
-- Dependencies: `@minecraft/server` 2.8.0-beta, `@minecraft/server-ui` 2.1.0-beta, `@minecraft/server-admin` 1.0.0-beta
-- `min_engine_version`: 1.26.10
+## 8 scripting packs at a glance
 
-Other scripting packs (7 total): ArmoredElytras, CampfireCreations, CustomFrames, FoodExpanded, PlayerHeads, SilentHill, VisualHD.
+| Pack | Entry | `@minecraft/server` |
+|------|-------|-------------------|
+| Javascript For Bedrock BP | `scripts/main.js` | 2.8.0-beta |
+| ArmoredElytras | `scripts/index.js` | (implicit, manifest: 2.2.0) |
+| SilentHill | `scripts/main.js` | (implicit, manifest: 2.6.0) |
+| VisualHD | `scripts/xVisuals.js` | (implicit, manifest: 1.19.0) |
+| CustomFrames | `scripts/CustomFrames.js` | (implicit, manifest: 1.12.0) |
+| FoodExpanded | `scripts/Foods.js` | (implicit, manifest: 1.17.0) |
+| CampfireCreations | `scripts/main.js` | (implicit, manifest: 2.6.0) |
+| PlayerHeads | `scripts/playerHeads.js` | (implicit, manifest: 2.1.0) |
 
-Each scripting pack's `manifest.json` declares its own entry script and `@minecraft/server` dependency version.
+No pack depends on another — all are fully independent.
 
-## Development workflow
+## Git
 
-- **No build/test commands exist.** Edit a JS or JSON file, then `/reload all` in-game (or re-join the world).
-- Enable **Content Log** (Settings → Creator) to debug JSON/script errors. Check `mc.log` for errors.
-- All packs are raw directories — no `.mcpack`/`.mcaddon` archiving needed.
-- Python validators in `skills/`: `validate_json.py` (duplicate keys, syntax), `inspect_animations.py` (animation structure). Not in PATH; run via `python skills/validate_json.py`.
+- No forceful or destructive commands.
+- Do not touch `db/`, `level.dat*`, `levelname.txt`, `world_icon.jpeg`, `mc.log` (all gitignored).
+- Keep commits scoped to the pack or file being changed.
 
-## Knowledge base (skills/)
+## OpenCode config
 
-The `skills/` directory is an Obsidian-style vault with wiki links (`[[...]]`). It is gitignored.
-
-- `SKILL.md` — Top-level skill entry; paths to `bedrock-wiki`, `bedrock-script-api`, `jsonui` skills
-- `skills/bedrock-wiki/SKILL.md` — Bedrock Wiki reference (JSON definitions, packs, commands, world gen)
-- `skills/bedrock-script-api/SKILL.md` — Script API reference (ESModules rules, `.d.ts` types, templates)
-  - Code rules: ESModules, multiplayer-safe patterns, no deprecated APIs, no `runCommand` spam, no per-player intervals
-  - Has 801KB `@minecraft/server` `.d.ts` and vanilla-data runtime JS at `skills/bedrock-script-api/references/`
-- `skills/jsonui/SKILL.md` — JSON UI property reference
-
-## Key conventions
-
-- All manifests use `format_version: 2`
-- Namespace custom identifiers (`my_pack:custom_block`)
-- Unique UUIDs per pack (header + each module)
-- `/reload all` reloads all packs in a development world
-- Never reuse UUIDs across packs
-- `min_engine_version` should match target Minecraft version (currently 1.26.x)
-
-## .gitignore
-
-Ignores: `db/`, `level.dat*`, `levelname.txt`, `world_icon.jpeg`, `mc.log`, `.agents`, `SKILL.md`, `README.md`, `skills/`, `error.md`. These are development metadata, not world data.
+`./.opencode/package.json` declares a single dependency: `@opencode-ai/plugin` 1.15.11. The `.opencode/` directory also has an active memory store at `memorys/`.

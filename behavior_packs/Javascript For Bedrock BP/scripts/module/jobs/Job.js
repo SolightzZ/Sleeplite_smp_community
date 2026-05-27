@@ -166,8 +166,7 @@ export const onJobItemUse = (event) => {
   if (source?.isValid) showMainMenu(source);
 };
 
-export const onJobPlayerLeave = (event) => {
-  const playerId = event.playerId;
+export const onJobPlayerLeave = (playerId) => {
   selectedMap.delete(playerId);
   amountMap.delete(playerId);
 };

@@ -22,7 +22,6 @@ export function applyZoom(player, config) {
 }
 
 export function clearZoom(player, config) {
-  player.camera.setFov();
   player.camera.clear();
 
   player.removeEffect(ZOOM_CONFIG.effect.id);

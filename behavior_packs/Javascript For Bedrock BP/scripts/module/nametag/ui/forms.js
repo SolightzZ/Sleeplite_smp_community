@@ -54,13 +54,13 @@ export const showMenuAdd = (admin, target) => {
     })
     .catch((e) => {
       if (e?.message !== "User is busy") {
-        if (player.isValid) {
-          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        if (admin.isValid) {
+          admin.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
 
         console.error("[NameTagRank] showMenuAdd: ", e);
       } else {
-        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+        admin.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };
@@ -103,13 +103,13 @@ export const showMenuEdit = (admin, target) => {
     })
     .catch((e) => {
       if (e?.message !== "User is busy") {
-        if (player.isValid) {
-          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        if (admin.isValid) {
+          admin.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
 
         console.error("[NameTagRank] showMenuEdit: ", e);
       } else {
-        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+        admin.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };
@@ -129,13 +129,13 @@ const showConfirmDelete = (admin, target, ranks) => {
     })
     .catch((e) => {
       if (e?.message !== "User is busy") {
-        if (player.isValid) {
-          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        if (admin.isValid) {
+          admin.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
 
         console.error("[NameTagRank] showConfirmDelete: ", e);
       } else {
-        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+        admin.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };
@@ -167,13 +167,13 @@ export const showMenuRemove = (admin, target) => {
     })
     .catch((e) => {
       if (e?.message !== "User is busy") {
-        if (player.isValid) {
-          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        if (admin.isValid) {
+          admin.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
 
         console.error("[NameTagRank] showMenuRemove: ", e);
       } else {
-        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+        admin.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };
@@ -199,13 +199,13 @@ const showActions = (admin, target) => {
     })
     .catch((e) => {
       if (e?.message !== "User is busy") {
-        if (player.isValid) {
-          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        if (admin.isValid) {
+          admin.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
 
         console.error("[NameTagRank] showActions: ", e);
       } else {
-        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+        admin.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };
@@ -229,13 +229,13 @@ export const showMainMenu = (admin) => {
     })
     .catch((e) => {
       if (e?.message !== "User is busy") {
-        if (player.isValid) {
-          player.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
+        if (admin.isValid) {
+          admin.sendMessage("§c[NameTagRank] เกิดข้อผิดพลาดในการเปิดเมนู");
         }
 
         console.error("[NameTagRank] showMainMenu: ", e);
       } else {
-        player.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
+        admin.sendMessage("§c[NameTagRank] โปรดรอสักครู่...");
       }
     });
 };

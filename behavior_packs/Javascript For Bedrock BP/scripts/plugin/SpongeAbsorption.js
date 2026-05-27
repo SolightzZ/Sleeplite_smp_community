@@ -1,5 +1,3 @@
-import { system } from "@minecraft/server";
-
 const SPONGE = "minecraft:sponge";
 const WATER = "minecraft:water";
 const MAX_DISTANCE = 6;
@@ -74,10 +72,8 @@ export const handleSpongeAbsorption = (event) => {
     const waterBlock = getTargetWaterBlock(player);
     if (!waterBlock) return;
 
-    system.run(() => {
-      if (!player.isValid || !waterBlock.isValid) return;
-      absorbWaterWithSponge(container, slot, waterBlock);
-    });
+    if (!player.isValid || !waterBlock.isValid) return;
+    absorbWaterWithSponge(container, slot, waterBlock);
   } catch (e) {
     console.error("[ SpongeAbsorption ] handleSpongeAbsorption", e.message);
   }

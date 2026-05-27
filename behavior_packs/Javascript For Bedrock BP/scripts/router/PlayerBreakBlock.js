@@ -19,7 +19,7 @@ const runHandlers = (handlers, ev) => {
       if (ev.cancel) return;
     }
   } catch (e) {
-    console.warn("[ PlayerBreakBlock ] player_break_block", e.message);
+    console.warn("[ PlayerBreakBlock ] player_break_block", String(e));
   }
 };
 

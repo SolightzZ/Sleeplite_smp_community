@@ -44,7 +44,7 @@ const config = {
   vipMul: 2,
   vipTag: "vip",
   adminTag: "admin",
-  dbKey: "reward:one1",
+  dbKey: "daily_reward_30day",
 };
 
 export { list, config };
