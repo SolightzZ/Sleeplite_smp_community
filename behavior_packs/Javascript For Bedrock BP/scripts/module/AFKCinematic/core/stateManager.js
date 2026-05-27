@@ -22,7 +22,7 @@ export function ensureState(player) {
     anchor: cloneVec3(loc),
     baseYaw: rot.y,
     sequence: [],
-    sequenceIndex: 0,
+    sequenceIndex: -1,
     shotTicks: 0,
     waveClock: Math.random() * Math.PI * 2,
   };

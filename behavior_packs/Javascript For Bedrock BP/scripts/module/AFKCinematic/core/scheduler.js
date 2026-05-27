@@ -1,8 +1,9 @@
-import { system, world } from "@minecraft/server";
+import { system, world, HudVisibility } from "@minecraft/server";
 import { CONFIG } from "../config.js";
 import { playerStates } from "./state.js";
 import { getCameraFrame } from "./afk.js";
 import { tickBlockCache } from "./block.js";
+import { hasMoved } from "./stateManager.js";
 
 function getPlayerById(playerId) {
   try {
@@ -78,6 +79,14 @@ export class CinematicScheduler {
         continue;
       }
 
+      if (hasMoved(player, s)) {
+        s.isAfk = false;
+        try { player.camera.clear(); } catch (_) {}
+        try { player.onScreenDisplay.setHudVisibility(HudVisibility.Reset); } catch (_) {}
+        toRemove.push(playerId);
+        continue;
+      }
+
       try {
         const { position: p, rotation: r } = getCameraFrame(player, s);
         setCinematicCamera(player, p, r);
@@ -90,7 +99,11 @@ export class CinematicScheduler {
       s.shotTicks++;
       const shot = s.sequence[s.sequenceIndex];
       if (s.shotTicks >= shot.duration) {
-        s.sequenceIndex = (s.sequenceIndex + 1) % s.sequence.length;
+        let next;
+        do {
+          next = Math.floor(Math.random() * s.sequence.length);
+        } while (s.sequence.length > 1 && next === s.sequenceIndex);
+        s.sequenceIndex = next;
         s.shotTicks = 0;
         s.waveClock = Math.random() * Math.PI * 2;
       }
