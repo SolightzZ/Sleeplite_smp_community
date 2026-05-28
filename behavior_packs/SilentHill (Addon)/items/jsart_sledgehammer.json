@@ -3,7 +3,10 @@
   "minecraft:item": {
     "description": {
       "identifier": "jsart:sledgehammer",
-      "menu_category": { "category": "equipment" }
+      "menu_category":  { 
+        "category": 
+        "equipment" 
+      }
     },
     "components": {
       "minecraft:icon": "jsart_sledgehammer",

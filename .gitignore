@@ -24,3 +24,4 @@ WORKFLOW.md
 .codex
 .claude
 skills/
+node_modules
