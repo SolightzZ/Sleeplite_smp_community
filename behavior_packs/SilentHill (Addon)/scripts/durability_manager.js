@@ -63,7 +63,7 @@ class DurabilityManager {
     });
   }
 
-  async #handleToolUseOn(event) {
+  #handleToolUseOn(event) {
     const { player, itemStack: item, block } = event;
     if (!item || !item.hasComponent(this.#customComponentName)) return;
 
@@ -131,7 +131,7 @@ class DurabilityManager {
     });
   }
 
-  async #coarseBlock(block) {
+  #coarseBlock(block) {
     block.setType("minecraft:grass_path");
   }
 
@@ -211,9 +211,9 @@ class DurabilityManager {
     const player = event.hurtEntity;
     const damage = event.damage;
     const armor = player.getComponent(EntityComponentTypes.Equippable);
-    const originalDamage = Math.floor(this.#getOriginalDamage(armor.totalArmor, armor.totalToughness, damage));
-
     if (!armor) return;
+
+    const originalDamage = Math.floor(this.#getOriginalDamage(armor.totalArmor, armor.totalToughness, damage));
 
     const equipmentSlots = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet];
     for (const slot of equipmentSlots) {

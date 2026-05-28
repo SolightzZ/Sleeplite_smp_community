@@ -556,7 +556,7 @@
           {
             "queue_command": {
               "command": [
-                "function nursefall"
+                "function nurse1fall"
               ]
             },
             "weight": 1

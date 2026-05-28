@@ -1,6 +1,4 @@
-import { system, world } from "@minecraft/server";
-import { decrementStack, getOppositeDirection, DirectionType, cardinalSides, randomFunction } from "./utils/helper";
-import { directionToVector3 } from "./utils/math";
+import { system } from "@minecraft/server";
 
 system.beforeEvents.startup.subscribe((initEvent) => {
   initEvent.itemComponentRegistry.registerCustomComponent("jsart_arare:trigger", {
@@ -13,10 +11,6 @@ system.beforeEvents.startup.subscribe((initEvent) => {
     onConsume: (e) => {
       e.source.addEffect("minecraft:health_boost", 2400, { amplifier: 3.6 });
       e.source.addEffect("minecraft:instant_health", 300, { amplifier: 2 });
-    },
-
-    onUse: (e) => {
-      e.source.runCommand("function js_sanity_heal");
     },
   });
 

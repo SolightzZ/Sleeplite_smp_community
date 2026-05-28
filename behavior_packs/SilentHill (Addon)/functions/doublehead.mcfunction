@@ -1,1 +1,1 @@
-playanimation @s animation.jsart:doublehead.new1
+playanimation @s animation.jsart_doublehead.new1
