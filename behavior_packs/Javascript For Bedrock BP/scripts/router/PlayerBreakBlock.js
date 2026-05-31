@@ -1,27 +1,23 @@
 import { world } from "@minecraft/server";
-import { TreeCapitatorBreakBlock } from "../module/treeCapitator/index.js";
-import { VeinMiner } from "../module/veinMiner/index.js";
+import { TreeCapitatorBreakBlock } from "../module/treeCapitator/core/events.js";
+import { VeinMiner } from "../module/veinMiner/core/events.js";
 import { handleAutoReplant } from "../plugin/AutoReplant.js";
-import { onBlockEdit } from "../module/protection/index.js";
+import { onBlockEdit } from "../module/protection/core/events.js";
+import { runEventHandlersWithCancel } from "./utils.js";
 
 const beforeHandlers = [onBlockEdit, VeinMiner];
 const afterHandlers = [handleAutoReplant, TreeCapitatorBreakBlock];
 
-const runHandlers = (handlers, ev) => {
-  try {
-    const player = ev.player;
-    const block = ev.block;
-    if (!player || !player.isValid || !block) return;
+world.beforeEvents.playerBreakBlock.subscribe((ev) => {
+  const player = ev.player;
+  const block = ev.block;
+  if (!player || !player.isValid || !block) return;
+  runEventHandlersWithCancel("PlayerBreakBlock", beforeHandlers, ev);
+});
 
-    const len = handlers.length;
-    for (let i = 0; i < len; i++) {
-      handlers[i](ev);
-      if (ev.cancel) return;
-    }
-  } catch (e) {
-    console.warn("[ PlayerBreakBlock ] player_break_block", String(e));
-  }
-};
-
-world.beforeEvents.playerBreakBlock.subscribe((ev) => runHandlers(beforeHandlers, ev));
-world.afterEvents.playerBreakBlock.subscribe((ev) => runHandlers(afterHandlers, ev));
+world.afterEvents.playerBreakBlock.subscribe((ev) => {
+  const player = ev.player;
+  const block = ev.block;
+  if (!player || !player.isValid || !block) return;
+  runEventHandlersWithCancel("PlayerBreakBlock", afterHandlers, ev);
+});

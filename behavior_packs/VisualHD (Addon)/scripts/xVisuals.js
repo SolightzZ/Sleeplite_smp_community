@@ -9,15 +9,11 @@ const MSG = {
     DROWN_COUNT: 17,
 };
 
-const IMPACT_MSGS = Array.from({ length: MSG.IMPACT_COUNT }, (_, i) =>
-    i >= 1 && i <= 3 ? `xVisImpactFixed${i}` : `xVisImpact${i}`,
-);
+const IMPACT_MSGS = Array.from({ length: MSG.IMPACT_COUNT }, (_, i) => (i >= 1 && i <= 3 ? `xVisImpactFixed${i}` : `xVisImpact${i}`));
 
 const FLAME_MSGS = Array.from({ length: MSG.FLAME_COUNT }, (_, i) => `xVisFlameImpact${i}`);
 
-const DROWN_MSGS = Array.from({ length: MSG.DROWN_COUNT }, (_, i) =>
-    i === 1 ? `xVisDrowningFixed${i}` : `xVisDrowning${i}`,
-);
+const DROWN_MSGS = Array.from({ length: MSG.DROWN_COUNT }, (_, i) => (i === 1 ? `xVisDrowningFixed${i}` : `xVisDrowning${i}`));
 
 // Section 2 — Damage Cause Classification
 
@@ -38,25 +34,8 @@ const DAMAGE_CAUSE = {
         'sonicBoom',
         'flyIntoWall',
     ]),
-    EXPLOSION: new Set([
-        'entityExplosion',
-        'blockExplosion',
-        'anvil',
-        'maceSmash',
-        'ramAttack',
-        'sonicBoom',
-        'flyIntoWall',
-    ]),
-    FLAME: new Set([
-        'fire',
-        'freTick',
-        'fireworks',
-        'lava',
-        'lightning',
-        'magma',
-        'campfire',
-        'soulCampfire',
-    ]),
+    EXPLOSION: new Set(['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall']),
+    FLAME: new Set(['fire', 'fireTick', 'fireworks', 'lava', 'lightning', 'magma', 'campfire', 'soulCampfire']),
 };
 
 const BLOOD_PARTICLES = ['xvisuals:blood_drop0', 'xvisuals:blood_drop1'];
@@ -174,8 +153,7 @@ const healthMonitor = () => {
     try {
         const healthComponent = player.getComponent('minecraft:health');
         if (healthComponent) {
-            const healthPercent =
-                (healthComponent.currentValue / healthComponent.effectiveMax) * 100;
+            const healthPercent = (healthComponent.currentValue / healthComponent.effectiveMax) * 100;
             updateLowHealth(player, healthPercent, 0);
             updateLowHealth(player, healthPercent, 1);
         }
@@ -274,6 +252,7 @@ const shiftQueue = (count) => {
     }
     for (let i = remaining; i < pendingLen; i++) {
         hurtPlayers[i] = null;
+        hurtDamages[i] = 0;
         hurtCauses[i] = null;
     }
     pendingLen = remaining;
@@ -289,7 +268,7 @@ const drainHurtQueue = () => {
         const damage = hurtDamages[i];
         const cause = hurtCauses[i];
 
-        if (!player.isValid) continue;
+        if (!player || !player.isValid) continue;
 
         const loc = player.location;
         const { IMPACT, EXPLOSION } = DAMAGE_CAUSE;

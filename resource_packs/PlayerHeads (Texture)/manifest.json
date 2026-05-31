@@ -1,26 +1,26 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Player Heads (Texture)",
-    "description": "BlueFireFroggy's Player Heads Resource Pack",
-    "uuid": "75898eaf-59de-42aa-8cb2-2eb85e99c0de",
-    "version": [1, 0, 1],
-    "min_engine_version": [1, 21, 120],
-    "pack_scope": "world"
-  },
-  "capabilities": ["pbr"],
-  "modules": [
-    {
-      "description": "BlueFireFroggy's Player Heads",
-      "type": "resources",
-      "uuid": "bebd3269-399e-498a-b286-1e9d4788ec5e",
-      "version": [1, 0, 1]
-    }
-  ],
-  "dependencies": [
-    {
-      "uuid": "79b42592-66b5-4781-b32b-f9141c6bf87a",
-      "version": [1, 0, 1]
-    }
-  ]
+    "format_version": 2,
+    "header": {
+        "name": "Player Heads (Texture)",
+        "description": "BlueFireFroggy's Player Heads Resource Pack",
+        "uuid": "85d367b5-ab8c-4cb6-8e76-788d37195673",
+        "version": [1, 0, 1],
+        "min_engine_version": [1, 21, 120],
+        "pack_scope": "world"
+    },
+    "capabilities": ["pbr"],
+    "modules": [
+        {
+            "description": "BlueFireFroggy's Player Heads",
+            "type": "resources",
+            "uuid": "cb41a267-a46a-412c-8a12-f521c3bc9197",
+            "version": [1, 0, 1]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
+            "version": [1, 0, 1]
+        }
+    ]
 }

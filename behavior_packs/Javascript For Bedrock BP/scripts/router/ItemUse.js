@@ -2,11 +2,11 @@ import { world } from "@minecraft/server";
 import { startEmote } from "../module/emotes/system.js";
 import { FullBrightUseItem } from "../module/fullBright/events.js";
 import { onJobItemUse } from "../module/jobs/Job.js";
-import { onMagnetUse } from "../module/magNet/index.js";
-import { onItemUse } from "../module/protection/index.js";
+import { onMagnetUse } from "../module/magNet/core/events.js";
+import { onItemUse } from "../module/protection/core/events.js";
 import { RewarditemUse } from "../module/rewards/system.js";
-import { chatRankItemUse } from "../module/nametag/index.js";
-import { RUNREPORT } from "../module/report/index.js";
+import { chatRankItemUse } from "../module/nametag/events.js";
+import { RUNREPORT } from "../module/report/core/functions.js";
 import { setting_main } from "../plugin/setting.js";
 import { handleSpongeAbsorption } from "../plugin/SpongeAbsorption.js";
 

@@ -1,26 +1,26 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Immersive Flora (Texture)",
-    "description": "Tired of the little flora in Minecraft? Immersive flora is an addon that brings new vegetation for Minecraft, there will be constant updates with new content from different biomes, enjoy it.",
-    "uuid": "e7bd895c-7231-4cc8-8359-61763c95838e",
-    "version": [1, 2, 0],
-    "min_engine_version": [1, 21, 120],
-    "pack_scope": "world"
-  },
-  "capabilities": ["pbr"],
-  "modules": [
-    {
-      "description": "Tired of the little flora in Minecraft? Immersive flora is an addon that brings new vegetation for Minecraft, there will be constant updates with new content from different biomes, enjoy it.",
-      "type": "resources",
-      "uuid": "da5a253e-747c-4d16-85a9-68047cc3bb12",
-      "version": [1, 2, 0]
-    }
-  ],
-  "dependencies": [
-    {
-      "uuid": "5c0d3241-74e0-423b-8514-0fc5fc2dfdbf",
-      "version": [1, 2, 0]
-    }
-  ]
+    "format_version": 2,
+    "header": {
+        "name": "Immersive Flora (Texture)",
+        "description": "Tired of the little flora in Minecraft? Immersive flora is an addon that brings new vegetation for Minecraft, there will be constant updates with new content from different biomes, enjoy it.",
+        "uuid": "e7bd895c-7231-4cc8-8359-61763c95838e",
+        "version": [1, 2, 0],
+        "min_engine_version": [1, 21, 120],
+        "pack_scope": "world"
+    },
+    "capabilities": ["pbr"],
+    "modules": [
+        {
+            "description": "Tired of the little flora in Minecraft? Immersive flora is an addon that brings new vegetation for Minecraft, there will be constant updates with new content from different biomes, enjoy it.",
+            "type": "resources",
+            "uuid": "da5a253e-747c-4d16-85a9-68047cc3bb12",
+            "version": [1, 2, 0]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "5c0d3241-74e0-423b-8514-0fc5fc2dfdbf",
+            "version": [1, 2, 0]
+        }
+    ]
 }

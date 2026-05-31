@@ -1,6 +1,6 @@
 import { world } from "@minecraft/server";
 import { ActionFormData, MessageFormData, ModalFormData } from "@minecraft/server-ui";
-import { ITEM, PREDEFINED_RANKS } from "../constants/index.js";
+import { ITEM, PREDEFINED_RANKS } from "../constants/constants.js";
 import { refreshNameTag } from "../core/nametag.js";
 import { addRank, getActiveRank, getAllServerRanks, getOwnedRanks, removeRanks, renameRank, setActiveRank } from "../core/tagManager.js";
 import { isValidPlayer } from "../utils/player.js";

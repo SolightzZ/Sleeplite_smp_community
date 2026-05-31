@@ -1,2 +1,2 @@
-import "./item_trigger";
-import "./durability_manager";
+import "./item_trigger.js";
+import "./durability_manager.js";

@@ -56,7 +56,7 @@ export const processJobs = () => {
           job.brokenCount++;
           broken++;
         } catch (e) {
-          console.log("[ treeCapitator ] breakError", e.message);
+          console.error("[ treeCapitator ] breakError", e.message);
         }
       }
     }

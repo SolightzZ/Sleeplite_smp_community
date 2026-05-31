@@ -1,5 +1,5 @@
 import { CommandPermissionLevel, CustomCommandStatus, Player, system } from "@minecraft/server";
-import { toggleZoom } from "./index.js";
+import { toggleZoom } from "./core.js";
 
 export function ZoomCommand(init) {
   init.customCommandRegistry.registerCommand(

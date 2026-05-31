@@ -1,4 +1,4 @@
-import { world, system } from "@minecraft/server";
+import { world, system, EquipmentSlot } from "@minecraft/server";
 import { ActionFormData, ModalFormData } from "@minecraft/server-ui";
 
 const TEXTURE_OPTIONS = [
@@ -30,8 +30,10 @@ world.beforeEvents.worldInitialize.subscribe((initEvent) => {
       const player = e.player;
       const block = e.block;
 
+      if (!player?.isValid) return;
+
       const equipment = player.getComponent("equippable");
-      const mainHand = equipment?.getEquipment("Mainhand");
+      const mainHand = equipment?.getEquipment(EquipmentSlot.Mainhand);
 
       if (mainHand?.typeId === "custom:brush") {
         system.run(() => showMainMenu(player, block));

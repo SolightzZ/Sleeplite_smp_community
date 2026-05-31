@@ -35,5 +35,5 @@ export const headMap = {
 };
 
 export const getHead = (name) => {
-  headMap[name] || null;
+  return headMap[name] || null;
 };

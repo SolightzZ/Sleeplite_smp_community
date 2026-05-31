@@ -1,11 +1,11 @@
 import { system } from "@minecraft/server";
-import { CFG } from "./config.js";
-import { state } from "./core/queue.js";
-import { getLocKey } from "./utils/block.js";
-import { PICKAXE_BREAKS, ORE_DROP } from "./data/ores.js";
-import { scanVein } from "./core/scanner.js";
-import { getEnchantData } from "./utils/enchant.js";
-import { processVeinJobs } from "./core/processor.js";
+import { CFG } from "../config.js";
+import { state } from "./queue.js";
+import { getLocKey } from "../utils/block.js";
+import { PICKAXE_BREAKS, ORE_DROP } from "../data/ores.js";
+import { scanVein } from "./scanner.js";
+import { getEnchantData } from "../utils/enchant.js";
+import { processVeinJobs } from "./processor.js";
 
 export const VeinMiner = (ev) => {
   const player = ev.player;

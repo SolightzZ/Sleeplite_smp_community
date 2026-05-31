@@ -1,35 +1,35 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Player Heads BP",
-    "description": "BlueFireFroggy's Player Heads Behavior Pack",
-    "uuid": "79b42592-66b5-4781-b32b-f9141c6bf87a",
-    "version": [1, 0, 1],
-    "min_engine_version": [1, 21, 120]
-  },
-  "metadata": {
-    "authors": ["SleepliteSMP"],
-    "license": "MIT",
-    "url": "https://discord.gg/gtqfbmvTJK",
-    "product_type": "addon"
-  },
-  "modules": [
-    {
-      "type": "script",
-      "language": "javascript",
-      "entry": "scripts/playerHeads.js",
-      "uuid": "6a93c711-9374-47bd-a71c-f16bc5dc1d87",
-      "version": [1, 0, 1]
-    }
-  ],
-  "dependencies": [
-    {
-      "uuid": "75898eaf-59de-42aa-8cb2-2eb85e99c0de",
-      "version": [1, 0, 1]
+    "format_version": 2,
+    "header": {
+        "name": "Player Heads BP",
+        "description": "BlueFireFroggy's Player Heads Behavior Pack",
+        "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
+        "version": [1, 0, 1],
+        "min_engine_version": [1, 21, 120]
     },
-    {
-      "module_name": "@minecraft/server",
-      "version": "2.1.0"
-    }
-  ]
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    },
+    "modules": [
+        {
+            "type": "script",
+            "language": "javascript",
+            "entry": "scripts/playerHeads.js",
+            "uuid": "6a93c711-9374-47bd-a71c-f16bc5dc1d87",
+            "version": [1, 0, 1]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "85d367b5-ab8c-4cb6-8e76-788d37195673",
+            "version": [1, 0, 1]
+        },
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.1.0"
+        }
+    ]
 }

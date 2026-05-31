@@ -1,4 +1,4 @@
-import { DEFAULT_RANK } from "../constants/index.js";
+import { DEFAULT_RANK } from "../constants/constants.js";
 import { isValidPlayer } from "../utils/player.js";
 import { getActiveRank, getOwnedRanks } from "./tagManager.js";
 

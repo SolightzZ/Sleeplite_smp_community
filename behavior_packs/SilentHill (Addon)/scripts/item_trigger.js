@@ -16,16 +16,19 @@ system.beforeEvents.startup.subscribe((initEvent) => {
 
   initEvent.itemComponentRegistry.registerCustomComponent("jsart_steel_pipe:trigger", {
     onHitEntity: (e) => {
+      if (!e.attackingEntity?.isValid) return;
       e.attackingEntity.runCommand("function cano_de_metal");
     },
   });
 
   initEvent.itemComponentRegistry.registerCustomComponent("jsart_sledgehammer:trigger", {
     onUse: (e) => {
+      if (!e.source?.isValid) return;
       e.source.runCommand("function martelo_skill");
     },
 
     onHitEntity: (e) => {
+      if (!e.attackingEntity?.isValid) return;
       e.attackingEntity.runCommand("function martelo_dano");
     },
   });

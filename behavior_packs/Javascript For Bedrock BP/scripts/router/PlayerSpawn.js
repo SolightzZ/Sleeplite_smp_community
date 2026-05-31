@@ -1,20 +1,12 @@
 import { world } from "@minecraft/server";
-import { flashSpawn } from "../module/flashlight/index.js";
+import { flashSpawn } from "../module/flashlight/core/engine.js";
 import { playerSpawnWelcome } from "../plugin/Welcome.js";
+import { runEventHandlers } from "./utils.js";
 
 const handlers = [playerSpawnWelcome, flashSpawn];
 
 world.afterEvents.playerSpawn.subscribe((ev) => {
-  try {
-    const player = ev.player;
-    if (!player || !player.isValid) return;
-
-    const len = handlers.length;
-    for (let i = 0; i < len; i++) {
-      const fn = handlers[i];
-      if (fn) fn(ev);
-    }
-  } catch (e) {
-    console.warn("[ PlayerSpawn ] player_spawn", e.message);
-  }
+  const player = ev.player;
+  if (!player || !player.isValid) return;
+  runEventHandlers("PlayerSpawn", handlers, ev);
 });

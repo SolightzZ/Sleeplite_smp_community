@@ -1,6 +1,6 @@
 import { EntityComponentTypes, EquipmentSlot, ItemComponentTypes } from "@minecraft/server";
-import { armorData } from "./help_ armorData";
-import { getDamageReduction } from "./help_function";
+import { armorData } from "./help_armorData.js";
+import { getDamageReduction } from "./help_function.js";
 
 const ARMOR_SLOTS = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand];
 const ARMOR_SLOTS_LEN = ARMOR_SLOTS.length;

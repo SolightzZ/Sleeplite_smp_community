@@ -1,39 +1,39 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Visual Damage Tint (Addon)",
-    "description": "By @t17x",
-    "min_engine_version": [1, 21, 80],
-    "uuid": "c16dc13b-ef9b-4c1b-9fd3-cc2300722259",
-    "version": [1, 0, 0]
-  },
-  "modules": [
-    {
-      "description": "xVisuals Addon [v1.2]",
-      "type": "data",
-      "uuid": "a8cc024f-450c-4d79-98cb-a32ea8fc1d92",
-      "version": [1, 0, 0]
+    "format_version": 2,
+    "header": {
+        "name": "Visual Damage Tint (Addon)",
+        "description": "xVisuals Texture [v1.2] By @t17x",
+        "min_engine_version": [1, 21, 80],
+        "uuid": "c16dc13b-ef9b-4c1b-9fd3-cc2300722259",
+        "version": [1, 0, 0]
     },
-    {
-      "type": "script",
-      "language": "javascript",
-      "uuid": "24f959c9-fadd-41d5-97a8-c1c88049470d",
-      "entry": "scripts/xVisuals.js",
-      "version": [1, 0, 0]
+    "modules": [
+        {
+            "description": "xVisuals Addon [v1.2]",
+            "type": "data",
+            "uuid": "a8cc024f-450c-4d79-98cb-a32ea8fc1d92",
+            "version": [1, 0, 0]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "24f959c9-fadd-41d5-97a8-c1c88049470d",
+            "entry": "scripts/xVisuals.js",
+            "version": [1, 0, 0]
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "f569ed3b-cfe2-4f33-adee-15dc3a85676e",
+            "version": [1, 0, 0]
+        },
+        {
+            "module_name": "@minecraft/server",
+            "version": "1.19.0"
+        }
+    ],
+    "metadata": {
+        "authors": ["xVisuals"],
+        "product_type": "addon"
     }
-  ],
-  "dependencies": [
-    {
-      "uuid": "f569ed3b-cfe2-4f33-adee-15dc3a85676e",
-      "version": [1, 0, 0]
-    },
-    {
-      "module_name": "@minecraft/server",
-      "version": "1.19.0"
-    }
-  ],
-  "metadata": {
-    "authors": ["xVisuals"],
-    "product_type": "addon"
-  }
 }

@@ -140,7 +140,7 @@ class DurabilityManager {
     const T = Number(toughness);
     const Df = Number(finalDamage);
 
-    if (Df < 0 || T === undefined || Number.isNaN(A) || Number.isNaN(T) || Number.isNaN(Df)) {
+    if (Df < 0 || Number.isNaN(A) || Number.isNaN(T) || Number.isNaN(Df)) {
       return 0;
     }
 
@@ -229,7 +229,7 @@ class DurabilityManager {
       if (Math.random() < ignoreChance) continue;
 
       const damageToRestore = Math.max(1, Math.floor(originalDamage / 4));
-      durability.damage = Math.max(0, durability.damage - damageToRestore);
+      durability.damage = Math.min(durability.maxDurability, durability.damage + damageToRestore);
       armor.setEquipment(slot, equipment);
     }
   }

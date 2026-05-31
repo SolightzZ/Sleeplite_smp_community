@@ -3,7 +3,6 @@
 // ==========================
 import "./router/Startup.js";
 import "./router/System.RunInterval.js";
-import "./index.js";
 
 // ==========================
 // World Events

@@ -1,5 +1,5 @@
 import { ColorCodes, INVENTORY_SLOTS } from "../config.js";
-import { applyChessPattern, applyColumnPattern, applyLinePattern } from "../patterns/index.js";
+import { applyChessPattern, applyColumnPattern, applyLinePattern } from "../patterns/patterns.js";
 import { isContainerSorted, sortAndMergeItems, writeContainerDiff } from "../utils/container.js";
 import { formatBlockName } from "../utils/formatter.js";
 import { compareItemsByMode } from "../utils/item.js";

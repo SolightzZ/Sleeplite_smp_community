@@ -1,5 +1,5 @@
-import { removeMagnetUser } from "./core/state.js";
-import { showMagnetMenu } from "./ui/menu.js";
+import { removeMagnetUser } from "./state.js";
+import { showMagnetMenu } from "../ui/menu.js";
 
 export const onMagnetUse = ({ source }) => {
   if (source && source.isValid) showMagnetMenu(source);

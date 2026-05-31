@@ -1,4 +1,4 @@
-import { ADMIN } from "./constants/index.js";
+import { ADMIN } from "./constants/constants.js";
 import { refreshNameTagOnJoin } from "./core/nametag.js";
 import { showMainMenu } from "./ui/forms.js";
 import { isValidPlayer } from "./utils/player.js";

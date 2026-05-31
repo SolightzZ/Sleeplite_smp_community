@@ -1,11 +1,11 @@
 import { system } from "@minecraft/server";
-import { CFG } from "./config.js";
-import { state } from "./core/state.js";
-import { LOG_TO_LEAF } from "./data/trees.js";
-import { getPlayerAxe } from "./utils/inventory.js";
-import { getBlockSafe } from "./utils/block.js";
-import { detectTree } from "./core/detector.js";
-import { processJobs } from "./core/processor.js";
+import { CFG } from "../config.js";
+import { state } from "./state.js";
+import { LOG_TO_LEAF } from "../data/trees.js";
+import { getPlayerAxe } from "../utils/inventory.js";
+import { getBlockSafe } from "../utils/block.js";
+import { detectTree } from "./detector.js";
+import { processJobs } from "./processor.js";
 
 export const TreeCapitatorBreakBlock = (ev) => {
   const player = ev.player;

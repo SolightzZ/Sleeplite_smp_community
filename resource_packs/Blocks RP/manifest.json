@@ -1,26 +1,26 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Blocks Gravestone RP",
-    "description": "Resource Pack Sleeplite SMP 2026",
-    "uuid": "5d561e76-6c8d-4c60-b957-abb8a89b6c2d",
-    "version": [1, 0, 1],
-    "min_engine_version": [1, 21, 120],
-    "pack_scope": "world"
-  },
-  "capabilities": ["pbr"],
-  "metadata": {
-    "authors": ["SleepliteSMP"],
-    "license": "MIT",
-    "url": "https://discord.gg/gtqfbmvTJK",
-    "product_type": "addon"
-  },
-  "modules": [
-    {
-      "description": "(RP)",
-      "type": "resources",
-      "uuid": "f5c879bb-6e94-45bc-a599-f1adf117c40f",
-      "version": [1, 0, 3]
-    }
-  ]
+    "format_version": 2,
+    "header": {
+        "name": "Blocks Gravestone RP",
+        "description": "Resource Pack Sleeplite SMP 2026",
+        "uuid": "67ac0542-4ee4-411b-870d-d55a55e902cc",
+        "version": [1, 0, 1],
+        "min_engine_version": [1, 21, 120],
+        "pack_scope": "world"
+    },
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    },
+    "modules": [
+        {
+            "description": "(RP)",
+            "type": "resources",
+            "uuid": "f5c879bb-6e94-45bc-a599-f1adf117c40f",
+            "version": [1, 0, 3]
+        }
+    ]
 }

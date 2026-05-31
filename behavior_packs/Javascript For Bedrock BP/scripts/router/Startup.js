@@ -1,11 +1,17 @@
 import { system } from "@minecraft/server";
 import { RegisterHelp } from "../help/help.js";
-import { registerCommandAFK } from "../module/AFKCinematic/index.js";
+import { registerCommandAFK } from "../module/AFKCinematic/commands/afk-command.js";
 import { registerCommands } from "../module/customCommands/Register.js";
-import { registerSortCommands } from "../module/inventorySorter/index.js";
+import { registerSortCommands } from "../module/inventorySorter/commands/sort-command.js";
 import { RegisterRewards } from "../module/rewards/system.js";
-import { registerCustomCommandTakeASeat } from "../module/simpleSit/index.js";
+import { registerCustomCommandTakeASeat } from "../module/simpleSit/commands/sit-command.js";
+import { initCleanup } from "../module/simpleSit/core/cleanup.js";
+import { zoneDatabase } from "../module/protection/core/database.js";
 import { ZoomCommand } from "../module/zoom/Command.js";
+import { runEventHandlers } from "./utils.js";
+
+system.run(() => zoneDatabase.load());
+initCleanup();
 
 const startupHandlers = [
   registerCommands,
@@ -18,12 +24,5 @@ const startupHandlers = [
 ];
 
 system.beforeEvents.startup.subscribe((init) => {
-  try {
-    const len = startupHandlers.length;
-    for (let i = 0; i < len; i++) {
-      startupHandlers[i](init);
-    }
-  } catch (e) {
-    console.error("[ Startup ] error: ", e.message);
-  }
+  runEventHandlers("Startup", startupHandlers, init);
 });

@@ -1,21 +1,13 @@
 import { world } from "@minecraft/server";
-import { onGravestoneInteract } from "../module/graveStones/index.js";
-import { onEntityInteract } from "../module/protection/index.js";
+import { onGravestoneInteract } from "../module/graveStones/core/interact.js";
+import { onEntityInteract } from "../module/protection/core/events.js";
+import { runEventHandlersWithCancel } from "./utils.js";
 
 const handlers = [onGravestoneInteract, onEntityInteract];
 
 world.beforeEvents.playerInteractWithEntity.subscribe((ev) => {
-  try {
-    const player = ev.player;
-    const target = ev.target;
-    if (!player || !player.isValid || !target) return;
-
-    const len = handlers.length;
-    for (let i = 0; i < len; i++) {
-      handlers[i](ev);
-      if (ev.cancel) return;
-    }
-  } catch (e) {
-    console.warn("[ PlayerInteractWithEntity ] player_interact_entity", String(e));
-  }
+  const player = ev.player;
+  const target = ev.target;
+  if (!player || !player.isValid || !target) return;
+  runEventHandlersWithCancel("PlayerInteractWithEntity", handlers, ev);
 });
