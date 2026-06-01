@@ -1,32 +1,35 @@
 {
-  "format_version": 2,
+    "format_version": 2,
 
-  "header": {
-    "name": "Peter bro (Texture)",
-    "description": "Resource Pack Sleeplite SMP 2026",
-    "uuid": "7e08f52d-03ce-4ad4-bc4d-1000d6cbd01f",
-    "version": [1, 0, 0],
-    "min_engine_version": [1, 21, 120],
-    "pack_scope": "world"
-  },
-  "capabilities": ["pbr"],
-  "metadata": {
-    "authors": ["SleepliteSMP"],
-    "license": "MIT",
-    "url": "https://discord.gg/gtqfbmvTJK",
-    "product_type": "addon"
-  },
-  "modules": [
-    {
-      "type": "resources",
-      "uuid": "6b301666-1850-490c-bb2c-5f320765138b",
-      "version": [1, 0, 0]
+    "header": {
+        "name": "Peter bro (Texture)",
+        "description": "Resource Pack Sleeplite SMP 2026",
+        "uuid": "7e08f52d-03ce-4ad4-bc4d-1000d6cbd01f",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10],
+        "pack_scope": "world"
+    },
+
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "6b301666-1850-490c-bb2c-5f320765138b",
+            "version": [1, 0, 0]
+        }
+    ],
+
+    "dependencies": [
+        {
+            "uuid": "867813b5-2c4a-479d-9b90-4bcec3f0b5f4",
+            "version": [1, 0, 0]
+        }
+    ],
+
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
     }
-  ],
-  "dependencies": [
-    {
-      "uuid": "867813b5-2c4a-479d-9b90-4bcec3f0b5f4",
-      "version": [1, 0, 0]
-    }
-  ]
 }

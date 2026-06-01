@@ -1,26 +1,27 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Custom NPC (Texture)",
-    "description": "Resource Pack Sleeplite SMP 2026",
-    "uuid": "482a848c-d103-4dd4-ac13-cf721fa66aa7",
-    "version": [1, 0, 1],
-    "min_engine_version": [1, 21, 120],
-    "pack_scope": "world"
-  },
-  "capabilities": ["pbr"],
-  "metadata": {
-    "authors": ["SleepliteSMP"],
-    "license": "MIT",
-    "url": "https://discord.gg/gtqfbmvTJK",
-    "product_type": "addon"
-  },
-  "modules": [
-    {
-      "description": "(RP)",
-      "type": "resources",
-      "uuid": "4760ebd6-3114-4a64-9ce2-874c15bb1f8f",
-      "version": [1, 0, 3]
+    "format_version": 2,
+    "header": {
+        "name": "Custom NPC (Texture)",
+        "description": "Resource Pack Sleeplite SMP 2026",
+        "uuid": "482a848c-d103-4dd4-ac13-cf721fa66aa7",
+        "version": [1, 0, 1],
+        "min_engine_version": [1, 26, 10],
+        "pack_scope": "world"
+    },
+
+    "modules": [
+        {
+            "description": "(RP)",
+            "type": "resources",
+            "uuid": "4760ebd6-3114-4a64-9ce2-874c15bb1f8f",
+            "version": [1, 0, 3]
+        }
+    ],
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
     }
-  ]
 }

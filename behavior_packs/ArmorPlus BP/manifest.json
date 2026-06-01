@@ -4,15 +4,10 @@
         "name": "Armor plus BP",
         "description": "Behavior Pack Sleeplite SMP 2026",
         "uuid": "2f6e14b1-5dab-438a-b9c8-9218ed8e3edd",
-        "min_engine_version": [1, 26, 10],
-        "version": [1, 0, 0]
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10]
     },
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    },
+
     "modules": [
         {
             "type": "data",
@@ -25,5 +20,12 @@
             "uuid": "f23afdc6-140d-4e0a-b119-b9881eb4d248",
             "version": [2, 1, 0]
         }
-    ]
+    ],
+
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    }
 }

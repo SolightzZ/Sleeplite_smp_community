@@ -3,9 +3,10 @@
     "header": {
         "name": "Visual Damage Tint (Texture)",
         "description": "xVisuals Texture [v1.2] By @t17x",
-        "min_engine_version": [1, 21, 80],
         "uuid": "f569ed3b-cfe2-4f33-adee-15dc3a85676e",
-        "version": [1, 0, 0]
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10],
+        "pack_scope": "world"
     },
     "modules": [
         {
@@ -20,6 +21,9 @@
             "version": [1, 0, 0]
         }
     ],
+
+    "capabilities": ["pbr"],
+
     "metadata": {
         "authors": ["xVisuals"],
         "product_type": "addon"

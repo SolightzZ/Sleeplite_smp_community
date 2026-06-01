@@ -5,15 +5,8 @@
         "description": "Resource Pack Sleeplite SMP 2026",
         "uuid": "f23afdc6-140d-4e0a-b119-b9881eb4d248",
         "version": [2, 1, 0],
-        "min_engine_version": [1, 21, 120],
+        "min_engine_version": [1, 26, 10],
         "pack_scope": "world"
-    },
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
     },
     "modules": [
         {
@@ -28,5 +21,12 @@
             "uuid": "2f6e14b1-5dab-438a-b9c8-9218ed8e3edd",
             "version": [1, 0, 0]
         }
-    ]
+    ],
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    }
 }

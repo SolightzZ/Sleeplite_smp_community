@@ -4,18 +4,14 @@
     "description": {
       "identifier": "steel_pipe_30b46a47"
     },
-    "tags": [
-      "crafting_table"
-    ],
-    "pattern": [
-      "AA",
-      " A",
-      " A"
-    ],
+    "tags": ["avanced"],
+    "pattern": ["##", " =", " ="],
     "key": {
-      "A": {
-        "item": "minecraft:iron_ingot",
-        "data": 0
+      "#": {
+        "item": "minecraft:iron_block"
+      },
+      "=": {
+        "item": "minecraft:iron_ingot"
       }
     },
     "result": {

@@ -5,16 +5,10 @@
         "description": "Custom Frames Resource Pack 2026",
         "uuid": "701d444b-1f03-4c1d-b594-3199bd079eb5",
         "version": [1, 6, 0],
-        "min_engine_version": [1, 21, 120],
+        "min_engine_version": [1, 26, 10],
         "pack_scope": "world"
     },
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    },
+
     "modules": [
         {
             "description": "Resource Pack",
@@ -28,5 +22,12 @@
             "uuid": "af7eb96a-9cbc-4eab-845e-d2f7bbeb4d94",
             "version": [1, 6, 0]
         }
-    ]
+    ],
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    }
 }

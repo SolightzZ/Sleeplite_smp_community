@@ -1,7 +1,7 @@
-import { showMain } from "./functions.js";
+import { showMain } from './functions.js';
 
 export function startEmote({ source }) {
-  if (source && source.isValid) {
-    showMain(source);
-  }
+    if (source && source.isValid) {
+        showMain(source);
+    }
 }

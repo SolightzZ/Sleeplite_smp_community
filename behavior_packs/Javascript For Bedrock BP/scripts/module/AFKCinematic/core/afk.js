@@ -63,13 +63,7 @@ export function getCameraFrame(player, s) {
     const drift = Math.cos(s.waveClock * 0.7 + progress * Math.PI * 2);
 
     const desiredOff = framePool.desiredOff;
-    rotateRelInto(
-        desiredOff,
-        shot.yaw,
-        shot.distance,
-        drift * shot.slide,
-        shot.height + breath * shot.bob,
-    );
+    rotateRelInto(desiredOff, shot.yaw, shot.distance, drift * shot.slide, shot.height + breath * shot.bob);
 
     const desired = framePool.desired;
     desired.x = s.anchor.x + desiredOff.x;

@@ -1,24 +1,26 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Pack Items BP",
-    "description": "Behavior Pack Sleeplite SMP 2026",
-    "uuid": "f8edbe43-7e1b-4082-9cc7-361b9876fe34",
-    "version": [1, 0, 0],
-    "min_engine_version": [1, 21, 120]
-  },
-  "metadata": {
-    "authors": ["SleepliteSMP"],
-    "license": "MIT",
-    "url": "https://discord.gg/gtqfbmvTJK",
-    "product_type": "addon"
-  },
-  "modules": [
-    {
-      "description": "Behavior",
-      "version": [1, 0, 2],
-      "type": "data",
-      "uuid": "9ae6ff03-d775-4130-8032-47df1431dc7a"
+    "format_version": 2,
+    "header": {
+        "name": "Pack Items BP",
+        "description": "Behavior Pack Sleeplite SMP 2026",
+        "uuid": "f8edbe43-7e1b-4082-9cc7-361b9876fe34",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10]
+    },
+
+    "modules": [
+        {
+            "description": "Behavior",
+            "version": [1, 0, 2],
+            "type": "data",
+            "uuid": "9ae6ff03-d775-4130-8032-47df1431dc7a"
+        }
+    ],
+
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
     }
-  ]
 }

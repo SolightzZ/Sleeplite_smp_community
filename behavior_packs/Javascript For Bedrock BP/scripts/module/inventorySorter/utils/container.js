@@ -1,144 +1,144 @@
-import { cloneWithAmountLike, compareItemsByMode } from "./item.js";
+import { cloneWithAmountLike, compareItemsByMode } from './item.js';
 
 const buildStackKey = (item) => {
-  if (!item?.typeId) return null;
+    if (!item?.typeId) return null;
 
-  const enchComp = item.getComponent("minecraft:enchantable");
-  const enchants = enchComp?.getEnchantments?.();
+    const enchComp = item.getComponent('minecraft:enchantable');
+    const enchants = enchComp?.getEnchantments?.();
 
-  let enchStr = "";
-  if (enchants && enchants.length > 0) {
-    const parts = new Array(enchants.length);
+    let enchStr = '';
+    if (enchants && enchants.length > 0) {
+        const parts = new Array(enchants.length);
 
-    for (let i = 0; i < enchants.length; i++) {
-      parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
+        for (let i = 0; i < enchants.length; i++) {
+            parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
+        }
+
+        parts.sort();
+        enchStr = parts.join(',');
     }
 
-    parts.sort();
-    enchStr = parts.join(",");
-  }
+    const lore = item.getLore?.();
+    const loreStr = lore && lore.length > 0 ? JSON.stringify(lore) : '';
 
-  const lore = item.getLore?.();
-  const loreStr = lore && lore.length > 0 ? JSON.stringify(lore) : "";
+    if (!item.nameTag && !loreStr && !enchStr) return item.typeId;
 
-  if (!item.nameTag && !loreStr && !enchStr) return item.typeId;
-
-  return `${item.typeId}\x00${item.nameTag || ""}\x00${loreStr}\x00${enchStr}`;
+    return `${item.typeId}\x00${item.nameTag || ''}\x00${loreStr}\x00${enchStr}`;
 };
 
 export const countTotalItems = (items) => {
-  if (!items) return 0;
+    if (!items) return 0;
 
-  let total = 0;
+    let total = 0;
 
-  for (let i = 0; i < items.length; i++) {
-    if (items[i]) total += items[i].amount;
-  }
+    for (let i = 0; i < items.length; i++) {
+        if (items[i]) total += items[i].amount;
+    }
 
-  return total;
+    return total;
 };
 
 export const sortAndMergeItems = (items, maxSize) => {
-  const buckets = new Map();
+    const buckets = new Map();
 
-  for (let i = 0; i < items.length; i++) {
-    const it = items[i];
-    if (!it?.typeId) continue;
+    for (let i = 0; i < items.length; i++) {
+        const it = items[i];
+        if (!it?.typeId) continue;
 
-    const key = buildStackKey(it);
-    if (!key) continue;
+        const key = buildStackKey(it);
+        if (!key) continue;
 
-    const entry = buckets.get(key);
+        const entry = buckets.get(key);
 
-    if (entry) {
-      entry.total += it.amount;
-    } else {
-      buckets.set(key, { ref: it, total: it.amount });
-    }
-  }
-
-  const out = [];
-  const maxAmountCache = new Map();
-  const bucketValues = Array.from(buckets.values());
-
-  for (let i = 0; i < bucketValues.length; i++) {
-    const group = bucketValues[i];
-    const typeId = group.ref.typeId;
-    let maxAmt = maxAmountCache.get(typeId);
-
-    if (maxAmt === undefined) {
-      maxAmt = group.ref.maxAmount ?? 64;
-      maxAmountCache.set(typeId, maxAmt);
+        if (entry) {
+            entry.total += it.amount;
+        } else {
+            buckets.set(key, { ref: it, total: it.amount });
+        }
     }
 
-    let remain = group.total;
-    while (remain > 0 && out.length < maxSize) {
-      const take = remain > maxAmt ? maxAmt : remain;
-      out.push(cloneWithAmountLike(group.ref, take));
-      remain -= take;
+    const out = [];
+    const maxAmountCache = new Map();
+    const bucketValues = Array.from(buckets.values());
+
+    for (let i = 0; i < bucketValues.length; i++) {
+        const group = bucketValues[i];
+        const typeId = group.ref.typeId;
+        let maxAmt = maxAmountCache.get(typeId);
+
+        if (maxAmt === undefined) {
+            maxAmt = group.ref.maxAmount ?? 64;
+            maxAmountCache.set(typeId, maxAmt);
+        }
+
+        let remain = group.total;
+        while (remain > 0 && out.length < maxSize) {
+            const take = remain > maxAmt ? maxAmt : remain;
+            out.push(cloneWithAmountLike(group.ref, take));
+            remain -= take;
+        }
+
+        if (out.length >= maxSize) break;
     }
 
-    if (out.length >= maxSize) break;
-  }
-
-  const outLen = out.length;
-  for (let i = outLen; i < maxSize; i++) {
-    out.push(undefined);
-  }
-  return out;
+    const outLen = out.length;
+    for (let i = outLen; i < maxSize; i++) {
+        out.push(undefined);
+    }
+    return out;
 };
 
-export const isContainerSorted = (container, mode = "type", startSlot = 0) => {
-  let prev = null;
-  let foundEmpty = false;
-  const size = container.size;
+export const isContainerSorted = (container, mode = 'type', startSlot = 0) => {
+    let prev = null;
+    let foundEmpty = false;
+    const size = container.size;
 
-  for (let i = startSlot; i < size; i++) {
-    const cur = container.getItem(i);
-    if (!cur) {
-      foundEmpty = true;
-      continue;
-    }
+    for (let i = startSlot; i < size; i++) {
+        const cur = container.getItem(i);
+        if (!cur) {
+            foundEmpty = true;
+            continue;
+        }
 
-    if (foundEmpty) return false;
-    if (prev) {
-      if (compareItemsByMode(prev, cur, mode) > 0) return false;
-      if (prev.typeId === cur.typeId && prev.amount < (prev.maxAmount ?? 64) && cur.isStackableWith?.(prev)) return false;
+        if (foundEmpty) return false;
+        if (prev) {
+            if (compareItemsByMode(prev, cur, mode) > 0) return false;
+            if (prev.typeId === cur.typeId && prev.amount < (prev.maxAmount ?? 64) && cur.isStackableWith?.(prev)) return false;
+        }
+        prev = cur;
     }
-    prev = cur;
-  }
-  return true;
+    return true;
 };
 
 const buildEnchantFingerprint = (item) => {
-  const enchants = item.getComponent("minecraft:enchantable")?.getEnchantments?.();
+    const enchants = item.getComponent('minecraft:enchantable')?.getEnchantments?.();
 
-  if (!enchants || enchants.length === 0) return "";
+    if (!enchants || enchants.length === 0) return '';
 
-  const parts = new Array(enchants.length);
-  for (let i = 0; i < enchants.length; i++) {
-    parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
-  }
+    const parts = new Array(enchants.length);
+    for (let i = 0; i < enchants.length; i++) {
+        parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
+    }
 
-  parts.sort();
-  return parts.join(",");
+    parts.sort();
+    return parts.join(',');
 };
 
 export const writeContainerDiff = (container, newItems, startSlot = 0) => {
-  const maxWrite = container.size - startSlot;
-  const len = newItems.length < maxWrite ? newItems.length : maxWrite;
+    const maxWrite = container.size - startSlot;
+    const len = newItems.length < maxWrite ? newItems.length : maxWrite;
 
-  for (let i = 0; i < len; i++) {
-    const cur = container.getItem(startSlot + i);
-    const nxt = newItems[i];
+    for (let i = 0; i < len; i++) {
+        const cur = container.getItem(startSlot + i);
+        const nxt = newItems[i];
 
-    if (!cur && !nxt) continue;
-    if (cur && nxt && cur.typeId === nxt.typeId && cur.amount === nxt.amount && cur.nameTag === nxt.nameTag) {
-      const curLore = cur.getLore?.();
-      const nxtLore = nxt.getLore?.();
-      const loreMatch = curLore && nxtLore ? JSON.stringify(curLore) === JSON.stringify(nxtLore) : !curLore?.length && !nxtLore?.length;
-      if (loreMatch && buildEnchantFingerprint(cur) === buildEnchantFingerprint(nxt)) continue;
+        if (!cur && !nxt) continue;
+        if (cur && nxt && cur.typeId === nxt.typeId && cur.amount === nxt.amount && cur.nameTag === nxt.nameTag) {
+            const curLore = cur.getLore?.();
+            const nxtLore = nxt.getLore?.();
+            const loreMatch = curLore && nxtLore ? JSON.stringify(curLore) === JSON.stringify(nxtLore) : !curLore?.length && !nxtLore?.length;
+            if (loreMatch && buildEnchantFingerprint(cur) === buildEnchantFingerprint(nxt)) continue;
+        }
+        container.setItem(startSlot + i, nxt);
     }
-    container.setItem(startSlot + i, nxt);
-  }
 };

@@ -1,7 +1,7 @@
-import { system, world } from "@minecraft/server";
-import { ActionFormData } from "@minecraft/server-ui";
-import { getPlayerById, jobs, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from "./Job.js";
-import { showMainMenu } from "./Menu.js";
+import { system, world } from '@minecraft/server';
+import { ActionFormData } from '@minecraft/server-ui';
+import { getPlayerById, jobs, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
+import { showMainMenu } from './Menu.js';
 
 const JOB_DURATION_TICKS = 20 * 60 * 20;
 const TIMER_INTERVAL_TICKS = 20;
@@ -9,199 +9,199 @@ const TIMER_INTERVAL_TICKS = 20;
 let timerLoopId = null;
 
 const stopTimerLoopIfIdle = () => {
-  if (timerMap.size === 0 && timerLoopId !== null) {
-    system.clearRun(timerLoopId);
-    timerLoopId = null;
-  }
+    if (timerMap.size === 0 && timerLoopId !== null) {
+        system.clearRun(timerLoopId);
+        timerLoopId = null;
+    }
 };
 
 const buildPlayerMap = () => {
-  const map = new Map();
-  const players = world.getAllPlayers();
-  const len = players.length;
+    const map = new Map();
+    const players = world.getAllPlayers();
+    const len = players.length;
 
-  for (let i = 0; i < len; i++) {
-    map.set(players[i].id, players[i]);
-  }
+    for (let i = 0; i < len; i++) {
+        map.set(players[i].id, players[i]);
+    }
 
-  return map;
+    return map;
 };
 
 const startTimer = (riderId, jobId_, savedStartTick) => {
-  stopTimer(riderId);
+    stopTimer(riderId);
 
-  const startTick = savedStartTick ?? system.currentTick;
+    const startTick = savedStartTick ?? system.currentTick;
 
-  timerMap.set(riderId, { startTick });
+    timerMap.set(riderId, { startTick });
 
-  if (timerLoopId === null) {
-    timerLoopId = system.runInterval(processTimers, TIMER_INTERVAL_TICKS);
-  }
+    if (timerLoopId === null) {
+        timerLoopId = system.runInterval(processTimers, TIMER_INTERVAL_TICKS);
+    }
 };
 
 const processTimers = () => {
-  if (timerMap.size === 0) {
+    if (timerMap.size === 0) {
+        stopTimerLoopIfIdle();
+        return;
+    }
+
+    const playerMap = buildPlayerMap();
+
+    for (const [riderId, data] of timerMap) {
+        if (!playerJobMap.has(riderId)) {
+            stopTimer(riderId);
+            continue;
+        }
+
+        const elapsed = system.currentTick - data.startTick;
+        const remaining = JOB_DURATION_TICKS - elapsed;
+
+        if (remaining <= 0) {
+            expireJob(riderId);
+            continue;
+        }
+
+        const rider = playerMap.get(riderId);
+        if (!rider || !rider.isValid) continue;
+
+        const secs = Math.ceil(remaining / 20);
+        const mins = Math.floor(secs / 60);
+        const sec2 = secs % 60;
+        const pad = sec2 < 10 ? '0' : '';
+
+        rider.onScreenDisplay?.setActionBar(`[Job] Time left: ${mins}:${pad}${sec2}`);
+    }
+
     stopTimerLoopIfIdle();
-    return;
-  }
-
-  const playerMap = buildPlayerMap();
-
-  for (const [riderId, data] of timerMap) {
-    if (!playerJobMap.has(riderId)) {
-      stopTimer(riderId);
-      continue;
-    }
-
-    const elapsed = system.currentTick - data.startTick;
-    const remaining = JOB_DURATION_TICKS - elapsed;
-
-    if (remaining <= 0) {
-      expireJob(riderId);
-      continue;
-    }
-
-    const rider = playerMap.get(riderId);
-    if (!rider || !rider.isValid) continue;
-
-    const secs = Math.ceil(remaining / 20);
-    const mins = Math.floor(secs / 60);
-    const sec2 = secs % 60;
-    const pad = sec2 < 10 ? "0" : "";
-
-    rider.onScreenDisplay?.setActionBar(`[Job] Time left: ${mins}:${pad}${sec2}`);
-  }
-
-  stopTimerLoopIfIdle();
 };
 
 const expireJob = (riderId) => {
-  stopTimer(riderId);
+    stopTimer(riderId);
 
-  const jobId_ = playerJobMap.get(riderId);
-  playerJobMap.delete(riderId);
+    const jobId_ = playerJobMap.get(riderId);
+    playerJobMap.delete(riderId);
 
-  if (jobId_ === undefined) return;
+    if (jobId_ === undefined) return;
 
-  let job = null;
-  const len = jobs.length;
+    let job = null;
+    const len = jobs.length;
 
-  for (let i = 0; i < len; i++) {
-    if (jobs[i].id === jobId_) {
-      job = jobs[i];
-      break;
-    }
-  }
-
-  if (!job) return;
-
-  job.status = "open";
-  job.takenBy = null;
-  saveData();
-
-  const rider = getPlayerById(riderId);
-  if (rider && rider.isValid) {
-    rider.sendMessage("[Job] หมดเวลาแล้ว ระบบได้ยกเลิกการจัดส่งและนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ”");
-    viewJobs(rider);
-  }
-
-  const owner = getPlayerById(job.owner);
-  if (owner && owner.isValid) owner.sendMessage("[Job] ผู้ส่งงานหมดเวลา การจัดส่งถูกรีเซ็ตและเปิดรับใหม่");
-};
-
-export function viewJobs(player) {
-  if (!player.isValid) return;
-
-  const openJobs = [];
-  const len = jobs.length;
-  for (let i = 0; i < len; i++) {
-    if (jobs[i].status === "open") openJobs.push(jobs[i]);
-  }
-
-  const form = new ActionFormData();
-  form.title("งานจัดส่งที่พร้อมรับ");
-
-  if (openJobs.length === 0) {
-    form.body("ไม่มีงานจัดส่งในขณะนี้");
-    form.button("ย้อนกลับ");
-    showUI(player, form, () => showMainMenu(player));
-    return;
-  }
-
-  form.body(`มีงานจัดส่งที่พร้อมรับ ${openJobs.length} งาน:`);
-  const openLen = openJobs.length;
-  for (let i = 0; i < openLen; i++) {
-    const job = openJobs[i];
-    form.button(`${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`, "textures/ui/icon_deals");
-  }
-
-  form.button("ย้อนกลับ");
-
-  showUI(player, form, (res) => {
-    if (res.selection === openJobs.length) {
-      showMainMenu(player);
-      return;
-    }
-    const job = openJobs[res.selection];
-    if (job) openJobDetail(player, job);
-  });
-}
-
-export const openJobDetail = (player, job) => {
-  if (!player.isValid) return;
-
-  const total = totalDiamond(job);
-  let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของทีไ่ด้รับ: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
-
-  const itemsLen = job.items.length;
-  for (let i = 0; i < itemsLen; i++) {
-    const it = job.items[i];
-    body += `- ${it.id.replace("minecraft:", "")} จำนวน ${it.amount} ชิ้น (ของที่ได้รับ ${it.diamond} เพชร)\n`;
-  }
-
-  const form = new ActionFormData();
-  form.title("รายละเอียดงานจัดส่ง");
-  form.body(body);
-  form.button("รับงานจัดส่ง", "textures/ui/New_confirm_Hover");
-  form.button("ย้อนกลับ");
-
-  showUI(player, form, (res) => {
-    if (res.selection === 1) {
-      viewJobs(player);
-      return;
+    for (let i = 0; i < len; i++) {
+        if (jobs[i].id === jobId_) {
+            job = jobs[i];
+            break;
+        }
     }
 
-    if (playerJobMap.has(player.id)) {
-      if (player.isValid) player.sendMessage("[Job] คุณมีงานจัดส่งที่กำลังดำเนินการอยู่แล้ว");
-      return;
-    }
+    if (!job) return;
 
-    if (job.status !== "open") {
-      if (player.isValid) player.sendMessage("[Job] งานนี้ไม่อยู่ในสถานะที่สามารถรับได้แล้ว");
-      return;
-    }
-
-    job.status = "taken";
-    job.takenBy = player.id;
-    playerJobMap.set(player.id, job.id);
-
-    startTimer(player.id, job.id);
+    job.status = 'open';
+    job.takenBy = null;
     saveData();
 
-    if (player.isValid) {
-      player.sendMessage("[Job] รับงานเรียบร้อยแล้ว คุณมีเวลา 20 นาที กรุณาเก็บไอเท็มให้ครบและกด “ส่งมอบงาน”");
+    const rider = getPlayerById(riderId);
+    if (rider && rider.isValid) {
+        rider.sendMessage('[Job] หมดเวลาแล้ว ระบบได้ยกเลิกการจัดส่งและนำกลับเข้าสู่ “งานจัดส่งที่พร้อมรับ”');
+        viewJobs(rider);
     }
 
     const owner = getPlayerById(job.owner);
-    if (owner && owner.isValid) owner.sendMessage(`[Job] ${player.name} ได้รับงานจัดส่งของคุณแล้ว ระบบเริ่มจับเวลา 20 นาที`);
-  });
+    if (owner && owner.isValid) owner.sendMessage('[Job] ผู้ส่งงานหมดเวลา การจัดส่งถูกรีเซ็ตและเปิดรับใหม่');
+};
+
+export function viewJobs(player) {
+    if (!player.isValid) return;
+
+    const openJobs = [];
+    const len = jobs.length;
+    for (let i = 0; i < len; i++) {
+        if (jobs[i].status === 'open') openJobs.push(jobs[i]);
+    }
+
+    const form = new ActionFormData();
+    form.title('งานจัดส่งที่พร้อมรับ');
+
+    if (openJobs.length === 0) {
+        form.body('ไม่มีงานจัดส่งในขณะนี้');
+        form.button('ย้อนกลับ');
+        showUI(player, form, () => showMainMenu(player));
+        return;
+    }
+
+    form.body(`มีงานจัดส่งที่พร้อมรับ ${openJobs.length} งาน:`);
+    const openLen = openJobs.length;
+    for (let i = 0; i < openLen; i++) {
+        const job = openJobs[i];
+        form.button(`${job.ownerName}\nจำนวน ${job.items.length} ชิ้น  | ของที่ได้รับ ${totalDiamond(job)} เพชร`, 'textures/ui/icon_deals');
+    }
+
+    form.button('ย้อนกลับ');
+
+    showUI(player, form, (res) => {
+        if (res.selection === openJobs.length) {
+            showMainMenu(player);
+            return;
+        }
+        const job = openJobs[res.selection];
+        if (job) openJobDetail(player, job);
+    });
+}
+
+export const openJobDetail = (player, job) => {
+    if (!player.isValid) return;
+
+    const total = totalDiamond(job);
+    let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของทีไ่ด้รับ: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
+
+    const itemsLen = job.items.length;
+    for (let i = 0; i < itemsLen; i++) {
+        const it = job.items[i];
+        body += `- ${it.id.replace('minecraft:', '')} จำนวน ${it.amount} ชิ้น (ของที่ได้รับ ${it.diamond} เพชร)\n`;
+    }
+
+    const form = new ActionFormData();
+    form.title('รายละเอียดงานจัดส่ง');
+    form.body(body);
+    form.button('รับงานจัดส่ง', 'textures/ui/New_confirm_Hover');
+    form.button('ย้อนกลับ');
+
+    showUI(player, form, (res) => {
+        if (res.selection === 1) {
+            viewJobs(player);
+            return;
+        }
+
+        if (playerJobMap.has(player.id)) {
+            if (player.isValid) player.sendMessage('[Job] คุณมีงานจัดส่งที่กำลังดำเนินการอยู่แล้ว');
+            return;
+        }
+
+        if (job.status !== 'open') {
+            if (player.isValid) player.sendMessage('[Job] งานนี้ไม่อยู่ในสถานะที่สามารถรับได้แล้ว');
+            return;
+        }
+
+        job.status = 'taken';
+        job.takenBy = player.id;
+        playerJobMap.set(player.id, job.id);
+
+        startTimer(player.id, job.id);
+        saveData();
+
+        if (player.isValid) {
+            player.sendMessage('[Job] รับงานเรียบร้อยแล้ว คุณมีเวลา 20 นาที กรุณาเก็บไอเท็มให้ครบและกด “ส่งมอบงาน”');
+        }
+
+        const owner = getPlayerById(job.owner);
+        if (owner && owner.isValid) owner.sendMessage(`[Job] ${player.name} ได้รับงานจัดส่งของคุณแล้ว ระบบเริ่มจับเวลา 20 นาที`);
+    });
 };
 
 system.runTimeout(() => {
-  const snapshot = Array.from(timerMap.entries());
-  const len = snapshot.length;
-  for (let i = 0; i < len; i++) {
-    const [riderId, data] = snapshot[i];
-    if (typeof data.startTick === "number") startTimer(riderId, playerJobMap.get(riderId), data.startTick);
-  }
+    const snapshot = Array.from(timerMap.entries());
+    const len = snapshot.length;
+    for (let i = 0; i < len; i++) {
+        const [riderId, data] = snapshot[i];
+        if (typeof data.startTick === 'number') startTimer(riderId, playerJobMap.get(riderId), data.startTick);
+    }
 }, 10);

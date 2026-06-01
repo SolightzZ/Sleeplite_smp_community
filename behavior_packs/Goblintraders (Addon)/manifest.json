@@ -1,26 +1,28 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Goblin Traders (Addon)",
-    "description": "Discover unique Goblin Traders in every biome!\nBy Iced Fox Studios\nWith Advanced Quest System & UI!\nVersion 2.1",
-    "uuid": "52f1127a-cbbb-416c-a7a4-66776a665311",
-    "version": [2, 1, 0],
-    "min_engine_version": [1, 21, 0]
-  },
-  "modules": [
-    {
-      "description": "Goblin Traders [2.1.0]",
-      "type": "data",
-      "uuid": "eded1654-793a-431f-b7ba-e68278388eac",
-      "version": [2, 1, 0]
-    }
-  ],
-  "metadata": {
-    "generated_with": {
-      "bridge": ["2.7.48"],
-      "dash": ["0.11.7"]
+    "format_version": 2,
+    "header": {
+        "name": "Goblin Traders (Addon)",
+        "description": "Discover unique Goblin Traders in every biome!\nBy Iced Fox Studios\nWith Advanced Quest System & UI!\nVersion 2.1",
+        "uuid": "52f1127a-cbbb-416c-a7a4-66776a665311",
+        "version": [2, 1, 0],
+        "min_engine_version": [1, 26, 10]
     },
-    "authors": ["Iced Fox Studios"],
-    "url": "https://github.com/icedfoxstudios/goblin-traders"
-  }
+
+    "modules": [
+        {
+            "description": "Goblin Traders [2.1.0]",
+            "type": "data",
+            "uuid": "eded1654-793a-431f-b7ba-e68278388eac",
+            "version": [2, 1, 0]
+        }
+    ],
+
+    "metadata": {
+        "generated_with": {
+            "bridge": ["2.7.48"],
+            "dash": ["0.11.7"]
+        },
+        "authors": ["Iced Fox Studios"],
+        "url": "https://github.com/icedfoxstudios/goblin-traders"
+    }
 }

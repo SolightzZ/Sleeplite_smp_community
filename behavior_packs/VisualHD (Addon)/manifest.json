@@ -3,10 +3,11 @@
     "header": {
         "name": "Visual Damage Tint (Addon)",
         "description": "xVisuals Texture [v1.2] By @t17x",
-        "min_engine_version": [1, 21, 80],
         "uuid": "c16dc13b-ef9b-4c1b-9fd3-cc2300722259",
-        "version": [1, 0, 0]
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10]
     },
+
     "modules": [
         {
             "description": "xVisuals Addon [v1.2]",
@@ -22,6 +23,7 @@
             "version": [1, 0, 0]
         }
     ],
+
     "dependencies": [
         {
             "uuid": "f569ed3b-cfe2-4f33-adee-15dc3a85676e",
@@ -32,6 +34,7 @@
             "version": "1.19.0"
         }
     ],
+
     "metadata": {
         "authors": ["xVisuals"],
         "product_type": "addon"

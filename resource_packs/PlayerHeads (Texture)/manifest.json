@@ -5,10 +5,10 @@
         "description": "BlueFireFroggy's Player Heads Resource Pack",
         "uuid": "85d367b5-ab8c-4cb6-8e76-788d37195673",
         "version": [1, 0, 1],
-        "min_engine_version": [1, 21, 120],
+        "min_engine_version": [1, 26, 10],
         "pack_scope": "world"
     },
-    "capabilities": ["pbr"],
+
     "modules": [
         {
             "description": "BlueFireFroggy's Player Heads",
@@ -17,10 +17,19 @@
             "version": [1, 0, 1]
         }
     ],
+
     "dependencies": [
         {
             "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
             "version": [1, 0, 1]
         }
-    ]
+    ],
+
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    }
 }

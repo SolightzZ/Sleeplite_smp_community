@@ -5,14 +5,9 @@
         "description": "BlueFireFroggy's Player Heads Behavior Pack",
         "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
         "version": [1, 0, 1],
-        "min_engine_version": [1, 21, 120]
+        "min_engine_version": [1, 26, 10]
     },
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    },
+
     "modules": [
         {
             "type": "script",
@@ -22,6 +17,7 @@
             "version": [1, 0, 1]
         }
     ],
+
     "dependencies": [
         {
             "uuid": "85d367b5-ab8c-4cb6-8e76-788d37195673",
@@ -31,5 +27,12 @@
             "module_name": "@minecraft/server",
             "version": "2.1.0"
         }
-    ]
+    ],
+
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    }
 }

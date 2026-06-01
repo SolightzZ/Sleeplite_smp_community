@@ -4,22 +4,14 @@
     "description": {
       "identifier": "sledgehammer_32d54d24"
     },
-    "tags": [
-      "crafting_table"
-    ],
-    "pattern": [
-      "ABA",
-      " B ",
-      " B "
-    ],
+    "tags": ["avanced"],
+    "pattern": ["###", " I ", " I "],
     "key": {
-      "A": {
-        "item": "minecraft:iron_block",
-        "data": 0
+      "#": {
+        "item": "minecraft:iron_block"
       },
-      "B": {
-        "item": "minecraft:stick",
-        "data": 0
+      "I": {
+        "item": "minecraft:iron_axe"
       }
     },
     "result": {

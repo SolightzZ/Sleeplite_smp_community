@@ -5,21 +5,23 @@
         "description": "Redesigned by regzinx, original creator Rvo",
         "uuid": "4c4ea7f9-c141-4252-bdc4-48e703d448c3",
         "version": [1, 0, 1],
-        "min_engine_version": [1, 21, 120],
+        "min_engine_version": [1, 26, 10],
         "pack_scope": "world"
     },
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    },
+
     "modules": [
         {
             "type": "resources",
             "uuid": "1a7d8c34-5b92-4f6e-9d21-3c8a7e5f0b66",
             "version": [1, 0, 1]
         }
-    ]
+    ],
+
+    "capabilities": ["pbr"],
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
+    }
 }

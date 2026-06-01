@@ -1,47 +1,49 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Silent Hill (Addon)",
-    "description": "Criaturas de silent hill para o seu minecraft! by @J.S.art",
-    "uuid": "1f4b513f-e423-4967-b576-63b28b0573d9",
-    "version": [1, 0, 1],
-    "min_engine_version": [1, 21, 700]
-  },
-  "modules": [
-    {
-      "description": "JS' Silent Hill [4.0.0]",
-      "type": "data",
-      "uuid": "e488fb85-434d-4217-9aa5-ebf0f4b5b9e8",
-      "version": [1, 0, 1]
+    "format_version": 2,
+    "header": {
+        "name": "Silent Hill (Addon)",
+        "description": "Criaturas de silent hill para o seu minecraft! by @J.S.art",
+        "uuid": "1f4b513f-e423-4967-b576-63b28b0573d9",
+        "version": [1, 0, 1],
+        "min_engine_version": [1, 26, 10]
     },
-    {
-      "type": "script",
-      "uuid": "f6676c1b-3ee8-4ea8-ab1d-31d8416f5ee8",
-      "version": [1, 0, 1],
-      "entry": "scripts/main.js",
-      "language": "javascript"
+    "modules": [
+        {
+            "description": "JS' Silent Hill [4.0.0]",
+            "type": "data",
+            "uuid": "e488fb85-434d-4217-9aa5-ebf0f4b5b9e8",
+            "version": [1, 0, 1]
+        },
+        {
+            "type": "script",
+            "uuid": "f6676c1b-3ee8-4ea8-ab1d-31d8416f5ee8",
+            "version": [1, 0, 1],
+            "entry": "scripts/main.js",
+            "language": "javascript"
+        }
+    ],
+
+    "dependencies": [
+        {
+            "uuid": "dfd9f8e2-abd8-4acd-b37f-138ead07b595",
+            "version": [1, 0, 1]
+        },
+        {
+            "version": "2.6.0",
+            "module_name": "@minecraft/server"
+        },
+        {
+            "version": "2.0.0",
+            "module_name": "@minecraft/server-ui"
+        }
+    ],
+
+    "metadata": {
+        "authors": ["@J.S.art"],
+        "generated_with": {
+            "MAM": ["3.7.6"]
+        },
+        "product_type": "addon",
+        "url": "https://addonsmaker.com/"
     }
-  ],
-  "dependencies": [
-    {
-      "uuid": "dfd9f8e2-abd8-4acd-b37f-138ead07b595",
-      "version": [1, 0, 1]
-    },
-    {
-      "version": "2.6.0",
-      "module_name": "@minecraft/server"
-    },
-    {
-      "version": "2.0.0",
-      "module_name": "@minecraft/server-ui"
-    }
-  ],
-  "metadata": {
-    "authors": ["@J.S.art"],
-    "generated_with": {
-      "MAM": ["3.7.6"]
-    },
-    "product_type": "addon",
-    "url": "https://addonsmaker.com/"
-  }
 }

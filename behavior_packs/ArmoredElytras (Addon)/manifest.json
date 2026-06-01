@@ -1,33 +1,37 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "Armored Elytras (Addon)",
-    "description": "By Raiyon",
-    "uuid": "d7c85cdd-1e7d-47ed-8440-c779c1c41e7f",
-    "version": [1, 0, 0],
-    "min_engine_version": [1, 20, 80]
-  },
-  "modules": [
-    {
-      "description": "Armored Elytras §c[v1.0]§f v26+",
-      "type": "script",
-      "language": "javascript",
-      "uuid": "1a201b18-0454-4357-969d-94d73efb3c0c",
-      "version": [1, 0, 0],
-      "entry": "scripts/index.js"
-    }
-  ],
-  "dependencies": [
-    {
-      "uuid": "57da7897-09dd-4c12-9301-9b4e901702f0",
-      "version": [1, 0, 0]
+    "format_version": 2,
+    "header": {
+        "name": "Armored Elytras (Addon)",
+        "description": "By Raiyon",
+        "uuid": "d7c85cdd-1e7d-47ed-8440-c779c1c41e7f",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10]
     },
-    {
-      "module_name": "@minecraft/server",
-      "version": "2.2.0"
+    "modules": [
+        {
+            "description": "Armored Elytras §c[v1.0]§f v26+",
+            "type": "script",
+            "language": "javascript",
+            "uuid": "1a201b18-0454-4357-969d-94d73efb3c0c",
+            "version": [1, 0, 0],
+            "entry": "scripts/index.js"
+        }
+    ],
+    "dependencies": [
+        {
+            "uuid": "57da7897-09dd-4c12-9301-9b4e901702f0",
+            "version": [1, 0, 0]
+        },
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.2.0"
+        }
+    ],
+
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
     }
-  ],
-  "metadata": {
-    "product_type": "addon"
-  }
 }

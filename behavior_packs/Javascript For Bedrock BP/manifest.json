@@ -1,44 +1,47 @@
 {
-  "format_version": 2,
-  "header": {
-    "name": "JavaScripts API For Bedrock BP",
-    "description": "Behavior Pack Sleeplite SMP 2026",
-    "uuid": "443064b6-27d1-467c-b432-01a3e852a2c5",
-    "version": [1, 0, 0],
-    "min_engine_version": [1, 26, 10]
-  },
-  "metadata": {
-    "authors": ["SleepliteSMP"],
-    "license": "MIT",
-    "url": "https://discord.gg/gtqfbmvTJK",
-    "product_type": "addon"
-  },
-  "modules": [
-    {
-      "type": "data",
-      "uuid": "8a056c7b-e65b-48ee-ae9f-3b173976a29e",
-      "version": [1, 0, 2]
+    "format_version": 2,
+    "header": {
+        "name": "JavaScripts API For Bedrock BP",
+        "description": "Behavior Pack Sleeplite SMP 2026",
+        "uuid": "443064b6-27d1-467c-b432-01a3e852a2c5",
+        "version": [1, 0, 0],
+        "min_engine_version": [1, 26, 10]
     },
-    {
-      "type": "script",
-      "language": "javascript",
-      "uuid": "07416640-971c-4d74-a01b-943667c8ee4d",
-      "entry": "scripts/main.js",
-      "version": [1, 0, 1]
+
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "8a056c7b-e65b-48ee-ae9f-3b173976a29e",
+            "version": [1, 0, 2]
+        },
+        {
+            "type": "script",
+            "language": "javascript",
+            "uuid": "07416640-971c-4d74-a01b-943667c8ee4d",
+            "entry": "scripts/main.js",
+            "version": [1, 0, 1]
+        }
+    ],
+
+    "dependencies": [
+        {
+            "module_name": "@minecraft/server",
+            "version": "2.8.0-beta"
+        },
+        {
+            "module_name": "@minecraft/server-ui",
+            "version": "2.1.0-beta"
+        },
+        {
+            "module_name": "@minecraft/server-admin",
+            "version": "1.0.0-beta"
+        }
+    ],
+
+    "metadata": {
+        "authors": ["SleepliteSMP"],
+        "license": "MIT",
+        "url": "https://discord.gg/gtqfbmvTJK",
+        "product_type": "addon"
     }
-  ],
-  "dependencies": [
-    {
-      "module_name": "@minecraft/server",
-      "version": "2.8.0-beta"
-    },
-    {
-      "module_name": "@minecraft/server-ui",
-      "version": "2.1.0-beta"
-    },
-    {
-      "module_name": "@minecraft/server-admin",
-      "version": "1.0.0-beta"
-    }
-  ]
 }

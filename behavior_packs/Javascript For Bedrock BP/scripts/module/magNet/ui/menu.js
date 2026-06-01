@@ -1,7 +1,5 @@
 import { ActionFormData } from '@minecraft/server-ui';
 import { MagnetConfig, MagnetIcons, MagnetText } from '../config.js';
-
-const BUSY_ERROR = 'User is busy';
 import { countMagnetUsers, hasMagnetUser } from '../core/state.js';
 import { canUseMagnet, toggleMagnet } from '../core/toggle.js';
 
@@ -33,13 +31,6 @@ export const showMagnetMenu = (player) => {
             toggleMagnet(player, !isOn);
         })
         .catch((e) => {
-            if (e?.message !== BUSY_ERROR) {
-                if (player.isValid) {
-                    player.sendMessage('§c[Magnet] เกิดข้อผิดพลาดในการเปิดเมนู');
-                }
-                console.error('[Magnet] showMagnetMenu: ', e);
-            } else {
-                player.sendMessage('§c[Magnet] โปรดรอสักครู่...');
-            }
+            console.error('[Magnet] UI Error:', e);
         });
 };

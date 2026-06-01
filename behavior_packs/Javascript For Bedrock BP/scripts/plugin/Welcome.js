@@ -23,7 +23,8 @@ const getPlayerDeaths = (player, objective) => {
     }
 
     return objective.getScore(identity) || 0;
-  } catch {
+  } catch (e) {
+    console.warn('[Welcome] getPlayerDeaths:', e);
     return 0;
   }
 };
