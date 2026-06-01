@@ -1,741 +1,487 @@
 {
-  "custom_sound.silenthill_kashi_idle1": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_kashi_idle1"
-    ]
-  },
-  "custom_sound.silenthill_kashi_idle2": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_kashi_idle2"
-    ]
-  },
-  "custom_sound.silenthill_radio": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_bloodsucker.say": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_creeper/say/say1",
-      "sounds/mob/jsart_creeper/say/say2",
-      "sounds/mob/jsart_creeper/say/say3",
-      "sounds/mob/jsart_creeper/say/say4"
-    ]
-  },
-  "mob.jsart_bloodsucker.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/silverfish/hit1",
-      "sounds/mob/silverfish/hit2",
-      "sounds/mob/silverfish/hit3"
-    ]
-  },
-  "mob.jsart_creeper.say": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_creeper/say/say1",
-      "sounds/mob/jsart_creeper/say/say2",
-      "sounds/mob/jsart_creeper/say/say3",
-      "sounds/mob/jsart_creeper/say/say4"
-    ]
-  },
-  "mob.jsart_creeper.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/silverfish/hit1",
-      "sounds/mob/silverfish/hit2",
-      "sounds/mob/silverfish/hit3"
-    ]
-  },
-  "mob.jsart_air_screamer.idle": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "sounds/mob/jsart_air_screamer/idle/idle_without_item1",
-        "volume": 0.12
-      },
-      {
-        "name": "sounds/custom_sound/silenthill_radio",
-        "volume": 0.12
-      },
-      {
-        "name": "sounds/mob/jsart_air_screamer/idle/idle_without_item3",
-        "volume": 0.12
-      },
-      {
-        "name": "sounds/mob/jsart_air_screamer/idle/idle_without_item4",
-        "volume": 0.12
-      }
-    ]
-  },
-  "mob.jsart_air_screamer.death": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "sounds/mob/jsart_air_screamer/death/death1",
-        "volume": 0.5
-      },
-      {
-        "name": "sounds/mob/ghast/death",
-        "volume": 0.5
-      }
-    ]
-  },
-  "mob.jsart_air_screamer.hurt": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "sounds/mob/jsart_air_screamer/hurt/hurt1",
-        "volume": 0.5
-      },
-      {
-        "name": "sounds/mob/jsart_air_screamer/hurt/hurt2",
-        "volume": 0.5
-      }
-    ]
-  },
-  "mob.jsart_asphyxia.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_asphyxia/death/death"
-    ]
-  },
-  "mob.jsart_asphyxia.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_asphyxia/hit/hit1",
-      "sounds/sounds/block/frog_spawn/break4",
-      "sounds/dig/coral1",
-      "sounds/dig/coral1"
-    ]
-  },
-  "mob.jsart_asphyxia.crack": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "sounds/mob/jsart_asphyxia/crack/crack1",
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/jsart_asphyxia/crack/crack2",
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/jsart_pyramidhead2/crack/crack1",
-        "pitch": 0.8,
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/jsart_pyramidhead2/crack/crack2",
-        "pitch": 0.8,
-        "volume": 0.8
-      }
-    ]
-  },
-  "mob.jsart_asphyxia.walk": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_asphyxia/walk/walk1",
-      "sounds/block/frog_spawn/break1",
-      "sounds/mob/jsart_asphyxia/walk/walk3",
-      "sounds/mob/jsart_asphyxia/walk/walk4"
-    ]
-  },
-  "mob.jsart_asphyxia.throw": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_asphyxia/throw/throw"
-    ]
-  },
-  "mob.jsart_kashimashi.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_kashimashi/death/death"
-    ]
-  },
-  "mob.jsart_kashimashi.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_kashimashi/hit/hit1",
-      "sounds/mob/jsart_kashimashi/hit/hit2",
-      "sounds/mob/jsart_kashimashi/hit/hit3",
-      "sounds/mob/jsart_kashimashi/hit/hit4"
-    ]
-  },
-  "mob.jsart_kashimashi.crack": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "sounds/mob/irongolem/crack1",
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/irongolem/crack2",
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/irongolem/crack1",
-        "pitch": 0.8,
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/irongolem/crack2",
-        "pitch": 0.8,
-        "volume": 0.8
-      }
-    ]
-  },
-  "mob.jsart_kashimashi.repair": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/irongolem/repair"
-    ]
-  },
-  "mob.jsart_kashimashi.walk": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/irongolem/walk1",
-      "sounds/mob/irongolem/walk2",
-      "sounds/mob/irongolem/walk3",
-      "sounds/mob/irongolem/walk4"
-    ]
-  },
-  "mob.jsart_kashimashi.throw": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/irongolem/throw"
-    ]
-  },
-  "mob.jsart_lyingfigure.armor": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/armor/armor"
-    ]
-  },
-  "mob.jsart_lyingfigure.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/idle/idle1",
-      "sounds/mob/jsart_lyingfigure/idle/idle2",
-      "sounds/mob/jsart_lyingfigure/idle/idle3"
-    ]
-  },
-  "mob.jsart_lyingfigure.breathe": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/breathe/breathe1",
-      "sounds/mob/jsart_lyingfigure/breathe/breathe2",
-      "sounds/mob/jsart_lyingfigure/breathe/breathe3"
-    ]
-  },
-  "mob.jsart_lyingfigure.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/death/death"
-    ]
-  },
-  "mob.jsart_lyingfigure.eat": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/sounds/mob/slime/attack1",
-      "sounds/sounds/mob/slime/attack1",
-      "sounds/sounds/mob/slime/attack2",
-      "sounds/sounds/mob/slime/attack2",
-      "sounds/sounds/mob/slime/big2"
-    ]
-  },
-  "mob.jsart_lyingfigure.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/hit/hit1",
-      "sounds/mob/jsart_lyingfigure/hit/hit2",
-      "sounds/mob/jsart_lyingfigure/hit/hit3",
-      "sounds/mob/jsart_lyingfigure/hit/hit4"
-    ]
-  },
-  "mob.jsart_lyingfigure.jump": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/jump/jump"
-    ]
-  },
-  "mob.jsart_lyingfigure.land": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/sounds/mob/slime/small1"
-    ]
-  },
-  "mob.jsart_lyingfigure.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_lyingfigure.leather": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure/leather/leather"
-    ]
-  },
-  "mob.jsart_cryinggirl.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_cryinggirl/idle/idle1",
-      "sounds/mob/jsart_cryinggirl/idle/idle2",
-      "sounds/mob/jsart_cryinggirl/idle/idle3"
-    ]
-  },
-  "mob.jsart_cryinggirl.death": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_cryinggirl/death/death"
-    ]
-  },
-  "mob.jsart_cryinggirl.hit": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_cryinggirl/hit/hit1",
-      "sounds/mob/jsart_cryinggirl/hit/hit2",
-      "sounds/mob/jsart_cryinggirl/hit/hit3",
-      "sounds/mob/jsart_cryinggirl/hit/hit4"
-    ]
-  },
-  "mob.jsart_doublehead.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_doublehead/idle/idle1",
-      "sounds/mob/jsart_doublehead/idle/idle2",
-      "sounds/mob/jsart_doublehead/idle/idle3"
-    ]
-  },
-  "mob.jsart_doublehead.breathe": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_doublehead/breathe/breathe1",
-      "sounds/mob/jsart_lyingfigure/breathe/breathe2",
-      "sounds/mob/jsart_lyingfigure/breathe/breathe3"
-    ]
-  },
-  "mob.jsart_doublehead.death": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_doublehead/death/death"
-    ]
-  },
-  "mob.jsart_doublehead.hit": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_doublehead/hit/hit1",
-      "sounds/mob/jsart_doublehead/hit/hit2",
-      "sounds/mob/jsart_doublehead/hit/hit3",
-      "sounds/mob/jsart_doublehead/hit/hit4"
-    ]
-  },
-  "mob.jsart_doublehead.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_ladyfukuro.ambient": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_ladyfukuro/ambient/idle1",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle2",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle3",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle4",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle5",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle6",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle7",
-      "sounds/mob/jsart_ladyfukuro/ambient/idle8"
-    ]
-  },
-  "mob.jsart_ladyfukuro.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_ladyfukuro/death/death1",
-      "sounds/mob/jsart_ladyfukuro/death/death2",
-      "sounds/mob/jsart_ladyfukuro/death/death3"
-    ]
-  },
-  "mob.jsart_ladyfukuro.hurt": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_ladyfukuro/hurt/hurt1",
-      "sounds/mob/jsart_ladyfukuro/hurt/hurt2",
-      "sounds/mob/jsart_ladyfukuro/hurt/hurt3",
-      "sounds/mob/jsart_ladyfukuro/hurt/hurt4"
-    ]
-  },
-  "mob.jsart_ladyfukuro.step": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/sounds/block/dripstone/step1",
-      "sounds/sounds/block/dripstone/step2",
-      "sounds/sounds/block/dripstone/step3",
-      "sounds/sounds/block/dripstone/step4",
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_lyingfigure3.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure3/idle/idle1",
-      "sounds/mob/jsart_lyingfigure3/idle/idle2",
-      "sounds/mob/jsart_lyingfigure3/idle/idle3"
-    ]
-  },
-  "mob.jsart_lyingfigure3.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure3/death/death"
-    ]
-  },
-  "mob.jsart_lyingfigure3.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure3/hit/hit1",
-      "sounds/mob/jsart_lyingfigure3/hit/hit2",
-      "sounds/mob/jsart_lyingfigure/hit/hit3",
-      "sounds/mob/jsart_lyingfigure/hit/hit4"
-    ]
-  },
-  "mob.jsart_lyingfigure3.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.pa_creakingkanother.ambient": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingkanother/ambient/idle1",
-      "sounds/mob/pa_creakingkanother/ambient/idle2",
-      "sounds/mob/pa_creakingkanother/ambient/idle3",
-      "sounds/mob/pa_creakingk/ambient/idle4",
-      "sounds/mob/pa_creakingk/ambient/idle5",
-      "sounds/mob/pa_creakingk/ambient/idle6",
-      "sounds/mob/pa_creakingk/ambient/idle7",
-      "sounds/mob/pa_creakingk/ambient/idle8"
-    ]
-  },
-  "mob.pa_creakingkanother.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingkanother/death/death1",
-      "sounds/mob/pa_creakingkanother/death/death2",
-      "sounds/mob/pa_creakingk/death/death3"
-    ]
-  },
-  "mob.pa_creakingkanother.hurt": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingkanother/hurt/hurt1",
-      "sounds/mob/pa_creakingkanother/hurt/hurt2",
-      "sounds/mob/pa_creakingk/hurt/hurt3",
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.pa_creakingk.step": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/sounds/block/dripstone/step1",
-      "sounds/sounds/block/dripstone/step2",
-      "sounds/sounds/block/dripstone/step3",
-      "sounds/sounds/block/dripstone/step4",
-      "sounds/sounds/block/dripstone/step5"
-    ]
-  },
-  "mob.jsart_mannequin.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mannequin/idle/idle1",
-      "sounds/mob/jsart_mannequin/idle/idle2",
-      "sounds/mob/jsart_mannequin/idle/idle3"
-    ]
-  },
-  "mob.jsart_mannequin.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mannequin/death/death"
-    ]
-  },
-  "mob.jsart_mannequin.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mannequin/hit/hit1",
-      "sounds/mob/jsart_mannequin/hit/hit2",
-      "sounds/mob/jsart_mannequin/hit/hit3",
-      "sounds/mob/jsart_mannequin/hit/hit4"
-    ]
-  },
-  "mob.jsart_mannequin.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_mandarindamage.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/sounds/block/amethyst/step1",
-      "sounds/sounds/block/amethyst/step1",
-      "sounds/sounds/block/amethyst/step1"
-    ]
-  },
-  "mob.jsart_mandarindamage.breathe": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/sounds/block/amethyst/step1",
-      "sounds/sounds/block/amethyst/step1",
-      "sounds/sounds/block/amethyst/step1"
-    ]
-  },
-  "mob.jsart_mandarindamage.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mandarindamage/death/death"
-    ]
-  },
-  "mob.jsart_mandarindamage.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/sounds/block/amethyst/step1",
-      "sounds/sounds/block/amethyst/step1",
-      "sounds/mob/horse/hit3",
-      "sounds/mob/horse/hit4"
-    ]
-  },
-  "mob.pa_creakingk2.ambient": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingk2/ambient/idle1",
-      "sounds/mob/pa_creakingk2/ambient/idle2",
-      "sounds/mob/pa_creakingk2/ambient/idle3",
-      "sounds/mob/pa_creakingk/ambient/idle4",
-      "sounds/mob/pa_creakingk/ambient/idle5",
-      "sounds/mob/pa_creakingk/ambient/idle6",
-      "sounds/mob/pa_creakingk/ambient/idle7",
-      "sounds/mob/pa_creakingk/ambient/idle8"
-    ]
-  },
-  "mob.pa_creakingk2.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingk2/death/death1",
-      "sounds/mob/pa_creakingk2/death/death2",
-      "sounds/mob/pa_creakingk/death/death3"
-    ]
-  },
-  "mob.pa_creakingk2.hurt": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingk2/hurt/hurt1",
-      "sounds/mob/pa_creakingk2/hurt/hurt2",
-      "sounds/custom_sound/silenthill_radio",
-      "sounds/mob/pa_creakingk/hurt/hurt4"
-    ]
-  },
-  "mob.pa_creakingk.ambient": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingk/ambient/idle1",
-      "sounds/mob/pa_creakingk/ambient/idle2",
-      "sounds/mob/pa_creakingk/ambient/idle3",
-      "sounds/mob/pa_creakingk/ambient/idle4",
-      "sounds/mob/pa_creakingk/ambient/idle5",
-      "sounds/mob/pa_creakingk/ambient/idle6",
-      "sounds/mob/pa_creakingk/ambient/idle7",
-      "sounds/mob/pa_creakingk/ambient/idle8"
-    ]
-  },
-  "mob.pa_creakingk.death": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingk/death/death1",
-      "sounds/mob/pa_creakingk/death/death2",
-      "sounds/mob/pa_creakingk/death/death3"
-    ]
-  },
-  "mob.pa_creakingk.hurt": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/pa_creakingk/hurt/hurt1",
-      "sounds/mob/pa_creakingk/hurt/hurt2",
-      "sounds/mob/pa_creakingk/hurt/hurt3",
-      "sounds/mob/pa_creakingk/hurt/hurt4"
-    ]
-  },
-  "mob.jsart_mandarin.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mandarin/idle/idle1",
-      "sounds/mob/jsart_mandarin/idle/idle2",
-      "sounds/mob/jsart_mandarin/idle/idle3"
-    ]
-  },
-  "mob.jsart_mandarin.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mandarin/death/death"
-    ]
-  },
-  "mob.jsart_mandarin.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_mandarin/hit/hit1",
-      "sounds/mob/jsart_mandarin/hit/hit2",
-      "sounds/mob/jsart_mandarin/hit/hit3",
-      "sounds/mob/jsart_mandarin/hit/hit4"
-    ]
-  },
-  "mob.jsart_mandarin.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_lyingfigure2.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure2/idle/idle1",
-      "sounds/mob/jsart_lyingfigure2/idle/idle2",
-      "sounds/mob/jsart_lyingfigure2/idle/idle3"
-    ]
-  },
-  "mob.jsart_lyingfigure2.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure2/death/death"
-    ]
-  },
-  "mob.jsart_lyingfigure2.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_lyingfigure2/hit/hit1",
-      "sounds/mob/jsart_lyingfigure2/hit/hit2",
-      "sounds/mob/jsart_lyingfigure2/hit/hit3",
-      "sounds/mob/jsart_lyingfigure2/hit/hit4"
-    ]
-  },
-  "mob.jsart_lyingfigure2.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_pyramidhead.death": {
-    "category": " neutral",
-    "sounds": [
-      "sounds/mob/jsart_pyramidhead2/death/death"
-    ]
-  },
-  "mob.jsart_pyramidhead.hit": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_pyramidhead/hit/hit1",
-      "sounds/mob/irongolem/hit2",
-      "sounds/mob/irongolem/hit3",
-      "sounds/mob/jsart_pyramidhead/hit/hit4"
-    ]
-  },
-  "mob.jsart_pyramidhead.crack": {
-    "category": "neutral",
-    "sounds": [
-      {
-        "name": "sounds/mob/jsart_pyramidhead/crack/crack1",
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/jsart_pyramidhead/crack/crack2",
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/jsart_pyramidhead2/crack/crack1",
-        "pitch": 0.8,
-        "volume": 0.8
-      },
-      {
-        "name": "sounds/mob/jsart_pyramidhead2/crack/crack2",
-        "pitch": 0.8,
-        "volume": 0.8
-      }
-    ]
-  },
-  "mob.jsart_pyramidhead.walk": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/irongolem/walk1",
-      "sounds/mob/irongolem/walk2",
-      "sounds/mob/irongolem/walk3",
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  },
-  "mob.jsart_pyramidhead.throw": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_pyramidhead/throw/throw"
-    ]
-  },
-  "mob.jsart_straightjacket.ambient": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_straightjacket/ambient/idle1",
-      "sounds/mob/jsart_straightjacket/ambient/idle2",
-      "sounds/mob/jsart_straightjacket/ambient/idle3",
-      "sounds/mob/jsart_straightjacket/ambient/idle4",
-      "sounds/mob/jsart_straightjacket/ambient/idle5",
-      "sounds/mob/jsart_straightjacket/ambient/idle6",
-      "sounds/mob/jsart_straightjacket/ambient/idle7",
-      "sounds/mob/jsart_straightjacket/ambient/idle8"
-    ]
-  },
-  "mob.jsart_straightjacket.death": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_straightjacket/death/death1",
-      "sounds/mob/jsart_straightjacket/death/death2",
-      "sounds/mob/jsart_straightjacket/death/death3"
-    ]
-  },
-  "mob.jsart_straightjacket.hurt": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_straightjacket/hurt/hurt1",
-      "sounds/mob/jsart_straightjacket/hurt/hurt2",
-      "sounds/mob/jsart_straightjacket/hurt/hurt3",
-      "sounds/mob/jsart_ladyfukuro/hurt/hurt4"
-    ]
-  },
-  "mob.jsart_victism16.ambient": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_victism16/ambient/idle1",
-      "sounds/mob/jsart_victism16/ambient/idle2",
-      "sounds/mob/jsart_victism16/ambient/idle3",
-      "sounds/mob/pa_creakingk/ambient/idle4",
-      "sounds/mob/pa_creakingk/ambient/idle5",
-      "sounds/mob/pa_creakingk/ambient/idle6",
-      "sounds/mob/pa_creakingk/ambient/idle7",
-      "sounds/mob/pa_creakingk/ambient/idle8"
-    ]
-  },
-  "mob.jsart_wormhead.idle": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/mob/jsart_wormhead/idle/idle1",
-      "sounds/mob/jsart_wormhead/idle/idle2",
-      "sounds/mob/jsart_wormhead/idle/idle3"
-    ]
-  },
-  "mob.jsart_wormhead.angry": {
-    "category": "neutral",
-    "sounds": [
-      "sounds/custom_sound/silenthill_radio"
-    ]
-  }
+    "custom_sound.silenthill_kashi_idle1": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_kashi_idle1"]
+    },
+    "custom_sound.silenthill_kashi_idle2": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_kashi_idle2"]
+    },
+    "custom_sound.silenthill_radio": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_bloodsucker.say": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_creeper/say/say1", "sounds/mob/jsart_creeper/say/say2", "sounds/mob/jsart_creeper/say/say3", "sounds/mob/jsart_creeper/say/say4"]
+    },
+    "mob.jsart_bloodsucker.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/silverfish/hit1", "sounds/mob/silverfish/hit2", "sounds/mob/silverfish/hit3"]
+    },
+    "mob.jsart_creeper.say": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_creeper/say/say1", "sounds/mob/jsart_creeper/say/say2", "sounds/mob/jsart_creeper/say/say3", "sounds/mob/jsart_creeper/say/say4"]
+    },
+    "mob.jsart_creeper.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/silverfish/hit1", "sounds/mob/silverfish/hit2", "sounds/mob/silverfish/hit3"]
+    },
+    "mob.jsart_air_screamer.idle": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "sounds/mob/jsart_air_screamer/idle/idle_without_item1",
+                "volume": 0.12
+            },
+            {
+                "name": "sounds/custom_sound/silenthill_radio",
+                "volume": 0.12
+            },
+            {
+                "name": "sounds/mob/jsart_air_screamer/idle/idle_without_item3",
+                "volume": 0.12
+            },
+            {
+                "name": "sounds/mob/jsart_air_screamer/idle/idle_without_item4",
+                "volume": 0.12
+            }
+        ]
+    },
+    "mob.jsart_air_screamer.death": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "sounds/mob/jsart_air_screamer/death/death1",
+                "volume": 0.5
+            },
+            {
+                "name": "sounds/mob/ghast/death",
+                "volume": 0.5
+            }
+        ]
+    },
+    "mob.jsart_air_screamer.hurt": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "sounds/mob/jsart_air_screamer/hurt/hurt1",
+                "volume": 0.5
+            },
+            {
+                "name": "sounds/mob/jsart_air_screamer/hurt/hurt2",
+                "volume": 0.5
+            }
+        ]
+    },
+    "mob.jsart_asphyxia.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_asphyxia/death/death"]
+    },
+    "mob.jsart_asphyxia.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_asphyxia/hit/hit1", "sounds/sounds/block/frog_spawn/break4", "sounds/dig/coral1", "sounds/dig/coral1"]
+    },
+    "mob.jsart_asphyxia.crack": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "sounds/mob/jsart_asphyxia/crack/crack1",
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/jsart_asphyxia/crack/crack2",
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/jsart_pyramidhead2/crack/crack1",
+                "pitch": 0.8,
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/jsart_pyramidhead2/crack/crack2",
+                "pitch": 0.8,
+                "volume": 0.8
+            }
+        ]
+    },
+    "mob.jsart_asphyxia.walk": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_asphyxia/walk/walk1", "sounds/block/frog_spawn/break1", "sounds/mob/jsart_asphyxia/walk/walk3", "sounds/mob/jsart_asphyxia/walk/walk4"]
+    },
+    "mob.jsart_asphyxia.throw": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_asphyxia/throw/throw"]
+    },
+    "mob.jsart_kashimashi.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_kashimashi/death/death"]
+    },
+    "mob.jsart_kashimashi.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_kashimashi/hit/hit1", "sounds/mob/jsart_kashimashi/hit/hit2", "sounds/mob/jsart_kashimashi/hit/hit3", "sounds/mob/jsart_kashimashi/hit/hit4"]
+    },
+    "mob.jsart_kashimashi.crack": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "sounds/mob/irongolem/crack1",
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/irongolem/crack2",
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/irongolem/crack1",
+                "pitch": 0.8,
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/irongolem/crack2",
+                "pitch": 0.8,
+                "volume": 0.8
+            }
+        ]
+    },
+    "mob.jsart_kashimashi.repair": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/irongolem/repair"]
+    },
+    "mob.jsart_kashimashi.walk": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/irongolem/walk1", "sounds/mob/irongolem/walk2", "sounds/mob/irongolem/walk3", "sounds/mob/irongolem/walk4"]
+    },
+    "mob.jsart_kashimashi.throw": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/irongolem/throw"]
+    },
+    "mob.jsart_lyingfigure.armor": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/armor/armor"]
+    },
+    "mob.jsart_lyingfigure.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/idle/idle1", "sounds/mob/jsart_lyingfigure/idle/idle2", "sounds/mob/jsart_lyingfigure/idle/idle3"]
+    },
+    "mob.jsart_lyingfigure.breathe": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/breathe/breathe1", "sounds/mob/jsart_lyingfigure/breathe/breathe2", "sounds/mob/jsart_lyingfigure/breathe/breathe3"]
+    },
+    "mob.jsart_lyingfigure.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/death/death"]
+    },
+    "mob.jsart_lyingfigure.eat": {
+        "category": " neutral",
+        "sounds": ["sounds/sounds/mob/slime/attack1", "sounds/sounds/mob/slime/attack1", "sounds/sounds/mob/slime/attack2", "sounds/sounds/mob/slime/attack2", "sounds/sounds/mob/slime/big2"]
+    },
+    "mob.jsart_lyingfigure.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/hit/hit1", "sounds/mob/jsart_lyingfigure/hit/hit2", "sounds/mob/jsart_lyingfigure/hit/hit3", "sounds/mob/jsart_lyingfigure/hit/hit4"]
+    },
+    "mob.jsart_lyingfigure.jump": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/jump/jump"]
+    },
+    "mob.jsart_lyingfigure.land": {
+        "category": " neutral",
+        "sounds": ["sounds/sounds/mob/slime/small1"]
+    },
+    "mob.jsart_lyingfigure.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_lyingfigure.leather": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure/leather/leather"]
+    },
+    "mob.jsart_cryinggirl.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_cryinggirl/idle/idle1", "sounds/mob/jsart_cryinggirl/idle/idle2", "sounds/mob/jsart_cryinggirl/idle/idle3"]
+    },
+    "mob.jsart_cryinggirl.death": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_cryinggirl/death/death"]
+    },
+    "mob.jsart_cryinggirl.hit": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_cryinggirl/hit/hit1", "sounds/mob/jsart_cryinggirl/hit/hit2", "sounds/mob/jsart_cryinggirl/hit/hit3", "sounds/mob/jsart_cryinggirl/hit/hit4"]
+    },
+    "mob.jsart_doublehead.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_doublehead/idle/idle1", "sounds/mob/jsart_doublehead/idle/idle2", "sounds/mob/jsart_doublehead/idle/idle3"]
+    },
+    "mob.jsart_doublehead.breathe": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_doublehead/breathe/breathe1", "sounds/mob/jsart_lyingfigure/breathe/breathe2", "sounds/mob/jsart_lyingfigure/breathe/breathe3"]
+    },
+    "mob.jsart_doublehead.death": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_doublehead/death/death"]
+    },
+    "mob.jsart_doublehead.hit": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_doublehead/hit/hit1", "sounds/mob/jsart_doublehead/hit/hit2", "sounds/mob/jsart_doublehead/hit/hit3", "sounds/mob/jsart_doublehead/hit/hit4"]
+    },
+    "mob.jsart_doublehead.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_ladyfukuro.ambient": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_kashimashi/hit/hit1", "sounds/mob/jsart_kashimashi/hit/hit2", "sounds/mob/jsart_kashimashi/hit/hit3", "sounds/mob/jsart_kashimashi/hit/hit4"]
+    },
+    "mob.jsart_ladyfukuro.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_kashimashi/death/death"]
+    },
+    "mob.jsart_ladyfukuro.hurt": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_kashimashi/hit/hit1", "sounds/mob/jsart_kashimashi/hit/hit2", "sounds/mob/jsart_kashimashi/hit/hit3", "sounds/mob/jsart_kashimashi/hit/hit4"]
+    },
+    "mob.jsart_ladyfukuro.step": {
+        "category": "neutral",
+        "sounds": [
+            "sounds/sounds/block/dripstone/step1",
+            "sounds/sounds/block/dripstone/step2",
+            "sounds/sounds/block/dripstone/step3",
+            "sounds/sounds/block/dripstone/step4",
+            "sounds/custom_sound/silenthill_radio"
+        ]
+    },
+    "mob.jsart_lyingfigure3.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure3/idle/idle1", "sounds/mob/jsart_lyingfigure3/idle/idle2", "sounds/mob/jsart_lyingfigure3/idle/idle3"]
+    },
+    "mob.jsart_lyingfigure3.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure3/death/death"]
+    },
+    "mob.jsart_lyingfigure3.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure3/hit/hit1", "sounds/mob/jsart_lyingfigure3/hit/hit2", "sounds/mob/jsart_lyingfigure/hit/hit3", "sounds/mob/jsart_lyingfigure/hit/hit4"]
+    },
+    "mob.jsart_lyingfigure3.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.pa_creakingkanother.ambient": {
+        "category": "neutral",
+        "sounds": [
+            "sounds/mob/pa_creakingkanother/ambient/idle1",
+            "sounds/mob/pa_creakingkanother/ambient/idle2",
+            "sounds/mob/pa_creakingkanother/ambient/idle3",
+            "sounds/mob/pa_creakingk/ambient/idle4",
+            "sounds/mob/pa_creakingk/ambient/idle5",
+            "sounds/mob/pa_creakingk/ambient/idle6",
+            "sounds/mob/pa_creakingk/ambient/idle7",
+            "sounds/mob/pa_creakingk/ambient/idle8"
+        ]
+    },
+    "mob.pa_creakingkanother.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/pa_creakingkanother/death/death1", "sounds/mob/pa_creakingkanother/death/death2", "sounds/mob/pa_creakingk/death/death3"]
+    },
+    "mob.pa_creakingkanother.hurt": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/pa_creakingkanother/hurt/hurt1", "sounds/mob/pa_creakingkanother/hurt/hurt2", "sounds/mob/pa_creakingk/hurt/hurt3", "sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.pa_creakingk.step": {
+        "category": " neutral",
+        "sounds": [
+            "sounds/sounds/block/dripstone/step1",
+            "sounds/sounds/block/dripstone/step2",
+            "sounds/sounds/block/dripstone/step3",
+            "sounds/sounds/block/dripstone/step4",
+            "sounds/sounds/block/dripstone/step5"
+        ]
+    },
+    "mob.jsart_mannequin.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mannequin/idle/idle1", "sounds/mob/jsart_mannequin/idle/idle2", "sounds/mob/jsart_mannequin/idle/idle3"]
+    },
+    "mob.jsart_mannequin.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mannequin/death/death"]
+    },
+    "mob.jsart_mannequin.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mannequin/hit/hit1", "sounds/mob/jsart_mannequin/hit/hit2", "sounds/mob/jsart_mannequin/hit/hit3", "sounds/mob/jsart_mannequin/hit/hit4"]
+    },
+    "mob.jsart_mannequin.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_mandarindamage.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1"]
+    },
+    "mob.jsart_mandarindamage.breathe": {
+        "category": "neutral",
+        "sounds": ["sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1"]
+    },
+    "mob.jsart_mandarindamage.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mandarindamage/death/death"]
+    },
+    "mob.jsart_mandarindamage.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1", "sounds/mob/horse/hit3", "sounds/mob/horse/hit4"]
+    },
+    "mob.pa_creakingk2.ambient": {
+        "category": "neutral",
+        "sounds": [
+            "sounds/mob/pa_creakingk2/ambient/idle1",
+            "sounds/mob/pa_creakingk2/ambient/idle2",
+            "sounds/mob/pa_creakingk2/ambient/idle3",
+            "sounds/mob/pa_creakingk/ambient/idle4",
+            "sounds/mob/pa_creakingk/ambient/idle5",
+            "sounds/mob/pa_creakingk/ambient/idle6",
+            "sounds/mob/pa_creakingk/ambient/idle7",
+            "sounds/mob/pa_creakingk/ambient/idle8"
+        ]
+    },
+    "mob.pa_creakingk2.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/pa_creakingk2/death/death1", "sounds/mob/pa_creakingk2/death/death2", "sounds/mob/pa_creakingk/death/death3"]
+    },
+    "mob.pa_creakingk2.hurt": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/pa_creakingk2/hurt/hurt1", "sounds/mob/pa_creakingk2/hurt/hurt2", "sounds/custom_sound/silenthill_radio", "sounds/mob/pa_creakingk/hurt/hurt4"]
+    },
+    "mob.pa_creakingk.ambient": {
+        "category": "neutral",
+        "sounds": [
+            "sounds/mob/pa_creakingk/ambient/idle1",
+            "sounds/mob/pa_creakingk/ambient/idle2",
+            "sounds/mob/pa_creakingk/ambient/idle3",
+            "sounds/mob/pa_creakingk/ambient/idle4",
+            "sounds/mob/pa_creakingk/ambient/idle5",
+            "sounds/mob/pa_creakingk/ambient/idle6",
+            "sounds/mob/pa_creakingk/ambient/idle7",
+            "sounds/mob/pa_creakingk/ambient/idle8"
+        ]
+    },
+    "mob.pa_creakingk.death": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/pa_creakingk/death/death1", "sounds/mob/pa_creakingk/death/death2", "sounds/mob/pa_creakingk/death/death3"]
+    },
+    "mob.pa_creakingk.hurt": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/pa_creakingk/hurt/hurt1", "sounds/mob/pa_creakingk/hurt/hurt2", "sounds/mob/pa_creakingk/hurt/hurt3", "sounds/mob/pa_creakingk/hurt/hurt4"]
+    },
+    "mob.jsart_mandarin.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mandarin/idle/idle1", "sounds/mob/jsart_mandarin/idle/idle2", "sounds/mob/jsart_mandarin/idle/idle3"]
+    },
+    "mob.jsart_mandarin.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mandarin/death/death"]
+    },
+    "mob.jsart_mandarin.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_mandarin/hit/hit1", "sounds/mob/jsart_mandarin/hit/hit2", "sounds/mob/jsart_mandarin/hit/hit3", "sounds/mob/jsart_mandarin/hit/hit4"]
+    },
+    "mob.jsart_mandarin.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_lyingfigure2.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure2/idle/idle1", "sounds/mob/jsart_lyingfigure2/idle/idle2", "sounds/mob/jsart_lyingfigure2/idle/idle3"]
+    },
+    "mob.jsart_lyingfigure2.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure2/death/death"]
+    },
+    "mob.jsart_lyingfigure2.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_lyingfigure2/hit/hit1", "sounds/mob/jsart_lyingfigure2/hit/hit2", "sounds/mob/jsart_lyingfigure2/hit/hit3", "sounds/mob/jsart_lyingfigure2/hit/hit4"]
+    },
+    "mob.jsart_lyingfigure2.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_pyramidhead.death": {
+        "category": " neutral",
+        "sounds": ["sounds/mob/jsart_pyramidhead2/death/death"]
+    },
+    "mob.jsart_pyramidhead.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_pyramidhead/hit/hit1", "sounds/mob/irongolem/hit2", "sounds/mob/irongolem/hit3", "sounds/mob/jsart_pyramidhead/hit/hit4"]
+    },
+    "mob.jsart_pyramidhead.crack": {
+        "category": "neutral",
+        "sounds": [
+            {
+                "name": "sounds/mob/jsart_pyramidhead/crack/crack1",
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/jsart_pyramidhead/crack/crack2",
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/jsart_pyramidhead2/crack/crack1",
+                "pitch": 0.8,
+                "volume": 0.8
+            },
+            {
+                "name": "sounds/mob/jsart_pyramidhead2/crack/crack2",
+                "pitch": 0.8,
+                "volume": 0.8
+            }
+        ]
+    },
+    "mob.jsart_pyramidhead.walk": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/irongolem/walk1", "sounds/mob/irongolem/walk2", "sounds/mob/irongolem/walk3", "sounds/custom_sound/silenthill_radio"]
+    },
+    "mob.jsart_pyramidhead.throw": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_pyramidhead/throw/throw"]
+    },
+    "mob.jsart_straightjacket.ambient": {
+        "category": "neutral",
+        "sounds": [
+            "sounds/mob/jsart_straightjacket/ambient/idle1",
+            "sounds/mob/jsart_straightjacket/ambient/idle2",
+            "sounds/mob/jsart_straightjacket/ambient/idle3",
+            "sounds/mob/jsart_straightjacket/ambient/idle4",
+            "sounds/mob/jsart_straightjacket/ambient/idle5",
+            "sounds/mob/jsart_straightjacket/ambient/idle6",
+            "sounds/mob/jsart_straightjacket/ambient/idle7",
+            "sounds/mob/jsart_straightjacket/ambient/idle8"
+        ]
+    },
+    "mob.jsart_straightjacket.death": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_straightjacket/death/death1", "sounds/mob/jsart_straightjacket/death/death2", "sounds/mob/jsart_straightjacket/death/death3"]
+    },
+    "mob.jsart_straightjacket.hurt": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_straightjacket/hurt/hurt1", "sounds/mob/jsart_straightjacket/hurt/hurt2", "sounds/mob/jsart_straightjacket/hurt/hurt3"]
+    },
+    "mob.jsart_victism16.ambient": {
+        "category": "neutral",
+        "sounds": [
+            "sounds/mob/jsart_victism16/ambient/idle1",
+            "sounds/mob/jsart_victism16/ambient/idle2",
+            "sounds/mob/jsart_victism16/ambient/idle3",
+            "sounds/mob/pa_creakingk/ambient/idle4",
+            "sounds/mob/pa_creakingk/ambient/idle5",
+            "sounds/mob/pa_creakingk/ambient/idle6",
+            "sounds/mob/pa_creakingk/ambient/idle7",
+            "sounds/mob/pa_creakingk/ambient/idle8"
+        ]
+    },
+    "mob.jsart_wormhead.idle": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_wormhead/idle/idle1", "sounds/mob/jsart_wormhead/idle/idle2", "sounds/mob/jsart_wormhead/idle/idle3"]
+    },
+    "mob.jsart_wormhead.angry": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    }
 }
