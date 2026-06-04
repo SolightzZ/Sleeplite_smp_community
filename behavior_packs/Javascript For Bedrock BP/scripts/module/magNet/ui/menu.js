@@ -30,7 +30,5 @@ export const showMagnetMenu = (player) => {
             if (!player.isValid) return;
             toggleMagnet(player, !isOn);
         })
-        .catch((e) => {
-            console.error('[Magnet] UI Error:', e);
-        });
+        .catch((e) => console.error('[Magnet] UI Error:', e));
 };

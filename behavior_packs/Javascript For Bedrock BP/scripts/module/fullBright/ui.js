@@ -22,7 +22,5 @@ export function showMenu(p) {
                 p.onScreenDisplay.setActionBar(next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`);
             }
         })
-        .catch((e) => {
-            console.error('[FullBright] UI Error:', e);
-        });
+        .catch((e) => console.error('[FullBright] UI Error:', e));
 }

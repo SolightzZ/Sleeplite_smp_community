@@ -1,108 +1,108 @@
 const dimNames = {
-  "minecraft:overworld": "Overworld",
-  "minecraft:nether": "Nether",
-  "minecraft:the_end": "The End",
+    'minecraft:overworld': 'Overworld',
+    'minecraft:nether': 'Nether',
+    'minecraft:the_end': 'The End',
 };
 
 const upperFirst = (str) => {
-  if (!str) return "";
-  return str[0].toUpperCase() + str.slice(1);
+    if (!str) return '';
+    return str[0].toUpperCase() + str.slice(1);
 };
 
 export const formatName = (id) => {
-  if (!id) return "Unknown";
+    if (!id) return 'Unknown';
 
-  return id.replace("minecraft:", "").replace(/_/g, " ").split(" ").map(upperFirst).join(" ");
+    return id.replace('minecraft:', '').replace(/_/g, ' ').split(' ').map(upperFirst).join(' ');
 };
 
 export const worldName = (id) => {
-  return dimNames[id] || formatName(id);
+    return dimNames[id] || formatName(id);
 };
 
 export const posInt = (p) => ({
-  x: Math.floor(p.x),
-  y: Math.floor(p.y),
-  z: Math.floor(p.z),
+    x: Math.floor(p.x),
+    y: Math.floor(p.y),
+    z: Math.floor(p.z),
 });
 
 export const getKillerName = (player, dmg) => {
-  const src = dmg?.damagingEntity;
-  const cause = dmg?.cause;
+    const src = dmg?.damagingEntity;
+    const cause = dmg?.cause;
 
-  if (src?.isValid) {
-    if (src.typeId === "minecraft:player") {
-      return src.id === player.id ? "Suicide" : src.name;
+    if (src?.isValid) {
+        if (src.typeId === 'minecraft:player') {
+            return src.id === player.id ? 'Suicide' : src.name;
+        }
+
+        return formatName(src.typeId);
     }
 
-    return formatName(src.typeId);
-  }
+    switch (cause) {
+        case 'suicide':
+            return 'Suicide';
 
-  switch (cause) {
-    case "suicide":
-      return "Suicide";
+        case 'fall':
+            return 'Fall Damage';
 
-    case "fall":
-      return "Fall Damage";
+        case 'fire':
+        case 'fireTick':
+            return 'Fire';
 
-    case "fire":
-    case "fireTick":
-      return "Fire";
+        case 'lava':
+            return 'Lava';
 
-    case "lava":
-      return "Lava";
+        case 'drowning':
+            return 'Drowning';
 
-    case "drowning":
-      return "Drowning";
+        case 'freezing':
+            return 'Freezing';
 
-    case "freezing":
-      return "Freezing";
+        case 'starvation':
+            return 'Starvation';
 
-    case "starvation":
-      return "Starvation";
+        case 'void':
+            return 'The Void';
 
-    case "void":
-      return "The Void";
+        case 'magic':
+            return 'Magic';
 
-    case "magic":
-      return "Magic";
+        case 'wither':
+            return 'Wither';
 
-    case "wither":
-      return "Wither";
+        case 'thorns':
+            return 'Thorns';
 
-    case "thorns":
-      return "Thorns";
+        case 'projectile':
+            return 'Projectile';
 
-    case "projectile":
-      return "Projectile";
+        case 'entityExplosion':
+            return 'Entity Explosion';
 
-    case "entityExplosion":
-      return "Entity Explosion";
+        case 'blockExplosion':
+            return 'Block Explosion';
 
-    case "blockExplosion":
-      return "Block Explosion";
+        case 'suffocation':
+            return 'Suffocation';
 
-    case "suffocation":
-      return "Suffocation";
+        case 'contact':
+            return 'Contact Damage';
 
-    case "contact":
-      return "Contact Damage";
+        case 'anvil':
+            return 'Anvil';
 
-    case "anvil":
-      return "Anvil";
+        case 'fallingBlock':
+            return 'Falling Block';
 
-    case "fallingBlock":
-      return "Falling Block";
+        case 'lightning':
+            return 'Lightning';
 
-    case "lightning":
-      return "Lightning";
+        case 'temperature':
+            return 'Temperature';
 
-    case "temperature":
-      return "Temperature";
+        case 'override':
+            return 'Command';
 
-    case "override":
-      return "Command";
-
-    default:
-      return formatName(cause);
-  }
+        default:
+            return formatName(cause);
+    }
 };

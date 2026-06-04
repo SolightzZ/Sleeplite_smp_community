@@ -163,11 +163,10 @@ export const inbox = (player) => {
         showForm(player, show, 'inbox.detail', (r) => {
             if (r.selection === 0) inbox(player);
         });
-    })
-        .catch((e) => {
-            console.warn('[ Report ] System Error (Inbox): ' + e);
-            menu(player);
-        });
+    }).catch((e) => {
+        console.warn('[ Report ] System Error (Inbox): ' + e);
+        menu(player);
+    });
 };
 
 export const reportmenu = (player) => {

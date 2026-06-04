@@ -98,9 +98,7 @@ export const showUI = (player, form, callback, retries = 3) => {
                 if (!res || res.canceled) return;
                 callback(res);
             })
-            .catch((err) => {
-                console.error('[Job] UI Error:', err);
-            });
+            .catch((err) => console.error('[Job] UI Error:', err));
     });
 };
 

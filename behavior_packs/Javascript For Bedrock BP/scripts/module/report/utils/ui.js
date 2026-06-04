@@ -17,7 +17,8 @@ export const handleUiError = (player, source, error) => {
 };
 
 export const showForm = (player, form, source, onSubmit) => {
-    return form.show(player)
+    return form
+        .show(player)
         .then((res) => {
             if (!player?.isValid) return;
             onSubmit(res);

@@ -1,5 +1,6 @@
 import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
+
 import { emoteList, setting } from './database.js';
 
 const BUSY_ERROR = 'User is busy';
@@ -52,24 +53,17 @@ function openSubMenu(player, group) {
         .then((result) => {
             if (!result || result.canceled) return;
 
-            const idx = result.selection;
-            if (idx === undefined) return;
+            const index = result.selection;
+            if (index === undefined) return;
 
-            const picked = items[idx];
-            if (picked) {
+            const selected = items[index];
+            if (selected) {
                 system.run(() => {
-                    if (player.isValid) playEmote(player, picked.anim, picked.name);
+                    if (player.isValid) playEmote(player, selected.anim, selected.name);
                 });
             }
         })
-        .catch((error) => {
-            if (error?.message !== BUSY_ERROR) {
-                if (player.isValid) {
-                    player.sendMessage('§c[Emote] เกิดข้อผิดพลาด');
-                }
-                console.error('[Emote] OpenSubMenu UI Error:', error);
-            }
-        });
+        .catch((error) => onsole.error('[Emote] OpenSubMenu UI Error:', error));
 }
 
 export function showMain(player) {
@@ -93,27 +87,20 @@ export function showMain(player) {
         .then((result) => {
             if (!result || result.canceled) return;
 
-            const idx = result.selection;
-            if (idx === undefined) return;
+            const index = result.selection;
+            if (index === undefined) return;
 
-            const picked = emoteList[idx];
-            if (!picked) return;
+            const selected = emoteList[index];
+            if (!selected) return;
 
             system.run(() => {
                 if (!player.isValid) return;
-                if (picked.type === 'BUTTON') {
-                    stopEmote(player, picked.cmd);
-                } else if (picked.type === 'GROUP') {
-                    openSubMenu(player, picked);
+                if (selected.type === 'BUTTON') {
+                    stopEmote(player, selected.cmd);
+                } else if (selected.type === 'GROUP') {
+                    openSubMenu(player, selected);
                 }
             });
         })
-        .catch((error) => {
-            if (error?.message !== BUSY_ERROR) {
-                if (player.isValid) {
-                    player.sendMessage('§c[Emote] เกิดข้อผิดพลาด');
-                }
-                console.error('[Emote] ShowMain UI Error:', error);
-            }
-        });
+        .catch((error) => console.error('[Emote] ShowMain UI Error:', error));
 }
