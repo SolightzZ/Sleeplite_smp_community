@@ -1,117 +1,129 @@
 import { system, world } from '@minecraft/server';
 import { Config } from '../config.js';
 import { openMenu } from '../ui/menu.js';
-import { isContainerBlock } from '../utils/validation.js';
+import { isContainerBlock, isPlayer } from '../utils/helpers.js';
 import { zoneDatabase } from './database.js';
-import { clearVisuals, uiLocks } from './protection.js';
-const isPlayer = (entity) => entity?.typeId?.startsWith('minecraft:player');
+import { clearBorderVisuals } from './borders.js';
+import { uiLockSet } from './protection.js';
 
-const checkFlag = (player, zone, flag) => {
-    if (player.name === zone.owner || player.hasTag(Config.AdminTag)) return true;
-    if (!zone.members?.includes(player.name)) return false;
-    const val = zone.flags?.[flag];
-    return val ?? Config.DefaultFlags[flag];
+// ตรวจสอบสิทธิ์
+const hasPermission = (player, zone, flag) => {
+    if (player.hasTag(Config.AdminTag)) return true;
+    if (player.name === zone.owner || zone.members?.includes(player.name)) {
+        const flagValue = zone.flags?.[flag];
+        return flagValue ?? Config.DefaultFlags[flag];
+    }
+    return false;
 };
 
-export const onBlockEdit = (ev) => {
-    const player = ev.player;
-    const block = ev.block;
+// จัดการอีเวนต์บล็อก (ทำลาย / วาง / ใช้งาน)
+export const onBlockEdit = (event) => {
+    const player = event.player;
+    const block = event.block;
     if (!player || !block) return;
 
     const zone = zoneDatabase.findByLocation(block.location, block.dimension.id);
     if (!zone) return;
 
-    const action = 'brokenBlockPermutation' in ev ? 'break' : 'face' in ev ? 'interact' : 'place';
+    const action = 'face' in event ? 'place' : 'blockFace' in event ? 'interact' : 'break';
     let flag = action === 'break' ? 'break' : action === 'place' ? 'place' : 'interact';
 
     if (action === 'interact' && isContainerBlock(block.typeId)) {
         flag = 'container';
     }
 
-    if (!checkFlag(player, zone, flag)) {
-        ev.cancel = true;
+    if (!hasPermission(player, zone, flag)) {
+        event.cancel = true;
     }
 };
 
-export const onEntityInteract = (ev) => {
-    const player = ev.player;
-    const target = ev.target;
+// จัดการโต้ตอบกับเอนทิตี
+export const onEntityInteract = (event) => {
+    const player = event.player;
+    const target = event.target;
     if (!player || !target) return;
     if (!isPlayer(target)) return;
 
     const zone = zoneDatabase.findByLocation(target.location, target.dimension.id);
     if (!zone) return;
 
-    if (!checkFlag(player, zone, 'interact')) {
-        ev.cancel = true;
+    if (!hasPermission(player, zone, 'interact')) {
+        event.cancel = true;
     }
 };
 
-export const onEntityHurt = (ev) => {
-    const target = ev.hurtEntity;
+// จัดการ PvP
+export const onEntityHurt = (event) => {
+    const target = event.hurtEntity;
     if (!target) return;
 
     const zone = zoneDatabase.findByLocation(target.location, target.dimension.id);
     if (!zone) return;
 
-    const attacker = ev.damageSource?.damagingEntity;
+    const attacker = event.damageSource?.damagingEntity;
 
-    if (attacker && isPlayer(attacker)) {
-        const dmg = zone.flags?.damage ?? Config.DefaultFlags.damage;
-        if (dmg) return;
-        if (!zone.members?.includes(attacker.name)) {
-            ev.cancel = true;
+    if (attacker && isPlayer(attacker) && isPlayer(target)) {
+        const damageEnabled = zone.flags?.damage ?? Config.DefaultFlags.damage;
+        if (!damageEnabled) {
+            event.cancel = true;
         }
-    } else if (attacker) {
-        ev.cancel = true;
     }
 };
 
-export const onExplosion = (ev) => {
-    const loc = ev.source?.location;
-    if (!loc) return;
+// ป้องกันการระเบิด
+export const onExplosion = (event) => {
+    const location = event.source?.location;
+    if (!location) return;
 
-    const zones = zoneDatabase.zones;
-    const owners = Object.keys(zones);
-    if (owners.length === 0) return;
+    const zoneCount = Object.keys(zoneDatabase.zones).length;
+    if (zoneCount === 0) return;
 
-    const dimId = ev.dimension?.id;
-    let near = false;
+    const dimensionId = event.dimension?.id;
+    let isNearZone = false;
     const radius = Config.ExplosionRadius;
 
-    for (const z of Object.values(zones)) {
-        if (!z?.start || !z?.end || !z.dimension) continue;
-        if (z.dimension !== dimId) continue;
+    for (const zone of Object.values(zoneDatabase.zones)) {
+        if (!zone?.start || !zone?.end || !zone.dimension) continue;
+        if (zone.dimension !== dimensionId) continue;
 
-        if (loc.x >= z.start.x - radius && loc.x <= z.end.x + radius && loc.y >= z.start.y - radius && loc.y <= z.end.y + radius && loc.z >= z.start.z - radius && loc.z <= z.end.z + radius) {
-            near = true;
+        if (
+            location.x >= zone.start.x - radius &&
+            location.x <= zone.end.x + radius &&
+            location.y >= zone.start.y - radius &&
+            location.y <= zone.end.y + radius &&
+            location.z >= zone.start.z - radius &&
+            location.z <= zone.end.z + radius
+        ) {
+            isNearZone = true;
             break;
         }
     }
 
-    if (!near) return;
+    if (!isNearZone) return;
 
-    for (const block of ev.getImpactedBlocks()) {
+    for (const block of event.getImpactedBlocks()) {
         if (zoneDatabase.findByLocation(block.location, block.dimension.id)) {
-            ev.cancel = true;
+            event.cancel = true;
             return;
         }
     }
 };
 
-export const onItemUse = (ev) => {
-    const source = ev.source;
+// เรียกเมนู
+export const onItemUse = (event) => {
+    const source = event.source;
     if (source && source.isValid) {
         openMenu(source);
     }
 };
 
-export const onChat = (ev) => {
-    const player = ev.sender;
-    const msg = ev.message;
-    if (msg !== '!json') return;
+// คำสั่งดีบักแอดมิน (!json)
+export const onChat = (event) => {
+    const player = event.sender;
+    const message = event.message;
+    if (message !== '!json') return;
 
-    ev.cancel = true;
+    event.cancel = true;
     system.run(() => {
         if (!player.isValid) return;
         if (!player.hasTag(Config.AdminTag)) {
@@ -120,23 +132,23 @@ export const onChat = (ev) => {
         }
 
         const zones = zoneDatabase.zones;
-        const owners = Object.keys(zones);
-        if (owners.length === 0) {
+        const ownerKeys = Object.keys(zones);
+        if (ownerKeys.length === 0) {
             player.sendMessage(`[x] ไม่มีโพรเทคในระบบ`);
             return;
         }
 
         const data = [];
-        for (const z of Object.values(zones)) {
-            if (!z?.start || !z?.end) continue;
+        for (const zone of Object.values(zones)) {
+            if (!zone?.start || !zone?.end) continue;
             data.push({
-                owner: z.owner,
-                dimension: z.dimension,
-                location: z.location,
-                start: z.start,
-                end: z.end,
-                members: z.members,
-                flags: z.flags,
+                owner: zone.owner,
+                dimension: zone.dimension,
+                location: zone.location,
+                start: zone.start,
+                end: zone.end,
+                members: zone.members,
+                flags: zone.flags,
             });
         }
 
@@ -144,9 +156,10 @@ export const onChat = (ev) => {
     });
 };
 
+// ล้างข้อมูลเมื่อผู้เล่นออก
 export const onPlayerLeave = (event) => {
     const player = event.player;
     if (!player?.isValid) return;
-    clearVisuals(player.name);
-    uiLocks.delete(player.name);
+    clearBorderVisuals(player.name);
+    uiLockSet.delete(player.name);
 };

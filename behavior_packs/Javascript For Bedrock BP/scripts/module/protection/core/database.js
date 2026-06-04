@@ -1,123 +1,165 @@
 import { world } from '@minecraft/server';
 import { Config } from '../config.js';
 
+// ค่าคงที่
 const STORAGE_KEY = 'ZONE_DATA';
 const MAX_STORAGE_SIZE = 32768;
 
-const oldToV2 = (owner, packed) => {
-    const sx = packed[0],
-        sy = packed[1],
-        sz = packed[2];
-    const ex = packed[3],
-        ey = packed[4],
-        ez = packed[5];
-    const friends = [];
-    for (let j = 6; j < packed.length; j++) {
-        if (typeof packed[j] === 'string') friends.push(packed[j]);
+// ตัวช่วยรูปแบบข้อมูลจัดเก็บ
+const parseStorageFormat = (raw) => {
+    if (Array.isArray(raw)) return raw;
+    if (raw && typeof raw === 'object') {
+        if (raw.version === 2 && Array.isArray(raw.zones)) return raw.zones;
+        if (raw.version === 1 && Array.isArray(raw.zones)) return raw.zones;
     }
+    return null;
+};
+
+const convertLegacyV1 = (owner, packedData) => {
+    const [startX, startY, startZ, endX, endY, endZ] = packedData;
+
+    const memberNames = [];
+    for (let i = 6; i < packedData.length; i++) {
+        if (typeof packedData[i] === 'string') memberNames.push(packedData[i]);
+    }
+
     const center = {
-        x: Math.floor((sx + ex) / 2),
-        y: Math.floor((sy + ey) / 2),
-        z: Math.floor((sz + ez) / 2),
+        x: Math.floor((startX + endX) / 2),
+        y: Math.floor((startY + endY) / 2),
+        z: Math.floor((startZ + endZ) / 2),
     };
+
     return {
         id: `minecraft:overworld:${center.x},${center.y},${center.z}`,
         dimension: 'minecraft:overworld',
         location: { ...center },
-        start: { x: sx, y: sy, z: sz },
-        end: { x: ex, y: ey, z: ez },
+        start: { x: startX, y: startY, z: startZ },
+        end: { x: endX, y: endY, z: endZ },
         owner,
-        members: friends,
+        members: memberNames,
         flags: { ...Config.DefaultFlags },
     };
 };
 
+const normalizeZoneEntry = (entry) => ({
+    id: entry.id || `${entry.dimension}:${entry.location?.x || 0},${entry.location?.y || 0},${entry.location?.z || 0}`,
+    dimension: entry.dimension,
+    location: entry.location || { x: 0, y: 0, z: 0 },
+    start: entry.start,
+    end: entry.end,
+    owner: entry.owner,
+    members: Array.isArray(entry.members) ? entry.members : [],
+    flags: entry.flags ? { ...Config.DefaultFlags, ...entry.flags } : { ...Config.DefaultFlags },
+});
+
+// ตัวช่วยบันทึกอัตโนมัติ Proxy
+const wrapArray = (arr, saveFn) =>
+    new Proxy(arr, {
+        set(target, prop, value) {
+            target[prop] = value;
+            saveFn();
+            return true;
+        },
+    });
+
+const wrapZone = (zoneData, saveFn) => {
+    zoneData.members = wrapArray(zoneData.members || [], saveFn);
+    return new Proxy(zoneData, {
+        set(target, prop, value) {
+            target[prop] = prop === 'members' ? wrapArray(value, saveFn) : value;
+            saveFn();
+            return true;
+        },
+        deleteProperty(target, prop) {
+            delete target[prop];
+            saveFn();
+            return true;
+        },
+    });
+};
+
+const buildZonesProxy = (data, saveFn) =>
+    new Proxy(data, {
+        set(target, prop, value) {
+            target[prop] = typeof value === 'object' && value !== null ? wrapZone(value, saveFn) : value;
+            saveFn();
+            return true;
+        },
+        deleteProperty(target, prop) {
+            delete target[prop];
+            saveFn();
+            return true;
+        },
+    });
+
+// คลาส ZoneDatabase
 export class ZoneDatabase {
     constructor() {
-        this.zones = {};
+        this._data = {};
         this.cache = new Map();
+        this.zones = buildZonesProxy(this._data, () => this.save());
     }
 
     save() {
         try {
-            const zones = [];
-            for (const key of Object.keys(this.zones)) {
-                zones.push({ ...this.zones[key] });
-            }
+            const zones = Object.keys(this._data).map((ownerName) => ({ ...this._data[ownerName] }));
             const payload = { version: 2, zones };
             const json = JSON.stringify(payload);
             if (json.length > MAX_STORAGE_SIZE) throw new Error('Data exceeds 32KB');
             world.setDynamicProperty(STORAGE_KEY, json);
-        } catch (err) {
-            console.warn(`[ Protection ] Zone save failed: ${err}`);
+        } catch (error) {
+            console.error(`[ Protection ] Save failed: ${error}`);
         }
     }
 
     load() {
         try {
-            this.zones = {};
+            this._data = {};
+            this.zones = buildZonesProxy(this._data, () => this.save());
             this.cache.clear();
 
             const json = world.getDynamicProperty(STORAGE_KEY);
             if (!json || typeof json !== 'string') return;
 
-            const parsed = JSON.parse(json);
+            const zonesData = parseStorageFormat(JSON.parse(json));
+            if (!zonesData) return;
 
-            let raw;
-            if (Array.isArray(parsed)) {
-                raw = parsed;
-            } else if (parsed && parsed.version === 1 && Array.isArray(parsed.zones)) {
-                raw = parsed.zones;
-            } else if (parsed && parsed.version === 2 && Array.isArray(parsed.zones)) {
-                raw = parsed.zones;
-            } else {
-                return;
-            }
+            const saveFn = () => this.save();
 
-            for (const entry of raw) {
+            for (const entry of zonesData) {
                 if (Array.isArray(entry)) {
-                    const [owner, packed] = entry;
-                    if (typeof owner !== 'string' || !Array.isArray(packed) || packed.length < 6) continue;
-                    const zone = oldToV2(owner, packed);
-                    this.zones[zone.owner] = zone;
-                } else if (entry && typeof entry === 'object' && entry.owner && entry.start && entry.end && entry.dimension) {
-                    this.zones[entry.owner] = {
-                        id: entry.id || `${entry.dimension}:${entry.location?.x || 0},${entry.location?.y || 0},${entry.location?.z || 0}`,
-                        dimension: entry.dimension,
-                        location: entry.location || { x: 0, y: 0, z: 0 },
-                        start: entry.start,
-                        end: entry.end,
-                        owner: entry.owner,
-                        members: Array.isArray(entry.members) ? entry.members : [],
-                        flags: entry.flags ? { ...Config.DefaultFlags, ...entry.flags } : { ...Config.DefaultFlags },
-                    };
+                    const [owner, packedZoneData] = entry;
+                    if (typeof owner !== 'string' || !Array.isArray(packedZoneData) || packedZoneData.length < 6) continue;
+                    this._data[owner] = wrapZone(convertLegacyV1(owner, packedZoneData), saveFn);
+                } else if (entry?.owner && entry?.start && entry?.end && entry?.dimension) {
+                    this._data[entry.owner] = wrapZone(normalizeZoneEntry(entry), saveFn);
                 }
             }
-        } catch (err) {
-            console.warn(`[ Protection ] Zone load failed: ${err}`);
-            this.zones = {};
+        } catch (error) {
+            console.error(`[ Protection ] Load failed: ${error}`);
+            this._data = {};
             this.cache.clear();
         }
     }
 
-    makeKey(loc, dimensionId) {
-        return `${dimensionId}:${Math.floor(loc.x)},${Math.floor(loc.y)},${Math.floor(loc.z)}`;
+    makeKey(location, dimensionId) {
+        return `${dimensionId}:${Math.floor(location.x)},${Math.floor(location.y)},${Math.floor(location.z)}`;
     }
 
-    findByLocation(loc, dimensionId) {
-        const key = this.makeKey(loc, dimensionId);
-        if (this.cache.has(key)) return this.cache.get(key);
+    findByLocation(location, dimensionId) {
+        const cacheKey = this.makeKey(location, dimensionId);
+        if (this.cache.has(cacheKey)) return this.cache.get(cacheKey);
 
-        for (const zone of Object.values(this.zones)) {
+        for (const zone of Object.values(this._data)) {
             if (zone.dimension !== dimensionId) continue;
-            if (loc.x >= zone.start.x && loc.x <= zone.end.x && loc.y >= zone.start.y && loc.y <= zone.end.y && loc.z >= zone.start.z && loc.z <= zone.end.z) {
+            if (location.x >= zone.start.x && location.x <= zone.end.x && location.y >= zone.start.y && location.y <= zone.end.y && location.z >= zone.start.z && location.z <= zone.end.z) {
                 if (this.cache.size > Config.CacheLimit) this.cache.clear();
-                this.cache.set(key, zone);
+                this.cache.set(cacheKey, zone);
                 return zone;
             }
         }
 
-        this.cache.set(key, null);
+        this.cache.set(cacheKey, null);
         return null;
     }
 }

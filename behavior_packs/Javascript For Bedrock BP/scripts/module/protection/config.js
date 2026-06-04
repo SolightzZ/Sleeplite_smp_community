@@ -18,7 +18,7 @@ export const Config = {
     },
 };
 
-export const HalfZoneSize = Config.ZoneSize / 2;
+export const halfZoneSize = Config.ZoneSize / 2;
 
 export const Colors = {
     Error: '§c',
@@ -27,6 +27,7 @@ export const Colors = {
     Info: '§7',
 };
 
+// ฟังก์ชันสร้างตำแหน่งขอบเขต
 export const buildEdgeOffsets = (size) => {
     const offsets = [];
     const zero = 0;
@@ -58,4 +59,4 @@ export const buildEdgeOffsets = (size) => {
     return offsets;
 };
 
-export const EdgeOffsets = buildEdgeOffsets(Config.ZoneSize);
+export const edgeOffsets = buildEdgeOffsets(Config.ZoneSize);
