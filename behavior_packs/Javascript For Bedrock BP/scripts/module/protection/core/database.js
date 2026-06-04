@@ -4,7 +4,33 @@ import { Config } from '../config.js';
 const STORAGE_KEY = 'ZONE_DATA';
 const MAX_STORAGE_SIZE = 32768;
 
-const isValidNumber = (n) => typeof n === 'number';
+const oldToV2 = (owner, packed) => {
+    const sx = packed[0],
+        sy = packed[1],
+        sz = packed[2];
+    const ex = packed[3],
+        ey = packed[4],
+        ez = packed[5];
+    const friends = [];
+    for (let j = 6; j < packed.length; j++) {
+        if (typeof packed[j] === 'string') friends.push(packed[j]);
+    }
+    const center = {
+        x: Math.floor((sx + ex) / 2),
+        y: Math.floor((sy + ey) / 2),
+        z: Math.floor((sz + ez) / 2),
+    };
+    return {
+        id: `minecraft:overworld:${center.x},${center.y},${center.z}`,
+        dimension: 'minecraft:overworld',
+        location: { ...center },
+        start: { x: sx, y: sy, z: sz },
+        end: { x: ex, y: ey, z: ez },
+        owner,
+        members: friends,
+        flags: { ...Config.DefaultFlags },
+    };
+};
 
 export class ZoneDatabase {
     constructor() {
@@ -14,17 +40,12 @@ export class ZoneDatabase {
 
     save() {
         try {
-            const owners = Object.keys(this.zones);
-            const ownersLen = owners.length;
-            const compressed = [];
-
-            for (let i = 0; i < ownersLen; i++) {
-                const owner = owners[i];
-                const zone = this.zones[owner];
-                compressed.push([owner, [zone.start.x, zone.start.y, zone.start.z, zone.end.x, zone.end.y, zone.end.z, ...zone.friends]]);
+            const zones = [];
+            for (const key of Object.keys(this.zones)) {
+                zones.push({ ...this.zones[key] });
             }
-
-            const json = JSON.stringify(compressed);
+            const payload = { version: 2, zones };
+            const json = JSON.stringify(payload);
             if (json.length > MAX_STORAGE_SIZE) throw new Error('Data exceeds 32KB');
             world.setDynamicProperty(STORAGE_KEY, json);
         } catch (err) {
@@ -41,41 +62,36 @@ export class ZoneDatabase {
             if (!json || typeof json !== 'string') return;
 
             const parsed = JSON.parse(json);
-            if (!Array.isArray(parsed)) return;
 
-            const parsedLen = parsed.length;
+            let raw;
+            if (Array.isArray(parsed)) {
+                raw = parsed;
+            } else if (parsed && parsed.version === 1 && Array.isArray(parsed.zones)) {
+                raw = parsed.zones;
+            } else if (parsed && parsed.version === 2 && Array.isArray(parsed.zones)) {
+                raw = parsed.zones;
+            } else {
+                return;
+            }
 
-            for (let i = 0; i < parsedLen; i++) {
-                const entry = parsed[i];
-                if (!Array.isArray(entry) || entry.length < 2) continue;
-
-                const owner = entry[0];
-                const packed = entry[1];
-
-                if (typeof owner !== 'string' || !Array.isArray(packed) || packed.length < 6) continue;
-
-                const sx = packed[0];
-                const sy = packed[1];
-                const sz = packed[2];
-                const ex = packed[3];
-                const ey = packed[4];
-                const ez = packed[5];
-
-                if (!isValidNumber(sx) || !isValidNumber(sy) || !isValidNumber(sz) || !isValidNumber(ex) || !isValidNumber(ey) || !isValidNumber(ez)) continue;
-
-                const friends = [];
-                const friendsStart = 6;
-                const packedLen = packed.length;
-                for (let j = friendsStart; j < packedLen; j++) {
-                    const f = packed[j];
-                    if (typeof f === 'string') friends.push(f);
+            for (const entry of raw) {
+                if (Array.isArray(entry)) {
+                    const [owner, packed] = entry;
+                    if (typeof owner !== 'string' || !Array.isArray(packed) || packed.length < 6) continue;
+                    const zone = oldToV2(owner, packed);
+                    this.zones[zone.owner] = zone;
+                } else if (entry && typeof entry === 'object' && entry.owner && entry.start && entry.end && entry.dimension) {
+                    this.zones[entry.owner] = {
+                        id: entry.id || `${entry.dimension}:${entry.location?.x || 0},${entry.location?.y || 0},${entry.location?.z || 0}`,
+                        dimension: entry.dimension,
+                        location: entry.location || { x: 0, y: 0, z: 0 },
+                        start: entry.start,
+                        end: entry.end,
+                        owner: entry.owner,
+                        members: Array.isArray(entry.members) ? entry.members : [],
+                        flags: entry.flags ? { ...Config.DefaultFlags, ...entry.flags } : { ...Config.DefaultFlags },
+                    };
                 }
-
-                this.zones[owner] = {
-                    start: { x: sx, y: sy, z: sz },
-                    end: { x: ex, y: ey, z: ez },
-                    friends: friends,
-                };
             }
         } catch (err) {
             console.warn(`[ Protection ] Zone load failed: ${err}`);
@@ -84,24 +100,20 @@ export class ZoneDatabase {
         }
     }
 
-    makeKey(loc) {
-        return `${Math.floor(loc.x)},${Math.floor(loc.y)},${Math.floor(loc.z)}`;
+    makeKey(loc, dimensionId) {
+        return `${dimensionId}:${Math.floor(loc.x)},${Math.floor(loc.y)},${Math.floor(loc.z)}`;
     }
 
-    findByLocation(loc) {
-        const key = this.makeKey(loc);
+    findByLocation(loc, dimensionId) {
+        const key = this.makeKey(loc, dimensionId);
         if (this.cache.has(key)) return this.cache.get(key);
 
-        const owners = Object.keys(this.zones);
-        const ownersLen = owners.length;
-
-        for (let i = 0; i < ownersLen; i++) {
-            const zone = this.zones[owners[i]];
+        for (const zone of Object.values(this.zones)) {
+            if (zone.dimension !== dimensionId) continue;
             if (loc.x >= zone.start.x && loc.x <= zone.end.x && loc.y >= zone.start.y && loc.y <= zone.end.y && loc.z >= zone.start.z && loc.z <= zone.end.z) {
                 if (this.cache.size > Config.CacheLimit) this.cache.clear();
-                const result = { owner: owners[i], ...zone };
-                this.cache.set(key, result);
-                return result;
+                this.cache.set(key, zone);
+                return zone;
             }
         }
 

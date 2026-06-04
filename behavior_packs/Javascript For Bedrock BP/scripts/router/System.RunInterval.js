@@ -4,4 +4,4 @@ import { FlashlightRunInterval } from '../module/flashlight/core/engine.js';
 
 system.runInterval(FlashlightRunInterval, 2);
 
-system.runInterval(handleIdlePoller, 1);
+system.runInterval(handleIdlePoller, 20);

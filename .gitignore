@@ -8,7 +8,6 @@ mc.log
 
 
 # AI
-AGENTS.md
 .agents
 SKILL.md
 README.md
@@ -25,3 +24,9 @@ WORKFLOW.md
 .claude
 skills/
 node_modules
+
+
+# packs
+FLOW.md
+AGENTS.md
+AGENTS.md

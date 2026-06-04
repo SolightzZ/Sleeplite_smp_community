@@ -7,8 +7,15 @@ export const Config = {
     BorderDuration: 60,
     CacheLimit: 1000,
     AdminTag: 'admin',
-    CooldownMs: 10000,
+    ExplosionRadius: 8,
     RequiredBlock: 'minecraft:diamond_block',
+    DefaultFlags: {
+        break: true,
+        place: true,
+        interact: true,
+        container: true,
+        damage: false,
+    },
 };
 
 export const HalfZoneSize = Config.ZoneSize / 2;

@@ -63,7 +63,7 @@ export const showMenuEdit = (admin, target) => {
     const activeRank = getActiveRank(target);
     const defaultIndex = activeRank ? owned.indexOf(activeRank) : 0;
 
-    const form = new ModalFormData().title('แก้ไขชื่อยศ').dropdown('เลือกยศ:', owned, { defaultValue: Math.max(0, defaultIndex) });
+    const form = new ModalFormData().title('แก้ไขชื่อยศ').dropdown('เลือกยศ:', owned, { defaultValueIndex: Math.max(0, defaultIndex) });
 
     form.show(admin).then((res) => {
         if (res.canceled) return;

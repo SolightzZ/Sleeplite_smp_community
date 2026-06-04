@@ -1,51 +1,35 @@
 import { ActionFormData } from '@minecraft/server-ui';
 import { Colors, Config, HalfZoneSize } from '../config.js';
 import { zoneDatabase } from '../core/database.js';
-import { adminDeleteZone, adminTeleport, createZone, deleteZone, manageFriends, showBorder, uiLocks } from '../core/protection.js';
-
-export const MenuLocks = new Set();
+import { adminDeleteZone, adminTeleport, createZone, deleteZone, manageFlags, manageFriends, showBorder, uiLocks } from '../core/protection.js';
 
 const buildBody = (player) => {
     const zones = zoneDatabase.zones;
     const zone = zones[player.name];
+    const zoneCount = Object.keys(zones).length;
 
-    let friendOwner = null;
     let friendZone = null;
-    const owners = Object.keys(zones);
-    const ownersLen = owners.length;
 
-    for (let i = 0; i < ownersLen; i++) {
-        const o = owners[i];
-        const z = zones[o];
-        const friends = z.friends;
-        const friendsLen = friends.length;
-
-        for (let j = 0; j < friendsLen; j++) {
-            if (friends[j] === player.name) {
-                friendOwner = o;
-                friendZone = z;
-                break;
-            }
+    for (const z of Object.values(zones)) {
+        if (z.members.includes(player.name)) {
+            friendZone = z;
+            break;
         }
-
-        if (friendOwner) break;
     }
 
-    const lines = [`§7โซน: ${ownersLen}/${Config.MaxZones}`];
+    const lines = [`§7โพรเทค: ${zoneCount}/${Config.MaxZones}`];
 
     if (zone || friendZone) {
-        const owner = zone ? player.name : friendOwner;
         const z = zone || friendZone;
         const h = HalfZoneSize;
-
         const center = {
             x: z.start.x + h,
             y: z.start.y + h,
             z: z.start.z + h,
         };
-
-        const friendStr = z.friends.length ? z.friends.join(', ') : 'ไม่มี';
-        lines.push(`เจ้าของ: ${owner}`, `เพื่อน: ${friendStr}`, `ศูนย์กลาง: (${center.x}, ${center.y}, ${center.z})`);
+        const memberStr = z.members.length ? z.members.join(', ') : 'ไม่มี';
+        const dimLabel = z.dimension === 'minecraft:overworld' ? 'Overworld' : z.dimension === 'minecraft:nether' ? 'Nether' : 'End';
+        lines.push(`เจ้าของ: ${z.owner}`, `สมาชิก: ${memberStr}`, `โลก: ${dimLabel}`, `ศูนย์กลาง: (${center.x}, ${center.y}, ${center.z})`);
     } else {
         lines.push('');
     }
@@ -62,26 +46,28 @@ const buildButtons = (form, player, isAdmin) => {
 
     if (!hasZone) {
         if (zoneCount < Config.MaxZones) {
-            addBtn(form, 'สร้างโซน', 'textures/ui/sidebar_icons/addon');
+            addBtn(form, 'สร้างโพรเทค', 'textures/ui/sidebar_icons/addon');
             actions.push(() => createZone(player));
         }
 
         if (isAdmin) {
-            addBtn(form, 'ลบโซน (แอดมิน)', 'textures/ui/sidebar_icons/promotag');
+            addBtn(form, 'ลบโพรเทค (แอดมิน)', 'textures/ui/sidebar_icons/promotag');
             addBtn(form, 'เทเลพอร์ต (แอดมิน)', 'textures/ui/sidebar_icons/my_characters');
             actions.push(() => adminDeleteZone(player));
             actions.push(() => adminTeleport(player));
         }
     } else {
-        addBtn(form, 'จัดการเพื่อน', 'textures/ui/sidebar_icons/wish_list');
+        addBtn(form, 'ตั้งค่าสิทธิ์', 'textures/ui/sidebar_icons/control');
+        addBtn(form, 'จัดการสมาชิก', 'textures/ui/sidebar_icons/wish_list');
         addBtn(form, 'แสดงขอบเขต', 'textures/ui/sidebar_icons/classic_skins');
-        addBtn(form, 'ลบโซน', 'textures/ui/sidebar_icons/squaredonut');
+        addBtn(form, 'ลบโพรเทค', 'textures/ui/sidebar_icons/squaredonut');
+        actions.push(() => manageFlags(player));
         actions.push(() => manageFriends(player));
         actions.push(() => showBorder(player));
         actions.push(() => deleteZone(player));
 
         if (isAdmin) {
-            addBtn(form, 'ลบโซน (แอดมิน)', 'textures/ui/sidebar_icons/promotag');
+            addBtn(form, 'ลบโพรเทค (แอดมิน)', 'textures/ui/sidebar_icons/promotag');
             addBtn(form, 'เทเลพอร์ต (แอดมิน)', 'textures/ui/sidebar_icons/my_characters');
             actions.push(() => adminDeleteZone(player));
             actions.push(() => adminTeleport(player));
@@ -91,14 +77,13 @@ const buildButtons = (form, player, isAdmin) => {
 };
 
 export const openMenu = async (player) => {
-    if (MenuLocks.has(player.name) || uiLocks.has(player.name)) return player.sendMessage(`[x] รอสักครู่!`);
+    if (uiLocks.has(player.name)) return player.sendMessage(`[x] กรุณารอสักครู่`);
 
-    MenuLocks.add(player.name);
     uiLocks.add(player.name);
 
     try {
         const isAdmin = player.hasTag(Config.AdminTag);
-        const form = new ActionFormData().title('โซนป้องกัน').body(buildBody(player));
+        const form = new ActionFormData().title('โพรเทค').body(buildBody(player));
         const actions = buildButtons(form, player, isAdmin);
 
         const res = await form.show(player);
@@ -108,13 +93,12 @@ export const openMenu = async (player) => {
         if (res.selection < actions.length) {
             await actions[res.selection]();
         } else {
-            player.sendMessage(`[x] เลือกไม่ถูกต้อง!`);
+            player.sendMessage(`[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
         }
     } catch (e) {
-        player.sendMessage(`[x] เมนูผิดพลาด!`);
+        player.sendMessage(`[x] เมนูผิดพลาด`);
         console.warn(`[ Protection ] openMenu: ${e}`);
     } finally {
-        MenuLocks.delete(player.name);
         uiLocks.delete(player.name);
     }
 };
