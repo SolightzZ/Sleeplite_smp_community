@@ -3,7 +3,6 @@ export const playerStates = new Map();
 export const blockCache = new Map();
 
 export const framePool = {
-    position: { x: 0, y: 0, z: 0 },
     rotation: { pitch: 0, yaw: 0 },
     desired: { x: 0, y: 0, z: 0 },
     target: { x: 0, y: 0, z: 0 },

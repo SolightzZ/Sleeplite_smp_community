@@ -1,9 +1,10 @@
 import { system, world, HudVisibility } from '@minecraft/server';
+
 import { CONFIG } from '../config.js';
-import { playerStates } from './state.js';
 import { getCameraFrame } from './afk.js';
 import { tickBlockCache } from './block.js';
 import { hasMoved } from './stateManager.js';
+import { playerStates } from './state.js';
 
 function getPlayerById(playerId) {
     try {
@@ -61,7 +62,7 @@ export class CinematicScheduler {
         const budget = Math.min(CONFIG.schedulerBudget, this._ids.length);
         const toRemove = [];
 
-        for (let b = 0; b < budget; b++) {
+        for (let i = 0; i < budget; i++) {
             if (this._ids.length === 0) break;
             if (this._cursor >= this._ids.length) this._cursor = 0;
 
@@ -73,14 +74,14 @@ export class CinematicScheduler {
                 continue;
             }
 
-            const s = playerStates.get(playerId);
-            if (!s?.isAfk) {
+            const state = playerStates.get(playerId);
+            if (!state?.isAfk) {
                 toRemove.push(playerId);
                 continue;
             }
 
-            if (hasMoved(player, s)) {
-                s.isAfk = false;
+            if (hasMoved(player, state)) {
+                state.isAfk = false;
 
                 player.camera.clear();
                 player.onScreenDisplay.setHudVisibility(HudVisibility.Reset);
@@ -89,24 +90,24 @@ export class CinematicScheduler {
             }
 
             try {
-                const { position: p, rotation: r } = getCameraFrame(player, s);
-                setCinematicCamera(player, p, r);
+                const { position: pos, rotation: rot } = getCameraFrame(player, state);
+                setCinematicCamera(player, pos, rot);
             } catch (error) {
                 console.error(' [ AFKCinematic ] CinematicScheduler: ' + error);
                 toRemove.push(playerId);
                 continue;
             }
 
-            s.shotTicks++;
-            const shot = s.sequence[s.sequenceIndex];
-            if (s.shotTicks >= shot.duration) {
-                let next;
+            state.shotTicks++;
+            const shot = state.sequence[state.sequenceIndex];
+            if (state.shotTicks >= shot.duration) {
+                let nextIndex;
                 do {
-                    next = Math.floor(Math.random() * s.sequence.length);
-                } while (s.sequence.length > 1 && next === s.sequenceIndex);
-                s.sequenceIndex = next;
-                s.shotTicks = 0;
-                s.waveClock = Math.random() * Math.PI * 2;
+                    nextIndex = Math.floor(Math.random() * state.sequence.length);
+                } while (state.sequence.length > 1 && nextIndex === state.sequenceIndex);
+                state.sequenceIndex = nextIndex;
+                state.shotTicks = 0;
+                state.waveClock = Math.random() * Math.PI * 2;
             }
         }
 

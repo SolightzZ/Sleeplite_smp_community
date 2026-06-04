@@ -1,6 +1,6 @@
 import { PASS_THROUGH_BLOCKS, CONFIG } from '../config.js';
-import { blockCache, framePool } from './state.js';
 import { dist3, lerp3Into } from '../utils/math.js';
+import { blockCache, framePool } from './state.js';
 
 let _blockCacheTick = 0;
 
@@ -12,19 +12,19 @@ export function tickBlockCache() {
 }
 
 export function getBlockTypeId(dimension, pos) {
-    const x = Math.floor(pos.x),
-        y = Math.floor(pos.y),
-        z = Math.floor(pos.z);
+    const x = Math.floor(pos.x);
+    const y = Math.floor(pos.y);
+    const z = Math.floor(pos.z);
     const key = `${dimension.id}:${x},${y},${z}`;
-    const cached = blockCache.get(key);
-    if (cached !== undefined) return cached === '\0' ? undefined : cached;
+    const storedType = blockCache.get(key);
+    if (storedType !== undefined) return storedType === '\0' ? undefined : storedType;
 
     if (blockCache.size >= CONFIG.blockCacheMax) {
         const iter = blockCache.keys();
         for (let i = 0; i < 64; i++) {
-            const k = iter.next().value;
-            if (k === undefined) break;
-            blockCache.delete(k);
+            const cacheKey = iter.next().value;
+            if (cacheKey === undefined) break;
+            blockCache.delete(cacheKey);
         }
     }
 
@@ -33,7 +33,9 @@ export function getBlockTypeId(dimension, pos) {
     return typeId;
 }
 
-export const isPassable = (dim, pos) => PASS_THROUGH_BLOCKS.has(getBlockTypeId(dim, pos) ?? '');
+export function isPassable(dim, pos) {
+    return PASS_THROUGH_BLOCKS.has(getBlockTypeId(dim, pos) ?? '');
+}
 
 export function liftAbove(dim, pos, skipLift = false) {
     const p = framePool.lifted;
@@ -48,9 +50,9 @@ export function liftAbove(dim, pos, skipLift = false) {
     return p;
 }
 
-export function pullCamera(dim, focus, desired, shotH = 0) {
+export function pullCamera(dim, focus, desired, shotHeight = 0) {
     const travel = dist3(focus, desired);
-    if (travel <= 0.001) return liftAbove(dim, desired, shotH > 5);
+    if (travel <= 0.001) return liftAbove(dim, desired, shotHeight > 5);
 
     const steps = Math.min(24, Math.max(2, Math.ceil(travel / CONFIG.collisionStep)));
     const safe = framePool.safe;
@@ -64,12 +66,12 @@ export function pullCamera(dim, focus, desired, shotH = 0) {
         if (!isPassable(dim, sample)) {
             const retreat = Math.min(1, CONFIG.collisionBuffer / travel);
             lerp3Into(sample, desired, safe, retreat);
-            return liftAbove(dim, sample, shotH > 5);
+            return liftAbove(dim, sample, shotHeight > 5);
         }
         safe.x = sample.x;
         safe.y = sample.y;
         safe.z = sample.z;
     }
 
-    return liftAbove(dim, desired, shotH > 5);
+    return liftAbove(dim, desired, shotHeight > 5);
 }

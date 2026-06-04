@@ -1,6 +1,7 @@
 import { HudVisibility } from '@minecraft/server';
+
 import { CONFIG } from '../config.js';
-import { cloneVec3, rotateRelInto, faceTargetInto, hashStr } from '../utils/math.js';
+import { cloneVec3, rotateRelInto, faceTargetInto, hashString } from '../utils/math.js';
 import { pullCamera } from './block.js';
 import { buildSequence } from './stateManager.js';
 import { framePool } from './state.js';
@@ -10,8 +11,8 @@ const safeCameraClear = (player) => {
 
     try {
         player.camera.clear();
-    } catch (e) {
-        console.warn(`[ AFKCinematic ] camera clear failed: ${e.message}`);
+    } catch (err) {
+        console.warn(`[ AFKCinematic ] camera clear failed: ${err.message}`);
     }
 };
 
@@ -20,21 +21,21 @@ const safeSetFov = (player, fov) => {
 
     try {
         player.camera.setFov({ fov });
-    } catch (e) {
-        console.warn(`[ AFKCinematic ] set fov failed: ${e.message}`);
+    } catch (err) {
+        console.warn(`[ AFKCinematic ] set fov failed: ${err.message}`);
     }
 };
 
-export function startAfk(player, s, cinematicScheduler) {
-    s.isAfk = true;
-    s.idleTicks = s.idleSecondsCache;
-    s.anchor = cloneVec3(player.location);
-    s.baseYaw = player.getRotation().y;
-    s.sequence = buildSequence(s.baseYaw, hashStr(player.id));
-    s.sequenceIndex = Math.floor(Math.random() * s.sequence.length);
-    s.shotTicks = 0;
-    s.waveClock = Math.random() * Math.PI * 2;
-    s.warningShown = false;
+export function startAfk(player, state, cinematicScheduler) {
+    state.isAfk = true;
+    state.idleTicks = state.idleSecondsCache;
+    state.anchor = cloneVec3(player.location);
+    state.baseYaw = player.getRotation().y;
+    state.sequence = buildSequence(state.baseYaw, hashString(player.id));
+    state.sequenceIndex = Math.floor(Math.random() * state.sequence.length);
+    state.shotTicks = 0;
+    state.waveClock = Math.random() * Math.PI * 2;
+    state.warningShown = false;
 
     player.onScreenDisplay.setHudVisibility(HudVisibility.Hide);
     player.camera.setCamera('minecraft:first_person', {
@@ -45,10 +46,10 @@ export function startAfk(player, s, cinematicScheduler) {
     cinematicScheduler.enqueue(player.id);
 }
 
-export function stopAfk(player, s, cinematicScheduler) {
-    s.isAfk = false;
-    s.idleTicks = 0;
-    s.warningShown = false;
+export function stopAfk(player, state, cinematicScheduler) {
+    state.isAfk = false;
+    state.idleTicks = 0;
+    state.warningShown = false;
 
     cinematicScheduler.dequeue(player.id);
 
@@ -56,22 +57,22 @@ export function stopAfk(player, s, cinematicScheduler) {
     safeCameraClear(player);
 }
 
-export function getCameraFrame(player, s) {
-    const shot = s.sequence[s.sequenceIndex];
-    const progress = shot.duration <= 0 ? 0 : s.shotTicks / shot.duration;
-    const breath = Math.sin(s.waveClock + progress * Math.PI * 2);
-    const drift = Math.cos(s.waveClock * 0.7 + progress * Math.PI * 2);
+export function getCameraFrame(player, state) {
+    const shot = state.sequence[state.sequenceIndex];
+    const progress = shot.duration <= 0 ? 0 : state.shotTicks / shot.duration;
+    const breath = Math.sin(state.waveClock + progress * Math.PI * 2);
+    const drift = Math.cos(state.waveClock * 0.7 + progress * Math.PI * 2);
 
     const desiredOff = framePool.desiredOff;
     rotateRelInto(desiredOff, shot.yaw, shot.distance, drift * shot.slide, shot.height + breath * shot.bob);
 
     const desired = framePool.desired;
-    desired.x = s.anchor.x + desiredOff.x;
-    desired.y = s.anchor.y + desiredOff.y;
-    desired.z = s.anchor.z + desiredOff.z;
+    desired.x = state.anchor.x + desiredOff.x;
+    desired.y = state.anchor.y + desiredOff.y;
+    desired.z = state.anchor.z + desiredOff.z;
 
     const targetOff = framePool.targetOff;
-    rotateRelInto(targetOff, s.baseYaw, shot.targetForward, shot.targetRight, shot.targetUp);
+    rotateRelInto(targetOff, state.baseYaw, shot.targetForward, shot.targetRight, shot.targetUp);
 
     const loc = player.location;
     const target = framePool.target;
