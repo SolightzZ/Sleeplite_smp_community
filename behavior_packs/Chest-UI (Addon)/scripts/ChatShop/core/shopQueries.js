@@ -8,7 +8,8 @@ class ShopQueries {
         const protectedEntry = data.protectedBlocks[key];
         if (!protectedEntry) return null;
 
-        return data.shops[protectedEntry.shopId] || null;
+        const shopId = typeof protectedEntry === 'object' ? protectedEntry.shopId : protectedEntry;
+        return data.shops[shopId] || null;
     };
 
     findShopById = (shopId) => {
@@ -16,12 +17,14 @@ class ShopQueries {
     };
 
     countPlayerShops = (playerId) => {
-        return Object.values(shopDatabase.data.shops).filter((shop) => shop.owner.playerId === playerId).length;
+        return Object.values(shopDatabase.data.shops).filter(
+            (shop) => shop.owner.playerId === playerId,
+        ).length;
     };
 
     getContainerSlotCount = (blockId) => {
-        if (blockId === 'minecraft:barrel') return 27;
-        return 27;
+        if (blockId === 'minecraft:barrel') return 28;
+        return 28;
     };
 }
 

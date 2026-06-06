@@ -28,7 +28,10 @@ class Helpers {
 
     isFormValid = (player, response) => {
         if (response.canceled) return false;
-        if ('formValues' in response && (!response.formValues || !Array.isArray(response.formValues))) {
+        if (
+            'formValues' in response &&
+            (!response.formValues || !Array.isArray(response.formValues))
+        ) {
             player.sendMessage(`§c[Shop] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
             return false;
         }
@@ -52,7 +55,10 @@ class Helpers {
                 if (remaining <= 0) break;
                 const item = container.getItem(slot);
                 if (!item) {
-                    container.setItem(slot, new ItemStack(CONFIG.currencyId, Math.min(remaining, 64)));
+                    container.setItem(
+                        slot,
+                        new ItemStack(CONFIG.currencyId, Math.min(remaining, 64)),
+                    );
                     remaining -= Math.min(remaining, 64);
                 } else if (item.typeId === CONFIG.currencyId && item.amount < 64) {
                     const space = 64 - item.amount;

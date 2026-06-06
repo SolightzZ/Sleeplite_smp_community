@@ -19,7 +19,9 @@ class Revenue {
                 shop.status.pendingRevenue = lost;
                 shopDatabase.save();
                 if (paid > 0) {
-                    player.sendMessage(`§c[Shop] ช่องเก็บของเต็ม! ได้รับเพียง ${paid} ไดม่อน (คงค้าง ${lost})`);
+                    player.sendMessage(
+                        `§c[Shop] ช่องเก็บของเต็ม! ได้รับเพียง ${paid} ไดม่อน (คงค้าง ${lost})`,
+                    );
                 } else {
                     player.sendMessage(`§c[Shop] ช่องเก็บของเต็ม! ไม่สามารถรับรายได้`);
                 }

@@ -26,7 +26,11 @@ class BuyExecutor {
             }
 
             const chestItemStack = chestContainer.getItem(slotIndex);
-            if (!chestItemStack || chestItemStack.typeId !== itemId || chestItemStack.amount < amount) {
+            if (
+                !chestItemStack ||
+                chestItemStack.typeId !== itemId ||
+                chestItemStack.amount < amount
+            ) {
                 helpers.addDiamonds(buyerInv, price);
                 player.sendMessage(`§c[Shop] สินค้าหมด`);
                 return false;
@@ -35,7 +39,9 @@ class BuyExecutor {
             const freeSpace = this.getFreeSpace(buyerInv, itemId);
             if (freeSpace < amount) {
                 helpers.addDiamonds(buyerInv, price);
-                player.sendMessage(`§c[Shop] ช่องเก็บของเต็ม (ต้องการ ${amount} ช่อง แต่เหลือ ${freeSpace})`);
+                player.sendMessage(
+                    `§c[Shop] ช่องเก็บของเต็ม (ต้องการ ${amount} ช่อง แต่เหลือ ${freeSpace})`,
+                );
                 return false;
             }
 
@@ -52,20 +58,18 @@ class BuyExecutor {
             const timestamp = Math.floor(Date.now() / 1000);
             delete shop.prices[slotKey];
 
-            shop.stats.totalSales = (shop.stats.totalSales || 0) + 1;
-            shop.stats.totalRevenue = (shop.stats.totalRevenue || 0) + price;
             shop.status.pendingRevenue = (shop.status.pendingRevenue || 0) + price;
             shop.lastSale = timestamp;
 
             const buyerId = player.id;
+            if (!shop.buyers) shop.buyers = {};
             if (!shop.buyers[buyerId]) {
                 shop.buyers[buyerId] = {
-                    name: player.name,
+                    playerName: player.name,
                     buyCount: 0,
                     spent: 0,
                     lastBuy: 0,
                 };
-                shop.stats.uniqueBuyers = Object.keys(shop.buyers).length;
             }
 
             const buyer = shop.buyers[buyerId];
@@ -73,17 +77,17 @@ class BuyExecutor {
             buyer.spent = (buyer.spent || 0) + price;
             buyer.lastBuy = timestamp;
 
-            shop.stats.repeatBuyers = Object.values(shop.buyers).filter((b) => b.buyCount > 1).length;
-
-            const saleId = `sale_${shop.shopId}_${slotKey}_${timestamp}`;
-            shop.salesHistory[saleId] = {
+            if (!Array.isArray(shop.salesHistory)) {
+                shop.salesHistory = [];
+            }
+            shop.salesHistory.push({
                 buyerId,
                 buyerName: player.name,
                 itemId,
                 amount,
                 price,
                 timestamp,
-            };
+            });
 
             shopDatabase.save();
 
@@ -107,7 +111,10 @@ class BuyExecutor {
                 if (!item || item.typeId !== CONFIG.currencyId) continue;
 
                 if (item.amount > remaining) {
-                    container.setItem(slot, new ItemStack(CONFIG.currencyId, item.amount - remaining));
+                    container.setItem(
+                        slot,
+                        new ItemStack(CONFIG.currencyId, item.amount - remaining),
+                    );
                     remaining = 0;
                 } else {
                     remaining -= item.amount;

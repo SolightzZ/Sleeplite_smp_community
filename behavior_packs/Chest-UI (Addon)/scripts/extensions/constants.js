@@ -9,7 +9,7 @@ export const inventory_enabled = true;
  * ...or reference a texture path, which removes enchant glint and 3d block render capability.
  */
 export const custom_content = {
-	/*
+    /*
 	'custom:block': {
 		 texture: 'minecraft:gold_block',
 		 type: 'block'
@@ -21,26 +21,60 @@ export const custom_content = {
 	*/
 };
 //Blocks are excluded from the count, as they do not shift vanilla IDs.
-export const number_of_custom_items = Object.values(custom_content).filter(v => v.type === 'item').length;
+export let number_of_custom_items = Object.values(custom_content).filter(
+    (v) => v.type === 'item',
+).length;
+
+import { system, ItemTypes, BlockTypes } from '@minecraft/server';
+
+try {
+    system.run(() => {
+        try {
+            const customItems = ItemTypes.getAll()
+                .map((item) => item.id)
+                .filter((id) => !id.startsWith('minecraft:'));
+
+            const customBlocks = new Set(
+                BlockTypes.getAll()
+                    .map((block) => block.id)
+                    .filter((id) => !id.startsWith('minecraft:')),
+            );
+
+            const filteredCustomItems = customItems.filter((id) => !customBlocks.has(id));
+            number_of_custom_items = filteredCustomItems.length;
+            console.warn(`[Chest-UI] Dynamically counted custom items: ${number_of_custom_items}`);
+        } catch (innerError) {
+            console.error(
+                '[Chest-UI] Error inside system.run for counting custom items:',
+                innerError,
+            );
+        }
+    });
+} catch (error) {
+    console.error('[Chest-UI] Failed to schedule system.run for custom items count:', error);
+}
+
 export const custom_content_keys = new Set(Object.keys(custom_content));
 //Add custom sizes defined in UI. Format is [key, [ui_flag, slot_count]]
 export const CHEST_UI_SIZES = new Map([
-	['single', ['§c§h§e§s§t§2§7§r', 27]], ['small', ['§c§h§e§s§t§2§7§r', 27]],
-	['double', ['§c§h§e§s§t§5§4§r', 54]], ['large', ['§c§h§e§s§t§5§4§r', 54]],
-	['1', ['§c§h§e§s§t§0§1§r', 1]],
-	['5', ['§c§h§e§s§t§0§5§r', 5]],
-	['9', ['§c§h§e§s§t§0§9§r', 9]],
-	['18', ['§c§h§e§s§t§1§8§r', 18]],
-	['27', ['§c§h§e§s§t§2§7§r', 27]],
-	['36', ['§c§h§e§s§t§3§6§r', 36]],
-	['45', ['§c§h§e§s§t§4§5§r', 45]],
-	['54', ['§c§h§e§s§t§5§4§r', 54]],
-	[1, ['§c§h§e§s§t§0§1§r', 1]],
-	[5, ['§c§h§e§s§t§0§5§r', 5]],
-	[9, ['§c§h§e§s§t§0§9§r', 9]],
-	[18, ['§c§h§e§s§t§1§8§r', 18]],
-	[27, ['§c§h§e§s§t§2§7§r', 27]],
-	[36, ['§c§h§e§s§t§3§6§r', 36]],
-	[45, ['§c§h§e§s§t§4§5§r', 45]],
-	[54, ['§c§h§e§s§t§5§4§r', 54]]
+    ['single', ['§c§h§e§s§t§2§7§r', 27]],
+    ['small', ['§c§h§e§s§t§2§7§r', 27]],
+    ['double', ['§c§h§e§s§t§5§4§r', 54]],
+    ['large', ['§c§h§e§s§t§5§4§r', 54]],
+    ['1', ['§c§h§e§s§t§0§1§r', 1]],
+    ['5', ['§c§h§e§s§t§0§5§r', 5]],
+    ['9', ['§c§h§e§s§t§0§9§r', 9]],
+    ['18', ['§c§h§e§s§t§1§8§r', 18]],
+    ['27', ['§c§h§e§s§t§2§7§r', 27]],
+    ['36', ['§c§h§e§s§t§3§6§r', 36]],
+    ['45', ['§c§h§e§s§t§4§5§r', 45]],
+    ['54', ['§c§h§e§s§t§5§4§r', 54]],
+    [1, ['§c§h§e§s§t§0§1§r', 1]],
+    [5, ['§c§h§e§s§t§0§5§r', 5]],
+    [9, ['§c§h§e§s§t§0§9§r', 9]],
+    [18, ['§c§h§e§s§t§1§8§r', 18]],
+    [27, ['§c§h§e§s§t§2§7§r', 27]],
+    [36, ['§c§h§e§s§t§3§6§r', 36]],
+    [45, ['§c§h§e§s§t§4§5§r', 45]],
+    [54, ['§c§h§e§s§t§5§4§r', 54]],
 ]);

@@ -81,7 +81,11 @@ class BlockUtils {
 
         archiveEntry.prices = {};
         archiveEntry.status.pendingRevenue = 0;
-        archiveEntry.container.containerHash = '';
+        archiveEntry.salesHistory = [];
+        if (archiveEntry.stats) delete archiveEntry.stats;
+        if (archiveEntry.container && archiveEntry.container.containerHash !== undefined) {
+            delete archiveEntry.container.containerHash;
+        }
 
         data.deletedShops[shop.shopId] = archiveEntry;
     };

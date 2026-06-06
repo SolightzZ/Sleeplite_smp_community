@@ -15,7 +15,9 @@ class ShopCreator {
 
             const { x, z } = block.location;
             if (!helpers.isWithinRange(x, z)) {
-                player.sendMessage(`§c[Shop] ร้านค้าต้องอยู่ในระยะ ${CONFIG.maxDistance} blocks จาก 0,0,0`);
+                player.sendMessage(
+                    `§c[Shop] ร้านค้าต้องอยู่ในระยะ ${CONFIG.maxDistance} blocks จาก 0,0,0`,
+                );
                 return;
             }
 
@@ -26,7 +28,9 @@ class ShopCreator {
 
             const playerShops = shopQueries.countPlayerShops(player.id);
             if (playerShops >= CONFIG.maxShopPerPlayer) {
-                player.sendMessage(`§c[Shop] คุณสามารถสร้างร้านได้สูงสุด ${CONFIG.maxShopPerPlayer} ร้าน`);
+                player.sendMessage(
+                    `§c[Shop] คุณสามารถสร้างร้านได้สูงสุด ${CONFIG.maxShopPerPlayer} ร้าน`,
+                );
                 return;
             }
 
@@ -44,11 +48,7 @@ class ShopCreator {
                 z: Math.floor(z),
             };
 
-            data.protectedBlocks[key] = {
-                shopId,
-                ownerId: player.id,
-                type: 'shop',
-            };
+            data.protectedBlocks[key] = shopId;
 
             data.shops[shopId] = {
                 shopId,
@@ -64,7 +64,6 @@ class ShopCreator {
                 container: {
                     blockId: block.typeId,
                     slots: shopQueries.getContainerSlotCount(block.typeId),
-                    containerHash: key,
                     isProtected: true,
                 },
                 protection: { ...CONFIG.protection },
@@ -75,15 +74,9 @@ class ShopCreator {
                     visitCount: 0,
                     lastAccess: timestamp,
                 },
-                stats: {
-                    totalSales: 0,
-                    totalRevenue: 0,
-                    uniqueBuyers: 0,
-                    repeatBuyers: 0,
-                },
                 buyers: {},
                 prices: {},
-                salesHistory: {},
+                salesHistory: [],
             };
 
             shopDatabase.save();
