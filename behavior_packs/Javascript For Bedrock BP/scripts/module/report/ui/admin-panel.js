@@ -1,7 +1,7 @@
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { Database } from '../core/database.js';
 import { LIMITS } from '../config.js';
-import { menu } from './main-menu.js';
+import { showMenuReport } from './main-menu.js';
 import { showForm, sure } from '../utils/ui.js';
 
 const showDetail = (player, item, targetName, index) => {
@@ -168,7 +168,7 @@ export const adminpanel = (player) => {
                 player.sendMessage('§e[System] Dump ข้อมูลลง Console แล้ว');
                 adminpanel(player);
             } else if (res.selection === names.length + 1) {
-                menu(player);
+                showMenuReport(player);
             } else {
                 const realIndex = res.selection - 1;
                 if (realIndex >= 0) adminmsg(player, names[realIndex]);
@@ -176,6 +176,6 @@ export const adminpanel = (player) => {
         });
     } catch (error) {
         console.error('[ Report ] System Error (AdminPanel): ' + error);
-        menu(player);
+        showMenuReport(player);
     }
 };

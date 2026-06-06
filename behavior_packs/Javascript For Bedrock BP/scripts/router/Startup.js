@@ -1,28 +1,30 @@
-import { system } from "@minecraft/server";
-import { RegisterHelp } from "../help/help.js";
-import { registerCommandAFK } from "../module/AFKCinematic/commands/afk-command.js";
-import { registerCommands } from "../module/customCommands/Register.js";
-import { registerSortCommands } from "../module/inventorySorter/commands/sort-command.js";
-import { RegisterRewards } from "../module/rewards/system.js";
-import { registerCustomCommandTakeASeat } from "../module/simpleSit/commands/sit-command.js";
-import { initCleanup } from "../module/simpleSit/core/cleanup.js";
-import { zoneDatabase } from "../module/protection/core/database.js";
-import { ZoomCommand } from "../module/zoom/Command.js";
-import { runEventHandlers } from "./utils.js";
+import { system } from '@minecraft/server';
+import { RegisterHelp } from '../help/help.js';
+import { registerCommandAFK } from '../module/AFKCinematic/commands/afk-command.js';
+import { registerCommands } from '../module/customCommands/Register.js';
+import { registerSortCommands } from '../module/inventorySorter/commands/sort-command.js';
+import { zoneDatabase } from '../module/protection/core/database.js';
+import { RegisterRewards } from '../module/rewards/system.js';
+import { registerCustomCommandTakeASeat } from '../module/simpleSit/commands/sit-command.js';
+import { initCleanup } from '../module/simpleSit/core/cleanup.js';
+import { ZoomCommand } from '../module/zoom/Command.js';
+import { runEventHandlers } from './utils.js';
 
-system.run(() => zoneDatabase.load());
+system.run(() => {
+    zoneDatabase.load();
+});
 initCleanup();
 
 const startupHandlers = [
-  registerCommands,
-  registerCommandAFK,
-  registerSortCommands,
-  registerCustomCommandTakeASeat,
-  RegisterRewards,
-  RegisterHelp,
-  ZoomCommand,
+    registerCommands,
+    registerCommandAFK,
+    registerSortCommands,
+    registerCustomCommandTakeASeat,
+    RegisterRewards,
+    RegisterHelp,
+    ZoomCommand,
 ];
 
 system.beforeEvents.startup.subscribe((init) => {
-  runEventHandlers("Startup", startupHandlers, init);
+    runEventHandlers('Startup', startupHandlers, init);
 });

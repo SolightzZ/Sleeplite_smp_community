@@ -15,7 +15,8 @@ const getBiomeIdAtLocation = (player) => {
 
     try {
         return player.dimension.getBiome(player.location)?.id ?? null;
-    } catch {
+    } catch (error) {
+        console.error('[BiomeType] getBiomeIdAtLocation: ' + error);
         return null;
     }
 };

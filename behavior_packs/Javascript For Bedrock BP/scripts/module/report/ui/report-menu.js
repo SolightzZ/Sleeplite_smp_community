@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData, MessageFormData } from '@minecraft/serve
 import { system } from '@minecraft/server';
 import { CONFIG, LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
-import { menu } from './main-menu.js';
+import { showMenuReport } from './main-menu.js';
 import { showForm, sure } from '../utils/ui.js';
 
 const trimValues = (values) => {
@@ -161,7 +161,7 @@ export const inbox = (player) => {
         ui.title('กล่องจดหมาย (Inbox)');
         ui.body('§7[Report] ยังไม่มีการตอบกลับจากผู้ดูแลระบบ');
         ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
-        showForm(player, ui, 'inbox.empty', () => menu(player));
+        showForm(player, ui, 'inbox.empty', () => showMenuReport(player));
         return;
     }
 
@@ -179,7 +179,7 @@ export const inbox = (player) => {
     showForm(player, ui, 'inbox', (res) => {
         if (res.canceled) return;
         if (res.selection === replied.length) {
-            menu(player);
+            showMenuReport(player);
             return;
         }
 
@@ -195,7 +195,7 @@ export const inbox = (player) => {
         });
     }).catch((error) => {
         console.error('[ Report ] System Error (Inbox): ' + error);
-        menu(player);
+        showMenuReport(player);
     });
 };
 
@@ -214,9 +214,9 @@ export const reportmenu = (player) => {
         if (res.selection === 0) sendform(player);
         if (res.selection === 1) mylist(player, 'edit');
         if (res.selection === 2) mylist(player, 'del');
-        if (res.selection === 3) menu(player);
+        if (res.selection === 3) showMenuReport(player);
     }).catch((error) => {
         console.error('[ Report ] System Error (ReportMenu): ' + error);
-        menu(player);
+        showMenuReport(player);
     });
 };

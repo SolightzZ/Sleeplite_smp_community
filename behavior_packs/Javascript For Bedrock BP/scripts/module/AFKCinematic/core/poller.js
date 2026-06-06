@@ -4,7 +4,7 @@ import { CONFIG } from '../config.js';
 import { cloneVec3 } from '../utils/math.js';
 import { ensureState, refreshBaseline, hasMoved } from './stateManager.js';
 import { startAfk, stopAfk } from './afk.js';
-import { CinematicScheduler } from './scheduler.js';
+import { cinematicScheduler } from './scheduler.js';
 import { playerStates } from './state.js';
 
 export function handleIdlePoller() {

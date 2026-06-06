@@ -72,7 +72,7 @@ export function removeLightBlock(playerId, fallbackDim) {
     if (!dim) return;
     try {
         const block = dim.getBlock(light);
-        if (block && block.typeId === BLOCK_LIGHT) {
+        if (block && (block.typeId === BLOCK_LIGHT || block.typeId === BLOCK_LIGHT_15)) {
             block.setType(BLOCK_AIR);
         }
     } catch (error) {
@@ -80,12 +80,12 @@ export function removeLightBlock(playerId, fallbackDim) {
     }
 }
 
-export function placeLightForPlayer(player) {
+export function placeLightForPlayer(player, skipHeldCheck = false) {
     if (!player || !player.isValid) return;
 
     const playerId = player.id;
 
-    if (!isFlashlightHeld(player)) {
+    if (!skipHeldCheck && !isFlashlightHeld(player)) {
         if (playerLights.has(playerId)) {
             removeLightBlock(playerId, player.dimension);
         }
@@ -110,7 +110,7 @@ export function placeLightForPlayer(player) {
             const oldDim = oldLight.dimId === currentDim.id ? currentDim : world.getDimension(oldLight.dimId);
             if (oldDim) {
                 const oldBlock = oldDim.getBlock(oldLight);
-                if (oldBlock && oldBlock.typeId === BLOCK_LIGHT) {
+                if (oldBlock && (oldBlock.typeId === BLOCK_LIGHT || oldBlock.typeId === BLOCK_LIGHT_15)) {
                     oldBlock.setType(BLOCK_AIR);
                 }
             }
@@ -132,7 +132,7 @@ export function placeLightForPlayer(player) {
         }
 
         const typeId = targetBlock.typeId;
-        const isReplaceable = typeId === BLOCK_AIR || typeId === BLOCK_LIGHT;
+        const isReplaceable = typeId === BLOCK_AIR || typeId === BLOCK_LIGHT || typeId === BLOCK_LIGHT_15;
         if (!isReplaceable) {
             playerLights.delete(playerId);
             return;

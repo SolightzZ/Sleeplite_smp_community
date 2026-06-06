@@ -2,6 +2,11 @@
 [
 	
 	{
+		"pack_id" : "2c0b13a1-125a-4a2a-829e-635daf382143",
+		"version" : [ 1, 0, 0 ]
+	},
+	
+	{
 		"pack_id" : "5ede07db-bea4-43cb-b437-f2593eb594fa",
 		"version" : [ 6, 5, 0 ]
 	},

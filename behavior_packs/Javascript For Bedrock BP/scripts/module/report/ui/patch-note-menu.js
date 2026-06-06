@@ -1,6 +1,6 @@
 import { ActionFormData } from '@minecraft/server-ui';
 import { patchNotesData } from '../data/patch-notes.js';
-import { menu } from './main-menu.js';
+import { showMenuReport } from './main-menu.js';
 import { showForm } from '../utils/ui.js';
 
 export const note = (player) => {
@@ -23,6 +23,6 @@ export const note = (player) => {
 
     showForm(player, form, 'note', (res) => {
         if (res.canceled) return;
-        if (res.selection === 0) menu(player);
+        if (res.selection === 0) showMenuReport(player);
     }).catch((error) => console.error('[ Report ] System Error (Note): ' + error));
 };

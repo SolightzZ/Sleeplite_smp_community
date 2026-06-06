@@ -1,0 +1,1 @@
+import './chatShop-router.js';

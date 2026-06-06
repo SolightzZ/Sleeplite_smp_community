@@ -3,7 +3,7 @@ export const BLOCK_LIGHT = 'minecraft:light_block';
 export const BLOCK_LIGHT_15 = 'minecraft:light_block_15';
 export const BLOCK_AIR = 'minecraft:air';
 
-export const TICK_RECONCILE = 200;
+export const TICK_RECONCILE = 40;
 export const TICK_TARGET_LATENCY = 5;
 export const BATCH_MIN_SIZE = 1;
 export const BATCH_MAX_SIZE = 8;

@@ -63,7 +63,8 @@ function openSubMenu(player, group) {
 }
 
 export function showMenuEmote(player) {
-    if (!player.isValid) return;
+    player = player.source;
+    if (!player?.isValid) return;
 
     const form = new ActionFormData().title('Emote Menu');
     form.body('§7เลือกท่าทาง:');

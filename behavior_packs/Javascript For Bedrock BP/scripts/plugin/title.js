@@ -4,7 +4,7 @@ const BOSS_IDS = new Set(['minecraft:ender_dragon', 'minecraft:wither']);
 const BOSS_TAG = 'boss';
 const TICK_DELAY = 5;
 const TITLE_TICKS = 80;
-const RADIUS = 100;
+const RADIUS = 128;
 const RADIUS_SQ = RADIUS * RADIUS;
 const SND_DEATH = 'mob.warden.death';
 const SND_THUNDER = 'ambient.weather.thunder';
@@ -18,8 +18,7 @@ const formatName = (id) => {
     const parts = id.replace('minecraft:', '').split('_');
     let text = '';
 
-    for (let i = 0; i < parts.length; i++) {
-        const part = parts[i];
+    for (const part of parts) {
         if (!part) continue;
         if (text) text += ' ';
         text += part[0].toUpperCase() + part.slice(1);
@@ -47,13 +46,12 @@ const collectPlayersByDimension = (players) => {
     return playersByDimension;
 };
 
-const getNearbyPlayers = (entity, candidates, out) => {
+const getNearbyPlayers = (origin, candidates, out) => {
     if (!candidates || candidates.length === 0) return;
 
-    const eloc = entity.location;
-    const ex = eloc.x;
-    const ey = eloc.y;
-    const ez = eloc.z;
+    const ex = origin.x;
+    const ey = origin.y;
+    const ez = origin.z;
 
     for (const player of candidates) {
         const dx = player.location.x - ex;
@@ -68,6 +66,7 @@ const createAnimation = (entity, bossName, subtitle, isDeath) => ({
     entity,
     bossName,
     subtitle,
+    spawnLocation: { x: entity.location.x, y: entity.location.y, z: entity.location.z },
     finalSound: isDeath ? SND_DEATH : SND_THUNDER,
     finalText: `${isDeath ? '§c' : '§e'}- ${bossName} -`,
     charIndex: 0,
@@ -75,7 +74,7 @@ const createAnimation = (entity, bossName, subtitle, isDeath) => ({
 });
 
 const playAnimationStep = (animation, playersByDimension, recipients) => {
-    const { entity, bossName, subtitle, finalSound, finalText, charIndex, maxCharIndex } = animation;
+    const { entity, bossName, subtitle, spawnLocation, finalSound, finalText, charIndex, maxCharIndex } = animation;
     if (!entity || !entity.isValid || charIndex > maxCharIndex) return false;
 
     const options = {
@@ -89,7 +88,7 @@ const playAnimationStep = (animation, playersByDimension, recipients) => {
 
     recipients.length = 0;
 
-    getNearbyPlayers(entity, playersByDimension.get(dimId), recipients);
+    getNearbyPlayers(spawnLocation, playersByDimension.get(dimId), recipients);
 
     if (recipients.length === 0) return true;
 
@@ -120,17 +119,17 @@ const processActiveAnimations = () => {
     const playersByDimension = collectPlayersByDimension(onlinePlayers);
     const recipients = [];
 
-    for (let i = 0; i < activeAnimations.length; i++) {
-        const animation = activeAnimations[i];
+    for (let index = 0; index < activeAnimations.length; index++) {
+        const animation = activeAnimations[index];
         const keepRunning = playAnimationStep(animation, playersByDimension, recipients);
 
         if (keepRunning) continue;
         const lastIndex = activeAnimations.length - 1;
-        activeAnimations[i] = activeAnimations[lastIndex];
+        activeAnimations[index] = activeAnimations[lastIndex];
 
         activeAnimations.pop();
 
-        i--;
+        index--;
     }
 };
 
