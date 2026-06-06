@@ -19,8 +19,8 @@ const convertLegacyV1 = (owner, packedData) => {
     const [startX, startY, startZ, endX, endY, endZ] = packedData;
 
     const memberNames = [];
-    for (let i = 6; i < packedData.length; i++) {
-        if (typeof packedData[i] === 'string') memberNames.push(packedData[i]);
+    for (let index = 6; index < packedData.length; index++) {
+        if (typeof packedData[index] === 'string') memberNames.push(packedData[index]);
     }
 
     const center = {

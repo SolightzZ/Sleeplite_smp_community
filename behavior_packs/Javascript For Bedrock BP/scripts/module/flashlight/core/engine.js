@@ -6,28 +6,24 @@ import { placeLightForPlayer, removeLightBlock } from './light-manager.js';
 
 export function syncPlayerQueue() {
     const allPlayers = world.getAllPlayers();
-    const allCount = allPlayers.length;
     const liveIds = new Set();
 
-    for (let i = 0; i < allCount; i++) {
-        liveIds.add(allPlayers[i].id);
+    for (const player of allPlayers) {
+        liveIds.add(player.id);
     }
 
     const trackedIds = Array.from(playerLights.keys());
-    const trackedCount = trackedIds.length;
 
-    for (let i = 0; i < trackedCount; i++) {
-        const id = trackedIds[i];
+    for (const id of trackedIds) {
         if (!liveIds.has(id)) {
             removeLightBlock(id);
         }
     }
 
     processQueue.length = 0;
-    for (let i = 0; i < allCount; i++) {
-        const p = allPlayers[i];
-        if (p && p.isValid) {
-            processQueue.push(p);
+    for (const player of allPlayers) {
+        if (player && player.isValid) {
+            processQueue.push(player);
         }
     }
 
@@ -74,10 +70,9 @@ export function flashSpawn(event) {
     const player = event.player;
     if (!player || !player.isValid) return;
     const playerId = player.id;
-    const qLen = processQueue.length;
 
-    for (let i = 0; i < qLen; i++) {
-        if (processQueue[i].id === playerId) return;
+    for (const queued of processQueue) {
+        if (queued.id === playerId) return;
     }
     processQueue.push(player);
 }

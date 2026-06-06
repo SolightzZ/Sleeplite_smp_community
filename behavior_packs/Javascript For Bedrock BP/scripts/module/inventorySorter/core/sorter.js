@@ -14,8 +14,8 @@ const readContainerSlice = (container, start, length) => {
 };
 
 const isAllEmpty = (arr) => {
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i]) return false;
+    for (const item of arr) {
+        if (item) return false;
     }
     return true;
 };
@@ -37,8 +37,8 @@ export function sortPlayerInventory(player, mode) {
     const mainItems = readContainerSlice(inv, hotbarEnd, mainLen);
 
     const rawItems = [];
-    for (let i = 0; i < mainLen; i++) {
-        if (mainItems[i]) rawItems.push(mainItems[i]);
+    for (const item of mainItems) {
+        if (item) rawItems.push(item);
     }
 
     if (rawItems.length === 0) {

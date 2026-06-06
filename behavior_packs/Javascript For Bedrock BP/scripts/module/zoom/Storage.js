@@ -19,8 +19,8 @@ export function getPlayerConfig(player) {
         }
       }
     }
-  } catch (e) {
-    console.error("[ Zoom ] Failed to load player config", e);
+  } catch (error) {
+    console.error("[ Zoom ] Failed to load player config", error);
   }
 
   return config;

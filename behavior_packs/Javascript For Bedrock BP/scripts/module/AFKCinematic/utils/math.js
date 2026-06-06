@@ -1,35 +1,35 @@
-export const cloneVec3 = (v) => ({ x: v.x, y: v.y, z: v.z });
-export const cloneVec2 = (v) => ({ x: v.x, y: v.y });
+export const cloneVec3 = (vec) => ({ x: vec.x, y: vec.y, z: vec.z });
+export const cloneVec2 = (vec) => ({ x: vec.x, y: vec.y });
 
-export const normalizeYaw = (y) => ((((y + 180) % 360) + 360) % 360) - 180;
-export const angleDiff = (a, b) => Math.abs(normalizeYaw(a - b));
+export const normalizeYaw = (yaw) => ((((yaw + 180) % 360) + 360) % 360) - 180;
+export const angleDiff = (yawA, yawB) => Math.abs(normalizeYaw(yawA - yawB));
 
-export const dist3 = (a, b) => {
-    const dx = a.x - b.x;
-    const dy = a.y - b.y;
-    const dz = a.z - b.z;
+export const dist3 = (pointA, pointB) => {
+    const dx = pointA.x - pointB.x;
+    const dy = pointA.y - pointB.y;
+    const dz = pointA.z - pointB.z;
     return Math.sqrt(dx * dx + dy * dy + dz * dz);
 };
 
-export const lerp3Into = (out, a, b, t) => {
-    out.x = a.x + (b.x - a.x) * t;
-    out.y = a.y + (b.y - a.y) * t;
-    out.z = a.z + (b.z - a.z) * t;
+export const lerp3Into = (out, from, to, progress) => {
+    out.x = from.x + (to.x - from.x) * progress;
+    out.y = from.y + (to.y - from.y) * progress;
+    out.z = from.z + (to.z - from.z) * progress;
     return out;
 };
 
 export const rotateRelInto = (out, yaw, fwd, right, up = 0) => {
-    const r = (yaw * Math.PI) / 180;
-    out.x = -Math.sin(r) * fwd + Math.cos(r) * right;
+    const radians = (yaw * Math.PI) / 180;
+    out.x = -Math.sin(radians) * fwd + Math.cos(radians) * right;
     out.y = up;
-    out.z = Math.cos(r) * fwd + Math.sin(r) * right;
+    out.z = Math.cos(radians) * fwd + Math.sin(radians) * right;
     return out;
 };
 
-export const hashString = (s) => {
-    let h = 0;
-    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
-    return h;
+export const hashString = (text) => {
+    let hash = 0;
+    for (let i = 0; i < text.length; i++) hash = (hash * 31 + text.charCodeAt(i)) >>> 0;
+    return hash;
 };
 
 export const faceTargetInto = (rot, from, to) => {

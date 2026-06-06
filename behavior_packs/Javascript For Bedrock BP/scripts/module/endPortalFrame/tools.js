@@ -9,23 +9,21 @@ export const count = (block) => {
     const zoneSq = zone * zone;
 
     const players = world.getAllPlayers();
-    const len = players.length;
-    let n = 0;
+    let nearbyCount = 0;
 
-    for (let i = 0; i < len; i++) {
-        const p = players[i];
-        if (!p.isValid) continue;
-        if (p.dimension.id !== dimId) continue;
+    for (const player of players) {
+        if (!player.isValid) continue;
+        if (player.dimension.id !== dimId) continue;
 
-        const ploc = p.location;
-        const dx = ploc.x - loc.x;
-        const dy = ploc.y - loc.y;
-        const dz = ploc.z - loc.z;
+        const playerLoc = player.location;
+        const dx = playerLoc.x - loc.x;
+        const dy = playerLoc.y - loc.y;
+        const dz = playerLoc.z - loc.z;
 
-        if (dx * dx + dy * dy + dz * dz <= zoneSq) n++;
+        if (dx * dx + dy * dy + dz * dz <= zoneSq) nearbyCount++;
     }
 
-    return n;
+    return nearbyCount;
 };
 
 export const fix = (text) => {
@@ -34,8 +32,8 @@ export const fix = (text) => {
     const len = words.length;
 
     for (let i = 0; i < len; i++) {
-        const w = words[i];
-        words[i] = w[0].toUpperCase() + w.slice(1);
+        const word = words[i];
+        words[i] = word[0].toUpperCase() + word.slice(1);
     }
 
     return words.join(' ');

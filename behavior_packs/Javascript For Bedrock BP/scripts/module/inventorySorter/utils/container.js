@@ -31,8 +31,8 @@ export const countTotalItems = (items) => {
 
     let total = 0;
 
-    for (let i = 0; i < items.length; i++) {
-        if (items[i]) total += items[i].amount;
+    for (const item of items) {
+        if (item) total += item.amount;
     }
 
     return total;
@@ -41,8 +41,7 @@ export const countTotalItems = (items) => {
 export const sortAndMergeItems = (items, maxSize) => {
     const buckets = new Map();
 
-    for (let i = 0; i < items.length; i++) {
-        const it = items[i];
+    for (const it of items) {
         if (!it?.typeId) continue;
 
         const key = buildStackKey(it);
@@ -61,8 +60,7 @@ export const sortAndMergeItems = (items, maxSize) => {
     const maxAmountCache = new Map();
     const bucketValues = Array.from(buckets.values());
 
-    for (let i = 0; i < bucketValues.length; i++) {
-        const group = bucketValues[i];
+    for (const group of bucketValues) {
         const typeId = group.ref.typeId;
         let maxAmt = maxAmountCache.get(typeId);
 

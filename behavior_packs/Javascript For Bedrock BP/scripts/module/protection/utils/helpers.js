@@ -55,9 +55,11 @@ export const isContainerBlock = (typeId) => CONTAINER_BLOCK_TYPES.has(typeId);
 export const consumeBlock = (player) => {
     const container = player.getComponent('minecraft:inventory')?.container;
     if (!container) return false;
+
     const slotCount = container.size;
     for (let slotIndex = 0; slotIndex < slotCount; slotIndex++) {
         const item = container.getItem(slotIndex);
+
         if (item && item.typeId === Config.RequiredBlock) {
             if (item.amount > 1) {
                 container.setItem(slotIndex, new ItemStack(Config.RequiredBlock, item.amount - 1));
@@ -76,6 +78,7 @@ export const isPlayer = (entity) => entity?.typeId?.startsWith('minecraft:player
 // ตรวจสอบฟอร์ม
 export const isFormValid = (player, response) => {
     if (response.canceled) return false;
+
     const hasFormValues = 'formValues' in response;
     const formValuesAreValid = response.formValues && Array.isArray(response.formValues);
     if (hasFormValues && !formValuesAreValid) {

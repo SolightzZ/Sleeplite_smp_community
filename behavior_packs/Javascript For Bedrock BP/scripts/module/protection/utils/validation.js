@@ -4,7 +4,7 @@ import { Config, halfZoneSize } from '../config.js';
 export const validateZoneCreate = (player, zones) => {
     const zoneCount = Object.keys(zones).length;
     if (zoneCount >= Config.MaxZones) {
-        return { ok: false, reason: `[x] มีโพรเทคครบ ${Config.MaxZones} อันแล้ว` };
+        return { ok: false, reason: `[x] มีโพรเทคครบ ${Config.MaxZones} แล้ว` };
     }
     if (zones[player.name]) {
         return { ok: false, reason: `[x] คุณมีโพรเทคอยู่แล้ว` };
@@ -12,9 +12,10 @@ export const validateZoneCreate = (player, zones) => {
 
     const basePosition = {
         x: Math.floor(player.location.x),
-        y: Math.floor(player.location.y) - 1,
+        y: Math.floor(player.location.y) + 1,
         z: Math.floor(player.location.z),
     };
+
     const bottom = basePosition.y - halfZoneSize;
     const top = basePosition.y + halfZoneSize;
     if (bottom < -63 || top > 319) {

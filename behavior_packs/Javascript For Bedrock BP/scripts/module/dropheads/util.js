@@ -57,7 +57,7 @@ export const getKillerName = (player, dmg) => {
         case 'freezing':
             return 'Freezing';
 
-        case 'starvation':
+        case 'starve':
             return 'Starvation';
 
         case 'void':

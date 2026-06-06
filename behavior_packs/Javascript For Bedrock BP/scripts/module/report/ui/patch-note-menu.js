@@ -9,17 +9,14 @@ export const note = (player) => {
 
     let bodyText = '§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n';
 
-    const sectionsLen = patchNotesData.length;
-    for (let i = 0; i < sectionsLen; i++) {
-        const section = patchNotesData[i];
-        if (i > 0) bodyText += '\n\n';
+    patchNotesData.forEach((section, sectionIndex) => {
+        if (sectionIndex > 0) bodyText += '\n\n';
         bodyText += `§3${section.category}§r\n§f- `;
-        const itemsLen = section.items.length;
-        for (let j = 0; j < itemsLen; j++) {
-            if (j > 0) bodyText += '\n- ';
-            bodyText += section.items[j];
-        }
-    }
+        section.items.forEach((item, itemIndex) => {
+            if (itemIndex > 0) bodyText += '\n- ';
+            bodyText += item;
+        });
+    });
 
     form.body(bodyText);
     form.button('ย้อนกลับ', 'textures/ui/arrow_left');
@@ -27,5 +24,5 @@ export const note = (player) => {
     showForm(player, form, 'note', (res) => {
         if (res.canceled) return;
         if (res.selection === 0) menu(player);
-    }).catch((e) => console.warn('[ Report ] System Error (Note): ' + e));
+    }).catch((error) => console.error('[ Report ] System Error (Note): ' + error));
 };

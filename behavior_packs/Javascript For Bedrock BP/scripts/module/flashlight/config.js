@@ -1,5 +1,6 @@
 export const FLASHLIGHT_ITEM = 'gao:flashlight';
-export const BLOCK_LIGHT = 'minecraft:light_block_15';
+export const BLOCK_LIGHT = 'minecraft:light_block';
+export const BLOCK_LIGHT_15 = 'minecraft:light_block_15';
 export const BLOCK_AIR = 'minecraft:air';
 
 export const TICK_RECONCILE = 200;

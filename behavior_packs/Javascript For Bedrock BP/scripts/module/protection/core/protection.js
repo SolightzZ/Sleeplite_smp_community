@@ -10,14 +10,22 @@ export const uiLockSet = new Set();
 
 // ยืนยันการลบ
 const confirmDelete = async (player) => {
-    const firstConfirmForm = new ActionFormData().title('ลบโพรเทค').body('คุณแน่ใจหรือไม่ว่าต้องการลบโพรเทคนี้').button('ตกลง', 'textures/ui/check').button('ยกเลิก', 'textures/ui/cancel');
+    const firstform = new ActionFormData();
+    firstform.title('ลบโพรเทค');
+    firstform.body('คุณแน่ใจหรือไม่ว่าต้องการลบโพรเทคนี้');
+    firstform.button('ตกลง', 'textures/ui/check');
+    firstform.button('ยกเลิก', 'textures/ui/cancel');
 
-    const firstResponse = await firstConfirmForm.show(player);
+    const firstResponse = await form.show(player);
     if (!isFormValid(player, firstResponse) || firstResponse.selection !== 0) return false;
 
-    const secondConfirmForm = new ActionFormData().title('ยืนยันอีกครั้ง').body('กรุณายืนยันอีกครั้งเพื่อลบโพรเทค').button('ตกลง', 'textures/ui/check').button('ยกเลิก', 'textures/ui/cancel');
+    const secondform = new ActionFormData();
+    secondform.title('ยืนยันอีกครั้ง');
+    secondform.body('กรุณายืนยันอีกครั้งเพื่อลบโพรเทค');
+    secondform.button('ตกลง', 'textures/ui/check');
+    secondform.button('ยกเลิก', 'textures/ui/cancel');
 
-    const secondResponse = await secondConfirmForm.show(player);
+    const secondResponse = await secondform.show(player);
     if (!isFormValid(player, secondResponse) || secondResponse.selection !== 0) return false;
 
     return true;
@@ -167,7 +175,9 @@ export const adminDeleteZone = async (player) => {
         const owners = Object.keys(zoneDatabase.zones);
         if (owners.length === 0) return player.sendMessage(`[x] ยังไม่มีโพรเทคในระบบ`);
 
-        const form = new ModalFormData().title('ลบโพรเทค (แอดมิน)').dropdown('เลือกโพรเทค', owners, { defaultValueIndex: 0 });
+        const form = new ModalFormData();
+        form.title('ลบโพรเทค (แอดมิน)');
+        form.dropdown('เลือกโพรเทค', owners, { defaultValueIndex: 0 });
 
         const response = await form.show(player);
         if (!isFormValid(player, response)) return;
@@ -204,7 +214,9 @@ export const adminTeleport = async (player) => {
         const owners = Object.keys(zoneDatabase.zones);
         if (owners.length === 0) return player.sendMessage(`[x] ยังไม่มีโพรเทคในระบบ`);
 
-        const form = new ModalFormData().title('เทเลพอร์ต (แอดมิน)').dropdown('เลือกโพรเทค', owners, { defaultValueIndex: 0 });
+        const form = new ModalFormData();
+        form.title('เทเลพอร์ต (แอดมิน)');
+        form.dropdown('เลือกโพรเทค', owners, { defaultValueIndex: 0 });
 
         const response = await form.show(player);
         if (!isFormValid(player, response)) return;

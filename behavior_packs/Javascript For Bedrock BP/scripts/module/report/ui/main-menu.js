@@ -5,7 +5,9 @@ import { reportmenu, inbox } from './report-menu.js';
 import { adminpanel } from './admin-panel.js';
 import { showForm } from '../utils/ui.js';
 
-export const menu = (player) => {
+export const showMenuReport = (event) => {
+    const player = event.source ?? event;
+    if (!player || !player.isValid) return;
     const form = new ActionFormData();
     form.title('เมนูหลัก (Main Menu)');
     form.body('แจ้งปัญหาต่างได้ที่นี้เลย!!');
@@ -23,5 +25,5 @@ export const menu = (player) => {
         if (res.selection === 1) reportmenu(player);
         if (res.selection === 2) inbox(player);
         if (res.selection === 3 && isAdmin(player)) adminpanel(player);
-    }).catch((e) => console.warn('[ Report ] System Error (Menu): ' + e));
+    }).catch((error) => console.error('[ Report ] System Error (Menu): ' + error));
 };

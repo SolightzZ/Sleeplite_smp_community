@@ -4,11 +4,11 @@ import { addDeath, initBoards } from './score.js';
 
 const PLAYER_TYPE = 'minecraft:player';
 
-export const DeathCounter = (ev) => {
-    const dead = ev.deadEntity;
+export const DeathCounter = (event) => {
+    const dead = event.deadEntity;
     if (!dead || dead.typeId !== PLAYER_TYPE) return;
 
-    const dmg = ev.damageSource;
+    const dmg = event.damageSource;
 
     system.run(() => {
         if (!dead.isValid) return;

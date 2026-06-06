@@ -8,12 +8,11 @@ export function showServerMenu(player) {
 
     const form = new ActionFormData().title('เลือกเซิร์ฟเวอร์');
 
-    for (let i = 0; i < SERVER_LIST.length; i++) {
-        const s = SERVER_LIST[i];
-        form.button(s.displayName, s.iconTexture || 'textures/items/xbox4');
+    for (const server of SERVER_LIST) {
+        form.button(server.displayName, server.iconTexture || 'textures/items/xbox4');
     }
-    form.button('กรอก IP ด้วยตัวเอง');
 
+    form.button('กรอก IP ด้วยตัวเอง');
     form.show(player)
         .then((response) => {
             if (!response || response.canceled) return;

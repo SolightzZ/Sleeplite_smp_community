@@ -37,9 +37,8 @@ export const finalizeAndCleanupState = (job) => {
     }
   }
 
-  const keysLen = job.visitedKeys.length;
-  for (let i = 0; i < keysLen; i++) {
-    state.pendingBlocks.delete(job.visitedKeys[i]);
+  for (const key of job.visitedKeys) {
+    state.pendingBlocks.delete(key);
   }
 
   const count = state.playerJobCount.get(job.playerId) || 1;

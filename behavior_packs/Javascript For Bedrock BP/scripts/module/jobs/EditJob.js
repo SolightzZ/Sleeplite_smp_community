@@ -17,10 +17,9 @@ export function editJobs(player) {
     if (!player.isValid) return;
 
     const myJobs = [];
-    const len = jobs.length;
 
-    for (let i = 0; i < len; i++) {
-        if (jobs[i].owner === player.id) myJobs.push(jobs[i]);
+    for (const job of jobs) {
+        if (job.owner === player.id) myJobs.push(job);
     }
 
     const form = new ActionFormData();
@@ -64,10 +63,8 @@ const openManageJobDetail = (player, job) => {
     const statusText = job.status === 'open' ? 'กำลังรับสมัคร' : job.status === 'taken' ? 'มีผู้รับงานแล้ว' : 'เสร็จสิ้น';
 
     let body = `สถานะ: ${statusText}\n\n`;
-    const itemsLen = job.items.length;
-    for (let i = 0; i < itemsLen; i++) {
-        const it = job.items[i];
-        body += `- ${it.id.replace('minecraft:', '')} จำนวน ${it.amount} ชิ้น  (ของที่ได้รับ ${it.diamond} เพชร)\n`;
+    for (const item of job.items) {
+        body += `- ${item.id.replace('minecraft:', '')} จำนวน ${item.amount} ชิ้น  (ของที่ได้รับ ${item.diamond} เพชร)\n`;
     }
 
     if (job.status === 'taken') {

@@ -11,8 +11,8 @@ const safeCameraClear = (player) => {
 
     try {
         player.camera.clear();
-    } catch (err) {
-        console.warn(`[ AFKCinematic ] camera clear failed: ${err.message}`);
+    } catch (error) {
+        console.error(`[ AFKCinematic ] camera clear failed: ${error.message}`);
     }
 };
 
@@ -21,8 +21,8 @@ const safeSetFov = (player, fov) => {
 
     try {
         player.camera.setFov({ fov });
-    } catch (err) {
-        console.warn(`[ AFKCinematic ] set fov failed: ${err.message}`);
+    } catch (error) {
+        console.error(`[ AFKCinematic ] set fov failed: ${error.message}`);
     }
 };
 

@@ -25,9 +25,7 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
     const container = inventory?.container;
     if (!container) return;
 
-    const len = items.length;
-    for (let i = 0; i < len; i++) {
-        const drop = items[i];
+    for (const drop of items) {
         if (!drop.isValid) continue;
 
         const itemData = drop.getComponent('minecraft:item')?.itemStack;
@@ -38,8 +36,8 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
         if (added) {
             try {
                 drop.remove();
-            } catch (e) {
-                console.error('[Gravestone] Error removing drop:', e);
+            } catch (error) {
+                console.error('[Gravestone] Error removing drop:', error);
             }
         } else {
             break;

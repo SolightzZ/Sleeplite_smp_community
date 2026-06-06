@@ -157,8 +157,8 @@ const healthMonitor = () => {
             updateLowHealth(player, healthPercent, 0);
             updateLowHealth(player, healthPercent, 1);
         }
-    } catch (e) {
-        console.warn('[xVisuals] health_monitor', String(e));
+    } catch (error) {
+        console.error('[xVisuals] health_monitor', String(error));
     }
 
     roundRobinIndex = (roundRobinIndex + 1) % playerIds.length;
@@ -292,8 +292,8 @@ const drainHurtQueue = () => {
 system.runInterval(() => {
     try {
         drainHurtQueue();
-    } catch (e) {
-        console.warn('[xVisuals] hurt_drain', String(e));
+    } catch (error) {
+        console.error('[xVisuals] hurt_drain', String(error));
     }
 }, 2);
 
@@ -308,7 +308,7 @@ world.afterEvents.effectAdd.subscribe((event) => {
 
     try {
         entity.sendMessage(message);
-    } catch (e) {
-        console.warn('[xVisuals] effect_icon', String(e));
+    } catch (error) {
+        console.error('[xVisuals] effect_icon', String(error));
     }
 });

@@ -1,5 +1,5 @@
-import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
-import { dy } from "./help_Durability.js";
+import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
+import { dy } from './help_Durability.js';
 
 const HELP_TEXT = `§8--------- §eHelper §8---------
 §7[§a/§7] /addon:help §7Help - คําสั่งต่างๆ
@@ -20,52 +20,52 @@ const ADMIN_HELP_TEXT = `§8--------- §cHelper Admin §8---------
 `;
 
 const showHelp = (player) => {
-  player.sendMessage(HELP_TEXT);
-  if (player.hasTag("admin")) player.sendMessage(ADMIN_HELP_TEXT);
+    player.sendMessage(HELP_TEXT);
+    if (player.hasTag('admin')) player.sendMessage(ADMIN_HELP_TEXT);
 };
 
 export const helpmain = (event) => {
-  const msg = event.message;
-  if (!msg) return;
+    const msg = event.message;
+    if (!msg) return;
 
-  const c0 = msg.charCodeAt(0);
-  if (c0 !== 33) return;
+    const firstChar = msg.charCodeAt(0);
+    if (firstChar !== 33) return;
 
-  const command = msg.trim().toLowerCase();
+    const command = msg.trim().toLowerCase();
 
-  if (command === "!help") {
-    event.cancel = true;
-    const player = event.sender;
-    if (player?.isValid) showHelp(player);
-    return;
-  }
+    if (command === '!help') {
+        event.cancel = true;
+        const player = event.sender;
+        if (player?.isValid) showHelp(player);
+        return;
+    }
 
-  if (command === "!d") {
-    event.cancel = true;
-    const player = event.sender;
-    if (player?.isValid)
-      system.runTimeout(() => {
-        if (player.isValid) dy(player);
-      }, 20);
-  }
+    if (command === '!d') {
+        event.cancel = true;
+        const player = event.sender;
+        if (player?.isValid)
+            system.runTimeout(() => {
+                if (player.isValid) dy(player);
+            }, 20);
+    }
 };
 
 export const RegisterHelp = (init) => {
-  init.customCommandRegistry.registerCommand(
-    {
-      name: "addon:help",
-      description: "Help - คําสั่งต่างๆ",
-      permissionLevel: CommandPermissionLevel.Any,
-      cheatsRequired: false,
-    },
-    (origin) => {
-      const player = origin.sourceEntity;
-      if (!player?.isValid) {
-        return { status: CustomCommandStatus.Failure, message: "§cใช้ได้เฉพาะผู้เล่น" };
-      }
+    init.customCommandRegistry.registerCommand(
+        {
+            name: 'addon:help',
+            description: 'Help - คําสั่งต่างๆ',
+            permissionLevel: CommandPermissionLevel.Any,
+            cheatsRequired: false,
+        },
+        (origin) => {
+            const player = origin.sourceEntity;
+            if (!player?.isValid) {
+                return { status: CustomCommandStatus.Failure, message: '§cใช้ได้เฉพาะผู้เล่น' };
+            }
 
-      showHelp(player);
-      return { status: CustomCommandStatus.Success };
-    },
-  );
+            showHelp(player);
+            return { status: CustomCommandStatus.Success };
+        },
+    );
 };

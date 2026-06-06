@@ -2,12 +2,12 @@ import { PASS_THROUGH_BLOCKS, CONFIG } from '../config.js';
 import { dist3, lerp3Into } from '../utils/math.js';
 import { blockCache, framePool } from './state.js';
 
-let _blockCacheTick = 0;
+let blockCacheTick = 0;
 
 export function tickBlockCache() {
-    if (++_blockCacheTick >= CONFIG.blockCacheTTL) {
+    if (++blockCacheTick >= CONFIG.blockCacheTTL) {
         blockCache.clear();
-        _blockCacheTick = 0;
+        blockCacheTick = 0;
     }
 }
 
@@ -15,6 +15,7 @@ export function getBlockTypeId(dimension, pos) {
     const x = Math.floor(pos.x);
     const y = Math.floor(pos.y);
     const z = Math.floor(pos.z);
+
     const key = `${dimension.id}:${x},${y},${z}`;
     const storedType = blockCache.get(key);
     if (storedType !== undefined) return storedType === '\0' ? undefined : storedType;
@@ -38,16 +39,16 @@ export function isPassable(dim, pos) {
 }
 
 export function liftAbove(dim, pos, skipLift = false) {
-    const p = framePool.lifted;
-    p.x = pos.x;
-    p.y = pos.y;
-    p.z = pos.z;
-    if (skipLift) return p;
+    const lifted = framePool.lifted;
+    lifted.x = pos.x;
+    lifted.y = pos.y;
+    lifted.z = pos.z;
+    if (skipLift) return lifted;
     for (let i = 0; i < 6; i++) {
-        if (isPassable(dim, p)) return p;
-        p.y += 0.5;
+        if (isPassable(dim, lifted)) return lifted;
+        lifted.y += 0.5;
     }
-    return p;
+    return lifted;
 }
 
 export function pullCamera(dim, focus, desired, shotHeight = 0) {

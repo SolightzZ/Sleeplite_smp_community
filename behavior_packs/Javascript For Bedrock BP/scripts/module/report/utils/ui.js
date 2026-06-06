@@ -1,13 +1,6 @@
 import { MessageFormData } from '@minecraft/server-ui';
 
-export const BUSY_ERROR = 'User is busy';
-
 export const handleUiError = (player, source, error) => {
-    if (error?.message === BUSY_ERROR) {
-        if (player?.isValid) player.sendMessage('§c[Report] โปรดรอสักครู่...');
-        return;
-    }
-
     if (player?.isValid) {
         player.sendMessage('§c[Report] เกิดข้อผิดพลาดในการเปิดเมนู');
     }
@@ -40,5 +33,5 @@ export const sure = (player, onConfirm, onCancel) => {
         }
         if (res.selection === 0) onConfirm();
         else if (onCancel) onCancel();
-    }).catch((e) => console.warn('[ Report ] System Error (Sure): ' + e));
+    }).catch((error) => console.error('[ Report ] System Error (Sure): ' + error));
 };

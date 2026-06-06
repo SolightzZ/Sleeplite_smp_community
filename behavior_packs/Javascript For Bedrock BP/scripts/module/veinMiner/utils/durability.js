@@ -7,7 +7,7 @@ export const applyDurabilityDamage = (player, item, amt, unbreakLevel) => {
   if (!dur) return;
 
   let actual = 0;
-  for (let i = 0; i < amt; i++) {
+  for (let iteration = 0; iteration < amt; iteration++) {
     if (Math.random() * 100 <= 100 / (unbreakLevel + 1)) {
       actual++;
     }

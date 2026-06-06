@@ -31,8 +31,8 @@ export const saveData = () => {
         world.setDynamicProperty(STORAGE_KEYS.PENDING, JSON.stringify(Array.from(pendingDelivery.entries())));
         const notifyEntries = Array.from(ownerNotifyMap.entries()).map(([k, v]) => [k, Array.from(v)]);
         world.setDynamicProperty(STORAGE_KEYS.NOTIFY, JSON.stringify(notifyEntries));
-    } catch (e) {
-        console.error('[Job] Save Error:', e);
+    } catch (error) {
+        console.error('[Job] Save Error:', error);
     }
 };
 
@@ -68,8 +68,8 @@ export const loadJobData = () => {
         if (notifyData) {
             JSON.parse(notifyData).forEach(([k, v]) => ownerNotifyMap.set(k, new Set(v)));
         }
-    } catch (e) {
-        console.error('[Job] Load Error:', e);
+    } catch (error) {
+        console.error('[Job] Load Error:', error);
     }
 };
 
@@ -98,7 +98,7 @@ export const showUI = (player, form, callback, retries = 3) => {
                 if (!res || res.canceled) return;
                 callback(res);
             })
-            .catch((err) => console.error('[Job] UI Error:', err));
+            .catch((error) => console.error('[Job] UI Error:', error));
     });
 };
 
@@ -125,18 +125,16 @@ export const buildInventoryMap = (inv) => {
 
 export const getPlayerById = (id) => {
     const players = world.getAllPlayers();
-    const len = players.length;
-    for (let i = 0; i < len; i++) {
-        if (players[i].id === id) return players[i];
+    for (const player of players) {
+        if (player.id === id) return player;
     }
     return null;
 };
 
 export const totalDiamond = (job) => {
     let sum = 0;
-    const len = job.items.length;
-    for (let i = 0; i < len; i++) {
-        sum += job.items[i].diamond;
+    for (const item of job.items) {
+        sum += item.diamond;
     }
     return sum;
 };
@@ -164,9 +162,8 @@ export const onJobPlayerLeave = (playerId) => {
 
 system.run(() => {
     const types = ItemTypes.getAll();
-    const len = types.length;
-    for (let i = 0; i < len; i++) {
-        ITEM_IDS.add(types[i].id);
+    for (const type of types) {
+        ITEM_IDS.add(type.id);
     }
     loadJobData();
 });

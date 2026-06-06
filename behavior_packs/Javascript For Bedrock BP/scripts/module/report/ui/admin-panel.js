@@ -1,7 +1,64 @@
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { Database } from '../core/database.js';
+import { LIMITS } from '../config.js';
 import { menu } from './main-menu.js';
 import { showForm, sure } from '../utils/ui.js';
+
+const showDetail = (player, item, targetName, index) => {
+    const form = new ModalFormData();
+    form.title('รายละเอียดรายงาน');
+    form.textField('ผู้ส่ง', '', { defaultValue: targetName });
+    form.textField('เวลา', '', { defaultValue: item.d });
+    form.textField('หัวข้อ', '', { defaultValue: item.t });
+    form.textField('เนื้อหา', '', { defaultValue: item.b });
+    if (item.r) form.textField('§aคำตอบเดิม', '', { defaultValue: item.r });
+    showForm(player, form, 'adminact.detail', () => adminact(player, targetName, index));
+};
+
+const showReplyForm = (player, item, targetName, index) => {
+    const form = new ModalFormData();
+    form.title('ตอบกลับผู้ใช้งาน');
+    form.textField('ข้อความตอบกลับ', '', { defaultValue: item.r });
+
+    showForm(player, form, 'adminact.reply', (result) => {
+        if (result.canceled) {
+            adminact(player, targetName, index);
+            return;
+        }
+        const text = result.formValues[0];
+        if (!text || text.trim() === '') {
+            player.sendMessage('§c[Report] กรุณากรอกข้อความตอบกลับ');
+            adminact(player, targetName, index);
+            return;
+        }
+        const trimmed = text.trim();
+        if (trimmed.length > LIMITS.reply) {
+            player.sendMessage(`§c[Report] ข้อความยาวเกิน ${LIMITS.reply} ตัวอักษร`);
+            adminact(player, targetName, index);
+            return;
+        }
+        Database.reply(targetName, index, trimmed);
+        player.sendMessage('§a[Report] บันทึกการตอบกลับสำเร็จ');
+        adminact(player, targetName, index);
+    });
+};
+
+const dumpToConsole = (player, item, targetName, index) => {
+    console.warn(JSON.stringify(item, null, 2));
+    adminact(player, targetName, index);
+};
+
+const confirmDelete = (player, targetName, index) => {
+    sure(
+        player,
+        () => {
+            Database.delete(targetName, index);
+            player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
+            adminmsg(player, targetName);
+        },
+        () => adminact(player, targetName, index),
+    );
+};
 
 export const adminact = (player, targetName, index) => {
     try {
@@ -27,48 +84,25 @@ export const adminact = (player, targetName, index) => {
         showForm(player, ui, 'adminact', (res) => {
             if (res.canceled) return;
 
-            if (res.selection === 0) {
-                const f = new ModalFormData();
-                f.title('รายละเอียดรายงาน');
-                f.textField('ผู้ส่ง', '', { defaultValue: targetName });
-                f.textField('เวลา', '', { defaultValue: item.d });
-                f.textField('หัวข้อ', '', { defaultValue: item.t });
-                f.textField('เนื้อหา', '', { defaultValue: item.b });
-                if (item.r) f.textField('§aคำตอบเดิม', '', { defaultValue: item.r });
-                showForm(player, f, 'adminact.detail', () => adminact(player, targetName, index));
-            } else if (res.selection === 1) {
-                const f = new ModalFormData();
-                f.title('ตอบกลับผู้ใช้งาน');
-                f.textField('ข้อความตอบกลับ', '', { defaultValue: item.r });
-
-                showForm(player, f, 'adminact.reply', (r) => {
-                    if (r.canceled) {
-                        adminact(player, targetName, index);
-                        return;
-                    }
-                    Database.reply(targetName, index, r.formValues[0]);
-                    player.sendMessage('§a[Report] บันทึกการตอบกลับสำเร็จ');
-                    adminact(player, targetName, index);
-                });
-            } else if (res.selection === 2) {
-                console.warn(JSON.stringify(item, null, 2));
-                adminact(player, targetName, index);
-            } else if (res.selection === 3) {
-                sure(
-                    player,
-                    () => {
-                        Database.delete(targetName, index);
-                        player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
-                        adminmsg(player, targetName);
-                    },
-                    () => adminact(player, targetName, index),
-                );
-            } else {
-                adminmsg(player, targetName);
+            switch (res.selection) {
+                case 0:
+                    showDetail(player, item, targetName, index);
+                    break;
+                case 1:
+                    showReplyForm(player, item, targetName, index);
+                    break;
+                case 2:
+                    dumpToConsole(player, item, targetName, index);
+                    break;
+                case 3:
+                    confirmDelete(player, targetName, index);
+                    break;
+                default:
+                    adminmsg(player, targetName);
             }
         });
-    } catch (e) {
-        console.warn('[Report] System Error (AdminAct): ' + e);
+    } catch (error) {
+        console.error('[Report] System Error (AdminAct): ' + error);
         adminmsg(player, targetName);
     }
 };
@@ -100,8 +134,8 @@ export const adminmsg = (player, targetName) => {
             }
             adminact(player, targetName, res.selection);
         });
-    } catch (e) {
-        console.warn('[ Report ] System Error (AdminMsg): ' + e);
+    } catch (error) {
+        console.error('[ Report ] System Error (AdminMsg): ' + error);
         adminpanel(player);
     }
 };
@@ -119,8 +153,8 @@ export const adminpanel = (player) => {
 
         const namesLen = names.length;
         for (let i = 0; i < namesLen; i++) {
-            const n = names[i];
-            ui.button(`${n} (${db[n].length})`);
+            const playerName = names[i];
+            ui.button(`${playerName} (${db[playerName].length})`);
         }
 
         ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
@@ -140,8 +174,8 @@ export const adminpanel = (player) => {
                 if (realIndex >= 0) adminmsg(player, names[realIndex]);
             }
         });
-    } catch (e) {
-        console.warn('[ Report ] System Error (AdminPanel): ' + e);
+    } catch (error) {
+        console.error('[ Report ] System Error (AdminPanel): ' + error);
         menu(player);
     }
 };

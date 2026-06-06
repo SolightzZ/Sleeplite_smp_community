@@ -15,9 +15,9 @@ export const refreshNameTag = (player) => {
 };
 
 const getActiveRankFromTags = (tags) => {
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i].startsWith('active:')) {
-            return tags[i].slice(7);
+    for (const tag of tags) {
+        if (tag.startsWith('active:')) {
+            return tag.slice(7);
         }
     }
     return null;

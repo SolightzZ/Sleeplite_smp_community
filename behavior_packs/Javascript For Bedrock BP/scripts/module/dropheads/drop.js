@@ -32,8 +32,8 @@ export const dropHead = (player, dmg) => {
         }
 
         dim.spawnItem(item, pos);
-    } catch (e) {
-        console.error('[Drophead] dropHead', player.name, e instanceof Error ? e.message : e);
+    } catch (error) {
+        console.error('[Drophead] dropHead', player.name, error instanceof Error ? error.message : error);
         player.sendMessage(`[x] Drophead error: ${player.name}`);
     }
 };

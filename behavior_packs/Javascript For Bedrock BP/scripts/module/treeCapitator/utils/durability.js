@@ -14,7 +14,7 @@ export const applyDurabilityDamage = (player, amount) => {
   const unbreakLevel = enchant?.getEnchantment("unbreaking")?.level || 0;
 
   let actual = 0;
-  for (let i = 0; i < amount; i++) {
+  for (let iteration = 0; iteration < amount; iteration++) {
     if (Math.random() * 100 <= 100 / (unbreakLevel + 1)) {
       actual++;
     }

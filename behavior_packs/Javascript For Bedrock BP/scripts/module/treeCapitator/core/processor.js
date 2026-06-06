@@ -55,8 +55,8 @@ export const processJobs = () => {
           block.setType("minecraft:air");
           job.brokenCount++;
           broken++;
-        } catch (e) {
-          console.error("[ treeCapitator ] breakError", e.message);
+        } catch (error) {
+          console.error("[ treeCapitator ] breakError", error.message);
         }
       }
     }

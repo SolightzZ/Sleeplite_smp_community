@@ -59,8 +59,6 @@ const CATEGORY_KEYWORDS = [
     ['scrap', ItemCategories.material],
 ];
 
-const CATEGORY_KEYWORDS_LEN = CATEGORY_KEYWORDS.length;
-
 const MATERIAL_TIER = [
     ['demon', 0],
     ['wolf', 1],
@@ -74,15 +72,13 @@ const MATERIAL_TIER = [
     ['leather', 9],
 ];
 
-const MATERIAL_TIER_LEN = MATERIAL_TIER.length;
-
 export const getItemCategory = (item) => {
     if (!item?.typeId) return ItemCategories.misc;
 
     const id = item.typeId.toLowerCase();
 
-    for (let i = 0; i < CATEGORY_KEYWORDS_LEN; i++) {
-        if (id.includes(CATEGORY_KEYWORDS[i][0])) return CATEGORY_KEYWORDS[i][1];
+    for (const [keyword, category] of CATEGORY_KEYWORDS) {
+        if (id.includes(keyword)) return category;
     }
 
     return ItemCategories.misc;
@@ -92,8 +88,8 @@ export const getItemMaterialTier = (item) => {
     if (!item?.typeId) return 99;
 
     const id = item.typeId.toLowerCase();
-    for (let i = 0; i < MATERIAL_TIER_LEN; i++) {
-        if (id.includes(MATERIAL_TIER[i][0])) return MATERIAL_TIER[i][1];
+    for (const [keyword, tier] of MATERIAL_TIER) {
+        if (id.includes(keyword)) return tier;
     }
 
     return 99;

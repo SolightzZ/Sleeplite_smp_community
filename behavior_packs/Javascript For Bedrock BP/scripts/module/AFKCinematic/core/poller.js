@@ -7,14 +7,11 @@ import { startAfk, stopAfk } from './afk.js';
 import { CinematicScheduler } from './scheduler.js';
 import { playerStates } from './state.js';
 
-export const cinematicScheduler = new CinematicScheduler();
-
 export function handleIdlePoller() {
     try {
         const players = world.getAllPlayers();
 
-        for (let i = 0; i < players.length; i++) {
-            const player = players[i];
+        for (const player of players) {
             if (!player.isValid) continue;
 
             const state = ensureState(player);

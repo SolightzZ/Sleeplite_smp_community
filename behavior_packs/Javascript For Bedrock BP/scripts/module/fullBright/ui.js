@@ -1,10 +1,10 @@
 import { ActionFormData } from '@minecraft/server-ui';
 import { hasBright, toggleBright } from './state.js';
 
-export function showMenu(p) {
-    if (!p || !p.isValid) return;
+export function showMenu(player) {
+    if (!player || !player.isValid) return;
 
-    const isOn = hasBright(p);
+    const isOn = hasBright(player);
 
     const form = new ActionFormData();
     form.title('Full Bright');
@@ -12,15 +12,15 @@ export function showMenu(p) {
     form.button(isOn ? 'Turn Off' : 'Turn On', isOn ? 'textures/items/fullbright' : 'textures/ui/icon_none');
     form.label('                 @Sleeplite SMP');
 
-    form.show(p)
+    form.show(player)
         .then((res) => {
             if (!res || res.canceled || res.selection !== 0) return;
 
-            const next = toggleBright(p);
+            const next = toggleBright(player);
 
-            if (p.isValid) {
-                p.onScreenDisplay.setActionBar(next ? `§aBright ON §f(${p.name})` : `§cBright OFF §f(${p.name})`);
+            if (player.isValid) {
+                player.onScreenDisplay.setActionBar(next ? `§aBright ON §f(${player.name})` : `§cBright OFF §f(${player.name})`);
             }
         })
-        .catch((e) => console.error('[FullBright] UI Error:', e));
+        .catch((error) => console.error('[FullBright] UI Error:', error));
 }

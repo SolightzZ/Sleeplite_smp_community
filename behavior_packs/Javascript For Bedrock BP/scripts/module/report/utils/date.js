@@ -1,10 +1,9 @@
+const pad = (num) => String(num).padStart(2, '0');
+
 export const getTime = () => {
     const now = new Date();
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const thailand = new Date(utc + 7 * 3600000);
 
-    // UTC+7 Thailand
-    now.setHours(now.getHours() + 7);
-
-    const pad = (n) => String(n).padStart(2, '0');
-
-    return `${pad(now.getDate())}/` + `${pad(now.getMonth() + 1)}/` + `${now.getFullYear()} ` + `${pad(now.getHours())}:` + `${pad(now.getMinutes())}`;
+    return `${pad(thailand.getDate())}/${pad(thailand.getMonth() + 1)}/${thailand.getFullYear()} ${pad(thailand.getHours())}:${pad(thailand.getMinutes())}`;
 };

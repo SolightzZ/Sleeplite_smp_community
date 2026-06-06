@@ -27,10 +27,8 @@ export const detectTree = (startBlock, logId, leafId) => {
         locations.push(curLoc);
 
         if (!foundLeaf) {
-            const offsetsLen = LEAF_OFFSETS.length;
-            for (let i = 0; i < offsetsLen; i++) {
-                const off = LEAF_OFFSETS[i];
-                const checkLoc = { x: cx + off.x, y: cy + off.y, z: cz + off.z };
+            for (const offset of LEAF_OFFSETS) {
+                const checkLoc = { x: cx + offset.x, y: cy + offset.y, z: cz + offset.z };
                 const checkBlock = getBlockSafe(dim, checkLoc);
                 if (checkBlock && checkBlock.typeId === leafId) {
                     foundLeaf = true;

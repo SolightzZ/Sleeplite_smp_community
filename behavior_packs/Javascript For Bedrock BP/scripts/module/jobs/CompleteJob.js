@@ -5,10 +5,8 @@ import { showMainMenu } from './Menu.js';
 
 export const checkJobItems = (inv, job) => {
     const invMap = buildInventoryMap(inv);
-    const len = job.items.length;
 
-    for (let i = 0; i < len; i++) {
-        const item = job.items[i];
+    for (const item of job.items) {
         const have = invMap.get(item.id) ?? 0;
 
         if (have < item.amount) return `${item.id.replace('minecraft:', '')} (${have}/${item.amount})`;
@@ -18,25 +16,22 @@ export const checkJobItems = (inv, job) => {
 };
 
 export const removeJobItems = (inv, job) => {
-    const len = job.items.length;
-
-    for (let idx = 0; idx < len; idx++) {
-        const item = job.items[idx];
+    for (const item of job.items) {
         let need = item.amount;
         const invSize = inv.size;
 
-        for (let i = 0; i < invSize && need > 0; i++) {
-            const it = inv.getItem(i);
+        for (let slotIndex = 0; slotIndex < invSize && need > 0; slotIndex++) {
+            const it = inv.getItem(slotIndex);
 
             if (!it || it.typeId !== item.id) continue;
             const take = Math.min(it.amount, need);
             if (take >= it.amount) {
                 need -= it.amount;
-                inv.setItem(i, undefined);
+                inv.setItem(slotIndex, undefined);
             } else {
                 it.amount -= take;
                 need -= take;
-                inv.setItem(i, it);
+                inv.setItem(slotIndex, it);
             }
         }
     }
@@ -108,11 +103,10 @@ export function completeJob(player) {
     }
 
     let job = null;
-    const len = jobs.length;
 
-    for (let i = 0; i < len; i++) {
-        if (jobs[i].id === activeJobId) {
-            job = jobs[i];
+    for (const currentJob of jobs) {
+        if (currentJob.id === activeJobId) {
+            job = currentJob;
             break;
         }
     }
@@ -143,10 +137,7 @@ export function completeJob(player) {
 
     let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของที่ได้: ${total} เพชร\nเวลาที่เหลือ: ${timeStr}\n\nไอเทมที่ต้องการ:\n`;
 
-    const itemsLen = job.items.length;
-
-    for (let i = 0; i < itemsLen; i++) {
-        const item = job.items[i];
+    for (const item of job.items) {
         const have = invMap.get(item.id) ?? 0;
         const ok = have >= item.amount;
 
@@ -195,9 +186,8 @@ export function showActiveJobForm(player, job, body, total) {
         removeJobItems(inv, job);
 
         const deliveryItems = [];
-        const itemsLen = job.items.length;
-        for (let i = 0; i < itemsLen; i++) {
-            deliveryItems.push({ id: job.items[i].id, amount: job.items[i].amount });
+        for (const item of job.items) {
+            deliveryItems.push({ id: item.id, amount: item.amount });
         }
 
         pendingDelivery.set(job.id, {

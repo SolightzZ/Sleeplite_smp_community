@@ -29,6 +29,7 @@ const buildMenuBody = (player) => {
             y: currentZone.start.y + halfSize,
             z: currentZone.start.z + halfSize,
         };
+
         const memberList = currentZone.members.length ? currentZone.members.join(', ') : 'ไม่มี';
         const dimensionLabel = currentZone.dimension === 'minecraft:overworld' ? 'Overworld' : currentZone.dimension === 'minecraft:nether' ? 'Nether' : 'End';
         bodyLines.push(`เจ้าของ: ${currentZone.owner}`, `สมาชิก: ${memberList}`, `โลก: ${dimensionLabel}`, `ศูนย์กลาง: (${center.x}, ${center.y}, ${center.z})`);
@@ -88,7 +89,9 @@ export const openMenu = async (player) => {
 
     try {
         const isAdmin = player.hasTag(Config.AdminTag);
-        const form = new ActionFormData().title('โพรเทค').body(buildMenuBody(player));
+        const form = new ActionFormData();
+        form.title('โพรเทค');
+        form.body(buildMenuBody(player));
         const actions = buildMenuButtons(form, player, isAdmin);
 
         const response = await form.show(player);

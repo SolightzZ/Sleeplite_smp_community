@@ -17,9 +17,7 @@ export const scanVein = (startBlock, targetId) => {
     const curLoc = queue[head++];
     locations.push(curLoc);
 
-    const dirsLen = DIRECTIONS.length;
-    for (let i = 0; i < dirsLen; i++) {
-      const dir = DIRECTIONS[i];
+    for (const dir of DIRECTIONS) {
       const nx = curLoc.x + dir.x;
       const ny = curLoc.y + dir.y;
       const nz = curLoc.z + dir.z;
@@ -28,8 +26,8 @@ export const scanVein = (startBlock, targetId) => {
       if (visited.has(key)) continue;
 
       visited.add(key);
-      const b = getBlockSafe(dim, { x: nx, y: ny, z: nz });
-      if (b && b.typeId === targetId) {
+      const block = getBlockSafe(dim, { x: nx, y: ny, z: nz });
+      if (block && block.typeId === targetId) {
         queue.push({ x: nx, y: ny, z: nz });
       }
     }

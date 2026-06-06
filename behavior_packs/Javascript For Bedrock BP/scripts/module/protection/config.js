@@ -31,28 +31,28 @@ export const Colors = {
 export const buildEdgeOffsets = (size) => {
     const offsets = [];
     const zero = 0;
-    const z = size;
-    const axes = [zero, z];
+    const zoneSize = size;
+    const axes = [zero, zoneSize];
     const axesLen = axes.length;
 
-    for (let i = 0; i < axesLen; i++) {
-        const y = axes[i];
-        for (let j = 0; j < axesLen; j++) {
-            offsets.push(['x', zero, y, axes[j]]);
+    for (let outerIndex = 0; outerIndex < axesLen; outerIndex++) {
+        const fixedY = axes[outerIndex];
+        for (let innerIndex = 0; innerIndex < axesLen; innerIndex++) {
+            offsets.push(['x', zero, fixedY, axes[innerIndex]]);
         }
     }
 
-    for (let i = 0; i < axesLen; i++) {
-        const x = axes[i];
-        for (let j = 0; j < axesLen; j++) {
-            offsets.push(['y', x, zero, axes[j]]);
+    for (let outerIndex = 0; outerIndex < axesLen; outerIndex++) {
+        const fixedX = axes[outerIndex];
+        for (let innerIndex = 0; innerIndex < axesLen; innerIndex++) {
+            offsets.push(['y', fixedX, zero, axes[innerIndex]]);
         }
     }
 
-    for (let i = 0; i < axesLen; i++) {
-        const x = axes[i];
-        for (let j = 0; j < axesLen; j++) {
-            offsets.push(['z', x, axes[j], zero]);
+    for (let outerIndex = 0; outerIndex < axesLen; outerIndex++) {
+        const fixedX = axes[outerIndex];
+        for (let innerIndex = 0; innerIndex < axesLen; innerIndex++) {
+            offsets.push(['z', fixedX, axes[innerIndex], zero]);
         }
     }
 

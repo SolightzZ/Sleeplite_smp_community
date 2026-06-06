@@ -1,35 +1,35 @@
-import { biomeIdList, EXCLUDED_BIOMES } from "./database.js";
+import { biomeIdList, EXCLUDED_BIOMES } from './database.js';
 
 const formatIdName = (id) => {
-  if (!id) return "Unknown";
+    if (!id) return 'Unknown';
 
-  return id
-    .split(":")
-    .pop()
-    .replace(/_/g, " ")
-    .replace(/\b\w/g, (char) => char.toUpperCase());
+    return id
+        .split(':')
+        .pop()
+        .replace(/_/g, ' ')
+        .replace(/\b\w/g, (char) => char.toUpperCase());
 };
 
 const getBiomeIdAtLocation = (player) => {
-  if (!player?.isValid) return null;
+    if (!player?.isValid) return null;
 
-  try {
-    return player.dimension.getBiome(player.location)?.id ?? null;
-  } catch {
-    return null;
-  }
+    try {
+        return player.dimension.getBiome(player.location)?.id ?? null;
+    } catch {
+        return null;
+    }
 };
 
 const getBiomeName = (biomeId) => {
-  if (!biomeId || EXCLUDED_BIOMES.has(biomeId)) {
-    return null;
-  }
+    if (!biomeId || EXCLUDED_BIOMES.has(biomeId)) {
+        return null;
+    }
 
-  return biomeIdList[biomeId] ?? formatIdName(biomeId);
+    return biomeIdList[biomeId] ?? formatIdName(biomeId);
 };
 
 const getDimensionName = (dimensionId) => {
-  return biomeIdList[dimensionId] ?? formatIdName(dimensionId);
+    return biomeIdList[dimensionId] ?? formatIdName(dimensionId);
 };
 
 export { getBiomeIdAtLocation, getBiomeName, getDimensionName };

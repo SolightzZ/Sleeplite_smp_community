@@ -23,8 +23,8 @@ export const startMagnetLoop = () => {
             const allPlayers = world.getAllPlayers();
             const playerMap = new Map();
 
-            for (let i = 0; i < allPlayers.length; i++) {
-                playerMap.set(allPlayers[i].id, allPlayers[i]);
+            for (const currentPlayer of allPlayers) {
+                playerMap.set(currentPlayer.id, currentPlayer);
             }
 
             const ids = getMagnetUserIds();
@@ -40,11 +40,11 @@ export const startMagnetLoop = () => {
                 }
             }
 
-            for (let i = 0; i < toRemove.length; i++) {
-                removeMagnetUser(toRemove[i]);
+            for (const playerId of toRemove) {
+                removeMagnetUser(playerId);
             }
-        } catch (err) {
-            console.error('[Magnet] Loop Error:', err);
+        } catch (error) {
+            console.error('[Magnet] Loop Error:', error);
             stopMagnetLoop();
         }
     }, MagnetConfig.TICK_SPEED);

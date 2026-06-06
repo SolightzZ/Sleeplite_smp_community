@@ -1,12 +1,7 @@
 const DOOR_SUFFIX = '_door';
 const TRAP_KEYWORD = 'trap';
 
-const NEIGHBOR_GETTERS = [
-    (block) => block.east(),
-    (block) => block.west(),
-    (block) => block.north(),
-    (block) => block.south(),
-];
+const NEIGHBOR_GETTERS = [(block) => block.east(), (block) => block.west(), (block) => block.north(), (block) => block.south()];
 
 function isDoorBlock(block) {
     const typeId = block.typeId;

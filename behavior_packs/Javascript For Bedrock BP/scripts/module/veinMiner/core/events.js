@@ -33,9 +33,8 @@ export const VeinMiner = (ev) => {
   const res = scanVein(block, targetId);
   if (res.locations.length <= 1) return;
 
-  const keysLen = res.visitedKeys.length;
-  for (let i = 0; i < keysLen; i++) {
-    state.pendingBlocks.add(res.visitedKeys[i]);
+  for (const key of res.visitedKeys) {
+    state.pendingBlocks.add(key);
   }
 
   const enc = getEnchantData(stack);

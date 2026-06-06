@@ -3,8 +3,6 @@ import { ActionFormData } from '@minecraft/server-ui';
 
 import { emoteList, setting } from './database.js';
 
-const BUSY_ERROR = 'User is busy';
-
 function playEmote(player, animName, emoteName) {
     if (!player.isValid) return;
 
@@ -12,7 +10,7 @@ function playEmote(player, animName, emoteName) {
     try {
         player.dimension.runCommand(cmd);
     } catch (error) {
-        console.warn(`[Emote] play command failed: ${error?.message ?? error}`);
+        console.error(`[Emote] play command failed: ${error?.message ?? error}`);
         return;
     }
 
@@ -27,7 +25,7 @@ function stopEmote(player, animName) {
     try {
         player.dimension.runCommand(cmd);
     } catch (error) {
-        console.warn(`[Emote] stop command failed: ${error?.message ?? error}`);
+        console.error(`[Emote] stop command failed: ${error?.message ?? error}`);
         return;
     }
 
@@ -42,10 +40,8 @@ function openSubMenu(player, group) {
     const form = new ActionFormData().title(title).body('§7เลือกท่าทาง:');
 
     const items = group.items;
-    const len = items.length;
 
-    for (let i = 0; i < len; i++) {
-        const item = items[i];
+    for (const item of items) {
         form.button(item.name, item.icon || setting.iconDefault);
     }
 
@@ -63,17 +59,15 @@ function openSubMenu(player, group) {
                 });
             }
         })
-        .catch((error) => onsole.error('[Emote] OpenSubMenu UI Error:', error));
+        .catch((error) => console.error('[Emote] OpenSubMenu UI Error:', error));
 }
 
-export function showMain(player) {
+export function showMenuEmote(player) {
     if (!player.isValid) return;
 
     const form = new ActionFormData().title('Emote Menu');
     form.body('§7เลือกท่าทาง:');
-    const len = emoteList.length;
-    for (let i = 0; i < len; i++) {
-        const group = emoteList[i];
+    for (const group of emoteList) {
         form.button(group.name, group.icon || setting.iconDefault);
     }
 

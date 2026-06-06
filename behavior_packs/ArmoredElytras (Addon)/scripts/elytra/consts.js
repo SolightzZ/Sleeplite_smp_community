@@ -1,31 +1,13 @@
 export const ARMOR_ENCHANT_LORE = new Map([
-    [
-        "protection",
-        "enchantment.protect.all",
-    ],
+    ['protection', 'enchantment.protect.all'],
 
-    [
-        "fire_protection",
-        "enchantment.protect.fire",
-    ],
+    ['fire_protection', 'enchantment.protect.fire'],
 
-    [
-        "blast_protection",
-        "enchantment.protect.explosion",
-    ],
+    ['blast_protection', 'enchantment.protect.explosion'],
 
-    [
-        "projectile_protection",
-        "enchantment.protect.projectile",
-    ],
+    ['projectile_protection', 'enchantment.protect.projectile'],
 
-    [
-        "thorns",
-        "enchantment.thorns",
-    ],
+    ['thorns', 'enchantment.thorns'],
 ]);
 
-export const ELYTRA_ENCHANTS = new Set([
-    "mending",
-    "unbreaking"
-])
+export const ELYTRA_ENCHANTS = new Set(['mending', 'unbreaking']);

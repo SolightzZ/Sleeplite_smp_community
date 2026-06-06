@@ -1,7 +1,4 @@
-/**
- * Run an array of handler functions in a for-loop, isolating each in its own
- * try/catch so that a single failure does not skip the remaining handlers.
- */
+// เรียกใช้ฟังก์ชันตัวจัดการหลายฟังก์ชันในลูป for โดยแยกแต่ละฟังก์ชันไว้ในส่วนของตัวเอง
 export function runEventHandlers(tag, handlers, event) {
     for (let i = 0; i < handlers.length; i++) {
         try {
@@ -12,9 +9,7 @@ export function runEventHandlers(tag, handlers, event) {
     }
 }
 
-/**
- * Same as runEventHandlers but stops early if `event.cancel` becomes truthy.
- */
+// เหมือนกับ runEventHandlers แต่จะหยุดทำงานก่อนกำหนดหาก `event.cancel` กลายเป็นค่าจริง
 export function runEventHandlersWithCancel(tag, handlers, event) {
     for (let i = 0; i < handlers.length; i++) {
         try {

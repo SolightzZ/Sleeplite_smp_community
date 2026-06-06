@@ -1,8 +1,6 @@
 import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 import { ask, forget } from './brain.js';
-
-const BUSY_ERROR = 'User is busy';
 import { eat, hit, say, see, sound } from './hand.js';
 import { boss, door, key, shop, team, zone } from './rules.js';
 import { count, fix } from './tools.js';
@@ -24,7 +22,7 @@ function showiconstest(player, title, message, icon) {
     system.run(() => {
         form.show(player)
             .then(() => {})
-            .catch((e) => console.error('[EndPortalFrame] showiconstest', e));
+            .catch((error) => console.error('[EndPortalFrame] showiconstest', error));
     });
 }
 
@@ -65,7 +63,7 @@ export const touch = (ev) => {
         sound(player, 'block.end_portal_frame.fill');
 
         player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`);
-    } catch (e) {
-        console.error('[EndPortalFrame]  touch: ', e.message);
+    } catch (error) {
+        console.error('[EndPortalFrame]  touch: ', error.message);
     }
 };

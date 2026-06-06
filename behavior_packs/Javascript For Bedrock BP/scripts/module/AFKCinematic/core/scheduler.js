@@ -111,8 +111,8 @@ export class CinematicScheduler {
             }
         }
 
-        for (let i = 0; i < toRemove.length; i++) {
-            this.dequeue(toRemove[i]);
+        for (const playerId of toRemove) {
+            this.dequeue(playerId);
         }
     }
 
@@ -125,3 +125,5 @@ export class CinematicScheduler {
         this._cursor = 0;
     }
 }
+
+export const cinematicScheduler = new CinematicScheduler();

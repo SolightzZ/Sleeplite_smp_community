@@ -38,25 +38,25 @@ function RegisterRewards(init) {
 }
 
 function RewardchatSend(event) {
-    const p = event.sender;
-    const msg = event.message;
+    const player = event.sender;
+    const message = event.message;
 
-    if (!p.hasTag(config.adminTag)) return;
+    if (!player.hasTag(config.adminTag)) return;
 
-    if (msg === '!reset-login') {
+    if (message === '!reset-login') {
         event.cancel = true;
-        reset(p);
-        p.sendMessage('§e[Admin] Data Reset!');
-    } else if (msg === '!check-reward') {
+        reset(player);
+        player.sendMessage('§e[Admin] Data Reset!');
+    } else if (message === '!check-reward') {
         event.cancel = true;
-        let text = '=== Player Status ===\n';
+        let statusText = '=== Player Status ===\n';
 
         for (const target of world.getPlayers()) {
-            const db = load(target);
-            text += `§7${target.name}: Count=${db.count}, Last=${db.last || 'Never'}\n`;
+            const data = load(target);
+            statusText += `§7${target.name}: Count=${data.count}, Last=${data.last || 'Never'}\n`;
         }
-        console.warn(text);
-        p.sendMessage(text);
+        console.warn(statusText);
+        player.sendMessage(statusText);
     }
 }
 

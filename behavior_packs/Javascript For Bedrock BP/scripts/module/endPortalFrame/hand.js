@@ -49,12 +49,12 @@ export const hit = (player, pain) => {
     });
 };
 
-export const say = (player, msg) => {
+export const say = (player, message) => {
     if (!player || !player.isValid) return;
 
     system.run(() => {
         if (!player.isValid) return;
-        player.onScreenDisplay?.setActionBar(msg);
+        player.onScreenDisplay?.setActionBar(message);
     });
 };
 

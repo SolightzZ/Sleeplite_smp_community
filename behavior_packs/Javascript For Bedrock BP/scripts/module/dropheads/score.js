@@ -15,8 +15,8 @@ export const addDeath = (player) => {
     try {
         objA.addScore(player, 1);
         objB.addScore(`*${player.name}`, 1);
-    } catch (e) {
-        console.warn('[ dropheads ] addDeath', e.message);
+    } catch (error) {
+        console.error('[ dropheads ] addDeath', error.message);
     }
 };
 
@@ -24,7 +24,7 @@ export const initBoards = () => {
     try {
         objA = getBoard(boardA);
         objB = getBoard(boardB);
-    } catch (e) {
-        console.warn('[ dropheads ] initBoards', e.message);
+    } catch (error) {
+        console.error('[ dropheads ] initBoards', error.message);
     }
 };

@@ -8,9 +8,9 @@ export const getOwnedRanks = (player) => {
     const tags = player.getTags();
     const ranks = [];
 
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i].startsWith(PREFIX_RANK)) {
-            ranks.push(tags[i].slice(RANK_PREFIX_LENGTH));
+    for (const tag of tags) {
+        if (tag.startsWith(PREFIX_RANK)) {
+            ranks.push(tag.slice(RANK_PREFIX_LENGTH));
         }
     }
 
@@ -21,9 +21,9 @@ export const getActiveRank = (player) => {
     if (!isValidPlayer(player)) return null;
 
     const tags = player.getTags();
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i].startsWith(PREFIX_ACTIVE)) {
-            return tags[i].slice(ACTIVE_PREFIX_LENGTH);
+    for (const tag of tags) {
+        if (tag.startsWith(PREFIX_ACTIVE)) {
+            return tag.slice(ACTIVE_PREFIX_LENGTH);
         }
     }
 
@@ -34,9 +34,9 @@ export const setActiveRank = (player, rankName) => {
     if (!isValidPlayer(player)) return false;
 
     const tags = player.getTags();
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i].startsWith(PREFIX_ACTIVE)) {
-            player.removeTag(tags[i]);
+    for (const tag of tags) {
+        if (tag.startsWith(PREFIX_ACTIVE)) {
+            player.removeTag(tag);
         }
     }
 
@@ -51,12 +51,12 @@ export const getAllServerRanks = () => {
     const ranks = new Set();
     const players = world.getPlayers();
 
-    for (let i = 0; i < players.length; i++) {
-        const tags = players[i].getTags();
+    for (const currentPlayer of players) {
+        const tags = currentPlayer.getTags();
 
-        for (let j = 0; j < tags.length; j++) {
-            if (tags[j].startsWith(PREFIX_RANK)) {
-                ranks.add(tags[j].slice(RANK_PREFIX_LENGTH));
+        for (const tag of tags) {
+            if (tag.startsWith(PREFIX_RANK)) {
+                ranks.add(tag.slice(RANK_PREFIX_LENGTH));
             }
         }
     }
@@ -70,8 +70,8 @@ export const addRank = (player, rankName) => {
     const tags = player.getTags();
     let exists = false;
 
-    for (let i = 0; i < tags.length; i++) {
-        if (tags[i] === fullTag) {
+    for (const tag of tags) {
+        if (tag === fullTag) {
             exists = true;
             break;
         }
@@ -88,9 +88,9 @@ export const addRank = (player, rankName) => {
 export const removeRanks = (player, ranks) => {
     if (!isValidPlayer(player) || !Array.isArray(ranks) || !ranks.length) return false;
 
-    for (let i = 0; i < ranks.length; i++) {
-        player.removeTag(PREFIX_RANK + ranks[i]);
-        player.removeTag(PREFIX_ACTIVE + ranks[i]);
+    for (const rank of ranks) {
+        player.removeTag(PREFIX_RANK + rank);
+        player.removeTag(PREFIX_ACTIVE + rank);
     }
     autoSetRemainingRank(player);
     return true;

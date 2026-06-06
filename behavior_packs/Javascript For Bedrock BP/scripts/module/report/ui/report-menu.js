@@ -1,9 +1,31 @@
 import { ActionFormData, ModalFormData, MessageFormData } from '@minecraft/server-ui';
 import { system } from '@minecraft/server';
-import { CONFIG } from '../config.js';
+import { CONFIG, LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
 import { menu } from './main-menu.js';
 import { showForm, sure } from '../utils/ui.js';
+
+const trimValues = (values) => {
+    const result = [];
+    for (const value of values) {
+        result.push(typeof value === 'string' ? value.trim() : value);
+    }
+    return result;
+};
+
+const validateFields = (player, fields, limits) => {
+    for (let i = 0; i < fields.length; i++) {
+        if (!fields[i]) {
+            player.sendMessage('§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน');
+            return false;
+        }
+        if (limits && fields[i].length > limits[i]) {
+            player.sendMessage(`§c[Report] ข้อความยาวเกิน ${limits[i]} ตัวอักษร`);
+            return false;
+        }
+    }
+    return true;
+};
 
 export const sendform = (player) => {
     const name = player.name;
@@ -26,28 +48,66 @@ export const sendform = (player) => {
                 reportmenu(player);
                 return;
             }
-            const [t, b] = res.formValues;
+            const [title, body] = trimValues(res.formValues);
 
-            if (!t || !b || t.trim() === '' || b.trim() === '') {
-                player.sendMessage('§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน');
+            if (!validateFields(player, [title, body], [LIMITS.title, LIMITS.body])) {
                 system.runTimeout(() => {
                     if (player.isValid) sendform(player);
                 }, 20);
                 return;
             }
 
-            Database.add(name, t, b);
+            Database.add(name, title, body);
             player.sendMessage('§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
             reportmenu(player);
         } catch (innerError) {
-            console.warn('[ Report ] Logic Error (SendForm): ' + innerError);
+            console.error('[ Report ] Logic Error (SendForm): ' + innerError);
             player.sendMessage('§cเกิดข้อผิดพลาดในการบันทึกข้อมูล');
             reportmenu(player);
         }
-    }).catch((e) => {
-        console.warn('[ Report ] System Error (SendForm): ' + e);
+    }).catch((error) => {
+        console.error('[ Report ] System Error (SendForm): ' + error);
         reportmenu(player);
     });
+};
+
+const editItem = (player, name, list, index) => {
+    const form = new ModalFormData();
+    form.title('แก้ไขรายงาน');
+    form.textField('หัวข้อเรื่อง', '', { defaultValue: list[index].t });
+    form.textField('รายละเอียด', '', { defaultValue: list[index].b });
+
+    showForm(player, form, 'mylist.edit', (result) => {
+        try {
+            if (result.canceled) {
+                mylist(player, 'edit');
+                return;
+            }
+            const [newTitle, newBody] = trimValues(result.formValues);
+            if (!validateFields(player, [newTitle, newBody], [LIMITS.title, LIMITS.body])) {
+                mylist(player, 'edit');
+                return;
+            }
+            Database.update(name, index, newTitle, newBody);
+            player.sendMessage('§e[Report] แก้ไขข้อมูลสำเร็จ');
+            mylist(player, 'edit');
+        } catch (error) {
+            console.error('[ Report ] Update Error: ' + error);
+            mylist(player, 'edit');
+        }
+    });
+};
+
+const deleteItem = (player, name, index) => {
+    sure(
+        player,
+        () => {
+            Database.delete(name, index);
+            player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
+            mylist(player, 'del');
+        },
+        () => mylist(player, 'del'),
+    );
 };
 
 export const mylist = (player, mode) => {
@@ -78,42 +138,15 @@ export const mylist = (player, mode) => {
             return;
         }
 
-        const idx = res.selection;
+        const index = res.selection;
 
         if (mode === 'edit') {
-            const f = new ModalFormData();
-            f.title('แก้ไขรายงาน');
-            f.textField('หัวข้อเรื่อง', '', { defaultValue: list[idx].t });
-            f.textField('รายละเอียด', '', { defaultValue: list[idx].b });
-
-            showForm(player, f, 'mylist.edit', (r) => {
-                try {
-                    if (r.canceled) {
-                        mylist(player, mode);
-                        return;
-                    }
-                    const [nt, nb] = r.formValues;
-                    Database.update(name, idx, nt, nb);
-                    player.sendMessage('§e[Report] แก้ไขข้อมูลสำเร็จ');
-                    mylist(player, mode);
-                } catch (e) {
-                    console.warn('[ Report ] Update Error: ' + e);
-                    mylist(player, mode);
-                }
-            });
+            editItem(player, name, list, index);
         } else {
-            sure(
-                player,
-                () => {
-                    Database.delete(name, idx);
-                    player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
-                    mylist(player, mode);
-                },
-                () => mylist(player, mode),
-            );
+            deleteItem(player, name, index);
         }
-    }).catch((e) => {
-        console.warn('[ Report ] System Error (MyList): ' + e);
+    }).catch((error) => {
+        console.error('[ Report ] System Error (MyList): ' + error);
         reportmenu(player);
     });
 };
@@ -121,10 +154,7 @@ export const mylist = (player, mode) => {
 export const inbox = (player) => {
     const name = player.name;
     const list = Database.get(name);
-    const replied = [];
-    for (let i = 0; i < list.length; i++) {
-        if (list[i].r !== '') replied.push(list[i]);
-    }
+    const replied = list.filter((item) => item.r !== '');
 
     if (replied.length === 0) {
         const ui = new ActionFormData();
@@ -160,11 +190,11 @@ export const inbox = (player) => {
         show.button1('ย้อนกลับ');
         show.button2('ปิดหน้าต่าง');
 
-        showForm(player, show, 'inbox.detail', (r) => {
-            if (r.selection === 0) inbox(player);
+        showForm(player, show, 'inbox.detail', (result) => {
+            if (result.selection === 0) inbox(player);
         });
-    }).catch((e) => {
-        console.warn('[ Report ] System Error (Inbox): ' + e);
+    }).catch((error) => {
+        console.error('[ Report ] System Error (Inbox): ' + error);
         menu(player);
     });
 };
@@ -185,8 +215,8 @@ export const reportmenu = (player) => {
         if (res.selection === 1) mylist(player, 'edit');
         if (res.selection === 2) mylist(player, 'del');
         if (res.selection === 3) menu(player);
-    }).catch((e) => {
-        console.warn('[ Report ] System Error (ReportMenu): ' + e);
+    }).catch((error) => {
+        console.error('[ Report ] System Error (ReportMenu): ' + error);
         menu(player);
     });
 };

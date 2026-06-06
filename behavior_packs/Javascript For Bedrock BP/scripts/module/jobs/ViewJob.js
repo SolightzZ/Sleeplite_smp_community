@@ -18,10 +18,9 @@ const stopTimerLoopIfIdle = () => {
 const buildPlayerMap = () => {
     const map = new Map();
     const players = world.getAllPlayers();
-    const len = players.length;
 
-    for (let i = 0; i < len; i++) {
-        map.set(players[i].id, players[i]);
+    for (const player of players) {
+        map.set(player.id, player);
     }
 
     return map;
@@ -84,11 +83,10 @@ const expireJob = (riderId) => {
     if (jobId_ === undefined) return;
 
     let job = null;
-    const len = jobs.length;
 
-    for (let i = 0; i < len; i++) {
-        if (jobs[i].id === jobId_) {
-            job = jobs[i];
+    for (const currentJob of jobs) {
+        if (currentJob.id === jobId_) {
+            job = currentJob;
             break;
         }
     }
@@ -113,9 +111,8 @@ export function viewJobs(player) {
     if (!player.isValid) return;
 
     const openJobs = [];
-    const len = jobs.length;
-    for (let i = 0; i < len; i++) {
-        if (jobs[i].status === 'open') openJobs.push(jobs[i]);
+    for (const job of jobs) {
+        if (job.status === 'open') openJobs.push(job);
     }
 
     const form = new ActionFormData();
@@ -153,9 +150,7 @@ export const openJobDetail = (player, job) => {
     const total = totalDiamond(job);
     let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของทีไ่ด้รับ: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
 
-    const itemsLen = job.items.length;
-    for (let i = 0; i < itemsLen; i++) {
-        const it = job.items[i];
+    for (const item of job.items) {
         body += `- ${it.id.replace('minecraft:', '')} จำนวน ${it.amount} ชิ้น (ของที่ได้รับ ${it.diamond} เพชร)\n`;
     }
 
@@ -198,10 +193,7 @@ export const openJobDetail = (player, job) => {
 };
 
 system.runTimeout(() => {
-    const snapshot = Array.from(timerMap.entries());
-    const len = snapshot.length;
-    for (let i = 0; i < len; i++) {
-        const [riderId, data] = snapshot[i];
+    for (const [riderId, data] of timerMap.entries()) {
         if (typeof data.startTick === 'number') startTimer(riderId, playerJobMap.get(riderId), data.startTick);
     }
 }, 10);
