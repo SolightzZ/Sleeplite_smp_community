@@ -1,109 +1,120 @@
 import { ItemStack } from '@minecraft/server';
 import { CONFIG } from '../config.js';
 
-class Helpers {
-    blockKey = (x, y, z) => `${Math.floor(x)}_${Math.floor(y)}_${Math.floor(z)}`;
+export const coordinateKey = (x, y, z) => `${Math.floor(x)}_${Math.floor(y)}_${Math.floor(z)}`;
 
-    isWithinRange = (x, z) => {
-        const dist = Math.sqrt(x * x + z * z);
-        return dist <= CONFIG.maxDistance;
-    };
+export const isWithinRange = (x, z) => {
+    const dist = Math.sqrt(x * x + z * z);
 
-    getDistance = (x, z) => Math.floor(Math.sqrt(x * x + z * z));
+    return dist <= CONFIG.maxDistance;
+};
 
-    isContainer = (blockId) => CONFIG.allowedContainers.includes(blockId);
+export const isContainer = (blockId) => CONFIG.allowedContainers.includes(blockId);
 
-    isShopTool = (itemStack) => {
-        if (!itemStack) return false;
-        return itemStack.typeId === CONFIG.shopTool;
-    };
+export const isShopTool = (itemStack) => {
+    if (!itemStack) return false;
 
-    genShopId = () => {
-        const ts = Date.now();
-        const rand = Math.random().toString(36).substring(2, 10);
-        return `shop_${ts}_${rand}`;
-    };
+    return itemStack.typeId === CONFIG.shopTool;
+};
 
-    now = () => Math.floor(Date.now() / 1000);
+export const generateShopId = (playerName, shopCount) => {
+    const cleanedName = playerName.toLowerCase().replace(/\s+/g, '');
 
-    isFormValid = (player, response) => {
-        if (response.canceled) return false;
-        if (
-            'formValues' in response &&
-            (!response.formValues || !Array.isArray(response.formValues))
-        ) {
-            player.sendMessage(`§c[Shop] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
-            return false;
-        }
-        return true;
-    };
+    const paddedNumber = String(shopCount).padStart(4, '0');
 
-    formatName = (itemId) => {
-        const name = itemId.replace('minecraft:', '');
-        return name
-            .split('_')
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-            .join(' ');
-    };
+    return `shop-${cleanedName}-${paddedNumber}`;
+};
 
-    addDiamonds = (container, amount) => {
-        try {
-            let remaining = amount;
-            const size = container.size;
+export const currentTimestamp = () => Math.floor(Date.now() / 1000);
 
-            for (const slot of Array.from({ length: size }).keys()) {
-                if (remaining <= 0) break;
-                const item = container.getItem(slot);
-                if (!item) {
-                    container.setItem(
-                        slot,
-                        new ItemStack(CONFIG.currencyId, Math.min(remaining, 64)),
-                    );
-                    remaining -= Math.min(remaining, 64);
-                } else if (item.typeId === CONFIG.currencyId && item.amount < 64) {
-                    const space = 64 - item.amount;
-                    const add = Math.min(space, remaining);
-                    item.amount += add;
-                    container.setItem(slot, item);
-                    remaining -= add;
-                }
+export const isFormValid = (player, response) => {
+    if (response.canceled) return false;
+
+    if ('formValues' in response && (!response.formValues || !Array.isArray(response.formValues))) {
+        player.sendMessage(`§c[Shop] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
+
+        return false;
+    }
+    return true;
+};
+
+export const formatName = (itemId) => {
+    const name = itemId.replace('minecraft:', '');
+
+    return name
+        .split('_')
+        .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+        .join(' ');
+};
+
+export const addCurrency = (container, amount) => {
+    try {
+        let remaining = amount;
+
+        const size = container.size;
+
+        for (const slot of Array.from({ length: size }).keys()) {
+            if (remaining <= 0) break;
+
+            const item = container.getItem(slot);
+
+            if (!item) {
+                container.setItem(slot, new ItemStack(CONFIG.currencyId, Math.min(remaining, 64)));
+
+                remaining -= Math.min(remaining, 64);
+            } else if (item.typeId === CONFIG.currencyId && item.amount < 64) {
+                const space = 64 - item.amount;
+
+                const add = Math.min(space, remaining);
+
+                item.amount += add;
+
+                container.setItem(slot, item);
+
+                remaining -= add;
             }
-
-            return remaining;
-        } catch (error) {
-            console.error('[Shop] addDiamonds:', error);
-            return amount;
-        }
-    };
-
-    addItems = (container, itemId, count) => {
-        const BATCH_SIZE = 64;
-        let remaining = count;
-
-        while (remaining > 0) {
-            const batchSize = Math.min(remaining, BATCH_SIZE);
-            const remain = container.addItem(new ItemStack(itemId, batchSize));
-            const batchReturned = batchSize - (remain ? remain.amount : 0);
-            remaining -= batchReturned;
-            if (batchReturned <= 0) break;
         }
 
-        return {
-            returned: count - remaining,
-            lost: remaining,
-        };
-    };
+        return remaining;
+    } catch (error) {
+        console.error('[Shop] addCurrency:', error);
+        return amount;
+    }
+};
 
-    addItemStack = (container, itemStack) => {
-        const totalAmount = itemStack.amount;
-        const remain = container.addItem(itemStack);
-        const returned = totalAmount - (remain ? remain.amount : 0);
-        return {
-            returned,
-            lost: remain ? remain.amount : 0,
-            remainder: remain ?? null,
-        };
-    };
-}
+export const formatThaiTime = (unixTimestamp) => {
+    if (!unixTimestamp || unixTimestamp === 0) return '§7-';
 
-export default new Helpers();
+    //แปลงเวลา - แปลง Unix Timestamp เป็นเวลาไทย (UTC+7)
+    const date = new Date((unixTimestamp + 7 * 60 * 60) * 1000);
+
+    const day = String(date.getUTCDate()).padStart(2, '0');
+
+    const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+
+    const year = date.getUTCFullYear();
+
+    const hours = String(date.getUTCHours()).padStart(2, '0');
+
+    const minutes = String(date.getUTCMinutes()).padStart(2, '0');
+
+    const seconds = String(date.getUTCSeconds()).padStart(2, '0');
+
+    return `§e${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+};
+
+export const transferItemToInventory = (container, itemStack) => {
+    const totalAmount = itemStack.amount;
+
+    const remain = container.addItem(itemStack);
+
+    const returned = totalAmount - (remain ? remain.amount : 0);
+
+    return {
+        returned,
+
+        lost: remain ? remain.amount : 0,
+
+        remainder: remain ?? null,
+    };
+};

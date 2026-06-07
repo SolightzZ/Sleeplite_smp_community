@@ -1,20 +1,18 @@
 export const CONFIG = {
-    dim: 'minecraft:overworld',
+    dimension: 'minecraft:overworld',
     maxDistance: 256,
 
     currencyId: 'minecraft:diamond',
-    currencyName: 'Diamond',
 
     shopTool: 'minecraft:stick',
 
-    allowedContainers: ['minecraft:chest', 'minecraft:barrel'],
+    allowedContainers: ['minecraft:chest'],
+    baseBlock: 'minecraft:emerald_block',
 
     maxItemsPerShop: 54,
 
-    maxShopPerPlayer: 10,
+    maxShopsPerPlayer: 10,
 
-    minAmount: 1,
-    maxAmount: 64,
     minPrice: 1,
     maxPrice: 64,
 
@@ -22,8 +20,6 @@ export const CONFIG = {
         allowOwnerBreak: true,
         allowOtherBreak: false,
         allowExplosion: false,
-        allowPiston: false,
-        allowHopper: false,
         allowOtherOpen: true,
     },
 
@@ -32,13 +28,4 @@ export const CONFIG = {
     dbMaxChunkSize: 15000,
 
     adminTag: 'admin',
-};
-
-export const Colors = {
-    error: '§c',
-    success: '§a',
-    warning: '§6',
-    info: '§7',
-    highlight: '§e',
-    title: '§l§6',
 };

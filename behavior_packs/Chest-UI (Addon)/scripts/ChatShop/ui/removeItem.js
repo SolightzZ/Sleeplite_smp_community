@@ -1,121 +1,137 @@
 import { ChestFormData } from '../../extensions/forms.js';
-import shopDatabase from '../core/database.js';
-import blockUtils from '../utils/blockUtils.js';
-import helpers from '../utils/helpers.js';
-import uiUtils from '../utils/ui.js';
+import shopDatabase from '../data/database.js';
+import { getContainer, spawnItemStack } from '../utils/blockUtils.js';
+import { formatName, transferItemToInventory, isFormValid } from '../utils/helpers.js';
+import { handleFormError } from '../utils/UIUtils.js';
 import { manageItems } from './manageItems.js';
+
+function getShopItems(container, prices) {
+    return Array.from({ length: container.size })
+        .map((_, i) => {
+            const item = container.getItem(i);
+
+            if (!item) return null;
+
+            const slotKey = String(i);
+
+            return {
+                slotKey,
+                slotIndex: i,
+                itemId: item.typeId,
+                amount: item.amount,
+                price: prices[slotKey] ?? 0,
+            };
+        })
+        .filter(Boolean);
+}
 
 export function removeItem(player, shop) {
     try {
-        const container = blockUtils.getContainer(shop);
+        const container = getContainer(shop);
+
         if (!container) {
             player.sendMessage(`§c[Shop] ไม่สามารถเข้าถึงร้านค้าได้`);
             return;
         }
 
-        const prices = shop.prices || {};
-        const items = Array.from({ length: container.size })
-            .map((_, i) => {
-                const item = container.getItem(i);
-                if (!item) return null;
-
-                const slotKey = String(i);
-                return {
-                    slotKey,
-                    slotIndex: i,
-                    itemId: item.typeId,
-                    amount: item.amount,
-                    price: prices[slotKey] ?? 0,
-                };
-            })
-            .filter(Boolean);
+        const items = getShopItems(container, shop.prices || {});
 
         if (items.length === 0) {
             player.sendMessage(`§c[Shop] ไม่มีสินค้าให้ลบ`);
             return;
         }
 
-        const chest = new ChestFormData('large')
-            .title('cลบสินค้า')
-            .pattern(
-                ['xxxxxxxxx', 'x_______x', 'x_______x', 'x_______x', 'x_______x', 'x_______x'],
-                {
-                    x: {
-                        itemName: '',
-                        texture: 'minecraft:red_stained_glass_pane',
-                        stackAmount: 1,
-                    },
-                },
-            );
+        const form = new ChestFormData('large').title('ลบสินค้า').pattern(['xxxxxxxxx', 'x_______x', 'x_______x', 'x_______x', 'x_______x', 'x_______x'], {
+            x: {
+                itemName: '',
+                texture: 'minecraft:red_stained_glass_pane',
+                stackAmount: 1,
+            },
+        });
 
         const slotMap = {};
-        let slotCursor = 10;
-        for (const entry of items) {
-            if (slotCursor >= 53) break;
-            while (slotCursor % 9 === 0 || slotCursor % 9 === 8) slotCursor++;
-            if (slotCursor >= 54) break;
 
-            chest.button(
-                slotCursor,
-                `§c${helpers.formatName(entry.itemId)}`,
-                [`§7x${entry.amount} | $${entry.price}`, '', '§eคลิกเพื่อดึงคืน'],
-                entry.itemId,
-                Math.min(entry.amount, 99),
+        let cursor = 10;
+
+        for (const selectedItem of items) {
+            if (cursor >= 53) break;
+
+            while (cursor % 9 === 0 || cursor % 9 === 8) cursor++;
+
+            if (cursor >= 54) break;
+
+            form.button(
+                cursor,
+                `§c${formatName(selectedItem.itemId)}`,
+                [`§7x${selectedItem.amount} | $${selectedItem.price}`, '', '§eคลิกเพื่อดึงคืน'],
+                selectedItem.itemId,
+                Math.min(selectedItem.amount, 99),
             );
-            slotMap[slotCursor] = entry;
-            slotCursor++;
+
+            slotMap[cursor] = selectedItem;
+
+            cursor++;
         }
 
-        chest.button(49, '§7ย้อนกลับ', [''], 'minecraft:barrier', 1);
+        form.button(49, 'ย้อนกลับ', [''], 'minecraft:barrier', 1);
 
-        uiUtils.showForm(player, chest, 'shop.remove.select', (res) => {
-            if (res.canceled) return;
-            if (res.selection === 49) {
-                manageItems(player, shop);
-                return;
-            }
-            const entry = slotMap[res.selection];
-            if (entry) confirmRemove(player, shop, entry, container);
-        });
+        form.show(player)
+            .then((res) => {
+                if (!isFormValid(player, res)) return;
+
+                if (!player?.isValid()) return;
+
+                if (res.selection === 49) {
+                    manageItems(player, shop);
+                    return;
+                }
+                const selectedItem = slotMap[res.selection];
+                if (selectedItem) confirmRemove(player, shop, selectedItem, container);
+            })
+            .catch((error) => handleFormError(player, error));
     } catch (error) {
         console.error('[Shop] removeItem:', error);
     }
 }
 
-function confirmRemove(player, shop, entry, chestContainer) {
+function confirmRemove(player, shop, selectedItem, container) {
     try {
-        const { slotKey, slotIndex, itemId, amount } = entry;
+        const { slotKey, slotIndex, itemId, amount } = selectedItem;
 
-        const chestItem = chestContainer.getItem(slotIndex);
-        if (!chestItem || chestItem.typeId !== itemId || chestItem.amount < amount) {
+        const containerItem = container.getItem(slotIndex);
+
+        if (!containerItem || containerItem.typeId !== itemId || containerItem.amount < amount) {
             player.sendMessage(`§c[Shop] ไม่พบสินค้าในร้าน`);
             return;
         }
 
-        const inv = player.getComponent('minecraft:inventory')?.container;
-        if (!inv) return;
+        const inventory = player.getComponent('minecraft:inventory')?.container;
 
-        const itemStack = chestContainer.getItem(slotIndex);
-        chestContainer.setItem(slotIndex, undefined);
+        if (!inventory) return;
+
+        const itemStack = container.getItem(slotIndex);
+
+        container.setItem(slotIndex, undefined);
 
         delete shop.prices[slotKey];
         shopDatabase.save();
 
-        const { returned, lost, remainder } = helpers.addItemStack(inv, itemStack);
+        const { returned, lost, remainder } = transferItemToInventory(inventory, itemStack);
 
         if (returned > 0) {
-            player.sendMessage(`§a[Shop] ดึง ${helpers.formatName(itemId)} คืน ${returned} ชิ้น`);
+            player.sendMessage(`§a[Shop] ดึง ${formatName(itemId)} คืน ${returned} ชิ้น`);
         }
 
         if (lost > 0 && remainder) {
-            blockUtils.spawnItemStack(shop, remainder);
-            player.sendMessage(
-                `§e[Shop] ช่องเก็บของเต็ม! ${lost} ${helpers.formatName(itemId)} ถูกวางบนพื้น`,
-            );
+            spawnItemStack(shop, remainder);
+            player.sendMessage(`§e[Shop] ช่องเก็บของเต็ม! ${lost} ${formatName(itemId)} ถูกวางบนพื้น`);
         }
+
+        //วนกลับ - แสดงฟอร์มลบสินค้าอีกครั้งเพื่อให้ลบต่อได้
+        removeItem(player, shop);
     } catch (error) {
         console.error('[Shop] confirmRemove:', error);
-        if (player?.isValid) {
+        if (player?.isValid()) {
             player.sendMessage(`§c[Shop] เกิดข้อผิดพลาดในการดึงคืนสินค้า`);
         }
     }

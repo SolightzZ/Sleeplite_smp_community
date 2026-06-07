@@ -1,35 +1,26 @@
 import { system, world } from '@minecraft/server';
-import shopDatabase from './ChatShop/core/database.js';
-import shopEngine from './ChatShop/core/engine.js';
+import { onShopInteract, onShopBreak, onShopExplosion } from './ChatShop/core/eventHandlers.js';
+import shopDatabase from './ChatShop/data/database.js';
 
 system.run(() => {
     shopDatabase.load();
 });
 
-world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-    const player = ev.player;
-    if (!player?.isValid) return;
-    try {
-        shopEngine.onShopInteract(ev);
-    } catch (e) {
-        console.error('[ChatShop] interact:', e);
-    }
-});
+function subscribeSafely(eventSignal, handler, getPlayer) {
+    eventSignal.subscribe((event) => {
+        const player = getPlayer?.(event);
+        if (player && !player.isValid()) return;
 
-world.beforeEvents.playerBreakBlock.subscribe((ev) => {
-    const player = ev.player;
-    if (!player?.isValid) return;
-    try {
-        shopEngine.onShopBreak(ev);
-    } catch (e) {
-        console.error('[ChatShop] break:', e);
-    }
-});
+        try {
+            handler(event);
+        } catch (e) {
+            console.error('[ChatShop]', e);
+        }
+    });
+}
 
-world.beforeEvents.explosion.subscribe((ev) => {
-    try {
-        shopEngine.onShopExplosion(ev);
-    } catch (e) {
-        console.error('[ChatShop] explosion:', e);
-    }
-});
+subscribeSafely(world.beforeEvents.playerInteractWithBlock, onShopInteract, (event) => event.player);
+
+subscribeSafely(world.beforeEvents.playerBreakBlock, onShopBreak, (event) => event.player);
+
+subscribeSafely(world.beforeEvents.explosion, onShopExplosion);

@@ -4,26 +4,9 @@
  */
 export const inventory_enabled = true;
 /**
- * Defines the custom block & item IDs for the form.
- * You can reference either a vanilla texture icon, which functions identically to other items...
- * ...or reference a texture path, which removes enchant glint and 3d block render capability.
+ * Custom items shift the vanilla item icon IDs used by chest forms.
  */
-export const custom_content = {
-    /*
-	'custom:block': {
-		 texture: 'minecraft:gold_block',
-		 type: 'block'
-	},
-	'custom:item': {
-		 texture: 'textures/items/paper',
-		 type: 'item'
-	},
-	*/
-};
-//Blocks are excluded from the count, as they do not shift vanilla IDs.
-export let number_of_custom_items = Object.values(custom_content).filter(
-    (v) => v.type === 'item',
-).length;
+export let number_of_custom_items = 0;
 
 import { system, ItemTypes, BlockTypes } from '@minecraft/server';
 
@@ -42,7 +25,6 @@ try {
 
             const filteredCustomItems = customItems.filter((id) => !customBlocks.has(id));
             number_of_custom_items = filteredCustomItems.length;
-            console.warn(`[Chest-UI] Dynamically counted custom items: ${number_of_custom_items}`);
         } catch (innerError) {
             console.error(
                 '[Chest-UI] Error inside system.run for counting custom items:',
@@ -54,7 +36,6 @@ try {
     console.error('[Chest-UI] Failed to schedule system.run for custom items count:', error);
 }
 
-export const custom_content_keys = new Set(Object.keys(custom_content));
 //Add custom sizes defined in UI. Format is [key, [ui_flag, slot_count]]
 export const CHEST_UI_SIZES = new Map([
     ['single', ['§c§h§e§s§t§2§7§r', 27]],
