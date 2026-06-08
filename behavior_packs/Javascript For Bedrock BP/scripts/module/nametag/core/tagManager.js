@@ -49,7 +49,7 @@ export const setActiveRank = (player, rankName) => {
 
 export const getAllServerRanks = () => {
     const ranks = new Set();
-    const players = world.getPlayers();
+    const players = world.getAllPlayers();
 
     for (const currentPlayer of players) {
         const tags = currentPlayer.getTags();

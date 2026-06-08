@@ -21,19 +21,30 @@ const STORAGE_KEYS = {
     NOTIFY: 'jobs_data_notify',
 };
 
+let isDirty = false;
+let saveScheduled = false;
+
 export const saveData = () => {
-    try {
-        world.setDynamicProperty(STORAGE_KEYS.JOBS, JSON.stringify(jobs));
-        world.setDynamicProperty(STORAGE_KEYS.JOB_ID, nextJobId);
-        world.setDynamicProperty(STORAGE_KEYS.RIDER_MAP, JSON.stringify(Array.from(playerJobMap.entries())));
-        const timerEntries = Array.from(timerMap.entries()).map(([k, v]) => [k, { startTick: v.startTick }]);
-        world.setDynamicProperty(STORAGE_KEYS.TIMERS, JSON.stringify(timerEntries));
-        world.setDynamicProperty(STORAGE_KEYS.PENDING, JSON.stringify(Array.from(pendingDelivery.entries())));
-        const notifyEntries = Array.from(ownerNotifyMap.entries()).map(([k, v]) => [k, Array.from(v)]);
-        world.setDynamicProperty(STORAGE_KEYS.NOTIFY, JSON.stringify(notifyEntries));
-    } catch (error) {
-        console.error('[Job] Save Error:', error);
-    }
+    isDirty = true;
+    if (saveScheduled) return;
+    saveScheduled = true;
+    system.run(() => {
+        saveScheduled = false;
+        if (!isDirty) return;
+        isDirty = false;
+        try {
+            world.setDynamicProperty(STORAGE_KEYS.JOBS, JSON.stringify(jobs));
+            world.setDynamicProperty(STORAGE_KEYS.JOB_ID, nextJobId);
+            world.setDynamicProperty(STORAGE_KEYS.RIDER_MAP, JSON.stringify(Array.from(playerJobMap.entries())));
+            const timerEntries = Array.from(timerMap.entries()).map(([k, v]) => [k, { startTick: v.startTick }]);
+            world.setDynamicProperty(STORAGE_KEYS.TIMERS, JSON.stringify(timerEntries));
+            world.setDynamicProperty(STORAGE_KEYS.PENDING, JSON.stringify(Array.from(pendingDelivery.entries())));
+            const notifyEntries = Array.from(ownerNotifyMap.entries()).map(([k, v]) => [k, Array.from(v)]);
+            world.setDynamicProperty(STORAGE_KEYS.NOTIFY, JSON.stringify(notifyEntries));
+        } catch (error) {
+            console.error('[Job] Save Error:', error);
+        }
+    });
 };
 
 export const loadJobData = () => {

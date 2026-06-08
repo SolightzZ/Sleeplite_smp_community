@@ -36,7 +36,7 @@ export function showSalesHistory(player, shop, onBack) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection === sorted.length) {
                     if (typeof onBack === 'function') {
@@ -77,7 +77,7 @@ function showSaleDetail(player, shop, entry, onBack) {
 
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 if (res.selection === 0) {
                     showSalesHistory(player, shop, onBack);
                 }

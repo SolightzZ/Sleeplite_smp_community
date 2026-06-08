@@ -115,7 +115,7 @@ refreshIds();
 
 world.afterEvents.playerJoin.subscribe((event) => {
     system.run(() => {
-        const entity = world.getEntity(event.playerId);
+        const entity = world.getAllPlayers().find((p) => p.id === event.playerId);
         if (entity && entity.isValid) {
             playerMap.set(event.playerId, entity);
             refreshIds();
@@ -138,33 +138,29 @@ world.beforeEvents.playerLeave.subscribe((event) => {
 const healthMonitor = () => {
     if (playerIds.length === 0) return;
 
-    if (roundRobinIndex >= playerIds.length) {
-        roundRobinIndex = 0;
-    }
+    for (let i = 0; i < playerIds.length; i++) {
+        const playerId = playerIds[i];
+        const player = playerMap.get(playerId);
 
-    const playerId = playerIds[roundRobinIndex];
-    const player = playerMap.get(playerId);
-
-    if (!player || !player.isValid) {
-        cleanupPlayer(playerId);
-        return;
-    }
-
-    try {
-        const healthComponent = player.getComponent('minecraft:health');
-        if (healthComponent) {
-            const healthPercent = (healthComponent.currentValue / healthComponent.effectiveMax) * 100;
-            updateLowHealth(player, healthPercent, 0);
-            updateLowHealth(player, healthPercent, 1);
+        if (!player || !player.isValid) {
+            cleanupPlayer(playerId);
+            continue;
         }
-    } catch (error) {
-        console.error('[xVisuals] health_monitor', String(error));
-    }
 
-    roundRobinIndex = (roundRobinIndex + 1) % playerIds.length;
+        try {
+            const healthComponent = player.getComponent('minecraft:health');
+            if (healthComponent) {
+                const healthPercent = (healthComponent.currentValue / healthComponent.effectiveMax) * 100;
+                updateLowHealth(player, healthPercent, 0);
+                updateLowHealth(player, healthPercent, 1);
+            }
+        } catch (error) {
+            console.error('[xVisuals] health_monitor', String(error));
+        }
+    }
 };
 
-const interval = system.runInterval(healthMonitor, 40);
+const interval = system.runInterval(healthMonitor, 20); // Check all players every 20 ticks (1s) instead of slow round-robin
 
 system.afterEvents.scriptEventReceive.subscribe((event) => {
     if (event.id === 'xVisuals:addon') {
@@ -183,6 +179,9 @@ let pendingLen = 0;
 world.afterEvents.entityHurt.subscribe((event) => {
     const { hurtEntity, damage, damageSource } = event;
     if (damage === 0 || !hurtEntity || hurtEntity.typeId !== 'minecraft:player') return;
+
+    // ป้องกันการรั่วไหลของหน่วยความจำ: จำกัดขนาดคิวไว้ที่ 50
+    if (pendingLen >= 50) return;
 
     hurtPlayers[pendingLen] = hurtEntity;
     hurtDamages[pendingLen] = damage;
@@ -261,7 +260,8 @@ const shiftQueue = (count) => {
 const drainHurtQueue = () => {
     if (pendingLen === 0) return;
 
-    const count = pendingLen < MAX_HURT_PER_TICK ? pendingLen : MAX_HURT_PER_TICK;
+    // ปรับขนาดจำนวนแบบ ไดนามิกตามความยาวของคิวเพื่อหลีกเลี่ยงความล่าช้าในการแสดงผลในสถานการณ์ที่มีผู้เล่นจำนวนมาก
+    const count = pendingLen < MAX_HURT_PER_TICK ? pendingLen : Math.min(pendingLen, Math.max(MAX_HURT_PER_TICK, Math.ceil(pendingLen / 2)));
 
     for (let i = 0; i < count; i++) {
         const player = hurtPlayers[i];

@@ -13,7 +13,7 @@ export function onShopInteract(event) {
     try {
         const player = event.player;
         const block = event.block;
-        if (!player?.isValid() || !block) return;
+        if (!player?.isValid || !block) return;
 
         if (!isContainer(block.typeId)) return;
 
@@ -44,11 +44,11 @@ export function onShopInteract(event) {
 
         if (shop.owner.playerId === player.id) {
             system.run(() => {
-                if (player.isValid()) manageItems(player, shop);
+                if (player.isValid) manageItems(player, shop);
             });
         } else if (isAdmin(player)) {
             system.run(() => {
-                if (player.isValid()) showAdminInteract(player, shop);
+                if (player.isValid) showAdminInteract(player, shop);
             });
         } else {
             if (!shop.status.isEnabled) {
@@ -60,7 +60,7 @@ export function onShopInteract(event) {
                 return;
             }
             system.run(() => {
-                if (player.isValid()) showBuyMenu(player, shop);
+                if (player.isValid) showBuyMenu(player, shop);
             });
         }
     } catch (error) {
@@ -72,7 +72,7 @@ export function onShopBreak(event) {
     try {
         const player = event.player;
         const block = event.block;
-        if (!player?.isValid() || !block) return;
+        if (!player?.isValid || !block) return;
 
         const data = shopDatabase.data;
 

@@ -115,7 +115,7 @@ const processActiveAnimations = () => {
         return;
     }
 
-    const onlinePlayers = world.getPlayers();
+    const onlinePlayers = world.getAllPlayers();
     const playersByDimension = collectPlayersByDimension(onlinePlayers);
     const recipients = [];
 

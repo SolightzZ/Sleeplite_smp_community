@@ -89,7 +89,7 @@ export const manageMembers = async (player) => {
         const zone = zoneDatabase.zones[player.name];
         if (!zone) return player.sendMessage(`[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
 
-        const allPlayers = world.getPlayers();
+        const allPlayers = world.getAllPlayers();
         const otherPlayerNames = [];
         for (const onlinePlayer of allPlayers) {
             if (onlinePlayer.name !== player.name) otherPlayerNames.push(onlinePlayer.name);
@@ -194,7 +194,7 @@ export const adminDeleteZone = async (player) => {
         clearBorderVisuals(owner);
         player.sendMessage(`${Colors.Warning}[/] ลบโพรเทคของ ${owner} แล้ว`);
 
-        for (const onlinePlayer of world.getPlayers()) {
+        for (const onlinePlayer of world.getAllPlayers()) {
             if (onlinePlayer.name === owner) {
                 onlinePlayer.sendMessage(`§cผู้ดูแลระบบลบโพรเทคของคุณแล้ว`);
                 break;

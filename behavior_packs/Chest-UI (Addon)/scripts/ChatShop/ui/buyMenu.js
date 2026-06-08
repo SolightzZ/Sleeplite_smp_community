@@ -60,7 +60,7 @@ export function showBuyMenu(player, shop) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection === 49) return;
 
@@ -112,7 +112,7 @@ function showBuyAmount(player, shop, selectedItem) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection === 49) {
                     showBuyMenu(player, shop);
@@ -150,7 +150,7 @@ function confirmBuy(player, shop, selectedItem, buyAmount, totalPrice) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection !== 0) return;
 

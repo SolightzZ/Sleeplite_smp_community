@@ -85,7 +85,7 @@ export function editPrice(player, shop) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection === 49) {
                     manageItems(player, shop);
@@ -133,7 +133,7 @@ function showEditForm(player, shop, selectedItem) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 const newPrice = Number(res.formValues[0]);
                 const newAmount = Number(res.formValues[1]);

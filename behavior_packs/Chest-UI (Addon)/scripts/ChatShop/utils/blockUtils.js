@@ -66,6 +66,11 @@ function archiveDeletedShop(shop) {
         delete archiveEntry.container.containerHash;
     }
 
+    // ปรับขนาดฐานข้อมูลให้เหมาะสม: จำกัดจำนวนประวัติการขายในไฟล์เก็บถาวรเพื่อป้องกันการใช้หน่วยความจำมากเกินไปเมื่อเวลาผ่านไป
+    if (Array.isArray(archiveEntry.salesHistory)) {
+        archiveEntry.salesHistory = archiveEntry.salesHistory.slice(-5);
+    }
+
     data.deletedShops[shop.shopId] = archiveEntry;
 }
 

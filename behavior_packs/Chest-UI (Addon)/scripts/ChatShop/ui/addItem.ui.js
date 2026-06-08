@@ -57,7 +57,7 @@ export function showAddForm(player, shop, container, emptySlots) {
         form.show(player)
             .then((res1) => {
                 if (!isFormValid(player, res1)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 if (res1.selection === 40) {
                     manageItems(player, shop);
                     return;
@@ -128,7 +128,7 @@ function showPriceForm(player, shop, container, emptySlots, inventorySlot, inven
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 if (res.selection === 49) {
                     showAddForm(player, shop, container, emptySlots);
                     return;
@@ -162,7 +162,7 @@ function showPriceModal(player, shop, container, emptySlots, inventorySlot, inve
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 const price = Number(res.formValues[0]);
 
@@ -219,7 +219,7 @@ function bulkDepositFlow(player, shop, container, emptySlots, inventorySlot, inv
 
         .then((res) => {
             if (!isFormValid(player, res)) return;
-            if (!player?.isValid()) return;
+            if (!player?.isValid) return;
 
             const price = Number(res.formValues[0]);
 

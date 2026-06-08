@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { system, world } from '@minecraft/server';
 import { Config } from '../config.js';
 
 // ค่าคงที่
@@ -97,7 +97,19 @@ export class ZoneDatabase {
     constructor() {
         this._data = {};
         this.cache = new Map();
-        this.zones = buildZonesProxy(this._data, () => this.save());
+        this._saveScheduled = false;
+        this.zones = buildZonesProxy(this._data, () => this.scheduleSave());
+    }
+
+    scheduleSave() {
+        // ล้างแคชทันทีเพื่อป้องกันไม่ให้คำสั่งค้นหาค้างอยู่
+        this.cache.clear();
+        if (this._saveScheduled) return;
+        this._saveScheduled = true;
+        system.run(() => {
+            this._saveScheduled = false;
+            this.save();
+        });
     }
 
     save() {
@@ -115,7 +127,7 @@ export class ZoneDatabase {
     load() {
         try {
             this._data = {};
-            this.zones = buildZonesProxy(this._data, () => this.save());
+            this.zones = buildZonesProxy(this._data, () => this.scheduleSave());
             this.cache.clear();
 
             const json = world.getDynamicProperty(STORAGE_KEY);

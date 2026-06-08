@@ -33,7 +33,7 @@ const renderBorderParticles = () => {
         stopParticleIntervalIfIdle();
         if (activeBorders.size === 0) return;
 
-        const players = world.getPlayers();
+        const players = world.getAllPlayers();
         const onlineNames = new Set(players.map((player) => player.name));
 
         const expiredNames = [];

@@ -79,7 +79,7 @@ export function removeItem(player, shop) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection === 49) {
                     manageItems(player, shop);
@@ -131,7 +131,7 @@ function confirmRemove(player, shop, selectedItem, container) {
         removeItem(player, shop);
     } catch (error) {
         console.error('[Shop] confirmRemove:', error);
-        if (player?.isValid()) {
+        if (player?.isValid) {
             player.sendMessage(`§c[Shop] เกิดข้อผิดพลาดในการดึงคืนสินค้า`);
         }
     }

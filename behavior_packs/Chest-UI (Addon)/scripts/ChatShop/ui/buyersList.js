@@ -25,7 +25,7 @@ export function showBuyersList(player, shop) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 if (res.selection === buyers.length) {
                     showInfo(player, shop);
                     return;
@@ -60,7 +60,7 @@ function showBuyerDetail(player, shop, buyerId, buyerData) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection === 0) {
                     showBuyersList(player, shop);

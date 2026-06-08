@@ -1,7 +1,7 @@
+import { system } from '@minecraft/server';
 import { CONFIG } from '../config.js';
 import { migrateToV2 } from './migration.js';
 import { loadRaw, saveRaw } from './storage.js';
-
 function normalizeShop(shop) {
     if (!shop) return;
 
@@ -33,6 +33,13 @@ function normalizeShop(shop) {
 class ShopDatabase {
     constructor() {
         this._cache = null;
+        this._isDirty = false;
+
+        system.runInterval(() => {
+            if (this._isDirty) {
+                this.forceSave();
+            }
+        }, 100); // 5 seconds interval
     }
 
     load() {
@@ -50,7 +57,7 @@ class ShopDatabase {
 
             if (this._cache.version === 1) {
                 migrateToV2(this._cache);
-                this.save();
+                this.forceSave();
             }
 
             if (!this._cache.settings) this._cache.settings = this._defaultSettings();
@@ -75,8 +82,13 @@ class ShopDatabase {
     }
 
     save() {
+        this._isDirty = true;
+    }
+
+    forceSave() {
         try {
             if (!this._cache) return;
+            this._isDirty = false;
 
             const json = JSON.stringify(this._cache);
 

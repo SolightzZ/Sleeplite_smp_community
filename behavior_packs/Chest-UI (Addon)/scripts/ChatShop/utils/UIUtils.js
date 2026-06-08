@@ -1,5 +1,5 @@
 export function handleFormError(player, error) {
-    if (player?.isValid()) {
+    if (player?.isValid) {
         player.sendMessage('§c[Shop] เกิดข้อผิดพลาดในการเปิดเมนู');
     }
 

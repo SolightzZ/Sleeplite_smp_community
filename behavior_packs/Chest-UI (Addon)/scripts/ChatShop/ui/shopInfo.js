@@ -55,7 +55,7 @@ export function showInfo(player, shop) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 switch (res.selection) {
                     case 0:
                         collectRevenue(player, shop);

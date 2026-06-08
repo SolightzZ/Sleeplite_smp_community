@@ -154,7 +154,7 @@ const showActions = (admin, target) => {
 export const showMainMenu = (admin) => {
     if (!isValidPlayer(admin)) return;
 
-    const players = world.getPlayers();
+    const players = world.getAllPlayers();
     const form = new ActionFormData().title('§lระบบจัดการยศ').body('§7เลือกผู้เล่นที่ต้องการจัดการ:');
 
     for (let i = 0; i < players.length; i++) {

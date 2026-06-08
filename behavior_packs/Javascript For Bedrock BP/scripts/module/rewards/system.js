@@ -51,7 +51,7 @@ function RewardchatSend(event) {
         event.cancel = true;
         let statusText = '=== Player Status ===\n';
 
-        for (const target of world.getPlayers()) {
+        for (const target of world.getAllPlayers()) {
             const data = load(target);
             statusText += `§7${target.name}: Count=${data.count}, Last=${data.last || 'Never'}\n`;
         }

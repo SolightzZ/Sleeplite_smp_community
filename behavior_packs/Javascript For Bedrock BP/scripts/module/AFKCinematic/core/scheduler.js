@@ -8,8 +8,7 @@ import { playerStates } from './state.js';
 
 function getPlayerById(playerId) {
     try {
-        const entity = world.getEntity(playerId);
-        return entity?.typeId === 'minecraft:player' ? entity : undefined;
+        return world.getAllPlayers().find((p) => p.id === playerId);
     } catch {
         return undefined;
     }

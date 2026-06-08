@@ -35,7 +35,7 @@ export function showAdminPanel(player) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 switch (res.selection) {
                     case 0:
                         showActiveShopList(player, activeShops);
@@ -72,7 +72,7 @@ function showSettingData(player) {
     form.show(player)
         .then((res) => {
             if (!isFormValid(player, res)) return;
-            if (!player?.isValid()) return;
+            if (!player?.isValid) return;
             switch (res.selection) {
                 case 0:
                     importShopFromJson(player);
@@ -118,7 +118,7 @@ function showActiveShopList(player, shops) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 if (res.selection === shops.length) {
                     showAdminPanel(player);
                     return;
@@ -151,7 +151,7 @@ function showDeletedShopList(player, shops) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 if (res.selection === shops.length) {
                     showAdminPanel(player);
                     return;
@@ -168,7 +168,7 @@ function showDeletedShopList(player, shops) {
 }
 
 export function isAdmin(player) {
-    if (!player?.isValid()) return false;
+    if (!player?.isValid) return false;
     try {
         return player.hasTag(CONFIG.adminTag);
     } catch {
@@ -193,7 +193,7 @@ export function showAdminInteract(player, shop) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
                 switch (res.selection) {
                     case 0:
                         showAdminShopInfo(player, shop);

@@ -9,7 +9,7 @@ system.run(() => {
 function subscribeSafely(eventSignal, handler, getPlayer) {
     eventSignal.subscribe((event) => {
         const player = getPlayer?.(event);
-        if (player && !player.isValid()) return;
+        if (player && !player.isValid) return;
 
         try {
             handler(event);

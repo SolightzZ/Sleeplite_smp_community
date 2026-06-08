@@ -79,8 +79,8 @@ export const onExplosion = (event) => {
     if (zoneCount === 0) return;
 
     const dimensionId = event.dimension?.id;
-    let isNearZone = false;
     const radius = Config.ExplosionRadius;
+    const nearbyZones = [];
 
     for (const zone of Object.values(zoneDatabase.zones)) {
         if (!zone?.start || !zone?.end || !zone.dimension) continue;
@@ -94,17 +94,19 @@ export const onExplosion = (event) => {
             location.z >= zone.start.z - radius &&
             location.z <= zone.end.z + radius
         ) {
-            isNearZone = true;
-            break;
+            nearbyZones.push(zone);
         }
     }
 
-    if (!isNearZone) return;
+    if (nearbyZones.length === 0) return;
 
     for (const block of event.getImpactedBlocks()) {
-        if (zoneDatabase.findByLocation(block.location, block.dimension.id)) {
-            event.cancel = true;
-            return;
+        const bLoc = block.location;
+        for (const zone of nearbyZones) {
+            if (bLoc.x >= zone.start.x && bLoc.x <= zone.end.x && bLoc.y >= zone.start.y && bLoc.y <= zone.end.y && bLoc.z >= zone.start.z && bLoc.z <= zone.end.z) {
+                event.cancel = true;
+                return;
+            }
         }
     }
 };

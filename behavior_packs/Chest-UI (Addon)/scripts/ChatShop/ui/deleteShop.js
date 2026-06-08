@@ -41,7 +41,7 @@ export function confirmDelete(player, shop) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (res.selection !== 0) return;
 
@@ -72,7 +72,7 @@ function showDeleteConfirmationForm(player, shop) {
         form.show(player)
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 const formValues = res.formValues;
                 const inputShopId = String(formValues[0] || '').trim();

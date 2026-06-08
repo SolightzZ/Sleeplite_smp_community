@@ -57,7 +57,7 @@ export function showAdminShopInfo(player, shop) {
 
             .then((res) => {
                 if (!isFormValid(player, res)) return;
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 if (isDeleted) {
                     //ร้านที่ถูกลบ: restore(0), permDelete(1), history(2), export(3), back(4)

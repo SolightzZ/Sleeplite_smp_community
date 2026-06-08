@@ -21,7 +21,7 @@ export function showSettings(player, shop) {
             .then((res) => {
                 if (!isFormValid(player, res)) return;
 
-                if (!player?.isValid()) return;
+                if (!player?.isValid) return;
 
                 shop.status.isEnabled = res.formValues[0];
 

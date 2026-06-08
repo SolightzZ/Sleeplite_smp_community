@@ -17,8 +17,8 @@ export function onDeadFullBright({ deadEntity }) {
 export function onLeaveFullBright(playerId) {
     if (!playerId) return;
     try {
-        const player = world.getEntity(playerId);
-        if (player?.typeId === 'minecraft:player' && player.isValid) {
+        const player = world.getAllPlayers().find((p) => p.id === playerId);
+        if (player && player.isValid) {
             resetBright(player);
         }
     } catch (error) {

@@ -14,6 +14,13 @@ export function buy(player, shop, purchaseEntry) {
 
         if (!buyerInventory) return false;
 
+        // ป้องกันบั๊กการสูญเสียเงิน: ตรวจสอบก่อนว่าผู้เล่นมีเงินเพียงพอหรือไม่
+        const totalCurrencyAvailable = getCurrencyAmount(buyerInventory);
+        if (totalCurrencyAvailable < usedPrice) {
+            player.sendMessage(`§c[Shop] คุณมีเพชรไม่พอ (มี ${totalCurrencyAvailable} ไดม่อน แต่ต้องการ ${usedPrice})`);
+            return false;
+        }
+
         const paymentSuccessful = removeCurrency(buyerInventory, usedPrice);
         if (!paymentSuccessful) {
             player.sendMessage(`§c[Shop] คุณมีเพชรไม่พอ`);
@@ -34,7 +41,8 @@ export function buy(player, shop, purchaseEntry) {
             return false;
         }
 
-        const availableItemSpace = remainingItemCapacity(buyerInventory, itemId);
+        const slotMaxAmount = slotItem.maxAmount || 64;
+        const availableItemSpace = remainingItemCapacity(buyerInventory, itemId, slotMaxAmount);
         if (availableItemSpace < buyAmount) {
             addCurrency(buyerInventory, usedPrice);
             player.sendMessage(`§c[Shop] ช่องเก็บของเต็ม (ต้องการ ${buyAmount} ช่อง แต่เหลือ ${availableItemSpace})`);
@@ -107,6 +115,11 @@ export function buy(player, shop, purchaseEntry) {
             timestamp,
         });
 
+        // Optimize DB size: Limit sales history to the last 50 transactions to prevent memory leak/bloat
+        if (shop.salesHistory.length > 50) {
+            shop.salesHistory.shift();
+        }
+
         shopDatabase.save();
 
         player.sendMessage(`§a[Shop] ซื้อ ${formatName(itemId)} x${buyAmount} สำเร็จ! (${usedPrice} ไดม่อน)`);
@@ -117,13 +130,29 @@ export function buy(player, shop, purchaseEntry) {
     }
 }
 
+function getCurrencyAmount(container) {
+    try {
+        let total = 0;
+        const size = container.size;
+        for (let slot = 0; slot < size; slot++) {
+            const item = container.getItem(slot);
+            if (item && item.typeId === CONFIG.currencyId) {
+                total += item.amount;
+            }
+        }
+        return total;
+    } catch (error) {
+        console.error('[Shop] getCurrencyAmount:', error);
+        return 0;
+    }
+}
+
 function removeCurrency(container, amount) {
     try {
         let remaining = amount;
-
         const size = container.size;
 
-        for (const slot of Array.from({ length: size }).keys()) {
+        for (let slot = 0; slot < size; slot++) {
             if (remaining <= 0) break;
             const item = container.getItem(slot);
 
@@ -145,14 +174,21 @@ function removeCurrency(container, amount) {
     }
 }
 
-function remainingItemCapacity(container, itemId) {
-    return Array.from({ length: container.size }).reduce((space, _, slot) => {
-        const item = container.getItem(slot);
-
-        if (!item) return space + 64;
-
-        if (item.typeId === itemId && item.amount < 64) return space + (64 - item.amount);
-
+function remainingItemCapacity(container, itemId, maxAmount = 64) {
+    try {
+        let space = 0;
+        const size = container.size;
+        for (let slot = 0; slot < size; slot++) {
+            const item = container.getItem(slot);
+            if (!item) {
+                space += maxAmount;
+            } else if (item.typeId === itemId && item.amount < maxAmount) {
+                space += maxAmount - item.amount;
+            }
+        }
         return space;
-    }, 0);
+    } catch (error) {
+        console.error('[Shop] remainingItemCapacity:', error);
+        return 0;
+    }
 }

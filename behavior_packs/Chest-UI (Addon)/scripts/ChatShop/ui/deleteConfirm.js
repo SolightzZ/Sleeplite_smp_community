@@ -52,7 +52,7 @@ export function clearAndDelete(player, shop) {
 
         if (shopDatabase.data.shops[shop.shopId]) {
             console.error(`[Shop] clearAndDelete: shop ${shop.shopId} still exists after deleteShop call`);
-            if (player?.isValid()) {
+            if (player?.isValid) {
                 player.sendMessage(`§c[Shop] ไม่สามารถลบร้านค้าได้ กรุณาลองอีกครั้ง`);
             }
             return false;
@@ -62,7 +62,7 @@ export function clearAndDelete(player, shop) {
         return true;
     } catch (error) {
         console.error('[Shop] clearAndDelete:', error);
-        if (player?.isValid()) {
+        if (player?.isValid) {
             player.sendMessage(`§c[Shop] เกิดข้อผิดพลาดในการลบร้านค้า`);
         }
         return false;

@@ -10,19 +10,27 @@ const validate = (value, label) => {
     return true;
 };
 
+let cachedData = null;
+
 export class Database {
     static load() {
+        if (cachedData !== null) return cachedData;
         try {
             const data = world.getDynamicProperty(CONFIG.dbKey);
-            if (!data) return {};
-            return JSON.parse(data);
+            if (!data) {
+                cachedData = {};
+            } else {
+                cachedData = JSON.parse(data);
+            }
         } catch (error) {
             console.error('[DB] Load Error: ' + error);
-            return {};
+            cachedData = {};
         }
+        return cachedData;
     }
 
     static save(data) {
+        cachedData = data;
         try {
             world.setDynamicProperty(CONFIG.dbKey, JSON.stringify(data));
         } catch (error) {
