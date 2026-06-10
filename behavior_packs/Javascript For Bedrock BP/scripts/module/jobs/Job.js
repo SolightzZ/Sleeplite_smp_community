@@ -47,7 +47,7 @@ export const saveData = () => {
     });
 };
 
-export const loadJobData = () => {
+const loadJobData = () => {
     try {
         const jobsData = world.getDynamicProperty(STORAGE_KEYS.JOBS);
         if (jobsData) {

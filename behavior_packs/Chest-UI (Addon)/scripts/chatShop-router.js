@@ -10,12 +10,7 @@ function subscribeSafely(eventSignal, handler, getPlayer) {
     eventSignal.subscribe((event) => {
         const player = getPlayer?.(event);
         if (player && !player.isValid) return;
-
-        try {
-            handler(event);
-        } catch (e) {
-            console.error('[ChatShop]', e);
-        }
+        handler(event);
     });
 }
 

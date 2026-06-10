@@ -16,7 +16,7 @@ const confirmDelete = async (player) => {
     firstform.button('ตกลง', 'textures/ui/check');
     firstform.button('ยกเลิก', 'textures/ui/cancel');
 
-    const firstResponse = await form.show(player);
+    const firstResponse = await firstform.show(player);
     if (!isFormValid(player, firstResponse) || firstResponse.selection !== 0) return false;
 
     const secondform = new ActionFormData();

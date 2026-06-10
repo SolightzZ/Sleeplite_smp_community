@@ -11,7 +11,7 @@ export function tickBlockCache() {
     }
 }
 
-export function getBlockTypeId(dimension, pos) {
+function getBlockTypeId(dimension, pos) {
     const x = Math.floor(pos.x);
     const y = Math.floor(pos.y);
     const z = Math.floor(pos.z);
@@ -34,11 +34,11 @@ export function getBlockTypeId(dimension, pos) {
     return typeId;
 }
 
-export function isPassable(dim, pos) {
+function isPassable(dim, pos) {
     return PASS_THROUGH_BLOCKS.has(getBlockTypeId(dim, pos) ?? '');
 }
 
-export function liftAbove(dim, pos, skipLift = false) {
+function liftAbove(dim, pos, skipLift = false) {
     const lifted = framePool.lifted;
     lifted.x = pos.x;
     lifted.y = pos.y;

@@ -4,7 +4,7 @@ import { processQueue, queueCursor } from './queue.js';
 import { playerLights, activeHolders } from './state.js';
 import { placeLightForPlayer, removeLightBlock, isFlashlightHeld } from './light-manager.js';
 
-export function syncPlayerQueue() {
+function syncPlayerQueue() {
     const allPlayers = world.getAllPlayers();
     const liveIds = new Set();
 

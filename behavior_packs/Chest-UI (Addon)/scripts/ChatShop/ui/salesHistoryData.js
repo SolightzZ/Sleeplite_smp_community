@@ -36,4 +36,3 @@ export function buildSaleButtonDesc(entry) {
     };
 }
 
-export { MAX_VISIBLE };

@@ -26,7 +26,7 @@ const buildStackKey = (item) => {
     return `${item.typeId}\x00${item.nameTag || ''}\x00${loreStr}\x00${enchStr}`;
 };
 
-export const countTotalItems = (items) => {
+const countTotalItems = (items) => {
     if (!items) return 0;
 
     let total = 0;

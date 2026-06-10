@@ -2,7 +2,7 @@ import { EntityComponentTypes, EquipmentSlot, world } from '@minecraft/server';
 import { FLASHLIGHT_ITEM, RAYCAST_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, BLOCK_LIGHT, BLOCK_LIGHT_15, BLOCK_AIR, WORLD_Y_MIN, WORLD_Y_MAX } from '../config.js';
 import { playerLights, playerLastPos } from './state.js';
 
-export function calcLightPos(headPos, viewDir, dimension) {
+function calcLightPos(headPos, viewDir, dimension) {
     const x = Math.floor(headPos.x + viewDir.x * RAYCAST_DISTANCE);
     const y = Math.floor(headPos.y + viewDir.y * RAYCAST_DISTANCE);
     const z = Math.floor(headPos.z + viewDir.z * RAYCAST_DISTANCE);
@@ -22,7 +22,7 @@ export function isFlashlightHeld(player) {
     return (main && main.typeId === FLASHLIGHT_ITEM) || (off && off.typeId === FLASHLIGHT_ITEM);
 }
 
-export function hasPlayerMoved(playerId, headPos, viewDir) {
+function hasPlayerMoved(playerId, headPos, viewDir) {
     const last = playerLastPos.get(playerId);
 
     if (!last) {

@@ -14,7 +14,7 @@ const getPredefinedRankList = () => {
     }));
 };
 
-export const showMenuAdd = (admin, target) => {
+const showMenuAdd = (admin, target) => {
     if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
     const predefined = getPredefinedRankList();
@@ -52,7 +52,7 @@ export const showMenuAdd = (admin, target) => {
     });
 };
 
-export const showMenuEdit = (admin, target) => {
+const showMenuEdit = (admin, target) => {
     if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
     const owned = getOwnedRanks(target);
@@ -105,7 +105,7 @@ const showConfirmDelete = (admin, target, ranks) => {
         });
 };
 
-export const showMenuRemove = (admin, target) => {
+const showMenuRemove = (admin, target) => {
     if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
     const owned = getOwnedRanks(target);
@@ -168,4 +168,4 @@ export const showMainMenu = (admin) => {
     });
 };
 
-export const isRankItem = (itemType) => itemType === ITEM;
+const isRankItem = (itemType) => itemType === ITEM;

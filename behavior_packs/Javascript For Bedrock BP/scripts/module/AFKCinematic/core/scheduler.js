@@ -21,7 +21,7 @@ function setCinematicCamera(player, position, rotation) {
     });
 }
 
-export class CinematicScheduler {
+class CinematicScheduler {
     constructor() {
         this._ids = [];
         this._cursor = 0;

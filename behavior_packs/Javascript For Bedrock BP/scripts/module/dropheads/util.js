@@ -9,7 +9,7 @@ const upperFirst = (str) => {
     return str[0].toUpperCase() + str.slice(1);
 };
 
-export const formatName = (id) => {
+const formatName = (id) => {
     if (!id) return 'Unknown';
 
     return id.replace('minecraft:', '').replace(/_/g, ' ').split(' ').map(upperFirst).join(' ');

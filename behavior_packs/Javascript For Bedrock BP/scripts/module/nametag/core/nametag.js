@@ -23,7 +23,7 @@ const getActiveRankFromTags = (tags) => {
     return null;
 };
 
-export const removeNameTag = (player) => {
+const removeNameTag = (player) => {
     if (!isValidPlayer(player)) return false;
 
     player.nameTag = player.name;

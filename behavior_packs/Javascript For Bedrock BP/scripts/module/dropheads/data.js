@@ -1,7 +1,7 @@
 export const boardA = 'Deaths';
 export const boardB = 'DeathsPlus';
 
-export const headMap = {
+const headMap = {
     Bank5273: 'bluefirefroggy:player_head_1',
     Cxnthiaz: 'bluefirefroggy:player_head_2',
     KinorlSAO: 'bluefirefroggy:player_head_3',
