@@ -4,7 +4,7 @@ import { getPlayerPickaxe } from "../utils/player.js";
 import { state } from "./queue.js";
 
 export const finalizeJobDrops = (job) => {
-  const dim = job.player.dimension;
+  const dim = job.dimension;
   const loc = job.player.location;
   const dropId = job.dropTypeId;
   const amt = job.brokenCount;

@@ -1,5 +1,3 @@
 {
-	"ui_defs": [
-		"ui/rieemote_form.json"
-	]
+   "ui_defs": ["ui/emote_form.json"]
 }

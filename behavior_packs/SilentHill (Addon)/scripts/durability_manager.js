@@ -213,7 +213,8 @@ class DurabilityManager {
     const armor = player.getComponent(EntityComponentTypes.Equippable);
     if (!armor) return;
 
-    const originalDamage = Math.floor(this.#getOriginalDamage(armor.totalArmor, armor.totalToughness, damage));
+    const { totalArmor, totalToughness } = this.#calculateArmorStats(armor);
+    const originalDamage = Math.floor(this.#getOriginalDamage(totalArmor, totalToughness, damage));
 
     const equipmentSlots = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet];
     for (const slot of equipmentSlots) {
@@ -232,6 +233,21 @@ class DurabilityManager {
       durability.damage = Math.min(durability.maxDurability, durability.damage + damageToRestore);
       armor.setEquipment(slot, equipment);
     }
+  }
+
+  #calculateArmorStats(equippable) {
+    let totalArmor = 0;
+    let totalToughness = 0;
+    const slots = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet];
+    for (const slot of slots) {
+      const item = equippable.getEquipment(slot);
+      if (!item) continue;
+      const armorComp = item.getComponent(ItemComponentTypes.Armor);
+      if (!armorComp) continue;
+      totalArmor += armorComp.defense ?? 0;
+      totalToughness += armorComp.toughness ?? 0;
+    }
+    return { totalArmor, totalToughness };
   }
 
   #reduceDurability(player, item, durability, doubleDamage) {

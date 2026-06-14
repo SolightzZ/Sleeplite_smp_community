@@ -20,7 +20,7 @@ const hasPermission = (player, zone, flag) => {
 export const onBlockEdit = (event) => {
     const player = event.player;
     const block = event.block;
-    if (!player || !block) return;
+    if (!player || !player.isValid || !block || !block.isValid) return;
 
     const zone = zoneDatabase.findByLocation(block.location, block.dimension.id);
     if (!zone) return;
@@ -41,7 +41,7 @@ export const onBlockEdit = (event) => {
 export const onEntityInteract = (event) => {
     const player = event.player;
     const target = event.target;
-    if (!player || !target) return;
+    if (!player || !player.isValid || !target || !target.isValid) return;
     if (!isPlayer(target)) return;
 
     const zone = zoneDatabase.findByLocation(target.location, target.dimension.id);
@@ -55,14 +55,14 @@ export const onEntityInteract = (event) => {
 // จัดการ PvP
 export const onEntityHurt = (event) => {
     const target = event.hurtEntity;
-    if (!target) return;
+    if (!target || !target.isValid) return;
 
     const zone = zoneDatabase.findByLocation(target.location, target.dimension.id);
     if (!zone) return;
 
     const attacker = event.damageSource?.damagingEntity;
 
-    if (attacker && isPlayer(attacker) && isPlayer(target)) {
+    if (attacker && attacker.isValid && isPlayer(attacker) && isPlayer(target)) {
         const damageEnabled = zone.flags?.damage ?? Config.DefaultFlags.damage;
         if (!damageEnabled) {
             event.cancel = true;

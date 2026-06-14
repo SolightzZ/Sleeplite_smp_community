@@ -9,11 +9,18 @@ export const hasBright = (player) => {
 const apply = (player) => {
     if (!player || !player.isValid || player.hasTag(tag)) return false;
 
-    player.addTag(tag);
-    player.addEffect(effect, 20 * 60 * 20, {
-        amplifier: 0,
-        showParticles: false,
-    });
+    try {
+        player.addTag(tag);
+    } catch {
+        return false;
+    }
+
+    try {
+        player.addEffect(effect, 20 * 60 * 20, {
+            amplifier: 0,
+            showParticles: false,
+        });
+    } catch {}
 
     return true;
 };
@@ -21,10 +28,16 @@ const apply = (player) => {
 const remove = (player) => {
     if (!player || !player.isValid || !player.hasTag(tag)) return false;
 
-    player.removeTag(tag);
+    try {
+        player.removeTag(tag);
+    } catch {
+        return false;
+    }
 
     if (player.getEffect(effect)) {
-        player.removeEffect(effect);
+        try {
+            player.removeEffect(effect);
+        } catch {}
     }
 
     return true;

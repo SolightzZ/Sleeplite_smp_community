@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, BlockPermutation } from "@minecraft/server";
 import { CFG } from "../config.js";
 import { state, popJob } from "./state.js";
 import { cleanupJobState } from "./lifecycle.js";
@@ -52,7 +52,7 @@ export const processJobs = () => {
 
       if (block && block.typeId === job.typeId) {
         try {
-          block.setType("minecraft:air");
+          block.setPermutation(BlockPermutation.resolve("minecraft:air"));
           job.brokenCount++;
           broken++;
         } catch (error) {

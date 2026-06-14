@@ -43,6 +43,10 @@ export class Database {
         try {
             const data = this.load();
             if (!data[name]) data[name] = [];
+            if (data[name].length >= CONFIG.maxReports) {
+                console.warn(`[DB] Max reports (${CONFIG.maxReports}) reached for ${name}`);
+                return;
+            }
             data[name].push({ t: title.trim(), b: body.trim(), d: getTime(), r: '' });
             this.save(data);
         } catch (error) {

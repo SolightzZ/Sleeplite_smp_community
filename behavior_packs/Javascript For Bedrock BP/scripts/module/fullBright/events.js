@@ -1,4 +1,3 @@
-import { world } from '@minecraft/server';
 import { resetBright } from './state.js';
 import { showMenu } from './ui.js';
 
@@ -14,14 +13,9 @@ export function onDeadFullBright({ deadEntity }) {
     }
 }
 
-export function onLeaveFullBright(playerId) {
-    if (!playerId) return;
-    try {
-        const player = world.getAllPlayers().find((p) => p.id === playerId);
-        if (player && player.isValid) {
-            resetBright(player);
-        }
-    } catch (error) {
-        console.error('[FullBright] onLeave Error:', error);
+export function onLeaveFullBright(event) {
+    const player = event.player;
+    if (player?.isValid) {
+        resetBright(player);
     }
 }

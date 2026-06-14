@@ -1,4 +1,4 @@
-import { EquipmentSlot, ItemComponentTypes } from "@minecraft/server";
+import { EquipmentSlot, ItemComponentTypes, EntityComponentTypes } from "@minecraft/server";
 
 export const applyDurabilityDamage = (player, item, amt, unbreakLevel) => {
   if (amt <= 0 || !item) return;
@@ -17,7 +17,7 @@ export const applyDurabilityDamage = (player, item, amt, unbreakLevel) => {
 
   dur.damage = Math.min(dur.damage + actual, dur.maxDurability);
 
-  const equip = player.getComponent("minecraft:equippable");
+  const equip = player.getComponent(EntityComponentTypes.Equippable);
   if (!equip) return;
 
   if (dur.damage >= dur.maxDurability) {

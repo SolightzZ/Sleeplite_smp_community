@@ -1,7 +1,9 @@
+import { EntityComponentTypes } from "@minecraft/server";
+
 export const getPlayerAxe = (player) => {
   if (!player || !player.isValid) return undefined;
 
-  const inv = player.getComponent("minecraft:inventory");
+  const inv = player.getComponent(EntityComponentTypes.Inventory);
   if (!inv || !inv.container) return undefined;
 
   const item = inv.container.getItem(player.selectedSlotIndex);

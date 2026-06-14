@@ -230,6 +230,10 @@ export const adminTeleport = async (player) => {
         const zone = zoneDatabase.zones[owner];
         if (!zone) return player.sendMessage(`[x] ไม่พบโพรเทคดังกล่าว`);
 
+        if (!zone.dimension) {
+            return player.sendMessage(`[x] โพรเทคไม่มีข้อมูลโลก`);
+        }
+
         const halfSize = halfZoneSize;
         const center = {
             x: zone.start.x + halfSize,

@@ -1,4 +1,4 @@
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, EntityComponentTypes } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 import { completeJob } from './CompleteJob.js';
 import { createJob } from './CreateJob.js';
@@ -9,7 +9,7 @@ import { viewJobs } from './ViewJob.js';
 export const giveItems = (player, items) => {
     if (!player.isValid) return;
 
-    const inv = player.getComponent('minecraft:inventory')?.container;
+    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!inv) return;
 
     const dim = player.dimension;

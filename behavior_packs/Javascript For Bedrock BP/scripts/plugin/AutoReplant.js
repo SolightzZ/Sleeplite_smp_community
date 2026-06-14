@@ -1,4 +1,4 @@
-import { BlockPermutation } from '@minecraft/server';
+import { BlockPermutation, EntityComponentTypes } from '@minecraft/server';
 
 const CROP_MAP = {
     'minecraft:wheat': 'minecraft:wheat_seeds',
@@ -52,7 +52,7 @@ export const handleAutoReplant = (ev) => {
     if (!seedId) return;
     if (perm.getState('growth') !== 7) return;
 
-    const container = player.getComponent('minecraft:inventory')?.container;
+    const container = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!container) return;
 
     if (consumeSeed(container, seedId)) {

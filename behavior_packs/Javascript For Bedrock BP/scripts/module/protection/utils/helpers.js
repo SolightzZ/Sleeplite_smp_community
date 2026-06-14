@@ -1,4 +1,4 @@
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, EntityComponentTypes } from '@minecraft/server';
 import { Config, edgeOffsets } from '../config.js';
 
 // คำนวณขอบเขต
@@ -53,7 +53,7 @@ const CONTAINER_BLOCK_TYPES = new Set([
 export const isContainerBlock = (typeId) => CONTAINER_BLOCK_TYPES.has(typeId);
 
 export const consumeBlock = (player) => {
-    const container = player.getComponent('minecraft:inventory')?.container;
+    const container = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!container) return false;
 
     const slotCount = container.size;

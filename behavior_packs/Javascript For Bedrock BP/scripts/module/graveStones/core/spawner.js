@@ -1,3 +1,4 @@
+import { EntityComponentTypes } from '@minecraft/server';
 import { GRAVESTONE_ENTITY, DIMENSION_HEIGHT_RULE, CENTER_OFFSET, INVENTORY_COMPONENT } from '../config.js';
 import { floorPosition, getGraveY } from '../utils/location.js';
 import { findNearbyItems, safeAddItem } from './container.js';
@@ -28,7 +29,7 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
     for (const drop of items) {
         if (!drop.isValid) continue;
 
-        const itemData = drop.getComponent('minecraft:item')?.itemStack;
+        const itemData = drop.getComponent(EntityComponentTypes.Item)?.itemStack;
         if (!itemData) continue;
 
         const added = safeAddItem(container, itemData);

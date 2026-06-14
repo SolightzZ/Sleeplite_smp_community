@@ -148,10 +148,10 @@ export const openJobDetail = (player, job) => {
     if (!player.isValid) return;
 
     const total = totalDiamond(job);
-    let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของทีไ่ด้รับ: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
+    let body = `ผู้ว่าจ้าง: ${job.ownerName}\nของที่ได้รับ: ${total} เพชร\n\nไอเทมที่ต้องการ:\n`;
 
     for (const item of job.items) {
-        body += `- ${it.id.replace('minecraft:', '')} จำนวน ${it.amount} ชิ้น (ของที่ได้รับ ${it.diamond} เพชร)\n`;
+        body += `- ${item.id.replace('minecraft:', '')} จำนวน ${item.amount} ชิ้น (ของที่ได้รับ ${item.diamond} เพชร)\n`;
     }
 
     const form = new ActionFormData();

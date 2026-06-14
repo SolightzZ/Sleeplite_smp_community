@@ -30,7 +30,6 @@ const forceStopParticleInterval = () => {
 // วนเรนเดอร์ขอบเขต (ทุก 40 ticks)
 const renderBorderParticles = () => {
     try {
-        stopParticleIntervalIfIdle();
         if (activeBorders.size === 0) return;
 
         const players = world.getAllPlayers();

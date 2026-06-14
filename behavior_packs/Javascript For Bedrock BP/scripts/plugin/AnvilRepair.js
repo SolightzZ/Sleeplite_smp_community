@@ -1,4 +1,4 @@
-import { ItemStack, system } from '@minecraft/server';
+import { ItemStack, system, EntityComponentTypes } from '@minecraft/server';
 
 const applyAnvilRepair = (block, permutation, damage, player, item) => {
     system.run(() => {
@@ -15,7 +15,7 @@ const applyAnvilRepair = (block, permutation, damage, player, item) => {
             pitch: 1.0,
         });
 
-        const inv = player.getComponent('minecraft:inventory')?.container;
+        const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
         if (!inv) return;
 
         const slot = player.selectedSlotIndex;

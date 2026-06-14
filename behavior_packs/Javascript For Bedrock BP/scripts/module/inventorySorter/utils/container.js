@@ -1,9 +1,10 @@
+import { ItemComponentTypes } from '@minecraft/server';
 import { cloneWithAmountLike, compareItemsByMode } from './item.js';
 
 const buildStackKey = (item) => {
     if (!item?.typeId) return null;
 
-    const enchComp = item.getComponent('minecraft:enchantable');
+    const enchComp = item.getComponent(ItemComponentTypes.Enchantable);
     const enchants = enchComp?.getEnchantments?.();
 
     let enchStr = '';
@@ -109,7 +110,7 @@ export const isContainerSorted = (container, mode = 'type', startSlot = 0) => {
 };
 
 const buildEnchantFingerprint = (item) => {
-    const enchants = item.getComponent('minecraft:enchantable')?.getEnchantments?.();
+    const enchants = item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments?.();
 
     if (!enchants || enchants.length === 0) return '';
 

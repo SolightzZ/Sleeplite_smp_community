@@ -1,4 +1,4 @@
-import { system } from '@minecraft/server';
+import { system, EntityComponentTypes } from '@minecraft/server';
 import { startGlobalSeatCheck } from './seat-checker.js';
 import { SEAT_ENTITY_ID } from '../config.js';
 
@@ -19,7 +19,7 @@ export const spawnSeat = (dim, spawnLoc, rot, player, blockLoc) => {
         try {
             const seat = dim.spawnEntity(SEAT_ENTITY_ID, spawnLoc);
             seat.setRotation(rot);
-            seat.getComponent('minecraft:rideable')?.addRider(player);
+            seat.getComponent(EntityComponentTypes.Rideable)?.addRider(player);
             registerSeat(seat, spawnLoc, dim, blockLoc);
         } catch (error) {
             console.error('[ simpleSit ] spawnSeat: ' + error);

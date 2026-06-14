@@ -1,4 +1,4 @@
-import { EntityComponentTypes, EquipmentSlot, world } from '@minecraft/server';
+import { BlockPermutation, EntityComponentTypes, EquipmentSlot, world } from '@minecraft/server';
 import { FLASHLIGHT_ITEM, RAYCAST_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, BLOCK_LIGHT, BLOCK_LIGHT_15, BLOCK_AIR, WORLD_Y_MIN, WORLD_Y_MAX } from '../config.js';
 import { playerLights, playerLastPos } from './state.js';
 
@@ -73,7 +73,7 @@ export function removeLightBlock(playerId, fallbackDim) {
     try {
         const block = dim.getBlock(light);
         if (block && (block.typeId === BLOCK_LIGHT || block.typeId === BLOCK_LIGHT_15)) {
-            block.setType(BLOCK_AIR);
+            block.setPermutation(BlockPermutation.resolve(BLOCK_AIR));
         }
     } catch (error) {
         console.error('[ flashlight ] removeLightBlock: ' + error);
@@ -111,7 +111,7 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
             if (oldDim) {
                 const oldBlock = oldDim.getBlock(oldLight);
                 if (oldBlock && (oldBlock.typeId === BLOCK_LIGHT || oldBlock.typeId === BLOCK_LIGHT_15)) {
-                    oldBlock.setType(BLOCK_AIR);
+                    oldBlock.setPermutation(BlockPermutation.resolve(BLOCK_AIR));
                 }
             }
         } catch (error) {
@@ -138,7 +138,7 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
             return;
         }
 
-        targetBlock.setType(BLOCK_LIGHT_15);
+        targetBlock.setPermutation(BlockPermutation.resolve(BLOCK_LIGHT_15));
 
         if (oldLight) {
             oldLight.x = newPos.x;

@@ -1,4 +1,4 @@
-import { ItemComponentTypes } from "@minecraft/server";
+import { ItemComponentTypes, EntityComponentTypes } from "@minecraft/server";
 import { getPlayerAxe } from "./inventory.js";
 
 export const applyDurabilityDamage = (player, amount) => {
@@ -24,7 +24,7 @@ export const applyDurabilityDamage = (player, amount) => {
 
   dur.damage = Math.min(dur.damage + actual, dur.maxDurability);
 
-  const inv = player.getComponent("minecraft:inventory");
+  const inv = player.getComponent(EntityComponentTypes.Inventory);
   if (!inv || !inv.container) return;
 
   if (dur.damage >= dur.maxDurability) {

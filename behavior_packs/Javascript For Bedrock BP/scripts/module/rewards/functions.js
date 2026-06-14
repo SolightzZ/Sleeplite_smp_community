@@ -1,4 +1,4 @@
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, EntityComponentTypes } from '@minecraft/server';
 import { config } from './constants.js';
 
 function time() {
@@ -16,7 +16,9 @@ function name(id) {
 
 function give(player, id, count) {
     try {
-        const inventory = player.getComponent('minecraft:inventory');
+        if (!player || !player.isValid) return false;
+
+        const inventory = player.getComponent(EntityComponentTypes.Inventory);
         if (!inventory?.container) return false;
 
         const container = inventory.container;
@@ -51,7 +53,7 @@ function give(player, id, count) {
             console.warn(`[Give] Not enough space. ${remaining} items could not be given.`);
         }
 
-        return true;
+        return remaining < amountToAdd;
     } catch (error) {
         console.error('[Give] Error:', error);
         return false;

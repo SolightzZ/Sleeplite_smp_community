@@ -1,4 +1,4 @@
-import { system } from "@minecraft/server";
+import { system, BlockPermutation } from "@minecraft/server";
 import { state, popJob } from "./queue.js";
 import { CFG } from "../config.js";
 import { getBlockSafe } from "../utils/block.js";
@@ -46,7 +46,7 @@ export const processVeinJobs = () => {
     let broken = 0;
     while (broken < blocksPerTick && job.index < job.locations.length) {
       const loc = job.locations[job.index++];
-      const block = getBlockSafe(job.player.dimension, loc);
+      const block = getBlockSafe(job.dimension, loc);
 
       if (block && block.typeId === job.targetId) {
         const dropAmt = job.fortuneLevel > 0 ? Math.floor(Math.random() * job.fortuneLevel) + 2 : 1;
@@ -54,7 +54,7 @@ export const processVeinJobs = () => {
         const xpAmt = xpChoices[Math.floor(Math.random() * xpChoices.length)];
 
         try {
-          block.setType("minecraft:air");
+          block.setPermutation(BlockPermutation.resolve("minecraft:air"));
           job.brokenCount += dropAmt;
           job.xpAccumulated += xpAmt;
           broken++;

@@ -1,3 +1,5 @@
+import { EntityDamageCause } from '@minecraft/server';
+
 const dimNames = {
     'minecraft:overworld': 'Overworld',
     'minecraft:nether': 'Nether',
@@ -38,68 +40,68 @@ export const getKillerName = (player, dmg) => {
     }
 
     switch (cause) {
-        case 'suicide':
+        case EntityDamageCause.suicide:
             return 'Suicide';
 
-        case 'fall':
+        case EntityDamageCause.fall:
             return 'Fall Damage';
 
-        case 'fire':
-        case 'fireTick':
+        case EntityDamageCause.fire:
+        case EntityDamageCause.fireTick:
             return 'Fire';
 
-        case 'lava':
+        case EntityDamageCause.lava:
             return 'Lava';
 
-        case 'drowning':
+        case EntityDamageCause.drowning:
             return 'Drowning';
 
-        case 'freezing':
+        case EntityDamageCause.freezing:
             return 'Freezing';
 
-        case 'starve':
+        case EntityDamageCause.starve:
             return 'Starvation';
 
-        case 'void':
+        case EntityDamageCause.void:
             return 'The Void';
 
-        case 'magic':
+        case EntityDamageCause.magic:
             return 'Magic';
 
-        case 'wither':
+        case EntityDamageCause.wither:
             return 'Wither';
 
-        case 'thorns':
+        case EntityDamageCause.thorns:
             return 'Thorns';
 
-        case 'projectile':
+        case EntityDamageCause.projectile:
             return 'Projectile';
 
-        case 'entityExplosion':
+        case EntityDamageCause.entityExplosion:
             return 'Entity Explosion';
 
-        case 'blockExplosion':
+        case EntityDamageCause.blockExplosion:
             return 'Block Explosion';
 
-        case 'suffocation':
+        case EntityDamageCause.suffocation:
             return 'Suffocation';
 
-        case 'contact':
+        case EntityDamageCause.contact:
             return 'Contact Damage';
 
-        case 'anvil':
+        case EntityDamageCause.anvil:
             return 'Anvil';
 
-        case 'fallingBlock':
+        case EntityDamageCause.fallingBlock:
             return 'Falling Block';
 
-        case 'lightning':
+        case EntityDamageCause.lightning:
             return 'Lightning';
 
-        case 'temperature':
+        case EntityDamageCause.temperature:
             return 'Temperature';
 
-        case 'override':
+        case EntityDamageCause.override:
             return 'Command';
 
         default:

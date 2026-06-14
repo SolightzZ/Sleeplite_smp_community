@@ -1,3 +1,4 @@
+import { EntityComponentTypes } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { amountMap, countItem, createJobData, buildInventoryMap, ITEM_IDS, jobs, selectedMap, showUI } from './Job.js';
 import { showMainMenu } from './Menu.js';
@@ -15,7 +16,7 @@ export const formatName = (id) => {
 export const searchBlock = (player) => {
     if (!player.isValid) return;
 
-    const inv = player.getComponent('minecraft:inventory')?.container;
+    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!inv) return;
 
     const invMap = buildInventoryMap(inv);
@@ -149,7 +150,7 @@ export function createJob(player) {
                 createJob(player);
                 return;
             }
-            const inv = player.getComponent('minecraft:inventory')?.container;
+            const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
             if (!inv) return;
             const invMap = buildInventoryMap(inv);
 
@@ -264,7 +265,7 @@ export const openConfirmForm = (player) => {
         body += `- ${id.replace('minecraft:', '')} จำนวน ${amount} ชิ้น (ของที่ได้รับ ${diamond} เพชร)\n`;
     }
 
-    const inv = player.getComponent('minecraft:inventory')?.container;
+    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!inv) return;
     const haveDiam = countItem(inv, 'minecraft:diamond');
     body += `\nของที่ได้รับทั้งหมด: ${total} เพชร`;
@@ -290,7 +291,7 @@ export const openConfirmForm = (player) => {
             return;
         }
 
-        const inv2 = player.getComponent('minecraft:inventory')?.container;
+        const inv2 = player.getComponent(EntityComponentTypes.Inventory)?.container;
         if (!inv2) return;
         const haveDiam2 = countItem(inv2, 'minecraft:diamond');
 

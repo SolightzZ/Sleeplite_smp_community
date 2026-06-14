@@ -13,6 +13,7 @@ export const TreeCapitatorBreakBlock = (ev) => {
   const perm = ev.brokenBlockPermutation;
 
   if (!player || !player.isValid) return;
+  if (!block || !block.isValid || !perm) return;
   if (!player.isSneaking) return;
   if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
 

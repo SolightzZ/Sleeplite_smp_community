@@ -1,4 +1,4 @@
-import { system } from '@minecraft/server';
+import { system, EntityComponentTypes } from '@minecraft/server';
 import { activeSeats } from './seat-manager.js';
 import { isRemovedBlock } from '../utils/block.js';
 import { seatHasMoved } from '../utils/location.js';
@@ -58,7 +58,7 @@ export const startGlobalSeatCheck = () => {
 
             const moved = seatHasMoved(entity.location, spawnLoc);
 
-            const rideable = entity.getComponent('minecraft:rideable');
+            const rideable = entity.getComponent(EntityComponentTypes.Rideable);
             let hasRider = false;
             if (rideable) {
                 const riders = rideable.getRiders();

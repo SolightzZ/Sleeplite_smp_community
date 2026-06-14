@@ -1,4 +1,4 @@
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, ItemComponentTypes } from '@minecraft/server';
 import { ItemCategories, RarityTiers } from '../data/rarity.js';
 import { getItemDisplayName, getItemDurability } from './formatter.js';
 
@@ -98,7 +98,7 @@ export const getItemMaterialTier = (item) => {
 export const getItemRarity = (item) => {
     if (!item) return 999;
 
-    const enchants = item.getComponent('minecraft:enchantable');
+    const enchants = item.getComponent(ItemComponentTypes.Enchantable);
     if (enchants?.getEnchantments?.()?.length > 0) return 4;
 
     return RarityTiers[item.typeId] ?? 5;
@@ -107,7 +107,7 @@ export const getItemRarity = (item) => {
 const getEnchantCount = (item) => {
     if (!item) return 0;
 
-    return item.getComponent('minecraft:enchantable')?.getEnchantments?.()?.length ?? 0;
+    return item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments?.()?.length ?? 0;
 };
 
 export const compareItemsByMode = (a, b, mode) => {
@@ -173,8 +173,8 @@ export const compareItemsByMode = (a, b, mode) => {
     }
 
     if (mode === 'durability') {
-        const hasDurA = !!a.getComponent('minecraft:durability');
-        const hasDurB = !!b.getComponent('minecraft:durability');
+        const hasDurA = !!a.getComponent(ItemComponentTypes.Durability);
+        const hasDurB = !!b.getComponent(ItemComponentTypes.Durability);
         if (hasDurA !== hasDurB) return hasDurA ? -1 : 1;
         if (hasDurA && hasDurB) {
             const da = getItemDurability(a);

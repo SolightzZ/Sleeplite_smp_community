@@ -1,3 +1,5 @@
+import { BlockPermutation, EntityComponentTypes } from '@minecraft/server';
+
 const SPONGE = 'minecraft:sponge';
 const WATER = 'minecraft:water';
 const MAX_DISTANCE = 6;
@@ -52,7 +54,7 @@ const consumeSponge = (container, slot) => {
 
 const absorbWaterWithSponge = (container, slot, block) => {
     if (!consumeSponge(container, slot)) return;
-    block.setType(SPONGE);
+    block.setPermutation(BlockPermutation.resolve(SPONGE));
 };
 
 export const handleSpongeAbsorption = (event) => {
@@ -63,7 +65,7 @@ export const handleSpongeAbsorption = (event) => {
         const player = event.source;
         if (!player || !player.isValid) return;
 
-        const container = player.getComponent('minecraft:inventory')?.container;
+        const container = player.getComponent(EntityComponentTypes.Inventory)?.container;
         if (!container) return;
 
         const slot = getSpongeSlot(player, container);

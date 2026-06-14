@@ -1,3 +1,4 @@
+import { BlockComponentTypes, EntityComponentTypes } from '@minecraft/server';
 import { ColorCodes, INVENTORY_SLOTS } from '../config.js';
 import { applyChessPattern, applyColumnPattern, applyLinePattern } from '../patterns/patterns.js';
 import { isContainerSorted, sortAndMergeItems, writeContainerDiff } from '../utils/container.js';
@@ -25,7 +26,7 @@ export function sortPlayerInventory(player, mode) {
         return { ok: false, msg: `${ColorCodes.red}[x] ผู้เล่นไม่ถูกต้องแล้ว` };
     }
 
-    const inv = player.getComponent('minecraft:inventory')?.container;
+    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!inv) {
         return { ok: false, msg: `${ColorCodes.red}[x] ไม่พบช่องเก็บของ` };
     }
@@ -89,7 +90,7 @@ export function sortBlockContainer(player, mode) {
     }
 
     const block = bv.block;
-    const container = block.getComponent('minecraft:inventory')?.container;
+    const container = block.getComponent(BlockComponentTypes.Inventory)?.container;
     if (!container) {
         return { ok: false, msg: `${ColorCodes.red}[!] บล็อกนี้ไม่มีที่เก็บของ` };
     }

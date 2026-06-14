@@ -13,6 +13,7 @@ export const VeinMiner = (ev) => {
   const stack = ev.itemStack;
 
   if (!player || !player.isValid) return;
+  if (!block || !block.isValid) return;
   if (!player.isSneaking) return;
   if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
 
@@ -42,9 +43,12 @@ export const VeinMiner = (ev) => {
 
   state.playerJobCount.set(player.id, pCount + 1);
 
+  const dim = player.dimension;
+
   state.jobQueue.push({
     player: player,
     playerId: player.id,
+    dimension: dim,
     targetId: targetId,
     dropTypeId: dropId,
     locations: res.locations,

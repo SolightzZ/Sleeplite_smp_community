@@ -1,4 +1,4 @@
-import { ItemStack } from '@minecraft/server';
+import { ItemStack, EntityDamageCause } from '@minecraft/server';
 import { getHead } from './data.js';
 import { posInt, worldName, getKillerName } from './util.js';
 
@@ -22,7 +22,7 @@ export const dropHead = (player, dmg) => {
         const item = new ItemStack(headId, 1);
         item.setLore([`§r§8Killer: §9${killer}`, `§r§8Location: §9${pos.x} ${pos.y} ${pos.z}`, `§r§8Dimension: §9${dimName}`]);
 
-        if (dmg?.cause === 'void') {
+        if (dmg?.cause === EntityDamageCause.void) {
             const minY = dim.heightRange.min + 1;
             if (dim.id === 'minecraft:the_end') {
                 pos.y = 64;

@@ -1,4 +1,4 @@
-import { ItemStack, system } from '@minecraft/server';
+import { ItemStack, system, EntityComponentTypes } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 import { getPlayerById, buildInventoryMap, jobs, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
 import { showMainMenu } from './Menu.js';
@@ -40,7 +40,7 @@ export const removeJobItems = (inv, job) => {
 export const giveDiamond = (player, amount) => {
     if (!player.isValid) return false;
 
-    const inv = player.getComponent('minecraft:inventory')?.container;
+    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!inv) return false;
 
     const invSize = inv.size;
@@ -118,7 +118,7 @@ export function completeJob(player) {
         return;
     }
 
-    const inv = player.getComponent('minecraft:inventory')?.container;
+    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
     if (!inv) return;
     const total = totalDiamond(job);
     const invMap = buildInventoryMap(inv);
@@ -170,7 +170,7 @@ export function showActiveJobForm(player, job, body, total) {
 
         if (!player.isValid) return;
 
-        const inv = player.getComponent('minecraft:inventory')?.container;
+        const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
         if (!inv) return;
         const missing = checkJobItems(inv, job);
 

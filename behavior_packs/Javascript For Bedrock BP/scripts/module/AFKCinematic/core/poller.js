@@ -66,7 +66,7 @@ export function playerLeaveAfk(playerId) {
     }
 }
 
-function setPlayerIdleTime(player, seconds) {
+export function setPlayerIdleTime(player, seconds) {
     try {
         const state = ensureState(player);
         const clamped = Math.max(CONFIG.minIdleSeconds, Math.min(CONFIG.maxIdleSeconds, Math.floor(seconds)));

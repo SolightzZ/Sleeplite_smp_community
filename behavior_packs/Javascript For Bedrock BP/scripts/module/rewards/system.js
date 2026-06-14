@@ -41,7 +41,7 @@ function RewardchatSend(event) {
     const player = event.sender;
     const message = event.message;
 
-    if (!player.hasTag(config.adminTag)) return;
+    if (!player || !player.isValid || !player.hasTag(config.adminTag)) return;
 
     if (message === '!reset-login') {
         event.cancel = true;
