@@ -1,12 +1,6 @@
-import { world } from "@minecraft/server";
 import { flashSpawn } from "../module/flashlight/core/engine.js";
 import { playerSpawnWelcome } from "../plugin/Welcome.js";
-import { runEventHandlers } from "./utils.js";
+import { router } from "./core/index.js";
 
-const handlers = [playerSpawnWelcome, flashSpawn];
-
-world.afterEvents.playerSpawn.subscribe((ev) => {
-  const player = ev.player;
-  if (!player || !player.isValid) return;
-  runEventHandlers("PlayerSpawn", handlers, ev);
-});
+router.on('afterPlayerSpawn', playerSpawnWelcome);
+router.on('afterPlayerSpawn', flashSpawn);

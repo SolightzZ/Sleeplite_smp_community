@@ -1,4 +1,5 @@
 import { ItemTypes, system, world } from '@minecraft/server';
+import { Registry } from '../../router/core/registry.js';
 import { showMainMenu } from './Menu.js';
 
 export const jobs = [];
@@ -135,11 +136,8 @@ export const buildInventoryMap = (inv) => {
 };
 
 export const getPlayerById = (id) => {
-    const players = world.getAllPlayers();
-    for (const player of players) {
-        if (player.id === id) return player;
-    }
-    return null;
+    // ใช้ Registry ในการดึงข้อมูลผู้เล่นแบบ O(1) เพื่อลดภาระการประมวลผลแทนการวนลูปแบบ O(N)
+    return Registry.get(id)?.player ?? null;
 };
 
 export const totalDiamond = (job) => {

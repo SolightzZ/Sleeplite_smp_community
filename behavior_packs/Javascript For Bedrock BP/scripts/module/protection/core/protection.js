@@ -1,4 +1,5 @@
 import { world } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { Colors, Config, halfZoneSize } from '../config.js';
 import { buildZone, isZoneOverlap, validateZoneCreate } from '../utils/validation.js';
@@ -89,7 +90,8 @@ export const manageMembers = async (player) => {
         const zone = zoneDatabase.zones[player.name];
         if (!zone) return player.sendMessage(`[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
 
-        const allPlayers = world.getAllPlayers();
+        // ดึงรายชื่อผู้เล่นออนไลน์จาก Registry เพื่อลดภาระการทำงานแบบ O(N)
+        const allPlayers = Registry.getPlayers();
         const otherPlayerNames = [];
         for (const onlinePlayer of allPlayers) {
             if (onlinePlayer.name !== player.name) otherPlayerNames.push(onlinePlayer.name);
@@ -194,7 +196,8 @@ export const adminDeleteZone = async (player) => {
         clearBorderVisuals(owner);
         player.sendMessage(`${Colors.Warning}[/] ลบโพรเทคของ ${owner} แล้ว`);
 
-        for (const onlinePlayer of world.getAllPlayers()) {
+        // ค้นหาผู้เล่นออนไลน์เพื่อแจ้งเตือนผ่าน Registry
+        for (const onlinePlayer of Registry.getPlayers()) {
             if (onlinePlayer.name === owner) {
                 onlinePlayer.sendMessage(`§cผู้ดูแลระบบลบโพรเทคของคุณแล้ว`);
                 break;

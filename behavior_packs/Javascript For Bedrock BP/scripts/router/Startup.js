@@ -8,7 +8,7 @@ import { RegisterRewards } from '../module/rewards/system.js';
 import { registerCustomCommandTakeASeat } from '../module/simpleSit/commands/sit-command.js';
 import { initCleanup } from '../module/simpleSit/core/cleanup.js';
 import { ZoomCommand } from '../module/zoom/Command.js';
-import { runEventHandlers } from './utils.js';
+import { runEventHandlers } from './core/utils.js';
 
 system.run(() => {
     zoneDatabase.load();
@@ -25,6 +25,6 @@ const startupHandlers = [
     ZoomCommand,
 ];
 
-system.beforeEvents.startup.subscribe((init) => {
-    runEventHandlers('Startup', startupHandlers, init);
+system.beforeEvents.startup.subscribe((event) => {
+    runEventHandlers('Startup', startupHandlers, event);
 });

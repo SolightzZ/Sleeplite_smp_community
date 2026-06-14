@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 import { ITEM, PREDEFINED_RANKS } from '../constants/constants.js';
 import { refreshNameTag } from '../core/nametag.js';
@@ -154,7 +154,8 @@ const showActions = (admin, target) => {
 export const showMainMenu = (admin) => {
     if (!isValidPlayer(admin)) return;
 
-    const players = world.getAllPlayers();
+    // คัดลอกอาร์เรย์ผู้เล่นเพื่อความปลอดภัยจากฝั่ง Asynchronous ของ UI (เนื่องจาก Registry ทำการแชร์บัฟเฟอร์ร่วมกัน)
+    const players = [...Registry.getPlayers()];
     const form = new ActionFormData().title('§lระบบจัดการยศ').body('§7เลือกผู้เล่นที่ต้องการจัดการ:');
 
     for (let i = 0; i < players.length; i++) {

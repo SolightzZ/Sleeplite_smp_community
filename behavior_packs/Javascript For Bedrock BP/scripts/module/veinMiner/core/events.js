@@ -7,10 +7,10 @@ import { scanVein } from "./scanner.js";
 import { getEnchantData } from "../utils/enchant.js";
 import { processVeinJobs } from "./processor.js";
 
-export const VeinMiner = (ev) => {
-  const player = ev.player;
-  const block = ev.block;
-  const stack = ev.itemStack;
+export const VeinMiner = (event) => {
+  const player = event.player;
+  const block = event.block;
+  const stack = event.itemStack;
 
   if (!player || !player.isValid) return;
   if (!block || !block.isValid) return;

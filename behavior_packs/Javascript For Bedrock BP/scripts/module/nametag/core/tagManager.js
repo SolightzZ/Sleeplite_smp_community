@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 import { PREFIX_RANK, PREFIX_ACTIVE, RANK_PREFIX_LENGTH, ACTIVE_PREFIX_LENGTH } from '../constants/constants.js';
 import { isValidPlayer } from '../utils/player.js';
 
@@ -49,7 +49,8 @@ export const setActiveRank = (player, rankName) => {
 
 export const getAllServerRanks = () => {
     const ranks = new Set();
-    const players = world.getAllPlayers();
+    // ดึงผู้เล่นออนไลน์ผ่าน Registry เพื่อป้องกันการใช้หน่วยความจำและการทำงานแบบ O(N)
+    const players = Registry.getPlayers();
 
     for (const currentPlayer of players) {
         const tags = currentPlayer.getTags();

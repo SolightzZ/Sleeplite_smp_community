@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 
 import { CONFIG } from '../config.js';
 import { cloneVec3 } from '../utils/math.js';
@@ -9,7 +9,8 @@ import { playerStates } from './state.js';
 
 export function handleIdlePoller() {
     try {
-        const players = world.getAllPlayers();
+        // ใช้ข้อมูลรายชื่อผู้เล่นที่แคชไว้เพื่อลดการโอเวอร์เฮดของระบบแบบ O(N)
+        const players = Registry.getPlayers();
 
         for (const player of players) {
             if (!player.isValid) continue;

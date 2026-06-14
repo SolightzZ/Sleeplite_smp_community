@@ -1,11 +1,12 @@
-import { world } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 import { TICK_RECONCILE, TICK_TARGET_LATENCY, BATCH_MIN_SIZE, BATCH_MAX_SIZE } from '../config.js';
 import { processQueue, queueCursor } from './queue.js';
 import { playerLights, activeHolders } from './state.js';
 import { placeLightForPlayer, removeLightBlock, isFlashlightHeld } from './light-manager.js';
 
 function syncPlayerQueue() {
-    const allPlayers = world.getAllPlayers();
+    // ดึงผู้เล่นผ่านแคช Registry แทนการเรียก world.getAllPlayers() ของแรพเปอร์หลักเพื่อลดการเกิด GC spike
+    const allPlayers = Registry.getPlayers();
     const liveIds = new Set();
 
     for (const player of allPlayers) {

@@ -1,21 +1,11 @@
-import { world } from '@minecraft/server';
 import { touch } from '../module/endPortalFrame/play.js';
 import { onBlockEdit } from '../module/protection/core/events.js';
 import { handleRepairAnvil } from '../plugin/AnvilRepair.js';
 import { openDoor } from '../plugin/OpenDoor.js';
-import { runEventHandlers, runEventHandlersWithCancel } from './utils.js';
+import { router } from './core/index.js';
 
-const beforeHandlers = [touch, onBlockEdit, handleRepairAnvil];
-const afterHandlers = [openDoor];
+router.on('beforePlayerInteractBlock', touch);
+router.on('beforePlayerInteractBlock', onBlockEdit);
+router.on('beforePlayerInteractBlock', handleRepairAnvil);
 
-world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
-   const player = ev.player;
-   if (!player?.isValid) return;
-   runEventHandlersWithCancel('PlayerInteractWithBlock', beforeHandlers, ev);
-});
-
-world.afterEvents.playerInteractWithBlock.subscribe((ev) => {
-   const player = ev.player;
-   if (!player?.isValid) return;
-   runEventHandlers('PlayerInteractWithBlock', afterHandlers, ev);
-});
+router.on('afterPlayerInteractBlock', openDoor);

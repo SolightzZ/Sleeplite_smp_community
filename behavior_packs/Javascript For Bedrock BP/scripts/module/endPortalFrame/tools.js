@@ -1,4 +1,4 @@
-import { world } from '@minecraft/server';
+import { Registry } from '../../router/core/registry.js';
 import { zone } from './rules.js';
 
 export const count = (block) => {
@@ -8,7 +8,8 @@ export const count = (block) => {
     const dimId = block.dimension.id;
     const zoneSq = zone * zone;
 
-    const players = world.getAllPlayers();
+    // ดึงผู้เล่นผ่านแคช Registry เพื่อลดการทำงานแบบ O(N)
+    const players = Registry.getPlayers();
     let nearbyCount = 0;
 
     for (const player of players) {

@@ -1,7 +1,8 @@
-import { system, world } from '@minecraft/server';
+import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 import { getPlayerById, jobs, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
 import { showMainMenu } from './Menu.js';
+import { Registry } from '../../router/core/registry.js';
 
 const JOB_DURATION_TICKS = 20 * 60 * 20;
 const TIMER_INTERVAL_TICKS = 20;
@@ -13,17 +14,6 @@ const stopTimerLoopIfIdle = () => {
         system.clearRun(timerLoopId);
         timerLoopId = null;
     }
-};
-
-const buildPlayerMap = () => {
-    const map = new Map();
-    const players = world.getAllPlayers();
-
-    for (const player of players) {
-        map.set(player.id, player);
-    }
-
-    return map;
 };
 
 const startTimer = (riderId, jobId_, savedStartTick) => {
@@ -44,8 +34,6 @@ const processTimers = () => {
         return;
     }
 
-    const playerMap = buildPlayerMap();
-
     for (const [riderId, data] of timerMap) {
         if (!playerJobMap.has(riderId)) {
             stopTimer(riderId);
@@ -60,7 +48,8 @@ const processTimers = () => {
             continue;
         }
 
-        const rider = playerMap.get(riderId);
+        // ดึงข้อมูลผู้เล่นแบบ O(1) จาก Registry
+        const rider = Registry.get(riderId)?.player;
         if (!rider || !rider.isValid) continue;
 
         const secs = Math.ceil(remaining / 20);

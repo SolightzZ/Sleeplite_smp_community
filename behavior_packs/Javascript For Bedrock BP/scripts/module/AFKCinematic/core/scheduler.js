@@ -1,4 +1,5 @@
-import { system, world, HudVisibility } from '@minecraft/server';
+import { system, HudVisibility } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 
 import { CONFIG } from '../config.js';
 import { getCameraFrame } from './afk.js';
@@ -8,7 +9,8 @@ import { playerStates } from './state.js';
 
 function getPlayerById(playerId) {
     try {
-        return world.getAllPlayers().find((p) => p.id === playerId);
+        // ค้นหาผู้เล่นด้วย ID แบบ O(1) จากระบบลงทะเบียน เพื่อหลีกเลี่ยงการสแกนหาแบบ O(N)
+        return Registry.get(playerId)?.player;
     } catch {
         return undefined;
     }

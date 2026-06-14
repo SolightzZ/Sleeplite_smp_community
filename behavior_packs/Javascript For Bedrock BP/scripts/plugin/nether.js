@@ -7,59 +7,59 @@ const MSG_USAGE = '§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ต�
 const MSG_UNSUPPORTED = '§eไม่สามารถคำนวณได้ในมิตินี้';
 
 const sendCalculated = (player, x, z) => {
-    if (!player.isValid) return;
+   if (!player.isValid) return;
 
-    const dimId = player.dimension.id;
-    const rx = Math.round(x);
-    const rz = Math.round(z);
+   const dimId = player.dimension.id;
+   const rx = Math.round(x);
+   const rz = Math.round(z);
 
-    let msg;
-    if (dimId === DIM_OVERWORLD) {
-        const nx = Math.floor(x * 0.125);
-        const nz = Math.floor(z * 0.125);
-        msg = `${PREFIX}§aOverworld: <x${rx}> <z${rz}> §cNether: <x${nx}> <z${nz}>`;
-    } else if (dimId === DIM_NETHER) {
-        const ox = Math.floor(x * 8);
-        const oz = Math.floor(z * 8);
-        msg = `${PREFIX}§cNether: X=${rx}, Z=${rz} §aOverworld: X=${ox}, Z=${oz}`;
-    } else {
-        msg = MSG_UNSUPPORTED;
-    }
+   let msg;
+   if (dimId === DIM_OVERWORLD) {
+      const nx = Math.floor(x * 0.125);
+      const nz = Math.floor(z * 0.125);
+      msg = `${PREFIX}§aOverworld: <x${rx}> <z${rz}> §cNether: <x${nx}> <z${nz}>`;
+   } else if (dimId === DIM_NETHER) {
+      const ox = Math.floor(x * 8);
+      const oz = Math.floor(z * 8);
+      msg = `${PREFIX}§cNether: X=${rx}, Z=${rz} §aOverworld: X=${ox}, Z=${oz}`;
+   } else {
+      msg = MSG_UNSUPPORTED;
+   }
 
-    player.sendMessage(msg);
+   player.sendMessage(msg);
 };
 
-export const xz_main = (ev) => {
-    const message = ev.message;
-    if (!message.startsWith('!xz')) return;
+export const xz_main = (event) => {
+   const message = event.message;
+   if (!message.startsWith('!xz')) return;
 
-    const player = ev.sender;
-    if (!player || !player.isValid) return;
+   const player = event.sender;
+   if (!player || !player.isValid) return;
 
-    ev.cancel = true;
+   event.cancel = true;
 
-    const trimmed = message.trim();
-    const sp1 = trimmed.indexOf(' ');
+   const trimmed = message.trim();
+   const sp1 = trimmed.indexOf(' ');
 
-    if (sp1 === -1) {
-        const loc = player.location;
-        sendCalculated(player, loc.x, loc.z);
-        return;
-    }
+   if (sp1 === -1) {
+      const loc = player.location;
+      sendCalculated(player, loc.x, loc.z);
+      return;
+   }
 
-    const sp2 = trimmed.indexOf(' ', sp1 + 1);
-    if (sp2 === -1) {
-        player.sendMessage(MSG_USAGE);
-        return;
-    }
+   const sp2 = trimmed.indexOf(' ', sp1 + 1);
+   if (sp2 === -1) {
+      player.sendMessage(MSG_USAGE);
+      return;
+   }
 
-    const argX = parseFloat(trimmed.slice(sp1 + 1, sp2));
-    const argZ = parseFloat(trimmed.slice(sp2 + 1));
+   const argX = parseFloat(trimmed.slice(sp1 + 1, sp2));
+   const argZ = parseFloat(trimmed.slice(sp2 + 1));
 
-    if (isNaN(argX) || isNaN(argZ)) {
-        player.sendMessage(MSG_INVALID);
-        return;
-    }
+   if (isNaN(argX) || isNaN(argZ)) {
+      player.sendMessage(MSG_INVALID);
+      return;
+   }
 
-    sendCalculated(player, argX, argZ);
+   sendCalculated(player, argX, argZ);
 };

@@ -26,11 +26,11 @@ function showiconstest(player, title, message, icon) {
     });
 }
 
-export const touch = (ev) => {
+export const touch = (event) => {
     try {
-        const player = ev.player;
-        const block = ev.block;
-        const item = ev.itemStack;
+        const player = event.player;
+        const block = event.block;
+        const item = event.itemStack;
 
         if (!player || !player.isValid) return;
         if (!block || !block.isValid) return;
@@ -41,7 +41,7 @@ export const touch = (ev) => {
 
         const friends = count(block);
         if (friends < team) {
-            ev.cancel = true;
+            event.cancel = true;
             say(player, `§cNeed more friends! (${friends}/${team}) within ${zone} blocks.`);
             return;
         }
@@ -50,7 +50,7 @@ export const touch = (ev) => {
         const name = fix(gift.id);
 
         if (!see(player, gift.id)) {
-            ev.cancel = true;
+            event.cancel = true;
             const itemData = shop.find((i) => i.id === gift.id);
             sound(player, 'random.click');
             showiconstest(player, 'Portal Frame', `${name}`, itemData?.icon);

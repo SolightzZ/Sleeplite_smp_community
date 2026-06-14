@@ -1,6 +1,7 @@
 // ==========================
 // Core / System
 // ==========================
+import './router/core/index.js';
 import './router/Startup.js';
 import './router/System.RunInterval.js';
 

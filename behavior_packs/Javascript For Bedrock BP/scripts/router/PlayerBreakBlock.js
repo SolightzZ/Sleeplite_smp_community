@@ -1,23 +1,11 @@
-import { world } from "@minecraft/server";
 import { TreeCapitatorBreakBlock } from "../module/treeCapitator/core/events.js";
 import { VeinMiner } from "../module/veinMiner/core/events.js";
 import { handleAutoReplant } from "../plugin/AutoReplant.js";
 import { onBlockEdit } from "../module/protection/core/events.js";
-import { runEventHandlersWithCancel } from "./utils.js";
+import { router } from "./core/index.js";
 
-const beforeHandlers = [onBlockEdit, VeinMiner];
-const afterHandlers = [handleAutoReplant, TreeCapitatorBreakBlock];
+router.on('beforePlayerBreakBlock', onBlockEdit);
+router.on('beforePlayerBreakBlock', VeinMiner);
 
-world.beforeEvents.playerBreakBlock.subscribe((ev) => {
-  const player = ev.player;
-  const block = ev.block;
-  if (!player || !player.isValid || !block) return;
-  runEventHandlersWithCancel("PlayerBreakBlock", beforeHandlers, ev);
-});
-
-world.afterEvents.playerBreakBlock.subscribe((ev) => {
-  const player = ev.player;
-  const block = ev.block;
-  if (!player || !player.isValid || !block) return;
-  runEventHandlersWithCancel("PlayerBreakBlock", afterHandlers, ev);
-});
+router.on('afterPlayerBreakBlock', handleAutoReplant);
+router.on('afterPlayerBreakBlock', TreeCapitatorBreakBlock);

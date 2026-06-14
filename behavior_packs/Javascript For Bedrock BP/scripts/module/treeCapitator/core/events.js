@@ -7,10 +7,10 @@ import { getBlockSafe } from "../utils/block.js";
 import { detectTree } from "./detector.js";
 import { processJobs } from "./processor.js";
 
-export const TreeCapitatorBreakBlock = (ev) => {
-  const player = ev.player;
-  const block = ev.block;
-  const perm = ev.brokenBlockPermutation;
+export const TreeCapitatorBreakBlock = (event) => {
+  const player = event.player;
+  const block = event.block;
+  const perm = event.brokenBlockPermutation;
 
   if (!player || !player.isValid) return;
   if (!block || !block.isValid || !perm) return;

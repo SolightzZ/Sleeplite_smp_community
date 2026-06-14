@@ -1,7 +1,8 @@
-import { system, world } from '@minecraft/server';
+import { system } from '@minecraft/server';
 import { MagnetConfig } from '../config.js';
 import { pullItemsToPlayer } from './puller.js';
 import { clearMagnetRunId, countMagnetUsers, getMagnetRunId, getMagnetUserIds, hasMagnetRunId, removeMagnetUser, setMagnetRunId } from './state.js';
+import { Registry } from '../../../router/core/registry.js';
 
 export const stopMagnetLoop = () => {
     if (hasMagnetRunId()) {
@@ -20,18 +21,12 @@ export const startMagnetLoop = () => {
                 return;
             }
 
-            const allPlayers = world.getAllPlayers();
-            const playerMap = new Map();
-
-            for (const currentPlayer of allPlayers) {
-                playerMap.set(currentPlayer.id, currentPlayer);
-            }
-
             const ids = getMagnetUserIds();
             const toRemove = [];
 
             for (const playerId of ids) {
-                const player = playerMap.get(playerId);
+                // ค้นหาผู้เล่นจาก Registry ด้วย ID แบบ O(1) เพื่อหลีกเลี่ยงภาระประมวลผลและการจัดสรร Map
+                const player = Registry.get(playerId)?.player;
 
                 if (player && player.isValid) {
                     pullItemsToPlayer(player);

@@ -1,4 +1,5 @@
 import { system, world } from '@minecraft/server';
+import { Registry } from '../../../router/core/registry.js';
 import { Config } from '../config.js';
 import { buildBorderPoints } from '../utils/helpers.js';
 import { zoneDatabase } from './database.js';
@@ -32,8 +33,11 @@ const renderBorderParticles = () => {
     try {
         if (activeBorders.size === 0) return;
 
-        const players = world.getAllPlayers();
-        const onlineNames = new Set(players.map((player) => player.name));
+        // ใช้ Registry ในการเช็คชื่อผู้เล่นที่ออนไลน์ เพื่อลดการทำงานแบบ O(N) ของเครื่องยนต์หลัก
+        const onlineNames = new Set();
+        for (const entry of Registry.getEntries()) {
+            onlineNames.add(entry.player.name);
+        }
 
         const expiredNames = [];
 

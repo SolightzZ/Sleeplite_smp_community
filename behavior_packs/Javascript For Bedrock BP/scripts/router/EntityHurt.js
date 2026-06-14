@@ -1,9 +1,4 @@
-import { world } from "@minecraft/server";
 import { onEntityHurt } from "../module/protection/core/events.js";
-import { runEventHandlers } from "./utils.js";
+import { router } from "./core/index.js";
 
-world.beforeEvents.entityHurt.subscribe((ev) => {
-  const hurtEntity = ev.hurtEntity;
-  if (!hurtEntity || !hurtEntity.isValid) return;
-  runEventHandlers("EntityHurt", [onEntityHurt], ev);
-});
+router.on('beforeEntityHurt', onEntityHurt);

@@ -1,14 +1,10 @@
-import { world } from "@minecraft/server";
-import { helpmain } from "../help/help.js";
-import { xz_main } from "../plugin/nether.js";
-import { RewardchatSend } from "../module/rewards/system.js";
-import { onChat } from "../module/protection/core/events.js";
-import { runEventHandlersWithCancel } from "./utils.js";
+import { helpmain } from '../help/help.js';
+import { xz_main } from '../plugin/nether.js';
+import { RewardchatSend } from '../module/rewards/system.js';
+import { onChat } from '../module/protection/core/events.js';
+import { router } from './core/index.js';
 
-const handlers = [helpmain, xz_main, RewardchatSend, onChat];
-
-world.beforeEvents.chatSend.subscribe((ev) => {
-  const sender = ev.sender;
-  if (!sender || !sender.isValid) return;
-  runEventHandlersWithCancel("ChatSend", handlers, ev);
-});
+router.on('beforeChatSend', helpmain);
+router.on('beforeChatSend', xz_main);
+router.on('beforeChatSend', RewardchatSend);
+router.on('beforeChatSend', onChat);
