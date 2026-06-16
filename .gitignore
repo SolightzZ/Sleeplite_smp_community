@@ -7,10 +7,9 @@ world_icon.jpeg
 mc.log
 
 
-# AI
+# packs
 .agents
 SKILL.md
-README.md
 skills
 ARCHITECTURE.md
 CODEX.md
@@ -24,9 +23,6 @@ WORKFLOW.md
 .claude
 skills/
 node_modules
-
-
-# packs
 skills-lock.json
 Analyze.md
 FLOW.md
