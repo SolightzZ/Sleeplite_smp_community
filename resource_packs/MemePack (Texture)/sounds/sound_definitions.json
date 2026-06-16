@@ -1,94 +1,99 @@
 {
-  "mob.girl.idle": {
-    "category": "neutral",
-    "sounds": ["sounds/mob/human/idle"],
-    "subtitle": "subtitles.entity.girl.idle"
-  },
-  "mob.girl.idle_night": {
-    "category": "neutral",
-    "sounds": ["sounds/mob/human/idle"],
-    "subtitle": "subtitles.entity.girl.idle_night"
-  },
-  "mob.girl.hit": {
-    "category": "neutral",
-    "sounds": ["sounds/mob/human/hit"],
-    "subtitle": "subtitles.entity.girl.hit"
-  },
-  "mob.girl.death": {
-    "category": "neutral",
-    "sounds": ["sounds/mob/human/death"],
-    "subtitle": "subtitles.entity.girl.die"
-  },
-  "mob.girl.attack": {
-    "__use_legacy_max_distance": "true",
-    "category": "neutral",
-    "sounds": ["sounds/mob/human/hit"],
-    "subtitle": "subtitles.entity.girl.attack"
-  },
-  "mob.human.hit": {
-    "category": "neutral",
-    "sounds": ["sounds/mob/human/hit"],
-    "subtitle": "subtitles.entity.human.hit"
-  },
-  "player.death": {
-    "category": "ui",
-    "sounds": [
-        "sounds/mob/ooh/ooh1",
-        "sounds/player/amongus",
-        "sounds/player/bass",
-        "sounds/player/beans",
-        "sounds/player/beatbox",
-        "sounds/player/beebee",
-        "sounds/player/bell",
-        "sounds/player/bonk",
-        "sounds/player/boom",
-        "sounds/player/brb",
-        "sounds/player/candy",
-        "sounds/player/daddy",
-        "sounds/player/dial",
-        "sounds/player/disconnect",
-        "sounds/player/dun",
-        "sounds/player/error",
-        "sounds/player/errorspam",
-        "sounds/player/failed",
-        "sounds/player/fart",
-        "sounds/player/fbi",
-        "sounds/player/flute",
-        "sounds/player/fortnite",
-        "sounds/player/goofy",
-        "sounds/player/gta",
-        "sounds/player/guitar",
-        "sounds/player/highpitch",
-        "sounds/player/illuminati",
-        "sounds/player/mario",
-        "sounds/player/mutahar",
-        "sounds/player/no",
-        "sounds/player/oof",
-        "sounds/player/outta",
-        "sounds/player/pac",
-        "sounds/player/pam",
-        "sounds/player/regular",
-        "sounds/player/rimshot",
-        "sounds/player/role",
-        "sounds/player/scream",
-        "sounds/player/slumber",
-        "sounds/player/smash",
-        "sounds/player/smoking",
-        "sounds/player/sonic",
-        "sounds/player/spider",
-        "sounds/player/squish",
-        "sounds/player/subaluwa",
-        "sounds/player/sus",
-        "sounds/player/terraria",
-        "sounds/player/triggered",
-        "sounds/player/trumpet",
-        "sounds/player/warzone",
-        "sounds/player/wilhelm",
-        "sounds/player/windows",
-        "sounds/player/women",
-        "sounds/player/wow",
-        "sounds/player/yoda"
-    ],
-    "subtitle": "subtitles.entity.player.dies"
-  }
+   "mob.girl.idle": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/human/idle"],
+      "subtitle": "subtitles.entity.girl.idle"
+   },
+   "mob.girl.idle_night": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/human/idle"],
+      "subtitle": "subtitles.entity.girl.idle_night"
+   },
+   "mob.girl.hit": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/human/hit"],
+      "subtitle": "subtitles.entity.girl.hit"
+   },
+   "mob.girl.death": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/human/death"],
+      "subtitle": "subtitles.entity.girl.die"
+   },
+   "mob.girl.attack": {
+      "__use_legacy_max_distance": "true",
+      "category": "neutral",
+      "sounds": ["sounds/mob/human/hit"],
+      "subtitle": "subtitles.entity.girl.attack"
+   },
+   "mob.human.hit": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/human/hit"],
+      "subtitle": "subtitles.entity.human.hit"
+   },
+   "mob.roblox_user.hurt": {
+      "category": "neutral",
+      "sounds": ["sounds/mob/ooh/ooh1"],
+      "subtitle": "subtitles.entity.roblox_user.hurt"
+   },
+   "player.death": {
+      "category": "ui",
+      "max_distance": 32,
+      "sounds": [
+         "sounds/player/amongus",
+         "sounds/player/bass",
+         "sounds/player/beans",
+         "sounds/player/beatbox",
+         "sounds/player/beebee",
+         "sounds/player/bell",
+         "sounds/player/bonk",
+         "sounds/player/boom",
+         "sounds/player/brb",
+         "sounds/player/candy",
+         "sounds/player/daddy",
+         "sounds/player/dial",
+         "sounds/player/disconnect",
+         "sounds/player/dun",
+         "sounds/player/error",
+         "sounds/player/errorspam",
+         "sounds/player/failed",
+         "sounds/player/fart",
+         "sounds/player/fbi",
+         "sounds/player/flute",
+         "sounds/player/fortnite",
+         "sounds/player/goofy",
+         "sounds/player/gta",
+         "sounds/player/guitar",
+         "sounds/player/highpitch",
+         "sounds/player/illuminati",
+         "sounds/player/mario",
+         "sounds/player/mutahar",
+         "sounds/player/no",
+         "sounds/player/oof",
+         "sounds/player/outta",
+         "sounds/player/pac",
+         "sounds/player/pam",
+         "sounds/player/regular",
+         "sounds/player/rimshot",
+         "sounds/player/role",
+         "sounds/player/scream",
+         "sounds/player/slumber",
+         "sounds/player/smash",
+         "sounds/player/smoking",
+         "sounds/player/sonic",
+         "sounds/player/spider",
+         "sounds/player/squish",
+         "sounds/player/subaluwa",
+         "sounds/player/sus",
+         "sounds/player/terraria",
+         "sounds/player/triggered",
+         "sounds/player/trumpet",
+         "sounds/player/warzone",
+         "sounds/player/wilhelm",
+         "sounds/player/windows",
+         "sounds/player/women",
+         "sounds/player/wow",
+         "sounds/player/yoda"
+      ],
+      "subtitle": "subtitles.entity.player.dies"
+   }
 }

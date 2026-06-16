@@ -2,6 +2,7 @@ import { EntityComponentTypes } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { amountMap, countItem, createJobData, buildInventoryMap, ITEM_IDS, jobs, selectedMap, showUI } from './Job.js';
 import { showMainMenu } from './Menu.js';
+import { addSound } from '../../plugin/utils.js';
 
 export const getIcon = (typeId) => {
     return ITEM_IDS.has(typeId) ? `textures/items/${typeId.replace('minecraft:', '')}` : 'textures/ui/icon_none';
@@ -22,6 +23,7 @@ export const searchBlock = (player) => {
     const invMap = buildInventoryMap(inv);
 
     if (invMap.size === 0) {
+        addSound(player, 'random.fizz');
         player.sendMessage('[Job] ไม่พบไอเท็มในคลัง');
         createJob(player);
         return;
@@ -53,6 +55,7 @@ export const searchBlock = (player) => {
 
     showUI(player, form, (res) => {
         if (res.selection === 0) {
+            addSound(player, 'random.chestclosed');
             createJob(player);
             return;
         }
@@ -66,12 +69,14 @@ export const searchBlock = (player) => {
         for (let i = 0; i < slen; i++) list.push(selectedList[i]);
 
         if (list.length >= 5) {
+            addSound(player, 'block.false_permissions');
             if (player.isValid) player.sendMessage('[Job] เลือกได้สูงสุด 5 ไอเท็ม');
             searchBlock(player);
             return;
         }
 
         if ((invMap.get(chosen) ?? 0) === 0) {
+            addSound(player, 'random.fizz');
             if (player.isValid) player.sendMessage('[Job] คุณไม่มีไอเท็มนี้');
             searchBlock(player);
             return;
@@ -86,6 +91,7 @@ export const searchBlock = (player) => {
         }
 
         if (isDuplicate) {
+            addSound(player, 'random.fizz');
             if (player.isValid) player.sendMessage('[Job] คุณได้เลือกไอเท็มนี้ไปแล้ว');
             searchBlock(player);
             return;
@@ -109,6 +115,7 @@ export function createJob(player) {
     }
 
     if (activeJobs.length >= 5) {
+        addSound(player, 'block.false_permissions');
         player.sendMessage('[Job] จำนวนงานสูงสุดที่สร้างได้คือ 5 งาน');
         showMainMenu(player);
         return;
@@ -143,9 +150,11 @@ export function createJob(player) {
     showUI(player, form, (res) => {
         if (!player.isValid) return;
         if (res.selection === 0) {
+            addSound(player, 'random.chestopen');
             searchBlock(player);
         } else if (res.selection === nextIndex) {
             if (selected.length === 0) {
+                addSound(player, 'random.fizz');
                 player.sendMessage('[Job] กรุณาเลือกอย่างน้อย 1 ไอเท็ม');
                 createJob(player);
                 return;
@@ -164,6 +173,7 @@ export function createJob(player) {
             }
 
             if (missing) {
+                addSound(player, 'random.fizz');
                 player.sendMessage(`[Job] ไม่พบไอเท็มในคลังแล้ว: ${missing.replace('minecraft:', '')}`);
 
                 const filtered = [];
@@ -175,10 +185,12 @@ export function createJob(player) {
                 return;
             }
 
+            addSound(player, 'ui.stonecutter.take_result');
             openAmountForm(player);
         } else if (res.selection === backIndex) {
             selectedMap.delete(player.id);
             amountMap.delete(player.id);
+            addSound(player, 'block.barrel.close');
             showMainMenu(player);
         } else if (res.selection >= 1 && res.selection < nextIndex) {
             const filtered = [];
@@ -243,6 +255,7 @@ export const openAmountForm = (player) => {
         }
 
         amountMap.set(player.id, newAmounts);
+        addSound(player, 'ui.stonecutter.take_result');
         openConfirmForm(player);
     });
 };
@@ -281,12 +294,14 @@ export const openConfirmForm = (player) => {
     showUI(player, form, (res) => {
         if (!player.isValid) return;
         if (res.selection === 1) {
+            addSound(player, 'random.orb');
             openAmountForm(player);
             return;
         }
         if (res.selection === 2) {
             selectedMap.delete(player.id);
             amountMap.delete(player.id);
+            addSound(player, 'vault.deactivate');
             showMainMenu(player);
             return;
         }
@@ -296,6 +311,7 @@ export const openConfirmForm = (player) => {
         const haveDiam2 = countItem(inv2, 'minecraft:diamond');
 
         if (haveDiam2 < total) {
+            addSound(player, 'block.false_permissions');
             const warnForm = new ActionFormData();
             warnForm.title('เพชรไม่เพียงพอ');
             warnForm.body(`ต้องการ: ${total} เพชร\n` + `มีอยู่: ${haveDiam2} เพชร\n` + `ขาดอีก: ${total - haveDiam2} เพชร`);
@@ -308,6 +324,7 @@ export const openConfirmForm = (player) => {
                 else {
                     selectedMap.delete(player.id);
                     amountMap.delete(player.id);
+                    addSound(player, 'vault.deactivate');
                     showMainMenu(player);
                 }
             });
@@ -349,6 +366,8 @@ export const openConfirmForm = (player) => {
         });
         selectedMap.delete(player.id);
         amountMap.delete(player.id);
+
+        addSound(player, 'random.anvil_use');
         player.sendMessage(`[Job] สร้างคำสั่งจัดส่งสำเร็จแล้ว ระบบได้หัก ${total} เพชร`);
     });
 };

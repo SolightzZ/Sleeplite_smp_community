@@ -1,26 +1,26 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:cam"
-    },
-    "tags": ["avanced"],
-    "pattern": [" # ", "#i#", " # "],
-    "key": {
-      "#": {
-        "item": "minecraft:resin_brick"
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:cam"
       },
-      "i": {
-        "item": "minecraft:iron_ingot"
-      }
-    },
-    "result": {
-      "item": "addon:cam"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:iron_ingot"
-      }
-    ]
-  }
+      "tags": ["avanced"],
+      "pattern": [" # ", "#i#", " # "],
+      "key": {
+         "#": {
+            "item": "minecraft:resin_brick"
+         },
+         "i": {
+            "item": "minecraft:iron_ingot"
+         }
+      },
+      "result": {
+         "item": "addon:cam"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:iron_ingot"
+         }
+      ]
+   }
 }

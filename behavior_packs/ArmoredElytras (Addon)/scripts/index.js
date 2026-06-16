@@ -1,1 +1,1 @@
-import "./elytra/system";
+import './elytra/system';

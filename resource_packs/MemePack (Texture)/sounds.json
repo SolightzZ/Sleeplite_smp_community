@@ -294,15 +294,15 @@
                "death":"mob.human.hit"
             }
          },
-         "meme:roblox_user":{
-           "volume": 1.0,
-           "pitch": [ 0.8, 1.2 ],
-            "events":{
-               "death.to.zombie":"player.death",
-               "hurt":"player.death",
-               "death":"player.death"
-            }
-         },
+          "meme:roblox_user":{
+            "volume": 1.0,
+            "pitch": [ 0.8, 1.2 ],
+             "events":{
+                "death.to.zombie":"player.death",
+                "hurt":"mob.roblox_user.hurt",
+                "death":"player.death"
+             }
+          },
          "meme:woodweaver":{
            "volume": 1.0,
            "pitch": [ 0.8, 1.2 ],

@@ -78,7 +78,7 @@ export const getItemCategory = (item) => {
     const id = item.typeId.toLowerCase();
 
     for (const [keyword, category] of CATEGORY_KEYWORDS) {
-        if (id.includes(keyword)) return category;
+        if (new RegExp(`\\b${keyword}\\b`).test(id)) return category;
     }
 
     return ItemCategories.misc;
@@ -89,7 +89,7 @@ export const getItemMaterialTier = (item) => {
 
     const id = item.typeId.toLowerCase();
     for (const [keyword, tier] of MATERIAL_TIER) {
-        if (id.includes(keyword)) return tier;
+        if (new RegExp(`\\b${keyword}\\b`).test(id)) return tier;
     }
 
     return 99;

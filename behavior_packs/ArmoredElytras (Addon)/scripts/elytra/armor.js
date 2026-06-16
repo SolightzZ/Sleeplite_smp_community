@@ -1,172 +1,196 @@
+const _0x40be27 = _0x1f9b;
+function _0x1f9b(_0x4eb944, _0x4d8176) {
+   _0x4eb944 = _0x4eb944 - 0x155;
+   const _0x16b81a = _0x16b8();
+   let _0x1f9b50 = _0x16b81a[_0x4eb944];
+   return _0x1f9b50;
+}
+(function (_0x33d980, _0x45b3f5) {
+   const _0x26a0b4 = _0x1f9b,
+      _0x33ab68 = _0x33d980();
+   while (!![]) {
+      try {
+         const _0x2cc8d3 =
+            parseInt(_0x26a0b4(0x177)) / 0x1 +
+            -parseInt(_0x26a0b4(0x162)) / 0x2 +
+            -parseInt(_0x26a0b4(0x16d)) / 0x3 +
+            parseInt(_0x26a0b4(0x168)) / 0x4 +
+            (-parseInt(_0x26a0b4(0x161)) / 0x5) * (parseInt(_0x26a0b4(0x16c)) / 0x6) +
+            -parseInt(_0x26a0b4(0x15f)) / 0x7 +
+            (-parseInt(_0x26a0b4(0x170)) / 0x8) * (-parseInt(_0x26a0b4(0x174)) / 0x9);
+         if (_0x2cc8d3 === _0x45b3f5) break;
+         else _0x33ab68['push'](_0x33ab68['shift']());
+      } catch (_0x303df4) {
+         _0x33ab68['push'](_0x33ab68['shift']());
+      }
+   }
+})(_0x16b8, 0x369b5);
 const ARMOR_CAUSES = new Set([
-    'anvil',
-    'blockExplosion',
-    'entityAttack',
-    'entityExplosion',
-    'fire',
-    'maceSmash',
-    'piston',
-    'projectile',
-    'ramAttack',
-    'stalactite',
-    'stalagmite',
-    'suffocation',
-    'thorns',
-]);
-
-const PROTECTION_TYPES = {
-    protection: new Set([
-        'anvil',
-        'blockExplosion',
-        'entityAttack',
-        'entityExplosion',
-        'fire',
-        'fireTick',
-        'maceSmash',
-        'piston',
-        'projectile',
-        'ramAttack',
-        'stalactite',
-        'stalagmite',
-        'suffocation',
-        'thorns',
-    ]),
-
-    fire_protection: new Set(['fire', 'fireTick']),
-
-    blast_protection: new Set(['blockExplosion', 'entityExplosion']),
-
-    projectile_protection: new Set(['projectile']),
+      _0x40be27(0x176),
+      'blockExplosion',
+      _0x40be27(0x173),
+      _0x40be27(0x158),
+      'fire',
+      'maceSmash',
+      'piston',
+      _0x40be27(0x160),
+      'ramAttack',
+      _0x40be27(0x169),
+      _0x40be27(0x164),
+      _0x40be27(0x16f),
+      'thorns',
+   ]),
+   PROTECTION_TYPES = {
+      protection: new Set([
+         _0x40be27(0x176),
+         _0x40be27(0x171),
+         _0x40be27(0x173),
+         _0x40be27(0x158),
+         _0x40be27(0x16a),
+         _0x40be27(0x15c),
+         _0x40be27(0x159),
+         _0x40be27(0x175),
+         _0x40be27(0x160),
+         _0x40be27(0x155),
+         _0x40be27(0x169),
+         _0x40be27(0x164),
+         _0x40be27(0x16f),
+         _0x40be27(0x166),
+      ]),
+      fire_protection: new Set([_0x40be27(0x16a), _0x40be27(0x15c)]),
+      blast_protection: new Set(['blockExplosion', _0x40be27(0x158)]),
+      projectile_protection: new Set([_0x40be27(0x160)]),
+   };
+export const calculateArmorDamage = (
+   _0x2d1b32,
+   _0x25103a,
+   _0x314e7a,
+   _0x3a624e = 0x0,
+   _0x1a17ce = 0x0,
+   _0x58d7ca = [],
+) => {
+   const _0x5d0bc5 = _0x40be27,
+      _0xe6c165 = _0x2d1b32[_0x5d0bc5(0x157)](_0x5d0bc5(0x16b)),
+      _0x12acd5 = _0xe6c165[_0x5d0bc5(0x16e)] ?? 0x0,
+      _0xf6f035 = _0xe6c165['totalToughness'] ?? 0x0,
+      _0x301d3c = [],
+      _0x4d521f = ['Head', _0x5d0bc5(0x165), 'Legs', _0x5d0bc5(0x163)];
+   for (const _0x2ee8e7 of _0x4d521f) {
+      const _0x973dfa = _0xe6c165[_0x5d0bc5(0x15e)](_0x2ee8e7);
+      if (!_0x973dfa) continue;
+      const _0x4edc1f = _0x973dfa['getComponent']('minecraft:enchantable');
+      if (!_0x4edc1f) continue;
+      for (const _0x1902b3 of _0x4edc1f['getEnchantments']()) {
+         _0x301d3c[_0x5d0bc5(0x15a)]({ type: _0x1902b3['type']['id'], level: _0x1902b3['level'] });
+      }
+   }
+   function _0x396ce6(_0x20a109, _0x4201a6, _0x57d43f) {
+      const _0x2fb560 = _0x5d0bc5;
+      ((_0x4201a6 = Math[_0x2fb560(0x15b)](_0x4201a6, 0x1e)),
+         (_0x57d43f = Math[_0x2fb560(0x15b)](_0x57d43f, 0x14)));
+      const _0x4a60b1 = Math['min'](
+         0x14,
+         Math[_0x2fb560(0x167)](_0x4201a6 / 0x5, _0x4201a6 - _0x20a109 / (0x2 + _0x57d43f / 0x4)),
+      );
+      return _0x20a109 * (0x1 - _0x4a60b1 / 0x19);
+   }
+   function _0x5af1d5(_0x3caf2a, _0x873696) {
+      const _0x5488cb = _0x5d0bc5;
+      let _0x53355d = 0x0;
+      for (const _0x184890 of _0x873696) {
+         const _0x349ba5 = _0x184890['type'],
+            _0x2d951e = _0x184890[_0x5488cb(0x15d)];
+         if (!_0x349ba5 || !_0x2d951e) continue;
+         const _0x5f44bc = PROTECTION_TYPES[_0x349ba5];
+         if (!_0x5f44bc?.[_0x5488cb(0x178)](_0x3caf2a)) continue;
+         switch (_0x349ba5) {
+            case 'protection':
+               _0x53355d += _0x2d951e;
+               break;
+            case _0x5488cb(0x156):
+            case _0x5488cb(0x172):
+            case 'projectile_protection':
+               _0x53355d += _0x2d951e * 0x2;
+               break;
+         }
+      }
+      return Math[_0x5488cb(0x15b)](_0x53355d, 0x14);
+   }
+   function _0x3753f9(_0xe64c1d, _0x395a63) {
+      return _0xe64c1d * (0x1 - _0x395a63 / 0x19);
+   }
+   const _0x37bf88 = _0x5af1d5(_0x25103a, _0x301d3c);
+   function _0x44fcda(_0x1e4c02) {
+      const _0xe63ace = _0x5d0bc5;
+      let _0x130294 = _0x1e4c02;
+      return (
+         ARMOR_CAUSES[_0xe63ace(0x178)](_0x25103a) &&
+            (_0x130294 = _0x396ce6(_0x130294, _0x12acd5, _0xf6f035)),
+         (_0x130294 = _0x3753f9(_0x130294, _0x37bf88)),
+         _0x130294
+      );
+   }
+   let _0x7552ea = _0x314e7a;
+   for (let _0x292d6a = 0x0; _0x292d6a < 0xf; _0x292d6a++) {
+      const _0x1ff135 = _0x44fcda(_0x7552ea);
+      if (_0x1ff135 <= 0x0) break;
+      const _0x3d2425 = _0x314e7a / _0x1ff135;
+      _0x7552ea *= _0x3d2425;
+   }
+   const _0xb4c263 = Math['max'](_0x7552ea, 0x0);
+   let _0x2d65fc = _0xb4c263;
+   ARMOR_CAUSES[_0x5d0bc5(0x178)](_0x25103a) &&
+      (_0x2d65fc = _0x396ce6(_0x2d65fc, _0x12acd5 + _0x3a624e, _0xf6f035 + _0x1a17ce));
+   const _0x40c062 = _0x5af1d5(_0x25103a, [..._0x301d3c, ..._0x58d7ca]);
+   return (
+      (_0x2d65fc = _0x3753f9(_0x2d65fc, _0x40c062)),
+      {
+         armorDamage: Number['isFinite'](_0x2d65fc) ? Math[_0x5d0bc5(0x167)](_0x2d65fc, 0x0) : 0x0,
+         baseDamage: _0xb4c263,
+      }
+   );
 };
-
-export const calculateArmorDamage = (hurtEntity, damageCause, finalVanillaDamage, extraArmor = 0, extraToughness = 0, extraEnchantments = []) => {
-    const equip = hurtEntity.getComponent('equippable');
-
-    const vanillaArmor = equip.totalArmor ?? 0;
-
-    const vanillaToughness = equip.totalToughness ?? 0;
-
-    const vanillaEnchantments = [];
-
-    const slots = ['Head', 'Chest', 'Legs', 'Feet'];
-
-    for (const slot of slots) {
-        const item = equip.getEquipment(slot);
-
-        if (!item) continue;
-
-        const enchantable = item.getComponent('minecraft:enchantable');
-
-        if (!enchantable) continue;
-
-        for (const enchantment of enchantable.getEnchantments()) {
-            vanillaEnchantments.push({
-                type: enchantment.type.id,
-
-                level: enchantment.level,
-            });
-        }
-    }
-
-    function applyArmorReduction(damage, armor, toughness) {
-        armor = Math.min(armor, 30);
-
-        toughness = Math.min(toughness, 20);
-
-        const reduction = Math.min(
-            20,
-
-            Math.max(
-                armor / 5,
-
-                armor - damage / (2 + toughness / 4),
-            ),
-        );
-
-        return damage * (1 - reduction / 25);
-    }
-
-    function getEPF(cause, enchantments) {
-        let epf = 0;
-
-        for (const enchantment of enchantments) {
-            const type = enchantment.type;
-
-            const level = enchantment.level;
-
-            if (!type || !level) continue;
-
-            const validCauses = PROTECTION_TYPES[type];
-
-            if (!validCauses?.has(cause)) continue;
-
-            switch (type) {
-                case 'protection':
-                    epf += level;
-                    break;
-
-                case 'fire_protection':
-                case 'blast_protection':
-                case 'projectile_protection':
-                    epf += level * 2;
-                    break;
-            }
-        }
-
-        return Math.min(epf, 20);
-    }
-
-    function applyEPFReduction(damage, epf) {
-        return damage * (1 - epf / 25);
-    }
-
-    const vanillaEPF = getEPF(damageCause, vanillaEnchantments);
-
-    function simulateVanilla(baseDamage) {
-        let damage = baseDamage;
-
-        if (ARMOR_CAUSES.has(damageCause)) {
-            damage = applyArmorReduction(damage, vanillaArmor, vanillaToughness);
-        }
-
-        damage = applyEPFReduction(damage, vanillaEPF);
-
-        return damage;
-    }
-
-    let baseDamageGuess = finalVanillaDamage;
-
-    for (let i = 0; i < 15; i++) {
-        const simulated = simulateVanilla(baseDamageGuess);
-
-        if (simulated <= 0) break;
-
-        const ratio = finalVanillaDamage / simulated;
-
-        baseDamageGuess *= ratio;
-    }
-
-    const baseDamage = Math.max(baseDamageGuess, 0);
-
-    let finalDamage = baseDamage;
-
-    if (ARMOR_CAUSES.has(damageCause)) {
-        finalDamage = applyArmorReduction(
-            finalDamage,
-
-            vanillaArmor + extraArmor,
-
-            vanillaToughness + extraToughness,
-        );
-    }
-
-    const totalEPF = getEPF(damageCause, [...vanillaEnchantments, ...extraEnchantments]);
-
-    finalDamage = applyEPFReduction(finalDamage, totalEPF);
-
-    return {
-        armorDamage: Number.isFinite(finalDamage) ? Math.max(finalDamage, 0) : 0,
-
-        baseDamage,
-    };
-};
+function _0x16b8() {
+   const _0x2e1f30 = [
+      'max',
+      '264040wUvACG',
+      'stalactite',
+      'fire',
+      'equippable',
+      '54108hzxuTm',
+      '1081632TTpCbf',
+      'totalArmor',
+      'suffocation',
+      '8uKKijy',
+      'blockExplosion',
+      'blast_protection',
+      'entityAttack',
+      '8680365FjPexN',
+      'piston',
+      'anvil',
+      '240283lWMUTl',
+      'has',
+      'ramAttack',
+      'fire_protection',
+      'getComponent',
+      'entityExplosion',
+      'maceSmash',
+      'push',
+      'min',
+      'fireTick',
+      'level',
+      'getEquipment',
+      '2986697vKRwed',
+      'projectile',
+      '85DyaCVW',
+      '213176TEMKJQ',
+      'Feet',
+      'stalagmite',
+      'Chest',
+      'thorns',
+   ];
+   _0x16b8 = function () {
+      return _0x2e1f30;
+   };
+   return _0x16b8();
+}

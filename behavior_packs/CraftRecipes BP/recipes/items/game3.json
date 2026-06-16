@@ -1,26 +1,26 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:game3"
-    },
-    "tags": ["avanced"],
-    "pattern": ["##", "LL", "LL"],
-    "key": {
-      "#": {
-        "item": "minecraft:white_wool"
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:game3"
       },
-      "L": {
-        "item": "minecraft:lime_wool"
-      }
-    },
-    "result": {
-      "item": "addon:game3"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:white_wool"
-      }
-    ]
-  }
+      "tags": ["avanced"],
+      "pattern": ["##", "LL", "LL"],
+      "key": {
+         "#": {
+            "item": "minecraft:white_wool"
+         },
+         "L": {
+            "item": "minecraft:lime_wool"
+         }
+      },
+      "result": {
+         "item": "addon:game3"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:white_wool"
+         }
+      ]
+   }
 }

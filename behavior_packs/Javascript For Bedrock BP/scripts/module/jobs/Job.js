@@ -85,9 +85,12 @@ const loadJobData = () => {
     }
 };
 
+const MAX_JOBS = 500;
+
 export const createJobData = (job) => {
     job.id = nextJobId++;
     jobs.push(job);
+    if (jobs.length > MAX_JOBS) jobs.splice(0, jobs.length - MAX_JOBS);
     saveData();
 };
 
@@ -159,6 +162,8 @@ export const hasOwnerNotify = (ownerId) => {
     return (ownerNotifyMap.get(ownerId)?.size ?? 0) > 0;
 };
 
+export const JOB_DURATION_TICKS = 20 * 60 * 20;
+
 export const onJobItemUse = (event) => {
     const source = event.source;
     if (source?.isValid) showMainMenu(source);
@@ -167,6 +172,9 @@ export const onJobItemUse = (event) => {
 export const onJobPlayerLeave = (playerId) => {
     selectedMap.delete(playerId);
     amountMap.delete(playerId);
+    playerJobMap.delete(playerId);
+    pendingDelivery.delete(playerId);
+    ownerNotifyMap.delete(playerId);
 };
 
 system.run(() => {

@@ -4,219 +4,229 @@ import { CONFIG, LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
 import { showMenuReport } from './main-menu.js';
 import { showForm, sure } from '../utils/ui.js';
+import { addSound } from '../../../plugin/utils.js';
 
 const trimValues = (values) => {
-    const result = [];
-    for (const value of values) {
-        result.push(typeof value === 'string' ? value.trim() : value);
-    }
-    return result;
+   const result = [];
+   for (const value of values) {
+      result.push(typeof value === 'string' ? value.trim() : value);
+   }
+   return result;
 };
 
 const validateFields = (player, fields, limits) => {
-    for (let i = 0; i < fields.length; i++) {
-        if (!fields[i]) {
-            player.sendMessage('§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน');
-            return false;
-        }
-        if (limits && fields[i].length > limits[i]) {
-            player.sendMessage(`§c[Report] ข้อความยาวเกิน ${limits[i]} ตัวอักษร`);
-            return false;
-        }
-    }
-    return true;
+   for (let i = 0; i < fields.length; i++) {
+      if (!fields[i]) {
+         player.sendMessage('§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน');
+         return false;
+      }
+      if (limits && fields[i].length > limits[i]) {
+         player.sendMessage(`§c[Report] ข้อความยาวเกิน ${limits[i]} ตัวอักษร`);
+         return false;
+      }
+   }
+   return true;
 };
 
 export const sendform = (player) => {
-    const name = player.name;
-    const list = Database.get(name);
+   const name = player.name;
+   const list = Database.get(name);
 
-    if (list.length >= CONFIG.maxReports) {
-        player.sendMessage(`§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
-        reportmenu(player);
-        return;
-    }
+   if (list.length >= CONFIG.maxReports) {
+      player.sendMessage(
+         `§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`,
+      );
+      reportmenu(player);
+      return;
+   }
 
-    const ui = new ModalFormData();
-    ui.title('แจ้งปัญหา / ข้อเสนอแนะ');
-    ui.textField('หัวข้อเรื่อง', 'เช่น: ฟาร์มบั๊ก, บล็อกหาย, ของหาย');
-    ui.textField('รายละเอียด', 'ระบุพิกัด และวิธีทำให้เกิดปัญหา');
+   addSound(player, 'item.book.page_turn');
 
-    showForm(player, ui, 'sendform', (res) => {
-        try {
-            if (res.canceled) {
-                reportmenu(player);
-                return;
-            }
-            const [title, body] = trimValues(res.formValues);
+   const ui = new ModalFormData();
+   ui.title('แจ้งปัญหา / ข้อเสนอแนะ');
+   ui.textField('หัวข้อเรื่อง', 'เช่น: ฟาร์มบั๊ก, บล็อกหาย, ของหาย');
+   ui.textField('รายละเอียด', 'ระบุพิกัด และวิธีทำให้เกิดปัญหา');
 
-            if (!validateFields(player, [title, body], [LIMITS.title, LIMITS.body])) {
-                system.runTimeout(() => {
-                    if (player.isValid) sendform(player);
-                }, 20);
-                return;
-            }
-
-            Database.add(name, title, body);
-            player.sendMessage('§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
+   showForm(player, ui, 'sendform', (res) => {
+      try {
+         if (res.canceled) {
             reportmenu(player);
-        } catch (innerError) {
-            console.error('[ Report ] Logic Error (SendForm): ' + innerError);
-            player.sendMessage('§cเกิดข้อผิดพลาดในการบันทึกข้อมูล');
-            reportmenu(player);
-        }
-    }).catch((error) => {
-        console.error('[ Report ] System Error (SendForm): ' + error);
-        reportmenu(player);
-    });
+            return;
+         }
+         const [title, body] = trimValues(res.formValues);
+
+         if (!validateFields(player, [title, body], [LIMITS.title, LIMITS.body])) {
+            system.runTimeout(() => {
+               if (player.isValid) sendform(player);
+            }, 20);
+            return;
+         }
+
+         Database.add(name, title, body);
+         player.sendMessage('§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
+         reportmenu(player);
+      } catch (innerError) {
+         console.error('[ Report ] Logic Error (SendForm): ' + innerError);
+         player.sendMessage('§cเกิดข้อผิดพลาดในการบันทึกข้อมูล');
+         reportmenu(player);
+      }
+   }).catch((error) => {
+      console.error('[ Report ] System Error (SendForm): ' + error);
+      reportmenu(player);
+   });
 };
 
 const editItem = (player, name, list, index) => {
-    const form = new ModalFormData();
-    form.title('แก้ไขรายงาน');
-    form.textField('หัวข้อเรื่อง', '', { defaultValue: list[index].t });
-    form.textField('รายละเอียด', '', { defaultValue: list[index].b });
+   addSound(player, 'item.book.page_turn');
+   const form = new ModalFormData();
+   form.title('แก้ไขรายงาน');
+   form.textField('หัวข้อเรื่อง', '', { defaultValue: list[index].t });
+   form.textField('รายละเอียด', '', { defaultValue: list[index].b });
 
-    showForm(player, form, 'mylist.edit', (result) => {
-        try {
-            if (result.canceled) {
-                mylist(player, 'edit');
-                return;
-            }
-            const [newTitle, newBody] = trimValues(result.formValues);
-            if (!validateFields(player, [newTitle, newBody], [LIMITS.title, LIMITS.body])) {
-                mylist(player, 'edit');
-                return;
-            }
-            Database.update(name, index, newTitle, newBody);
-            player.sendMessage('§e[Report] แก้ไขข้อมูลสำเร็จ');
+   showForm(player, form, 'mylist.edit', (result) => {
+      try {
+         if (result.canceled) {
             mylist(player, 'edit');
-        } catch (error) {
-            console.error('[ Report ] Update Error: ' + error);
+            return;
+         }
+         const [newTitle, newBody] = trimValues(result.formValues);
+         if (!validateFields(player, [newTitle, newBody], [LIMITS.title, LIMITS.body])) {
             mylist(player, 'edit');
-        }
-    });
+            return;
+         }
+         Database.update(name, index, newTitle, newBody);
+         player.sendMessage('§e[Report] แก้ไขข้อมูลสำเร็จ');
+         mylist(player, 'edit');
+      } catch (error) {
+         console.error('[ Report ] Update Error: ' + error);
+         mylist(player, 'edit');
+      }
+   });
 };
 
 const deleteItem = (player, name, index) => {
-    sure(
-        player,
-        () => {
-            Database.delete(name, index);
-            player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
-            mylist(player, 'del');
-        },
-        () => mylist(player, 'del'),
-    );
+   sure(
+      player,
+      () => {
+         Database.delete(name, index);
+         player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
+         mylist(player, 'del');
+      },
+      () => mylist(player, 'del'),
+   );
 };
 
 export const mylist = (player, mode) => {
-    const name = player.name;
-    const list = Database.get(name);
+   addSound(player, 'item.book.page_turn');
+   const name = player.name;
+   const list = Database.get(name);
 
-    if (list.length === 0) {
-        player.sendMessage('§c[Report] ไม่พบข้อมูลในระบบ');
-        reportmenu(player);
-        return;
-    }
+   if (list.length === 0) {
+      player.sendMessage('§c[Report] ไม่พบข้อมูลในระบบ');
+      reportmenu(player);
+      return;
+   }
 
-    const ui = new ActionFormData();
-    ui.title(mode === 'edit' ? 'เลือกรายการเพื่อแก้ไข' : 'เลือกรายการเพื่อลบ');
-    ui.body('รายการข้อความของท่าน');
+   const ui = new ActionFormData();
+   ui.title(mode === 'edit' ? 'เลือกรายการเพื่อแก้ไข' : 'เลือกรายการเพื่อลบ');
+   ui.body('รายการข้อความของท่าน');
 
-    const listLen = list.length;
-    for (let i = 0; i < listLen; i++) {
-        ui.button(`${i + 1}. ${list[i].t}`);
-    }
+   const listLen = list.length;
+   for (let i = 0; i < listLen; i++) {
+      ui.button(`${i + 1}. ${list[i].t}`);
+   }
 
-    ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
+   ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
 
-    showForm(player, ui, 'mylist', (res) => {
-        if (res.canceled) return;
-        if (res.selection === list.length) {
-            reportmenu(player);
-            return;
-        }
+   showForm(player, ui, 'mylist', (res) => {
+      if (res.canceled) return;
+      if (res.selection === list.length) {
+         reportmenu(player);
+         return;
+      }
 
-        const index = res.selection;
+      const index = res.selection;
 
-        if (mode === 'edit') {
-            editItem(player, name, list, index);
-        } else {
-            deleteItem(player, name, index);
-        }
-    }).catch((error) => {
-        console.error('[ Report ] System Error (MyList): ' + error);
-        reportmenu(player);
-    });
+      if (mode === 'edit') {
+         editItem(player, name, list, index);
+      } else {
+         deleteItem(player, name, index);
+      }
+   }).catch((error) => {
+      console.error('[ Report ] System Error (MyList): ' + error);
+      reportmenu(player);
+   });
 };
 
 export const inbox = (player) => {
-    const name = player.name;
-    const list = Database.get(name);
-    const replied = list.filter((item) => item.r !== '');
+   addSound(player, 'item.book.page_turn');
+   const name = player.name;
+   const list = Database.get(name);
+   const replied = list.filter((item) => item.r !== '');
 
-    if (replied.length === 0) {
-        const ui = new ActionFormData();
-        ui.title('กล่องจดหมาย (Inbox)');
-        ui.body('§7[Report] ยังไม่มีการตอบกลับจากผู้ดูแลระบบ');
-        ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
-        showForm(player, ui, 'inbox.empty', () => showMenuReport(player));
-        return;
-    }
+   if (replied.length === 0) {
+      const ui = new ActionFormData();
+      ui.title('กล่องจดหมาย (Inbox)');
+      ui.body('§7[Report] ยังไม่มีการตอบกลับจากผู้ดูแลระบบ');
+      ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
+      showForm(player, ui, 'inbox.empty', () => showMenuReport(player));
+      return;
+   }
 
-    const ui = new ActionFormData();
-    ui.title('กล่องจดหมาย (Inbox)');
-    ui.body('รายการที่ได้รับการตอบกลับแล้ว');
+   const ui = new ActionFormData();
+   ui.title('กล่องจดหมาย (Inbox)');
+   ui.body('รายการที่ได้รับการตอบกลับแล้ว');
 
-    const repliedLen = replied.length;
-    for (let i = 0; i < repliedLen; i++) {
-        ui.button(`อ่าน: ${replied[i].t}`);
-    }
+   const repliedLen = replied.length;
+   for (let i = 0; i < repliedLen; i++) {
+      ui.button(`อ่าน: ${replied[i].t}`);
+   }
 
-    ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
+   ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
 
-    showForm(player, ui, 'inbox', (res) => {
-        if (res.canceled) return;
-        if (res.selection === replied.length) {
-            showMenuReport(player);
-            return;
-        }
+   showForm(player, ui, 'inbox', (res) => {
+      if (res.canceled) return;
+      if (res.selection === replied.length) {
+         showMenuReport(player);
+         return;
+      }
 
-        const item = replied[res.selection];
-        const show = new MessageFormData();
-        show.title('รายละเอียดการตอบกลับ');
-        show.body(`หัวข้อ: ${item.t}\nคำถาม: ${item.b}\n\n§eตอบกลับ: ${item.r}`);
-        show.button1('ย้อนกลับ');
-        show.button2('ปิดหน้าต่าง');
+      const item = replied[res.selection];
+      addSound(player, 'item.book.page_turn');
+      const show = new MessageFormData();
+      show.title('รายละเอียดการตอบกลับ');
+      show.body(`หัวข้อ: ${item.t}\nคำถาม: ${item.b}\n\n§eตอบกลับ: ${item.r}`);
+      show.button1('ย้อนกลับ');
+      show.button2('ปิดหน้าต่าง');
 
-        showForm(player, show, 'inbox.detail', (result) => {
-            if (result.selection === 0) inbox(player);
-        });
-    }).catch((error) => {
-        console.error('[ Report ] System Error (Inbox): ' + error);
-        showMenuReport(player);
-    });
+      showForm(player, show, 'inbox.detail', (result) => {
+         if (result.selection === 0) inbox(player);
+      });
+   }).catch((error) => {
+      console.error('[ Report ] System Error (Inbox): ' + error);
+      showMenuReport(player);
+   });
 };
 
 export const reportmenu = (player) => {
-    const ui = new ActionFormData();
-    ui.title('เมนูรายงาน (Report)');
-    ui.body('กรุณาเลือกรายการที่ต้องการ');
+   addSound(player, 'item.book.page_turn');
+   const ui = new ActionFormData();
+   ui.title('เมนูรายงาน (Report)');
+   ui.body('กรุณาเลือกรายการที่ต้องการ');
 
-    ui.button('ส่งข้อความ');
-    ui.button('แก้ไขข้อความ');
-    ui.button('ลบข้อความ');
-    ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
+   ui.button('ส่งข้อความ');
+   ui.button('แก้ไขข้อความ');
+   ui.button('ลบข้อความ');
+   ui.button('ย้อนกลับ', 'textures/ui/arrow_left');
 
-    showForm(player, ui, 'reportmenu', (res) => {
-        if (res.canceled) return;
-        if (res.selection === 0) sendform(player);
-        if (res.selection === 1) mylist(player, 'edit');
-        if (res.selection === 2) mylist(player, 'del');
-        if (res.selection === 3) showMenuReport(player);
-    }).catch((error) => {
-        console.error('[ Report ] System Error (ReportMenu): ' + error);
-        showMenuReport(player);
-    });
+   showForm(player, ui, 'reportmenu', (res) => {
+      if (res.canceled) return;
+      if (res.selection === 0) sendform(player);
+      if (res.selection === 1) mylist(player, 'edit');
+      if (res.selection === 2) mylist(player, 'del');
+      if (res.selection === 3) showMenuReport(player);
+   }).catch((error) => {
+      console.error('[ Report ] System Error (ReportMenu): ' + error);
+      showMenuReport(player);
+   });
 };

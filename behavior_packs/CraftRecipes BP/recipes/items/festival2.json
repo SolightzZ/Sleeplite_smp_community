@@ -1,26 +1,26 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:festival2"
-    },
-    "tags": ["avanced"],
-    "pattern": [" # ", "#Y#"],
-    "key": {
-      "#": {
-        "item": "minecraft:azure_bluet"
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:festival2"
       },
-      "Y": {
-        "item": "minecraft:yellow_flower"
-      }
-    },
-    "result": {
-      "item": "addon:festival2"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:azure_bluet"
-      }
-    ]
-  }
+      "tags": ["avanced"],
+      "pattern": [" # ", "#Y#"],
+      "key": {
+         "#": {
+            "item": "minecraft:azure_bluet"
+         },
+         "Y": {
+            "item": "minecraft:yellow_flower"
+         }
+      },
+      "result": {
+         "item": "addon:festival2"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:azure_bluet"
+         }
+      ]
+   }
 }

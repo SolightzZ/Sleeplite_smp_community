@@ -57,6 +57,12 @@ function hasPlayerMoved(playerId, headPos, viewDir) {
     return true;
 }
 
+let _airPermutation;
+let _light15Permutation;
+
+const getAirPerm = () => _airPermutation || (_airPermutation = BlockPermutation.resolve(BLOCK_AIR));
+const getLight15Perm = () => _light15Permutation || (_light15Permutation = BlockPermutation.resolve(BLOCK_LIGHT_15));
+
 export function removeLightBlock(playerId, fallbackDim) {
     const light = playerLights.get(playerId);
 
@@ -73,7 +79,7 @@ export function removeLightBlock(playerId, fallbackDim) {
     try {
         const block = dim.getBlock(light);
         if (block && (block.typeId === BLOCK_LIGHT || block.typeId === BLOCK_LIGHT_15)) {
-            block.setPermutation(BlockPermutation.resolve(BLOCK_AIR));
+            block.setPermutation(getAirPerm());
         }
     } catch (error) {
         console.error('[ flashlight ] removeLightBlock: ' + error);
@@ -111,7 +117,7 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
             if (oldDim) {
                 const oldBlock = oldDim.getBlock(oldLight);
                 if (oldBlock && (oldBlock.typeId === BLOCK_LIGHT || oldBlock.typeId === BLOCK_LIGHT_15)) {
-                    oldBlock.setPermutation(BlockPermutation.resolve(BLOCK_AIR));
+                    oldBlock.setPermutation(getAirPerm());
                 }
             }
         } catch (error) {
@@ -138,7 +144,7 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
             return;
         }
 
-        targetBlock.setPermutation(BlockPermutation.resolve(BLOCK_LIGHT_15));
+        targetBlock.setPermutation(getLight15Perm());
 
         if (oldLight) {
             oldLight.x = newPos.x;

@@ -1,181 +1,238 @@
-(function (_0x18dde8, _0x6cf91e) {
-    const _0x231398 = _0x3f52,
-        _0x296fb1 = _0x18dde8();
-    while (!![]) {
-        try {
-            const _0x324ff2 =
-                -parseInt(_0x231398(0xf1)) / 0x1 +
-                (parseInt(_0x231398(0x106)) / 0x2) * (parseInt(_0x231398(0xf2)) / 0x3) +
-                -parseInt(_0x231398(0xf4)) / 0x4 +
-                -parseInt(_0x231398(0xe2)) / 0x5 +
-                (parseInt(_0x231398(0x112)) / 0x6) * (-parseInt(_0x231398(0x10b)) / 0x7) +
-                (parseInt(_0x231398(0x111)) / 0x8) * (-parseInt(_0x231398(0x109)) / 0x9) +
-                parseInt(_0x231398(0xed)) / 0xa;
-            if (_0x324ff2 === _0x6cf91e) break;
-            else _0x296fb1['push'](_0x296fb1['shift']());
-        } catch (_0x3f4074) {
-            _0x296fb1['push'](_0x296fb1['shift']());
-        }
-    }
-})(_0x57d4, 0x99722);
-import { system, ItemStack, ItemEnchantableComponent, EnchantmentType, world } from '@minecraft/server';
-export const currentElytra = (_0x2d9e48) => {
-    const _0x252fc7 = _0x3f52,
-        _0x2a6419 = _0x2d9e48['getComponent'](_0x252fc7(0xfd)),
-        _0x185687 = _0x2a6419[_0x252fc7(0xe5)]('Chest');
-    if (!_0x185687) return null;
-    const _0x56a6de = _0x185687[_0x252fc7(0xff)],
-        _0x57230a = getParams(_0x185687);
-    if (_0x56a6de !== _0x252fc7(0xfe) && !_0x57230a) return null;
-    const _0xccde8 = _0x185687[_0x252fc7(0xf8)](_0x252fc7(0xe7)),
-        _0x40e72c = (_0xccde8?.['damage'] ?? 0x0) >= _0xccde8?.[_0x252fc7(0x10f)] - 0x1 ?? ![];
-    return { item: _0x185687, id: _0x56a6de, isBroken: _0x40e72c, type: _0x57230a?.['type'] ?? _0x252fc7(0x104) };
-};
-export function getColytraData(_0x33117d) {
-    const _0x2f7766 = _0x3f52;
-    try {
-        const _0x548b76 = _0x33117d[_0x2f7766(0x10e)](_0x2f7766(0xf3));
-        if (!_0x548b76 || typeof _0x548b76 !== _0x2f7766(0xee)) return null;
-        return JSON[_0x2f7766(0xe3)](_0x548b76);
-    } catch {
-        return null;
-    }
+(function (_0x29e4d8, _0x460598) {
+   const _0x351556 = _0x4a97,
+      _0x12476c = _0x29e4d8();
+   while (!![]) {
+      try {
+         const _0x3e7639 =
+            -parseInt(_0x351556(0xcc)) / 0x1 +
+            (parseInt(_0x351556(0xb1)) / 0x2) * (-parseInt(_0x351556(0xc5)) / 0x3) +
+            (parseInt(_0x351556(0xac)) / 0x4) * (-parseInt(_0x351556(0xb7)) / 0x5) +
+            parseInt(_0x351556(0xc1)) / 0x6 +
+            (parseInt(_0x351556(0xa4)) / 0x7) * (parseInt(_0x351556(0xa3)) / 0x8) +
+            (parseInt(_0x351556(0xa6)) / 0x9) * (-parseInt(_0x351556(0xa0)) / 0xa) +
+            parseInt(_0x351556(0xb4)) / 0xb;
+         if (_0x3e7639 === _0x460598) break;
+         else _0x12476c['push'](_0x12476c['shift']());
+      } catch (_0x4de798) {
+         _0x12476c['push'](_0x12476c['shift']());
+      }
+   }
+})(_0x7147, 0xe85c3);
+function _0x7147() {
+   const _0xa7cbcb = [
+      'getEquipment',
+      'dimension',
+      'enchantable',
+      '4730ejMkOR',
+      'minecraft:health',
+      'vanilla',
+      '41280HuYSpO',
+      '287RTwbby',
+      'maxDurability',
+      '9558aeccBz',
+      'leashable',
+      'attribute.name.generic.armor',
+      'rme:custom_elytra',
+      'armor',
+      'params',
+      '183116RGCIUA',
+      'minecraft:durability',
+      'rme:absorption',
+      'getEnchantments',
+      'location',
+      '1126vmRGQJ',
+      'getDynamicProperty',
+      'damage',
+      '24253691fcFcCu',
+      'minecraft:enchantable',
+      'spawnEntity',
+      '15LKhfUQ',
+      'knockback_resistance',
+      'armor_data',
+      'then',
+      'addEnchantment',
+      'attribute.name.minecraft:knockback_resistance',
+      'typeId',
+      'waitTicks',
+      'toughness',
+      'rme:elytra_data',
+      '6127920tmvNvB',
+      'equippable',
+      'leashTo',
+      '§r§9+',
+      '8313YbdoBf',
+      'addEnchantments',
+      'removeEnchantment',
+      'getComponent',
+      'Chest',
+      'type',
+      'slot.armor.chest.when_equipped',
+      '286278vvYOnG',
+      'floor',
+      'max',
+      'parse',
+      'push',
+      'rme:default',
+   ];
+   _0x7147 = function () {
+      return _0xa7cbcb;
+   };
+   return _0x7147();
 }
-export const updateMolang = (_0x3d66ea, _0x3175ae) => {
-    const _0x424eb0 = _0x3f52;
-    try {
-        const { x: _0x316c42, y: _0x482050, z: _0xb199ea } = _0x3d66ea[_0x424eb0(0xe4)],
-            _0x3ca368 = _0x3d66ea[_0x424eb0(0x10a)][_0x424eb0(0xf6)](_0x3175ae?.['replace']('_p', '')[_0x424eb0(0x10c)]('_b', '') ?? 'rme:default', { x: _0x316c42, y: _0x482050, z: _0xb199ea });
-        (_0x3ca368[_0x424eb0(0xf8)](_0x424eb0(0x108))[_0x424eb0(0xfa)](_0x3d66ea),
-            system[_0x424eb0(0xec)](0x1)['then'](() => {
-                const _0x2fcca9 = _0x424eb0;
-                _0x3ca368[_0x2fcca9(0xe9)]();
-            }));
-    } catch {}
+import {
+   system,
+   ItemStack,
+   ItemEnchantableComponent,
+   EnchantmentType,
+   world,
+} from '@minecraft/server';
+export const currentElytra = (_0x277906) => {
+   const _0x264031 = _0x4a97,
+      _0x1ba212 = _0x277906[_0x264031(0xc8)](_0x264031(0xc2)),
+      _0x569a6c = _0x1ba212[_0x264031(0x9d)](_0x264031(0xc9));
+   if (!_0x569a6c) return null;
+   const _0x25dfce = _0x569a6c[_0x264031(0xbd)],
+      _0x55c5eb = getParams(_0x569a6c);
+   if (_0x25dfce !== 'minecraft:elytra' && !_0x55c5eb) return null;
+   const _0xd3c4cc = _0x569a6c[_0x264031(0xc8)](_0x264031(0xad)),
+      _0xd17658 =
+         (_0xd3c4cc?.[_0x264031(0xb3)] ?? 0x0) >= _0xd3c4cc?.[_0x264031(0xa5)] - 0x1 ?? ![];
+   return {
+      item: _0x569a6c,
+      id: _0x25dfce,
+      isBroken: _0xd17658,
+      type: _0x55c5eb?.[_0x264031(0xca)] ?? _0x264031(0xa2),
+   };
 };
-export const attributeLore = (_0x456340, _0x2fae96) => {
-    const _0x3f4d38 = _0x3f52,
-        _0x4c437a = _0x2fae96?.['armor_data'] ?? _0x2fae96?.[_0x3f4d38(0x101)] ?? null;
-    if (!_0x4c437a) return;
-    let _0x41d04c = [];
-    return (
-        (_0x4c437a[_0x3f4d38(0x10d)] || _0x4c437a['toughness'] || _0x4c437a[_0x3f4d38(0x100)]) &&
-            _0x41d04c[_0x3f4d38(0x105)]('§r', { rawtext: [{ text: _0x3f4d38(0xeb) }, { translate: _0x3f4d38(0xf0) }] }),
-        _0x4c437a[_0x3f4d38(0x10d)] && _0x41d04c['push']({ rawtext: [{ text: '§r§9+' }, { text: _0x4c437a['armor'] + '\x20' }, { translate: 'attribute.name.generic.armor' }] }),
-        _0x4c437a[_0x3f4d38(0xfb)] && _0x41d04c['push']({ rawtext: [{ text: _0x3f4d38(0xea) }, { text: _0x4c437a['toughness'] + '\x20' }, { translate: _0x3f4d38(0xf9) }] }),
-        _0x4c437a[_0x3f4d38(0x100)] && _0x41d04c[_0x3f4d38(0x105)]({ rawtext: [{ text: _0x3f4d38(0xea) }, { text: _0x4c437a[_0x3f4d38(0x100)] + '\x20' }, { translate: _0x3f4d38(0xe6) }] }),
-        _0x41d04c
-    );
+function _0x4a97(_0x31e039, _0x4faad0) {
+   _0x31e039 = _0x31e039 - 0x98;
+   const _0x7147a1 = _0x7147();
+   let _0x4a97e2 = _0x7147a1[_0x31e039];
+   return _0x4a97e2;
+}
+export function getColytraData(_0x18cb2a) {
+   const _0x4913ba = _0x4a97;
+   try {
+      const _0x597450 = _0x18cb2a[_0x4913ba(0xb2)](_0x4913ba(0xc0));
+      if (!_0x597450 || typeof _0x597450 !== 'string') return null;
+      return JSON[_0x4913ba(0x9a)](_0x597450);
+   } catch {
+      return null;
+   }
+}
+export const updateMolang = (_0x2658b0, _0x4217ef) => {
+   const _0x428a4f = _0x4a97;
+   try {
+      const { x: _0x12185f, y: _0x5efbfe, z: _0x202217 } = _0x2658b0[_0x428a4f(0xb0)],
+         _0x1c8ff9 = _0x2658b0[_0x428a4f(0x9e)][_0x428a4f(0xb6)](
+            _0x4217ef?.['replace']('_p', '')['replace']('_b', '') ?? _0x428a4f(0x9c),
+            { x: _0x12185f, y: _0x5efbfe, z: _0x202217 },
+         );
+      (_0x1c8ff9['getComponent'](_0x428a4f(0xa7))[_0x428a4f(0xc3)](_0x2658b0),
+         system[_0x428a4f(0xbe)](0x1)[_0x428a4f(0xba)](() => {
+            _0x1c8ff9['remove']();
+         }));
+   } catch {}
 };
-export const getParams = (_0x10a2f9) => {
-    const _0x25a074 = _0x3f52,
-        _0x3457a0 = _0x10a2f9?.[_0x25a074(0xf8)](_0x25a074(0x103))?.['customComponentParameters']['params'];
-    if (!_0x3457a0) return null;
-    return _0x3457a0;
+export const attributeLore = (_0x4c2acc, _0x282404) => {
+   const _0x43d15e = _0x4a97,
+      _0x41d0da = _0x282404?.[_0x43d15e(0xb9)] ?? _0x282404?.['armorData'] ?? null;
+   if (!_0x41d0da) return;
+   let _0x2bf9ed = [];
+   return (
+      (_0x41d0da['armor'] || _0x41d0da[_0x43d15e(0xbf)] || _0x41d0da['knockback_resistance']) &&
+         _0x2bf9ed[_0x43d15e(0x9b)]('§r', {
+            rawtext: [{ text: '§r§7' }, { translate: _0x43d15e(0xcb) }],
+         }),
+      _0x41d0da[_0x43d15e(0xaa)] &&
+         _0x2bf9ed[_0x43d15e(0x9b)]({
+            rawtext: [
+               { text: _0x43d15e(0xc4) },
+               { text: _0x41d0da[_0x43d15e(0xaa)] + '\x20' },
+               { translate: _0x43d15e(0xa8) },
+            ],
+         }),
+      _0x41d0da[_0x43d15e(0xbf)] &&
+         _0x2bf9ed[_0x43d15e(0x9b)]({
+            rawtext: [
+               { text: _0x43d15e(0xc4) },
+               { text: _0x41d0da[_0x43d15e(0xbf)] + '\x20' },
+               { translate: 'attribute.name.generic.armorToughness' },
+            ],
+         }),
+      _0x41d0da['knockback_resistance'] &&
+         _0x2bf9ed[_0x43d15e(0x9b)]({
+            rawtext: [
+               { text: _0x43d15e(0xc4) },
+               { text: _0x41d0da[_0x43d15e(0xb8)] + '\x20' },
+               { translate: _0x43d15e(0xbc) },
+            ],
+         }),
+      _0x2bf9ed
+   );
 };
-function _0x3f52(_0x4db9a4, _0x19379a) {
-    _0x4db9a4 = _0x4db9a4 - 0xe2;
-    const _0x57d45a = _0x57d4();
-    let _0x3f52cf = _0x57d45a[_0x4db9a4];
-    return _0x3f52cf;
-}
-export function transferDurabilityByPercent(_0x3121b3, _0xd909be) {
-    const _0x857d82 = _0x3f52;
-    if (!_0x3121b3 || !_0xd909be) return;
-    const _0x382fbe = _0x3121b3[_0x857d82(0xf5)] ?? 0x0;
-    if (_0x382fbe >= _0x3121b3[_0x857d82(0x10f)] - 0x1) {
-        _0xd909be[_0x857d82(0xf5)] = _0xd909be['maxDurability'];
-        return;
-    }
-    const _0x4d1f61 = _0x382fbe / _0x3121b3['maxDurability'];
-    _0xd909be['damage'] = Math[_0x857d82(0x110)](_0x4d1f61 * _0xd909be['maxDurability']);
-}
-function _0x57d4() {
-    const _0x5c3fac = [
-        'maxDurability',
-        'floor',
-        '574072gzNzoO',
-        '6feBXld',
-        'addEnchantments',
-        '349635tllLaF',
-        'parse',
-        'location',
-        'getEquipment',
-        'attribute.name.minecraft:knockback_resistance',
-        'minecraft:durability',
-        'addEnchantment',
-        'remove',
-        '§r§9+',
-        '§r§7',
-        'waitTicks',
-        '35986130lAGxVa',
-        'string',
-        'removeEnchantment',
-        'slot.armor.chest.when_equipped',
-        '1129236UoIENN',
-        '21llPMYw',
-        'rme:elytra_data',
-        '3039060MvMgpN',
-        'damage',
-        'spawnEntity',
-        'getEnchantments',
-        'getComponent',
-        'attribute.name.generic.armorToughness',
-        'leashTo',
-        'toughness',
-        'type',
-        'equippable',
-        'minecraft:elytra',
-        'typeId',
-        'knockback_resistance',
-        'armorData',
-        'enchantments',
-        'rme:custom_elytra',
-        'vanilla',
-        'push',
-        '161962MeqvVn',
-        'enchantable',
-        'leashable',
-        '63EOemCN',
-        'dimension',
-        '7530075NFxQgy',
-        'replace',
-        'armor',
-        'getDynamicProperty',
-    ];
-    _0x57d4 = function () {
-        return _0x5c3fac;
-    };
-    return _0x57d4();
-}
-export const cloneItemStack = (_0x43a2fb, _0x5956b3) => {
-    const _0xc3ae94 = _0x3f52,
-        _0x4a33df = new ItemStack(_0x5956b3),
-        _0x3e6b02 = (_0x24584a, _0x43035d) => {
-            const _0x16d04c = _0x3f52,
-                _0xad19d2 = _0x43a2fb['getComponent'](_0x24584a),
-                _0x1ccaf1 = _0x4a33df[_0x16d04c(0xf8)](_0x24584a);
-            _0xad19d2 && _0x1ccaf1 && _0x43035d(_0xad19d2, _0x1ccaf1);
-        };
-    return (
-        _0x3e6b02('durability', (_0x1e102b, _0x53d149) => {
-            transferDurabilityByPercent(_0x1e102b, _0x53d149);
-        }),
-        _0x3e6b02(_0xc3ae94(0x107), (_0x4d451c, _0x43393d) => {
-            const _0x387f88 = _0xc3ae94;
-            _0x43393d[_0x387f88(0x113)](_0x4d451c[_0x387f88(0xf7)]());
-        }),
-        _0x4a33df
-    );
+export const getParams = (_0x5a5ce0) => {
+   const _0x227777 = _0x4a97,
+      _0x420d17 = _0x5a5ce0?.[_0x227777(0xc8)](_0x227777(0xa9))?.['customComponentParameters'][
+         _0x227777(0xab)
+      ];
+   if (!_0x420d17) return null;
+   return _0x420d17;
 };
-export function addEnchantmentsData(_0x421d74, _0x4bd4a5) {
-    const _0x2cc294 = _0x3f52,
-        _0x41ba1a = _0x421d74[_0x2cc294(0xf8)]('minecraft:enchantable');
-    if (!_0x41ba1a || !_0x4bd4a5[_0x2cc294(0x102)]) return;
-    for (const _0x190d9c of _0x41ba1a[_0x2cc294(0xf7)]()) {
-        _0x41ba1a[_0x2cc294(0xef)](_0x190d9c[_0x2cc294(0xfc)]['id']);
-    }
-    for (const _0x37ed24 of _0x4bd4a5[_0x2cc294(0x102)]) {
-        _0x41ba1a[_0x2cc294(0xe8)]({ type: new EnchantmentType(_0x37ed24[_0x2cc294(0xfc)]), level: _0x37ed24['level'] });
-    }
+export function transferDurabilityByPercent(_0x35d7de, _0x4147c4) {
+   const _0x49e557 = _0x4a97;
+   if (!_0x35d7de || !_0x4147c4) return;
+   const _0x52c0bd = _0x35d7de[_0x49e557(0xb3)] ?? 0x0;
+   if (_0x52c0bd >= _0x35d7de[_0x49e557(0xa5)] - 0x1) {
+      _0x4147c4['damage'] = _0x4147c4[_0x49e557(0xa5)];
+      return;
+   }
+   const _0x13caaa = _0x52c0bd / _0x35d7de[_0x49e557(0xa5)];
+   _0x4147c4[_0x49e557(0xb3)] = Math[_0x49e557(0x98)](_0x13caaa * _0x4147c4[_0x49e557(0xa5)]);
 }
+export const cloneItemStack = (_0x2ef569, _0x393d99) => {
+   const _0x1092de = _0x4a97,
+      _0x6e62d = new ItemStack(_0x393d99),
+      _0x1e0fce = (_0x53b65f, _0x378510) => {
+         const _0x52434d = _0x4a97,
+            _0x3b67b5 = _0x2ef569['getComponent'](_0x53b65f),
+            _0xc3edf8 = _0x6e62d[_0x52434d(0xc8)](_0x53b65f);
+         _0x3b67b5 && _0xc3edf8 && _0x378510(_0x3b67b5, _0xc3edf8);
+      };
+   return (
+      _0x1e0fce('durability', (_0x46bd04, _0x289236) => {
+         transferDurabilityByPercent(_0x46bd04, _0x289236);
+      }),
+      _0x1e0fce(_0x1092de(0x9f), (_0x346dfb, _0x3f5d43) => {
+         const _0x5c2eb2 = _0x1092de;
+         _0x3f5d43[_0x5c2eb2(0xc6)](_0x346dfb[_0x5c2eb2(0xaf)]());
+      }),
+      _0x6e62d
+   );
+};
+export function addEnchantmentsData(_0x5ec88a, _0x2c9ed0) {
+   const _0x4afe62 = _0x4a97,
+      _0x1dcdef = _0x5ec88a['getComponent'](_0x4afe62(0xb5));
+   if (!_0x1dcdef || !_0x2c9ed0['enchantments']) return;
+   for (const _0x4b03e3 of _0x1dcdef[_0x4afe62(0xaf)]()) {
+      _0x1dcdef[_0x4afe62(0xc7)](_0x4b03e3[_0x4afe62(0xca)]['id']);
+   }
+   for (const _0x59c4c5 of _0x2c9ed0['enchantments']) {
+      _0x1dcdef[_0x4afe62(0xbb)]({
+         type: new EnchantmentType(_0x59c4c5[_0x4afe62(0xca)]),
+         level: _0x59c4c5['level'],
+      });
+   }
+}
+export const rowNumber = (_0x6838d3) => {
+   const _0x422915 = _0x4a97,
+      _0x520b0d = _0x6838d3['getComponent'](_0x422915(0xa1)),
+      _0x4c1d73 = _0x6838d3[_0x422915(0xb2)](_0x422915(0xae)) ?? 0x0,
+      _0x339465 = _0x520b0d['effectiveMax'] + _0x4c1d73;
+   let _0x2fb57b = Math['ceil'](_0x339465 / 0x14);
+   const _0x37cc4f = _0x339465 % 0x14;
+   return (
+      _0x37cc4f > 0x0 && _0x37cc4f < 0x2 && _0x2fb57b--,
+      Math[_0x422915(0x99)](0x0, _0x2fb57b - 0x1)
+   );
+};

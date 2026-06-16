@@ -1,23 +1,23 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:dr"
-    },
-    "tags": ["avanced"],
-    "pattern": ["#"],
-    "key": {
-      "#": {
-        "item": "minecraft:diamond"
-      }
-    },
-    "result": {
-      "item": "addon:dr"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:diamond"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:dr"
+      },
+      "tags": ["avanced"],
+      "pattern": ["#"],
+      "key": {
+         "#": {
+            "item": "minecraft:diamond"
+         }
+      },
+      "result": {
+         "item": "addon:dr"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:diamond"
+         }
+      ]
+   }
 }

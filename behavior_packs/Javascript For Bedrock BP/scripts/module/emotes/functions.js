@@ -2,6 +2,7 @@ import { system, world } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 
 import { emoteList, setting } from './database.js';
+import { addSound } from '../../plugin/utils.js';
 
 function playEmote(player, animName, emoteName) {
    if (!player.isValid) return;
@@ -14,12 +15,14 @@ function playEmote(player, animName, emoteName) {
          }
       });
    } catch (error) {
-      console.error(`[Emote] play command failed: ${error?.message ?? error}`);
+      console.error(
+         `[Emote] play command failed: ${error instanceof Error ? error.message : error}`,
+      );
       return;
    }
 
    player.onScreenDisplay?.setActionBar(`§aEmote: §f${emoteName}`);
-   if (setting.soundClick) player.playSound(setting.soundClick);
+   addSound(player, setting.soundClick);
 }
 
 function stopEmote(player, animName) {
@@ -33,18 +36,20 @@ function stopEmote(player, animName) {
          }
       });
    } catch (error) {
-      console.error(`[Emote] stop command failed: ${error?.message ?? error}`);
+      console.error(
+         `[Emote] stop command failed: ${error instanceof Error ? error.message : error}`,
+      );
       return;
    }
 
    player.onScreenDisplay?.setActionBar('§cEmote: §fSTOPPED');
-   if (setting.soundClick) player.playSound(setting.soundClick);
+   addSound(player, setting.soundClick);
 }
 
 function openSubMenu(player, group) {
    if (!player.isValid) return;
 
-   const title = group.title ? `§e§m§o§t§e§f${group.title}` : 'Emotes';
+   const title = group.title ? `§e§m§o§t§e§f` + '§r§8' + `${group.title}` : 'Emotes';
    const form = new ActionFormData().title(title).body('§7เลือกท่าทาง:');
 
    const items = group.items;
@@ -75,13 +80,14 @@ export function showMenuEmote(event) {
    const player = event.source;
    if (!player?.isValid) return;
 
-   const form = new ActionFormData().title('Emote Menu');
-   form.body('§7เลือกท่าทาง:');
+   const form = new ActionFormData().title('Emote Packs | รวมท่าทาง');
+   form.body('                     §7เลือกท่าทาง:');
+   form.divider();
    for (const group of emoteList) {
       form.button(group.name, group.icon || setting.iconDefault);
    }
 
-   form.label('                 @Sleeplite SMP');
+   form.label('               @Sleeplite 2026');
 
    if (setting.soundOpen) {
       player.playSound(setting.soundOpen);

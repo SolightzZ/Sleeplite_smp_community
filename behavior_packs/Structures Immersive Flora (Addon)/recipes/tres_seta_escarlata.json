@@ -1,26 +1,24 @@
 {
-	"format_version": "1.20.10",
-	"minecraft:recipe_shapeless": {
-		"description": {
-			"identifier": "tayi:tres_seta_escarlata"
-		},
-		"tags": [
-			"crafting_table"
-		],
-		"ingredients": [
-			{
-				"item": "tayi:seta_escarlata_tres"
-			}
-		],
-		"unlock": [
-			{
-				"item": "tayi:seta_escarlata_tres"
-			}
-		],
-		"result": {
-			"item": "tayi:seta_escarlata",
-			"count": 3
-		},
-		"priority": 0
-	}
+   "format_version": "1.12",
+   "minecraft:recipe_shapeless": {
+      "description": {
+         "identifier": "tayi:tres_seta_escarlata"
+      },
+      "tags": ["crafting_table"],
+      "ingredients": [
+         {
+            "item": "tayi:seta_escarlata_tres"
+         }
+      ],
+      "unlock": [
+         {
+            "item": "tayi:seta_escarlata_tres"
+         }
+      ],
+      "result": {
+         "item": "tayi:seta_escarlata",
+         "count": 3
+      },
+      "priority": 0
+   }
 }

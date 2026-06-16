@@ -1,6 +1,11 @@
 import { CONFIG_KEY, DEFAULT_CONFIG } from "./Config.js";
 
+const configCache = new Map();
+
 export function getPlayerConfig(player) {
+  const cached = configCache.get(player.id);
+  if (cached) return cached;
+
   let config = { ...DEFAULT_CONFIG };
 
   try {
@@ -23,5 +28,10 @@ export function getPlayerConfig(player) {
     console.error("[ Zoom ] Failed to load player config", error);
   }
 
+  configCache.set(player.id, config);
   return config;
+}
+
+export function clearZoomCache(playerId) {
+  configCache.delete(playerId);
 }

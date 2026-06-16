@@ -10,7 +10,7 @@ const CONFIG = {
    collisionStep: 0.45,
    collisionBuffer: 0.2,
    schedulerBudget: 4,
-   blockCacheMax: 1024,
+   blockCacheMax: 8192,
    blockCacheTTL: 400,
    swaySpeed: 0.87,
 };

@@ -1,26 +1,26 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:enchanting_table"
-    },
-    "tags": ["crafting_table"],
-    "pattern": ["B"],
-    "key": {
-      "B": {
-        "item": "minecraft:enchanting_table",
-        "data": 0
-      }
-    },
-    "result": {
-      "item": "minecraft:diamond",
-      "count": 2,
-      "data": 0
-    },
-    "unlock": [
-      {
-        "item": "minecraft:enchanting_table"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:enchanting_table"
+      },
+      "tags": ["crafting_table"],
+      "pattern": ["B"],
+      "key": {
+         "B": {
+            "item": "minecraft:enchanting_table",
+            "data": 0
+         }
+      },
+      "result": {
+         "item": "minecraft:diamond",
+         "count": 2,
+         "data": 0
+      },
+      "unlock": [
+         {
+            "item": "minecraft:enchanting_table"
+         }
+      ]
+   }
 }

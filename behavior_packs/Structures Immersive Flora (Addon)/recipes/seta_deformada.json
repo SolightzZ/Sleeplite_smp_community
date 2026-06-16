@@ -1,26 +1,24 @@
 {
-	"format_version": "1.20.10",
-	"minecraft:recipe_shapeless": {
-		"description": {
-			"identifier": "tayi:seta_deformada"
-		},
-		"tags": [
-			"crafting_table"
-		],
-		"ingredients": [
-			{
-				"item": "minecraft:warped_fungus"
-			}
-		],
-		"unlock": [
-			{
-				"item": "minecraft:warped_fungus"
-			}
-		],
-		"result": {
-			"item": "tayi:seta_deformada",
-			"count": 1
-		},
-		"priority": -1
-	}
+   "format_version": "1.12",
+   "minecraft:recipe_shapeless": {
+      "description": {
+         "identifier": "tayi:seta_deformada"
+      },
+      "tags": ["crafting_table"],
+      "ingredients": [
+         {
+            "item": "minecraft:warped_fungus"
+         }
+      ],
+      "unlock": [
+         {
+            "item": "minecraft:warped_fungus"
+         }
+      ],
+      "result": {
+         "item": "tayi:seta_deformada",
+         "count": 1
+      },
+      "priority": -1
+   }
 }

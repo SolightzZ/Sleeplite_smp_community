@@ -1,54 +1,95 @@
+import { system } from '@minecraft/server';
+import { Registry } from '../../router/core/registry.js';
+
 const tag = 'bright';
 const effect = 'night_vision';
+const REFRESH_TICKS = 6000;
 
 export const hasBright = (player) => {
-    if (!player || !player.isValid) return false;
-    return player.hasTag(tag);
+   if (!player || !player.isValid) return false;
+   return player.hasTag(tag);
 };
 
 const apply = (player) => {
-    if (!player || !player.isValid || player.hasTag(tag)) return false;
+   if (!player || !player.isValid || player.hasTag(tag)) return false;
 
-    try {
-        player.addTag(tag);
-    } catch {
-        return false;
-    }
+   try {
+      player.addTag(tag);
+   } catch {
+      return false;
+   }
 
-    try {
-        player.addEffect(effect, 20 * 60 * 20, {
-            amplifier: 0,
-            showParticles: false,
-        });
-    } catch {}
+   try {
+      player.addEffect(effect, REFRESH_TICKS + 200, {
+         amplifier: 0,
+         showParticles: false,
+      });
+   } catch (error) {
+      console.error('[fullbright] apply failed: ' + error);
+   }
 
-    return true;
+   return true;
 };
 
 const remove = (player) => {
-    if (!player || !player.isValid || !player.hasTag(tag)) return false;
+   if (!player || !player.isValid || !player.hasTag(tag)) return false;
 
-    try {
-        player.removeTag(tag);
-    } catch {
-        return false;
-    }
+   try {
+      player.removeTag(tag);
+   } catch {
+      return false;
+   }
 
-    if (player.getEffect(effect)) {
-        try {
-            player.removeEffect(effect);
-        } catch {}
-    }
+   if (player.getEffect(effect)) {
+      try {
+         player.removeEffect(effect);
+      } catch (error) {
+         console.error('[fullbright] remove failed: ' + error);
+      }
+   }
 
-    return true;
+   return true;
 };
 
 export const toggleBright = (player) => {
-    if (!player || !player.isValid) return false;
-    return player.hasTag(tag) ? !remove(player) : apply(player);
+   if (!player || !player.isValid) return false;
+   return player.hasTag(tag) ? !remove(player) : apply(player);
+};
+
+export const clearEffect = (player) => {
+   if (!player || !player.isValid) return;
+   try {
+      player.removeEffect(effect);
+   } catch {
+      // ignore if effect doesn't exist
+   }
 };
 
 export const resetBright = (player) => {
-    if (!player || !player.isValid) return;
-    if (player.hasTag(tag)) remove(player);
+   if (!player || !player.isValid) return;
+
+   try {
+      player.removeTag(tag);
+   } catch {
+      // ignore if tag doesn't exist
+   }
+
+   try {
+      player.removeEffect(effect);
+   } catch {
+      // ignore if effect doesn't exist
+   }
+};
+export const refreshBright = (player) => {
+   if (!player || !player.isValid) return;
+   if (player.hasTag(tag)) {
+      try {
+         player.addEffect(effect, REFRESH_TICKS + 200, {
+            amplifier: 0,
+            showParticles: false,
+         });
+      } catch (error) {
+         console.error('[fullbright] refresh failed: ' + error);
+      }
+   }
 };

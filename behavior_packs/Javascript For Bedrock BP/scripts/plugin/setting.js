@@ -6,6 +6,7 @@ import {
    world,
 } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
+import { addSound } from './utils.js';
 
 const OBJECTIVE_DEATHS = 'Deaths';
 const OBJECTIVE_DEATHS_PLUS = 'DeathsPlus';
@@ -22,13 +23,17 @@ const HUD_ELEMENT_BY_KEY = new Map([
 ]);
 
 const mainMenu = async (player) => {
-   const form = new ActionFormData()
-      .title('Settings Menu')
-      .button('Server Settings', 'textures/ui/sidebar_icons/categories')
-      .button('HUD Settings', 'textures/ui/sidebar_icons/my_characters');
-   const response = await form.show(player);
+   addSound(player, 'block.loom.use');
 
-   if (response.canceled) return;
+   const form = new ActionFormData();
+   form.title('Settings');
+   form.button('Server Settings', 'textures/ui/sidebar_icons/categories');
+   form.button('HUD Settings', 'textures/ui/sidebar_icons/my_characters');
+
+   const response = await form.show(player);
+   if (response.canceled) {
+      return;
+   }
 
    if (response.selection === 0) {
       await serverSettings(player);
@@ -95,21 +100,30 @@ const serverSettings = async (player) => {
    if (!deathsPlusObjective) return;
 
    try {
-      const form = new ModalFormData()
-         .title('Server Setting')
-         .toggle('Show XYZ', { defaultValue: world.gameRules.showCoordinates })
-         .toggle('Show Day', { defaultValue: world.gameRules.showDaysPlayed })
-         .toggle('Sidebar Death Count', {
-            defaultValue: hasDisplayObjective(DisplaySlotId.Sidebar, OBJECTIVE_DEATHS),
-         })
-         .toggle('Belowname Death Count', {
-            defaultValue: hasDisplayObjective(DisplaySlotId.BelowName, OBJECTIVE_DEATHS_PLUS),
-         })
-         .toggle('Locator Bar', { defaultValue: world.gameRules.locatorBar });
+      addSound(player, 'block.smithing_table.use');
+
+      const form = new ModalFormData();
+      form.title('Server Setting');
+      form.toggle('Show XYZ', { defaultValue: world.gameRules.showCoordinates });
+      form.toggle('Show Day', { defaultValue: world.gameRules.showDaysPlayed });
+
+      form.toggle('Sidebar Death Count', {
+         defaultValue: hasDisplayObjective(DisplaySlotId.Sidebar, OBJECTIVE_DEATHS),
+      });
+
+      form.toggle('Belowname Death Count', {
+         defaultValue: hasDisplayObjective(DisplaySlotId.BelowName, OBJECTIVE_DEATHS_PLUS),
+      });
+
+      form.toggle('Locator Bar', { defaultValue: world.gameRules.locatorBar });
+
       const response = await form.show(player);
 
-      if (response.canceled || !response.formValues) return;
+      if (response.canceled || !response.formValues) {
+         return;
+      }
       updateServerSettings(response.formValues, deathsObjective, deathsPlusObjective);
+      addSound(player, 'random.orb');
    } catch (error) {
       console.error('[ setting ] server_settings_error', error.message);
    }
@@ -142,15 +156,20 @@ const setHudElement = (player, element, hideElement) => {
 
 const hudSettings = async (player) => {
    try {
-      const form = new ModalFormData()
-         .title('HUD Setting')
-         .toggle('Item Text', { defaultValue: hasHudTag(player, HUD_ITEM_TEXT) })
-         .toggle('Status Effects', { defaultValue: hasHudTag(player, HUD_STATUS_EFFECTS) })
-         .toggle('ToolTips', { defaultValue: hasHudTag(player, HUD_TOOLTIPS) })
-         .toggle('Touch Controls', { defaultValue: hasHudTag(player, HUD_TOUCH_CONTROLS) });
+      addSound(player, 'block.cartography_table.use');
+
+      const form = new ModalFormData();
+      form.title('HUD Setting');
+      form.toggle('Item Text', { defaultValue: hasHudTag(player, HUD_ITEM_TEXT) });
+
+      form.toggle('Status Effects', { defaultValue: hasHudTag(player, HUD_STATUS_EFFECTS) });
+      form.toggle('ToolTips', { defaultValue: hasHudTag(player, HUD_TOOLTIPS) });
+      form.toggle('Touch Controls', { defaultValue: hasHudTag(player, HUD_TOUCH_CONTROLS) });
       const response = await form.show(player);
 
-      if (response.canceled || !response.formValues) return;
+      if (response.canceled || !response.formValues) {
+         return;
+      }
 
       const [hideItemText, hideStatusEffects, hideTooltips, hideTouchControls] =
          response.formValues;
@@ -158,6 +177,7 @@ const hudSettings = async (player) => {
       setHudElement(player, HUD_STATUS_EFFECTS, hideStatusEffects);
       setHudElement(player, HUD_TOOLTIPS, hideTooltips);
       setHudElement(player, HUD_TOUCH_CONTROLS, hideTouchControls);
+      addSound(player, 'random.orb');
    } catch (error) {
       console.error('[ setting ] hud_settings_error', error.message);
    }

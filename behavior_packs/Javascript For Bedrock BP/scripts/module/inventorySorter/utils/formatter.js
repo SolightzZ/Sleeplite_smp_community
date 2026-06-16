@@ -1,6 +1,6 @@
 import { ItemComponentTypes } from '@minecraft/server';
 
-export const formatBlockName = (typeId) => {
+const _formatName = (typeId) => {
    const raw = typeId ? typeId.replace('minecraft:', '') : 'unknown';
    const parts = raw.split('_');
    let out = '';
@@ -13,20 +13,13 @@ export const formatBlockName = (typeId) => {
    return out;
 };
 
+export const formatBlockName = (typeId) => _formatName(typeId);
+
 export const getItemDisplayName = (item) => {
    if (!item?.typeId) return 'zzz';
    if (item.nameTag) return item.nameTag.toLowerCase();
 
-   const raw = item.typeId.replace('minecraft:', '');
-   const parts = raw.split('_');
-   let out = '';
-
-   for (let i = 0; i < parts.length; i++) {
-      if (i > 0) out += ' ';
-      out += parts[i].charAt(0).toUpperCase() + parts[i].slice(1);
-   }
-
-   return out.toLowerCase();
+   return _formatName(item.typeId).toLowerCase();
 };
 
 export const getItemDurability = (item) => {

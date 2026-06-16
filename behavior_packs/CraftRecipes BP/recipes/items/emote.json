@@ -1,23 +1,23 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:emote"
-    },
-    "tags": ["avanced"],
-    "pattern": ["##", "##"],
-    "key": {
-      "#": {
-        "item": "minecraft:amethyst_shard"
-      }
-    },
-    "result": {
-      "item": "addon:emote"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:amethyst_shard"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:emote"
+      },
+      "tags": ["avanced"],
+      "pattern": ["##", "##"],
+      "key": {
+         "#": {
+            "item": "minecraft:amethyst_shard"
+         }
+      },
+      "result": {
+         "item": "addon:emote"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:amethyst_shard"
+         }
+      ]
+   }
 }

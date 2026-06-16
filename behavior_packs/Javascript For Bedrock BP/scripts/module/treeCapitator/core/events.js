@@ -1,6 +1,17 @@
 import { system } from "@minecraft/server";
 import { CFG } from "../config.js";
-import { state } from "./state.js";
+import {
+  getJobQueueLength,
+  getPlayerJobCount,
+  getPlayerLastJobEnd,
+  isTreePending,
+  addPendingTree,
+  incrementPlayerJobCount,
+  pushJob,
+  getRunHandle,
+  setRunHandle,
+  cleanupPlayerState
+} from "./state.js";
 import { LOG_TO_LEAF } from "../data/trees.js";
 import { getPlayerAxe } from "../utils/inventory.js";
 import { getBlockSafe } from "../utils/block.js";
@@ -15,12 +26,12 @@ export const TreeCapitatorBreakBlock = (event) => {
   if (!player || !player.isValid) return;
   if (!block || !block.isValid || !perm) return;
   if (!player.isSneaking) return;
-  if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
+  if (getJobQueueLength() >= CFG.maxGlobalJobs) return;
 
-  const pCount = state.playerJobCount.get(player.id) || 0;
+  const pCount = getPlayerJobCount(player.id);
   if (pCount >= CFG.maxJobsPerPlayer) return;
 
-  const lastEnd = state.playerLastJobEnd.get(player.id) || 0;
+  const lastEnd = getPlayerLastJobEnd(player.id);
   if (Date.now() - lastEnd < CFG.playerCooldownMs) return;
 
   const axe = getPlayerAxe(player);
@@ -34,7 +45,7 @@ export const TreeCapitatorBreakBlock = (event) => {
   const loc = block.location;
   const treeKey = `${dim.id}:${loc.x},${loc.y},${loc.z}`;
 
-  if (state.pendingTrees.has(treeKey)) return;
+  if (isTreePending(treeKey)) return;
 
   const above = getBlockSafe(dim, { x: loc.x, y: loc.y + 1, z: loc.z });
   if (!above || above.typeId !== logId) return;
@@ -42,10 +53,10 @@ export const TreeCapitatorBreakBlock = (event) => {
   const res = detectTree(above, logId, leafId);
   if (!res.foundLeaf || res.locations.length === 0) return;
 
-  state.pendingTrees.add(treeKey);
-  state.playerJobCount.set(player.id, pCount + 1);
+  addPendingTree(treeKey);
+  incrementPlayerJobCount(player.id);
 
-  state.jobQueue.push({
+  pushJob({
     player: player,
     dimension: dim,
     typeId: logId,
@@ -57,7 +68,9 @@ export const TreeCapitatorBreakBlock = (event) => {
     brokenCount: 0,
   });
 
-  if (state.runHandle === null) {
-    state.runHandle = system.runInterval(processJobs, 1);
+  if (getRunHandle() === null) {
+    setRunHandle(system.runInterval(processJobs, 1));
   }
 };
+
+

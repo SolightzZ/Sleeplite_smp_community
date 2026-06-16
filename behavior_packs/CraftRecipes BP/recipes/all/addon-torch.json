@@ -1,26 +1,26 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:torch"
-    },
-    "tags": ["crafting_table"],
-    "pattern": [" AA", " AA"],
-    "key": {
-      "A": {
-        "item": "minecraft:torch",
-        "data": 0
-      }
-    },
-    "result": {
-      "item": "minecraft:coal",
-      "count": 1,
-      "data": 1
-    },
-    "unlock": [
-      {
-        "item": "minecraft:torch"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:torch"
+      },
+      "tags": ["crafting_table"],
+      "pattern": [" AA", " AA"],
+      "key": {
+         "A": {
+            "item": "minecraft:torch",
+            "data": 0
+         }
+      },
+      "result": {
+         "item": "minecraft:coal",
+         "count": 1,
+         "data": 1
+      },
+      "unlock": [
+         {
+            "item": "minecraft:torch"
+         }
+      ]
+   }
 }

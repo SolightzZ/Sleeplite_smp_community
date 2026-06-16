@@ -46,5 +46,7 @@ export function zoomPlayerLeave(playerId) {
 }
 
 export function zoomEntityDie(event) {
-  disableZoom(event.deadEntity);
+  const entity = event.deadEntity;
+  if (entity.typeId !== 'minecraft:player') return;
+  disableZoom(entity);
 }

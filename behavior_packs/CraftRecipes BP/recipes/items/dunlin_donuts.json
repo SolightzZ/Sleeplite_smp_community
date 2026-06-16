@@ -1,26 +1,26 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:dunlin_donuts"
-    },
-    "tags": ["avanced"],
-    "pattern": ["#", "G"],
-    "key": {
-      "#": {
-        "item": "minecraft:poppy"
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:dunlin_donuts"
       },
-      "G": {
-        "item": "minecraft:glass_pane"
-      }
-    },
-    "result": {
-      "item": "addon:dunlin_donuts"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:poppy"
-      }
-    ]
-  }
+      "tags": ["avanced"],
+      "pattern": ["#", "G"],
+      "key": {
+         "#": {
+            "item": "minecraft:poppy"
+         },
+         "G": {
+            "item": "minecraft:glass_pane"
+         }
+      },
+      "result": {
+         "item": "addon:dunlin_donuts"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:poppy"
+         }
+      ]
+   }
 }

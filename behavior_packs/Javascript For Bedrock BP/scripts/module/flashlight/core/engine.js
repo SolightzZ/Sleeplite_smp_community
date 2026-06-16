@@ -59,6 +59,7 @@ export function FlashlightRunInterval() {
             const last = processQueue.pop();
             if (queueCursor.idx < processQueue.length) {
                 processQueue[queueCursor.idx] = last;
+                index--;
             } else {
                 queueCursor.idx = 0;
             }
@@ -74,6 +75,7 @@ export function FlashlightRunInterval() {
             const last = processQueue.pop();
             if (queueCursor.idx < processQueue.length) {
                 processQueue[queueCursor.idx] = last;
+                index--;
             } else {
                 queueCursor.idx = 0;
             }

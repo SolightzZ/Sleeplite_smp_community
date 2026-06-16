@@ -1,3 +1,4 @@
+import { showCamMenu } from '../module/cam/ui.js';
 import { showMenuEmote } from '../module/emotes/functions.js';
 import { FullBrightUseItem } from '../module/fullBright/events.js';
 import { onJobItemUse } from '../module/jobs/Job.js';
@@ -10,33 +11,28 @@ import { setting_main } from '../plugin/setting.js';
 import { handleSpongeAbsorption } from '../plugin/SpongeAbsorption.js';
 import { router } from './core/index.js';
 
-const itemHandlersMap = {
-    'minecraft:compass': setting_main,
-    'addon:protection': onItemUse,
-    'addon:trade': RewarditemUse,
-    'addon:emote': showMenuEmote,
-    'minecraft:paper': showMenuReport,
-    'minecraft:command_block': chatRankItemUse,
-    'minecraft:sponge': handleSpongeAbsorption,
-};
+const itemHandlers = [
+   { prefix: 'addon:magnet_', run: onMagnetUse },
+   { prefix: 'addon:fullbright_', run: FullBrightUseItem },
+   { prefix: 'addon:job', run: onJobItemUse },
+   { prefix: 'addon:setting', run: setting_main },
+   { prefix: 'addon:protection', run: onItemUse },
+   { prefix: 'addon:trade', run: RewarditemUse },
+   { prefix: 'addon:emote', run: showMenuEmote },
+   { prefix: 'addon:report', run: showMenuReport },
+   { prefix: 'addon:admin', run: chatRankItemUse },
+   { prefix: 'minecraft:sponge', run: handleSpongeAbsorption },
+   { prefix: 'addon:cam', run: showCamMenu },
+];
 
 router.on('afterItemUse', (event) => {
-    const stack = event.itemStack;
-    if (!stack) return;
+   const stack = event.itemStack;
+   if (!stack) return;
 
-    // 1. Direct O(1) matching for standard item types
-    const handler = itemHandlersMap[stack.typeId];
-    if (handler) {
-        handler(event);
-        return;
-    }
-
-    // 2. Prefix matching for dynamic items (e.g. magnets, job items)
-    if (stack.typeId.startsWith('addon:magnet_')) {
-        onMagnetUse(event);
-    } else if (stack.typeId.startsWith('addon:fullbright_')) {
-        FullBrightUseItem(event);
-    } else if (stack.typeId.startsWith('addon:job')) {
-        onJobItemUse(event);
-    }
+   for (const { prefix, run } of itemHandlers) {
+      if (stack.typeId.startsWith(prefix)) {
+         run(event);
+         return;
+      }
+   }
 });

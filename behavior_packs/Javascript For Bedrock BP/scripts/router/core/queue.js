@@ -1,3 +1,5 @@
+import { logError } from './logger.js';
+
 const _tasks = [];
 const _priority = [];
 let _pHead = 0;
@@ -33,7 +35,7 @@ export const Queue = {
             try {
                 task();
             } catch (error) {
-                console.error('[Queue] task error:', error?.message ?? error);
+                logError('Queue', 'task error', error);
             }
         }
 

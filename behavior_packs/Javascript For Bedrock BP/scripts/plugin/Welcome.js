@@ -5,9 +5,14 @@ const HEAD = '§e[+] Welcome to Sleeplite SMP Community';
 
 const pendingWelcomes = [];
 let welcomeLoopId;
-let objective;
 
-const getDeathObjective = () => (objective ??= world.scoreboard.getObjective(OBJECTIVE));
+const getDeathObjective = () => {
+   try {
+      return world.scoreboard.getObjective(OBJECTIVE);
+   } catch {
+      return undefined;
+   }
+};
 
 const getPlayerDeaths = (player, objective) => {
    if (!objective) return 0;

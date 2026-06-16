@@ -1,22 +1,29 @@
 {
-  "format_version": "1.12",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "sledgehammer_32d54d24"
-    },
-    "tags": ["avanced"],
-    "pattern": ["###", " I ", " I "],
-    "key": {
-      "#": {
-        "item": "minecraft:iron_block"
+   "format_version": "1.12",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "jsart:sledgehammer"
       },
-      "I": {
-        "item": "minecraft:iron_axe"
+      "tags": ["avanced"],
+      "pattern": ["###", " I ", " I "],
+      "key": {
+         "#": {
+            "item": "minecraft:iron_block"
+         },
+         "I": {
+            "item": "minecraft:iron_axe"
+         }
+      },
+
+      "unlock": [
+         {
+            "item": "minecraft:iron_axe"
+         }
+      ],
+
+      "result": {
+         "item": "jsart:sledgehammer",
+         "count": 1
       }
-    },
-    "result": {
-      "item": "jsart:sledgehammer",
-      "count": 1
-    }
-  }
+   }
 }

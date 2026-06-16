@@ -1,7 +1,8 @@
 import { ItemStack, system, EntityComponentTypes } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
-import { getPlayerById, buildInventoryMap, jobs, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
+import { getPlayerById, buildInventoryMap, JOB_DURATION_TICKS, jobs, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
 import { showMainMenu } from './Menu.js';
+import { addSound } from '../../plugin/utils.js';
 
 export const checkJobItems = (inv, job) => {
     const invMap = buildInventoryMap(inv);
@@ -97,6 +98,7 @@ export function completeJob(player) {
     const activeJobId = playerJobMap.get(player.id);
 
     if (activeJobId === undefined) {
+        addSound(player, 'random.fizz');
         player.sendMessage('[Job] ไม่มีงานที่กำลังดำเนินการอยู่');
         showMainMenu(player);
         return;
@@ -127,7 +129,7 @@ export function completeJob(player) {
     let timeStr = 'N/A';
 
     if (t) {
-        const secs = Math.ceil((20 * 60 * 20 - (system.currentTick - t.startTick)) / 20);
+        const secs = Math.ceil((JOB_DURATION_TICKS - (system.currentTick - t.startTick)) / 20);
 
         const m = Math.floor(secs / 60);
         const s = secs % 60;
@@ -159,11 +161,13 @@ export function showActiveJobForm(player, job, body, total) {
 
     showUI(player, form, (res) => {
         if (res.selection === 2) {
+            addSound(player, 'random.orb');
             showMainMenu(player);
             return;
         }
 
         if (res.selection === 1) {
+            addSound(player, 'vault.deactivate');
             showCancelConfirmForm(player, job);
             return;
         }
@@ -175,6 +179,7 @@ export function showActiveJobForm(player, job, body, total) {
         const missing = checkJobItems(inv, job);
 
         if (missing) {
+            addSound(player, 'random.fizz');
             player.sendMessage(`[Job] รายการที่ยังไม่ครบ: ${missing}`);
             return;
         }
@@ -203,6 +208,7 @@ export function showActiveJobForm(player, job, body, total) {
         job.status = 'done';
         saveData();
 
+        addSound(player, 'firework.twinkle');
         player.sendMessage(`[Job] งานเสร็จสมบูรณ์ ได้รับ ${total} เพชร`);
 
         const owner = getPlayerById(job.owner);
@@ -224,6 +230,7 @@ export function showCancelConfirmForm(player, job) {
 
     showUI(player, form, (res) => {
         if (res.selection === 1) {
+            addSound(player, 'random.orb');
             completeJob(player);
             return;
         }

@@ -1,9 +1,9 @@
+import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system } from '@minecraft/server';
+
 const DIM_OVERWORLD = 'minecraft:overworld';
 const DIM_NETHER = 'minecraft:nether';
 
 const PREFIX = '§7[§l\u00BB§r§7] ';
-const MSG_INVALID = '§c[x] กรุณาป้อนพิกัดเป็นตัวเลขที่ถูกต้อง';
-const MSG_USAGE = '§c[?] ใช้งาน: !xz หรือ !xz <x> <z> ตัวอย่าง: !xz 200 200';
 const MSG_UNSUPPORTED = '§eไม่สามารถคำนวณได้ในมิตินี้';
 
 const sendCalculated = (player, x, z) => {
@@ -29,37 +29,32 @@ const sendCalculated = (player, x, z) => {
    player.sendMessage(msg);
 };
 
-export const xz_main = (event) => {
-   const message = event.message;
-   if (!message.startsWith('!xz')) return;
+export function RegisterNetherCalc(init) {
+   init.customCommandRegistry.registerCommand(
+      {
+         name: 'addon:xz',
+         description: '§7คำนวณพิกัด Overworld ↔ Nether',
+         permissionLevel: CommandPermissionLevel.Any,
+         cheatsRequired: false,
+         optionalParameters: [
+            { name: 'x', type: CustomCommandParamType.Float },
+            { name: 'z', type: CustomCommandParamType.Float },
+         ],
+      },
+      (origin, x, z) => {
+         const player = origin.sourceEntity;
+         if (!player?.isValid) return { status: CustomCommandStatus.Failure, message: '§cใช้ได้เฉพาะผู้เล่น' };
 
-   const player = event.sender;
-   if (!player || !player.isValid) return;
-
-   event.cancel = true;
-
-   const trimmed = message.trim();
-   const sp1 = trimmed.indexOf(' ');
-
-   if (sp1 === -1) {
-      const loc = player.location;
-      sendCalculated(player, loc.x, loc.z);
-      return;
-   }
-
-   const sp2 = trimmed.indexOf(' ', sp1 + 1);
-   if (sp2 === -1) {
-      player.sendMessage(MSG_USAGE);
-      return;
-   }
-
-   const argX = parseFloat(trimmed.slice(sp1 + 1, sp2));
-   const argZ = parseFloat(trimmed.slice(sp2 + 1));
-
-   if (isNaN(argX) || isNaN(argZ)) {
-      player.sendMessage(MSG_INVALID);
-      return;
-   }
-
-   sendCalculated(player, argX, argZ);
-};
+         system.run(() => {
+            if (!player.isValid) return;
+            if (x === undefined || z === undefined) {
+               const loc = player.location;
+               sendCalculated(player, loc.x, loc.z);
+            } else {
+               sendCalculated(player, x, z);
+            }
+         });
+         return { status: CustomCommandStatus.Success };
+      },
+   );
+}

@@ -67,24 +67,26 @@ class DurabilityManager {
     const { player, itemStack: item, block } = event;
     if (!item || !item.hasComponent(this.#customComponentName)) return;
 
-    const tags = block.getTags();
-    const typeId = block.typeId;
-
     if (item.hasTag("minecraft:is_axe")) {
       system.runTimeout(() => {
-        this.#onStripLog(player, item, block, typeId);
+        const afterBlock = block?.dimension?.getBlock(block.location);
+        if (!afterBlock) return;
+        this.#onStripLog(player, item, afterBlock, block.typeId);
       }, 1);
     } else if (item.hasTag("minecraft:is_hoe")) {
-      system.runTimeout(() => {
-        this.#onTillDirt(player, item, block, typeId, tags);
-      }, 1);
+      const afterBlock = block?.dimension?.getBlock(block.location);
+      if (!afterBlock) return;
+      const tags = afterBlock.getTags();
+      this.#onTillDirt(player, item, afterBlock, afterBlock.typeId, tags);
     } else if (item.hasTag("minecraft:is_shovel")) {
-      this.#onCoarseDirt(player, item, block);
+      const afterBlock = block?.dimension?.getBlock(block.location);
+      if (!afterBlock) return;
+      this.#onCoarseDirt(player, item, afterBlock);
     }
   }
 
-  #onStripLog(player, item, afterBlock, beforeTypeId) {
-    if (beforeTypeId.includes("stripped") || !afterBlock.typeId.includes("stripped")) return;
+  #onStripLog(player, item, block, beforeTypeId) {
+    if (beforeTypeId.includes("stripped") || !block.typeId.includes("stripped")) return;
 
     let materialSound = "";
     if (beforeTypeId === "minecraft:cherry_log") materialSound = "step.cherry_wood";
@@ -94,7 +96,7 @@ class DurabilityManager {
 
     if (!materialSound) return;
 
-    player.dimension.playSound(materialSound, afterBlock.center(), { volume: 1, pitch: 0.8 });
+    player.dimension.playSound(materialSound, block.center(), { volume: 1, pitch: 0.8 });
 
     const durability = item.getComponent(ItemComponentTypes.Durability);
     if (!durability || this.#activateUnbreaking(item, durability)) return;
@@ -121,14 +123,12 @@ class DurabilityManager {
 
     if (!isCoarsable || hasBlockAbove) return;
 
-    system.run(() => {
-      player.dimension.playSound("use.grass", block.center(), { volume: 1, pitch: 0.8 });
+    player.dimension.playSound("use.grass", block.center(), { volume: 1, pitch: 0.8 });
 
-      const durability = item.getComponent(ItemComponentTypes.Durability);
-      if (!durability || this.#activateUnbreaking(item, durability)) return;
+    const durability = item.getComponent(ItemComponentTypes.Durability);
+    if (!durability || this.#activateUnbreaking(item, durability)) return;
 
-      this.#reduceDurability(player, item, durability, false);
-    });
+    this.#reduceDurability(player, item, durability, false);
   }
 
   #coarseBlock(block) {
@@ -209,12 +209,8 @@ class DurabilityManager {
     }
 
     const player = event.hurtEntity;
-    const damage = event.damage;
     const armor = player.getComponent(EntityComponentTypes.Equippable);
     if (!armor) return;
-
-    const { totalArmor, totalToughness } = this.#calculateArmorStats(armor);
-    const originalDamage = Math.floor(this.#getOriginalDamage(totalArmor, totalToughness, damage));
 
     const equipmentSlots = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet];
     for (const slot of equipmentSlots) {
@@ -222,16 +218,22 @@ class DurabilityManager {
       if (!equipment || !equipment?.hasComponent(this.#customComponentName)) continue;
       const enchantable = equipment.getComponent(ItemComponentTypes.Enchantable);
       const durability = equipment.getComponent(ItemComponentTypes.Durability);
+      if (!durability) continue;
 
-      if (!durability || !enchantable?.hasEnchantment("unbreaking")) continue;
+      if (enchantable?.hasEnchantment("unbreaking")) {
+        const unbreakingLv = enchantable.getEnchantment("unbreaking").level;
+        const ignoreChance = 1 / (unbreakingLv + 1);
+        if (Math.random() > ignoreChance) continue;
+      }
 
-      const unbreakingLv = enchantable.getEnchantment("unbreaking").level;
-      const ignoreChance = (60 + 40 / (unbreakingLv + 1)) / 100;
-      if (Math.random() < ignoreChance) continue;
-
-      const damageToRestore = Math.max(1, Math.floor(originalDamage / 4));
-      durability.damage = Math.min(durability.maxDurability, durability.damage + damageToRestore);
-      armor.setEquipment(slot, equipment);
+      if (durability.damage + 1 >= durability.maxDurability) {
+        const slotEnum = { 'Head': EquipmentSlot.Head, 'Chest': EquipmentSlot.Chest, 'Legs': EquipmentSlot.Legs, 'Feet': EquipmentSlot.Feet };
+        armor.getEquipmentSlot(slot)?.setItem(undefined);
+        player.dimension.playSound("random.break", player.location, { volume: 1.0, pitch: 0.9 });
+      } else {
+        durability.damage += 1;
+        armor.setEquipment(slot, equipment);
+      }
     }
   }
 

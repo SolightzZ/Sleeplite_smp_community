@@ -52,9 +52,12 @@ const consumeSponge = (container, slot) => {
     return true;
 };
 
+let _spongePermutation;
+const getSpongePerm = () => _spongePermutation || (_spongePermutation = BlockPermutation.resolve(SPONGE));
+
 const absorbWaterWithSponge = (container, slot, block) => {
     if (!consumeSponge(container, slot)) return;
-    block.setPermutation(BlockPermutation.resolve(SPONGE));
+    block.setPermutation(getSpongePerm());
 };
 
 export const handleSpongeAbsorption = (event) => {

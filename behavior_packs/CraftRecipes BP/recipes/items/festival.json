@@ -1,23 +1,23 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:festival"
-    },
-    "tags": ["avanced"],
-    "pattern": ["##", "##"],
-    "key": {
-      "#": {
-        "item": "minecraft:bamboo"
-      }
-    },
-    "result": {
-      "item": "addon:festival"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:bamboo"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:festival"
+      },
+      "tags": ["avanced"],
+      "pattern": ["##", "##"],
+      "key": {
+         "#": {
+            "item": "minecraft:bamboo"
+         }
+      },
+      "result": {
+         "item": "addon:festival"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:bamboo"
+         }
+      ]
+   }
 }

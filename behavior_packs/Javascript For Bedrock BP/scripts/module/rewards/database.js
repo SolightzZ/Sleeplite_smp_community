@@ -1,10 +1,15 @@
 import { config } from './constants.js';
 
+const cache = new Map();
+
 function load(player) {
+    const cached = cache.get(player.id);
+    if (cached !== undefined) return cached;
     try {
         const rawData = player.getDynamicProperty(config.dbKey);
-        if (!rawData) return { last: null, count: 0 };
-        return JSON.parse(rawData);
+        const data = !rawData ? { last: null, count: 0 } : JSON.parse(rawData);
+        cache.set(player.id, data);
+        return data;
     } catch (error) {
         console.error('[ Rewards ] load Error: ' + error);
         return { last: null, count: 0 };
@@ -12,6 +17,7 @@ function load(player) {
 }
 
 function save(player, data) {
+    cache.set(player.id, data);
     try {
         const jsonString = JSON.stringify(data);
         player.setDynamicProperty(config.dbKey, jsonString);
@@ -23,8 +29,13 @@ function save(player, data) {
 }
 
 function reset(player) {
+    cache.delete(player.id);
     console.warn('Reward reset' + config.dbKey);
     player.setDynamicProperty(config.dbKey, undefined);
+}
+
+export function clearRewardCache(playerId) {
+    cache.delete(playerId);
 }
 
 export { load, save, reset };

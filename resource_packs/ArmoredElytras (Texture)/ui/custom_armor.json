@@ -1,198 +1,9 @@
 {
    "namespace": "customarmor",
 
-   // Touch
-   "custom_armor_panel_non_centered": {
-      "$key": "!custom_armor.",
-      "$atext": "$actionbar_text",
-      "type": "panel",
-      "size": [0, 0],
-      "layer": 30,
-      "anchor_from": "top_left",
-      "anchor_to": "top_left",
-      "visible": "(('%.14s' * $atext) = $key)",
-      "controls": [
-         { "0@customarmor.render_empty": { "offset": [0, 0], "$i": 2 } },
-         { "1@customarmor.render_full": { "offset": [0, 0], "$i": 2 } },
-         { "2@customarmor.render_half": { "offset": [0, 0], "$i": 1 } },
-
-         { "3@customarmor.render_empty": { "offset": [8, 0], "$i": 4 } },
-         { "4@customarmor.render_full": { "offset": [8, 0], "$i": 4 } },
-         { "5@customarmor.render_half": { "offset": [8, 0], "$i": 3 } },
-
-         { "6@customarmor.render_empty": { "offset": [16, 0], "$i": 6 } },
-         { "7@customarmor.render_full": { "offset": [16, 0], "$i": 6 } },
-         { "8@customarmor.render_half": { "offset": [16, 0], "$i": 5 } },
-
-         { "9@customarmor.render_empty": { "offset": [24, 0], "$i": 8 } },
-         { "10@customarmor.render_full": { "offset": [24, 0], "$i": 8 } },
-         { "11@customarmor.render_half": { "offset": [24, 0], "$i": 7 } },
-
-         { "12@customarmor.render_empty": { "offset": [32, 0], "$i": 10 } },
-         { "13@customarmor.render_full": { "offset": [32, 0], "$i": 10 } },
-         { "14@customarmor.render_half": { "offset": [32, 0], "$i": 9 } },
-
-         { "15@customarmor.render_empty": { "offset": [40, 0], "$i": 12 } },
-         { "16@customarmor.render_full": { "offset": [40, 0], "$i": 12 } },
-         { "17@customarmor.render_half": { "offset": [40, 0], "$i": 11 } },
-
-         { "18@customarmor.render_empty": { "offset": [48, 0], "$i": 14 } },
-         { "19@customarmor.render_full": { "offset": [48, 0], "$i": 14 } },
-         { "20@customarmor.render_half": { "offset": [48, 0], "$i": 13 } },
-
-         { "21@customarmor.render_empty": { "offset": [56, 0], "$i": 16 } },
-         { "22@customarmor.render_full": { "offset": [56, 0], "$i": 16 } },
-         { "23@customarmor.render_half": { "offset": [56, 0], "$i": 15 } },
-
-         { "24@customarmor.render_empty": { "offset": [64, 0], "$i": 18 } },
-         { "25@customarmor.render_full": { "offset": [64, 0], "$i": 18 } },
-         { "26@customarmor.render_half": { "offset": [64, 0], "$i": 17 } },
-
-         { "27@customarmor.render_empty": { "offset": [72, 0], "$i": 20 } },
-         { "28@customarmor.render_full": { "offset": [72, 0], "$i": 20 } },
-         { "29@customarmor.render_half": { "offset": [72, 0], "$i": 19 } }
-      ]
-   },
-
-   "custom_armor_factory_non_centered": {
-      "type": "panel",
-      "factory": {
-         "name": "hud_actionbar_text_factory",
-         "control_ids": {
-            "hud_actionbar_text": "custom_armor_panel_non_centerd@customarmor.custom_armor_panel_non_centered"
-         }
-      }
-   },
-
-   // Touch Classic
-   "custom_armor_panel_clasic": {
-      "$key": "!custom_armor.",
-      "$atext": "$actionbar_text",
-      "type": "panel",
-      "size": ["100%c", 9],
-      "offset": [-1, -20],
-      "layer": 30,
-      "anchor_from": "bottom_left",
-      "anchor_to": "bottom_left",
-      "visible": "(('%.14s' * $atext) = $key)",
-
-      "controls": [
-         { "0@customarmor.render_empty": { "offset": [0, 0], "$i": 2 } },
-         { "1@customarmor.render_full": { "offset": [0, 0], "$i": 2 } },
-         { "2@customarmor.render_half": { "offset": [0, 0], "$i": 1 } },
-
-         { "3@customarmor.render_empty": { "offset": [8, 0], "$i": 4 } },
-         { "4@customarmor.render_full": { "offset": [8, 0], "$i": 4 } },
-         { "5@customarmor.render_half": { "offset": [8, 0], "$i": 3 } },
-
-         { "6@customarmor.render_empty": { "offset": [16, 0], "$i": 6 } },
-         { "7@customarmor.render_full": { "offset": [16, 0], "$i": 6 } },
-         { "8@customarmor.render_half": { "offset": [16, 0], "$i": 5 } },
-
-         { "9@customarmor.render_empty": { "offset": [24, 0], "$i": 8 } },
-         { "10@customarmor.render_full": { "offset": [24, 0], "$i": 8 } },
-         { "11@customarmor.render_half": { "offset": [24, 0], "$i": 7 } },
-
-         { "12@customarmor.render_empty": { "offset": [32, 0], "$i": 10 } },
-         { "13@customarmor.render_full": { "offset": [32, 0], "$i": 10 } },
-         { "14@customarmor.render_half": { "offset": [32, 0], "$i": 9 } },
-
-         { "15@customarmor.render_empty": { "offset": [40, 0], "$i": 12 } },
-         { "16@customarmor.render_full": { "offset": [40, 0], "$i": 12 } },
-         { "17@customarmor.render_half": { "offset": [40, 0], "$i": 11 } },
-
-         { "18@customarmor.render_empty": { "offset": [48, 0], "$i": 14 } },
-         { "19@customarmor.render_full": { "offset": [48, 0], "$i": 14 } },
-         { "20@customarmor.render_half": { "offset": [48, 0], "$i": 13 } },
-
-         { "21@customarmor.render_empty": { "offset": [56, 0], "$i": 16 } },
-         { "22@customarmor.render_full": { "offset": [56, 0], "$i": 16 } },
-         { "23@customarmor.render_half": { "offset": [56, 0], "$i": 15 } },
-
-         { "24@customarmor.render_empty": { "offset": [64, 0], "$i": 18 } },
-         { "25@customarmor.render_full": { "offset": [64, 0], "$i": 18 } },
-         { "26@customarmor.render_half": { "offset": [64, 0], "$i": 17 } },
-
-         { "27@customarmor.render_empty": { "offset": [72, 0], "$i": 20 } },
-         { "28@customarmor.render_full": { "offset": [72, 0], "$i": 20 } },
-         { "29@customarmor.render_half": { "offset": [72, 0], "$i": 19 } }
-      ]
-   },
-
-   "custom_armor_factory_clasic": {
-      "type": "panel",
-      "factory": {
-         "name": "hud_actionbar_text_factory",
-         "control_ids": {
-            "hud_actionbar_text": "custom_armor_panel_clasic@customarmor.custom_armor_panel_clasic"
-         }
-      }
-   },
-
-   // PC Classic
-   "custom_armor_panel": {
-      "$key": "!custom_armor.",
-      "$atext": "$actionbar_text",
-      "type": "panel",
-      "size": ["100%c", 9],
-      "offset": [-1, -20],
-      "layer": 30,
-      "anchor_from": "bottom_left",
-      "anchor_to": "bottom_left",
-      "visible": "(('%.14s' * $atext) = $key)",
-
-      "controls": [
-         { "0@customarmor.render_empty": { "offset": [0, 0], "$i": 2 } },
-         { "1@customarmor.render_full": { "offset": [0, 0], "$i": 2 } },
-         { "2@customarmor.render_half": { "offset": [0, 0], "$i": 1 } },
-
-         { "3@customarmor.render_empty": { "offset": [8, 0], "$i": 4 } },
-         { "4@customarmor.render_full": { "offset": [8, 0], "$i": 4 } },
-         { "5@customarmor.render_half": { "offset": [8, 0], "$i": 3 } },
-
-         { "6@customarmor.render_empty": { "offset": [16, 0], "$i": 6 } },
-         { "7@customarmor.render_full": { "offset": [16, 0], "$i": 6 } },
-         { "8@customarmor.render_half": { "offset": [16, 0], "$i": 5 } },
-
-         { "9@customarmor.render_empty": { "offset": [24, 0], "$i": 8 } },
-         { "10@customarmor.render_full": { "offset": [24, 0], "$i": 8 } },
-         { "11@customarmor.render_half": { "offset": [24, 0], "$i": 7 } },
-
-         { "12@customarmor.render_empty": { "offset": [32, 0], "$i": 10 } },
-         { "13@customarmor.render_full": { "offset": [32, 0], "$i": 10 } },
-         { "14@customarmor.render_half": { "offset": [32, 0], "$i": 9 } },
-
-         { "15@customarmor.render_empty": { "offset": [40, 0], "$i": 12 } },
-         { "16@customarmor.render_full": { "offset": [40, 0], "$i": 12 } },
-         { "17@customarmor.render_half": { "offset": [40, 0], "$i": 11 } },
-
-         { "18@customarmor.render_empty": { "offset": [48, 0], "$i": 14 } },
-         { "19@customarmor.render_full": { "offset": [48, 0], "$i": 14 } },
-         { "20@customarmor.render_half": { "offset": [48, 0], "$i": 13 } },
-
-         { "21@customarmor.render_empty": { "offset": [56, 0], "$i": 16 } },
-         { "22@customarmor.render_full": { "offset": [56, 0], "$i": 16 } },
-         { "23@customarmor.render_half": { "offset": [56, 0], "$i": 15 } },
-
-         { "24@customarmor.render_empty": { "offset": [64, 0], "$i": 18 } },
-         { "25@customarmor.render_full": { "offset": [64, 0], "$i": 18 } },
-         { "26@customarmor.render_half": { "offset": [64, 0], "$i": 17 } },
-
-         { "27@customarmor.render_empty": { "offset": [72, 0], "$i": 20 } },
-         { "28@customarmor.render_full": { "offset": [72, 0], "$i": 20 } },
-         { "29@customarmor.render_half": { "offset": [72, 0], "$i": 19 } }
-      ]
-   },
-
-   "custom_armor_factory": {
-      "type": "panel",
-      "factory": {
-         "name": "hud_actionbar_text_factory",
-         "control_ids": {
-            "hud_actionbar_text": "custom_armor_panel@customarmor.custom_armor_panel"
-         }
-      }
-   },
+   // ─────────────────────────────────────────────────────────────
+   // RENDERERS
+   // ─────────────────────────────────────────────────────────────
 
    "render_full": {
       "$i|default": 0,
@@ -222,5 +33,132 @@
       "anchor_to": "left_middle",
       "texture": "textures/ui/armor_empty",
       "visible": "(($atext - ('%.14s' * $atext)) < ($i - 1))"
+   },
+
+   // ─────────────────────────────────────────────────────────────
+   // ICONS
+   // ─────────────────────────────────────────────────────────────
+
+   "armor_icons": {
+      "$atext": "$actionbar_text",
+      "type": "panel",
+      "size": ["100%c", 9],
+      "anchor_from": "left_middle",
+      "anchor_to": "left_middle",
+      "controls": [
+         { "0@customarmor.render_empty": { "offset": [0, 0], "$i": 2 } },
+         { "1@customarmor.render_full": { "offset": [0, 0], "$i": 2 } },
+         { "2@customarmor.render_half": { "offset": [0, 0], "$i": 1 } },
+         { "3@customarmor.render_empty": { "offset": [8, 0], "$i": 4 } },
+         { "4@customarmor.render_full": { "offset": [8, 0], "$i": 4 } },
+         { "5@customarmor.render_half": { "offset": [8, 0], "$i": 3 } },
+         { "6@customarmor.render_empty": { "offset": [16, 0], "$i": 6 } },
+         { "7@customarmor.render_full": { "offset": [16, 0], "$i": 6 } },
+         { "8@customarmor.render_half": { "offset": [16, 0], "$i": 5 } },
+         { "9@customarmor.render_empty": { "offset": [24, 0], "$i": 8 } },
+         { "10@customarmor.render_full": { "offset": [24, 0], "$i": 8 } },
+         { "11@customarmor.render_half": { "offset": [24, 0], "$i": 7 } },
+         { "12@customarmor.render_empty": { "offset": [32, 0], "$i": 10 } },
+         { "13@customarmor.render_full": { "offset": [32, 0], "$i": 10 } },
+         { "14@customarmor.render_half": { "offset": [32, 0], "$i": 9 } },
+         { "15@customarmor.render_empty": { "offset": [40, 0], "$i": 12 } },
+         { "16@customarmor.render_full": { "offset": [40, 0], "$i": 12 } },
+         { "17@customarmor.render_half": { "offset": [40, 0], "$i": 11 } },
+         { "18@customarmor.render_empty": { "offset": [48, 0], "$i": 14 } },
+         { "19@customarmor.render_full": { "offset": [48, 0], "$i": 14 } },
+         { "20@customarmor.render_half": { "offset": [48, 0], "$i": 13 } },
+         { "21@customarmor.render_empty": { "offset": [56, 0], "$i": 16 } },
+         { "22@customarmor.render_full": { "offset": [56, 0], "$i": 16 } },
+         { "23@customarmor.render_half": { "offset": [56, 0], "$i": 15 } },
+         { "24@customarmor.render_empty": { "offset": [64, 0], "$i": 18 } },
+         { "25@customarmor.render_full": { "offset": [64, 0], "$i": 18 } },
+         { "26@customarmor.render_half": { "offset": [64, 0], "$i": 17 } },
+         { "27@customarmor.render_empty": { "offset": [72, 0], "$i": 20 } },
+         { "28@customarmor.render_full": { "offset": [72, 0], "$i": 20 } },
+         { "29@customarmor.render_half": { "offset": [72, 0], "$i": 19 } }
+      ]
+   },
+
+   // ─────────────────────────────────────────────────────────────
+   // ROWS - BASE
+   // ─────────────────────────────────────────────────────────────
+
+   "armor_row_0": { "$atext": "$actionbar_text", "type": "panel", "size": [89, 9], "offset": [-1, -20], "anchor_from": "left_middle", "anchor_to": "left_middle", "visible": "(($atext - ('%.17s' * $atext)) = 0)", "controls": [{ "icons@customarmor.armor_icons": {} }] },
+   "armor_row_1": { "$atext": "$actionbar_text", "type": "panel", "size": [89, 9], "offset": [-1, -30], "anchor_from": "left_middle", "anchor_to": "left_middle", "visible": "(($atext - ('%.17s' * $atext)) = 1)", "controls": [{ "icons@customarmor.armor_icons": {} }] },
+   "armor_row_2": { "$atext": "$actionbar_text", "type": "panel", "size": [89, 9], "offset": [-1, -40], "anchor_from": "left_middle", "anchor_to": "left_middle", "visible": "(($atext - ('%.17s' * $atext)) = 2)", "controls": [{ "icons@customarmor.armor_icons": {} }] },
+   "armor_row_3": { "$atext": "$actionbar_text", "type": "panel", "size": [89, 9], "offset": [-1, -50], "anchor_from": "left_middle", "anchor_to": "left_middle", "visible": "(($atext - ('%.17s' * $atext)) = 3)", "controls": [{ "icons@customarmor.armor_icons": {} }] },
+
+   // ─────────────────────────────────────────────────────────────
+   // ROWS - TOUCH
+   // ─────────────────────────────────────────────────────────────
+
+   "armor_row_0_touch@customarmor.armor_row_0": { "size": [0, 0], "offset": [0, 0],  "anchor_from": "top_left", "anchor_to": "top_left" },
+   "armor_row_1_touch@customarmor.armor_row_1": { "size": [0, 0], "offset": [0, 10], "anchor_from": "top_left", "anchor_to": "top_left" },
+   "armor_row_2_touch@customarmor.armor_row_2": { "size": [0, 0], "offset": [0, 20], "anchor_from": "top_left", "anchor_to": "top_left" },
+   "armor_row_3_touch@customarmor.armor_row_3": { "size": [0, 0], "offset": [0, 30], "anchor_from": "top_left", "anchor_to": "top_left" },
+
+   // ─────────────────────────────────────────────────────────────
+   // PANEL BASE
+   // ─────────────────────────────────────────────────────────────
+
+   "custom_armor_panel_base": {
+      "$key": "!custom_armor.",
+      "$atext": "$actionbar_text",
+      "type": "panel",
+      "size": ["100%c", 9],
+      "layer": 30,
+      "anchor_from": "bottom_left",
+      "anchor_to": "bottom_left",
+      "visible": "(('%.14s' * $atext) = $key)",
+      "controls": [{ "r0@customarmor.armor_row_0": {} }, { "r1@customarmor.armor_row_1": {} }, { "r2@customarmor.armor_row_2": {} }, { "r3@customarmor.armor_row_3": {} }]
+   },
+
+   "custom_armor_panel@customarmor.custom_armor_panel_base": {},
+   "custom_armor_panel_clasic@customarmor.custom_armor_panel_base": {},
+
+   "custom_armor_factory": {
+      "type": "panel",
+      "factory": {
+         "name": "hud_actionbar_text_factory",
+         "control_ids": {
+            "hud_actionbar_text": "custom_armor_panel@customarmor.custom_armor_panel"
+         }
+      }
+   },
+
+   "custom_armor_factory_clasic": {
+      "type": "panel",
+      "factory": {
+         "name": "hud_actionbar_text_factory",
+         "control_ids": {
+            "hud_actionbar_text": "custom_armor_panel_clasic@customarmor.custom_armor_panel_clasic"
+         }
+      }
+   },
+
+   // ─────────────────────────────────────────────────────────────
+   // TOUCH (non-centered)
+   // ─────────────────────────────────────────────────────────────
+
+   "custom_armor_panel_non_centered": {
+      "$key": "!custom_armor.",
+      "$atext": "$actionbar_text",
+      "type": "panel",
+      "size": [0, 0],
+      "layer": 30,
+      "anchor_from": "top_left",
+      "anchor_to": "top_left",
+      "visible": "(('%.14s' * $atext) = $key)",
+      "controls": [{ "r0@customarmor.armor_row_0_touch": {} }, { "r1@customarmor.armor_row_1_touch": {} }, { "r2@customarmor.armor_row_2_touch": {} }, { "r3@customarmor.armor_row_3_touch": {} }]
+   },
+
+   "custom_armor_factory_non_centered": {
+      "type": "panel",
+      "factory": {
+         "name": "hud_actionbar_text_factory",
+         "control_ids": {
+            "hud_actionbar_text": "custom_armor_panel_non_centered@customarmor.custom_armor_panel_non_centered"
+         }
+      }
    }
 }

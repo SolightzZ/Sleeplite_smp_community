@@ -18,12 +18,6 @@
                         {
                            "custom_armor_factory_non_centered@customarmor.custom_armor_factory_non_centered": {}
                         }
-                     ],
-                     "bindings": [
-                        {
-                           "binding_name": "#show_survival_ui",
-                           "binding_name_override": "#visible"
-                        }
                      ]
                   }
                }
@@ -74,34 +68,5 @@
             ]
          }
       ]
-   },
-
-   "anim_actionbar_text_alpha_out": {
-      "anim_type": "alpha",
-      "easing": "in_expo",
-      "duration": 3,
-      "from": 0,
-      "to": 0,
-      "destroy_at_end": "hud_actionbar_text",
-      "end_event": "hud_actionbar_text_complete"
-   },
-
-   "anim_title_background_alpha_in": {
-      "anim_type": "alpha",
-      "easing": "linear",
-      "duration": "$title_fade_in_time",
-      "from": 0,
-      "to": 0,
-      "next": "@hud.anim_title_background_alpha_stay"
-   },
-
-   "anim_actionbar_text_background_alpha_out": {
-      "anim_type": "alpha",
-      "easing": "in_expo",
-      "duration": 3,
-      "from": 0,
-      "to": 0,
-      "destroy_at_end": "hud_actionbar_text",
-      "end_event": "hud_actionbar_text_complete"
    }
 }

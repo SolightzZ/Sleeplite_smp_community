@@ -1,3 +1,5 @@
+import { INVENTORY_SLOTS } from '../config.js';
+
 export const applyChessPattern = (items, containerSize) => {
     const result = new Array(containerSize);
     for (let i = 0; i < containerSize; i++) result[i] = undefined;
@@ -16,7 +18,7 @@ export const applyChessPattern = (items, containerSize) => {
 };
 
 export const applyLinePattern = (items, containerSize) => {
-    const ROW = 9;
+    const ROW = INVENTORY_SLOTS.ROW;
     const result = new Array(containerSize);
 
     for (let i = 0; i < containerSize; i++) result[i] = undefined;
@@ -35,7 +37,7 @@ export const applyLinePattern = (items, containerSize) => {
 };
 
 export const applyColumnPattern = (items, containerSize) => {
-    const ROW = 9;
+    const ROW = INVENTORY_SLOTS.ROW;
     const result = new Array(containerSize);
 
     for (let i = 0; i < containerSize; i++) result[i] = undefined;

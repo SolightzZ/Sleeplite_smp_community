@@ -2,171 +2,206 @@ import { Registry } from '../../../router/core/registry.js';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 import { ITEM, PREDEFINED_RANKS } from '../constants/constants.js';
 import { refreshNameTag } from '../core/nametag.js';
-import { addRank, getActiveRank, getAllServerRanks, getOwnedRanks, removeRanks, renameRank, setActiveRank } from '../core/tagManager.js';
+import {
+   addRank,
+   getActiveRank,
+   getAllServerRanks,
+   getOwnedRanks,
+   removeRanks,
+   renameRank,
+   setActiveRank,
+} from '../core/tagManager.js';
 import { isValidPlayer } from '../utils/player.js';
+import { addSound } from '../../../plugin/utils.js';
 
 const getPredefinedRankList = () => {
-    const entries = Object.entries(PREDEFINED_RANKS);
-    return entries.map(([key, icon]) => ({
-        key,
-        label: `${icon} ${key}`,
-        full: icon,
-    }));
+   const entries = Object.entries(PREDEFINED_RANKS);
+   return entries.map(([key, icon]) => ({
+      key,
+      label: `${icon} ${key}`,
+      full: icon,
+   }));
 };
 
 const showMenuAdd = (admin, target) => {
-    if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
+   if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
-    const predefined = getPredefinedRankList();
-    const predefinedLabels = predefined.map((p) => p.label);
-    const existingRanks = getAllServerRanks();
-    const existingList = existingRanks.length ? existingRanks : ['(ไม่มี)'];
+   addSound(admin, 'block.smithing_table.use');
 
-    const form = new ModalFormData()
-        .title('เพิ่ม / เปลี่ยนยศ')
-        .dropdown('เลือกยศสำเร็จรูป:', ['-- เลือก --', ...predefinedLabels])
-        .textField('หรือตั้งชื่อยศใหม่:', 'เช่น [Admin]')
-        .dropdown('หรือเลือกจากที่มีอยู่:', existingList);
+   const predefined = getPredefinedRankList();
+   const predefinedLabels = predefined.map((p) => p.label);
+   const existingRanks = getAllServerRanks();
+   const existingList = existingRanks.length ? existingRanks : ['(ไม่มี)'];
 
-    form.show(admin).then((res) => {
-        if (res.canceled) return;
+   const form = new ModalFormData();
+   form.title('เพิ่ม / เปลี่ยนยศ');
+   form.dropdown('เลือกยศสำเร็จรูป:', ['-- เลือก --', ...predefinedLabels]);
+   form.textField('หรือตั้งชื่อยศใหม่:', 'เช่น [Admin]');
+   form.dropdown('หรือเลือกจากที่มีอยู่:', existingList);
 
-        const predefinedIndex = Number(res.formValues[0] ?? 0);
-        const input = String(res.formValues[1] ?? '').trim();
-        const existingIndex = Number(res.formValues[2] ?? 0);
+   form.show(admin).then((res) => {
+      if (res.canceled) return;
 
-        let rank = '';
-        if (predefinedIndex > 0) {
-            rank = predefined[predefinedIndex - 1].full;
-        } else if (input) {
-            rank = input;
-        } else if (existingList[existingIndex] !== '(ไม่มี)') {
-            rank = existingList[existingIndex];
-        }
+      const predefinedIndex = Number(res.formValues[0] ?? 0);
+      const input = String(res.formValues[1] ?? '').trim();
+      const existingIndex = Number(res.formValues[2] ?? 0);
 
-        if (rank) {
-            addRank(target, rank);
-            refreshNameTag(target);
-            admin.sendMessage(`§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
-        }
-    });
+      let rank = '';
+      if (predefinedIndex > 0) {
+         rank = predefined[predefinedIndex - 1].full;
+      } else if (input) {
+         rank = input;
+      } else if (existingList[existingIndex] !== '(ไม่มี)') {
+         rank = existingList[existingIndex];
+      }
+
+      if (rank) {
+         addRank(target, rank);
+         refreshNameTag(target);
+         addSound(admin, 'random.levelup');
+         admin.sendMessage(`§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
+      }
+   });
 };
 
 const showMenuEdit = (admin, target) => {
-    if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
+   if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
-    const owned = getOwnedRanks(target);
-    if (!owned.length) {
-        return admin.sendMessage('§c[RANK] ไม่มียศ');
-    }
+   const owned = getOwnedRanks(target);
+   if (!owned.length) {
+      addSound(admin, 'block.false_permissions');
+      return admin.sendMessage('§c[RANK] ไม่มียศ');
+   }
 
-    const activeRank = getActiveRank(target);
-    const defaultIndex = activeRank ? owned.indexOf(activeRank) : 0;
+   addSound(admin, 'block.grindstone.use');
 
-    const form = new ModalFormData();
-    form.title('แก้ไขชื่อยศ');
-    form.dropdown('เลือกยศ:', owned, { defaultValueIndex: Math.max(0, defaultIndex) });
+   const activeRank = getActiveRank(target);
+   const defaultIndex = activeRank ? owned.indexOf(activeRank) : 0;
 
-    form.show(admin).then((res) => {
-        if (res.canceled) return;
+   const form = new ModalFormData();
+   form.title('แก้ไขชื่อยศ');
+   form.dropdown('เลือกยศ:', owned, { defaultValueIndex: Math.max(0, defaultIndex) });
 
-        const oldName = owned[Number(res.formValues[0])];
+   form.show(admin).then((res) => {
+      if (res.canceled) return;
 
-        new ModalFormData()
-            .title('เปลี่ยนชื่อยศ')
-            .textField('ชื่อใหม่', oldName, { defaultValue: oldName })
-            .show(admin)
-            .then((r) => {
-                if (r.canceled) return;
+      const oldName = owned[Number(res.formValues[0])];
 
-                const newName = String(r.formValues[0] ?? '').trim();
-                if (newName && newName !== oldName) {
-                    renameRank(target, oldName, newName);
-                } else {
-                    setActiveRank(target, oldName);
-                }
-                refreshNameTag(target);
-            });
-    });
+      const renameForm = new ModalFormData();
+      renameForm.title('เปลี่ยนชื่อยศ');
+      renameForm.textField('ชื่อใหม่', oldName, { defaultValue: oldName });
+
+      renameForm.show(admin).then((r) => {
+         if (r.canceled) return;
+
+         const newName = String(r.formValues[0] ?? '').trim();
+         if (newName && newName !== oldName) {
+            renameRank(target, oldName, newName);
+         } else {
+            setActiveRank(target, oldName);
+         }
+         refreshNameTag(target);
+         addSound(admin, 'random.orb');
+      });
+   });
 };
 
 const showConfirmDelete = (admin, target, ranks) => {
-    new MessageFormData()
-        .title('ยืนยันลบยศ')
-        .body(`ยศที่จะลบ:\n${ranks.join('\n')}`)
-        .button1('Confirm (ลบ)')
-        .button2('Cancel (ยกเลิก)')
-        .show(admin)
-        .then((res) => {
-            if (res.selection === 0) {
-                removeRanks(target, ranks);
-                refreshNameTag(target);
-            }
-        });
+   const form = new MessageFormData();
+   form.title('ยืนยันลบยศ');
+   form.body(`ยศที่จะลบ:\n${ranks.join('\n')}`);
+   form.button1('Confirm (ลบ)');
+   form.button2('Cancel (ยกเลิก)');
+
+   form.show(admin).then((res) => {
+      if (res.canceled) return;
+
+      if (res.selection === 0) {
+         removeRanks(target, ranks);
+         refreshNameTag(target);
+         addSound(admin, 'random.anvil_break');
+      }
+   });
 };
 
 const showMenuRemove = (admin, target) => {
-    if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
+   if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
-    const owned = getOwnedRanks(target);
-    if (!owned.length) return;
+   const owned = getOwnedRanks(target);
+   if (!owned.length) {
+      addSound(admin, 'block.false_permissions');
+      return;
+   }
 
-    const form = new ModalFormData().title('ลบยศ');
-    for (let i = 0; i < owned.length; i++) {
-        form.toggle(owned[i], { defaultValue: false });
-    }
+   addSound(admin, 'block.loom.use');
 
-    form.show(admin).then((res) => {
-        if (res.canceled) return;
+   const form = new ModalFormData().title('ลบยศ');
+   for (let i = 0; i < owned.length; i++) {
+      form.toggle(owned[i], { defaultValue: false });
+   }
 
-        const toDelete = [];
-        for (let i = 0; i < owned.length; i++) {
-            if (res.formValues[i]) toDelete.push(owned[i]);
-        }
+   form.show(admin).then((res) => {
+      if (res.canceled) return;
 
-        if (toDelete.length) {
-            showConfirmDelete(admin, target, toDelete);
-        }
-    });
+      const toDelete = [];
+      for (let i = 0; i < owned.length; i++) {
+         if (res.formValues[i]) toDelete.push(owned[i]);
+      }
+
+      if (toDelete.length) {
+         showConfirmDelete(admin, target, toDelete);
+      }
+   });
 };
 
 const showActions = (admin, target) => {
-    if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
+   if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
-    const current = getActiveRank(target) || '(ไม่มี)';
-    const count = getOwnedRanks(target).length;
+   addSound(admin, 'block.cartography_table.use');
 
-    new ActionFormData()
-        .title(`จัดการ: ${target.name}`)
-        .body(`ยศที่ใช้อยู่: ${current}\nจำนวนยศที่มี: ${count}`)
-        .button('เพิ่ม / เปลี่ยนยศ', 'textures/ui/sidebar_icons/categories')
-        .button('แก้ไขชื่อยศ', 'textures/ui/sidebar_icons/classic_skins')
-        .button('ลบยศ', 'textures/ui/icons/icon_trending')
-        .show(admin)
-        .then((res) => {
-            if (res.canceled) return;
-            if (res.selection === 0) showMenuAdd(admin, target);
-            else if (res.selection === 1) showMenuEdit(admin, target);
-            else if (res.selection === 2) showMenuRemove(admin, target);
-        });
+   const current = getActiveRank(target) || '(ไม่มี)';
+   const count = getOwnedRanks(target).length;
+   const form = new ActionFormData();
+
+   form.title(`จัดการ: ${target.name}`);
+   form.body(`ยศที่ใช้อยู่: ${current}\nจำนวนยศที่มี: ${count}`);
+   form.button('เพิ่ม / เปลี่ยนยศ', 'textures/ui/sidebar_icons/categories');
+   form.button('แก้ไขชื่อยศ', 'textures/ui/sidebar_icons/classic_skins');
+   form.button('ลบยศ', 'textures/ui/icons/icon_trending');
+
+   form.show(admin).then((res) => {
+      if (res.canceled) return;
+
+      if (res.selection === 0) {
+         showMenuAdd(admin, target);
+      } else if (res.selection === 1) {
+         showMenuEdit(admin, target);
+      } else if (res.selection === 2) {
+         showMenuRemove(admin, target);
+      }
+   });
 };
 
 export const showMainMenu = (admin) => {
-    if (!isValidPlayer(admin)) return;
+   if (!isValidPlayer(admin)) return;
 
-    // คัดลอกอาร์เรย์ผู้เล่นเพื่อความปลอดภัยจากฝั่ง Asynchronous ของ UI (เนื่องจาก Registry ทำการแชร์บัฟเฟอร์ร่วมกัน)
-    const players = [...Registry.getPlayers()];
-    const form = new ActionFormData().title('§lระบบจัดการยศ').body('§7เลือกผู้เล่นที่ต้องการจัดการ:');
+   addSound(admin, 'block.loom.use');
 
-    for (let i = 0; i < players.length; i++) {
-        form.button(players[i].nameTag);
-    }
+   const players = [...Registry.getPlayers()];
+   const form = new ActionFormData();
+   form.title('Manager Ranks  | ระบบจัดการยศ');
+   form.body('§7เลือกผู้เล่นที่ต้องการจัดการ:');
 
-    form.show(admin).then((res) => {
-        if (res.canceled) return;
-        const target = players[res.selection];
-        if (target?.isValid) showActions(admin, target);
-    });
+   for (let i = 0; i < players.length; i++) {
+      form.button(players[i].nameTag);
+   }
+
+   form.show(admin).then((res) => {
+      if (res.canceled) return;
+
+      const target = players[res.selection];
+      if (target?.isValid) showActions(admin, target);
+   });
 };
 
 const isRankItem = (itemType) => itemType === ITEM;

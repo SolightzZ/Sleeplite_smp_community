@@ -3,7 +3,7 @@ import { system, EntityDamageCause } from "@minecraft/server";
 const EFFECT_DURATION = 240;
 
 const randomInt = (min, max) => {
-  Math.floor(Math.random() * (max - min + 1)) + min;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 };
 
 const chance = (percent) => randomInt(1, 100) <= percent;

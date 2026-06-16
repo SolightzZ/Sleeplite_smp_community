@@ -1,112 +1,121 @@
 {
-  "resource_pack_name": "vanilla",
-  "texture_name": "atlas.items",
-  "texture_data": {
-    "cooked_axolotl_bucket": {
-      "textures": "textures/items/cooked_axolotl_bucket"
-    },
-    "sp_1": {
-      "textures": "textures/items/sp_1"
-    },
-    "sp_2": {
-      "textures": "textures/items/sp_2"
-    },
-    "sp_3": {
-      "textures": "textures/items/sp_3"
-    },
-    "sp_4": {
-      "textures": "textures/items/sp_4"
-    },
-    "magnet_": {
-      "textures": "textures/items/magnet_"
-    },
-    "fullbright": {
-      "textures": "textures/items/fullbright"
-    },
-    "trade": {
-      "textures": "textures/items/trade"
-    },
-    "protection": {
-      "textures": "textures/items/protection"
-    },
+   "resource_pack_name": "vanilla",
+   "texture_name": "atlas.items",
+   "texture_data": {
+      "cooked_axolotl_bucket": {
+         "textures": "textures/items/cooked_axolotl_bucket"
+      },
+      "sp_1": {
+         "textures": "textures/items/sp_1"
+      },
+      "sp_2": {
+         "textures": "textures/items/sp_2"
+      },
+      "sp_3": {
+         "textures": "textures/items/sp_3"
+      },
+      "sp_4": {
+         "textures": "textures/items/sp_4"
+      },
+      "magnet_": {
+         "textures": "textures/items/magnet_"
+      },
+      "fullbright": {
+         "textures": "textures/items/fullbright"
+      },
+      "trade": {
+         "textures": "textures/items/trade"
+      },
+      "protection": {
+         "textures": "textures/items/protection"
+      },
 
-    "emote": {
-      "textures": "textures/items/emote"
-    },
-    "cam": {
-      "textures": "textures/items/cam"
-    },
-    "co": {
-      "textures": "textures/items/co"
-    },
-    "gif": {
-      "textures": "textures/ui/gift_square"
-    },
-    "festival": {
-      "textures": "textures/items/festival"
-    },
-    "festival2": {
-      "textures": "textures/items/festival2"
-    },
-    "festival3": {
-      "textures": "textures/items/festival3"
-    },
-    "game1": {
-      "textures": "textures/items/game1"
-    },
-    "game2": {
-      "textures": "textures/items/game2"
-    },
-    "game3": {
-      "textures": "textures/items/game3"
-    },
-    "game4": {
-      "textures": "textures/items/game4"
-    },
-    "game5": {
-      "textures": "textures/items/game5"
-    },
-    "dr": {
-      "textures": "textures/items/dr"
-    },
-    "su1": {
-      "textures": "textures/items/su1"
-    },
-    "su2": {
-      "textures": "textures/items/su2"
-    },
-    "the_coffee_bean": {
-      "textures": "textures/items/the_coffee_bean"
-    },
-    "kfc": {
-      "textures": "textures/items/kfc"
-    },
-    "mcdonald": {
-      "textures": "textures/items/M"
-    },
-    "m1": {
-      "textures": "textures/items/m1"
-    },
-    "m2": {
-      "textures": "textures/items/m2"
-    },
-    "m3": {
-      "textures": "textures/items/m3"
-    },
-    "dunlin_donuts": {
-      "textures": "textures/items/dunlin_donuts"
-    },
-    "addon_water_bottle": {
-      "textures": "textures/items/addon_water_bottle"
-    },
-    "job": {
-      "textures": "textures/items/job"
-    },
-    "gao:flashlight": {
-      "textures": "textures/items/flashlight"
-    },
-    "addon:gravestone_storage": {
-      "textures": "textures/items/gravestone"
-    }
-  }
+      "emote": {
+         "textures": "textures/items/emote"
+      },
+      "cam": {
+         "textures": "textures/items/cam"
+      },
+      "co": {
+         "textures": "textures/items/co"
+      },
+      "gif": {
+         "textures": "textures/ui/gift_square"
+      },
+      "festival": {
+         "textures": "textures/items/festival"
+      },
+      "festival2": {
+         "textures": "textures/items/festival2"
+      },
+      "festival3": {
+         "textures": "textures/items/festival3"
+      },
+      "game1": {
+         "textures": "textures/items/game1"
+      },
+      "game2": {
+         "textures": "textures/items/game2"
+      },
+      "game3": {
+         "textures": "textures/items/game3"
+      },
+      "game4": {
+         "textures": "textures/items/game4"
+      },
+      "game5": {
+         "textures": "textures/items/game5"
+      },
+      "dr": {
+         "textures": "textures/items/dr"
+      },
+      "su1": {
+         "textures": "textures/items/su1"
+      },
+      "su2": {
+         "textures": "textures/items/su2"
+      },
+      "the_coffee_bean": {
+         "textures": "textures/items/the_coffee_bean"
+      },
+      "kfc": {
+         "textures": "textures/items/kfc"
+      },
+      "mcdonald": {
+         "textures": "textures/items/M"
+      },
+      "m1": {
+         "textures": "textures/items/m1"
+      },
+      "m2": {
+         "textures": "textures/items/m2"
+      },
+      "m3": {
+         "textures": "textures/items/m3"
+      },
+      "dunlin_donuts": {
+         "textures": "textures/items/dunlin_donuts"
+      },
+      "addon_water_bottle": {
+         "textures": "textures/items/addon_water_bottle"
+      },
+      "job": {
+         "textures": "textures/items/job"
+      },
+      "gao:flashlight": {
+         "textures": "textures/items/flashlight"
+      },
+      "addon:gravestone_storage": {
+         "textures": "textures/items/gravestone"
+      },
+      "report": {
+         "textures": "textures/items/report"
+      },
+      "admin": {
+         "textures": "textures/items/admin"
+      },
+      "setting": {
+         "textures": "textures/items/setting"
+      }
+   }
 }

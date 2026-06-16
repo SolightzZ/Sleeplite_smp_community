@@ -4,7 +4,7 @@ import { Registry } from '../../../router/core/registry.js';
 import { CONFIG } from '../config.js';
 import { getCameraFrame } from './afk.js';
 import { tickBlockCache } from './block.js';
-import { hasMoved } from './stateManager.js';
+import { hasMoved, refreshBaseline } from './stateManager.js';
 import { playerStates } from './state.js';
 
 function getPlayerById(playerId) {
@@ -86,6 +86,7 @@ class CinematicScheduler {
 
                 player.camera.clear();
                 player.onScreenDisplay.setHudVisibility(HudVisibility.Reset);
+                refreshBaseline(player, state);
                 toRemove.push(playerId);
                 continue;
             }

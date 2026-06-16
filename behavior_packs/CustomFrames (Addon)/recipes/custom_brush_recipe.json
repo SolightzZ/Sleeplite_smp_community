@@ -1,27 +1,27 @@
 {
-  "format_version": "1.20.10",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "custom:brush_recipe"
-    },
-    "tags": ["avanced"],
-    "pattern": [" W ", " S ", " S "],
-    "key": {
-      "S": {
-        "item": "minecraft:stick"
+   "format_version": "1.12",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "custom:brush_recipe"
       },
-      "W": {
-        "item": "minecraft:wool"
-      }
-    },
-    "result": {
-      "item": "custom:brush",
-      "count": 1
-    },
-    "unlock": [
-      {
-        "item": "minecraft:stick"
-      }
-    ]
-  }
+      "tags": ["avanced"],
+      "pattern": [" W ", " S ", " S "],
+      "key": {
+         "S": {
+            "item": "minecraft:stick"
+         },
+         "W": {
+            "item": "minecraft:wool"
+         }
+      },
+      "result": {
+         "item": "custom:brush",
+         "count": 1
+      },
+      "unlock": [
+         {
+            "item": "minecraft:stick"
+         }
+      ]
+   }
 }

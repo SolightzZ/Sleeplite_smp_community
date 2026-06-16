@@ -1,8 +1,9 @@
 import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 import { giveDiamond } from './CompleteJob.js';
-import { deleteJobData, getPlayerById, jobs, playerJobMap, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
+import { deleteJobData, getPlayerById, JOB_DURATION_TICKS, jobs, playerJobMap, showUI, stopTimer, timerMap, totalDiamond } from './Job.js';
 import { showMainMenu } from './Menu.js';
+import { addSound } from '../../plugin/utils.js';
 
 const refundOwner = (job) => {
     const owner = getPlayerById(job.owner);
@@ -28,7 +29,10 @@ export function editJobs(player) {
     if (myJobs.length === 0) {
         form.body('คุณไม่มีรายการคำสั่งที่กำลังดำเนินการ');
         form.button('ย้อนกลับ');
-        showUI(player, form, () => showMainMenu(player));
+        showUI(player, form, () => {
+            addSound(player, 'item.book.page_turn');
+            showMainMenu(player);
+        });
         return;
     }
 
@@ -46,6 +50,7 @@ export function editJobs(player) {
     showUI(player, form, (res) => {
         const backIdx = myJobs.length;
         if (res.selection === backIdx) {
+            addSound(player, 'item.book.page_turn');
             showMainMenu(player);
             return;
         }
@@ -53,7 +58,10 @@ export function editJobs(player) {
         const jobIdx = res.selection;
         const job = myJobs[jobIdx];
 
-        if (job) openManageJobDetail(player, job);
+        if (job) {
+            addSound(player, 'random.orb');
+            openManageJobDetail(player, job);
+        }
     });
 }
 
@@ -73,7 +81,7 @@ const openManageJobDetail = (player, job) => {
         let timeLeft = '';
 
         if (t) {
-            const secs = Math.ceil((20 * 60 * 20 - (system.currentTick - t.startTick)) / 20);
+            const secs = Math.ceil((JOB_DURATION_TICKS - (system.currentTick - t.startTick)) / 20);
             const m = Math.floor(secs / 60),
                 s = secs % 60;
             timeLeft = ` (เหลือเวลา ${m}:${String(s).padStart(2, '0')})`;
@@ -106,8 +114,10 @@ const openManageJobDetail = (player, job) => {
             refundOwner(job);
             deleteJobData(job.id);
             if (player.isValid) player.sendMessage('[Job] คำสั่งถูกยกเลิกเรียบร้อยแล้ว');
+            addSound(player, 'vault.deactivate');
             editJobs(player);
         } else {
+            addSound(player, 'item.book.page_turn');
             editJobs(player);
         }
     });

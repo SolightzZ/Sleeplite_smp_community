@@ -1,418 +1,638 @@
-const _0x538b68 = _0x4e5f;
-(function (_0x18f767, _0x2ba544) {
-    const _0xfc2929 = _0x4e5f,
-        _0x5a149d = _0x18f767();
-    while (!![]) {
-        try {
-            const _0x2699f5 =
-                (parseInt(_0xfc2929(0x8f)) / 0x1) * (-parseInt(_0xfc2929(0xd3)) / 0x2) +
-                (parseInt(_0xfc2929(0xd4)) / 0x3) * (-parseInt(_0xfc2929(0xc3)) / 0x4) +
-                -parseInt(_0xfc2929(0xbd)) / 0x5 +
-                (-parseInt(_0xfc2929(0x81)) / 0x6) * (parseInt(_0xfc2929(0x84)) / 0x7) +
-                -parseInt(_0xfc2929(0x94)) / 0x8 +
-                -parseInt(_0xfc2929(0xa5)) / 0x9 +
-                (-parseInt(_0xfc2929(0x7b)) / 0xa) * (-parseInt(_0xfc2929(0x87)) / 0xb);
-            if (_0x2699f5 === _0x2ba544) break;
-            else _0x5a149d['push'](_0x5a149d['shift']());
-        } catch (_0x4162ab) {
-            _0x5a149d['push'](_0x5a149d['shift']());
-        }
-    }
-})(_0x29f8, 0x3b411);
-function _0x4e5f(_0x3ffcfc, _0x3fb507) {
-    _0x3ffcfc = _0x3ffcfc - 0x72;
-    const _0x29f81a = _0x29f8();
-    let _0x4e5ff0 = _0x29f81a[_0x3ffcfc];
-    return _0x4e5ff0;
+function _0x4568(_0x4ac01c, _0x44af46) {
+   _0x4ac01c = _0x4ac01c - 0x1a9;
+   const _0x50b9d1 = _0x50b9();
+   let _0x4568e7 = _0x50b9d1[_0x4ac01c];
+   return _0x4568e7;
 }
+const _0x1f8775 = _0x4568;
+(function (_0x9280e5, _0x2e2dc0) {
+   const _0x1f9db5 = _0x4568,
+      _0x26e590 = _0x9280e5();
+   while (!![]) {
+      try {
+         const _0x5266b7 =
+            -parseInt(_0x1f9db5(0x1b8)) / 0x1 +
+            parseInt(_0x1f9db5(0x1e4)) / 0x2 +
+            -parseInt(_0x1f9db5(0x20e)) / 0x3 +
+            parseInt(_0x1f9db5(0x21a)) / 0x4 +
+            (parseInt(_0x1f9db5(0x224)) / 0x5) * (parseInt(_0x1f9db5(0x1c8)) / 0x6) +
+            parseInt(_0x1f9db5(0x200)) / 0x7 +
+            (-parseInt(_0x1f9db5(0x1e8)) / 0x8) * (parseInt(_0x1f9db5(0x210)) / 0x9);
+         if (_0x5266b7 === _0x2e2dc0) break;
+         else _0x26e590['push'](_0x26e590['shift']());
+      } catch (_0x172956) {
+         _0x26e590['push'](_0x26e590['shift']());
+      }
+   }
+})(_0x50b9, 0x592d0);
 import { world, system, ItemStack } from '@minecraft/server';
-import * as _0x2a0d57 from './utils';
-import * as _0x19b8f2 from './consts';
-function _0x29f8() {
-    const _0x52eed4 = [
-        'startup',
-        '741142iXWKMK',
-        '69VGJMns',
-        'push',
-        'currentValue',
-        'typeId',
-        'itemComponentRegistry',
-        'knockbackResistance',
-        'ELYTRA_ENCHANTS',
-        'updateMolang',
-        'handleArmor',
-        'durability',
-        'getGameMode',
-        'totalArmor',
-        'subscribe',
-        'random',
-        'elytraDamageMap',
-        'getAllPlayers',
-        'getComponent',
-        'isBroken',
-        'damagingEntity',
-        'includes',
-        'minecraft:elytra',
-        '5925020HtgFzA',
-        'thorns',
-        'broken',
-        'entityHurt',
-        'cause',
-        'stopsound\x20@s\x20armor.equip_leather',
-        '131754zaiPSO',
-        'getColytraData',
-        'run',
-        '7adwbPo',
-        '!custom_armor.',
-        'setLore',
-        '44XAmPNY',
-        'health',
-        'rme:custom_elytra',
-        'setItem',
-        'transferDurabilityByPercent',
-        'registerComponent',
-        'level',
-        'getVelocity',
-        '1yJpyUl',
-        'replace',
-        'playSound',
-        'ARMOR_ENCHANT_LORE',
-        'getParams',
-        '3610008zZEwga',
-        'maxDurability',
-        'addEnchantment',
-        'minecraft:enchantable',
-        'toughness',
-        'getEnchantments',
-        'damage.thorns',
-        'rme:elytra_data',
-        'vanilla',
-        'attributeLore',
-        'set',
-        'has',
-        'runCommand',
-        'updateDurability',
-        'Creative',
-        'tick',
-        'armorStateMap',
-        '3961863fyonOq',
-        'getEnchantment',
-        'sqrt',
-        'length',
-        'stringify',
-        'afterEvents',
-        'calculateArmorDamage',
-        'map',
-        'get',
-        'isValid',
-        'armor',
-        'Chest',
-        'beforeEvents',
-        'inventory',
-        'setDynamicProperty',
-        'item',
-        'equip_sound',
-        'itemChange',
-        'cloneItemStack',
-        'transformElytra',
-        'minecraft:durability',
-        'floor',
-        'currentElytra',
-        'location',
-        '2413835ayKWZC',
-        'armorData',
-        'updateTicksMap',
-        '§r§7',
-        'max',
-        'onScreenDisplay',
-        '62704wzeZsR',
-        'damage',
-        'itemUse',
-        'displayArmor',
-        'setEquipment',
-        'minecraft:player',
-        'updateElytra',
-        'enchantment.level.',
-        'equippable',
-        'Spectator',
-        'isGliding',
-        'runTimeout',
-        'type',
-        'armor_data',
-        'entityAttack',
-    ];
-    _0x29f8 = function () {
-        return _0x52eed4;
-    };
-    return _0x29f8();
+function _0x50b9() {
+   const _0x32decf = [
+      'damage',
+      'itemCompleteUse',
+      'minecraft:enchantable',
+      'item',
+      'getVelocity',
+      'afterEvents',
+      'max',
+      'equippable',
+      '1141392VtvTuc',
+      'itemChange',
+      'getEnchantment',
+      'health',
+      '24DbNQOy',
+      'map',
+      'armorStateMap',
+      'applyImpulse',
+      'isValid',
+      'getComponent',
+      'damage.thorns',
+      'set',
+      'riptide',
+      'beforeEvents',
+      'includes',
+      'toString',
+      'unbreaking',
+      'getGameMode',
+      'getEffect',
+      'level',
+      'absMap',
+      'inventory',
+      'absorptionEvents',
+      'setLore',
+      'itemStartUse',
+      'attributeLore',
+      'knockbackResistance',
+      'rowNumber',
+      '3614443oQtgpB',
+      'runInterval',
+      'rme:absorption',
+      'location',
+      'registerComponent',
+      'run',
+      'lastRiptideTickMap',
+      '§r§7',
+      'minecraft:durability',
+      'thorns',
+      'toughness',
+      'currentTick',
+      'replace',
+      'setItem',
+      '615714HpRNvN',
+      'random',
+      '774018nBemKE',
+      'typeId',
+      'applyDamage',
+      'getParams',
+      'maxDurability',
+      'armorMap',
+      'cloneItemStack',
+      'onScreenDisplay',
+      'transformElytra',
+      'minecraft:player',
+      '10972KrcVBf',
+      'has',
+      'Spectator',
+      'Mainhand',
+      'setActionBar',
+      'addEnchantmentsData',
+      'onUseItem',
+      'getDynamicProperty',
+      'removeEffect',
+      'updateTicksMap',
+      '380905CkfyOV',
+      'addEffect',
+      'rme:custom_elytra',
+      'updateElytra',
+      'trackAbsorption',
+      'itemComponentRegistry',
+      'type',
+      'currentValue',
+      'transferDurabilityByPercent',
+      'subscribe',
+      'handleArmor',
+      'delete',
+      'start',
+      'getItem',
+      'elytraDamageMap',
+      'updateMolang',
+      'rme:elytra_data',
+      'isGliding',
+      'armorData',
+      'itemUse',
+      '566004mrHwAf',
+      'calculateArmorDamage',
+      'getAllPlayers',
+      'floor',
+      'currentElytra',
+      'get',
+      'cause',
+      'absorption',
+      'setEquipment',
+      'setDynamicProperty',
+      'Chest',
+      'isBroken',
+      'startup',
+      'duration',
+      'push',
+      'tick',
+      '24rWytfU',
+      'entityAttack',
+      'enchantment.level.',
+      'getColytraData',
+      'displayArmor',
+      'armor',
+      '!custom_armor.',
+      'playerInventoryItemChange',
+      'projectile',
+      'minecraft:elytra',
+      'getEnchantments',
+      'amplifier',
+      'durability',
+      'sqrt',
+      'playSound',
+      'vanilla',
+      'rowMap',
+      'entityHurt',
+      'enchantable',
+      'hasEnchantment',
+   ];
+   _0x50b9 = function () {
+      return _0x32decf;
+   };
+   return _0x50b9();
 }
-import * as _0x23ec58 from './armor';
+import * as _0x125ac0 from './utils';
+import * as _0x53a635 from './consts';
+import * as _0x51e69d from './armor';
 class CustomElytraManager {
-    constructor() {
-        const _0x48747c = _0x4e5f;
-        ((this[_0x48747c(0xa4)] = new Map()), (this[_0x48747c(0xbf)] = new Map()), (this[_0x48747c(0x74)] = new Map()), this['start']());
-    }
-    ['start']() {
-        const _0x2514ba = _0x4e5f;
-        (system['runInterval'](() => this[_0x2514ba(0xa3)]()), this[_0x2514ba(0x8c)](), this[_0x2514ba(0xdc)](), this[_0x2514ba(0xd9)](), this[_0x2514ba(0xb6)](), this['molangOnUse']());
-    }
-    [_0x538b68(0x8c)]() {
-        const _0x2403b4 = _0x538b68;
-        system[_0x2403b4(0xb1)][_0x2403b4(0xd2)]['subscribe']((_0xa26444) => {
-            const _0x29d2e5 = _0x2403b4;
-            _0xa26444[_0x29d2e5(0xd8)]['registerCustomComponent'](_0x29d2e5(0x89), {});
-        });
-    }
-    [_0x538b68(0xa3)]() {
-        const _0x93377 = _0x538b68;
-        for (const _0x55cd9f of world[_0x93377(0x75)]()) {
-            if (!_0x55cd9f?.[_0x93377(0xae)]) continue;
-            if (_0x55cd9f[_0x93377(0xde)]() === _0x93377(0xcc)) continue;
-            const _0x15bd45 = _0x2a0d57['currentElytra'](_0x55cd9f);
-            this[_0x93377(0xc6)](_0x55cd9f, _0x15bd45);
-            if (!_0x15bd45) {
-                this[_0x93377(0xbf)]['delete'](_0x55cd9f['id']);
-                continue;
+   constructor() {
+      const _0x23ea06 = _0x4568;
+      ((this[_0x23ea06(0x1ea)] = new Map()),
+         (this['updateTicksMap'] = new Map()),
+         (this['absMap'] = new Map()),
+         (this['rowMap'] = new Map()),
+         (this[_0x23ea06(0x215)] = new Map()),
+         (this['elytraDamageMap'] = new Map()),
+         (this[_0x23ea06(0x206)] = new Map()),
+         this['start']());
+   }
+   [_0x1f8775(0x1b0)]() {
+      const _0x180e3c = _0x1f8775;
+      (system[_0x180e3c(0x201)](() => this[_0x180e3c(0x1c7)]()),
+         this[_0x180e3c(0x204)](),
+         this[_0x180e3c(0x1ae)](),
+         this[_0x180e3c(0x1fe)](),
+         this[_0x180e3c(0x1e5)](),
+         this[_0x180e3c(0x220)](),
+         this[_0x180e3c(0x1fa)]());
+   }
+   ['registerComponent']() {
+      const _0x4f9c0f = _0x1f8775;
+      system[_0x4f9c0f(0x1f1)][_0x4f9c0f(0x1c4)][_0x4f9c0f(0x1ad)]((_0x487332) => {
+         const _0x5605e9 = _0x4f9c0f;
+         _0x487332[_0x5605e9(0x1a9)]['registerCustomComponent'](_0x5605e9(0x226), {});
+      });
+   }
+   ['tick']() {
+      const _0x58e7bf = _0x1f8775;
+      for (const _0x4c5547 of world[_0x58e7bf(0x1ba)]()) {
+         if (!_0x4c5547?.[_0x58e7bf(0x1ec)]) continue;
+         if (_0x4c5547[_0x58e7bf(0x1f5)]() === _0x58e7bf(0x21c)) continue;
+         const _0x35406d = _0x125ac0[_0x58e7bf(0x1bc)](_0x4c5547);
+         (this[_0x58e7bf(0x228)](_0x4c5547), this[_0x58e7bf(0x1cc)](_0x4c5547, _0x35406d));
+         if (!_0x35406d) {
+            this[_0x58e7bf(0x223)][_0x58e7bf(0x1af)](_0x4c5547['id']);
+            continue;
+         }
+         if (_0x35406d?.['type'] !== _0x58e7bf(0x1d7)) {
+            this[_0x58e7bf(0x218)](_0x4c5547, _0x35406d);
+            continue;
+         }
+         const _0x581fcd = _0x125ac0[_0x58e7bf(0x1cb)](_0x35406d?.['item']) ?? null;
+         this[_0x58e7bf(0x227)](_0x4c5547, _0x581fcd);
+         if (!_0x581fcd) continue;
+         this['updateDurability'](_0x4c5547, _0x581fcd, _0x35406d);
+      }
+   }
+   ['transformElytra'](_0x4d2e09, _0x284656) {
+      const _0x529b3e = _0x1f8775,
+         { item: _0x483748, id: _0x58bfaa } = _0x284656;
+      if (!_0x483748) return;
+      const _0x1997e0 = _0x125ac0[_0x529b3e(0x213)](_0x483748);
+      if (!_0x1997e0) return;
+      const _0x388fcc = new ItemStack(_0x529b3e(0x1d1));
+      _0x125ac0[_0x529b3e(0x1ac)](
+         _0x483748[_0x529b3e(0x1ed)](_0x529b3e(0x1d4)),
+         _0x388fcc[_0x529b3e(0x1ed)]('durability'),
+      );
+      const _0xbf242f = [],
+         _0x3a7b29 = _0x483748[_0x529b3e(0x1ed)](_0x529b3e(0x1de))?.[_0x529b3e(0x1d2)]() ?? [],
+         _0xd47dfc = _0x388fcc[_0x529b3e(0x1ed)](_0x529b3e(0x1de));
+      for (const _0x33d67f of _0x3a7b29) {
+         const _0x592770 = _0x33d67f['type']['id'];
+         if (!_0x53a635['ELYTRA_ENCHANTS'][_0x529b3e(0x21b)](_0x592770)) {
+            const _0x1dcada = _0x53a635['ARMOR_ENCHANT_LORE'][_0x529b3e(0x1bd)](_0x592770);
+            _0x1dcada &&
+               _0xbf242f['push']({
+                  rawtext: [
+                     { text: _0x529b3e(0x207) },
+                     { translate: _0x1dcada },
+                     { text: '\x20' },
+                     { translate: _0x529b3e(0x1ca) + _0x33d67f[_0x529b3e(0x1f7)] },
+                  ],
+               });
+            continue;
+         }
+         _0xd47dfc?.['addEnchantment'](_0x33d67f);
+      }
+      (_0xbf242f[_0x529b3e(0x1c6)](..._0x125ac0[_0x529b3e(0x1fd)]([], _0x1997e0)),
+         _0x388fcc[_0x529b3e(0x1fb)](_0xbf242f));
+      const _0xac2416 = {
+         id: _0x58bfaa?.[_0x529b3e(0x20c)](/(_p|_b)$/, '') ?? 'rme:default',
+         maxDurability: _0x483748[_0x529b3e(0x1ed)]('durability')[_0x529b3e(0x214)] ?? 0x0,
+         armorData: _0x1997e0['armor_data'],
+         enchantments: _0x3a7b29[_0x529b3e(0x1e9)]((_0x706c37) => ({
+            type: _0x706c37['type']['id'],
+            level: _0x706c37[_0x529b3e(0x1f7)],
+         })),
+      };
+      (_0x388fcc[_0x529b3e(0x1c1)](_0x529b3e(0x1b4), JSON['stringify'](_0xac2416)),
+         this[_0x529b3e(0x223)][_0x529b3e(0x1ef)](_0x4d2e09['id'], 0x0),
+         _0x125ac0[_0x529b3e(0x1b3)](_0x4d2e09, _0x58bfaa),
+         _0x4d2e09[_0x529b3e(0x1ed)](_0x529b3e(0x1e3))?.['setEquipment'](
+            _0x529b3e(0x1c2),
+            _0x388fcc,
+         ));
+      if (_0x1997e0['equip_sound'])
+         _0x4d2e09[_0x529b3e(0x1d6)](_0x1997e0['equip_sound'], { volume: 0.8 });
+   }
+   ['updateElytra'](_0x3bd65d, _0x11f0d2) {
+      const _0x463729 = _0x1f8775,
+         _0xe275cb = this[_0x463729(0x206)][_0x463729(0x1bd)](_0x3bd65d['id']) ?? -Infinity;
+      if (system['currentTick'] - _0xe275cb < 0x3c) {
+         this['updateTicksMap'][_0x463729(0x1ef)](_0x3bd65d['id'], 0x0);
+         return;
+      }
+      const _0x487b46 = (this['updateTicksMap']['get'](_0x3bd65d['id']) ?? 0x0) + 0x1;
+      this[_0x463729(0x223)]['set'](_0x3bd65d['id'], _0x487b46);
+      if (_0x487b46 < 0x4) return;
+      (_0x125ac0[_0x463729(0x1b3)](_0x3bd65d, _0x11f0d2?.['id']),
+         this[_0x463729(0x223)][_0x463729(0x1ef)](_0x3bd65d['id'], 0x0));
+   }
+   ['updateDurability'](_0x38f016, _0x2e1e86, _0x109dfe) {
+      const _0x333d27 = _0x1f8775;
+      if (_0x38f016[_0x333d27(0x1ed)](_0x333d27(0x1e7))['currentValue'] <= 0x0) return;
+      const _0x2718c8 = _0x109dfe[_0x333d27(0x1df)][_0x333d27(0x1ed)](_0x333d27(0x208)),
+         _0x868b8f = _0x2718c8[_0x333d27(0x1dc)] ?? 0x0,
+         _0x421665 = this[_0x333d27(0x1b2)][_0x333d27(0x1bd)](_0x38f016['id']) ?? _0x868b8f;
+      if (_0x38f016[_0x333d27(0x1b5)] && _0x868b8f > _0x421665) {
+         const _0x37f402 = _0x2e1e86[_0x333d27(0x214)],
+            _0x2b6d05 = _0x2718c8[_0x333d27(0x214)];
+         if (_0x37f402 < _0x2b6d05) return;
+         const _0x49303e = _0x2b6d05 / _0x37f402;
+         if (Math[_0x333d27(0x20f)]() > _0x49303e) {
+            if (_0x38f016[_0x333d27(0x1ed)]('health')['currentValue'] <= 0x0) return;
+            ((_0x2718c8['damage'] = Math['max'](0x0, _0x868b8f - 0x1)),
+               _0x38f016[_0x333d27(0x1ed)](_0x333d27(0x1e3))?.[_0x333d27(0x1c0)](
+                  _0x333d27(0x1c2),
+                  _0x109dfe[_0x333d27(0x1df)],
+               ));
+         }
+      }
+      this[_0x333d27(0x1b2)][_0x333d27(0x1ef)](_0x38f016['id'], _0x868b8f);
+   }
+   [_0x1f8775(0x1cc)](_0xb6634f, _0x243ae6) {
+      const _0xae584a = _0x1f8775,
+         _0x5876a1 = _0x125ac0[_0xae584a(0x1cb)](_0x243ae6?.[_0xae584a(0x1df)]),
+         _0x3a44dd = _0xb6634f['id'];
+      if (
+         _0x5876a1 &&
+         _0xb6634f[_0xae584a(0x1f5)]() !== 'Creative' &&
+         !_0x243ae6?.[_0xae584a(0x1c3)]
+      ) {
+         const _0x23355a = _0xb6634f['getComponent'](_0xae584a(0x1e3)),
+            _0x531eb6 = _0x23355a?.['totalArmor'] ?? 0x0,
+            _0x9e89cb = _0x5876a1[_0xae584a(0x1b6)][_0xae584a(0x1cd)],
+            _0x37b7b4 = _0x531eb6 + _0x9e89cb,
+            _0x443fff = _0x37b7b4[_0xae584a(0x1f3)]()['padStart'](0x2, '0'),
+            _0x2972fa = _0x125ac0[_0xae584a(0x1ff)](_0xb6634f),
+            _0x3c1216 = this[_0xae584a(0x215)][_0xae584a(0x1bd)](_0x3a44dd),
+            _0x482c81 = this['rowMap']['get'](_0x3a44dd),
+            _0x2ff0c4 = _0x3c1216 !== _0x443fff,
+            _0x3cfde7 = _0x482c81 !== _0x2972fa;
+         (_0x2ff0c4 || _0x3cfde7 || system['currentTick'] % 0x64 === 0x0) &&
+            (_0xb6634f[_0xae584a(0x217)][_0xae584a(0x21e)](
+               _0xae584a(0x1ce) + _0x443fff + '.' + _0x2972fa,
+            ),
+            this['armorMap'][_0xae584a(0x1ef)](_0x3a44dd, _0x443fff),
+            this[_0xae584a(0x1d8)][_0xae584a(0x1ef)](_0x3a44dd, _0x2972fa));
+         this[_0xae584a(0x1ea)][_0xae584a(0x1ef)](_0x3a44dd, !![]);
+         return;
+      }
+      if (!this['armorStateMap']['get'](_0x3a44dd)) return;
+      (_0xb6634f[_0xae584a(0x217)][_0xae584a(0x21e)]('\x20'),
+         this[_0xae584a(0x1ea)][_0xae584a(0x1ef)](_0x3a44dd, ![]),
+         this[_0xae584a(0x1d8)][_0xae584a(0x1af)](_0x3a44dd),
+         this[_0xae584a(0x215)][_0xae584a(0x1af)](_0x3a44dd));
+   }
+   [_0x1f8775(0x1ae)]() {
+      const _0x17345 = _0x1f8775,
+         _0xf4c161 = (_0xe5b187, _0x2a7fc3, _0xf9ae4c, _0x162478, _0x55fd11) => {
+            const _0x5a120 = _0x4568,
+               {
+                  armorData: _0x3abd41,
+                  enchantments: _0x26d6f0,
+                  maxDurability: _0x2a6d96,
+               } = _0x162478;
+            if (
+               !_0x3abd41?.[_0x5a120(0x1cd)] &&
+               !_0x3abd41?.['toughness'] &&
+               !_0x26d6f0?.['length']
+            )
+               return;
+            const { armorDamage: _0x4519b9, baseDamage: _0x137316 } = _0x51e69d[_0x5a120(0x1b9)](
+               _0x2a7fc3,
+               _0xf9ae4c['cause'],
+               _0xe5b187[_0x5a120(0x1dc)],
+               _0x3abd41[_0x5a120(0x1cd)] ?? 0x0,
+               _0x3abd41[_0x5a120(0x20a)] ?? 0x0,
+               _0x26d6f0,
+            );
+            (_0xb855ef(_0x4519b9, _0x2a7fc3, _0x2a6d96, _0x55fd11),
+               (_0xe5b187['damage'] = _0x4519b9));
+         },
+         _0xb855ef = (_0x24e8d9, _0xb5cf3, _0x79a01, _0x17f570) => {
+            const _0x520bfd = _0x4568;
+            if (_0xb5cf3[_0x520bfd(0x1ed)](_0x520bfd(0x1e7))['currentValue'] <= 0x0) return;
+            const _0x330251 = _0x17f570?.[_0x520bfd(0x1df)];
+            if (!_0x330251) return;
+            const _0x526dce = _0x330251[_0x520bfd(0x1ed)](_0x520bfd(0x208));
+            if (!_0x526dce || _0x526dce['damage'] >= 0x1af) return;
+            const _0x2a7bdb = Math['max'](0x1, Math['floor'](_0x24e8d9 / 0x4));
+            let _0x369997 = _0x2a7bdb;
+            if (_0x79a01 > 0x1b0) {
+               const _0x1fa79a = 0x1b0 / _0x79a01;
+               _0x369997 = Math['max'](0x1, Math[_0x520bfd(0x1bb)](_0x2a7bdb * _0x1fa79a));
             }
-            if (_0x15bd45?.[_0x93377(0xcf)] !== 'vanilla') {
-                this[_0x93377(0xb8)](_0x55cd9f, _0x15bd45);
-                continue;
+            const _0x248224 = _0x330251[_0x520bfd(0x1ed)](_0x520bfd(0x1de))?.[_0x520bfd(0x1e6)](
+               _0x520bfd(0x1f4),
+            );
+            if (_0x248224) {
+               let _0x426abf = 0x0;
+               const _0x33e4cd = 0.6 + 0.4 / (_0x248224[_0x520bfd(0x1f7)] + 0x1);
+               for (let _0x54868f = 0x0; _0x54868f < _0x369997; _0x54868f++) {
+                  Math[_0x520bfd(0x20f)]() <= _0x33e4cd && _0x426abf++;
+               }
+               _0x369997 = _0x426abf;
             }
-            const _0x4e8853 = _0x2a0d57['getColytraData'](_0x15bd45?.[_0x93377(0xb4)]) ?? null;
-            this[_0x93377(0xc9)](_0x55cd9f, _0x4e8853);
-            if (!_0x4e8853) continue;
-            this[_0x93377(0xa1)](_0x55cd9f, _0x4e8853, _0x15bd45);
-        }
-    }
-    [_0x538b68(0xb8)](_0x587cea, _0x43165e) {
-        const _0x57637a = _0x538b68,
-            { item: _0xc5effc, id: _0x4707d3 } = _0x43165e;
-        if (!_0xc5effc) return;
-        const _0x5d6a04 = _0x2a0d57[_0x57637a(0x93)](_0xc5effc);
-        if (!_0x5d6a04) return;
-        const _0x37695b = new ItemStack(_0x57637a(0x7a));
-        _0x2a0d57[_0x57637a(0x8b)](_0xc5effc['getComponent'](_0x57637a(0xdd)), _0x37695b[_0x57637a(0x76)]('durability'));
-        const _0x550e32 = [],
-            _0x15b349 = _0xc5effc['getComponent']('minecraft:enchantable')?.[_0x57637a(0x99)]() ?? [],
-            _0x24e410 = _0x37695b['getComponent'](_0x57637a(0x97));
-        for (const _0x55501f of _0x15b349) {
-            const _0x1b9314 = _0x55501f['type']['id'];
-            if (!_0x19b8f2[_0x57637a(0xda)][_0x57637a(0x9f)](_0x1b9314)) {
-                const _0x4b9239 = _0x19b8f2[_0x57637a(0x92)]['get'](_0x1b9314);
-                _0x4b9239 &&
-                    _0x550e32[_0x57637a(0xd5)]({ rawtext: [{ text: _0x57637a(0xc0) }, { translate: _0x4b9239 }, { text: '\x20' }, { translate: _0x57637a(0xca) + _0x55501f[_0x57637a(0x8d)] }] });
-                continue;
-            }
-            _0x24e410?.[_0x57637a(0x96)](_0x55501f);
-        }
-        (_0x550e32['push'](..._0x2a0d57[_0x57637a(0x9d)]([], _0x5d6a04)), _0x37695b[_0x57637a(0x86)](_0x550e32));
-        const _0x4b8ee9 = {
-            id: _0x4707d3?.['replace'](/(_p|_b)$/, '') ?? 'rme:default',
-            maxDurability: _0xc5effc['getComponent'](_0x57637a(0xdd))[_0x57637a(0x95)] ?? 0x0,
-            armorData: _0x5d6a04[_0x57637a(0xd0)],
-            enchantments: _0x15b349[_0x57637a(0xac)]((_0x3faef0) => ({ type: _0x3faef0[_0x57637a(0xcf)]['id'], level: _0x3faef0['level'] })),
-        };
-        (_0x37695b[_0x57637a(0xb3)](_0x57637a(0x9b), JSON[_0x57637a(0xa9)](_0x4b8ee9)),
-            this[_0x57637a(0xbf)][_0x57637a(0x9e)](_0x587cea['id'], 0x0),
-            _0x2a0d57[_0x57637a(0xdb)](_0x587cea, _0x4707d3),
-            _0x587cea[_0x57637a(0x76)](_0x57637a(0xcb))?.[_0x57637a(0xc7)](_0x57637a(0xb0), _0x37695b));
-        if (_0x5d6a04[_0x57637a(0xb5)]) _0x587cea[_0x57637a(0x91)](_0x5d6a04[_0x57637a(0xb5)], { volume: 0.8 });
-    }
-    ['updateElytra'](_0x2f2298, _0x20df59) {
-        const _0x2a4c1a = _0x538b68,
-            _0x412ccd = (this['updateTicksMap'][_0x2a4c1a(0xad)](_0x2f2298['id']) ?? 0x0) + 0x1;
-        this[_0x2a4c1a(0xbf)][_0x2a4c1a(0x9e)](_0x2f2298['id'], _0x412ccd);
-        if (_0x412ccd < 0x4) return;
-        (_0x2a0d57[_0x2a4c1a(0xdb)](_0x2f2298, _0x20df59?.['id']), this[_0x2a4c1a(0xbf)][_0x2a4c1a(0x9e)](_0x2f2298['id'], 0x0));
-    }
-    [_0x538b68(0xa1)](_0x5a47f6, _0x74583e, _0x5f2550) {
-        const _0x4a1841 = _0x538b68;
-        if (_0x5a47f6[_0x4a1841(0x76)]('health')['currentValue'] <= 0x0) return;
-        const _0x386482 = _0x5f2550[_0x4a1841(0xb4)]['getComponent'](_0x4a1841(0xb9)),
-            _0x187ced = _0x386482[_0x4a1841(0xc4)] ?? 0x0,
-            _0x3fa56c = this[_0x4a1841(0x74)][_0x4a1841(0xad)](_0x5a47f6['id']) ?? _0x187ced;
-        if (_0x5a47f6[_0x4a1841(0xcd)] && _0x187ced > _0x3fa56c) {
-            const _0x1f21fd = _0x74583e['maxDurability'],
-                _0x3d10f6 = _0x386482[_0x4a1841(0x95)];
-            if (_0x1f21fd < _0x3d10f6) return;
-            const _0x3c230c = _0x3d10f6 / _0x1f21fd;
-            if (Math['random']() > _0x3c230c) {
-                if (_0x5a47f6[_0x4a1841(0x76)](_0x4a1841(0x88))[_0x4a1841(0xd6)] <= 0x0) return;
-                ((_0x386482['damage'] = Math[_0x4a1841(0xc1)](0x0, _0x187ced - 0x1)),
-                    _0x5a47f6[_0x4a1841(0x76)](_0x4a1841(0xcb))?.[_0x4a1841(0xc7)](_0x4a1841(0xb0), _0x5f2550['item']),
-                    system[_0x4a1841(0xce)](() => {
-                        const _0x571756 = _0x4a1841;
-                        _0x5a47f6[_0x571756(0xa0)](_0x571756(0x80));
-                    }, 0x1));
-            }
-        }
-        this[_0x4a1841(0x74)][_0x4a1841(0x9e)](_0x5a47f6['id'], _0x187ced);
-    }
-    [_0x538b68(0xc6)](_0x3961b1, _0x4aced5) {
-        const _0xe973bf = _0x538b68,
-            _0x34d731 = _0x2a0d57['getColytraData'](_0x4aced5?.[_0xe973bf(0xb4)]),
-            _0x54e5f4 = _0x3961b1['id'];
-        if (_0x34d731 && _0x3961b1[_0xe973bf(0xde)]() !== _0xe973bf(0xa2) && !_0x4aced5?.[_0xe973bf(0x77)]) {
-            const _0x43c1e0 = _0x3961b1['getComponent']('equippable'),
-                _0x29db39 = _0x43c1e0?.[_0xe973bf(0xdf)] ?? 0x0,
-                _0x26a30c = _0x34d731['armorData'][_0xe973bf(0xaf)];
-            (_0x3961b1[_0xe973bf(0xc2)]['setActionBar'](_0xe973bf(0x85) + (_0x29db39 + _0x26a30c)), this[_0xe973bf(0xa4)][_0xe973bf(0x9e)](_0x54e5f4, !![]));
+            if (_0x369997 <= 0x0) return;
+            const _0x42b3b8 = (_0x526dce[_0x520bfd(0x1dc)] ?? 0x0) + _0x369997;
+            system[_0x520bfd(0x205)](() => {
+               const _0x5cbe01 = _0x520bfd;
+               if (_0xb5cf3[_0x5cbe01(0x1ed)](_0x5cbe01(0x1e7))[_0x5cbe01(0x1ab)] <= 0x0) return;
+               if (_0x42b3b8 >= _0x526dce['maxDurability']) {
+                  _0x526dce['damage'] = _0x526dce[_0x5cbe01(0x214)] - 0x1;
+                  return;
+               }
+               ((_0x526dce[_0x5cbe01(0x1dc)] = _0x42b3b8),
+                  _0xb5cf3[_0x5cbe01(0x1ed)](_0x5cbe01(0x1e3))?.['setEquipment'](
+                     _0x5cbe01(0x1c2),
+                     _0x330251,
+                  ));
+            });
+         },
+         _0x52a583 = (_0x3f92c1, _0x4c6b8d, { enchantments: _0x5e3ecf }) => {
+            const _0x2eeba2 = _0x4568;
+            if (
+               ![_0x2eeba2(0x1c9), _0x2eeba2(0x1d0)][_0x2eeba2(0x1f2)](_0x4c6b8d[_0x2eeba2(0x1be)])
+            )
+               return;
+            const _0x2045a8 = _0x4c6b8d['damagingEntity'];
+            if (!_0x2045a8?.[_0x2eeba2(0x1ec)]) return;
+            const _0x4cd0bd = _0x5e3ecf['find'](
+               (_0x1102df) => _0x1102df[_0x2eeba2(0x1aa)] === _0x2eeba2(0x209),
+            );
+            if (!_0x4cd0bd) return;
+            const _0x154bf6 = _0x4cd0bd[_0x2eeba2(0x1f7)] * 0.15;
+            if (Math[_0x2eeba2(0x20f)]() > _0x154bf6) return;
+            const _0x4cb173 = Math['random']() * 0x4 + 0x1;
+            system[_0x2eeba2(0x205)](() => {
+               const _0x3448f9 = _0x2eeba2;
+               (_0x3f92c1['dimension'][_0x3448f9(0x1d6)](
+                  _0x3448f9(0x1ee),
+                  _0x3f92c1[_0x3448f9(0x203)],
+               ),
+                  _0x2045a8[_0x3448f9(0x212)](_0x4cb173, {
+                     cause: _0x3448f9(0x209),
+                     damagingEntity: _0x3f92c1,
+                  }));
+            });
+         };
+      world[_0x17345(0x1f1)]['entityHurt']['subscribe']((_0xb00541) => {
+         const _0x341c3f = _0x17345,
+            { hurtEntity: _0x8d0ca8, damageSource: _0x3cf79f } = _0xb00541;
+         if (!_0x8d0ca8?.['isValid'] || _0x8d0ca8[_0x341c3f(0x211)] !== _0x341c3f(0x219)) return;
+         const _0x38638e = _0x125ac0[_0x341c3f(0x1bc)](_0x8d0ca8);
+         if (!_0x38638e || _0x38638e?.[_0x341c3f(0x1c3)]) return;
+         const _0x33cc6e = _0x125ac0[_0x341c3f(0x1cb)](_0x38638e['item']);
+         if (!_0x33cc6e) return;
+         (_0xf4c161(_0xb00541, _0x8d0ca8, _0x3cf79f, _0x33cc6e, _0x38638e),
+            _0x52a583(_0x8d0ca8, _0x3cf79f, _0x33cc6e));
+      });
+   }
+   ['knockbackResistance']() {
+      const _0x49bef9 = _0x1f8775;
+      world['afterEvents']['entityHurt'][_0x49bef9(0x1ad)]((_0x2738af) => {
+         const _0x2a8852 = _0x49bef9,
+            { hurtEntity: _0x2116fb, damageSource: _0x3c233e } = _0x2738af;
+         if (
+            !_0x2116fb?.[_0x2a8852(0x1ec)] ||
+            _0x2116fb[_0x2a8852(0x211)] !== _0x2a8852(0x219) ||
+            !_0x3c233e?.['damagingEntity']
+         )
             return;
-        }
-        if (!this[_0xe973bf(0xa4)][_0xe973bf(0xad)](_0x54e5f4)) return;
-        (_0x3961b1[_0xe973bf(0xc2)]['setActionBar']('\x20'), this[_0xe973bf(0xa4)][_0xe973bf(0x9e)](_0x54e5f4, ![]));
-    }
-    [_0x538b68(0xdc)]() {
-        const _0x549339 = _0x538b68,
-            _0x1cf901 = (_0x1076bd, _0x59cb89, _0x4d2108, _0x52ff24, _0x55f773) => {
-                const _0x4babaf = _0x4e5f,
-                    { armorData: _0x1bfde0, enchantments: _0x1b7ad1, maxDurability: _0x5437ca } = _0x52ff24;
-                if (!_0x1bfde0?.['armor'] && !_0x1bfde0?.[_0x4babaf(0x98)] && !_0x1b7ad1?.[_0x4babaf(0xa8)]) return;
-                const { armorDamage: _0x345b4d, baseDamage: _0x41050e } = _0x23ec58[_0x4babaf(0xab)](
-                    _0x59cb89,
-                    _0x4d2108['cause'],
-                    _0x1076bd['damage'],
-                    _0x1bfde0[_0x4babaf(0xaf)] ?? 0x0,
-                    _0x1bfde0[_0x4babaf(0x98)] ?? 0x0,
-                    _0x1b7ad1,
-                );
-                (_0x43d50e(_0x345b4d, _0x59cb89, _0x5437ca, _0x55f773), (_0x1076bd['damage'] = _0x345b4d));
-            },
-            _0x43d50e = (_0x43f801, _0xa9c806, _0x14d9e0, _0x1c4da5) => {
-                const _0x58bb79 = _0x4e5f;
-                if (_0xa9c806[_0x58bb79(0x76)]('health')['currentValue'] <= 0x0) return;
-                const _0x12ba9f = _0x1c4da5?.['item'];
-                if (!_0x12ba9f) return;
-                const _0x276ad3 = _0x12ba9f[_0x58bb79(0x76)](_0x58bb79(0xb9));
-                if (!_0x276ad3 || _0x276ad3[_0x58bb79(0xc4)] >= 0x1af) return;
-                const _0x4e151d = Math[_0x58bb79(0xc1)](0x1, Math[_0x58bb79(0xba)](_0x43f801 / 0x4));
-                let _0x43fa8e = _0x4e151d;
-                if (_0x14d9e0 > 0x1b0) {
-                    const _0x456d19 = 0x1b0 / _0x14d9e0;
-                    _0x43fa8e = Math[_0x58bb79(0xc1)](0x1, Math[_0x58bb79(0xba)](_0x4e151d * _0x456d19));
-                }
-                const _0x45bc37 = _0x12ba9f[_0x58bb79(0x76)]('minecraft:enchantable')?.[_0x58bb79(0xa6)]('unbreaking');
-                if (_0x45bc37) {
-                    let _0x4fa05a = 0x0;
-                    const _0x5941a = 0.6 + 0.4 / (_0x45bc37[_0x58bb79(0x8d)] + 0x1);
-                    for (let _0x1b08a7 = 0x0; _0x1b08a7 < _0x43fa8e; _0x1b08a7++) {
-                        Math[_0x58bb79(0x73)]() <= _0x5941a && _0x4fa05a++;
-                    }
-                    _0x43fa8e = _0x4fa05a;
-                }
-                if (_0x43fa8e <= 0x0) return;
-                const _0x16144b = (_0x276ad3[_0x58bb79(0xc4)] ?? 0x0) + _0x43fa8e;
-                system[_0x58bb79(0x83)](() => {
-                    const _0x319ed8 = _0x58bb79;
-                    if (_0xa9c806[_0x319ed8(0x76)]('health')['currentValue'] <= 0x0) return;
-                    if (_0x16144b >= _0x276ad3[_0x319ed8(0x95)]) {
-                        _0x276ad3['damage'] = _0x276ad3[_0x319ed8(0x95)] - 0x1;
-                        return;
-                    }
-                    ((_0x276ad3[_0x319ed8(0xc4)] = _0x16144b),
-                        _0xa9c806[_0x319ed8(0x76)]('equippable')?.['setEquipment'](_0x319ed8(0xb0), _0x12ba9f),
-                        system['runTimeout'](() => {
-                            const _0x30f807 = _0x319ed8;
-                            _0xa9c806[_0x30f807(0xa0)](_0x30f807(0x80));
-                        }, 0x1));
-                });
-            },
-            _0x32dfb3 = (_0x3ac013, _0x2e6d00, { enchantments: _0x152b9e }) => {
-                const _0x27542a = _0x4e5f;
-                if (![_0x27542a(0xd1), 'projectile'][_0x27542a(0x79)](_0x2e6d00[_0x27542a(0x7f)])) return;
-                const _0x4dd934 = _0x2e6d00[_0x27542a(0x78)];
-                if (!_0x4dd934?.[_0x27542a(0xae)]) return;
-                const _0x1ab0b6 = _0x152b9e['find']((_0x5e633a) => _0x5e633a[_0x27542a(0xcf)] === _0x27542a(0x7c));
-                if (!_0x1ab0b6) return;
-                const _0x211888 = _0x1ab0b6[_0x27542a(0x8d)] * 0.15;
-                if (Math[_0x27542a(0x73)]() > _0x211888) return;
-                const _0x58a97b = Math['random']() * 0x4 + 0x1;
-                system['run'](() => {
-                    const _0x148010 = _0x27542a;
-                    (_0x3ac013['dimension'][_0x148010(0x91)](_0x148010(0x9a), _0x3ac013[_0x148010(0xbc)]), _0x4dd934['applyDamage'](_0x58a97b, { cause: _0x148010(0x7c), damagingEntity: _0x3ac013 }));
-                });
-            };
-        world[_0x549339(0xb1)][_0x549339(0x7e)][_0x549339(0x72)]((_0x22f0f1) => {
-            const _0x439dd4 = _0x549339,
-                { hurtEntity: _0x2a3c97, damageSource: _0x374078 } = _0x22f0f1;
-            if (!_0x2a3c97?.[_0x439dd4(0xae)] || _0x2a3c97[_0x439dd4(0xd7)] !== _0x439dd4(0xc8)) return;
-            const _0x22a511 = _0x2a0d57[_0x439dd4(0xbb)](_0x2a3c97);
-            if (!_0x22a511 || _0x22a511?.[_0x439dd4(0x77)]) return;
-            const _0x5252a0 = _0x2a0d57[_0x439dd4(0x82)](_0x22a511[_0x439dd4(0xb4)]);
-            if (!_0x5252a0) return;
-            (_0x1cf901(_0x22f0f1, _0x2a3c97, _0x374078, _0x5252a0, _0x22a511), _0x32dfb3(_0x2a3c97, _0x374078, _0x5252a0));
-        });
-    }
-    [_0x538b68(0xd9)]() {
-        const _0x554289 = _0x538b68;
-        world[_0x554289(0xaa)][_0x554289(0x7e)][_0x554289(0x72)]((_0x48299e) => {
-            const _0x471c2b = _0x554289,
-                { hurtEntity: _0x4486e1, damageSource: _0x5e211f } = _0x48299e;
-            if (!_0x4486e1?.[_0x471c2b(0xae)] || _0x4486e1[_0x471c2b(0xd7)] !== _0x471c2b(0xc8) || !_0x5e211f?.[_0x471c2b(0x78)]) return;
-            const _0x18c82c = _0x2a0d57['currentElytra'](_0x4486e1);
-            if (!_0x18c82c || _0x18c82c?.[_0x471c2b(0x77)]) return;
-            const _0x1a27cb = _0x2a0d57[_0x471c2b(0x82)](_0x18c82c[_0x471c2b(0xb4)]);
-            if (!_0x1a27cb) return;
-            const _0x3919a0 = _0x1a27cb?.[_0x471c2b(0xbe)]?.['knockback_resistance'] ?? 0x0;
-            if (_0x3919a0 <= 0x0) return;
-            system[_0x471c2b(0xce)](() => {
-                const _0x3edf85 = _0x471c2b,
-                    _0x330fdd = _0x4486e1[_0x3edf85(0x8e)](),
-                    _0x19ce27 = Math[_0x3edf85(0xa7)](_0x330fdd['x'] ** 0x2 + _0x330fdd['z'] ** 0x2);
-                if (_0x19ce27 <= 0.01) return;
-                const _0x26f0ae = Math[_0x3edf85(0xc1)](0x0, 0x1 + -_0x3919a0 / 0xa),
-                    _0x41bbf1 = _0x330fdd['x'] * _0x26f0ae,
-                    _0x4dd490 = _0x330fdd['z'] * _0x26f0ae,
-                    _0x3ccd64 = { x: _0x41bbf1 - _0x330fdd['x'], y: 0x0, z: _0x4dd490 - _0x330fdd['z'] };
-                _0x4486e1['applyImpulse'](_0x3ccd64);
-            }, 0x2);
-        });
-    }
-    [_0x538b68(0xb6)]() {
-        const _0x485461 = _0x538b68;
-        world[_0x485461(0xaa)]['playerInventoryItemChange']['subscribe']((_0x5994bb) => {
-            const _0x485954 = _0x485461,
-                { player: _0x3672e7, itemStack: _0x1a7781, slot: _0x259713 } = _0x5994bb;
-            if (!_0x3672e7?.[_0x485954(0xae)] || !_0x1a7781) return;
-            const { container: _0x3c85bd } = _0x3672e7[_0x485954(0x76)](_0x485954(0xb2));
-            if (!_0x3c85bd) return;
-            if (_0x1a7781[_0x485954(0xd7)] === _0x485954(0x7a)) {
-                const _0x5ca540 = _0x2a0d57[_0x485954(0x82)](_0x1a7781);
-                if (!_0x5ca540) return;
-                const _0x1ead33 = _0x1a7781[_0x485954(0x76)](_0x485954(0xb9));
-                if (!_0x1ead33) return;
-                const _0xef5ce0 = _0x1ead33[_0x485954(0xc4)] >= _0x1ead33[_0x485954(0x95)] - 0x1,
-                    _0x54d83b = _0x2a0d57[_0x485954(0xb7)](_0x1a7781, _0xef5ce0 ? _0x5ca540['id'] + '_b' : _0x5ca540['id']);
-                (_0x2a0d57['addEnchantmentsData'](_0x54d83b, _0x5ca540), _0x54d83b[_0x485954(0x86)](_0x2a0d57[_0x485954(0x9d)]([], _0x5ca540)), _0x3c85bd['setItem'](_0x259713, _0x54d83b));
-                return;
-            }
-            const _0x23896d = _0x2a0d57['getParams'](_0x1a7781);
-            if (!_0x23896d) return;
-            if (_0x23896d[_0x485954(0xcf)] === 'placeholder') {
-                const _0x22fa1e = _0x2a0d57[_0x485954(0xb7)](_0x1a7781, _0x1a7781[_0x485954(0xd7)][_0x485954(0x90)]('_p', ''));
-                (_0x22fa1e[_0x485954(0x86)](_0x2a0d57['attributeLore']([], _0x23896d)), _0x3c85bd[_0x485954(0x8a)](_0x259713, _0x22fa1e));
-                return;
-            }
-            if (_0x23896d[_0x485954(0xcf)] === _0x485954(0x7d)) {
-                const _0x2d99c2 = _0x1a7781[_0x485954(0x76)]('minecraft:durability');
-                if ((_0x2d99c2[_0x485954(0xc4)] ?? 0x0) >= _0x2d99c2['maxDurability']) return;
-                const _0x5b3983 = _0x2a0d57[_0x485954(0xb7)](_0x1a7781, _0x1a7781[_0x485954(0xd7)]['replace']('_b', ''));
-                (_0x5b3983[_0x485954(0x86)](_0x2a0d57[_0x485954(0x9d)]([], _0x23896d)), _0x3c85bd[_0x485954(0x8a)](_0x259713, _0x5b3983));
-                return;
-            }
-        });
-    }
-    ['molangOnUse']() {
-        const _0x345f5b = _0x538b68;
-        world[_0x345f5b(0xaa)][_0x345f5b(0xc5)][_0x345f5b(0x72)](({ itemStack: _0x52c7ab, source: _0x244eef }) => {
-            const _0x39b0ab = _0x345f5b;
-            if (!_0x244eef?.[_0x39b0ab(0xae)]) return;
-            if (!_0x52c7ab) return;
-            const _0x432fd3 = _0x2a0d57[_0x39b0ab(0x93)](_0x52c7ab);
-            if (!_0x432fd3) return;
-            if (_0x432fd3?.['type'] === _0x39b0ab(0x9c)) return;
-            (this[_0x39b0ab(0xbf)][_0x39b0ab(0x9e)](_0x244eef['id'], 0x0), _0x2a0d57[_0x39b0ab(0xdb)](_0x244eef, _0x52c7ab[_0x39b0ab(0xd7)]));
-        });
-    }
+         const _0x12c21c = _0x125ac0[_0x2a8852(0x1bc)](_0x2116fb);
+         if (!_0x12c21c || _0x12c21c?.[_0x2a8852(0x1c3)]) return;
+         const _0x12e058 = _0x125ac0[_0x2a8852(0x1cb)](_0x12c21c[_0x2a8852(0x1df)]);
+         if (!_0x12e058) return;
+         const _0x36fb42 = _0x12e058?.[_0x2a8852(0x1b6)]?.['knockback_resistance'] ?? 0x0;
+         if (_0x36fb42 <= 0x0) return;
+         system['runTimeout'](() => {
+            const _0x20e32e = _0x2a8852,
+               _0x1d02c0 = _0x2116fb[_0x20e32e(0x1e0)](),
+               _0x1ffc2f = Math[_0x20e32e(0x1d5)](_0x1d02c0['x'] ** 0x2 + _0x1d02c0['z'] ** 0x2);
+            if (_0x1ffc2f <= 0.01) return;
+            const _0x903ccd = Math['max'](0x0, 0x1 + -_0x36fb42 / 0xa),
+               _0x9dbe2d = _0x1d02c0['x'] * _0x903ccd,
+               _0x260e3f = _0x1d02c0['z'] * _0x903ccd,
+               _0x8cad53 = { x: _0x9dbe2d - _0x1d02c0['x'], y: 0x0, z: _0x260e3f - _0x1d02c0['z'] };
+            _0x2116fb[_0x20e32e(0x1eb)](_0x8cad53);
+         }, 0x2);
+      });
+   }
+   [_0x1f8775(0x1e5)]() {
+      const _0x3c98ef = _0x1f8775;
+      world['afterEvents'][_0x3c98ef(0x1cf)][_0x3c98ef(0x1ad)]((_0xda6654) => {
+         const _0x2366ba = _0x3c98ef,
+            { player: _0x15615f, itemStack: _0x2774f0, slot: _0x3d8abe } = _0xda6654;
+         if (!_0x15615f?.['isValid'] || !_0x2774f0) return;
+         const { container: _0x5c7ce3 } = _0x15615f['getComponent']('inventory');
+         if (!_0x5c7ce3) return;
+         if (_0x2774f0['typeId'] === _0x2366ba(0x1d1)) {
+            const _0x59ab36 = _0x125ac0[_0x2366ba(0x1cb)](_0x2774f0);
+            if (!_0x59ab36) return;
+            const _0x2b22fa = _0x2774f0[_0x2366ba(0x1ed)](_0x2366ba(0x208));
+            if (!_0x2b22fa) return;
+            const _0x14b579 = _0x2b22fa[_0x2366ba(0x1dc)] >= _0x2b22fa[_0x2366ba(0x214)] - 0x1,
+               _0x2519cf = _0x125ac0[_0x2366ba(0x216)](
+                  _0x2774f0,
+                  _0x14b579 ? _0x59ab36['id'] + '_b' : _0x59ab36['id'],
+               );
+            (_0x125ac0[_0x2366ba(0x21f)](_0x2519cf, _0x59ab36),
+               _0x2519cf[_0x2366ba(0x1fb)](_0x125ac0[_0x2366ba(0x1fd)]([], _0x59ab36)));
+            const _0x23f867 = _0x15615f[_0x2366ba(0x1ed)](_0x2366ba(0x1f9))['container'][
+               _0x2366ba(0x1b1)
+            ](_0x3d8abe);
+            if (!_0x23f867) return;
+            const _0xd348d0 =
+               _0x2774f0[_0x2366ba(0x221)](_0x2366ba(0x1b4)) ===
+                  _0x23f867[_0x2366ba(0x221)](_0x2366ba(0x1b4)) &&
+               _0x2774f0[_0x2366ba(0x211)] === _0x23f867[_0x2366ba(0x211)];
+            if (!_0xd348d0) return;
+            _0x5c7ce3[_0x2366ba(0x20d)](_0x3d8abe, _0x2519cf);
+            return;
+         }
+         const _0x5eda5c = _0x125ac0[_0x2366ba(0x213)](_0x2774f0);
+         if (!_0x5eda5c) return;
+         if (_0x5eda5c[_0x2366ba(0x1aa)] === 'placeholder') {
+            const _0xc63bfe = _0x125ac0[_0x2366ba(0x216)](
+               _0x2774f0,
+               _0x2774f0['typeId'][_0x2366ba(0x20c)]('_p', ''),
+            );
+            (_0xc63bfe['setLore'](_0x125ac0['attributeLore']([], _0x5eda5c)),
+               _0x5c7ce3[_0x2366ba(0x20d)](_0x3d8abe, _0xc63bfe));
+            return;
+         }
+         if (_0x5eda5c['type'] === 'broken') {
+            const _0x131d29 = _0x2774f0['getComponent'](_0x2366ba(0x208));
+            if ((_0x131d29['damage'] ?? 0x0) >= _0x131d29[_0x2366ba(0x214)]) return;
+            const _0x3a00dd = _0x125ac0[_0x2366ba(0x216)](
+               _0x2774f0,
+               _0x2774f0[_0x2366ba(0x211)][_0x2366ba(0x20c)]('_b', ''),
+            );
+            (_0x3a00dd[_0x2366ba(0x1fb)](_0x125ac0[_0x2366ba(0x1fd)]([], _0x5eda5c)),
+               _0x5c7ce3[_0x2366ba(0x20d)](_0x3d8abe, _0x3a00dd));
+            return;
+         }
+      });
+   }
+   [_0x1f8775(0x220)]() {
+      const _0x15a51c = _0x1f8775;
+      (world[_0x15a51c(0x1e1)][_0x15a51c(0x1b7)][_0x15a51c(0x1ad)](
+         ({ itemStack: _0x19eccb, source: _0x56c732 }) => {
+            const _0x2f1e5a = _0x15a51c;
+            if (!_0x56c732?.[_0x2f1e5a(0x1ec)]) return;
+            if (!_0x19eccb) return;
+            _0x19eccb['typeId'] === 'minecraft:elytra' &&
+               _0x56c732[_0x2f1e5a(0x1d6)]('armor.equip_elytra');
+            const _0x114a82 = _0x125ac0['getParams'](_0x19eccb);
+            if (!_0x114a82) return;
+            if (_0x114a82?.[_0x2f1e5a(0x1aa)] === _0x2f1e5a(0x1d7)) return;
+            (this[_0x2f1e5a(0x223)][_0x2f1e5a(0x1ef)](_0x56c732['id'], 0x0),
+               _0x125ac0[_0x2f1e5a(0x1b3)](_0x56c732, _0x19eccb[_0x2f1e5a(0x211)]));
+         },
+      ),
+         world['afterEvents'][_0x15a51c(0x1fc)][_0x15a51c(0x1ad)](({ source: _0x442b4a }) => {
+            const _0x169614 = _0x15a51c;
+            if (!_0x442b4a?.[_0x169614(0x1ec)]) return;
+            if (_0x442b4a['typeId'] !== _0x169614(0x219)) return;
+            const _0x13f4b9 = _0x442b4a['getComponent'](_0x169614(0x1e3))?.['getEquipment'](
+                  _0x169614(0x21d),
+               ),
+               _0x71963e = _0x13f4b9?.['getComponent'](_0x169614(0x1da))?.[_0x169614(0x1db)](
+                  _0x169614(0x1f0),
+               );
+            if (!_0x71963e) return;
+            this['lastRiptideTickMap'][_0x169614(0x1ef)](_0x442b4a['id'], system[_0x169614(0x20b)]);
+         }));
+   }
+   [_0x1f8775(0x228)](_0x2b7fa7) {
+      const _0x1ba853 = _0x1f8775,
+         _0x2fcf41 = _0x2b7fa7['id'],
+         _0x1e38e2 = _0x2b7fa7[_0x1ba853(0x1f6)](_0x1ba853(0x1bf)),
+         _0x10836b = this['absMap'][_0x1ba853(0x1bd)](_0x2fcf41);
+      if (_0x1e38e2) {
+         const _0x1e21ce =
+               _0x1e38e2[_0x1ba853(0x1d3)] === 0x0
+                  ? 0x4
+                  : _0x1e38e2[_0x1ba853(0x1d3)] === 0x1
+                    ? 0xc
+                    : 0x10,
+            _0x298f3f = !_0x10836b;
+         _0x298f3f && _0x2b7fa7[_0x1ba853(0x1c1)](_0x1ba853(0x202), _0x1e21ce);
+         if (_0x10836b) {
+            const _0x219eca = _0x1e38e2[_0x1ba853(0x1c5)] > _0x10836b[_0x1ba853(0x1c5)],
+               _0x5f4470 = _0x1e38e2[_0x1ba853(0x1d3)] !== _0x10836b['amplifier'];
+            (_0x219eca &&
+               !_0x5f4470 &&
+               (_0x2b7fa7[_0x1ba853(0x222)](_0x1ba853(0x1bf)),
+               _0x2b7fa7['addEffect'](_0x1ba853(0x1bf), _0x10836b[_0x1ba853(0x1c5)], {
+                  amplifier: _0x10836b['amplifier'],
+               })),
+               (_0x219eca || _0x5f4470) &&
+                  _0x2b7fa7[_0x1ba853(0x1c1)](_0x1ba853(0x202), _0x1e21ce));
+         }
+      } else _0x2b7fa7[_0x1ba853(0x1c1)](_0x1ba853(0x202), 0x0);
+      this[_0x1ba853(0x1f8)][_0x1ba853(0x1ef)](
+         _0x2fcf41,
+         _0x1e38e2
+            ? { duration: _0x1e38e2[_0x1ba853(0x1c5)], amplifier: _0x1e38e2[_0x1ba853(0x1d3)] }
+            : undefined,
+      );
+   }
+   [_0x1f8775(0x1fa)]() {
+      const _0x531fe6 = _0x1f8775;
+      (world[_0x531fe6(0x1e1)][_0x531fe6(0x1d9)][_0x531fe6(0x1ad)](
+         ({ hurtEntity: _0x1023d8, damage: _0x383023 }) => {
+            const _0x425d18 = _0x531fe6;
+            if (!_0x1023d8?.['isValid']) return;
+            if (_0x1023d8?.[_0x425d18(0x211)] !== 'minecraft:player') return;
+            const _0x5bd137 = _0x1023d8[_0x425d18(0x221)](_0x425d18(0x202)) ?? 0x0,
+               _0x1e6821 = Math[_0x425d18(0x1e2)](0x0, _0x5bd137 - _0x383023);
+            _0x1023d8['setDynamicProperty'](_0x425d18(0x202), _0x1e6821);
+         },
+      ),
+         world[_0x531fe6(0x1e1)]['playerSpawn']['subscribe'](({ player: _0x2c32e1 }) => {
+            const _0x1819d6 = _0x531fe6;
+            if (!_0x2c32e1[_0x1819d6(0x1ec)]) return;
+            const _0x456222 = _0x2c32e1['getEffect'](_0x1819d6(0x1bf));
+            if (!_0x456222?.[_0x1819d6(0x1ec)]) return;
+            const _0xdbdf9c = _0x456222[_0x1819d6(0x1c5)],
+               _0x2e1ca7 = _0x456222[_0x1819d6(0x1d3)];
+            (_0x2c32e1['removeEffect'](_0x1819d6(0x1bf)),
+               _0x2c32e1[_0x1819d6(0x225)]('absorption', _0xdbdf9c, { amplifier: _0x2e1ca7 }));
+         }),
+         world[_0x531fe6(0x1e1)][_0x531fe6(0x1dd)]['subscribe']((_0xfb0490) => {
+            const _0x45ad7b = _0x531fe6,
+               { source: _0x3671cc, itemStack: _0x4fe7af } = _0xfb0490;
+            if (!_0x3671cc['isValid']) return;
+            const _0x16e9bc = _0x3671cc[_0x45ad7b(0x1f6)]('absorption'),
+               _0x59ab6f =
+                  _0x16e9bc[_0x45ad7b(0x1d3)] === 0x0
+                     ? 0x4
+                     : _0x16e9bc[_0x45ad7b(0x1d3)] === 0x1
+                       ? 0xc
+                       : 0x10,
+               _0x42608d = _0x4fe7af?.[_0x45ad7b(0x211)],
+               _0x57bb04 = {
+                  'minecraft:golden_apple': _0x16e9bc[_0x45ad7b(0x1d3)] > 0x0 ? _0x59ab6f : 0x4,
+                  'minecraft:enchanted_golden_apple': 0x10,
+               },
+               _0x32ebe8 = _0x57bb04[_0x42608d] || 0x0;
+            if (_0x32ebe8 === 0x0) return;
+            _0x3671cc[_0x45ad7b(0x1c1)]('rme:absorption', _0x32ebe8);
+         }));
+   }
 }
 new CustomElytraManager();

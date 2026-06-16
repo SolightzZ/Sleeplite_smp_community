@@ -165,7 +165,15 @@ export class ZoneDatabase {
         for (const zone of Object.values(this._data)) {
             if (zone.dimension !== dimensionId) continue;
             if (location.x >= zone.start.x && location.x <= zone.end.x && location.y >= zone.start.y && location.y <= zone.end.y && location.z >= zone.start.z && location.z <= zone.end.z) {
-                if (this.cache.size > Config.CacheLimit) this.cache.clear();
+                if (this.cache.size > Config.CacheLimit) {
+                    const iter = this.cache.keys();
+                    const evictCount = Math.min(64, this.cache.size >> 2);
+                    for (let i = 0; i < evictCount; i++) {
+                        const key = iter.next().value;
+                        if (key === undefined) break;
+                        this.cache.delete(key);
+                    }
+                }
                 this.cache.set(cacheKey, zone);
                 return zone;
             }

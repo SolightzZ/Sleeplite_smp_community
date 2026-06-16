@@ -1,0 +1,28 @@
+{
+   "format_version": "1.12",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "jsart:arare"
+      },
+      "tags": ["avanced"],
+      "pattern": [" # ", "#P#"],
+      "key": {
+         "#": {
+            "item": "minecraft:glistering_melon_slice"
+         },
+         "P": {
+            "item": "minecraft:potion"
+         }
+      },
+
+      "unlock": [
+         {
+            "item": "minecraft:potion"
+         }
+      ],
+
+      "result": {
+         "item": "jsart:arare"
+      }
+   }
+}

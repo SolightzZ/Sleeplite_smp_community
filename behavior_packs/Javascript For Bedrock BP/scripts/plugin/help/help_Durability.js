@@ -61,7 +61,7 @@ const updateInventoryLore = (container, playerTag, damage) => {
         const lore = buildLore(item, playerTag, stats, enchants, damage);
         if (!lore) continue;
 
-        item.setLore([lore]);
+        item.setLore(lore.split('\n'));
         container.setItem(i, item);
     }
 };
@@ -94,7 +94,7 @@ const updateEquipmentLore = (equippable, playerTag, damage) => {
             if (hasMatch) continue;
         }
 
-        item.setLore([lore]);
+        item.setLore(lore.split('\n'));
         eSlot.setItem(item);
     }
 };

@@ -1,0 +1,33 @@
+{
+   "format_version": "1.12",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "jsart:yokan"
+      },
+      "tags": ["avanced"],
+      "pattern": ["#o#", "#P#", "///"],
+      "key": {
+         "#": {
+            "item": "minecraft:feather"
+         },
+         "o": {
+            "item": "minecraft:amethyst_shard"
+         },
+         "P": {
+            "item": "minecraft:potion"
+         },
+         "/": {
+            "item": "minecraft:bone"
+         }
+      },
+
+      "unlock": [
+         {
+            "item": "minecraft:potion"
+         }
+      ],
+      "result": {
+         "item": "jsart:yokan"
+      }
+   }
+}

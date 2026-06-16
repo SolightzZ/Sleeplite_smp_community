@@ -1,6 +1,7 @@
 import { system } from '@minecraft/server';
 import { Registry } from './registry.js';
 import { Queue } from './queue.js';
+import { logError } from './logger.js';
 
 const _intervals = [];
 
@@ -19,7 +20,7 @@ export const Interval = {
                 iv.fn();
             } catch (error) {
                 const name = iv.fn?.name || `anonymous_interval[${i}]`;
-                console.error(`[Interval] ${name} error:`, error?.message ?? error);
+                logError('Interval', `${name} error`, error);
             }
         }
     }
@@ -39,7 +40,7 @@ export function createPlayerBatchIterator() {
             try {
                 fn(entry);
             } catch (error) {
-                console.error('[PlayerBatchIterator] task error:', error?.message ?? error);
+                logError('PlayerBatchIterator', 'task error', error);
             }
         }
         index++;
@@ -48,6 +49,10 @@ export function createPlayerBatchIterator() {
 
 // ขับเคลื่อนระบบช่วงเวลาและคิวงานจากลูปช่วงเวลาหลักเพียงลูปเดียว
 system.runInterval(() => {
-    Interval.tick();
-    Queue.tick();
+    try {
+        Interval.tick();
+        Queue.tick();
+    } catch (error) {
+        logError('Tick', 'main loop error', error);
+    }
 }, 1);

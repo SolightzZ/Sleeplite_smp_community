@@ -1,7 +1,7 @@
 import { ItemStack, EntityComponentTypes } from '@minecraft/server';
 import { Config, edgeOffsets } from '../config.js';
 
-// คำนวณขอบเขต
+const BORDER_CACHE_MAX = 100;
 const borderPointCache = new Map();
 
 export const buildBorderPoints = (start, step) => {
@@ -30,6 +30,7 @@ export const buildBorderPoints = (start, step) => {
         }
     }
 
+    if (borderPointCache.size >= BORDER_CACHE_MAX) borderPointCache.clear();
     borderPointCache.set(cacheKey, points);
     return points;
 };

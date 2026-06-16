@@ -7,7 +7,11 @@ export const getPlayerAxe = (player) => {
   if (!inv || !inv.container) return undefined;
 
   const item = inv.container.getItem(player.selectedSlotIndex);
-  if (!item || !item.typeId.includes("axe")) return undefined;
+  if (!item) return undefined;
+
+  const typeId = item.typeId;
+  if (!typeId.includes("axe") || typeId.includes("pickaxe")) return undefined;
 
   return item;
 };
+

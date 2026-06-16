@@ -1,6 +1,17 @@
 import { system } from "@minecraft/server";
 import { CFG } from "../config.js";
-import { state } from "./queue.js";
+import {
+  getJobQueueLength,
+  getPlayerJobCount,
+  getPlayerLastJobEnd,
+  isBlockPending,
+  addPendingBlock,
+  incrementPlayerJobCount,
+  pushJob,
+  getRunHandle,
+  setRunHandle,
+  cleanupPlayerState
+} from "./queue.js";
 import { getLocKey } from "../utils/block.js";
 import { PICKAXE_BREAKS, ORE_DROP } from "../data/ores.js";
 import { scanVein } from "./scanner.js";
@@ -15,12 +26,12 @@ export const VeinMiner = (event) => {
   if (!player || !player.isValid) return;
   if (!block || !block.isValid) return;
   if (!player.isSneaking) return;
-  if (state.jobQueue.length >= CFG.maxGlobalJobs) return;
+  if (getJobQueueLength() >= CFG.maxGlobalJobs) return;
 
-  const pCount = state.playerJobCount.get(player.id) || 0;
+  const pCount = getPlayerJobCount(player.id);
   if (pCount >= CFG.maxJobsPerPlayer) return;
 
-  const lastEnd = state.playerLastJobEnd.get(player.id) || 0;
+  const lastEnd = getPlayerLastJobEnd(player.id);
   if (Date.now() - lastEnd < CFG.playerCooldownMs) return;
 
   const targetId = block.typeId;
@@ -29,23 +40,24 @@ export const VeinMiner = (event) => {
 
   const loc = block.location;
   const startKey = getLocKey(loc.x, loc.y, loc.z);
-  if (state.pendingBlocks.has(startKey)) return;
+  if (isBlockPending(startKey)) return;
 
   const res = scanVein(block, targetId);
   if (res.locations.length <= 1) return;
 
-  for (const key of res.visitedKeys) {
-    state.pendingBlocks.add(key);
+  const locationKeys = res.locations.map(l => getLocKey(l.x, l.y, l.z));
+  for (const key of locationKeys) {
+    addPendingBlock(key);
   }
 
   const enc = getEnchantData(stack);
   const dropId = enc.silk ? targetId : ORE_DROP[targetId];
 
-  state.playerJobCount.set(player.id, pCount + 1);
+  incrementPlayerJobCount(player.id);
 
   const dim = player.dimension;
 
-  state.jobQueue.push({
+  pushJob({
     player: player,
     playerId: player.id,
     dimension: dim,
@@ -58,10 +70,12 @@ export const VeinMiner = (event) => {
     unbreakingLevel: enc.unbreaking,
     brokenCount: 0,
     xpAccumulated: 0,
-    visitedKeys: res.visitedKeys,
+    locationKeys: locationKeys,
   });
 
-  if (state.runHandle === null) {
-    state.runHandle = system.runInterval(processVeinJobs, 1);
+  if (getRunHandle() === null) {
+    setRunHandle(system.runInterval(processVeinJobs, 1));
   }
 };
+
+

@@ -1,0 +1,49 @@
+{
+   "format_version": "1.12",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "jsart:divine_water"
+      },
+      "tags": ["avanced"],
+      "pattern": ["#SN", "FPs", "CGR"],
+      "key": {
+         "#": {
+            "item": "minecraft:crimson_roots"
+         },
+         "S": {
+            "item": "minecraft:sweet_berries"
+         },
+         "N": {
+            "item": "minecraft:nether_wart"
+         },
+         "F": {
+            "item": "minecraft:fermented_spider_eye"
+         },
+         "P": {
+            "item": "minecraft:potion"
+         },
+         "s": {
+            "item": "minecraft:spider_eye"
+         },
+         "C": {
+            "item": "minecraft:crimson_fungus"
+         },
+         "G": {
+            "item": "minecraft:golden_dandelion"
+         },
+         "R": {
+            "item": "minecraft:red_mushroom"
+         }
+      },
+
+      "unlock": [
+         {
+            "item": "minecraft:potion"
+         }
+      ],
+
+      "result": {
+         "item": "jsart:divine_water"
+      }
+   }
+}

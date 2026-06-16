@@ -1,42 +1,29 @@
 import { ItemComponentTypes } from '@minecraft/server';
 import { cloneWithAmountLike, compareItemsByMode } from './item.js';
 
+const _getEnchantString = (item) => {
+    const enchants = item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments?.();
+    if (!enchants || enchants.length === 0) return '';
+
+    const parts = new Array(enchants.length);
+    for (let i = 0; i < enchants.length; i++) {
+        parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
+    }
+
+    parts.sort();
+    return parts.join(',');
+};
+
 const buildStackKey = (item) => {
     if (!item?.typeId) return null;
 
-    const enchComp = item.getComponent(ItemComponentTypes.Enchantable);
-    const enchants = enchComp?.getEnchantments?.();
-
-    let enchStr = '';
-    if (enchants && enchants.length > 0) {
-        const parts = new Array(enchants.length);
-
-        for (let i = 0; i < enchants.length; i++) {
-            parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
-        }
-
-        parts.sort();
-        enchStr = parts.join(',');
-    }
-
+    const enchStr = _getEnchantString(item);
     const lore = item.getLore?.();
     const loreStr = lore && lore.length > 0 ? JSON.stringify(lore) : '';
 
     if (!item.nameTag && !loreStr && !enchStr) return item.typeId;
 
     return `${item.typeId}\x00${item.nameTag || ''}\x00${loreStr}\x00${enchStr}`;
-};
-
-const countTotalItems = (items) => {
-    if (!items) return 0;
-
-    let total = 0;
-
-    for (const item of items) {
-        if (item) total += item.amount;
-    }
-
-    return total;
 };
 
 export const sortAndMergeItems = (items, maxSize) => {
@@ -109,19 +96,7 @@ export const isContainerSorted = (container, mode = 'type', startSlot = 0) => {
     return true;
 };
 
-const buildEnchantFingerprint = (item) => {
-    const enchants = item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments?.();
-
-    if (!enchants || enchants.length === 0) return '';
-
-    const parts = new Array(enchants.length);
-    for (let i = 0; i < enchants.length; i++) {
-        parts[i] = `${enchants[i].type.id}:${enchants[i].level}`;
-    }
-
-    parts.sort();
-    return parts.join(',');
-};
+const buildEnchantFingerprint = (item) => _getEnchantString(item);
 
 export const writeContainerDiff = (container, newItems, startSlot = 0) => {
     const maxWrite = container.size - startSlot;

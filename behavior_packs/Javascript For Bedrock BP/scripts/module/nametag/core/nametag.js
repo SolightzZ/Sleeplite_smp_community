@@ -3,31 +3,31 @@ import { isValidPlayer } from '../utils/player.js';
 import { getActiveRank, getOwnedRanks } from './tagManager.js';
 
 export const refreshNameTag = (player) => {
-    if (!isValidPlayer(player)) return false;
+   if (!isValidPlayer(player)) return false;
 
-    const tags = player.getTags();
-    const active = getActiveRank(player) || getActiveRankFromTags(tags);
-    const owned = getOwnedRanks(player);
-    const display = active || (owned.length === 0 ? DEFAULT_RANK : '');
-    player.nameTag = display ? `${display} ${player.name}` : player.name;
+   const tags = player.getTags();
+   const active = getActiveRank(player) || getActiveRankFromTags(tags);
+   const owned = getOwnedRanks(player);
+   const display = active || (owned.length === 0 ? DEFAULT_RANK : '');
+   player.nameTag = display ? `${display} ${player.name}` : player.name;
 
-    return true;
+   return true;
 };
 
 const getActiveRankFromTags = (tags) => {
-    for (const tag of tags) {
-        if (tag.startsWith('active:')) {
-            return tag.slice(7);
-        }
-    }
-    return null;
+   for (const tag of tags) {
+      if (tag.startsWith('active:')) {
+         return tag.slice(7);
+      }
+   }
+   return null;
 };
 
 const removeNameTag = (player) => {
-    if (!isValidPlayer(player)) return false;
+   if (!isValidPlayer(player)) return false;
 
-    player.nameTag = player.name;
-    return true;
+   player.nameTag = player.name;
+   return true;
 };
 
 export const refreshNameTagOnJoin = refreshNameTag;

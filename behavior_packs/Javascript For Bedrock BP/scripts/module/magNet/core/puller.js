@@ -1,6 +1,8 @@
 import { MagnetConfig } from '../config.js';
 import { hasMagnetUser } from './state.js';
 
+const pullableSet = new Set(MagnetConfig.PULLABLE_TYPES);
+
 export const pullItemsToPlayer = (player) => {
     if (!player.isValid || !hasMagnetUser(player.id)) return;
 
@@ -8,21 +10,16 @@ export const pullItemsToPlayer = (player) => {
     const target = { x: loc.x, y: loc.y + 0.8, z: loc.z };
     let pulledCount = 0;
 
-    for (const typeId of MagnetConfig.PULLABLE_TYPES) {
+    const entities = player.dimension.getEntities({
+        location: loc,
+        maxDistance: MagnetConfig.RANGE,
+    });
+
+    for (const entity of entities) {
         if (pulledCount >= MagnetConfig.MAX_ITEMS) break;
-
-        const entities = player.dimension.getEntities({
-            location: loc,
-            maxDistance: MagnetConfig.RANGE,
-            type: typeId,
-        });
-
-        for (const entity of entities) {
-            if (pulledCount >= MagnetConfig.MAX_ITEMS) break;
-
-            if (!entity.isValid) continue;
-            entity.teleport(target, { dimension: player.dimension });
-            pulledCount++;
-        }
+        if (!entity.isValid) continue;
+        if (!pullableSet.has(entity.typeId)) continue;
+        entity.teleport(target, { dimension: player.dimension });
+        pulledCount++;
     }
 };

@@ -1,50 +1,49 @@
 {
-  "format_version": "1.21.120",
-  "minecraft:item": {
-    "description": {
-      "identifier": "jsart:sledgehammer",
-      "menu_category":  { 
-        "category": 
-        "equipment" 
+   "format_version": "1.21.120",
+   "minecraft:item": {
+      "description": {
+         "identifier": "jsart:sledgehammer",
+         "menu_category": {
+            "category": "equipment"
+         }
+      },
+      "components": {
+         "minecraft:icon": "jsart_sledgehammer",
+         "minecraft:max_stack_size": 1,
+         "minecraft:stacked_by_data": true,
+         "minecraft:glint": false,
+         "minecraft:hand_equipped": true,
+         "minecraft:damage": 55,
+         "minecraft:durability": { "max_durability": 40 },
+         "minecraft:mining_speed": 1,
+         "minecraft:allow_off_hand": false,
+         "minecraft:repairable": {
+            "repair_items": [
+               { "items": ["minecraft:emerald"], "repair_amount": 10 },
+               {
+                  "items": ["jsart:sledgehammer"],
+                  "repair_amount": "context.other->query.remaining_durability + 0.2 * context.other->query.max_durability"
+               }
+            ]
+         },
+         "minecraft:can_destroy_in_creative": false,
+         "minecraft:tags": {
+            "tags": ["minecraft:is_sword", "minecraft:transformable_items"]
+         },
+         "minecraft:swing_duration": { "value": 0.8 },
+         "minecraft:cooldown": {
+            "category": "sledgehammer_cooldown",
+            "duration": 1.5,
+            "type": "use"
+         },
+         "item:has_durability": {},
+         "minecraft:fire_resistant": { "value": true },
+         "minecraft:use_modifiers": {
+            "emit_vibrations": true,
+            "movement_modifier": 0.8,
+            "use_duration": 1.0
+         },
+         "jsart_sledgehammer:trigger": {}
       }
-    },
-    "components": {
-      "minecraft:icon": "jsart_sledgehammer",
-      "minecraft:max_stack_size": 1,
-      "minecraft:stacked_by_data": true,
-      "minecraft:glint": false,
-      "minecraft:hand_equipped": true,
-      "minecraft:damage": 55,
-      "minecraft:durability": { "max_durability": 40 },
-      "minecraft:mining_speed": 1,
-      "minecraft:allow_off_hand": false,
-      "minecraft:repairable": {
-        "repair_items": [
-          { "items": ["minecraft:emerald"], "repair_amount": 10 },
-          {
-            "items": ["jsart:sledgehammer"],
-            "repair_amount": "context.other->query.remaining_durability + 0.2 * context.other->query.max_durability"
-          }
-        ]
-      },
-      "minecraft:can_destroy_in_creative": false,
-      "minecraft:tags": {
-        "tags": ["minecraft:is_sword", "minecraft:transformable_items"]
-      },
-      "minecraft:swing_duration": { "value": 0.8 },
-      "minecraft:cooldown": {
-        "category": "sledgehammer_cooldown",
-        "duration": 1.5,
-        "type": "use"
-      },
-      "item:has_durability": {},
-      "minecraft:fire_resistant": { "value": true },
-      "minecraft:use_modifiers": {
-        "emit_vibrations": true,
-        "movement_modifier": 0.8,
-        "use_duration": 1.0
-      },
-      "jsart_sledgehammer:trigger": {}
-    }
-  }
+   }
 }

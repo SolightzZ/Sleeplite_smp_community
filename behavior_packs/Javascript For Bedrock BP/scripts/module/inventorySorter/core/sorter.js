@@ -14,11 +14,26 @@ const readContainerSlice = (container, start, length) => {
     return arr;
 };
 
-const isAllEmpty = (arr) => {
-    for (const item of arr) {
-        if (item) return false;
+const _patternComparator = (a, b) => {
+    if (!a && !b) return 0;
+    if (!a) return 1;
+    if (!b) return -1;
+    if (a.amount !== b.amount) return a.amount - b.amount;
+    return a.typeId < b.typeId ? -1 : a.typeId > b.typeId ? 1 : 0;
+};
+
+const _sortByMode = (rawItems, sortMode, size, container, startSlot = 0) => {
+    if (sortMode === 'chess' || sortMode === 'line' || sortMode === 'column') {
+        const sorted = sortAndMergeItems(rawItems, size);
+        sorted.sort(_patternComparator);
+        if (sortMode === 'chess') return applyChessPattern(sorted, size);
+        if (sortMode === 'line') return applyLinePattern(sorted, size);
+        return applyColumnPattern(sorted, size);
     }
-    return true;
+    if (isContainerSorted(container, sortMode, startSlot)) return null;
+    const merged = sortAndMergeItems(rawItems, size);
+    merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
+    return merged;
 };
 
 export function sortPlayerInventory(player, mode) {
@@ -46,26 +61,9 @@ export function sortPlayerInventory(player, mode) {
         return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
     }
 
-    let merged;
-    if (sortMode === 'chess' || sortMode === 'line' || sortMode === 'column') {
-        const sorted = sortAndMergeItems(rawItems, mainLen);
-        sorted.sort((a, b) => {
-            if (!a && !b) return 0;
-            if (!a) return 1;
-            if (!b) return -1;
-            if (a.amount !== b.amount) return a.amount - b.amount;
-            return a.typeId < b.typeId ? -1 : a.typeId > b.typeId ? 1 : 0;
-        });
-
-        if (sortMode === 'chess') merged = applyChessPattern(sorted, mainLen);
-        else if (sortMode === 'line') merged = applyLinePattern(sorted, mainLen);
-        else merged = applyColumnPattern(sorted, mainLen);
-    } else {
-        if (isContainerSorted(inv, sortMode, hotbarEnd)) {
-            return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
-        }
-        merged = sortAndMergeItems(rawItems, mainLen);
-        merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
+    const merged = _sortByMode(rawItems, sortMode, mainLen, inv, hotbarEnd);
+    if (merged === null) {
+        return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
     }
 
     writeContainerDiff(inv, merged, hotbarEnd);
@@ -111,25 +109,9 @@ export function sortBlockContainer(player, mode) {
         return { ok: true, msg: `${ColorCodes.green}[/] ที่เก็บของว่างเปล่า` };
     }
 
-    let merged;
-    if (sortMode === 'chess' || sortMode === 'line' || sortMode === 'column') {
-        const sorted = sortAndMergeItems(rawItems, size);
-        sorted.sort((a, b) => {
-            if (!a && !b) return 0;
-            if (!a) return 1;
-            if (!b) return -1;
-            if (a.amount !== b.amount) return a.amount - b.amount;
-            return a.typeId < b.typeId ? -1 : a.typeId > b.typeId ? 1 : 0;
-        });
-        if (sortMode === 'chess') merged = applyChessPattern(sorted, size);
-        else if (sortMode === 'line') merged = applyLinePattern(sorted, size);
-        else merged = applyColumnPattern(sorted, size);
-    } else {
-        if (isContainerSorted(container, sortMode)) {
-            return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
-        }
-        merged = sortAndMergeItems(rawItems, size);
-        merged.sort((a, b) => compareItemsByMode(a, b, sortMode));
+    const merged = _sortByMode(rawItems, sortMode, size, container, 0);
+    if (merged === null) {
+        return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
     }
 
     writeContainerDiff(container, merged);
