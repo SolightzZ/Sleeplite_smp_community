@@ -2,7 +2,7 @@
    "format_version": "1.17.41",
    "minecraft:recipe_shaped": {
       "description": {
-         "identifier": "addon:cam"
+         "identifier": "addon:2_cam"
       },
       "tags": ["avanced"],
       "pattern": [" # ", "#i#", " # "],

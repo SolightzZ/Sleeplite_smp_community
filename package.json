@@ -1,5 +1,5 @@
 {
-  "name": "mc-bedrock-1.26.20",
+  "name": "mc-bedrock-1.26.30",
   "version": "1.0.0",
   "description": "> Vault สำหรับ Minecraft Bedrock Edition add-on และ Script API development",
   "main": "index.js",
@@ -20,13 +20,13 @@
   "homepage": "https://github.com/SolightzZ/Sleeplite_smp_community#readme",
   "dependencies": {
     "@minecraft/common": "^1.3.0",
-    "@minecraft/debug-utilities": "^1.0.0-beta.1.26.21-stable",
-    "@minecraft/server": "^2.8.0-beta.1.26.21-stable",
-    "@minecraft/server-admin": "^1.0.0-beta.1.26.21-stable",
-    "@minecraft/server-editor": "^0.1.0-beta.1.26.21-stable",
-    "@minecraft/server-gametest": "^1.0.0-beta.1.26.21-stable",
-    "@minecraft/server-net": "^1.0.0-beta.1.26.21-stable",
-    "@minecraft/server-ui": "^2.1.0-beta.1.26.21-stable",
-    "@minecraft/vanilla-data": "^1.26.21"
+    "@minecraft/debug-utilities": "^1.0.0-beta.1.26.30-stable",
+    "@minecraft/server": "^2.8.0-beta.1.26.30-stable",
+    "@minecraft/server-admin": "^1.0.0-beta.1.26.30-stable",
+    "@minecraft/server-editor": "^0.1.0-beta.1.26.30-stable",
+    "@minecraft/server-gametest": "^1.0.0-beta.1.26.30-stable",
+    "@minecraft/server-net": "^1.0.0-beta.1.26.30-stable",
+    "@minecraft/server-ui": "^2.1.0-beta.1.26.30-stable",
+    "@minecraft/vanilla-data": "^1.26.30"
   }
 }

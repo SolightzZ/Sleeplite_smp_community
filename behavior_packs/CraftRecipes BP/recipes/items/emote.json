@@ -2,7 +2,7 @@
    "format_version": "1.17.41",
    "minecraft:recipe_shaped": {
       "description": {
-         "identifier": "addon:emote"
+         "identifier": "addon:3_emote"
       },
       "tags": ["avanced"],
       "pattern": ["##", "##"],

@@ -617,8 +617,9 @@ class CustomElytraManager {
             const _0x45ad7b = _0x531fe6,
                { source: _0x3671cc, itemStack: _0x4fe7af } = _0xfb0490;
             if (!_0x3671cc['isValid']) return;
-            const _0x16e9bc = _0x3671cc[_0x45ad7b(0x1f6)]('absorption'),
-               _0x59ab6f =
+             const _0x16e9bc = _0x3671cc[_0x45ad7b(0x1f6)]('absorption');
+             if (!_0x16e9bc) return;
+             const _0x59ab6f =
                   _0x16e9bc[_0x45ad7b(0x1d3)] === 0x0
                      ? 0x4
                      : _0x16e9bc[_0x45ad7b(0x1d3)] === 0x1

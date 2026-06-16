@@ -1,26 +1,26 @@
 {
-  "format_version": "1.17.41",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:protection"
-    },
-    "tags": ["avanced"],
-    "pattern": ["C", "W"],
-    "key": {
-      "C": {
-        "item": "minecraft:chest"
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:7_protection"
       },
-      "W": {
-        "item": "minecraft:compass"
-      }
-    },
-    "result": {
-      "item": "addon:protection"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:chest"
-      }
-    ]
-  }
+      "tags": ["avanced"],
+      "pattern": ["C", "W"],
+      "key": {
+         "C": {
+            "item": "minecraft:chest"
+         },
+         "W": {
+            "item": "minecraft:compass"
+         }
+      },
+      "result": {
+         "item": "addon:protection"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:chest"
+         }
+      ]
+   }
 }

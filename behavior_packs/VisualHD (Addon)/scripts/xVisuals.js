@@ -1,314 +1,290 @@
-import { world, system } from '@minecraft/server';
+import { system, world } from '@minecraft/server';
+import {
+   MSG,
+   IMPACT_MSGS,
+   FLAME_MSGS,
+   DROWN_MSGS,
+   DAMAGE_CAUSE,
+   BLOOD_PARTICLES,
+   EFFECT_MAP,
+   SEV_MSGS,
+   EXP_MSGS,
+   EXP_SOUNDS,
+   getExpTier,
+   MAX_HURT,
+   HURT_MASK,
+   MAX_EFF,
+   EFF_MASK,
+   randElem,
+   buildHurtEffect,
+} from './utils.js';
 
-// Section 1 — Message Tables
+class XVisuals {
+   errorCount = 0;
+   healthComponents = new Map();
+   healthStates = new Map();
+   playerMap = new Map();
+   playerIds = [];
+   heartbeatingPlayers = new Map();
+   tickCounter = 0;
 
-const MSG = {
-    PREFIX: 'xVis',
-    IMPACT_COUNT: 34,
-    FLAME_COUNT: 8,
-    DROWN_COUNT: 17,
-};
+   hurtPlayers = new Array(MAX_HURT);
+   hurtDamages = new Array(MAX_HURT);
+   hurtCauses = new Array(MAX_HURT);
+   hurtHead = 0;
+   hurtSize = 0;
 
-const IMPACT_MSGS = Array.from({ length: MSG.IMPACT_COUNT }, (_, i) => (i >= 1 && i <= 3 ? `xVisImpactFixed${i}` : `xVisImpact${i}`));
+   effectPlayers = new Array(MAX_EFF);
+   effectMessages = new Array(MAX_EFF);
+   effectHead = 0;
+   effectSize = 0;
 
-const FLAME_MSGS = Array.from({ length: MSG.FLAME_COUNT }, (_, i) => `xVisFlameImpact${i}`);
+   constructor() {
+      for (const player of world.getAllPlayers()) this.playerMap.set(player.id, player);
+      this.refreshIds();
+      this.registerEvents();
+      this.interval = system.runInterval(() => this.tick(), 2);
+   }
 
-const DROWN_MSGS = Array.from({ length: MSG.DROWN_COUNT }, (_, i) => (i === 1 ? `xVisDrowningFixed${i}` : `xVisDrowning${i}`));
-
-// Section 2 — Damage Cause Classification
-
-const DAMAGE_CAUSE = {
-    IMPACT: new Set([
-        'contact',
-        'entityAttack',
-        'fall',
-        'magic',
-        'projectile',
-        'stalactite',
-        'stalagmite',
-        'entityExplosion',
-        'blockExplosion',
-        'anvil',
-        'maceSmash',
-        'ramAttack',
-        'sonicBoom',
-        'flyIntoWall',
-    ]),
-    EXPLOSION: new Set(['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall']),
-    FLAME: new Set(['fire', 'fireTick', 'fireworks', 'lava', 'lightning', 'magma', 'campfire', 'soulCampfire']),
-};
-
-const BLOOD_PARTICLES = ['xvisuals:blood_drop0', 'xvisuals:blood_drop1'];
-
-const getRandomElement = (array) => array[(Math.random() * array.length) | 0];
-
-const EFFECT_MAP = {
-    poison: 'xVisPoison',
-    fire_resistance: 'xVisFireResistance',
-    resistance: 'xVisResistance',
-    regeneration: 'xVisRegeneration',
-    slow_falling: 'xVisSlowFalling',
-    speed: 'xVisSpeed',
-    strength: 'xVisStrength',
-    slowness: 'xVisSlowness',
-    jump_boost: 'xVisJumpBoost',
-    night_vision: 'xVisNightVision',
-    invisibility: 'xVisInvisibility',
-    water_breathing: 'xVisWaterBreathing',
-    weakness: 'xVisWeakness',
-    wither: 'xVisWither',
-    levitation: 'xVisLevitation',
-    wind_charged: 'xVisWindCharged',
-    weaving: 'xVisWeaving',
-    oozing: 'xVisOozing',
-    infested: 'xVisInfested',
-};
-
-// Section 3 — Low-Health Blur
-
-const healthStates = new Map();
-
-const getHealthState = (playerId) => {
-    let state = healthStates.get(playerId);
-    if (!state) {
-        state = { active: [false, false], msgSent: [false, false] };
-        healthStates.set(playerId, state);
-    }
-    return state;
-};
-
-const updateLowHealth = (player, healthPercent, level) => {
-    const minHealth = level === 0 ? 25 : 0;
-    const maxHealth = level === 0 ? 50 : 25;
-    const isActive = healthPercent <= maxHealth && healthPercent > minHealth;
-
-    const state = getHealthState(player.id);
-    if (state.active[level] === isActive) return;
-
-    state.active[level] = isActive;
-    if (isActive) {
-        if (state.msgSent[level]) return;
-        state.msgSent[level] = true;
-        player.sendMessage(`xVisLowHealth${level}Blur`);
-    } else {
-        if (!state.msgSent[level]) return;
-        state.msgSent[level] = false;
-        player.sendMessage(`xVisFalseLowHealth${level}Blur`);
-    }
-};
-
-// Section 4 — Player Registry
-
-const playerMap = new Map();
-let playerIds = [];
-let roundRobinIndex = 0;
-
-const refreshIds = () => {
-    playerIds = [...playerMap.keys()];
-    roundRobinIndex = 0;
-};
-
-for (const p of world.getAllPlayers()) {
-    playerMap.set(p.id, p);
-}
-refreshIds();
-
-world.afterEvents.playerJoin.subscribe((event) => {
-    system.run(() => {
-        const entity = world.getAllPlayers().find((p) => p.id === event.playerId);
-        if (entity && entity.isValid) {
-            playerMap.set(event.playerId, entity);
-            refreshIds();
-        }
-    });
-});
-
-const cleanupPlayer = (playerId) => {
-    playerMap.delete(playerId);
-    healthStates.delete(playerId);
-    refreshIds();
-};
-
-world.beforeEvents.playerLeave.subscribe((event) => {
-    cleanupPlayer(event.playerId);
-});
-
-// Section 5 — Health Monitor
-
-const healthMonitor = () => {
-    if (playerIds.length === 0) return;
-
-    for (let i = 0; i < playerIds.length; i++) {
-        const playerId = playerIds[i];
-        const player = playerMap.get(playerId);
-
-        if (!player || !player.isValid) {
-            cleanupPlayer(playerId);
-            continue;
-        }
-
-        try {
-            const healthComponent = player.getComponent('minecraft:health');
-            if (healthComponent) {
-                const healthPercent = (healthComponent.currentValue / healthComponent.effectiveMax) * 100;
-                updateLowHealth(player, healthPercent, 0);
-                updateLowHealth(player, healthPercent, 1);
+   registerEvents() {
+      world.afterEvents.playerJoin.subscribe((event) => {
+         system.run(() => {
+            const player = world.getAllPlayers().find((p) => p.id === event.playerId);
+            if (player?.isValid) {
+               this.playerMap.set(event.playerId, player);
+               this.refreshIds();
             }
-        } catch (error) {
-            console.error('[xVisuals] health_monitor', String(error));
-        }
-    }
-};
+         });
+      });
 
-const interval = system.runInterval(healthMonitor, 20); // Check all players every 20 ticks (1s) instead of slow round-robin
+      world.afterEvents.playerSpawn.subscribe(({ player }) => {
+         if (!player) return;
+         this.playerMap.set(player.id, player);
+         this.healthComponents.delete(player.id); //อัปเดต cache ตอน respawn
+         this.refreshIds();
+      });
 
-system.afterEvents.scriptEventReceive.subscribe((event) => {
-    if (event.id === 'xVisuals:addon') {
-        system.sendScriptEvent('xVisualsAddon:activated', 'Activated');
-        system.clearRun(interval);
-    }
-});
+      world.afterEvents.playerLeave.subscribe(({ playerId }) => {
+         this.cleanupPlayer(playerId);
+      });
 
-// Section 6 — Hurt Visuals Pipeline
+      world.afterEvents.entityHurt.subscribe((event) => {
+         try {
+            const entity = event.hurtEntity;
+            const dmg = event.damage;
+            if (dmg === 0 || !entity || entity.typeId !== 'minecraft:player') return;
+            if (this.hurtSize >= MAX_HURT) return;
+            const tail = (this.hurtHead + this.hurtSize) & HURT_MASK;
+            this.hurtPlayers[tail] = entity;
+            this.hurtDamages[tail] = dmg;
+            this.hurtCauses[tail] = event.damageSource.cause;
+            this.hurtSize++;
+         } catch (error) {
+            this.logError('[xVisuals] entityHurt', error);
+         }
+      });
 
-const hurtPlayers = [];
-const hurtDamages = [];
-const hurtCauses = [];
-let pendingLen = 0;
+      world.afterEvents.effectAdd.subscribe((event) => {
+         try {
+            const entity = event.entity;
+            if (!entity || entity.typeId !== 'minecraft:player') return;
+            const message = EFFECT_MAP[event.effect.typeId];
+            if (!message || this.effectSize >= MAX_EFF) return;
+            const tail = (this.effectHead + this.effectSize) & EFF_MASK;
+            this.effectPlayers[tail] = entity;
+            this.effectMessages[tail] = message;
+            this.effectSize++;
+         } catch (error) {
+            this.logError('[xVisuals] effectAdd', error);
+         }
+      });
 
-world.afterEvents.entityHurt.subscribe((event) => {
-    const { hurtEntity, damage, damageSource } = event;
-    if (damage === 0 || !hurtEntity || hurtEntity.typeId !== 'minecraft:player') return;
+      system.afterEvents.scriptEventReceive.subscribe((event) => {
+         if (event.id === 'xVisuals:addon') {
+            system.sendScriptEvent('xVisualsAddon:activated', 'Activated');
+            system.clearRun(this.interval);
+         }
+      });
+   }
 
-    // ป้องกันการรั่วไหลของหน่วยความจำ: จำกัดขนาดคิวไว้ที่ 50
-    if (pendingLen >= 50) return;
+   tick() {
+      this.tickCounter++;
+      if (this.errorCount > 0) this.errorCount--;
 
-    hurtPlayers[pendingLen] = hurtEntity;
-    hurtDamages[pendingLen] = damage;
-    hurtCauses[pendingLen] = damageSource.cause;
-    pendingLen++;
-});
+      if (this.tickCounter % 10 === 0) {
+         try {
+            this.healthMonitor();
+         } catch (error) {
+            this.logError('[xVisuals] health_monitor', error);
+         }
+      }
 
-const MAX_HURT_PER_TICK = 3;
+      try {
+         this.drainHeartbeats();
+      } catch (error) {
+         this.logError('[xVisuals] heartbeat', error);
+      }
 
-const buildHurtMessage = (damage, cause) => {
-    const parts = [];
+      try {
+         this.drainHurtQueue();
+      } catch (error) {
+         this.logError('[xVisuals] hurt_drain', error);
+      }
 
-    if (damage < 7) {
-        parts.push('xVisWeakDamage');
-    } else if (damage < 14) {
-        parts.push('xVisHardDamage');
-    } else {
-        parts.push('xVisStrongDamage');
-    }
+      try {
+         this.drainEffectIcons();
+      } catch (error) {
+         this.logError('[xVisuals] effect_icon', error);
+      }
+   }
 
-    const { IMPACT, EXPLOSION, FLAME } = DAMAGE_CAUSE;
+   logError(tag, error) {
+      if (this.errorCount > 100) return;
+      this.errorCount++;
+      console.error(tag + ': ', error);
+   }
 
-    if (IMPACT.has(cause)) {
-        parts.push(getRandomElement(IMPACT_MSGS));
-    }
+   refreshIds = () => {
+      this.playerIds = [...this.playerMap.keys()];
+   };
 
-    if (EXPLOSION.has(cause)) {
-        if (damage >= 4 && damage < 9) {
-            parts.push('xVisWeakExplosion');
-        } else if (damage >= 9 && damage < 14) {
-            parts.push('xVisHardExplosion');
-        } else if (damage >= 14) {
-            parts.push('xVisStrongExplosion');
-        }
-    }
+   cleanupPlayer(playerId) {
+      this.playerMap.delete(playerId);
+      this.healthComponents.delete(playerId);
+      this.healthStates.delete(playerId);
+      this.heartbeatingPlayers.delete(playerId);
+      this.refreshIds();
+   }
 
-    if (FLAME.has(cause)) {
-        parts.push(getRandomElement(FLAME_MSGS));
-    }
+   //เลือดต่ำ 50% → ส่ง message
+   getHealthState(playerId) {
+      let state = this.healthStates.get(playerId);
+      if (!state) {
+         state = { lowHealth: false, msgSent: false };
+         this.healthStates.set(playerId, state);
+      }
+      return state;
+   }
 
-    if (cause === 'drowning') {
-        parts.push(getRandomElement(DROWN_MSGS));
-    }
+   updateLowHealth(player, hp) {
+      const isLow = hp <= 50;
+      const state = this.getHealthState(player.id);
+      if (state.lowHealth === isLow) return;
+      state.lowHealth = isLow;
+      if (isLow) {
+         if (state.msgSent) return;
+         state.msgSent = true;
+         player.sendMessage('xVisLowHealth0Blur');
+      } else {
+         if (!state.msgSent) return;
+         state.msgSent = false;
+         player.sendMessage('xVisFalseLowHealth0Blur');
+      }
+   }
 
-    return parts.join('\n');
-};
+   healthMonitor() {
+      if (this.playerIds.length === 0) return;
+      for (let i = 0; i < this.playerIds.length; i++) {
+         const playerId = this.playerIds[i];
+         const player = this.playerMap.get(playerId);
+         if (!player || !player.isValid) {
+            this.cleanupPlayer(playerId);
+            continue;
+         }
 
-const getExplosionSound = (damage) => {
-    if (damage >= 4 && damage < 9) {
-        return { id: 'x.visuals.ear_ring.0', volume: 0.15 };
-    }
-    if (damage >= 9 && damage < 14) {
-        return { id: 'x.visuals.ear_ring.0', volume: 0.35 };
-    }
-    if (damage >= 14) {
-        return { id: 'x.visuals.ear_ring.1', volume: 0.25 };
-    }
-    return null;
-};
+         try {
+            let health = this.healthComponents.get(playerId);
+            if (!health) {
+               health = player.getComponent('minecraft:health');
+               if (!health) continue;
+               this.healthComponents.set(playerId, health);
+            }
+            const hp = (health.currentValue / health.effectiveMax) * 100;
+            this.updateLowHealth(player, hp);
+            if (hp <= 30 && !this.heartbeatingPlayers.has(playerId)) this.heartbeatingPlayers.set(playerId, { cooldown: 0 });
+            else if (hp > 30 && this.heartbeatingPlayers.has(playerId)) this.heartbeatingPlayers.delete(playerId);
+         } catch (error) {
+            this.logError('[xVisuals] health_monitor', error);
+         }
+      }
+   }
 
-const shiftQueue = (count) => {
-    const remaining = pendingLen - count;
-    for (let i = 0; i < remaining; i++) {
-        hurtPlayers[i] = hurtPlayers[i + count];
-        hurtDamages[i] = hurtDamages[i + count];
-        hurtCauses[i] = hurtCauses[i + count];
-    }
-    for (let i = remaining; i < pendingLen; i++) {
-        hurtPlayers[i] = null;
-        hurtDamages[i] = 0;
-        hurtCauses[i] = null;
-    }
-    pendingLen = remaining;
-};
+   drainHeartbeats() {
+      if (this.heartbeatingPlayers.size === 0) return;
 
-const drainHurtQueue = () => {
-    if (pendingLen === 0) return;
+      for (const [playerId, data] of this.heartbeatingPlayers) {
+         data.cooldown--;
 
-    // ปรับขนาดจำนวนแบบ ไดนามิกตามความยาวของคิวเพื่อหลีกเลี่ยงความล่าช้าในการแสดงผลในสถานการณ์ที่มีผู้เล่นจำนวนมาก
-    const count = pendingLen < MAX_HURT_PER_TICK ? pendingLen : Math.min(pendingLen, Math.max(MAX_HURT_PER_TICK, Math.ceil(pendingLen / 2)));
+         if (data.cooldown > 0) continue;
+         const player = this.playerMap.get(playerId);
 
-    for (let i = 0; i < count; i++) {
-        const player = hurtPlayers[i];
-        const damage = hurtDamages[i];
-        const cause = hurtCauses[i];
+         if (!player || !player.isValid) {
+            this.heartbeatingPlayers.delete(playerId);
+            continue;
+         }
+         try {
+            player.playSound('mob.warden.heartbeat', { location: player.location, volume: 0.4, pitch: 1.0 });
+            data.cooldown = 10;
+         } catch (error) {
+            this.logError('[xVisuals] heartbeat', error);
+         }
+      }
+   }
 
-        if (!player || !player.isValid) continue;
+   drainHurtQueue() {
+      let sz = this.hurtSize;
+      if (sz === 0) return;
+      const count = sz < 4 ? sz : 4;
+      const players = this.hurtPlayers,
+         damages = this.hurtDamages,
+         causes = this.hurtCauses;
+      let head = this.hurtHead;
 
-        const loc = player.location;
-        const { IMPACT, EXPLOSION } = DAMAGE_CAUSE;
+      for (let i = 0; i < count; i++) {
+         const idx = (head + i) & HURT_MASK;
+         const player = players[idx],
+            damage = damages[idx],
+            cause = causes[idx];
+         players[idx] = null;
+         damages[idx] = 0;
+         causes[idx] = null;
+         if (!player || !player.isValid) continue;
 
-        if (IMPACT.has(cause)) {
-            player.dimension.spawnParticle(getRandomElement(BLOOD_PARTICLES), loc);
-        }
+         const effect = buildHurtEffect(damage, cause);
+         const loc = player.location;
+         if (effect.bloodParticle) player.dimension.spawnParticle(effect.bloodParticle, loc);
+         if (effect.sound) player.playSound(effect.sound.id, { location: loc, volume: effect.sound.volume });
+         player.sendMessage(effect.message);
+      }
+      this.hurtHead = (head + count) & HURT_MASK;
+      this.hurtSize = sz - count;
+   }
 
-        const explosionSound = EXPLOSION.has(cause) ? getExplosionSound(damage) : null;
-        if (explosionSound) {
-            player.playSound(explosionSound.id, { location: loc, volume: explosionSound.volume });
-        }
+   drainEffectIcons() {
+      let sz = this.effectSize;
+      if (sz === 0) return;
+      const count = sz < 8 ? sz : 8;
+      const players = this.effectPlayers,
+         messages = this.effectMessages;
+      let head = this.effectHead;
 
-        const message = buildHurtMessage(damage, cause);
-        player.sendMessage(message);
-    }
+      for (let i = 0; i < count; i++) {
+         const idx = (head + i) & EFF_MASK;
+         const player = players[idx],
+            message = messages[idx];
+         players[idx] = null;
+         messages[idx] = null;
+         if (player?.isValid) {
+            try {
+               player.sendMessage(message);
+            } catch (error) {
+               this.logError('[xVisuals] effect_icon', error);
+            }
+         }
+      }
+      this.effectHead = (head + count) & EFF_MASK;
+      this.effectSize = sz - count;
+   }
+}
 
-    shiftQueue(count);
-};
-
-system.runInterval(() => {
-    try {
-        drainHurtQueue();
-    } catch (error) {
-        console.error('[xVisuals] hurt_drain', String(error));
-    }
-}, 2);
-
-// Section 7 — Status-Effect HUD Icons
-
-world.afterEvents.effectAdd.subscribe((event) => {
-    const { entity, effect } = event;
-    if (!entity || entity.typeId !== 'minecraft:player') return;
-
-    const message = EFFECT_MAP[effect.typeId];
-    if (!message) return;
-
-    try {
-        entity.sendMessage(message);
-    } catch (error) {
-        console.error('[xVisuals] effect_icon', String(error));
-    }
-});
+export default new XVisuals();

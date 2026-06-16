@@ -1,35 +1,35 @@
 {
-  "format_version": "1.17.41",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:magnet_"
-    },
-    "tags": ["avanced"],
-    "pattern": ["# N", "IH ", "IIR"],
-    "key": {
-      "#": {
-        "item": "minecraft:lapis_block"
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:6_magnet_"
       },
-      "N": {
-        "item": "minecraft:nether_star"
+      "tags": ["avanced"],
+      "pattern": ["# N", "IH ", "IIR"],
+      "key": {
+         "#": {
+            "item": "minecraft:lapis_block"
+         },
+         "N": {
+            "item": "minecraft:nether_star"
+         },
+         "I": {
+            "item": "minecraft:iron_block"
+         },
+         "H": {
+            "item": "minecraft:heavy_core"
+         },
+         "R": {
+            "item": "minecraft:redstone_block"
+         }
       },
-      "I": {
-        "item": "minecraft:iron_block"
+      "result": {
+         "item": "addon:magnet_"
       },
-      "H": {
-        "item": "minecraft:heavy_core"
-      },
-      "R": {
-        "item": "minecraft:redstone_block"
-      }
-    },
-    "result": {
-      "item": "addon:magnet_"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:lapis_block"
-      }
-    ]
-  }
+      "unlock": [
+         {
+            "item": "minecraft:lapis_block"
+         }
+      ]
+   }
 }

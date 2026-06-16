@@ -1,23 +1,23 @@
 {
-  "format_version": "1.17.41",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:job"
-    },
-    "tags": ["avanced"],
-    "pattern": ["", " #", ""],
-    "key": {
-      "#": {
-        "item": "minecraft:emerald"
-      }
-    },
-    "result": {
-      "item": "addon:job"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:emerald"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:5_job"
+      },
+      "tags": ["avanced"],
+      "pattern": ["", " #", ""],
+      "key": {
+         "#": {
+            "item": "minecraft:emerald"
+         }
+      },
+      "result": {
+         "item": "addon:job"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:emerald"
+         }
+      ]
+   }
 }

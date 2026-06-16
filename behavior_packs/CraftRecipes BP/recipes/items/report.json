@@ -2,7 +2,7 @@
    "format_version": "1.20.10",
    "minecraft:recipe_shaped": {
       "description": {
-         "identifier": "addon:report"
+         "identifier": "addon:8_report"
       },
       "tags": ["crafting_table"],
       "pattern": ["##", "##"],

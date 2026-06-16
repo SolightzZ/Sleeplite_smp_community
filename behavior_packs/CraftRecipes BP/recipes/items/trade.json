@@ -1,23 +1,23 @@
 {
-  "format_version": "1.17.41",
-  "minecraft:recipe_shaped": {
-    "description": {
-      "identifier": "addon:trade"
-    },
-    "tags": ["crafting_table"],
-    "pattern": ["#"],
-    "key": {
-      "#": {
-        "item": "minecraft:dirt"
-      }
-    },
-    "result": {
-      "item": "addon:trade"
-    },
-    "unlock": [
-      {
-        "item": "minecraft:dirt"
-      }
-    ]
-  }
+   "format_version": "1.17.41",
+   "minecraft:recipe_shaped": {
+      "description": {
+         "identifier": "addon:10_trade"
+      },
+      "tags": ["crafting_table"],
+      "pattern": ["#"],
+      "key": {
+         "#": {
+            "item": "minecraft:dirt"
+         }
+      },
+      "result": {
+         "item": "addon:trade"
+      },
+      "unlock": [
+         {
+            "item": "minecraft:dirt"
+         }
+      ]
+   }
 }
