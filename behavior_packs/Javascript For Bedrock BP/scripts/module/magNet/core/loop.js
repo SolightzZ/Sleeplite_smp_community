@@ -1,47 +1,34 @@
-import { system } from '@minecraft/server';
 import { MagnetConfig } from '../config.js';
 import { pullItemsToPlayer } from './puller.js';
-import { clearMagnetRunId, countMagnetUsers, getMagnetRunId, getMagnetUserIds, hasMagnetRunId, removeMagnetUser, setMagnetRunId } from './state.js';
+import { countMagnetUsers, getMagnetUserIds, removeMagnetUser } from './state.js';
 import { Registry } from '../../../router/core/registry.js';
 
-export const stopMagnetLoop = () => {
-    if (hasMagnetRunId()) {
-        system.clearRun(getMagnetRunId());
-        clearMagnetRunId();
-    }
-};
+export const stopMagnetLoop = () => {};
 
-export const startMagnetLoop = () => {
-    if (hasMagnetRunId()) return;
+export const startMagnetLoop = () => {};
 
-    const id = system.runInterval(() => {
-        try {
-            if (countMagnetUsers() === 0) {
-                stopMagnetLoop();
-                return;
+export const magnetTick = () => {
+    try {
+        if (countMagnetUsers() === 0) return;
+
+        const ids = getMagnetUserIds();
+        const toRemove = [];
+
+        for (const playerId of ids) {
+            // ค้นหาผู้เล่นจาก Registry ด้วย ID แบบ O(1) เพื่อหลีกเลี่ยงภาระประมวลผลและการจัดสรร Map
+            const player = Registry.get(playerId)?.player;
+
+            if (player && player.isValid) {
+                pullItemsToPlayer(player);
+            } else {
+                toRemove.push(playerId);
             }
-
-            const ids = getMagnetUserIds();
-            const toRemove = [];
-
-            for (const playerId of ids) {
-                // ค้นหาผู้เล่นจาก Registry ด้วย ID แบบ O(1) เพื่อหลีกเลี่ยงภาระประมวลผลและการจัดสรร Map
-                const player = Registry.get(playerId)?.player;
-
-                if (player && player.isValid) {
-                    pullItemsToPlayer(player);
-                } else {
-                    toRemove.push(playerId);
-                }
-            }
-
-            for (const playerId of toRemove) {
-                removeMagnetUser(playerId);
-            }
-        } catch (error) {
-            console.error('[Magnet] Loop Error:', error);
-            stopMagnetLoop();
         }
-    }, MagnetConfig.TICK_SPEED);
-    setMagnetRunId(id);
+
+        for (const playerId of toRemove) {
+            removeMagnetUser(playerId);
+        }
+    } catch (error) {
+        console.error('[Magnet] Loop Error:', error);
+    }
 };

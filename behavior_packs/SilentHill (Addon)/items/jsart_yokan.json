@@ -1,33 +1,38 @@
 {
-  "format_version": "1.21.120",
-  "minecraft:item": {
-    "description": {
-      "identifier": "jsart:yokan",
-      "menu_category": {
-        "category":  "equipment"
+   "format_version": "1.21.120",
+   "minecraft:item": {
+      "description": {
+         "identifier": "jsart:yokan",
+         "menu_category": {
+            "category": "equipment"
+         }
+      },
+      "components": {
+         "minecraft:hand_equipped": false,
+         "minecraft:max_stack_size": 64,
+         "minecraft:glint": false,
+         "minecraft:allow_off_hand": false,
+         "minecraft:use_animation": "eat",
+         "minecraft:icon": "jsart:yokan",
+
+         "jsart_yokan:trigger": {},
+
+         "minecraft:food": {
+            "saturation_modifier": 0.6,
+            "nutrition": 5,
+            "can_always_eat": true,
+            "using_converts_to": "glass_bottle"
+         },
+
+         "minecraft:use_modifiers": {
+            "emit_vibrations": true,
+            "movement_modifier": 0.35,
+            "use_duration": 1.6
+         },
+
+         "minecraft:tags": {
+            "tags": ["minecraft:is_food"]
+         }
       }
-    },
-    "components": {
-      "minecraft:hand_equipped": false,
-      "minecraft:max_stack_size": 64,
-      "minecraft:glint": false,
-      "minecraft:food": {
-        "saturation_modifier": 0.6,
-        "nutrition": 5,
-        "can_always_eat": true
-      },
-      "minecraft:use_modifiers": {
-        "emit_vibrations": true,
-        "movement_modifier": 0.35,
-        "use_duration": 1.6
-      },
-      "minecraft:tags": {
-        "tags": ["minecraft:is_food"]
-      },
-      "minecraft:allow_off_hand": false,
-      "minecraft:use_animation": "eat",
-      "minecraft:icon": "jsart:yokan",
-      "jsart_yokan:trigger": {}
-    }
-  }
+   }
 }

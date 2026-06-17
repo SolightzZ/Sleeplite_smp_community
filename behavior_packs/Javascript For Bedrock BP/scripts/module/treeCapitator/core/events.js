@@ -8,15 +8,12 @@ import {
   addPendingTree,
   incrementPlayerJobCount,
   pushJob,
-  getRunHandle,
-  setRunHandle,
   cleanupPlayerState
 } from "./state.js";
 import { LOG_TO_LEAF } from "../data/trees.js";
 import { getPlayerAxe } from "../utils/inventory.js";
 import { getBlockSafe } from "../utils/block.js";
 import { detectTree } from "./detector.js";
-import { processJobs } from "./processor.js";
 
 export const TreeCapitatorBreakBlock = (event) => {
   const player = event.player;
@@ -67,10 +64,6 @@ export const TreeCapitatorBreakBlock = (event) => {
     playerId: player.id,
     brokenCount: 0,
   });
-
-  if (getRunHandle() === null) {
-    setRunHandle(system.runInterval(processJobs, 1));
-  }
 };
 
 

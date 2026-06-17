@@ -1,6 +1,24 @@
 import { handleIdlePoller } from '../module/AFKCinematic/core/poller.js';
 import { FlashlightRunInterval } from '../module/flashlight/core/engine.js';
+import { processJobs } from '../module/treeCapitator/core/processor.js';
+import { processVeinJobs } from '../module/veinMiner/core/processor.js';
+import { cinematicScheduler } from '../module/AFKCinematic/core/scheduler.js';
+import { processTimers } from '../module/jobs/ViewJob.js';
+import { processWelcomeQueue } from '../plugin/Welcome.js';
+import { processActiveAnimations } from '../plugin/title.js';
+import { checkSeats } from '../module/simpleSit/core/seat-checker.js';
+import { renderBorderParticles } from '../module/protection/core/borders.js';
+import { magnetTick } from '../module/magNet/core/loop.js';
 import { Interval } from './core/interval.js';
 
 Interval.register(FlashlightRunInterval, 2);
 Interval.register(handleIdlePoller, 20);
+Interval.register(processJobs, 1);
+Interval.register(processVeinJobs, 1);
+Interval.register(() => cinematicScheduler.tick(), 1);
+Interval.register(processTimers, 20);
+Interval.register(processWelcomeQueue, 5);
+Interval.register(processActiveAnimations, 5);
+Interval.register(checkSeats, 10);
+Interval.register(renderBorderParticles, 40);
+Interval.register(magnetTick, 15);

@@ -13,6 +13,7 @@ export const pullItemsToPlayer = (player) => {
     const entities = player.dimension.getEntities({
         location: loc,
         maxDistance: MagnetConfig.RANGE,
+        type: MagnetConfig.PULLABLE_TYPES,
     });
 
     for (const entity of entities) {

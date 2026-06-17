@@ -4,7 +4,6 @@ const OBJECTIVE = 'Deaths';
 const HEAD = '§e[+] Welcome to Sleeplite SMP Community';
 
 const pendingWelcomes = [];
-let welcomeLoopId;
 
 const getDeathObjective = () => {
    try {
@@ -45,14 +44,8 @@ const showWelcome = (player, objective) => {
    player.playSound('random.toast', { pitch: 1, volume: 1.0 });
 };
 
-const processWelcomeQueue = () => {
-   if (pendingWelcomes.length === 0) {
-      if (welcomeLoopId !== undefined) {
-         system.clearRun(welcomeLoopId);
-         welcomeLoopId = undefined;
-      }
-      return;
-   }
+export const processWelcomeQueue = () => {
+   if (pendingWelcomes.length === 0) return;
 
    const now = system.currentTick;
    const objective = getDeathObjective();
@@ -71,14 +64,8 @@ const processWelcomeQueue = () => {
    }
 };
 
-const ensureWelcomeLoop = () => {
-   if (welcomeLoopId !== undefined) return;
-   welcomeLoopId = system.runInterval(processWelcomeQueue, 5);
-};
-
 const enqueueWelcome = (player) => {
    pendingWelcomes.push({ player, runAtTick: system.currentTick + 150 });
-   ensureWelcomeLoop();
 };
 
 export const playerSpawnWelcome = (event) => {

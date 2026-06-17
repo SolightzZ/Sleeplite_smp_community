@@ -58,14 +58,14 @@ function menu(player) {
          if (!player.isValid || res.canceled) return;
 
          if (res.selection !== data.count) {
-            addSound(player, 'vault.reject_rewarded_player');
-            player.sendMessage('§c[x] กรุณารับของตามลำดับ');
+            addSound(player, 'random.break');
+            player.onScreenDisplay.setTitle('§cกรุณารับของตามลำดับ');
             return;
          }
 
          if (data.last === today) {
             addSound(player, 'random.fizz');
-            player.sendMessage('§c[x] คุณรับของวันนี้ไปแล้ว');
+            player.onScreenDisplay.setTitle('§cคุณรับของวันนี้ไปแล้ว');
             return;
          }
 
@@ -110,9 +110,11 @@ function confirm(player, data, today) {
                save(player, data);
                addSound(player, 'random.levelup');
                player.sendMessage(`§a[/] §aรับของสำเร็จ! ได้รับ ${name(item.id)}`);
+               player.onScreenDisplay.setTitle(`§a${name(item.id)} x${item.count}`);
             } else {
                addSound(player, 'block.false_permissions');
                player.sendMessage('§c[x] §cช่องเก็บของเต็ม');
+               player.onScreenDisplay.setTitle('§cช่องเก็บของเต็ม');
             }
          }
       })

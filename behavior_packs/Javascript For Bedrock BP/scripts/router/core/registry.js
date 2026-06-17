@@ -2,8 +2,8 @@ import { world, system } from '@minecraft/server';
 import { logError } from './logger.js';
 
 const _registry = new Map();
-const _entriesBuf = []; // นำบัฟเฟอร์กลับมาใช้ใหม่เพื่อป้องกันการจัดสรรหน่วยความจำสำหรับ GC
-const _playersBuf = []; // บัฟเฟอร์สำหรับอาร์เรย์ผู้เล่นเพื่อลดการสร้างขยะ/วัตถุใหม่ในหน่วยความจำ
+const _entriesBuf = []; // ใช้บัฟเฟอร์ซ้ำ ลด GC allocation
+const _playersBuf = []; // บัฟเฟอร์อาร์เรย์ผู้เล่น ลด GC pressure
 
 export const Registry = {
    add(player) {
@@ -31,8 +31,8 @@ export const Registry = {
       return _registry;
    },
 
-   // คืนค่าบัฟเฟอร์ของผู้เล่นที่ออนไลน์ในปัจจุบัน (เป็นมิตรกับ GC)
-   // คำเตือน: อาร์เรย์ที่ส่งคืนเป็น Shared Mutable Reference ห้ามเก็บแคชข้าม Tick
+    // คืนบัฟเฟอร์รายการผู้เล่นที่ reuse ได้ (GC-friendly)
+    // คำเตือน: ตัวแปรอ้างอิงร่วมกัน ห้าม cache ข้าม tick
    getEntries() {
       _entriesBuf.length = 0;
       for (const entry of _registry.values()) {
@@ -43,8 +43,8 @@ export const Registry = {
       return _entriesBuf;
    },
 
-   // คืนค่าบัฟเฟอร์ของออบเจกต์ Player ของผู้เล่นที่ออนไลน์ในปัจจุบัน (เป็นมิตรกับ GC)
-   // คำเตือน: อาร์เรย์ที่ส่งคืนเป็น Shared Mutable Reference ห้ามเก็บแคชข้าม Tick
+    // คืนบัฟเฟอร์ Player objects ที่ reuse ได้ (GC-friendly)
+    // คำเตือน: ตัวแปรอ้างอิงร่วมกัน ห้าม cache ข้าม tick
    getPlayers() {
       _playersBuf.length = 0;
       for (const entry of _registry.values()) {
@@ -55,7 +55,7 @@ export const Registry = {
       return _playersBuf;
    },
 
-   // กวาดล้างเอนทิตีที่ใช้งานไม่ได้ (ป้องกันปัญหาหน่วยความจำรั่วไหล)
+    // ลบผู้เล่นที่เชื่อมต่อไม่ถูกต้องแล้วออก ป้องกัน memory leak
    sweep() {
       for (const [id, entry] of _registry) {
          if (!entry.player?.isValid) {
@@ -68,7 +68,7 @@ export const Registry = {
       return _registry.size;
    },
 
-   // ซิงค์รายชื่อผู้เล่นที่ออนไลน์อยู่ตอนนี้ (โดยเฉพาะหลังจากใช้คำสั่ง /reload)
+    // ซิงค์ผู้เล่นที่ออนไลน์เข้า Registry (ใช้ตอนโหลดโลกหรือ /reload)
    init() {
       try {
          for (const player of world.getAllPlayers()) {
@@ -80,7 +80,7 @@ export const Registry = {
    },
 };
 
-// กวาดล้างขยะเป็นระยะทุกๆ 30 วินาที (600 ticks)
+// sweep ผู้เล่นที่หลุดทุก 30 วินาที (600 ticks)
 system.runInterval(() => {
    Registry.sweep();
 }, 600);

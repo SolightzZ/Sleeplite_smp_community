@@ -8,15 +8,12 @@ import {
   addPendingBlock,
   incrementPlayerJobCount,
   pushJob,
-  getRunHandle,
-  setRunHandle,
   cleanupPlayerState
 } from "./queue.js";
 import { getLocKey } from "../utils/block.js";
 import { PICKAXE_BREAKS, ORE_DROP } from "../data/ores.js";
 import { scanVein } from "./scanner.js";
 import { getEnchantData } from "../utils/enchant.js";
-import { processVeinJobs } from "./processor.js";
 
 export const VeinMiner = (event) => {
   const player = event.player;
@@ -72,10 +69,5 @@ export const VeinMiner = (event) => {
     xpAccumulated: 0,
     locationKeys: locationKeys,
   });
-
-  if (getRunHandle() === null) {
-    setRunHandle(system.runInterval(processVeinJobs, 1));
-  }
 };
-
 

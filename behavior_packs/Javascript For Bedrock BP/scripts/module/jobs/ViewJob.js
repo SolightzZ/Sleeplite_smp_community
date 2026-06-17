@@ -14,16 +14,6 @@ import {
 import { showMainMenu } from './Menu.js';
 import { Registry } from '../../router/core/registry.js';
 import { addSound } from '../../plugin/utils.js';
-const TIMER_INTERVAL_TICKS = 20;
-
-let timerLoopId = null;
-
-const stopTimerLoopIfIdle = () => {
-   if (timerMap.size === 0 && timerLoopId !== null) {
-      system.clearRun(timerLoopId);
-      timerLoopId = null;
-   }
-};
 
 const startTimer = (riderId, jobId_, savedStartTick) => {
    stopTimer(riderId);
@@ -31,17 +21,10 @@ const startTimer = (riderId, jobId_, savedStartTick) => {
    const startTick = savedStartTick ?? system.currentTick;
 
    timerMap.set(riderId, { startTick });
-
-   if (timerLoopId === null) {
-      timerLoopId = system.runInterval(processTimers, TIMER_INTERVAL_TICKS);
-   }
 };
 
-const processTimers = () => {
-   if (timerMap.size === 0) {
-      stopTimerLoopIfIdle();
-      return;
-   }
+export const processTimers = () => {
+   if (timerMap.size === 0) return;
 
    for (const [riderId, data] of timerMap) {
       if (!playerJobMap.has(riderId)) {
@@ -67,8 +50,6 @@ const processTimers = () => {
 
       rider.onScreenDisplay?.setActionBar(`[Job] Time left: ${mins}:${pad}${sec2}`);
    }
-
-   stopTimerLoopIfIdle();
 };
 
 const expireJob = (riderId) => {
@@ -210,10 +191,3 @@ export const openJobDetail = (player, job) => {
          );
    });
 };
-
-system.runTimeout(() => {
-   for (const [riderId, data] of timerMap.entries()) {
-      if (typeof data.startTick === 'number')
-         startTimer(riderId, playerJobMap.get(riderId), data.startTick);
-   }
-}, 10);

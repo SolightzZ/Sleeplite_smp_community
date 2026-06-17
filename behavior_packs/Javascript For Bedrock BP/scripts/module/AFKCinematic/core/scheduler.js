@@ -1,4 +1,4 @@
-import { system, HudVisibility } from '@minecraft/server';
+import { HudVisibility } from '@minecraft/server';
 import { Registry } from '../../../router/core/registry.js';
 
 import { CONFIG } from '../config.js';
@@ -27,7 +27,6 @@ class CinematicScheduler {
     constructor() {
         this._ids = [];
         this._cursor = 0;
-        this.intervalId = undefined;
     }
 
     get size() {
@@ -38,9 +37,6 @@ class CinematicScheduler {
         if (!this._ids.includes(playerId)) {
             this._ids.push(playerId);
         }
-        if (this.intervalId === undefined) {
-            this.intervalId = system.runInterval(() => this.tick(), 1);
-        }
     }
 
     dequeue(playerId) {
@@ -49,14 +45,10 @@ class CinematicScheduler {
         this._ids.splice(idx, 1);
         if (this._cursor > idx) this._cursor--;
         if (this._cursor >= this._ids.length) this._cursor = 0;
-        if (this._ids.length === 0) this.stop();
     }
 
     tick() {
-        if (this._ids.length === 0) {
-            this.stop();
-            return;
-        }
+        if (this._ids.length === 0) return;
 
         tickBlockCache();
 
@@ -119,10 +111,6 @@ class CinematicScheduler {
     }
 
     stop() {
-        if (this.intervalId !== undefined) {
-            system.clearRun(this.intervalId);
-            this.intervalId = undefined;
-        }
         this._ids.length = 0;
         this._cursor = 0;
     }

@@ -2,7 +2,6 @@ const jobQueue = [];
 const pendingBlocks = new Set();
 const playerJobCount = new Map();
 const playerLastJobEnd = new Map();
-let runHandle = null;
 let lastProcessedIndex = 0;
 
 export const getJobQueueLength = () => jobQueue.length;
@@ -38,11 +37,6 @@ export const setPlayerLastJobEnd = (playerId, time) => playerLastJobEnd.set(play
 export const cleanupPlayerState = (playerId) => {
   playerLastJobEnd.delete(playerId);
   playerJobCount.delete(playerId);
-};
-
-export const getRunHandle = () => runHandle;
-export const setRunHandle = (handle) => {
-  runHandle = handle;
 };
 
 export const getLastProcessedIndex = () => lastProcessedIndex;

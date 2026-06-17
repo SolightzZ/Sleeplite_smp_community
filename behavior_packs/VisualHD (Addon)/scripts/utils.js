@@ -26,7 +26,7 @@ export const DAMAGE_CAUSE = {
    FLAME: new Set(['fire', 'fireTick', 'fireworks', 'lava', 'lightning', 'magma', 'campfire', 'soulCampfire']),
 };
 
-export const BLOOD_PARTICLES = ['xvisuals:blood_drop0', 'xvisuals:blood_drop1'];
+export const BLOOD_PARTICLES = ['jsart:silentblood', 'jsart:silentblood2'];
 
 export const EFFECT_MAP = {
    poison: 'xVisPoison',

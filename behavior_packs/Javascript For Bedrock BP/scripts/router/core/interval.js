@@ -6,53 +6,55 @@ import { logError } from './logger.js';
 const _intervals = [];
 
 export const Interval = {
-    register(fn, ticks) {
-        _intervals.push({ fn, ticks, counter: 0 });
-    },
+   register(fn, ticks) {
+      _intervals.push({ fn, ticks, counter: 0 });
+   },
 
+    // เรียก callback ที่ครบจำนวน ticks ตามที่ลงทะเบียนไว้
     tick() {
-        for (let i = 0; i < _intervals.length; i++) {
-            const iv = _intervals[i];
-            iv.counter++;
-            if (iv.counter < iv.ticks) continue;
-            iv.counter = 0;
-            try {
-                iv.fn();
-            } catch (error) {
-                const name = iv.fn?.name || `anonymous_interval[${i}]`;
-                logError('Interval', `${name} error`, error);
-            }
-        }
-    }
+      for (let i = 0; i < _intervals.length; i++) {
+         const iv = _intervals[i];
+         iv.counter++;
+
+         if (iv.counter < iv.ticks) continue;
+         iv.counter = 0;
+         try {
+            iv.fn();
+         } catch (error) {
+            const name = iv.fn?.name || `anonymous_interval[${i}]`;
+            logError('Interval', `${name} error`, error);
+         }
+      }
+   },
 };
 
-// สร้างตัววนซ้ำผู้เล่นแบบมีสถานะเฉพาะสำหรับการประมวลผลแบบเวียน (Round-robin)
+// วนผู้เล่นแบบ round-robin: ประมวลผลทีละคน วนกลับเมื่อหมด
 export function createPlayerBatchIterator() {
-    let index = 0;
-    return function (fn) {
-        const entries = Registry.getEntries();
-        if (entries.length === 0) return;
-        if (index >= entries.length) {
-            index = 0;
-        }
-        const entry = entries[index];
-        if (entry && entry.player?.isValid) {
-            try {
-                fn(entry);
-            } catch (error) {
-                logError('PlayerBatchIterator', 'task error', error);
-            }
-        }
-        index++;
-    };
+   let index = 0;
+   return function (fn) {
+      const entries = Registry.getEntries();
+      if (entries.length === 0) return;
+      if (index >= entries.length) {
+         index = 0;
+      }
+      const entry = entries[index];
+      if (entry && entry.player?.isValid) {
+         try {
+            fn(entry);
+         } catch (error) {
+            logError('PlayerBatchIterator', 'task error', error);
+         }
+      }
+      index++;
+   };
 }
 
-// ขับเคลื่อนระบบช่วงเวลาและคิวงานจากลูปช่วงเวลาหลักเพียงลูปเดียว
+// ลูปหลักเพียงลูปเดียว ขับทั้ง Interval callbacks และ task queue
 system.runInterval(() => {
-    try {
-        Interval.tick();
-        Queue.tick();
-    } catch (error) {
-        logError('Tick', 'main loop error', error);
-    }
+   try {
+      Interval.tick();
+      Queue.tick();
+   } catch (error) {
+      logError('Tick', 'main loop error', error);
+   }
 }, 1);

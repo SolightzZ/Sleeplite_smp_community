@@ -1,4 +1,3 @@
-import { system } from '@minecraft/server';
 import { Registry } from '../router/core/registry.js';
 
 const BOSS_IDS = new Set(['minecraft:ender_dragon', 'minecraft:wither']);
@@ -7,7 +6,6 @@ const RADIUS = 128;
 const RADIUS_SQ = RADIUS * RADIUS;
 
 const activeAnimations = [];
-let animationIntervalId;
 
 const formatName = (id) => {
    const parts = id.replace('minecraft:', '').split('_');
@@ -110,14 +108,8 @@ const playAnimationStep = (animation, playersByDimension, recipients) => {
    return animation.charIndex <= maxCharIndex;
 };
 
-const processActiveAnimations = () => {
-   if (activeAnimations.length === 0) {
-      if (animationIntervalId !== undefined) {
-         system.clearRun(animationIntervalId);
-         animationIntervalId = undefined;
-      }
-      return;
-   }
+export const processActiveAnimations = () => {
+   if (activeAnimations.length === 0) return;
 
    // ดึงรายชื่อผู้เล่นออนไลน์จาก Registry เพื่อหลีกเลี่ยง overhead ของการวนหาแบบ O(N) ใน tick loop ถี่ๆ
    const onlinePlayers = Registry.getPlayers();
@@ -138,14 +130,8 @@ const processActiveAnimations = () => {
    }
 };
 
-const ensureAnimationLoop = () => {
-   if (animationIntervalId !== undefined) return;
-   animationIntervalId = system.runInterval(processActiveAnimations, 5);
-};
-
 const enqueueBossTitle = (entity, subtitle, isDeath) => {
    activeAnimations.push(createAnimation(entity, formatName(entity.typeId), subtitle, isDeath));
-   ensureAnimationLoop();
 };
 
 export const itile_main = (event) => {

@@ -3,8 +3,6 @@ import {
   getJobQueueLength,
   getJob,
   popJob,
-  getRunHandle,
-  setRunHandle,
   getLastProcessedIndex,
   setLastProcessedIndex,
   incrementLastProcessedIndex
@@ -22,22 +20,20 @@ export const processVeinJobs = () => {
    const AIR = _airPermutation || (_airPermutation = BlockPermutation.resolve('minecraft:air'));
    const totalJobs = getJobQueueLength();
    if (totalJobs === 0) {
-      const runHandle = getRunHandle();
-      if (runHandle !== null) {
-         system.clearRun(runHandle);
-         setRunHandle(null);
-         setLastProcessedIndex(0);
-      }
+      setLastProcessedIndex(0);
       return;
    }
 
    const loadFactor = Math.max(1, Math.floor(totalJobs / 4));
    const blocksPerTick = Math.max(1, Math.ceil(CFG.blocksPerTickBase / loadFactor));
+   const startTime = Date.now();
 
    let jobsDone = 0;
+   let budgetChecked = 0;
    const maxJobs = Math.min(totalJobs, 4);
 
    while (jobsDone < maxJobs && getJobQueueLength() > 0) {
+      if (++budgetChecked % 4 === 0 && Date.now() - startTime > 5) break;
       let lastProcessedIndex = getLastProcessedIndex();
       if (lastProcessedIndex >= getJobQueueLength()) {
          lastProcessedIndex = 0;
@@ -62,7 +58,9 @@ export const processVeinJobs = () => {
 
       let broken = 0;
       let tickBlocksBroken = 0;
+      let blockBudgetChecked = 0;
       while (broken < blocksPerTick && job.index < job.locations.length) {
+         if (++blockBudgetChecked % 4 === 0 && Date.now() - startTime > 5) break;
          const loc = job.locations[job.index++];
          const block = getBlockSafe(job.dimension, loc);
 

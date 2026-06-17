@@ -223,7 +223,7 @@ class XVisuals {
             continue;
          }
          try {
-            player.playSound('mob.warden.heartbeat', { location: player.location, volume: 0.4, pitch: 1.0 });
+            player.playSound('mob.warden.heartbeat', { location: player.location, volume: 1, pitch: 1 });
             data.cooldown = 10;
          } catch (error) {
             this.logError('[xVisuals] heartbeat', error);

@@ -59,12 +59,10 @@ export const router = {
    },
 };
 
-// เวิร์ลเริ่มต้นประมวลผลเสร็จสิ้น (worldLoad) ให้ดึงรายชื่อผู้เล่นที่ออนไลน์อยู่แล้วเข้า Registry
+// ใส่ผู้เล่นที่ออนไลน์อยู่แล้วเข้า Registry หลังจากโหลดโลกเสร็จ
 subscribe(world.afterEvents.worldLoad, 'worldLoad', () => {
    Registry.init();
 });
-
-// ── สมัครรับเหตุการณ์เพียงครั้งเดียวต่อเหตุการณ์ ──
 
 subscribe(world.beforeEvents.chatSend, 'chatSend', (event) => {
    const sender = event.sender;
@@ -154,11 +152,7 @@ subscribe(world.afterEvents.playerDimensionChange, 'playerDimensionChange', (eve
 subscribe(world.beforeEvents.playerInteractWithBlock, 'playerInteractWithBlock', (event) => {
    const player = event.player;
    if (!player || !player.isValid) return;
-   runEventHandlersWithCancel(
-      'PlayerInteractWithBlock(Before)',
-      HANDLERS.beforePlayerInteractBlock,
-      event,
-   );
+   runEventHandlersWithCancel('PlayerInteractWithBlock(Before)', HANDLERS.beforePlayerInteractBlock, event);
 });
 
 subscribe(world.afterEvents.playerInteractWithBlock, 'playerInteractWithBlock(After)', (event) => {
@@ -171,11 +165,7 @@ subscribe(world.beforeEvents.playerInteractWithEntity, 'playerInteractWithEntity
    const player = event.player;
    const target = event.target;
    if (!player || !player.isValid || !target) return;
-   runEventHandlersWithCancel(
-      'PlayerInteractWithEntity',
-      HANDLERS.beforePlayerInteractEntity,
-      event,
-   );
+   runEventHandlersWithCancel('PlayerInteractWithEntity', HANDLERS.beforePlayerInteractEntity, event);
 });
 
 subscribe(world.beforeEvents.playerPlaceBlock, 'playerPlaceBlock', (event) => {
