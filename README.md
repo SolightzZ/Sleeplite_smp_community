@@ -16,36 +16,15 @@
 
 ---
 
-## ภาพรวม (Overview)
+## 🌍 ภาพรวม (Overview)
 
-**Sleeplite SMP Community** คือ Workspace สำหรับใช้ในการพัฒนาและทดสอบ Behavior Packs (BP) และ Resource Packs (RP) ของเกม Minecraft Bedrock Edition (เวอร์ชัน 1.26.30) ด้วยภาษา JavaScript (Script API) และ mcfunction เพื่อให้สามารถเปิดรันและทดสอบแพ็กต่างๆ ในเกมได้โดยตรง
+**Sleeplite SMP Community** คือเซิร์ฟเวอร์ Minecraft Bedrock แบบ SMP (Survival Multiplayer)
+ที่ผู้เล่นสามารถอยู่รอด สร้างบ้าน สะสมทรัพยากร
+มีระบบเศรษฐกิจ และเล่นร่วมกับผู้เล่นคนอื่นในโลกเดียวกัน
 
----
-
-## 💻 คู่มือการใช้งานสำหรับผู้พัฒนา (Developer Guide)
-
-Workspace นี้ออกแบบมาเพื่ออำนวยความสะดวกในการเข้าถึงซอร์สโค้ดและช่วยให้สามารถปรับปรุง แก้ไข หรือทดสอบระบบ Add-on Packs ได้แบบเรียลไทม์
-
-### 1. การติดตั้งและเตรียมสภาพแวดล้อม (Setup)
-
-1. **Clone หรือดาวน์โหลดโปรเจกต์** เพื่อใช้เป็นสภาพแวดล้อมจำลองในการรันและทดสอบแพ็กต่างๆ ในเกม
-2. **ติดตั้ง Dependencies สำหรับพัฒนาสคริปต์**: เปิด Terminal ในตำแหน่งโฟลเดอร์นี้และรันคำสั่งติดตั้งโมดูลเสริมสำหรับใช้ช่วยเขียนโค้ด (Auto-complete) และการตรวจชนิดข้อมูล (Type Checking):
-   ```bash
-   npm install
-   ```
-
-> [!IMPORTANT]
-> **การตั้งค่าสำหรับการทดสอบ**: ต้องเปิดตัวเลือก **Experimental Features (Beta APIs / Gametest Framework)** และ **Holiday Creator Features** ในหน้าการตั้งค่าเปิดใช้งานสคริปต์และแพ็กเสมอ เพื่อให้ระบบสคริปต์ (Script API) และ Add-on สามารถทำงานได้สมบูรณ์
-
-### 2. โครงสร้างโฟลเดอร์โครงการ
-
-- `behavior_packs/` — โฟลเดอร์หลักสำหรับพัฒนา Behavior Packs (BP) เช่น ตรรกะระบบ, พฤติกรรมของเอนทิตี, สูตรคราฟต์ และ Script API
-- `resource_packs/` — โฟลเดอร์หลักสำหรับพัฒนา Resource Packs (RP) เช่น โมเดลสามมิติ (3D Models), พื้นผิว (Textures), ไอคอน และเอฟเฟกต์เสียง
-
-### 3. การเขียนสคริปต์ระบบ (Script API)
-
-ตัวโปรเจกต์ควบคุมเหตุการณ์ในเกมด้วยภาษา JavaScript โดยซอร์สโค้ดหลักสำหรับเขียนควบคุมจะอยู่ในตำแหน่ง:
-📂 `behavior_packs/Javascript For Bedrock BP/scripts/main.js`
+- Survival = โหมดเอาชีวิตรอด (ต้องหาอาหาร เก็บทรัพยากร สร้างบ้าน)<br>
+- Multiplayer = ผู้เล่นหลายคนเล่นร่วมกันผ่านเซิร์ฟเวอร์
+- Economy = ซื้อขาย ร้านค้า และเศรษฐกิจภายในเซิร์ฟเวอร์
 
 ---
 
@@ -64,7 +43,7 @@ Workspace นี้ออกแบบมาเพื่ออำนวยคว�
 | 7   | [Food Expanded BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/FoodExpanded%20%28Addon%29)                                       | `behavior_packs/FoodExpanded (Addon)`                   |
 | 8   | [Goblin Traders (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Goblintraders%20%28Addon%29)                                | `behavior_packs/Goblintraders (Addon)`                  |
 | 9   | [Pack Items BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Items%20BP)                                                          | `behavior_packs/Items BP`                               |
-| 10  | [JavaScripts API For Bedrock BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Javascript%20For%20Bedrock%20BP)                    | `behavior_packs/Javascript For Bedrock BP`              |
+| 10  | [JavaScript API For Bedrock BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Javascript%20For%20Bedrock%20BP)                     | `behavior_packs/Javascript For Bedrock BP`              |
 | 11  | [Meme Packs (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/MemePack%20%28Addon%29)                                         | `behavior_packs/MemePack (Addon)`                       |
 | 12  | [Peter (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Peter%20%28Addon%29)                                                 | `behavior_packs/Peter (Addon)`                          |
 | 13  | [Player Heads BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/PlayerHeads%20%28Addon%29)                                         | `behavior_packs/PlayerHeads (Addon)`                    |
@@ -106,13 +85,11 @@ Workspace นี้ออกแบบมาเพื่ออำนวยคว�
 
 ## 🛠️ เทคโนโลยีที่ใช้ (Tech Stack)
 
-| Category        | Technology                                                                                                                    |
-| --------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| **Language**    | JavaScript (Script API), mcfunction                                                                                           |
-| **Framework**   | `@minecraft/server` ^2.8.0-beta.1.26.30-stable, `@minecraft/server-ui` ^2.1.0-beta.1.26.30-stable, `@minecraft/common` ^1.3.0 |
-| **Runtime**     | Minecraft Bedrock Engine 1.26.30 (ทำงานร่วมกับสคริปต์สอดรับถึงเวอร์ชัน 1.26.30)                                               |
-| **CI / CD**     | GitHub Actions                                                                                                                |
-| **Add-on Type** | Behavior Packs (21), Resource Packs (20, เปิดใช้งานอยู่: 18), Script API                                                      |
+| Category      | Technology                                                        |
+| ------------- | ----------------------------------------------------------------- |
+| **Language**  | Bedrock Script API, mcfunction                                    |
+| **Framework** | `@minecraft/server` 2.9.0-beta, `@minecraft/server-ui` 2.2.0-beta |
+| **Runtime**   | Minecraft Bedrock 1.26.30                                         |
 
 ---
 
@@ -125,31 +102,13 @@ Workspace นี้ออกแบบมาเพื่ออำนวยคว�
 
 ---
 
-## 🔄 Changelog
+## 💻 ผู้พัฒนา (Developers)
 
-### v2.0.0
-
-- Initial release — Sleeplite SMP Community
-- 21 Behavior Packs, 20 Resource Packs
-- README documentation
-
----
-
-## 🤝 Contributing
-
-1. Fork repository
-2. สร้าง branch ใหม่ (`git checkout -b feature/your-feature`)
-3. Commit การเปลี่ยนแปลง (`git commit -m 'Add your feature'`)
-4. Push ไปที่ branch (`git push origin feature/your-feature`)
-5. เปิด Pull Request
-
-## 👥 ผู้พัฒนา (Developers)
-
-- **SolightzZ** — [GitHub](https://github.com/SolightzZ)
+- **SolightzZ** — [GitHub/SolightzZ](https://github.com/SolightzZ)
 
 ## 📄 License
 
-[MIT](./LICENSE)
+[(MIT) Master of Science in Information Technology](./LICENSE)
 
 ---
 

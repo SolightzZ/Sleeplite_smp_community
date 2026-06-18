@@ -8,6 +8,7 @@ mc.log
 
 
 # packs
+package-lock.json
 .agents
 SKILL.md
 skills
