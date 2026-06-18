@@ -1,0 +1,30 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:single_block_feature": {
+		"description": {
+			"identifier": "tayi:helecho_abundante"
+		},
+		"places_block": {
+			"name": "tayi:helecho_abundante"
+		},
+		"enforce_survivability_rules": true,
+		"enforce_placement_rules": false,
+		"may_replace": [
+			{
+				"name": "minecraft:short_grass"
+			},
+			{
+				"name": "minecraft:tall_grass"
+			},
+			{
+				"name": "minecraft:fern"
+			},
+			{
+				"name": "minecraft:large_fern"
+			},
+			{
+				"name": "minecraft:air"
+			}
+		]
+	}
+}

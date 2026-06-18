@@ -1,0 +1,21 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:single_block_feature": {
+		"description": {
+			"identifier": "tayi:hongo_rojo"
+		},
+		"places_block": {
+			"name": "tayi:hongo_rojo"
+		},
+		"enforce_survivability_rules": true,
+		"enforce_placement_rules": false,
+		"may_replace": [
+			{
+				"name": "minecraft:red_mushroom"
+			},
+			{
+				"name": "minecraft:air"
+			}
+		]
+	}
+}

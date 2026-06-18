@@ -1,0 +1,24 @@
+{
+   "format_version": "1.12",
+   "minecraft:recipe_shapeless": {
+      "description": {
+         "identifier": "tayi:crimson_fungus"
+      },
+      "tags": ["crafting_table"],
+      "ingredients": [
+         {
+            "item": "tayi:seta_escarlata"
+         }
+      ],
+      "unlock": [
+         {
+            "item": "tayi:seta_escarlata"
+         }
+      ],
+      "result": {
+         "count": 1,
+         "item": "minecraft:crimson_fungus"
+      },
+      "priority": -1
+   }
+}

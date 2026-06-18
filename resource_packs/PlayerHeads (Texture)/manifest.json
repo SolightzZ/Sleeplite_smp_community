@@ -1,35 +1,35 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Player Heads (Texture)",
-        "description": "BlueFireFroggy's Player Heads Resource Pack",
-        "uuid": "85d367b5-ab8c-4cb6-8e76-788d37195673",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10],
-        "pack_scope": "world"
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Player Heads (Texture)",
+      "description": "BlueFireFroggy's Player Heads Resource Pack",
+      "uuid": "3f294778-df3b-402e-a46c-ef8d4c07ed60",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
 
-    "modules": [
-        {
-            "description": "BlueFireFroggy's Player Heads",
-            "type": "resources",
-            "uuid": "cb41a267-a46a-412c-8a12-f521c3bc9197",
-            "version": [1, 0, 1]
-        }
-    ],
+   "modules": [
+      {
+         "description": "BlueFireFroggy's Player Heads",
+         "type": "resources",
+         "uuid": "cb41a267-a46a-412c-8a12-f521c3bc9197",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "dependencies": [
-        {
-            "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
-            "version": [1, 0, 1]
-        }
-    ],
+   "dependencies": [
+      {
+         "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "capabilities": ["pbr"],
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

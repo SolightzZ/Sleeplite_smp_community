@@ -1,34 +1,34 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Goblin Traders (Addon)",
-        "description": "Discover unique Goblin Traders in every biome!\nBy Iced Fox Studios\nVersion 2.1",
-        "uuid": "4d7bcb2f-ba0c-44e8-b977-186967cd8042",
-        "version": [2, 1, 0],
-        "min_engine_version": [1, 26, 10],
-        "pack_scope": "world"
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Goblin Traders (Addon)",
+      "description": "Discover unique Goblin Traders in every biome!\nBy Iced Fox Studios\nVersion 2.1",
+      "uuid": "ea23c30f-be9f-4735-9fdd-37c18dadf5c3",
+      "version": [2, 1, 0],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
 
-    "modules": [
-        {
-            "type": "resources",
-            "uuid": "d202e7e0-7059-4861-ae7d-02a6b62a4124",
-            "version": [2, 1, 0]
-        }
-    ],
+   "modules": [
+      {
+         "type": "resources",
+         "uuid": "d202e7e0-7059-4861-ae7d-02a6b62a4124",
+         "version": [2, 1, 0]
+      }
+   ],
 
-    "dependencies": [
-        {
-            "uuid": "52f1127a-cbbb-416c-a7a4-66776a665311",
-            "version": [2, 1, 0]
-        }
-    ],
+   "dependencies": [
+      {
+         "uuid": "52f1127a-cbbb-416c-a7a4-66776a665311",
+         "version": [2, 1, 0]
+      }
+   ],
 
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "capabilities": ["pbr"],
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

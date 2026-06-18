@@ -1,0 +1,39 @@
+{
+   "format_version": 2,
+   "header": {
+      "name": "Campfire Creations (Addon)",
+      "description": "Combine a stick with your favourite ingredients and cook them over a campfire to create a variety of delicious skewers",
+      "uuid": "9a5f666f-c26d-4599-ad24-ba74f985070c",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10]
+   },
+
+   "modules": [
+      {
+         "description": "Script resources",
+         "language": "javascript",
+         "type": "script",
+         "uuid": "6db1b170-70eb-4dd9-a3e4-fea54dfab2c3",
+         "version": [1, 0, 0],
+         "entry": "scripts/main.js"
+      }
+   ],
+
+   "dependencies": [
+      {
+         "uuid": "c28c9327-ce8a-4f12-8fc5-b1a5c3c64cdc",
+         "version": [1, 0, 1]
+      },
+      {
+         "module_name": "@minecraft/server",
+         "version": "2.6.0"
+      }
+   ],
+
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
+}

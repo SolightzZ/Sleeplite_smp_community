@@ -1,42 +1,42 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Food Expanded BP",
-        "description": "Added new foods into Minecraft by Kiranaked",
-        "uuid": "6bf34c8a-cb6b-48be-84ff-8259c53688f7",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10]
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Food Expanded BP",
+      "description": "Added new foods into Minecraft by Kiranaked",
+      "uuid": "6bf34c8a-cb6b-48be-84ff-8259c53688f7",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10]
+   },
 
-    "modules": [
-        {
-            "type": "data",
-            "uuid": "a0c74d75-9434-4b97-bbbd-2497fbb333a3",
-            "version": [1, 0, 1]
-        },
-        {
-            "type": "script",
-            "uuid": "6f45bb75-cd8b-40bb-8fa4-9e105a3abf72",
-            "version": [1, 0, 1],
-            "entry": "scripts/Foods.js",
-            "language": "javascript"
-        }
-    ],
-    "dependencies": [
-        {
-            "uuid": "8807c419-8ce5-4d67-b029-7d97770b7637",
-            "version": [1, 0, 1]
-        },
-        {
-            "module_name": "@minecraft/server",
-            "version": "1.17.0"
-        }
-    ],
+   "modules": [
+      {
+         "type": "data",
+         "uuid": "a0c74d75-9434-4b97-bbbd-2497fbb333a3",
+         "version": [1, 0, 1]
+      },
+      {
+         "type": "script",
+         "uuid": "6f45bb75-cd8b-40bb-8fa4-9e105a3abf72",
+         "version": [1, 0, 1],
+         "entry": "scripts/Foods.js",
+         "language": "javascript"
+      }
+   ],
+   "dependencies": [
+      {
+         "uuid": "297e316e-d859-43b7-8892-28964ca1c5a8",
+         "version": [1, 0, 1]
+      },
+      {
+         "module_name": "@minecraft/server",
+         "version": "1.17.0"
+      }
+   ],
 
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

@@ -1,0 +1,37 @@
+{
+  "format_version": "1.17.41",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:wolf_shovel"
+    },
+    "tags": ["avanced"],
+    "pattern": [" e ", "fgh"],
+    "key": {
+      "e": {
+        "item": "minecraft:netherite_ingot"
+      },
+       "g": {
+        "item": "minecraft:diamond_shovel"
+      },
+      "f": {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+      },
+     
+      "h": {
+        "item": "addon:wolf_template"
+      }
+    },
+    "result": {
+      "item": "addon:wolf_shovel",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+      },
+       {
+        "item": "minecraft:diamond_shovel"
+      }
+    ]
+  }
+}

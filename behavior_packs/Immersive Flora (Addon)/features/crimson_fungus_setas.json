@@ -1,0 +1,18 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:weighted_random_feature": {
+		"description": {
+			"identifier": "tayi:crimson_fungus_setas"
+		},
+		"features": [
+			[
+				"tayi:seta_escarlata",
+				9
+			],
+			[
+				"tayi:seta_escarlata_tres",
+				5
+			]
+		]
+	}
+}

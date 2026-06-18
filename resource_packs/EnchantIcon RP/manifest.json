@@ -1,27 +1,27 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Enchant Icon RP",
-        "description": "Redesigned by regzinx, original creator Rvo",
-        "uuid": "4c4ea7f9-c141-4252-bdc4-48e703d448c3",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10],
-        "pack_scope": "world"
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Enchant Icon RP",
+      "description": "Redesigned by regzinx, original creator Rvo",
+      "uuid": "f19a0e29-2c4e-461b-9d34-df05f45d2a39",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
 
-    "modules": [
-        {
-            "type": "resources",
-            "uuid": "1a7d8c34-5b92-4f6e-9d21-3c8a7e5f0b66",
-            "version": [1, 0, 1]
-        }
-    ],
+   "modules": [
+      {
+         "type": "resources",
+         "uuid": "1a7d8c34-5b92-4f6e-9d21-3c8a7e5f0b66",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "capabilities": ["pbr"],
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

@@ -1,0 +1,30 @@
+{
+	"format_version": "1.21.0",
+	"minecraft:weighted_random_feature": {
+		"description": {
+			"identifier": "tayi:warped_fungus"
+		},
+		"features": [
+			[
+				"tayi:seta_peluda_distorcionada",
+				9
+			],
+			[
+				"tayi:seta_peluda_distorcionada_peq",
+				5
+			],
+			[
+				"tayi:seta_deformada",
+				9
+			],
+			[
+				"tayi:hongo_marron",
+				1
+			],
+			[
+				"tayi:hongo_rojo",
+				1
+			]
+		]
+	}
+}

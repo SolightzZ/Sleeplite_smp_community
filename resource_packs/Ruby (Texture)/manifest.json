@@ -1,34 +1,34 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Rubies Reborn (Texture)",
-        "description": "Once lost to time, rubies have resurfaced. Brave the depths to uncover this rare gem and unlock new trading opportunities in a world that just got a little richer.",
-        "uuid": "83bf5d20-6690-49d9-bdfa-7e57c73a7028",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10],
-        "pack_scope": "world"
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Rubies Reborn (Texture)",
+      "description": "Once lost to time, rubies have resurfaced. Brave the depths to uncover this rare gem and unlock new trading opportunities in a world that just got a little richer.",
+      "uuid": "b6ac64cd-24d6-4d37-9ccd-75b454ee7db0",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
 
-    "modules": [
-        {
-            "type": "resources",
-            "uuid": "f1f059e1-8b21-449b-a757-1a8dc73d1bcd",
-            "version": [1, 0, 1]
-        }
-    ],
+   "modules": [
+      {
+         "type": "resources",
+         "uuid": "f1f059e1-8b21-449b-a757-1a8dc73d1bcd",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "dependencies": [
-        {
-            "uuid": "2fb20915-26ce-4bef-8b41-c95b0cfdeb3c",
-            "version": [1, 0, 1]
-        }
-    ],
+   "dependencies": [
+      {
+         "uuid": "2fb20915-26ce-4bef-8b41-c95b0cfdeb3c",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "capabilities": ["pbr"],
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

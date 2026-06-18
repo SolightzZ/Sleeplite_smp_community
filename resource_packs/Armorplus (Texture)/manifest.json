@@ -1,0 +1,32 @@
+{
+   "format_version": 2,
+   "header": {
+      "name": "Armor plus  RP",
+      "description": "Resource Pack Sleeplite SMP 2026",
+      "uuid": "90bffc06-c075-4752-9e5d-bf3eac7199a5",
+      "version": [2, 1, 0],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
+   "modules": [
+      {
+         "description": "Sleeplite SMP 2025",
+         "type": "resources",
+         "uuid": "1fb2bc4a-19de-4231-bd79-f5701e128df1",
+         "version": [2, 1, 0]
+      }
+   ],
+   "dependencies": [
+      {
+         "uuid": "2f6e14b1-5dab-438a-b9c8-9218ed8e3edd",
+         "version": [1, 0, 0]
+      }
+   ],
+   "capabilities": ["pbr"],
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
+}

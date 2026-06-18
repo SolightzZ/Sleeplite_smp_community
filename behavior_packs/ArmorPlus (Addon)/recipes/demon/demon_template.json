@@ -1,0 +1,42 @@
+{
+  "format_version": "1.17.41",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:demon_template"
+    },
+    "tags": ["avanced"],
+    "pattern": [" #n", "ENS", " T "],
+    "key": {
+      "#": {
+        "item": "minecraft:rib_armor_trim_smithing_template"
+      },
+      "n": {
+        "item": "minecraft:netherite_ingot"
+      },
+      "E": {
+        "item": "minecraft:eye_armor_trim_smithing_template"
+      },
+      "N": {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+      },
+      "S": {
+        "item": "minecraft:silence_armor_trim_smithing_template"
+      },
+      "T": {
+        "item": "minecraft:tide_armor_trim_smithing_template"
+      }
+    },
+    "result": {
+      "item": "addon:demon_template",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+      },
+      {
+        "item": "minecraft:netherite_ingot"
+      }
+    ]
+  }
+}

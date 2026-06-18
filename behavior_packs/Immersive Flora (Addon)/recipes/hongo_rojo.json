@@ -1,0 +1,24 @@
+{
+   "format_version": "1.12",
+   "minecraft:recipe_shapeless": {
+      "description": {
+         "identifier": "tayi:hongo_rojo"
+      },
+      "tags": ["crafting_table"],
+      "ingredients": [
+         {
+            "item": "minecraft:red_mushroom"
+         }
+      ],
+      "unlock": [
+         {
+            "item": "minecraft:red_mushroom"
+         }
+      ],
+      "result": {
+         "item": "tayi:hongo_rojo",
+         "count": 1
+      },
+      "priority": -1
+   }
+}

@@ -1,38 +1,38 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Silent Hill (Texture)",
-        "description": "Criaturas de silent hill para o seu minecraft! by @J.S.art",
-        "uuid": "dfd9f8e2-abd8-4acd-b37f-138ead07b595",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10],
-        "pack_scope": "world"
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Silent Hill (Texture)",
+      "description": "Criaturas de silent hill para o seu minecraft! by @J.S.art",
+      "uuid": "3b56aead-d99e-4e25-b3b8-f70466362e16",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
 
-    "modules": [
-        {
-            "description": "JS' Silent Hill [4.0.0]",
-            "type": "resources",
-            "uuid": "ebef5fb3-f9fb-441e-8d8e-a19269e9123e",
-            "version": [1, 0, 1]
-        }
-    ],
+   "modules": [
+      {
+         "description": "JS' Silent Hill [4.0.0]",
+         "type": "resources",
+         "uuid": "ebef5fb3-f9fb-441e-8d8e-a19269e9123e",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "dependencies": [
-        {
-            "uuid": "1f4b513f-e423-4967-b576-63b28b0573d9",
-            "version": [1, 0, 1]
-        }
-    ],
+   "dependencies": [
+      {
+         "uuid": "1f4b513f-e423-4967-b576-63b28b0573d9",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "capabilities": ["pbr"],
+   "capabilities": ["pbr"],
 
-    "metadata": {
-        "authors": ["@J.S.art"],
-        "generated_with": {
-            "MAM": ["3.7.6"]
-        },
-        "product_type": "addon",
-        "url": "https://addonsmaker.com/"
-    }
+   "metadata": {
+      "authors": ["@J.S.art"],
+      "generated_with": {
+         "MAM": ["3.7.6"]
+      },
+      "product_type": "addon",
+      "url": "https://addonsmaker.com/"
+   }
 }

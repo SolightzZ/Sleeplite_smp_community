@@ -1,0 +1,36 @@
+{
+  "format_version": "1.17.41",
+  "minecraft:recipe_shaped": {
+    "description": {
+      "identifier": "addon:demon_chestplate"
+    },
+    "tags": ["avanced"],
+    "pattern": [" a ", "bcd"],
+    "key": {
+      "a": {
+        "item": "minecraft:netherite_ingot"
+      },
+      "b": {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+      },
+      "c": {
+        "item": "minecraft:diamond_chestplate"
+      },
+      "d": {
+        "item": "addon:demon_template"
+      }
+    },
+    "result": {
+      "item": "addon:demon_chestplate",
+      "count": 1
+    },
+    "unlock": [
+      {
+        "item": "minecraft:netherite_upgrade_smithing_template"
+      },
+      {
+        "item": "minecraft:diamond_chestplate"
+      }
+    ]
+  }
+}

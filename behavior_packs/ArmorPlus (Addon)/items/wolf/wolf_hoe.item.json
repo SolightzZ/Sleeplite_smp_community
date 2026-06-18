@@ -1,0 +1,131 @@
+{
+  "format_version": "1.21.90",
+  "minecraft:item": {
+    "description": {
+      "identifier": "addon:wolf_hoe",
+      "menu_category": {
+        "category": "equipment",
+        "group": "minecraft:itemGroup.name.hoe"
+      }
+    },
+    "components": {
+      "minecraft:hand_equipped": true,
+      "minecraft:liquid_clipped": true,
+      "minecraft:fire_resistant": {
+        "value": true
+      },
+      "minecraft:tags": {
+        "tags": ["minecraft:is_hoe", "minecraft:is_tool"]
+      },
+      "minecraft:max_stack_size": 1,
+      "minecraft:durability": {
+        "max_durability": 4000
+      },
+      "minecraft:icon": "addon:wolf_hoe",
+      "minecraft:damage": 6,
+      "minecraft:can_destroy_in_creative": true,
+      "minecraft:render_offsets": {
+        "main_hand": {
+          "third_person": {
+            "scale": [0.1, 0.1, 0.1]
+          },
+          "first_person": {
+            "scale": [
+              0.037999999999977205, 0.037999999999977205, 0.037999999999977205
+            ]
+          }
+        },
+        "off_hand": {
+          "third_person": {
+            "scale": [0.1, 0.1, 0.1]
+          },
+          "first_person": {
+            "scale": [
+              0.037999999999977205, 0.037999999999977205, 0.037999999999977205
+            ]
+          }
+        }
+      },
+      "minecraft:digger": {
+        "use_efficiency": true,
+        "destroy_speeds": [
+          {
+            "block": {
+              "tags": "query.any_tag( 'leaves','plant','crop','sponge','moss','sculk' )"
+            },
+            "speed": 25
+          },
+          {
+            "block": "minecraft:mangrove_leaves",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:moss_block",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:leaves",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:shroomlight",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:sponge",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:target",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:hay_block",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:leaves2",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:warped_wart_block",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:nether_wart_block",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:sculk",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:sculk_catalyst",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:sculk_shrieker",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:sculk_vein",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:sculk_sensor",
+            "speed": 25
+          },
+          {
+            "block": "minecraft:dried_kelp_block",
+            "speed": 25
+          }
+        ]
+      },
+      "minecraft:allow_off_hand": true,
+      "minecraft:enchantable": {
+        "value": 25,
+        "slot": "hoe"
+      }
+    }
+  }
+}

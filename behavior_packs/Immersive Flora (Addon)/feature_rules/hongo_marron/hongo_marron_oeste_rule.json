@@ -1,0 +1,46 @@
+{
+  "format_version": "1.13.0",
+  "minecraft:feature_rules": {
+    "description": {
+      "identifier": "tayi:hongo_marron_oeste_rule",
+      "places_feature": "tayi:hongo_marron_oeste"
+    },
+    "conditions": {
+      "placement_pass": "after_surface_pass",
+      "minecraft:biome_filter": [
+        {
+          "any_of": [
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "roofed"
+            },
+            {
+              "test": "has_biome_tag",
+              "operator": "==",
+              "value": "swamp"
+            }
+          ]
+        }
+      ]
+    },
+    "distribution": {
+      "iterations": 50,
+      "x": {
+        "extent": [0, 16],
+        "distribution": "uniform"
+      },
+      "y": {
+        "distribution": "uniform",
+        "extent": [
+          "query.heightmap(variable.worldx, variable.worldz)+1",
+          "query.heightmap(variable.worldx, variable.worldz) * 3"
+        ]
+      },
+      "z": {
+        "extent": [0, 16],
+        "distribution": "uniform"
+      }
+    }
+  }
+}

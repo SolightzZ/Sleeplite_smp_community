@@ -1,28 +1,28 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Sleeplite SMP Packs (Texture)",
-        "description": "Resource Pack Sleeplite SMP 2026",
-        "uuid": "3a244607-9a35-4648-a398-4944b3b2af00",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10],
-        "pack_scope": "world"
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Sleeplite SMP Packs (Texture)",
+      "description": "Resource Pack Sleeplite SMP 2026",
+      "uuid": "b5ba37b1-71cc-43d9-99de-959505f832ac",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10],
+      "pack_scope": "world"
+   },
 
-    "modules": [
-        {
-            "description": "(RP)",
-            "type": "resources",
-            "uuid": "edda45f2-a614-4483-bd78-4b46e1660b17",
-            "version": [1, 0, 2]
-        }
-    ],
+   "modules": [
+      {
+         "description": "(RP)",
+         "type": "resources",
+         "uuid": "edda45f2-a614-4483-bd78-4b46e1660b17",
+         "version": [1, 0, 2]
+      }
+   ],
 
-    "capabilities": ["pbr"],
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "capabilities": ["pbr"],
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

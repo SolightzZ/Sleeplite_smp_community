@@ -1,38 +1,38 @@
 {
-    "format_version": 2,
-    "header": {
-        "name": "Player Heads BP",
-        "description": "BlueFireFroggy's Player Heads Behavior Pack",
-        "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
-        "version": [1, 0, 1],
-        "min_engine_version": [1, 26, 10]
-    },
+   "format_version": 2,
+   "header": {
+      "name": "Player Heads (Addon)",
+      "description": "BlueFireFroggy's Player Heads Behavior Pack",
+      "uuid": "0fa33900-1421-441e-a5ba-f9759002bf99",
+      "version": [1, 0, 1],
+      "min_engine_version": [1, 26, 10]
+   },
 
-    "modules": [
-        {
-            "type": "script",
-            "language": "javascript",
-            "entry": "scripts/playerHeads.js",
-            "uuid": "6a93c711-9374-47bd-a71c-f16bc5dc1d87",
-            "version": [1, 0, 1]
-        }
-    ],
+   "modules": [
+      {
+         "type": "script",
+         "language": "javascript",
+         "entry": "scripts/playerHeads.js",
+         "uuid": "6a93c711-9374-47bd-a71c-f16bc5dc1d87",
+         "version": [1, 0, 1]
+      }
+   ],
 
-    "dependencies": [
-        {
-            "uuid": "85d367b5-ab8c-4cb6-8e76-788d37195673",
-            "version": [1, 0, 1]
-        },
-        {
-            "module_name": "@minecraft/server",
-            "version": "2.1.0"
-        }
-    ],
+   "dependencies": [
+      {
+         "uuid": "3f294778-df3b-402e-a46c-ef8d4c07ed60",
+         "version": [1, 0, 1]
+      },
+      {
+         "module_name": "@minecraft/server",
+         "version": "2.1.0"
+      }
+   ],
 
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }
