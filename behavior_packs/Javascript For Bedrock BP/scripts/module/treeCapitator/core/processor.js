@@ -5,7 +5,8 @@ import {
   getJob,
   popJob,
   getLastProcessedIndex,
-  setLastProcessedIndex
+  setLastProcessedIndex,
+  incrementLastProcessedIndex
 } from "./state.js";
 import { cleanupJobState } from "./lifecycle.js";
 import { getPlayerAxe } from "../utils/inventory.js";
