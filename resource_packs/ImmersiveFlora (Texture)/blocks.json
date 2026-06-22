@@ -44,31 +44,13 @@
   "seta_peluda_distorcioanda": {
     "sound": "fungus"
   },
-  "alocasia_azlanii_grande": {
-    "sound": "grass"
-  },
-  "alocasia_zebrina_grande": {
-    "sound": "grass"
-  },
-  "alocasia_frydek_grande": {
-    "sound": "grass"
-  },
-  "alocasia_azlanii": {
+"alocasia_azlanii": {
     "sound": "grass"
   },
   "alocacia_zebrina": {
     "sound": "grass"
   },
-  "caladium_lima_grande": {
-    "sound": "grass"
-  },
-  "caladium_blanco_grande": {
-    "sound": "grass"
-  },
   "caladium_grande": {
-    "sound": "grass"
-  },
-  "caladium_rojo_grande": {
     "sound": "grass"
   },
   "caladium_lima": {
@@ -116,13 +98,7 @@
   "hongo_marron_norte": {
     "sound": "fungus"
   },
-  "hongo_rojo_lateral": {
-    "sound": "fungus"
-  },
-  "hongo_marron_lateral": {
-    "sound": "fungus"
-  },
-  "hongo_marron": {
+"hongo_marron": {
     "sound": "fungus"
   },
   "seta_deformada_oeste": {
@@ -137,9 +113,6 @@
   "seta_deformada_norte": {
     "sound": "fungus"
   },
-  "seta_deformada_lateral": {
-    "sound": "fungus"
-  },
   "hongo_carmesi_oeste": {
     "sound": "fungus"
   },
@@ -150,9 +123,6 @@
     "sound": "fungus"
   },
   "hongo_carmesi_norte": {
-    "sound": "fungus"
-  },
-  "hongo_carmesi_lateral": {
     "sound": "fungus"
   },
   "ave_de_paraiso": {

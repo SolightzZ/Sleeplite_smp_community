@@ -58,32 +58,14 @@
     "seta_peluda_distorcioanda": {
       "textures": "textures/blocks/seta_peluda_distorcioanda.png"
     },
-    "alocasia_azlanii_grande": {
-      "textures": "textures/blocks/alocasia_azlanii_grande.png"
-    },
-    "alocasia_zebrina_grande": {
-      "textures": "textures/blocks/alocasia_zebrina_grande.png"
-    },
-    "alocasia_frydek_grande": {
-      "textures": "textures/blocks/alocasia_frydek_grande.png"
-    },
-    "alocasia_azlanii": {
+"alocasia_azlanii": {
       "textures": "textures/blocks/alocasia_azlanii.png"
     },
     "alocacia_zebrina": {
       "textures": "textures/blocks/alocacia_zebrina.png"
     },
-    "caladium_lima_grande": {
-      "textures": "textures/blocks/caladium_lima"
-    },
-    "caladium_blanco_grande": {
-      "textures": "textures/blocks/caladium_blanco"
-    },
     "caladium_grande": {
       "textures": "textures/blocks/caladium"
-    },
-    "caladium_rojo_grande": {
-      "textures": "textures/blocks/caladium_rojo"
     },
     "caladium_lima": {
       "textures": "textures/blocks/caladium_lima.png"
@@ -133,13 +115,7 @@
     "hongo_marron_norte": {
       "textures": "textures/blocks/hongo_marron_lateral"
     },
-    "hongo_rojo_lateral": {
-      "textures": "textures/blocks/hongo_rojo_lateral.png"
-    },
-    "hongo_marron_lateral": {
-      "textures": "textures/blocks/hongo_marron_lateral.png"
-    },
-    "seta_deformada_oeste": {
+"seta_deformada_oeste": {
       "textures": "textures/blocks/seta_deformada_lateral"
     },
     "seta_deformada_este": {
@@ -151,16 +127,10 @@
     "seta_deformada_norte": {
       "textures": "textures/blocks/seta_deformada_lateral"
     },
-    "seta_deformada_lateral": {
-      "textures": "textures/blocks/seta_deformada_lateral.png"
-    },
     "hongo_carmesi_oeste": {
       "textures": "textures/blocks/hongo_carmesi_lateral.png"
     },
     "hongo_carmesi_este": {
-      "textures": "textures/blocks/hongo_carmesi_lateral.png"
-    },
-    "hongo_carmesi_lateral": {
       "textures": "textures/blocks/hongo_carmesi_lateral.png"
     },
     "palito_de_brasil": {

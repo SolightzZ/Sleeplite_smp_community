@@ -1,15 +1,6 @@
 {
   "texture_data": {
-    "caladium_lima_grande": {
-      "textures": "textures/items/caladium_lima_grande.png"
-    },
-    "caladium_rojo_grande": {
-      "textures": "textures/items/caladium_rojo_grande.png"
-    },
-    "caladium_blanco_grande": {
-      "textures": "textures/items/caladium_blanco_grande.png"
-    },
-    "caladium_grande": {
+"caladium_grande": {
       "textures": "textures/items/caladium_grande.png"
     },
     "caladium_rosa_grande": {
@@ -30,18 +21,6 @@
     "caladium": {
       "textures": "textures/items/caladium.png"
     },
-    "hongo_rojo_lateral": {
-      "textures": "textures/items/hongo_rojo_lateral.png"
-    },
-    "hongo_marron_lateral": {
-      "textures": "textures/items/hongo_marron_lateral.png"
-    },
-    "seta_deformada_lateral": {
-      "textures": "textures/items/seta_deformada_lateral.png"
-    },
-    "hongo_carmesi_lateral": {
-      "textures": "textures/items/hongo_carmesi_lateral.png"
-    }
   },
   "resource_pack_name": "Immersive Flora All Biomes Pack",
   "texture_name": "atlas.items"

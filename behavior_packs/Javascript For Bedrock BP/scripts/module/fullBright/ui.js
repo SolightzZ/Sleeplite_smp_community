@@ -18,9 +18,7 @@ export function showMenu(player) {
 
    addSound(player, 'mob.reset_growth');
 
-   form
-      .show(player)
-      .then((res) => {
+   form.show(player).then((res) => {
          if (!res || res.canceled || res.selection !== 0) return;
 
          const next = toggleBright(player);

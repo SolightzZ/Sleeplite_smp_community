@@ -67,22 +67,6 @@ export function playerLeaveAfk(playerId) {
     }
 }
 
-export function setPlayerIdleTime(player, seconds) {
-    try {
-        const state = ensureState(player);
-        const clamped = Math.max(CONFIG.minIdleSeconds, Math.min(CONFIG.maxIdleSeconds, Math.floor(seconds)));
-        state.idleSeconds = clamped;
-        state.idleTicks = 0;
-        state.idleSecondsCache = clamped;
-        state.warningSecondsCache = Math.min(CONFIG.warningSeconds, Math.max(1, clamped - 1));
-        state.warningShown = false;
-        refreshBaseline(player, state);
-        player.sendMessage(`§7[AFK] Start time set to §e${clamped}§7 seconds.`);
-    } catch (error) {
-        console.error('[ AFKCinematic ] setPlayerIdleTime: ' + error);
-    }
-}
-
 export function startCinematicNow(player) {
     try {
         if (!player.isValid) return;

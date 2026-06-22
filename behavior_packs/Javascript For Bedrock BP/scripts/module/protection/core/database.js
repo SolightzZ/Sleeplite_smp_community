@@ -102,6 +102,7 @@ export class ZoneDatabase {
     }
 
     scheduleSave() {
+        
         // ล้างแคชทันทีเพื่อป้องกันไม่ให้คำสั่งค้นหาค้างอยู่
         this.cache.clear();
         if (this._saveScheduled) return;

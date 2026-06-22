@@ -17,31 +17,12 @@
               "tayi:caladium_rojo",
               "tayi:caladium_rosa",
               "tayi:caladium_grande",
-              "tayi:caladium_blanco_grande",
-              "tayi:caladium_lima_grande",
-              "tayi:caladium_rojo_grande",
               "tayi:caladium_rosa_grande"
             ]
           }
         ]
       },
-      {
-        "category_name": "nature",
-        "groups": [
-          {
-            "group_identifier": {
-              "icon": "tayi:hongo_rojo_lateral",
-              "name": "tayi:itemGroup.name.hongos_laterales"
-            },
-            "items": [
-              "tayi:hongo_rojo_lateral",
-              "tayi:hongo_marron_lateral",
-              "tayi:hongo_carmesi_lateral",
-              "tayi:seta_deformada_lateral"
-            ]
-          }
-        ]
-      },
+
       {
         "category_name": "nature",
         "groups": [
@@ -53,10 +34,7 @@
             "items": [
               "tayi:alocacia_zebrina",
               "tayi:alocasia_frydek",
-              "tayi:alocasia_azlanii",
-              "tayi:alocasia_zebrina_grande",
-              "tayi:alocasia_frydek_grande",
-              "tayi:alocasia_azlanii_grande"
+              "tayi:alocasia_azlanii"
             ]
           }
         ]

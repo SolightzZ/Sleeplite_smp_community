@@ -62,7 +62,7 @@
       "minecraft:behavior.tempt": {
         "priority": 0,
         "speed_multiplier": 1,
-        "items": ["chorus_fruit"]
+        "items": ["minecraft:chorus_fruit"]
       },
       "minecraft:behavior.pickup_items": {
         "priority": 1,
@@ -74,7 +74,7 @@
         "all_items_max_amount": 1,
         "items": [
           {
-            "item": "chorus_fruit",
+            "item": "minecraft:chorus_fruit",
             "priority": 0,
             "max_amount": 1
           }

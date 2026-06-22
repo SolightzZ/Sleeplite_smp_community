@@ -24,10 +24,10 @@
 			"minecraft:destructible_by_explosion": {
 				"explosion_resistance": 0
 			},
-			"minecraft:geometry": "geometry.seta_deformada_lateral",
+			"minecraft:geometry": "geometry.hongo_marron",
 			"minecraft:material_instances": {
 				"*": {
-					"texture": "seta_deformada_lateral",
+					"texture": "seta_deformada",
 					"render_method": "alpha_test",
 					"face_dimming": true,
 					"ambient_occlusion": false
@@ -42,8 +42,7 @@
 					0
 				]
 			},
-			"minecraft:loot": "loot_tables/blocks/seta_deformada_lateral.json",
-			"minecraft:light_emission": 3,
+"minecraft:light_emission": 3,
 			"minecraft:placement_filter": {
 				"conditions": [
 					{

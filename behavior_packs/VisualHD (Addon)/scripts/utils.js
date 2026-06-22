@@ -1,4 +1,4 @@
-// ── Message Tables ──────────────────────────────────────────────
+
 export const MSG = { PREFIX: 'xVis', IMPACT_COUNT: 34, FLAME_COUNT: 8, DROWN_COUNT: 17 };
 
 export const IMPACT_MSGS = Array.from({ length: MSG.IMPACT_COUNT }, (_, i) => (i >= 1 && i <= 3 ? `xVisImpactFixed${i}` : `xVisImpact${i}`));
@@ -26,7 +26,7 @@ export const DAMAGE_CAUSE = {
    FLAME: new Set(['fire', 'fireTick', 'fireworks', 'lava', 'lightning', 'magma', 'campfire', 'soulCampfire']),
 };
 
-export const BLOOD_PARTICLES = ['jsart:silentblood', 'jsart:silentblood2'];
+export const BLOOD_PARTICLES = ['xvisuals:blood_drop0', 'xvisuals:blood_drop1', 'xvisuals:blood_drop2'];
 
 export const EFFECT_MAP = {
    poison: 'xVisPoison',
@@ -67,7 +67,7 @@ export const EFF_MASK = 31;
 
 export const randElem = (arr) => arr[(Math.random() * arr.length) | 0];
 
-//หากมีผู้เล่น 1 คนใน 4 slot จะได้ message 4 บรรทัด
+
 export const buildHurtEffect = (damage, cause) => {
    const { IMPACT, EXPLOSION, FLAME } = DAMAGE_CAUSE;
    const parts = new Array(4);

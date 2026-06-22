@@ -1,5 +1,4 @@
 import { system } from '@minecraft/server';
-import { Registry } from './registry.js';
 import { Queue } from './queue.js';
 import { logError } from './logger.js';
 
@@ -27,27 +26,6 @@ export const Interval = {
       }
    },
 };
-
-// วนผู้เล่นแบบ round-robin: ประมวลผลทีละคน วนกลับเมื่อหมด
-export function createPlayerBatchIterator() {
-   let index = 0;
-   return function (fn) {
-      const entries = Registry.getEntries();
-      if (entries.length === 0) return;
-      if (index >= entries.length) {
-         index = 0;
-      }
-      const entry = entries[index];
-      if (entry && entry.player?.isValid) {
-         try {
-            fn(entry);
-         } catch (error) {
-            logError('PlayerBatchIterator', 'task error', error);
-         }
-      }
-      index++;
-   };
-}
 
 // ลูปหลักเพียงลูปเดียว ขับทั้ง Interval callbacks และ task queue
 system.runInterval(() => {

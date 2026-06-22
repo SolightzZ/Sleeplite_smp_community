@@ -56,40 +56,18 @@ export const toggleBright = (player) => {
    return player.hasTag(tag) ? !remove(player) : apply(player);
 };
 
-export const clearEffect = (player) => {
-   if (!player || !player.isValid) return;
-   try {
-      player.removeEffect(effect);
-   } catch {
-      // ignore if effect doesn't exist
-   }
-};
-
 export const resetBright = (player) => {
    if (!player || !player.isValid) return;
 
    try {
       player.removeTag(tag);
    } catch {
-      // ignore if tag doesn't exist
+      // ignore
    }
 
    try {
       player.removeEffect(effect);
    } catch {
-      // ignore if effect doesn't exist
-   }
-};
-export const refreshBright = (player) => {
-   if (!player || !player.isValid) return;
-   if (player.hasTag(tag)) {
-      try {
-         player.addEffect(effect, REFRESH_TICKS + 200, {
-            amplifier: 0,
-            showParticles: false,
-         });
-      } catch (error) {
-         console.error('[fullbright] refresh failed: ' + error);
-      }
+      // ignore
    }
 };

@@ -3,6 +3,7 @@
   "minecraft:entity": {
     "description": {
       "identifier": "jsart:mandarin",
+      "spawn_category": "monster",
       "is_spawnable": true,
       "is_summonable": true,
       "is_experimental": false
@@ -71,14 +72,14 @@
           "track_target": true
         },
         "minecraft:tamemount": {
-          "minTemper": 0,
-          "maxTemper": 100,
+          "min_temper": 0,
+          "max_temper": 100,
           "feed_text": "action.interact.feed",
           "ride_text": "action.interact.mount",
-          "feedItems": [
+          "feed_items": [
             {
               "item": "wheat",
-              "temperMod": 3
+              "temper_mod": 3
             }
           ],
           "autoRejectItems": [
@@ -107,7 +108,6 @@
       "minecraft:horse_tamed": {
         "minecraft:is_tamed": {},
         "minecraft:rideable": {
-          "priority": 0,
           "seat_count": 1,
           "crouching_skip_interact": true,
           "family_types": [
@@ -123,9 +123,9 @@
           }
         },
         "minecraft:breedable": {
-          "requireTame": true,
-          "inheritTamed": false,
-          "breedsWith": [
+          "require_tame": true,
+          "inherit_tamed": false,
+          "breeds_with": [
             {
               "mateType": "minecraft:horse",
               "babyType": "minecraft:horse",
@@ -143,7 +143,7 @@
               }
             }
           ],
-          "breedItems": [
+          "breed_items": [
             "golden_carrot",
             "golden_apple",
             "appleEnchanted"
@@ -198,9 +198,17 @@
           "monster"
         ]
       },
+      "minecraft:is_hidden_when_invisible": {},
+      "minecraft:conditional_bandwidth_optimization": {},
+      "minecraft:nameable": {
+        "allow_name_tag_renaming": true,
+        "always_show": false
+      },
+      "minecraft:pushable": {
+        "is_pushable": true,
+        "is_pushable_by_piston": true
+      },
       "minecraft:breathable": {
-        "totalSupply": 15,
-        "suffocateTime": 0,
         "breathes_air": true,
         "breathes_lava": true,
         "breathes_solids": false,

@@ -12,7 +12,6 @@ export const renderBorderParticles = () => {
     try {
         if (activeBorders.size === 0) return;
 
-        // ใช้ Registry ในการเช็คชื่อผู้เล่นที่ออนไลน์ เพื่อลดการทำงานแบบ O(N) ของเครื่องยนต์หลัก
         const onlineNames = new Set();
         for (const entry of Registry.getEntries()) {
             onlineNames.add(entry.player.name);

@@ -1,15 +1,14 @@
 import { CustomCommandStatus } from '@minecraft/server';
 import { Config } from '../config.js';
 
-// คืนค่าผู้เล่นจาก Origin หรือ null
-export const requirePlayer = (origin) => {
-   const player = origin?.sourceEntity;
-   return player?.isValid ? player : null;
-};
-
 // ตรวจสอบว่าผู้เล่นเป็นผู้ดูแลระบบ (Admin) หรือไม่
 export const isAdmin = (player) => {
    return player?.hasTag?.(Config.adminTag) ?? false;
+};
+
+const requirePlayer = (origin) => {
+   const player = origin?.sourceEntity;
+   return player?.isValid ? player : null;
 };
 
 // ตรวจสอบและคืนค่าผู้ดูแลระบบ (Admin)
@@ -19,15 +18,13 @@ export const requireAdmin = (origin) => {
    return isAdmin(player) ? player : null;
 };
 
-// ตรวจสอบและกรองรายชื่อผู้เล่นเป้าหมายที่อยู่ในระบบ
-export const requireValidTargets = (targetPlayers) => {
+const requireValidTargets = (targetPlayers) => {
    if (!Array.isArray(targetPlayers) || targetPlayers.length === 0) return null;
    const valid = targetPlayers.filter((p) => p?.isValid);
    return valid.length > 0 ? valid : null;
 };
 
-// ค้นหาผู้ดูแลระบบจากรายชื่อผู้เล่นเป้าหมาย
-export const findAdminTarget = (targetPlayers) => {
+const findAdminTarget = (targetPlayers) => {
    for (const target of targetPlayers) {
       if (target?.isValid && isAdmin(target)) return target;
    }

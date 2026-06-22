@@ -156,7 +156,7 @@ class XVisuals {
       this.refreshIds();
    }
 
-   //เลือดต่ำ 50% → ส่ง message
+   //เลือดต่ำ 50% ส่ง message
    getHealthState(playerId) {
       let state = this.healthStates.get(playerId);
       if (!state) {

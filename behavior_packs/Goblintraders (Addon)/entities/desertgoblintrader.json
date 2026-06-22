@@ -55,7 +55,7 @@
       "minecraft:behavior.tempt": {
         "priority": 0,
         "speed_multiplier": 1.2,
-        "items": ["rabbit", "cooked_rabbit"]
+        "items": ["minecraft:rabbit", "minecraft:cooked_rabbit"]
       },
       "minecraft:behavior.pickup_items": {
         "priority": 1,

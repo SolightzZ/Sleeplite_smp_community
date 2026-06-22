@@ -1,6 +1,6 @@
 import { Registry } from '../../../router/core/registry.js';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
-import { ITEM, PREDEFINED_RANKS } from '../constants/constants.js';
+import { PREDEFINED_RANKS } from '../constants/constants.js';
 import { refreshNameTag } from '../core/nametag.js';
 import {
    addRank,
@@ -204,4 +204,3 @@ export const showMainMenu = (admin) => {
    });
 };
 
-const isRankItem = (itemType) => itemType === ITEM;

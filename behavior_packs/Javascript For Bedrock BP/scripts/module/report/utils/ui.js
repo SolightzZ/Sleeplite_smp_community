@@ -1,7 +1,7 @@
 import { MessageFormData } from '@minecraft/server-ui';
 import { addSound } from '../../../plugin/utils';
 
-export const handleUiError = (player, source, error) => {
+const handleUiError = (player, source, error) => {
    if (player?.isValid) {
       player.sendMessage('§c[Report] เกิดข้อผิดพลาดในการเปิดเมนู');
    }

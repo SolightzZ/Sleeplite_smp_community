@@ -89,6 +89,9 @@
       }
     },
     "components": {
+      "minecraft:equipment": {
+        "table": "loot_tables/equipment/goblin_equipment_random.json"
+      },
       "minecraft:economy_trade_table": {
         "display_name": "entity.veingoblintrader.name",
         "table": "trading/vein_globin_trades/trades.json",
@@ -104,7 +107,7 @@
       "minecraft:behavior.tempt": {
         "priority": 0,
         "speed_multiplier": 1,
-        "items": ["carrot"]
+        "items": ["minecraft:carrot"]
       },
       "minecraft:behavior.pickup_items": {
         "priority": 1,

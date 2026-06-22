@@ -935,6 +935,27 @@
                     "celebrate": "mob.ravager.celebrate"
                 }
             },
+            "jsart:splitworm": {
+                "volume": 1.0,
+                "pitch": [0.8, 1.2],
+                "events": {
+                    "ambient": {
+                        "sound": "mob.jsart_splitworm.say",
+                        "volume": [1.0, 1.0],
+                        "pitch": [0.8, 1.2]
+                    },
+                    "death": {
+                        "sound": "mob.jsart_splitworm.kill",
+                        "volume": [1.0, 1.0],
+                        "pitch": [0.8, 1.2]
+                    },
+                    "hurt": {
+                        "sound": "mob.jsart_splitworm.hit",
+                        "volume": [1.0, 1.0],
+                        "pitch": [0.8, 1.2]
+                    }
+                }
+            },
             "jsart:wormhead": {
                 "volume": 1.0,
                 "pitch": [0.8, 1.2],

@@ -27,10 +27,37 @@ const ADMIN_HELP_TEXT = `§8--------- §cHelper Admin §8---------
 §7[§c/§7] /banlist - ดูรายชื่อคนถูกแบน
 `;
 
+const RULE_TEXT = `§8--------- §eRule §8---------
+§7[§a/§7] /rule - ดู Rule
+`;
+
+
+const WEBSITES_TEXT = `§8--------- §eWebsites §8---------
+§7[§a/§7] /websites - ดู Websites
+`;
+
+const VOTE_TEXT = `§8--------- §eVote §8---------
+§7[§a/§7] /vote - ดู Vote
+`;
+
+
 const showHelp = (player) => {
    player.sendMessage(HELP_TEXT);
    if (player.hasTag('admin')) player.sendMessage(ADMIN_HELP_TEXT);
 };
+
+const showRule = (player) => {
+   player.sendMessage(RULE_TEXT);
+}
+
+const showWebsites = (player) => {
+   player.sendMessage(WEBSITES_TEXT);
+}
+
+const showVote = (player) => {
+   player.sendMessage(VOTE_TEXT);
+}
+
 
 export const helpmain = (event) => {
    const msg = event.message;
@@ -92,3 +119,72 @@ export const RegisterHelp = (init) => {
       },
    );
 };
+
+export const RegisterRule = (init) =>{
+   init.customCommandRegistry.registerCommand(
+      {
+         name: 'addon:rule',
+         description: 'Rule',
+         permissionLevel: CommandPermissionLevel.Any,
+         cheatsRequired: false,
+      },
+      (origin) => {
+         const player = origin.sourceEntity;
+         if (!player?.isValid) {
+            return {
+               status: CustomCommandStatus.Failure,
+               message: '§cใช้ได้เฉพาะผู้เล่น',
+            };
+         }
+
+         showRule(player);
+         return { status: CustomCommandStatus.Success };
+      }
+   )
+}
+
+export const RegisterVote = (init) => {
+   init.customCommandRegistry.registerCommand(
+      {
+         name: 'addon:vote',
+         description: 'Vote',
+         permissionLevel: CommandPermissionLevel.Any,
+         cheatsRequired: false,
+      },
+      (origin) => {
+         const player = origin.sourceEntity;
+         if (!player?.isValid) {
+            return {
+               status: CustomCommandStatus.Failure,
+               message: '§cใช้ได้เฉพาะผู้เล่น',
+            };
+         }
+
+         showVote(player);
+         return { status: CustomCommandStatus.Success };
+      }
+   )
+}
+
+export const RegisterWebsites = (init) => {
+   init.customCommandRegistry.registerCommand(
+      {
+         name: 'addon:websites',
+         description: 'Websites',
+         permissionLevel: CommandPermissionLevel.Any,
+         cheatsRequired: false,
+      },
+      (origin) => {
+         const player = origin.sourceEntity;
+         if (!player?.isValid) {
+            return {
+               status: CustomCommandStatus.Failure,
+               message: '§cใช้ได้เฉพาะผู้เล่น',
+            };
+         }
+
+         showWebsites(player);
+         return { status: CustomCommandStatus.Success };
+      }
+   )
+}

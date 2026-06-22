@@ -1,4 +1,8 @@
 {
+    "custom_sound.silenthill_radio": {
+        "category": "neutral",
+        "sounds": ["sounds/custom_sound/silenthill_radio"]
+    },
     "custom_sound.silenthill_kashi_idle1": {
         "category": "neutral",
         "sounds": ["sounds/custom_sound/silenthill_kashi_idle1"]
@@ -6,10 +10,6 @@
     "custom_sound.silenthill_kashi_idle2": {
         "category": "neutral",
         "sounds": ["sounds/custom_sound/silenthill_kashi_idle2"]
-    },
-    "custom_sound.silenthill_radio": {
-        "category": "neutral",
-        "sounds": ["sounds/custom_sound/silenthill_radio"]
     },
     "mob.jsart_bloodsucker.say": {
         "category": "neutral",
@@ -67,10 +67,6 @@
             {
                 "name": "sounds/mob/jsart_air_screamer/hurt/hurt1",
                 "volume": 0.5
-            },
-            {
-                "name": "sounds/mob/jsart_air_screamer/hurt/hurt2",
-                "volume": 0.5
             }
         ]
     },
@@ -80,7 +76,7 @@
     },
     "mob.jsart_asphyxia.hit": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_asphyxia/hit/hit1", "sounds/sounds/block/frog_spawn/break4", "sounds/dig/coral1", "sounds/dig/coral1"]
+        "sounds": ["sounds/mob/jsart_asphyxia/hit/hit1", "sounds/mob/irongolem/hit2", "sounds/mob/irongolem/hit3"]
     },
     "mob.jsart_asphyxia.crack": {
         "category": "neutral",
@@ -94,12 +90,12 @@
                 "volume": 0.8
             },
             {
-                "name": "sounds/mob/jsart_pyramidhead2/crack/crack1",
+                "name": "sounds/mob/irongolem/crack1",
                 "pitch": 0.8,
                 "volume": 0.8
             },
             {
-                "name": "sounds/mob/jsart_pyramidhead2/crack/crack2",
+                "name": "sounds/mob/irongolem/crack2",
                 "pitch": 0.8,
                 "volume": 0.8
             }
@@ -158,7 +154,7 @@
     },
     "mob.jsart_lyingfigure.armor": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure/armor/armor"]
+        "sounds": ["sounds/mob/horse/armor"]
     },
     "mob.jsart_lyingfigure.idle": {
         "category": "neutral",
@@ -166,7 +162,7 @@
     },
     "mob.jsart_lyingfigure.breathe": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure/breathe/breathe1", "sounds/mob/jsart_lyingfigure/breathe/breathe2", "sounds/mob/jsart_lyingfigure/breathe/breathe3"]
+        "sounds": ["sounds/mob/jsart_lyingfigure/idle/idle1", "sounds/mob/jsart_lyingfigure/idle/idle2", "sounds/mob/jsart_lyingfigure/idle/idle3"]
     },
     "mob.jsart_lyingfigure.death": {
         "category": "neutral",
@@ -174,19 +170,19 @@
     },
     "mob.jsart_lyingfigure.eat": {
         "category": " neutral",
-        "sounds": ["sounds/sounds/mob/slime/attack1", "sounds/sounds/mob/slime/attack1", "sounds/sounds/mob/slime/attack2", "sounds/sounds/mob/slime/attack2", "sounds/sounds/mob/slime/big2"]
+        "sounds": ["sounds/mob/slime/attack1", "sounds/mob/slime/attack1", "sounds/mob/slime/attack2", "sounds/mob/slime/attack2", "sounds/mob/slime/big2"]
     },
     "mob.jsart_lyingfigure.hit": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure/hit/hit1", "sounds/mob/jsart_lyingfigure/hit/hit2", "sounds/mob/jsart_lyingfigure/hit/hit3", "sounds/mob/jsart_lyingfigure/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_lyingfigure/hit/hit1", "sounds/mob/jsart_lyingfigure/hit/hit2"]
     },
     "mob.jsart_lyingfigure.jump": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure/jump/jump"]
+        "sounds": ["sounds/mob/horse/jump"]
     },
     "mob.jsart_lyingfigure.land": {
         "category": " neutral",
-        "sounds": ["sounds/sounds/mob/slime/small1"]
+        "sounds": ["sounds/mob/slime/small1"]
     },
     "mob.jsart_lyingfigure.angry": {
         "category": "neutral",
@@ -194,7 +190,7 @@
     },
     "mob.jsart_lyingfigure.leather": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure/leather/leather"]
+        "sounds": ["sounds/mob/horse/leather"]
     },
     "mob.jsart_cryinggirl.idle": {
         "category": "neutral",
@@ -202,27 +198,27 @@
     },
     "mob.jsart_cryinggirl.death": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_cryinggirl/death/death"]
+        "sounds": ["sounds/mob/jsart_lyingfigure/death/death"]
     },
     "mob.jsart_cryinggirl.hit": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_cryinggirl/hit/hit1", "sounds/mob/jsart_cryinggirl/hit/hit2", "sounds/mob/jsart_cryinggirl/hit/hit3", "sounds/mob/jsart_cryinggirl/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_lyingfigure/hit/hit1", "sounds/mob/jsart_lyingfigure/hit/hit2"]
     },
     "mob.jsart_doublehead.idle": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_doublehead/idle/idle1", "sounds/mob/jsart_doublehead/idle/idle2", "sounds/mob/jsart_doublehead/idle/idle3"]
+        "sounds": ["sounds/mob/jsart_doublehead/idle/idle1", "sounds/mob/jsart_doublehead/idle/idle2"]
     },
     "mob.jsart_doublehead.breathe": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_doublehead/breathe/breathe1", "sounds/mob/jsart_lyingfigure/breathe/breathe2", "sounds/mob/jsart_lyingfigure/breathe/breathe3"]
+        "sounds": ["sounds/mob/jsart_doublehead/idle/idle1", "sounds/mob/jsart_doublehead/idle/idle2"]
     },
     "mob.jsart_doublehead.death": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_doublehead/death/death"]
+        "sounds": ["sounds/mob/jsart_lyingfigure/death/death"]
     },
     "mob.jsart_doublehead.hit": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_doublehead/hit/hit1", "sounds/mob/jsart_doublehead/hit/hit2", "sounds/mob/jsart_doublehead/hit/hit3", "sounds/mob/jsart_doublehead/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_lyingfigure/hit/hit1", "sounds/mob/jsart_lyingfigure/hit/hit2"]
     },
     "mob.jsart_doublehead.angry": {
         "category": "neutral",
@@ -230,23 +226,28 @@
     },
     "mob.jsart_ladyfukuro.ambient": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_kashimashi/hit/hit1", "sounds/mob/jsart_kashimashi/hit/hit2", "sounds/mob/jsart_kashimashi/hit/hit3", "sounds/mob/jsart_kashimashi/hit/hit4"]
+        "sounds": [
+            "sounds/mob/jsart_ladyfukuro/ambient/idle5",
+            "sounds/mob/jsart_ladyfukuro/ambient/idle6",
+            "sounds/mob/jsart_ladyfukuro/ambient/idle7",
+            "sounds/mob/jsart_ladyfukuro/ambient/idle8"
+        ]
     },
     "mob.jsart_ladyfukuro.death": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_kashimashi/death/death"]
+        "sounds": ["sounds/mob/jsart_ladyfukuro/death/death1", "sounds/mob/jsart_ladyfukuro/death/death2", "sounds/mob/jsart_ladyfukuro/death/death3"]
     },
     "mob.jsart_ladyfukuro.hurt": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_kashimashi/hit/hit1", "sounds/mob/jsart_kashimashi/hit/hit2", "sounds/mob/jsart_kashimashi/hit/hit3", "sounds/mob/jsart_kashimashi/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_ladyfukuro/hurt/hurt2", "sounds/mob/jsart_ladyfukuro/hurt/hurt3"]
     },
     "mob.jsart_ladyfukuro.step": {
         "category": "neutral",
         "sounds": [
-            "sounds/sounds/block/dripstone/step1",
-            "sounds/sounds/block/dripstone/step2",
-            "sounds/sounds/block/dripstone/step3",
-            "sounds/sounds/block/dripstone/step4",
+            "sounds/block/dripstone/step1",
+            "sounds/block/dripstone/step2",
+            "sounds/block/dripstone/step3",
+            "sounds/block/dripstone/step4",
             "sounds/custom_sound/silenthill_radio"
         ]
     },
@@ -260,7 +261,7 @@
     },
     "mob.jsart_lyingfigure3.hit": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure3/hit/hit1", "sounds/mob/jsart_lyingfigure3/hit/hit2", "sounds/mob/jsart_lyingfigure/hit/hit3", "sounds/mob/jsart_lyingfigure/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_lyingfigure3/hit/hit1", "sounds/mob/jsart_lyingfigure3/hit/hit2"]
     },
     "mob.jsart_lyingfigure3.angry": {
         "category": "neutral",
@@ -281,20 +282,20 @@
     },
     "mob.pa_creakingkanother.death": {
         "category": "neutral",
-        "sounds": ["sounds/mob/pa_creakingkanother/death/death1", "sounds/mob/pa_creakingkanother/death/death2", "sounds/mob/pa_creakingk/death/death3"]
+        "sounds": ["sounds/mob/pa_creakingkanother/death/death1", "sounds/mob/pa_creakingkanother/death/death2"]
     },
     "mob.pa_creakingkanother.hurt": {
         "category": "neutral",
-        "sounds": ["sounds/mob/pa_creakingkanother/hurt/hurt1", "sounds/mob/pa_creakingkanother/hurt/hurt2", "sounds/mob/pa_creakingk/hurt/hurt3", "sounds/custom_sound/silenthill_radio"]
+        "sounds": ["sounds/mob/pa_creakingkanother/hurt/hurt1", "sounds/mob/pa_creakingkanother/hurt/hurt2", "sounds/custom_sound/silenthill_radio"]
     },
     "mob.pa_creakingk.step": {
         "category": " neutral",
         "sounds": [
-            "sounds/sounds/block/dripstone/step1",
-            "sounds/sounds/block/dripstone/step2",
-            "sounds/sounds/block/dripstone/step3",
-            "sounds/sounds/block/dripstone/step4",
-            "sounds/sounds/block/dripstone/step5"
+            "sounds/block/dripstone/step1",
+            "sounds/block/dripstone/step2",
+            "sounds/block/dripstone/step3",
+            "sounds/block/dripstone/step4",
+            "sounds/block/dripstone/step5"
         ]
     },
     "mob.jsart_mannequin.idle": {
@@ -315,11 +316,11 @@
     },
     "mob.jsart_mandarindamage.idle": {
         "category": "neutral",
-        "sounds": ["sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1"]
+        "sounds": ["sounds/block/amethyst/step1", "sounds/block/amethyst/step1", "sounds/block/amethyst/step1"]
     },
     "mob.jsart_mandarindamage.breathe": {
         "category": "neutral",
-        "sounds": ["sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1"]
+        "sounds": ["sounds/block/amethyst/step1", "sounds/block/amethyst/step1", "sounds/block/amethyst/step1"]
     },
     "mob.jsart_mandarindamage.death": {
         "category": "neutral",
@@ -327,7 +328,7 @@
     },
     "mob.jsart_mandarindamage.hit": {
         "category": "neutral",
-        "sounds": ["sounds/sounds/block/amethyst/step1", "sounds/sounds/block/amethyst/step1", "sounds/mob/horse/hit3", "sounds/mob/horse/hit4"]
+        "sounds": ["sounds/block/amethyst/step1", "sounds/block/amethyst/step1", "sounds/mob/horse/hit3", "sounds/mob/horse/hit4"]
     },
     "mob.pa_creakingk2.ambient": {
         "category": "neutral",
@@ -344,11 +345,11 @@
     },
     "mob.pa_creakingk2.death": {
         "category": "neutral",
-        "sounds": ["sounds/mob/pa_creakingk2/death/death1", "sounds/mob/pa_creakingk2/death/death2", "sounds/mob/pa_creakingk/death/death3"]
+        "sounds": ["sounds/mob/pa_creakingk2/death/death1", "sounds/mob/pa_creakingk2/death/death2"]
     },
     "mob.pa_creakingk2.hurt": {
         "category": "neutral",
-        "sounds": ["sounds/mob/pa_creakingk2/hurt/hurt1", "sounds/mob/pa_creakingk2/hurt/hurt2", "sounds/custom_sound/silenthill_radio", "sounds/mob/pa_creakingk/hurt/hurt4"]
+        "sounds": ["sounds/mob/pa_creakingk2/hurt/hurt1", "sounds/mob/pa_creakingk2/hurt/hurt2", "sounds/custom_sound/silenthill_radio", "sounds/mob/pa_creakingkanother/hurt/hurt1"]
     },
     "mob.pa_creakingk.ambient": {
         "category": "neutral",
@@ -365,11 +366,11 @@
     },
     "mob.pa_creakingk.death": {
         "category": " neutral",
-        "sounds": ["sounds/mob/pa_creakingk/death/death1", "sounds/mob/pa_creakingk/death/death2", "sounds/mob/pa_creakingk/death/death3"]
+        "sounds": ["sounds/mob/pa_creakingk2/death/death1", "sounds/mob/pa_creakingk2/death/death2"]
     },
     "mob.pa_creakingk.hurt": {
         "category": " neutral",
-        "sounds": ["sounds/mob/pa_creakingk/hurt/hurt1", "sounds/mob/pa_creakingk/hurt/hurt2", "sounds/mob/pa_creakingk/hurt/hurt3", "sounds/mob/pa_creakingk/hurt/hurt4"]
+        "sounds": ["sounds/mob/pa_creakingk2/hurt/hurt1", "sounds/mob/pa_creakingk2/hurt/hurt2", "sounds/mob/pa_creakingkanother/hurt/hurt1"]
     },
     "mob.jsart_mandarin.idle": {
         "category": "neutral",
@@ -381,7 +382,7 @@
     },
     "mob.jsart_mandarin.hit": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_mandarin/hit/hit1", "sounds/mob/jsart_mandarin/hit/hit2", "sounds/mob/jsart_mandarin/hit/hit3", "sounds/mob/jsart_mandarin/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_mandarin/hit/hit1", "sounds/mob/jsart_mandarin/hit/hit2"]
     },
     "mob.jsart_mandarin.angry": {
         "category": "neutral",
@@ -397,7 +398,7 @@
     },
     "mob.jsart_lyingfigure2.hit": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_lyingfigure2/hit/hit1", "sounds/mob/jsart_lyingfigure2/hit/hit2", "sounds/mob/jsart_lyingfigure2/hit/hit3", "sounds/mob/jsart_lyingfigure2/hit/hit4"]
+        "sounds": ["sounds/mob/jsart_lyingfigure2/hit/hit1", "sounds/mob/jsart_lyingfigure2/hit/hit2"]
     },
     "mob.jsart_lyingfigure2.angry": {
         "category": "neutral",
@@ -405,7 +406,7 @@
     },
     "mob.jsart_pyramidhead.death": {
         "category": " neutral",
-        "sounds": ["sounds/mob/jsart_pyramidhead2/death/death"]
+        "sounds": ["sounds/mob/irongolem/death"]
     },
     "mob.jsart_pyramidhead.hit": {
         "category": "neutral",
@@ -423,12 +424,12 @@
                 "volume": 0.8
             },
             {
-                "name": "sounds/mob/jsart_pyramidhead2/crack/crack1",
+                "name": "sounds/mob/irongolem/crack1",
                 "pitch": 0.8,
                 "volume": 0.8
             },
             {
-                "name": "sounds/mob/jsart_pyramidhead2/crack/crack2",
+                "name": "sounds/mob/irongolem/crack2",
                 "pitch": 0.8,
                 "volume": 0.8
             }
@@ -461,7 +462,7 @@
     },
     "mob.jsart_straightjacket.hurt": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_straightjacket/hurt/hurt1", "sounds/mob/jsart_straightjacket/hurt/hurt2", "sounds/mob/jsart_straightjacket/hurt/hurt3"]
+        "sounds": ["sounds/mob/jsart_straightjacket/hurt/hurt1", "sounds/mob/jsart_straightjacket/hurt/hurt2", "sounds/mob/jsart_straightjacket/hurt/hurt3", "sounds/mob/jsart_ladyfukuro/hurt/hurt3"]
     },
     "mob.jsart_victism16.ambient": {
         "category": "neutral",
@@ -475,6 +476,18 @@
             "sounds/mob/pa_creakingk/ambient/idle7",
             "sounds/mob/pa_creakingk/ambient/idle8"
         ]
+    },
+    "mob.jsart_splitworm.say": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_splitworm/say/say1", "sounds/mob/jsart_splitworm/say/say2", "sounds/ambient/cave", "sounds/ambient/cave"]
+    },
+    "mob.jsart_splitworm.kill": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_splitworm/kill/kill"]
+    },
+    "mob.jsart_splitworm.hit": {
+        "category": "neutral",
+        "sounds": ["sounds/mob/jsart_splitworm/hit/hit1", "sounds/mob/jsart_splitworm/hit/hit2", "sounds/mob/jsart_splitworm/hit/hit3"]
     },
     "mob.jsart_wormhead.idle": {
         "category": "neutral",

@@ -23,11 +23,4 @@ const getActiveRankFromTags = (tags) => {
    return null;
 };
 
-const removeNameTag = (player) => {
-   if (!isValidPlayer(player)) return false;
-
-   player.nameTag = player.name;
-   return true;
-};
-
 export const refreshNameTagOnJoin = refreshNameTag;

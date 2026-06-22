@@ -16,11 +16,9 @@ const clearSeatsInDimension = (dimName) => {
 };
 
 export const initCleanup = () => {
-    system.run(() => {
-        system.runTimeout(() => {
-            for (const dimName of dims) {
-                clearSeatsInDimension(dimName);
+    system.runTimeout(() => {
+        for (const dimName of dims) {
+            clearSeatsInDimension(dimName);
             }
-        }, 1);
-    });
+    }, 1);
 };

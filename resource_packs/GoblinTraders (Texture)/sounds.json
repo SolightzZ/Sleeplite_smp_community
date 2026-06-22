@@ -1,17 +1,37 @@
 {
   "entity_sounds": {
     "entities": {
-      "gt:goblintrader": {
+      "goblin:goblintrader": {
         "volume": 6,
         "pitch": 1,
         "events": { "ambient": "goblin_trader_idle" }
       },
-      "gt:endgoblintrader": {
+      "goblin:badlandsgoblintrader": {
         "volume": 6,
         "pitch": 1,
         "events": { "ambient": "goblin_trader_idle" }
       },
-      "gt:veingoblintrader": {
+      "goblin:desertgoblintrader": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      },
+      "goblin:endgoblintrader": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      },
+      "goblin:endgoblintrader_b": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      },
+      "goblin:veingoblintrader": {
+        "volume": 6,
+        "pitch": 1,
+        "events": { "ambient": "goblin_trader_idle" }
+      },
+      "goblin:veingoblintrader_blue": {
         "volume": 6,
         "pitch": 1,
         "events": { "ambient": "goblin_trader_idle" }

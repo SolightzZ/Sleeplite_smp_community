@@ -5,7 +5,7 @@ import { playerLights, activeHolders } from './state.js';
 import { placeLightForPlayer, removeLightBlock, isFlashlightHeld } from './light-manager.js';
 
 function syncPlayerQueue() {
-    // ดึงผู้เล่นผ่านแคช Registry แทนการเรียก world.getAllPlayers() ของแรพเปอร์หลักเพื่อลดการเกิด GC spike
+
     const allPlayers = Registry.getPlayers();
     const liveIds = new Set();
 

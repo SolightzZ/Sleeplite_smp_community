@@ -9,7 +9,7 @@ import { RegisterRewards } from '../module/rewards/system.js';
 import { registerCustomCommandTakeASeat } from '../module/simpleSit/commands/sit-command.js';
 import { initCleanup } from '../module/simpleSit/core/cleanup.js';
 import { ZoomCommand } from '../module/zoom/Command.js';
-import { RegisterDurability, RegisterHelp } from '../plugin/help/help.js';
+import { RegisterDurability, RegisterHelp, RegisterRule, RegisterVote, RegisterWebsites } from '../plugin/help/help.js';
 import { RegisterNetherCalc } from '../plugin/nether.js';
 import { logError } from './core/logger.js';
 import { runEventHandlers } from './core/utils.js';
@@ -29,6 +29,9 @@ const startupHandlers = [
    registerCustomCommandTakeASeat, // addon:sit
    RegisterRewards, // addon:rw
    RegisterHelp, // addon:help
+   RegisterRule, // addon:rule
+   RegisterVote, // addon:vote
+   RegisterWebsites, // addon:websites
    RegisterDurability, // addon:d
    RegisterNetherCalc, // addon:xz
    ZoomCommand, // addon:zoom

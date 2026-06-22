@@ -3,6 +3,7 @@
   "minecraft:entity": {
     "description": {
       "identifier": "jsart:mandarindamage",
+      "spawn_category": "monster",
       "is_summonable": true,
       "is_experimental": false,
       "is_spawnable": false

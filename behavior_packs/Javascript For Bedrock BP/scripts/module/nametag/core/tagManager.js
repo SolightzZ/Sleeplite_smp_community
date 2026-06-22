@@ -55,7 +55,6 @@ export const setActiveRank = (player, rankName) => {
 export const getAllServerRanks = () => {
    const ranks = new Set();
 
-   // ดึงผู้เล่นออนไลน์ผ่าน Registry เพื่อป้องกันการใช้หน่วยความจำและการทำงานแบบ
    const players = Registry.getPlayers();
 
    for (const currentPlayer of players) {

@@ -54,7 +54,7 @@
       "minecraft:behavior.tempt": {
         "priority": 0,
         "speed_multiplier": 1,
-        "items": ["apple"]
+        "items": ["minecraft:apple"]
       },
       "minecraft:behavior.pickup_items": {
         "priority": 1,

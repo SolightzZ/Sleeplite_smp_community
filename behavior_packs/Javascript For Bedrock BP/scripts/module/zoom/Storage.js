@@ -32,6 +32,3 @@ export function getPlayerConfig(player) {
   return config;
 }
 
-export function clearZoomCache(playerId) {
-  configCache.delete(playerId);
-}

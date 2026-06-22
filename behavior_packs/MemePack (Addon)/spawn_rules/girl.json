@@ -7,7 +7,9 @@
         },
         "conditions": [
             {
-                "minecraft:player_in_village_filter": {},
+                "minecraft:player_in_village_filter": {
+    "distance": 32
+},
                 "minecraft:spawns_on_surface": {},
                 "minecraft:brightness_filter": {
                     "min": 13,

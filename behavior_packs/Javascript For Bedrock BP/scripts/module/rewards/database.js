@@ -34,8 +34,4 @@ function reset(player) {
     player.setDynamicProperty(config.dbKey, undefined);
 }
 
-export function clearRewardCache(playerId) {
-    cache.delete(playerId);
-}
-
 export { load, save, reset };

@@ -6,8 +6,6 @@ import { seatHasMoved } from '../utils/location.js';
 const WATER = 'minecraft:water';
 const FLOWING_WATER = 'minecraft:flowing_water';
 
-export const startGlobalSeatCheck = () => {};
-
 export const checkSeats = () => {
     for (const [seatId, data] of activeSeats) {
         const entity = data.seatEntity;

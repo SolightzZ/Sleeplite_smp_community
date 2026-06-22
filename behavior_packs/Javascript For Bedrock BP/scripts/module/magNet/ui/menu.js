@@ -27,9 +27,8 @@ export const showMagnetMenu = (player) => {
    form.label('               @Sleeplite 2026');
 
    addSound(player, 'vault.open_shutter');
-   form
-      .show(player)
-      .then((res) => {
+   
+   form.show(player).then((res) => {
          if (!res || res.canceled || res.selection !== 0) return;
          if (!player.isValid) return;
          toggleMagnet(player, !isOn);

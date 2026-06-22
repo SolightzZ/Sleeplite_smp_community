@@ -52,7 +52,6 @@ function RewardchatSend(event) {
         event.cancel = true;
         let statusText = '=== Player Status ===\n';
 
-        // ดึงข้อมูลผู้เล่นออนไลน์ทั้งหมดผ่าน Registry เพื่อประหยัดทรัพยากร
         for (const target of Registry.getPlayers()) {
             const data = load(target);
             statusText += `§7${target.name}: Count=${data.count}, Last=${data.last || 'Never'}\n`;

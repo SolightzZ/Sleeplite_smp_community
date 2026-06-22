@@ -1,5 +1,4 @@
 import { MagnetConfig, MagnetText } from '../config.js';
-import { startMagnetLoop } from './loop.js';
 import { addMagnetUser, countMagnetUsers, hasMagnetUser, removeMagnetUser } from './state.js';
 import { addSound } from '../../../plugin/utils.js';
 
@@ -20,7 +19,6 @@ export const toggleMagnet = (player, turnOn) => {
       addMagnetUser(player);
       player.onScreenDisplay?.setActionBar(`${MagnetText.ON}`);
       addSound(player, 'respawn_anchor.set_spawn');
-      startMagnetLoop();
    } else {
       removeMagnetUser(id);
       player.onScreenDisplay?.setActionBar(`${MagnetText.OFF}`);

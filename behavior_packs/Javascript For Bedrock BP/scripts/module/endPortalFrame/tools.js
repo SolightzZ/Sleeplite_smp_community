@@ -8,7 +8,6 @@ export const count = (block) => {
     const dimId = block.dimension.id;
     const zoneSq = zone * zone;
 
-    // ดึงผู้เล่นผ่านแคช Registry เพื่อลดการทำงานแบบ O(N)
     const players = Registry.getPlayers();
     let nearbyCount = 0;
 

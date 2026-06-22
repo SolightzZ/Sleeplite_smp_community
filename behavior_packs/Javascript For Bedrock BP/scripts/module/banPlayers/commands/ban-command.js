@@ -24,9 +24,8 @@ const iterateTargets = (targets, fn) => {
    }
 };
 
-// ลงทะเบียนคำสั่งแอดมินพร้อมตรวจสอบสิทธิ์และรองรับ error catching
+
 const registerAdminCommand = (init, options, handler) => {
-   // ลงทะเบียนคำสั่งหลัก
    try {
       init.customCommandRegistry.registerCommand(options, (origin, ...args) => {
          try {

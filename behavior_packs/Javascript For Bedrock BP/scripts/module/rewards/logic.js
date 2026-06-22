@@ -52,9 +52,7 @@ function menu(player) {
 
    addSound(player, 'vault.open_shutter');
 
-   form
-      .show(player)
-      .then((res) => {
+   form.show(player).then((res) => {
          if (!player.isValid || res.canceled) return;
 
          if (res.selection !== data.count) {
@@ -98,8 +96,7 @@ function confirm(player, data, today) {
 
    addSound(player, 'random.pop2');
 
-   ui.show(player)
-      .then((res) => {
+   ui.show(player).then((res) => {
          if (!player.isValid) return;
 
          if (res.selection === 1) {
