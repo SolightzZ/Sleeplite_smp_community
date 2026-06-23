@@ -1,0 +1,26 @@
+{
+   "format_version": 2,
+   "header": {
+      "name": "Structure Mayhem BP",
+      "description": "Made by Sir Rel (no resource pack needed)",
+      "uuid": "2389b11c-85d0-4b1d-a684-6a90a164183a",
+      "version": [1, 0, 7],
+      "min_engine_version": [1, 26, 0]
+   },
+
+   "modules": [
+      {
+         "description": "Structure Mayhem v1.3 Hotfix 3 Add-on",
+         "type": "data",
+         "uuid": "fde9a5cb-0609-4479-8567-1f3a8a17d97c",
+         "version": [1, 0, 7]
+      }
+   ],
+
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
+}

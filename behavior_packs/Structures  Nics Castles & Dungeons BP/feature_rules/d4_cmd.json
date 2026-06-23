@@ -1,26 +1,26 @@
 {
-  "format_version": "1.13.0",
-  "minecraft:feature_rules": {
-    "description": {
-      "identifier": "ncd:d4_cmd",
-      "places_feature": "ncd:d4_cmd"
-    },
-    "conditions": {
-      "placement_pass": "surface_pass",
-      "minecraft:biome_filter": [
-        {
-          "test": "has_biome_tag",
-          "value": "plains",
-          "operator": "=="
-        }
-      ]
-    },
-    "distribution": {
-      "iterations": 1,
-      "scatter_chance": 0.02,
-      "x": 15,
-      "y": "query.heightmap(variable.worldx, variable.worldz) - 1",
-      "z": 15
-    }
-  }
+   "format_version": "1.13.0",
+   "minecraft:feature_rules": {
+      "description": {
+         "identifier": "ncd:d4_cmd",
+         "places_feature": "ncd:d4_cmd"
+      },
+      "conditions": {
+         "placement_pass": "surface_pass",
+         "minecraft:biome_filter": [
+            {
+               "test": "has_biome_tag",
+               "value": "plains",
+               "operator": "=="
+            }
+         ]
+      },
+      "distribution": {
+         "iterations": 1,
+         "x": 30,
+         "y": "query.heightmap(variable.worldx, variable.worldz) - 1",
+         "z": 30,
+         "scatter_chance": 0.05
+      }
+   }
 }

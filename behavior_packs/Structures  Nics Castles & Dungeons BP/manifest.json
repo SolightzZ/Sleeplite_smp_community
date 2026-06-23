@@ -1,26 +1,26 @@
 {
-    "format_version": 2,
+   "format_version": 2,
 
-    "header": {
-        "name": "Nics Castles and Dungeons BP",
-        "description": "Explore massive, hand-crafted castles and dangerous dungeons across your worlds. Discover loot, fight enemies, and transform your survival into an epic adventure.",
-        "uuid": "cf5dcea2-f569-46d5-bbf0-2a427e66c2c4",
-        "version": [1, 0, 0],
-        "min_engine_version": [1, 26, 10]
-    },
+   "header": {
+      "name": "Nics Castles and Dungeons BP",
+      "description": "Explore massive, hand-crafted castles and dangerous dungeons across your worlds. Discover loot, fight enemies, and transform your survival into an epic adventure.",
+      "uuid": "cf5dcea2-f569-46d5-bbf0-2a427e66c2c4",
+      "version": [1, 0, 0],
+      "min_engine_version": [1, 26, 10]
+   },
 
-    "modules": [
-        {
-            "type": "data",
-            "uuid": "d4c0ba09-4b61-48b2-85b6-20d717b8cc6f",
-            "version": [1, 0, 0]
-        }
-    ],
+   "modules": [
+      {
+         "type": "data",
+         "uuid": "d4c0ba09-4b61-48b2-85b6-20d717b8cc6f",
+         "version": [1, 0, 0]
+      }
+   ],
 
-    "metadata": {
-        "authors": ["SleepliteSMP"],
-        "license": "MIT",
-        "url": "https://discord.gg/gtqfbmvTJK",
-        "product_type": "addon"
-    }
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
 }

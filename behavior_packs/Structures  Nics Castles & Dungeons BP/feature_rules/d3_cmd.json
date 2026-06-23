@@ -1,0 +1,40 @@
+{
+   "format_version": "1.13.0",
+   "minecraft:feature_rules": {
+      "description": {
+         "identifier": "ncd:d3_cmd",
+         "places_feature": "ncd:d3_cmd"
+      },
+      "conditions": {
+         "placement_pass": "surface_pass",
+         "minecraft:biome_filter": [
+            {
+               "all_of": [
+                  {
+                     "test": "has_biome_tag",
+                     "operator": "==",
+                     "value": "overworld"
+                  },
+                  {
+                     "test": "has_biome_tag",
+                     "operator": "!=",
+                     "value": "frozen_peaks"
+                  },
+                  {
+                     "test": "has_biome_tag",
+                     "operator": "!=",
+                     "value": "frozen"
+                  }
+               ]
+            }
+         ]
+      },
+      "distribution": {
+         "iterations": 1,
+         "x": 30,
+         "y": "query.heightmap(variable.worldx, variable.worldz) - 1",
+         "z": 30,
+         "scatter_chance": 0.05
+      }
+   }
+}

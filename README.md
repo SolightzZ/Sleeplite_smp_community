@@ -50,7 +50,7 @@
 
 ## 📦 Behavior Packs
 
-> **21 Behavior Packs** — **2,695 ไฟล์** ( JSON: 2,504 | JS: 191)
+> **22 Behavior Packs** — **2,695 ไฟล์** ( JSON: 2,504 | JS: 191)
 
 | # | Pack Name | Path |
 |---|-----------|------|
@@ -75,6 +75,7 @@
 | 19 | [Immersive Flora (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Immersive%20Flora%20%28Addon%29) | `behavior_packs/Structures Immersive Flora (Addon)` |
 | 20 | [Reds More Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Reds%20More%20BP) | `behavior_packs/Structures Reds More BP` |
 | 21 | [Visual Damage Tint (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/VisualHD%20%28Addon%29) | `behavior_packs/VisualHD (Addon)` |
+| 22 | [Structure Mayhem](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structure%20Mayhem) | `behavior_packs/Structure Mayhem` |
 
 ---
 
@@ -351,6 +352,25 @@
 |------|------------|
 | สิ่งปลูกสร้าง 8 แบบ | โครงสร้างใน Overworld |
 | โอกาสเกิด 1/1250 | เฉลี่ย 1 ครั้งต่อ 1250 บล็อก |
+
+</details>
+
+---
+
+<details open>
+<summary><b>Structure Mayhem</b></summary>
+
+| ระบบ | รายละเอียด |
+|------|------------|
+| **239 โครงสร้าง** | บอลลูน, อาคาร, เกาะ, เต็นท์, วิหาร, ปราสาท, ดันเจี้ยน, ซากปรักหักพัง, เรือ, บ้าน ฯลฯ ครอบคลุมทุกไบโอม (acacia, bamboo, birch, cherry, crimson, dark oak, jungle, mangrove, pale oak, spruce, warped) |
+| **Nether Ruins** | 10 แบบ (netherruins1-10) |
+| **Ruins** | 15 แบบ (ruins1-15) |
+| **Cold/Warm Ruins** | Cold 5 แบบ, Warm 5 แบบ |
+| **SM Floating Islands** | 3 แบบ |
+| **Giant Pumpkins** | 6 ขนาด |
+| **Prismarine** | ปราสาท, วิหาร, รูปปั้น, หอย, ซากปรักหักพัง, สเปนเนอร์, ศาลเจ้า |
+| **Boss Structures** | King Bones (ปราสาท + ตัว), Lord Frostshaw, Lord Oinkers, Captain Iron Eye, Prince Marrow, Princess Dark Rose, Hell Rider |
+| **End Structures** | 4 แบบ (endthing1-4), enderbrain, endertowerthing, endspirething, chorusisland, chorusnest |
 
 </details>
 

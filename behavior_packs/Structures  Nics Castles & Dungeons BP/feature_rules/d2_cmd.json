@@ -1,44 +1,35 @@
 {
-  "format_version": "1.20.0",
-  "minecraft:feature_rules": {
-    "description": {
-      "identifier": "ncd:d2_cmd",
-      "places_feature": "ncd:d2_cmd"
-    },
-    "conditions": {
-      "placement_pass": "surface_pass",
-      "minecraft:biome_filter": [
-        {
-          "all_of": [
+   "format_version": "1.13.0",
+   "minecraft:feature_rules": {
+      "description": {
+         "identifier": "ncd:d2_cmd",
+         "places_feature": "ncd:d2_cmd"
+      },
+      "conditions": {
+         "placement_pass": "surface_pass",
+         "minecraft:biome_filter": [
             {
-              "test": "has_biome_tag",
-              "operator": "!=",
-              "value": "frozen"
-            },
-            {
-              "test": "has_biome_tag",
-              "operator": "!=",
-              "value": "ocean"
+               "all_of": [
+                  {
+                     "test": "has_biome_tag",
+                     "operator": "==",
+                     "value": "frozen_peaks"
+                  },
+                  {
+                     "test": "has_biome_tag",
+                     "operator": "==",
+                     "value": "frozen"
+                  }
+               ]
             }
-          ]
-        }
-      ]
-    },
-    "distribution": {
-      "iterations": 1,
-      "scatter_chance": {
-        "numerator": 1,
-        "denominator": 1500
+         ]
       },
-      "x": {
-        "distribution": "uniform",
-        "extent": [0, 15]
-      },
-      "y": "query.heightmap(variable.worldx, variable.worldz)",
-      "z": {
-        "distribution": "uniform",
-        "extent": [0, 15]
+      "distribution": {
+         "iterations": 1,
+         "x": 30,
+         "y": "query.heightmap(variable.worldx, variable.worldz) + 80",
+         "z": 30,
+         "scatter_chance": 0.05
       }
-    }
-  }
+   }
 }

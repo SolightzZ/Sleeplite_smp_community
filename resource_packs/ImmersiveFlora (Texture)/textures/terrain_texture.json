@@ -37,9 +37,6 @@
     "hongo_rojo": {
       "textures": "textures/blocks/hongo_rojo.png"
     },
-    "moras_azules_infernales": {
-      "textures": "textures/blocks/moras_azules_infernales.png"
-    },
     "verruga_colgante_escarlata": {
       "textures": "textures/blocks/verruga_colgante_escarlata.png"
     },
@@ -64,9 +61,6 @@
     "alocacia_zebrina": {
       "textures": "textures/blocks/alocacia_zebrina.png"
     },
-    "caladium_grande": {
-      "textures": "textures/blocks/caladium"
-    },
     "caladium_lima": {
       "textures": "textures/blocks/caladium_lima.png"
     },
@@ -88,62 +82,11 @@
     "alocasia_frydek": {
       "textures": "textures/blocks/alocasia_frydek.png"
     },
-    "follage_de_roble": {
-      "textures": "textures/blocks/follage_de_roble.png"
-    },
-    "hongo_rojo_oeste": {
-      "textures": "textures/blocks/hongo_rojo_lateral"
-    },
-    "hongo_rojo_este": {
-      "textures": "textures/blocks/hongo_rojo_lateral.png"
-    },
-    "hongo_rojo_sur": {
-      "textures": "textures/blocks/hongo_rojo_lateral"
-    },
-    "hongo_rojo_norte": {
-      "textures": "textures/blocks/hongo_rojo_lateral"
-    },
-    "hongo_marron_oeste": {
-      "textures": "textures/blocks/hongo_marron_lateral"
-    },
-    "hongo_marron_este": {
-      "textures": "textures/blocks/hongo_marron_lateral"
-    },
-    "hongo_marron_sur": {
-      "textures": "textures/blocks/hongo_marron_lateral"
-    },
-    "hongo_marron_norte": {
-      "textures": "textures/blocks/hongo_marron_lateral"
-    },
-"seta_deformada_oeste": {
-      "textures": "textures/blocks/seta_deformada_lateral"
-    },
-    "seta_deformada_este": {
-      "textures": "textures/blocks/seta_deformada_lateral"
-    },
-    "seta_deformada_sur": {
-      "textures": "textures/blocks/seta_deformada_lateral"
-    },
-    "seta_deformada_norte": {
-      "textures": "textures/blocks/seta_deformada_lateral"
-    },
-    "hongo_carmesi_oeste": {
-      "textures": "textures/blocks/hongo_carmesi_lateral.png"
-    },
-    "hongo_carmesi_este": {
-      "textures": "textures/blocks/hongo_carmesi_lateral.png"
-    },
-    "palito_de_brasil": {
-      "textures": "textures/blocks/palito_de_brasil.png"
-    },
     "ave_de_paraiso": {
       "textures": "textures/blocks/ave_de_paraiso.png"
     },
     "arbusto_de_helecho": {
       "textures": "textures/blocks/arbusto_de_helecho.png"
-    },
-    "flor_test": {
-      "textures": "textures/blocks/flor_test.png"
     }
   }
 }

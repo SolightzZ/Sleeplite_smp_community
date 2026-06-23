@@ -20,7 +20,7 @@
     },
     "caladium": {
       "textures": "textures/items/caladium.png"
-    },
+    }
   },
   "resource_pack_name": "Immersive Flora All Biomes Pack",
   "texture_name": "atlas.items"
