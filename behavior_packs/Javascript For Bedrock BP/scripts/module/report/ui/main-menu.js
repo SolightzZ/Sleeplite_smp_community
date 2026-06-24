@@ -1,10 +1,12 @@
 import { ActionFormData } from '@minecraft/server-ui';
-import { isAdmin } from '../utils/permission.js';
-import { note } from './patch-note-menu.js';
-import { reportmenu, inbox } from './report-menu.js';
-import { adminpanel } from './admin-panel.js';
-import { showForm } from '../utils/ui.js';
+
 import { addSound } from '../../../plugin/utils.js';
+import { logError } from '../../../router/core/logger.js';
+import { isAdmin } from '../utils/permission.js';
+import { showForm } from '../utils/ui.js';
+import { adminpanel } from './admin-panel.js';
+import { note } from './patch-note-menu.js';
+import { inbox, reportmenu } from './report-menu.js';
 
 export const showMenuReport = (arg) => {
    const player = arg?.source ?? arg;
@@ -30,5 +32,5 @@ export const showMenuReport = (arg) => {
       if (res.selection === 1) reportmenu(player);
       if (res.selection === 2) inbox(player);
       if (res.selection === 3 && isAdmin(player)) adminpanel(player);
-   }).catch((error) => console.error('[ Report ] System Error (Menu): ' + error));
+   }).catch((error) => logError('Report', 'System Error (Menu)', error));
 };

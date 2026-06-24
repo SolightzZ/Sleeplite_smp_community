@@ -1,13 +1,10 @@
+import { system, world } from '@minecraft/server';
 import { kickPlayer } from '@minecraft/server-admin';
-import { world, system } from '@minecraft/server';
-import { Config } from '../config.js';
-import { BanDatabase } from './database.js';
+import { logError } from '../../../router/core/logger.js';
 import { Registry } from '../../../router/core/registry.js';
-import {
-   formatDuration,
-   formatRemaining,
-   formatDate,
-} from '../utils/format.js';
+import { Config } from '../config.js';
+import { formatDate, formatDuration, formatRemaining } from '../utils/format.js';
+import { BanDatabase } from './database.js';
 
 // ส่งเตะผู้เล่น
 const execKick = (player, reason) => {
@@ -20,23 +17,13 @@ const execKick = (player, reason) => {
       });
       return true;
    } catch (error) {
-      console.error(
-         '[Ban] kickPlayer failed for',
-         player?.name,
-         ':',
-         error.name,
-         error.message,
-      );
+      logError('Ban', 'kickPlayer failed for ' + (player?.name || 'unknown'), error);
       return false;
    }
 };
 
 const buildBanMessage = (entry) => {
-   const lines = [
-      `§4คุณถูกแบนจากเซิร์ฟเวอร์!`,
-      `§7==============================`,
-      `§cสาเหตุ: §f${entry.reason}`,
-   ];
+   const lines = [`§4คุณถูกแบนจากเซิร์ฟเวอร์!`, `§7==============================`, `§cสาเหตุ: §f${entry.reason}`];
 
    if (entry.duration === 0) {
       lines.push(`§cระยะเวลา: §fถาวร`);
@@ -46,11 +33,7 @@ const buildBanMessage = (entry) => {
       lines.push(`§cระยะเวลาที่เหลือ: §f${formatRemaining(entry.expiresAt)}`);
    }
 
-   lines.push(
-      `§cดำเนินการโดย: §f${entry.bannedBy}`,
-      `§cวันเวลาที่ดำเนินการ: §f${formatDate(entry.bannedAt)}`,
-      `§7==============================`,
-   );
+   lines.push(`§cดำเนินการโดย: §f${entry.bannedBy}`, `§cวันเวลาที่ดำเนินการ: §f${formatDate(entry.bannedAt)}`, `§7==============================`);
 
    return lines.join('\n');
 };
@@ -65,15 +48,14 @@ export const kickAndNotify = (player, reason, adminName) => {
 
       return execKick(player, reason);
    } catch (error) {
-      console.error('[Ban] kickPlayer error:', error.name, error.message);
+      logError('Ban', 'kickPlayer error', error);
       return false;
    }
 };
 
 export const banPlayer = (name, reason, duration, adminPlayer) => {
    try {
-      if (!adminPlayer || !adminPlayer.isValid)
-         return { ok: false, message: 'Invalid admin' };
+      if (!adminPlayer || !adminPlayer.isValid) return { ok: false, message: 'Invalid admin' };
 
       if (adminPlayer.name === name) {
          return {
@@ -93,9 +75,7 @@ export const banPlayer = (name, reason, duration, adminPlayer) => {
 
       const existing = BanDatabase.get(name);
       if (existing) {
-         const stillBanned =
-            existing.duration === 0 ||
-            existing.expiresAt > Math.floor(Date.now() / 1000);
+         const stillBanned = existing.duration === 0 || existing.expiresAt > Math.floor(Date.now() / 1000);
          if (stillBanned) {
             return {
                ok: false,
@@ -118,7 +98,7 @@ export const banPlayer = (name, reason, duration, adminPlayer) => {
 
       return { ok: true };
    } catch (error) {
-      console.error('[Ban] banPlayer error:', error.name, error.message);
+      logError('Ban', 'banPlayer error', error);
       return {
          ok: false,
          message: `§c[x] เกิดข้อผิดพลาดในการดำเนินการแบนผู้เล่น`,
@@ -128,8 +108,7 @@ export const banPlayer = (name, reason, duration, adminPlayer) => {
 
 export const unbanPlayer = (name, adminPlayer) => {
    try {
-      if (!adminPlayer || !adminPlayer.isValid)
-         return { ok: false, message: 'Invalid admin' };
+      if (!adminPlayer || !adminPlayer.isValid) return { ok: false, message: 'Invalid admin' };
 
       const existing = BanDatabase.get(name);
       if (!existing) {
@@ -143,7 +122,7 @@ export const unbanPlayer = (name, adminPlayer) => {
       adminPlayer.sendMessage(`§a[/] ปลดแบนผู้เล่น ${name} เสร็จสิ้น`);
       return { ok: true };
    } catch (error) {
-      console.error('[Ban] unbanPlayer error:', error.name, error.message);
+      logError('Ban', 'unbanPlayer error', error);
       return {
          ok: false,
          message: `§c[x] เกิดข้อผิดพลาดในการปลดแบนผู้เล่น`,
@@ -166,7 +145,7 @@ export const checkBanOnJoin = (player) => {
       execKick(player, entry.reason);
       return true;
    } catch (error) {
-      console.error('[Ban] checkBanOnJoin error:', error.name, error.message);
+      logError('Ban', 'checkBanOnJoin error', error);
       return false;
    }
 };

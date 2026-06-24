@@ -1,10 +1,12 @@
-import { ActionFormData, ModalFormData, MessageFormData } from '@minecraft/server-ui';
 import { system } from '@minecraft/server';
+import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
+
+import { addSound } from '../../../plugin/utils.js';
+import { logError } from '../../../router/core/logger.js';
 import { CONFIG, LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
-import { showMenuReport } from './main-menu.js';
 import { showForm, sure } from '../utils/ui.js';
-import { addSound } from '../../../plugin/utils.js';
+import { showMenuReport } from './main-menu.js';
 
 const trimValues = (values) => {
    const result = [];
@@ -33,9 +35,7 @@ export const sendform = (player) => {
    const list = Database.get(name);
 
    if (list.length >= CONFIG.maxReports) {
-      player.sendMessage(
-         `§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`,
-      );
+      player.sendMessage(`§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
       reportmenu(player);
       return;
    }
@@ -66,12 +66,12 @@ export const sendform = (player) => {
          player.sendMessage('§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
          reportmenu(player);
       } catch (innerError) {
-         console.error('[ Report ] Logic Error (SendForm): ' + innerError);
+         logError('Report', 'Logic Error (SendForm)', innerError);
          player.sendMessage('§cเกิดข้อผิดพลาดในการบันทึกข้อมูล');
          reportmenu(player);
       }
    }).catch((error) => {
-      console.error('[ Report ] System Error (SendForm): ' + error);
+      logError('Report', 'System Error (SendForm)', error);
       reportmenu(player);
    });
 };
@@ -98,7 +98,7 @@ const editItem = (player, name, list, index) => {
          player.sendMessage('§e[Report] แก้ไขข้อมูลสำเร็จ');
          mylist(player, 'edit');
       } catch (error) {
-         console.error('[ Report ] Update Error: ' + error);
+         logError('Report', 'Update Error', error);
          mylist(player, 'edit');
       }
    });
@@ -153,7 +153,7 @@ export const mylist = (player, mode) => {
          deleteItem(player, name, index);
       }
    }).catch((error) => {
-      console.error('[ Report ] System Error (MyList): ' + error);
+      logError('Report', 'System Error (MyList)', error);
       reportmenu(player);
    });
 };
@@ -203,7 +203,7 @@ export const inbox = (player) => {
          if (result.selection === 0) inbox(player);
       });
    }).catch((error) => {
-      console.error('[ Report ] System Error (Inbox): ' + error);
+      logError('Report', 'System Error (Inbox)', error);
       showMenuReport(player);
    });
 };
@@ -226,7 +226,7 @@ export const reportmenu = (player) => {
       if (res.selection === 2) mylist(player, 'del');
       if (res.selection === 3) showMenuReport(player);
    }).catch((error) => {
-      console.error('[ Report ] System Error (ReportMenu): ' + error);
+      logError('Report', 'System Error (ReportMenu)', error);
       showMenuReport(player);
    });
 };

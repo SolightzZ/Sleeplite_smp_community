@@ -1,6 +1,6 @@
-import { onGravestoneInteract } from "../module/graveStones/core/interact.js";
-import { onEntityInteract } from "../module/protection/core/events.js";
-import { router } from "./core/index.js";
+import { onGravestoneInteract } from '../module/graveStones/core/interact.js';
+import { onEntityInteract } from '../module/protection/core/events.js';
+import { router } from './core/index.js';
 
 router.on('beforePlayerInteractEntity', onGravestoneInteract);
 router.on('beforePlayerInteractEntity', onEntityInteract);

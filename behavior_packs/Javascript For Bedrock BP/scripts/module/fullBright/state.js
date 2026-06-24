@@ -1,5 +1,7 @@
 import { system } from '@minecraft/server';
+
 import { Registry } from '../../router/core/registry.js';
+import { logError } from '../../router/core/logger.js';
 
 const tag = 'bright';
 const effect = 'night_vision';
@@ -25,7 +27,7 @@ const apply = (player) => {
          showParticles: false,
       });
    } catch (error) {
-      console.error('[fullbright] apply failed: ' + error);
+      logError('fullbright', 'apply failed', error);
    }
 
    return true;
@@ -44,7 +46,7 @@ const remove = (player) => {
       try {
          player.removeEffect(effect);
       } catch (error) {
-         console.error('[fullbright] remove failed: ' + error);
+         logError('fullbright', 'remove failed', error);
       }
    }
 

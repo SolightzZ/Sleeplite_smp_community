@@ -1,4 +1,5 @@
 import { system, world } from '@minecraft/server';
+import { logError } from '../router/core/logger.js';
 
 const OBJECTIVE = 'Deaths';
 const HEAD = '§e[+] Welcome to Sleeplite SMP Community';
@@ -27,7 +28,7 @@ const getPlayerDeaths = (player, objective) => {
 
       return objective.getScore(identity) || 0;
    } catch (error) {
-      console.error('[Welcome] getPlayerDeaths:', error);
+      logError('Welcome', 'getPlayerDeaths', error);
       return 0;
    }
 };

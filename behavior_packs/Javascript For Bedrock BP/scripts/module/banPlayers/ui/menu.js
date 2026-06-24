@@ -1,25 +1,12 @@
-import {
-   ActionFormData,
-   ModalFormData,
-   MessageFormData,
-} from '@minecraft/server-ui';
 import { world } from '@minecraft/server';
-import { Config } from '../config.js';
-import {
-   banPlayer,
-   unbanPlayer,
-   kickAndNotify,
-   getBanList,
-} from '../core/ban.js';
-import {
-   validateDuration,
-   validatePlayerName,
-   isAdmin,
-} from '../utils/validation.js';
-import { formatRemaining, formatDate } from '../utils/format.js';
-import { banReasons, kickReasons } from '../data/messages.js';
+import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 import { addSound } from '../../../plugin/utils.js';
+import { logError } from '../../../router/core/logger.js';
 import { Registry } from '../../../router/core/registry.js';
+import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';
+import { banReasons, kickReasons } from '../data/messages.js';
+import { formatDate, formatRemaining } from '../utils/format.js';
+import { isAdmin, validateDuration, validatePlayerName } from '../utils/validation.js';
 
 const uiLockSet = new Set();
 
@@ -56,7 +43,7 @@ const withFormError = (name, handler) => async (player) => {
       await handler(player);
    } catch (error) {
       player.sendMessage(`[x] เกิดข้อผิดพลาดในการดำเนินงาน`);
-      console.error(`[Ban] ${name} error:`, error.name, error.message);
+      logError('Ban', name + ' error', error);
    }
 };
 
@@ -65,8 +52,7 @@ const buildBanlistBody = () => {
    if (bans.length === 0) return '§7ไม่มีรายชื่อผู้เล่นที่ถูกแบนในระบบ';
 
    const lines = bans.map((ban, i) => {
-      const remaining =
-         ban.duration === 0 ? '§cถาวร' : `§e${formatRemaining(ban.expiresAt)}`;
+      const remaining = ban.duration === 0 ? '§cถาวร' : `§e${formatRemaining(ban.expiresAt)}`;
       return `§7${i + 1}. §f${ban.name}\n   §7สาเหตุ: §f${ban.reason}\n   §7ระยะเวลาที่เหลือ: ${remaining}\n   §7ดำเนินการโดย: §f${ban.bannedBy} §7(${formatDate(ban.bannedAt)})`;
    });
 
@@ -76,8 +62,7 @@ const buildBanlistBody = () => {
 export const openBanMenu = async (arg) => {
    const player = arg?.source ?? arg;
    if (!player || !player.isValid) return;
-   if (uiLockSet.has(player.name))
-      return player.sendMessage(`[x] กรุณารอสักครู่ขณะระบบกำลังประมวลผล`);
+   if (uiLockSet.has(player.name)) return player.sendMessage(`[x] กรุณารอสักครู่ขณะระบบกำลังประมวลผล`);
    uiLockSet.add(player.name);
 
    try {
@@ -94,10 +79,7 @@ export const openBanMenu = async (arg) => {
          form.button('ปลดแบนผู้เล่น', 'textures/ui/sidebar_icons/promotag');
          form.button('เตะผู้เล่น', 'textures/ui/icons/icon_multiplayer');
       }
-      form.button(
-         'รายชื่อผู้เล่นที่ถูกแบน',
-         'textures/ui/sidebar_icons/wish_list',
-      );
+      form.button('รายชื่อผู้เล่นที่ถูกแบน', 'textures/ui/sidebar_icons/wish_list');
       form.label('               @Sleeplite 2026');
 
       const response = await formGuard(form, player);
@@ -111,7 +93,7 @@ export const openBanMenu = async (arg) => {
    } catch (error) {
       addSound(player, 'block.false_permissions');
       player.sendMessage(`[x] เกิดข้อผิดพลาดในการเปิดเมนู`);
-      console.error('[Ban] openMenu error:', error.name, error.message);
+      logError('Ban', 'openMenu error', error);
    } finally {
       uiLockSet.delete(player.name);
    }
@@ -130,10 +112,7 @@ const showBanForm = withFormError('showBanForm', async (adminPlayer) => {
       });
    }
    form.textField('หรือระบุชื่อผู้เล่นด้วยตนเอง', 'พิมพ์ชื่อผู้เล่นที่นี่');
-   form.textField(
-      'ระยะเวลาแบน (ตัวอย่างเช่น 7d, 7h, 30m, 30s หรือ perm สำหรับถาวร)',
-      '7h',
-   );
+   form.textField('ระยะเวลาแบน (ตัวอย่างเช่น 7d, 7h, 30m, 30s หรือ perm สำหรับถาวร)', '7h');
    form.dropdown('ระบุสาเหตุ', banReasons, { defaultValueIndex: 0 });
    form.textField('รายละเอียดเพิ่มเติม (ถ้ามี)', '');
 
@@ -166,17 +145,10 @@ const showBanForm = withFormError('showBanForm', async (adminPlayer) => {
 
    if (!durationResult.ok) {
       addSound(adminPlayer, 'block.false_permissions');
-      return adminPlayer.sendMessage(
-         `[x] รูปแบบเวลาไม่ถูกต้อง กรุณาใช้รูปแบบ เช่น 7d (วัน), 7h (ชั่วโมง), 30m (นาที) หรือ perm (ถาวร)`,
-      );
+      return adminPlayer.sendMessage(`[x] รูปแบบเวลาไม่ถูกต้อง กรุณาใช้รูปแบบ เช่น 7d (วัน), 7h (ชั่วโมง), 30m (นาที) หรือ perm (ถาวร)`);
    }
 
-   const reason = buildReason(
-      response.formValues,
-      offset + 2,
-      offset + 3,
-      banReasons,
-   );
+   const reason = buildReason(response.formValues, offset + 2, offset + 3, banReasons);
 
    banPlayer(targetName, reason, durationResult.seconds, adminPlayer);
 });
@@ -184,9 +156,7 @@ const showBanForm = withFormError('showBanForm', async (adminPlayer) => {
 const showUnbanForm = withFormError('showUnbanForm', async (adminPlayer) => {
    const bans = getBanList();
    if (bans.length === 0) {
-      return adminPlayer.sendMessage(
-         `[x] ไม่พบรายชื่อผู้เล่นที่ถูกแบนในขณะนี้`,
-      );
+      return adminPlayer.sendMessage(`[x] ไม่พบรายชื่อผู้เล่นที่ถูกแบนในขณะนี้`);
    }
    const banNames = bans.map((b) => `${b.name} (${b.reason})`);
 
@@ -205,9 +175,7 @@ const showUnbanForm = withFormError('showUnbanForm', async (adminPlayer) => {
    const selected = bans[index];
    const confirm = new MessageFormData();
    confirm.title('ยืนยันการปลดแบน');
-   confirm.body(
-      `§7คุณต้องการปลดแบนผู้เล่น\n§f${selected.name} §7หรือไม่?\n\n§7สาเหตุ: §f${selected.reason}\n§7ดำเนินการโดย: §f${selected.bannedBy}`,
-   );
+   confirm.body(`§7คุณต้องการปลดแบนผู้เล่น\n§f${selected.name} §7หรือไม่?\n\n§7สาเหตุ: §f${selected.reason}\n§7ดำเนินการโดย: §f${selected.bannedBy}`);
    confirm.button1('ตกลง');
    confirm.button2('ยกเลิก');
 
@@ -222,9 +190,7 @@ const showUnbanForm = withFormError('showUnbanForm', async (adminPlayer) => {
 
 const showKickForm = withFormError('showKickForm', async (adminPlayer) => {
    const allPlayers = Registry.getPlayers();
-   const otherPlayers = allPlayers.filter(
-      (p) => p.name !== adminPlayer.name && !isAdmin(p),
-   );
+   const otherPlayers = allPlayers.filter((p) => p.name !== adminPlayer.name && !isAdmin(p));
    const playerNames = otherPlayers.map((p) => p.name);
 
    if (playerNames.length === 0) {
@@ -255,9 +221,7 @@ const showKickForm = withFormError('showKickForm', async (adminPlayer) => {
       }
    }
 
-   adminPlayer.sendMessage(
-      `§c[x] ไม่พบผู้เล่นชื่อ ${targetName} ในเซิร์ฟเวอร์`,
-   );
+   adminPlayer.sendMessage(`§c[x] ไม่พบผู้เล่นชื่อ ${targetName} ในเซิร์ฟเวอร์`);
 });
 
 const showBanlist = async (player) => {

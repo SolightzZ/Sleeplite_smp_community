@@ -1,8 +1,10 @@
 import { ActionFormData } from '@minecraft/server-ui';
+
+import { addSound } from '../../../plugin/utils.js';
+import { logError } from '../../../router/core/logger.js';
 import { MagnetConfig, MagnetIcons, MagnetText } from '../config.js';
 import { countMagnetUsers, hasMagnetUser } from '../core/state.js';
 import { canUseMagnet, toggleMagnet } from '../core/toggle.js';
-import { addSound } from '../../../plugin/utils.js';
 
 export const showMagnetMenu = (player) => {
    if (!canUseMagnet(player)) return;
@@ -27,11 +29,13 @@ export const showMagnetMenu = (player) => {
    form.label('               @Sleeplite 2026');
 
    addSound(player, 'vault.open_shutter');
-   
-   form.show(player).then((res) => {
+
+   form
+      .show(player)
+      .then((res) => {
          if (!res || res.canceled || res.selection !== 0) return;
          if (!player.isValid) return;
          toggleMagnet(player, !isOn);
       })
-      .catch((error) => console.error('[Magnet] UI Error:', error));
+      .catch((error) => logError('Magnet', 'UI Error', error));
 };

@@ -1,10 +1,11 @@
 import { HudVisibility } from '@minecraft/server';
 
+import { logError } from '../../../router/core/logger.js';
 import { CONFIG } from '../config.js';
-import { cloneVec3, rotateRelInto, faceTargetInto, hashString } from '../utils/math.js';
+import { cloneVec3, faceTargetInto, hashString, rotateRelInto } from '../utils/math.js';
 import { pullCamera } from './block.js';
-import { buildSequence } from './stateManager.js';
 import { framePool } from './state.js';
+import { buildSequence } from './stateManager.js';
 
 const safeCameraClear = (player) => {
    if (!player || !player.isValid) return;
@@ -12,7 +13,7 @@ const safeCameraClear = (player) => {
    try {
       player.camera.clear();
    } catch (error) {
-      console.error(`[ AFKCinematic ] camera clear failed: ${error.message}`);
+      logError('AFKCinematic', 'camera clear failed', error);
    }
 };
 
@@ -22,7 +23,7 @@ const safeSetFov = (player, fov) => {
    try {
       player.camera.setFov({ fov });
    } catch (error) {
-      console.error(`[ AFKCinematic ] set fov failed: ${error.message}`);
+      logError('AFKCinematic', 'set fov failed', error);
    }
 };
 
@@ -64,13 +65,7 @@ export function getCameraFrame(player, state) {
    const drift = Math.cos(state.waveClock * CONFIG.swaySpeed + progress * Math.PI * 2);
 
    const desiredOff = framePool.desiredOff;
-   rotateRelInto(
-      desiredOff,
-      shot.yaw,
-      shot.distance,
-      drift * shot.slide,
-      shot.height + breath * shot.bob,
-   );
+   rotateRelInto(desiredOff, shot.yaw, shot.distance, drift * shot.slide, shot.height + breath * shot.bob);
 
    const desired = framePool.desired;
    desired.x = state.anchor.x + desiredOff.x;

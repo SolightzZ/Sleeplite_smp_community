@@ -1,9 +1,12 @@
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
-import { Database } from '../core/database.js';
-import { LIMITS } from '../config.js';
-import { showMenuReport } from './main-menu.js';
-import { showForm, sure } from '../utils/ui.js';
+
 import { addSound } from '../../../plugin/utils.js';
+
+import { logError } from '../../../router/core/logger.js';
+import { LIMITS } from '../config.js';
+import { Database } from '../core/database.js';
+import { showForm, sure } from '../utils/ui.js';
+import { showMenuReport } from './main-menu.js';
 
 const showDetail = (player, item, targetName, index) => {
    addSound(player, 'item.book.page_turn');
@@ -106,7 +109,7 @@ export const adminact = (player, targetName, index) => {
          }
       });
    } catch (error) {
-      console.error('[Report] System Error (AdminAct): ' + error);
+      logError('Report', 'System Error (AdminAct)', error);
       adminmsg(player, targetName);
    }
 };
@@ -140,7 +143,7 @@ export const adminmsg = (player, targetName) => {
          adminact(player, targetName, res.selection);
       });
    } catch (error) {
-      console.error('[ Report ] System Error (AdminMsg): ' + error);
+      logError('Report', 'System Error (AdminMsg)', error);
       adminpanel(player);
    }
 };
@@ -181,7 +184,7 @@ export const adminpanel = (player) => {
          }
       });
    } catch (error) {
-      console.error('[ Report ] System Error (AdminPanel): ' + error);
+      logError('Report', 'System Error (AdminPanel)', error);
       showMenuReport(player);
    }
 };

@@ -1,8 +1,9 @@
 import { system, world } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 
-import { emoteList, setting } from './database.js';
 import { addSound } from '../../plugin/utils.js';
+import { logError } from '../../router/core/logger.js';
+import { emoteList, setting } from './database.js';
 
 function playEmote(player, animName, emoteName) {
    if (!player.isValid) return;
@@ -15,9 +16,7 @@ function playEmote(player, animName, emoteName) {
          }
       });
    } catch (error) {
-      console.error(
-         `[Emote] play command failed: ${error instanceof Error ? error.message : error}`,
-      );
+      logError('Emote', 'play command failed', error);
       return;
    }
 
@@ -36,9 +35,7 @@ function stopEmote(player, animName) {
          }
       });
    } catch (error) {
-      console.error(
-         `[Emote] stop command failed: ${error instanceof Error ? error.message : error}`,
-      );
+      logError('Emote', 'stop command failed', error);
       return;
    }
 
@@ -73,7 +70,7 @@ function openSubMenu(player, group) {
             });
          }
       })
-      .catch((error) => console.error('[Emote] OpenSubMenu UI Error:', error));
+      .catch((error) => logError('Emote', 'OpenSubMenu UI Error', error));
 }
 
 export function showMenuEmote(event) {
@@ -113,5 +110,5 @@ export function showMenuEmote(event) {
             }
          });
       })
-      .catch((error) => console.error('[Emote] ShowMain UI Error:', error));
+      .catch((error) => logError('Emote', 'ShowMain UI Error', error));
 }

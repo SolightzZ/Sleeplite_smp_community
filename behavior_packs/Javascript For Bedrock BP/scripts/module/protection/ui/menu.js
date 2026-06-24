@@ -1,18 +1,11 @@
 import { ActionFormData } from '@minecraft/server-ui';
-import { Colors, Config, halfZoneSize } from '../config.js';
-import { zoneDatabase } from '../core/database.js';
 
-import {
-   adminDeleteZone,
-   adminTeleport,
-   createZone,
-   deleteZone,
-   manageFlags,
-   manageMembers,
-   uiLockSet,
-} from '../core/protection.js';
-import { showBorder } from '../core/borders.js';
 import { addSound } from '../../../plugin/utils.js';
+import { logError } from '../../../router/core/logger.js';
+import { Config, halfZoneSize } from '../config.js';
+import { showBorder } from '../core/borders.js';
+import { zoneDatabase } from '../core/database.js';
+import { adminDeleteZone, adminTeleport, createZone, deleteZone, manageFlags, manageMembers, uiLockSet } from '../core/protection.js';
 
 // สร้างเนื้อหาเมนู
 const buildMenuBody = (player) => {
@@ -41,18 +34,8 @@ const buildMenuBody = (player) => {
       };
 
       const memberList = currentZone.members.length ? currentZone.members.join(', ') : 'ไม่มี';
-      const dimensionLabel =
-         currentZone.dimension === 'minecraft:overworld'
-            ? 'Overworld'
-            : currentZone.dimension === 'minecraft:nether'
-              ? 'Nether'
-              : 'End';
-      bodyLines.push(
-         `เจ้าของ: ${currentZone.owner}`,
-         `สมาชิก: ${memberList}`,
-         `โลก: ${dimensionLabel}`,
-         `ศูนย์กลาง: (${center.x}, ${center.y}, ${center.z})`,
-      );
+      const dimensionLabel = currentZone.dimension === 'minecraft:overworld' ? 'Overworld' : currentZone.dimension === 'minecraft:nether' ? 'Nether' : 'End';
+      bodyLines.push(`เจ้าของ: ${currentZone.owner}`, `สมาชิก: ${memberList}`, `โลก: ${dimensionLabel}`, `ศูนย์กลาง: (${center.x}, ${center.y}, ${center.z})`);
    } else {
       bodyLines.push('');
    }
@@ -161,7 +144,7 @@ export const openMenu = async (player) => {
    } catch (error) {
       addSound(player, 'block.false_permissions');
       player.sendMessage(`[x] เมนูผิดพลาด`);
-      console.error(`[ Protection ] openMenu: ${error}`);
+      logError('Protection', 'openMenu', error);
    } finally {
       uiLockSet.delete(player.name);
    }

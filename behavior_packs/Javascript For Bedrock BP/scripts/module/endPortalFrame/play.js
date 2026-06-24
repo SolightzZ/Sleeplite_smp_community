@@ -1,5 +1,7 @@
 import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
+
+import { logError } from '../../router/core/logger.js';
 import { ask, forget } from './brain.js';
 import { eat, hit, say, see, sound } from './hand.js';
 import { boss, door, key, shop, team, zone } from './rules.js';
@@ -23,7 +25,7 @@ function showiconstest(player, title, message, icon) {
       form
          .show(player)
          .then(() => {})
-         .catch((error) => console.error('[EndPortalFrame] showiconstest', error));
+         .catch((error) => logError('EndPortalFrame', 'showiconstest', error));
    });
 }
 
@@ -65,6 +67,6 @@ export const touch = (event) => {
 
       player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`);
    } catch (error) {
-      console.error('[EndPortalFrame]  touch: ', error.message);
+      logError('EndPortalFrame', 'touch', error);
    }
 };

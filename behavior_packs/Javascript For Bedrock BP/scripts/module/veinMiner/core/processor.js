@@ -1,18 +1,13 @@
-import { system, BlockPermutation } from '@minecraft/server';
-import {
-  getJobQueueLength,
-  getJob,
-  popJob,
-  getLastProcessedIndex,
-  setLastProcessedIndex,
-  incrementLastProcessedIndex
-} from "./queue.js";
+import { BlockPermutation, system } from '@minecraft/server';
+
+import { logError } from '../../../router/core/logger.js';
 import { CFG } from '../config.js';
+import { ORE_XP } from '../data/ores.js';
 import { getBlockSafe } from '../utils/block.js';
+import { applyDurabilityDamage } from '../utils/durability.js';
 import { getPlayerPickaxe } from '../utils/player.js';
 import { finalizeAndCleanupState } from './lifecycle.js';
-import { ORE_XP } from '../data/ores.js';
-import { applyDurabilityDamage } from '../utils/durability.js';
+import { getJob, getJobQueueLength, getLastProcessedIndex, incrementLastProcessedIndex, popJob, setLastProcessedIndex } from './queue.js';
 
 let _airPermutation;
 
@@ -65,8 +60,7 @@ export const processVeinJobs = () => {
          const block = getBlockSafe(job.dimension, loc);
 
          if (block && block.typeId === job.targetId) {
-            const dropAmt =
-               job.fortuneLevel > 0 ? Math.floor(Math.random() * job.fortuneLevel) + 2 : 1;
+            const dropAmt = job.fortuneLevel > 0 ? Math.floor(Math.random() * job.fortuneLevel) + 2 : 1;
             const xpChoices = ORE_XP[job.targetId] || [0];
             const xpAmt = xpChoices[Math.floor(Math.random() * xpChoices.length)];
 
@@ -77,7 +71,7 @@ export const processVeinJobs = () => {
                broken++;
                tickBlocksBroken++;
             } catch (error) {
-               console.error('[VeinMiner] Error breaking block:' + error);
+               logError('VeinMiner', 'Error breaking block', error);
             }
          }
       }
@@ -97,5 +91,3 @@ export const processVeinJobs = () => {
       jobsDone++;
    }
 };
-
-

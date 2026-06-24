@@ -28,10 +28,11 @@ const HANDLERS = {
    beforePlayerBreakBlock: [],
    afterPlayerBreakBlock: [],
    afterPlayerDimensionChange: [],
-   beforePlayerInteractBlock: [],
-   afterPlayerInteractBlock: [],
-   beforePlayerInteractEntity: [],
-   beforePlayerPlaceBlock: [],
+    beforePlayerInteractBlock: [],
+    afterPlayerInteractBlock: [],
+    afterPlayerInventoryChange: [],
+    beforePlayerInteractEntity: [],
+    beforePlayerPlaceBlock: [],
 };
 
 export const router = {
@@ -159,6 +160,12 @@ subscribe(world.afterEvents.playerInteractWithBlock, 'playerInteractWithBlock(Af
    const player = event.player;
    if (!player || !player.isValid) return;
    runEventHandlers('PlayerInteractWithBlock(After)', HANDLERS.afterPlayerInteractBlock, event);
+});
+
+subscribe(world.afterEvents.playerInventoryItemChange, 'playerInventoryItemChange', (event) => {
+   const player = event.player;
+   if (!player || !player.isValid) return;
+   runEventHandlers('PlayerInventoryItemChange', HANDLERS.afterPlayerInventoryChange, event);
 });
 
 subscribe(world.beforeEvents.playerInteractWithEntity, 'playerInteractWithEntity', (event) => {

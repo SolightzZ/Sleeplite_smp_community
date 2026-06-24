@@ -1,4 +1,5 @@
 import { BlockPermutation, EntityComponentTypes } from '@minecraft/server';
+import { logError } from '../router/core/logger.js';
 
 const CROP_MAP = {
    'minecraft:wheat': 'minecraft:wheat_seeds',
@@ -15,7 +16,7 @@ const getPerm = (id) => {
    try {
       perm = BlockPermutation.resolve(id).withState('growth', 0);
    } catch (error) {
-      console.error('[ AutoReplant ] getPerm', error.message);
+      logError('AutoReplant', 'getPerm', error);
    }
    permCache[id] = perm;
    return perm;

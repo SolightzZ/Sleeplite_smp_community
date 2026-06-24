@@ -19,4 +19,3 @@ router.on('afterPlayerLeave', onJobPlayerLeave);
 router.on('afterPlayerLeave', zoomPlayerLeave);
 router.on('afterPlayerLeave', cleanupTreeCapState);
 router.on('afterPlayerLeave', cleanupVeinMinerState);
-

@@ -1,13 +1,14 @@
 import { MessageFormData } from '@minecraft/server-ui';
+
 import { addSound } from '../../../plugin/utils';
+import { logError } from '../../../router/core/logger.js';
 
 const handleUiError = (player, source, error) => {
    if (player?.isValid) {
       player.sendMessage('§c[Report] เกิดข้อผิดพลาดในการเปิดเมนู');
    }
 
-   const message = error instanceof Error ? (error.stack ?? error.message) : String(error);
-   console.error(`[Report] ${source}: ${message}`);
+   logError('Report', source, error);
 };
 
 export const showForm = (player, form, source, onSubmit) => {
@@ -36,5 +37,5 @@ export const sure = (player, onConfirm, onCancel) => {
       }
       if (res.selection === 0) onConfirm();
       else if (onCancel) onCancel();
-   }).catch((error) => console.error('[ Report ] System Error (Sure): ' + error));
+   }).catch((error) => logError('Report', 'System Error (Sure)', error));
 };

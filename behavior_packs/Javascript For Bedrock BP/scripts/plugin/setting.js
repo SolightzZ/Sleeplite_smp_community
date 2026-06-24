@@ -1,11 +1,6 @@
-import {
-   DisplaySlotId,
-   HudElement,
-   HudVisibility,
-   ObjectiveSortOrder,
-   world,
-} from '@minecraft/server';
+import { DisplaySlotId, HudElement, HudVisibility, ObjectiveSortOrder, world } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
+import { logError } from '../router/core/logger.js';
 import { addSound } from './utils.js';
 
 const OBJECTIVE_DEATHS = 'Deaths';
@@ -61,14 +56,13 @@ const getOrCreateObjective = (id, player) => {
       return objective;
    } catch (error) {
       player.sendMessage(`§c[x] ไม่สามารถสร้าง Scoreboard '${id}' ได้`);
-      console.error('[ setting ] objective_create_error', id, error.message);
+      logError('setting', 'objective_create_error ' + id, error);
       return undefined;
    }
 };
 
 const updateServerSettings = (values, deathsObjective, deathsPlusObjective) => {
-   const [showCoordinates, showDaysPlayed, showSidebarDeaths, showBelowNameDeaths, showLocatorBar] =
-      values;
+   const [showCoordinates, showDaysPlayed, showSidebarDeaths, showBelowNameDeaths, showLocatorBar] = values;
 
    world.gameRules.showCoordinates = showCoordinates;
    world.gameRules.showDaysPlayed = showDaysPlayed;
@@ -125,7 +119,7 @@ const serverSettings = async (player) => {
       updateServerSettings(response.formValues, deathsObjective, deathsPlusObjective);
       addSound(player, 'random.orb');
    } catch (error) {
-      console.error('[ setting ] server_settings_error', error.message);
+      logError('setting', 'server_settings_error', error);
    }
 };
 
@@ -137,10 +131,7 @@ const setHudElement = (player, element, hideElement) => {
       const hudElement = HUD_ELEMENT_BY_KEY.get(element);
       if (hudElement === undefined) return;
 
-      player.onScreenDisplay.setHudVisibility(
-         hideElement ? HudVisibility.Hide : HudVisibility.Reset,
-         [hudElement],
-      );
+      player.onScreenDisplay.setHudVisibility(hideElement ? HudVisibility.Hide : HudVisibility.Reset, [hudElement]);
 
       if (hideElement) {
          player.addTag(getHudTag(element));
@@ -149,7 +140,7 @@ const setHudElement = (player, element, hideElement) => {
 
       player.removeTag(getHudTag(element));
    } catch (error) {
-      console.error('[ setting ] hud_command_error', element, error.message);
+      logError('setting', 'hud_command_error ' + element, error);
       player.sendMessage(`§c[x] ไม่สามารถปรับ HUD ${element} ได้`);
    }
 };
@@ -171,15 +162,14 @@ const hudSettings = async (player) => {
          return;
       }
 
-      const [hideItemText, hideStatusEffects, hideTooltips, hideTouchControls] =
-         response.formValues;
+      const [hideItemText, hideStatusEffects, hideTooltips, hideTouchControls] = response.formValues;
       setHudElement(player, HUD_ITEM_TEXT, hideItemText);
       setHudElement(player, HUD_STATUS_EFFECTS, hideStatusEffects);
       setHudElement(player, HUD_TOOLTIPS, hideTooltips);
       setHudElement(player, HUD_TOUCH_CONTROLS, hideTouchControls);
       addSound(player, 'random.orb');
    } catch (error) {
-      console.error('[ setting ] hud_settings_error', error.message);
+      logError('setting', 'hud_settings_error', error);
    }
 };
 

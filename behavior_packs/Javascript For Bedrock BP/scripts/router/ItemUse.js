@@ -1,10 +1,10 @@
+import { openBanMenu } from '../module/banPlayers/ui/menu.js';
 import { showCamMenu } from '../module/cam/ui.js';
 import { showMenuEmote } from '../module/emotes/functions.js';
 import { FullBrightUseItem } from '../module/fullBright/events.js';
 import { onJobItemUse } from '../module/jobs/Job.js';
 import { onMagnetUse } from '../module/magNet/core/events.js';
 import { chatRankItemUse } from '../module/nametag/events.js';
-import { openBanMenu } from '../module/banPlayers/ui/menu.js';
 import { onItemUse } from '../module/protection/core/events.js';
 import { showMenuReport } from '../module/report/ui/main-menu.js';
 import { RewarditemUse } from '../module/rewards/system.js';

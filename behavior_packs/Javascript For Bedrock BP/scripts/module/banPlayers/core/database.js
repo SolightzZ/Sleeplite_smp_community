@@ -1,4 +1,5 @@
 import { world } from '@minecraft/server';
+import { logError } from '../../../router/core/logger.js';
 import { Config } from '../config.js';
 import { BanState } from './state.js';
 
@@ -27,7 +28,7 @@ export class BanDatabase {
          BanState.rebuildCache(cleanData);
          return cleanData;
       } catch (error) {
-         console.error('[BanDB] Load error:', error.name, error.message);
+         logError('BanDB', 'Load error', error);
          return {};
       }
    }
@@ -37,7 +38,7 @@ export class BanDatabase {
          world.setDynamicProperty(Config.dbKey, JSON.stringify(data));
          BanState.markDirty();
       } catch (error) {
-         console.error('[BanDB] Save error:', error.name, error.message);
+         logError('BanDB', 'Save error', error);
       }
    }
 
@@ -56,7 +57,7 @@ export class BanDatabase {
 
    static remove(name) {
       const data = this.load();
-      
+
       if (!data[name]) return false;
       delete data[name];
       this.save(data);

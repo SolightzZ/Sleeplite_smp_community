@@ -1,12 +1,14 @@
 import { world } from '@minecraft/server';
-import { Registry } from '../../../router/core/registry.js';
+
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
-import { Colors, Config, halfZoneSize } from '../config.js';
-import { buildZone, isZoneOverlap, validateZoneCreate } from '../utils/validation.js';
-import { consumeBlock, isFormValid } from '../utils/helpers.js';
 import { addSound } from '../../../plugin/utils.js';
-import { zoneDatabase } from './database.js';
+import { logError } from '../../../router/core/logger.js';
+import { Registry } from '../../../router/core/registry.js';
+import { Colors, Config, halfZoneSize } from '../config.js';
+import { consumeBlock, isFormValid } from '../utils/helpers.js';
+import { buildZone, isZoneOverlap, validateZoneCreate } from '../utils/validation.js';
 import { clearBorderVisuals } from './borders.js';
+import { zoneDatabase } from './database.js';
 
 export const uiLockSet = new Set();
 
@@ -58,9 +60,7 @@ export const createZone = async (player) => {
 
       const confirmForm = new ActionFormData()
          .title('สร้างโพรเทค')
-         .body(
-            `คุณต้องการสร้างโพรเทคขนาด ${Config.ZoneSize}x${Config.ZoneSize} ที่นี่หรือไม่?\nต้องใช้ Diamond Block 1 บล็อก`,
-         )
+         .body(`คุณต้องการสร้างโพรเทคขนาด ${Config.ZoneSize}x${Config.ZoneSize} ที่นี่หรือไม่?\nต้องใช้ Diamond Block 1 บล็อก`)
          .button('ตกลง', 'textures/ui/check')
          .button('ยกเลิก', 'textures/ui/cancel');
 
@@ -76,12 +76,10 @@ export const createZone = async (player) => {
       zoneDatabase.zones[player.name] = newZone;
 
       addSound(player, 'random.levelup');
-      player.sendMessage(
-         `${Colors.Success}[/] สร้างโพรเทค ${Config.ZoneSize}x${Config.ZoneSize} สำเร็จ`,
-      );
+      player.sendMessage(`${Colors.Success}[/] สร้างโพรเทค ${Config.ZoneSize}x${Config.ZoneSize} สำเร็จ`);
    } catch (error) {
       player.sendMessage(`[x] ไม่สามารถสร้างโพรเทคได้`);
-      console.error(`[ Protection ] createZone: ${error}`);
+      logError('Protection', 'createZone', error);
    }
 };
 
@@ -101,7 +99,7 @@ export const deleteZone = async (player) => {
       player.sendMessage(`${Colors.Success}[/] ลบโพรเทคเรียบร้อย`);
    } catch (error) {
       player.sendMessage(`[x] ไม่สามารถลบโพรเทคได้`);
-      console.error(`[ Protection ] deleteZone: ${error}`);
+      logError('Protection', 'deleteZone', error);
    }
 };
 
@@ -133,11 +131,7 @@ export const manageMembers = async (player) => {
       const actionIndex = response.formValues[0];
       const playerIndex = response.formValues[1];
 
-      if (
-         typeof playerIndex !== 'number' ||
-         playerIndex < 0 ||
-         playerIndex >= otherPlayerNames.length
-      ) {
+      if (typeof playerIndex !== 'number' || playerIndex < 0 || playerIndex >= otherPlayerNames.length) {
          return player.sendMessage(`[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
       }
 
@@ -161,7 +155,7 @@ export const manageMembers = async (player) => {
       }
    } catch (error) {
       player.sendMessage(`[x] ไม่สามารถจัดการสมาชิกได้`);
-      console.error(`[ Protection ] manageMembers: ${error}`);
+      logError('Protection', 'manageMembers', error);
    }
 };
 
@@ -194,15 +188,14 @@ export const manageFlags = async (player) => {
       player.sendMessage(`${Colors.Success}[/] ตั้งค่าสิทธิ์โพรเทคเรียบร้อย`);
    } catch (error) {
       player.sendMessage(`[x] ไม่สามารถตั้งค่าสิทธิ์ได้`);
-      console.error(`[ Protection ] manageFlags: ${error}`);
+      logError('Protection', 'manageFlags', error);
    }
 };
 
 // เครื่องมือแอดมิน
 export const adminDeleteZone = async (player) => {
    try {
-      if (!player.hasTag(Config.AdminTag))
-         return player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
+      if (!player.hasTag(Config.AdminTag)) return player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
 
       const owners = Object.keys(zoneDatabase.zones);
       if (owners.length === 0) return player.sendMessage(`[x] ยังไม่มีโพรเทคในระบบ`);
@@ -215,11 +208,7 @@ export const adminDeleteZone = async (player) => {
       if (!isFormValid(player, response)) return;
 
       const selectedIndex = response.formValues[0];
-      if (
-         typeof selectedIndex !== 'number' ||
-         selectedIndex < 0 ||
-         selectedIndex >= owners.length
-      ) {
+      if (typeof selectedIndex !== 'number' || selectedIndex < 0 || selectedIndex >= owners.length) {
          return player.sendMessage(`[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
       }
 
@@ -239,15 +228,14 @@ export const adminDeleteZone = async (player) => {
       }
    } catch (error) {
       player.sendMessage(`[x] ไม่สามารถลบโพรเทคได้ (แอดมิน)`);
-      console.error(`[ Protection ] adminDeleteZone: ${error}`);
+      logError('Protection', 'adminDeleteZone', error);
    }
 };
 
 // เครื่องมือแอดมิน
 export const adminTeleport = async (player) => {
    try {
-      if (!player.hasTag(Config.AdminTag))
-         return player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
+      if (!player.hasTag(Config.AdminTag)) return player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
 
       const owners = Object.keys(zoneDatabase.zones);
       if (owners.length === 0) return player.sendMessage(`[x] ยังไม่มีโพรเทคในระบบ`);
@@ -260,11 +248,7 @@ export const adminTeleport = async (player) => {
       if (!isFormValid(player, response)) return;
 
       const selectedIndex = response.formValues[0];
-      if (
-         typeof selectedIndex !== 'number' ||
-         selectedIndex < 0 ||
-         selectedIndex >= owners.length
-      ) {
+      if (typeof selectedIndex !== 'number' || selectedIndex < 0 || selectedIndex >= owners.length) {
          return player.sendMessage(`[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
       }
 
@@ -287,6 +271,6 @@ export const adminTeleport = async (player) => {
       player.sendMessage(`${Colors.Success}[/] เทเลพอร์ตไปยังโพรเทคของ ${owner}`);
    } catch (error) {
       player.sendMessage(`[x] ไม่สามารถเทเลพอร์ตได้`);
-      console.error(`[ Protection ] adminTeleport: ${error}`);
+      logError('Protection', 'adminTeleport', error);
    }
 };
