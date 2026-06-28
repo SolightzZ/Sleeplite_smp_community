@@ -1,0 +1,47 @@
+{
+   "format_version": 2,
+   "header": {
+      "name": "Economy (Addon)",
+      "description": "Behavior Pack Sleeplite SMP 2026",
+      "uuid": "94d06ed5-b343-466b-8d44-8622d040741a",
+      "version": [1, 0, 0],
+      "min_engine_version": [1, 26, 10]
+   },
+
+   "modules": [
+      {
+         "type": "data",
+         "uuid": "0a7ff120-a579-4cfa-a023-37c6a2939260",
+         "version": [1, 0, 2]
+      },
+      {
+         "type": "script",
+         "language": "javascript",
+         "uuid": "3d36d4be-e1d6-4f4e-923b-7add7d5f83fb",
+         "entry": "scripts/main.js",
+         "version": [1, 0, 1]
+      }
+   ],
+
+   "dependencies": [
+      {
+         "module_name": "@minecraft/server",
+         "version": "2.9.0-beta"
+      },
+      {
+         "module_name": "@minecraft/server-ui",
+         "version": "2.2.0-beta"
+      },
+      {
+         "module_name": "@minecraft/server-admin",
+         "version": "1.0.0-beta"
+      }
+   ],
+
+   "metadata": {
+      "authors": ["SleepliteSMP"],
+      "license": "MIT",
+      "url": "https://discord.gg/gtqfbmvTJK",
+      "product_type": "addon"
+   }
+}

@@ -193,18 +193,14 @@ class XVisuals {
          }
 
          try {
-            let health = this.healthComponents.get(playerId);
-            if (!health) {
-               health = player.getComponent('minecraft:health');
-               if (!health) continue;
-               this.healthComponents.set(playerId, health);
-            }
+            const health = player.getComponent('minecraft:health');
+            if (!health) continue;
             const hp = (health.currentValue / health.effectiveMax) * 100;
             this.updateLowHealth(player, hp);
             if (hp <= 30 && !this.heartbeatingPlayers.has(playerId)) this.heartbeatingPlayers.set(playerId, { cooldown: 0 });
             else if (hp > 30 && this.heartbeatingPlayers.has(playerId)) this.heartbeatingPlayers.delete(playerId);
-         } catch (error) {
-            this.logError('[xVisuals] health_monitor', error);
+         } catch {
+            this.cleanupPlayer(playerId);
          }
       }
    }
