@@ -1,7 +1,7 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
 
-import { logError } from '../../router/core/logger.js';
-import { Registry } from '../../router/core/registry.js';
+import { logError } from '../../events/logger.js';
+import { Registry } from '../../events/registry.js';
 import { config } from './constants.js';
 import { load, reset } from './database.js';
 import { menu } from './logic.js';

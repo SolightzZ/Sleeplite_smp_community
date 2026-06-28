@@ -1,7 +1,7 @@
 import { MessageFormData } from '@minecraft/server-ui';
 
-import { addSound } from '../../../plugin/utils';
-import { logError } from '../../../router/core/logger.js';
+import { addSound } from '../../../plugin/utils.js';
+import { logError } from '../../../events/logger.js';
 
 const handleUiError = (player, source, error) => {
    if (player?.isValid) {

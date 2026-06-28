@@ -7,7 +7,7 @@ import { zoomPlayerLeave } from '../module/zoom/core.js';
 import { onPlayerLeave } from '../module/protection/core/events.js';
 import { cleanupPlayerState as cleanupTreeCapState } from '../module/treeCapitator/core/state.js';
 import { cleanupPlayerState as cleanupVeinMinerState } from '../module/veinMiner/core/queue.js';
-import { router } from './core/index.js';
+import { router } from '../events/index.js';
 
 router.on('beforePlayerLeave', onLeaveFullBright);
 router.on('beforePlayerLeave', onPlayerLeave);

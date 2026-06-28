@@ -1,7 +1,7 @@
 import { helpmain } from '../plugin/help/help.js';
 import { RewardchatSend } from '../module/rewards/system.js';
 import { onChat } from '../module/protection/core/events.js';
-import { router } from './core/index.js';
+import { router } from '../events/index.js';
 
 router.on('beforeChatSend', helpmain);
 router.on('beforeChatSend', RewardchatSend);

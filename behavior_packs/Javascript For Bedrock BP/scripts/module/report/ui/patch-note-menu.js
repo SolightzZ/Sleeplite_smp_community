@@ -1,7 +1,7 @@
 import { ActionFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../../plugin/utils.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { patchNotesData } from '../data/patch-notes.js';
 import { showForm } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';

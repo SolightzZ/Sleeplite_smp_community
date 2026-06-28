@@ -1,6 +1,6 @@
 import { BlockPermutation, EntityComponentTypes, EquipmentSlot, world } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { BLOCK_AIR, BLOCK_LIGHT, BLOCK_LIGHT_15, FLASHLIGHT_ITEM, RAYCAST_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, WORLD_Y_MAX, WORLD_Y_MIN } from '../config.js';
 import { playerLastPos, playerLights } from './state.js';
 

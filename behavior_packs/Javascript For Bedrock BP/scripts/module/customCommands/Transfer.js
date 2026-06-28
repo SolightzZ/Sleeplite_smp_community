@@ -1,7 +1,7 @@
 import { system } from '@minecraft/server';
 import { transferPlayer } from '@minecraft/server-admin';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { MESSAGES, SERVER_LIST } from './Source.js';
 
 export function showServerMenu(player) {

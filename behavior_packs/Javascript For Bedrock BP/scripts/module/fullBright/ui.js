@@ -2,7 +2,7 @@ import { ActionFormData } from '@minecraft/server-ui';
 
 import { hasBright, toggleBright } from './state.js';
 import { addSound } from '../../plugin/utils.js';
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 
 export function showMenu(player) {
    if (!player || !player.isValid) return;

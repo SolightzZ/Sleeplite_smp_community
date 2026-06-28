@@ -1,4 +1,4 @@
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { ITEM_ENTITY, MAX_ITEM_RADIUS } from '../config.js';
 
 export const findNearbyItems = (dimension, location) => {

@@ -10,7 +10,7 @@ import { showMenuReport } from '../module/report/ui/main-menu.js';
 import { RewarditemUse } from '../module/rewards/system.js';
 import { setting_main } from '../plugin/setting.js';
 import { handleSpongeAbsorption } from '../plugin/SpongeAbsorption.js';
-import { router } from './core/index.js';
+import { router } from '../events/index.js';
 
 const itemHandlers = [
    { prefix: 'addon:magnet_', run: onMagnetUse },

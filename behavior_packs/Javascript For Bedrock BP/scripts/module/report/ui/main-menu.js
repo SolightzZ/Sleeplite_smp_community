@@ -1,7 +1,7 @@
 import { ActionFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../../plugin/utils.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { isAdmin } from '../utils/permission.js';
 import { showForm } from '../utils/ui.js';
 import { adminpanel } from './admin-panel.js';

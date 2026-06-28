@@ -1,11 +1,11 @@
 import { HudVisibility } from '@minecraft/server';
-import { Registry } from '../../../router/core/registry.js';
+import { Registry } from '../../../events/registry.js';
 import { CONFIG } from '../config.js';
 import { getCameraFrame } from './afk.js';
 import { tickBlockCache } from './block.js';
 import { playerStates } from './state.js';
 import { hasMoved, refreshBaseline } from './stateManager.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 function getPlayerById(playerId) {
    try {
       // ค้นหาผู้เล่นด้วย ID แบบ O(1) จากระบบลงทะเบียน เพื่อหลีกเลี่ยงการสแกนหาแบบ O(N)

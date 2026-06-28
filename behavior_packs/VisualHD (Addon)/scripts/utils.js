@@ -1,9 +1,10 @@
-
 export const MSG = { PREFIX: 'xVis', IMPACT_COUNT: 34, FLAME_COUNT: 8, DROWN_COUNT: 17 };
 
 export const IMPACT_MSGS = Array.from({ length: MSG.IMPACT_COUNT }, (_, i) => (i >= 1 && i <= 3 ? `xVisImpactFixed${i}` : `xVisImpact${i}`));
 export const FLAME_MSGS = Array.from({ length: MSG.FLAME_COUNT }, (_, i) => `xVisFlameImpact${i}`);
 export const DROWN_MSGS = Array.from({ length: MSG.DROWN_COUNT }, (_, i) => (i === 1 ? `xVisDrowningFixed${i}` : `xVisDrowning${i}`));
+
+const EXPLOSION_CAUSES = ['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall'];
 
 export const DAMAGE_CAUSE = {
    IMPACT: new Set([
@@ -22,7 +23,7 @@ export const DAMAGE_CAUSE = {
       'sonicBoom',
       'flyIntoWall',
    ]),
-   EXPLOSION: new Set(['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall']),
+   EXPLOSION: new Set(EXPLOSION_CAUSES),
    FLAME: new Set(['fire', 'fireTick', 'fireworks', 'lava', 'lightning', 'magma', 'campfire', 'soulCampfire']),
 };
 
@@ -58,15 +59,21 @@ export const EXP_SOUNDS = [
    { id: 'x.visuals.ear_ring.1', volume: 0.25 },
 ];
 
-export const getExpTier = (damage) => (damage < 4 ? -1 : damage < 9 ? 0 : damage < 14 ? 1 : 2);
+const EXP_TIER_LOW = 4;
+const EXP_TIER_MED = 9;
+const EXP_TIER_HIGH = 14;
 
-export const MAX_HURT = 64;
-export const HURT_MASK = 63;
-export const MAX_EFF = 32;
-export const EFF_MASK = 31;
+const DMG_SEV_WEAK = 7;
+const DMG_SEV_HARD = 14;
+
+export const getExpTier = (damage) => (damage < EXP_TIER_LOW ? -1 : damage < EXP_TIER_MED ? 0 : damage < EXP_TIER_HIGH ? 1 : 2);
+
+export const MAX_HURT = 128;
+export const HURT_MASK = 127;
+export const MAX_EFF = 64;
+export const EFF_MASK = 63;
 
 export const randElem = (arr) => arr[(Math.random() * arr.length) | 0];
-
 
 export const buildHurtEffect = (damage, cause) => {
    const { IMPACT, EXPLOSION, FLAME } = DAMAGE_CAUSE;
@@ -76,7 +83,7 @@ export const buildHurtEffect = (damage, cause) => {
       sound = null,
       blood = null;
 
-   parts[partIndex++] = SEV_MSGS[damage < 7 ? 0 : damage < 14 ? 1 : 2];
+   parts[partIndex++] = SEV_MSGS[damage < DMG_SEV_WEAK ? 0 : damage < DMG_SEV_HARD ? 1 : 2];
 
    if (IMPACT.has(cause)) {
       blood = randElem(BLOOD_PARTICLES);
@@ -100,5 +107,5 @@ export const buildHurtEffect = (damage, cause) => {
 
    parts.length = partIndex;
 
-   return { message: parts.join('\n'), sound, bloodParticle: blood };
+   return { message: parts.join(' '), sound, bloodParticle: blood };
 };

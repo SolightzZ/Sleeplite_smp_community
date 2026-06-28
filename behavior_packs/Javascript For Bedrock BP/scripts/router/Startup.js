@@ -12,8 +12,8 @@ import { loadSpawnProtec } from '../module/spawnProtection/core/database.js';
 import { ZoomCommand } from '../module/zoom/Command.js';
 import { RegisterDurability, RegisterHelp, RegisterRule, RegisterVote, RegisterWebsites } from '../plugin/help/help.js';
 import { RegisterNetherCalc } from '../plugin/nether.js';
-import { logError } from './core/logger.js';
-import { runEventHandlers } from './core/utils.js';
+import { logError } from '../events/logger.js';
+import { runEventHandlers } from '../events/utils.js';
 import { RegisterSpawnProtection } from '../module/spawnProtection/command.js';
 
 // โหลดข้อมูลโซนและแบนตอนเริ่มเกม

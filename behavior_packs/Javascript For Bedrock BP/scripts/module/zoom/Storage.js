@@ -1,4 +1,4 @@
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { CONFIG_KEY, DEFAULT_CONFIG } from './Config.js';
 
 const configCache = new Map();

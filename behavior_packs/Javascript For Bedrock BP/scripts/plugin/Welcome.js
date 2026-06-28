@@ -1,5 +1,5 @@
 import { system, world } from '@minecraft/server';
-import { logError } from '../router/core/logger.js';
+import { logError } from '../events/logger.js';
 
 const OBJECTIVE = 'Deaths';
 const HEAD = '§e[+] Welcome to Sleeplite SMP Community';

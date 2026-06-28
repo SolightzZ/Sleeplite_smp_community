@@ -1,4 +1,4 @@
-import { Registry } from '../../../router/core/registry.js';
+import { Registry } from '../../../events/registry.js';
 import {
    PREFIX_RANK,
    PREFIX_ACTIVE,

@@ -1,6 +1,6 @@
 import { system, world } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { Config } from '../config.js';
 
 // ค่าคงที่

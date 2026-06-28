@@ -1,7 +1,7 @@
 import { ActionFormData, MessageFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../plugin/utils.js';
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { list } from './constants.js';
 import { load, save } from './database.js';
 import { give, name, time } from './functions.js';

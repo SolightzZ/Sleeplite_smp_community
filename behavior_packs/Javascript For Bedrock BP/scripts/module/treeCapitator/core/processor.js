@@ -1,6 +1,6 @@
 import { BlockPermutation, ItemStack, system } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { CFG } from '../config.js';
 import { applyDurabilityDamage } from '../utils/durability.js';
 import { getPlayerAxe } from '../utils/inventory.js';

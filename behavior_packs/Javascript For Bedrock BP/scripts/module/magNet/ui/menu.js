@@ -1,7 +1,7 @@
 import { ActionFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../../plugin/utils.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { MagnetConfig, MagnetIcons, MagnetText } from '../config.js';
 import { countMagnetUsers, hasMagnetUser } from '../core/state.js';
 import { canUseMagnet, toggleMagnet } from '../core/toggle.js';

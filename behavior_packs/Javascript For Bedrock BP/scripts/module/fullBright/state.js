@@ -1,7 +1,7 @@
 import { system } from '@minecraft/server';
 
-import { Registry } from '../../router/core/registry.js';
-import { logError } from '../../router/core/logger.js';
+import { Registry } from '../../events/registry.js';
+import { logError } from '../../events/logger.js';
 
 const tag = 'bright';
 const effect = 'night_vision';

@@ -1,6 +1,6 @@
 import { BlockPermutation, system } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { CFG } from '../config.js';
 import { ORE_XP } from '../data/ores.js';
 import { getBlockSafe } from '../utils/block.js';

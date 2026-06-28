@@ -1,5 +1,5 @@
 import { system } from '@minecraft/server';
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { Colors } from './database.js';
 import { getBiomeIdAtLocation, getBiomeName, getDimensionName } from './functions.js';
 

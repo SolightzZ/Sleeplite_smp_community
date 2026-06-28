@@ -1,5 +1,5 @@
 import { BlockPermutation, EntityComponentTypes } from '@minecraft/server';
-import { logError } from '../router/core/logger.js';
+import { logError } from '../events/logger.js';
 
 const CROP_MAP = {
    'minecraft:wheat': 'minecraft:wheat_seeds',

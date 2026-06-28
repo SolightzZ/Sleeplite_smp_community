@@ -1,6 +1,6 @@
 import { HudVisibility } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { CONFIG } from '../config.js';
 import { cloneVec3, faceTargetInto, hashString, rotateRelInto } from '../utils/math.js';
 import { pullCamera } from './block.js';

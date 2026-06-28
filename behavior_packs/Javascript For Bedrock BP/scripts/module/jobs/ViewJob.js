@@ -12,7 +12,7 @@ import {
    totalDiamond,
 } from './Job.js';
 import { showMainMenu } from './Menu.js';
-import { Registry } from '../../router/core/registry.js';
+import { Registry } from '../../events/registry.js';
 import { addSound } from '../../plugin/utils.js';
 
 const startTimer = (riderId, jobId_, savedStartTick) => {

@@ -1,5 +1,5 @@
-import { logError } from '../../../router/core/logger.js';
-import { Registry } from '../../../router/core/registry.js';
+import { logError } from '../../../events/logger.js';
+import { Registry } from '../../../events/registry.js';
 import { cloneVec3 } from '../utils/math.js';
 import { startAfk, stopAfk } from './afk.js';
 import { cinematicScheduler } from './scheduler.js';

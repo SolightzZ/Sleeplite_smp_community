@@ -1,6 +1,6 @@
 import { EntityComponentTypes, system } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { SEAT_ENTITY_ID } from '../config.js';
 
 export const activeSeats = new Map();

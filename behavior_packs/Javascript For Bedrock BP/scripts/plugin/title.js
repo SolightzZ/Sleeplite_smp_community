@@ -1,4 +1,4 @@
-import { Registry } from '../router/core/registry.js';
+import { Registry } from '../events/registry.js';
 
 const BOSS_IDS = new Set(['minecraft:ender_dragon', 'minecraft:wither']);
 const BOSS_TAG = 'boss';

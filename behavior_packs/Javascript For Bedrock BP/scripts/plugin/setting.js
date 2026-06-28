@@ -1,6 +1,6 @@
 import { DisplaySlotId, HudElement, HudVisibility, ObjectiveSortOrder, world } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
-import { logError } from '../router/core/logger.js';
+import { logError } from '../events/logger.js';
 import { addSound } from './utils.js';
 
 const OBJECTIVE_DEATHS = 'Deaths';

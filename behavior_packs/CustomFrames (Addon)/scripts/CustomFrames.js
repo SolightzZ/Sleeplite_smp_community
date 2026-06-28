@@ -2,233 +2,235 @@ import { world, system, EquipmentSlot } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 
 const TEXTURE_OPTIONS = [
-    { name: 'Default', index: 0, icon: 'textures/blocks/default' },
-    { name: 'ShowCase2026', index: 1, icon: 'textures/blocks/custom_paintings/1' },
-    { name: 'UHCRUN2026', index: 2, icon: 'textures/blocks/custom_paintings/2' },
-    { name: 'SleepliteJr(1)', index: 3, icon: 'textures/blocks/custom_paintings/3' },
-    { name: 'SleepliteJr(2)', index: 4, icon: 'textures/blocks/custom_paintings/4' },
-    { name: 'SleepliteJr(3)', index: 5, icon: 'textures/blocks/custom_paintings/5' },
-    { name: 'SleepliteJr(4)', index: 6, icon: 'textures/blocks/custom_paintings/6' },
-    { name: 'SleepliteJr(7)', index: 7, icon: 'textures/blocks/custom_paintings/7' },
-    { name: 'SleepliteJr(8)', index: 8, icon: 'textures/blocks/custom_paintings/8' },
-    { name: 'SleepliteJr(9)', index: 9, icon: 'textures/blocks/custom_paintings/9' },
-    { name: 'SleepliteJr(10)', index: 10, icon: 'textures/blocks/custom_paintings/10' },
-    { name: 'Sleeplite Junior', index: 11, icon: 'textures/blocks/custom_paintings/sljr' },
-    { name: 'Sleeplite', index: 12, icon: 'textures/blocks/custom_paintings/sl' },
+   { name: 'Default', index: 0, icon: 'textures/blocks/default' },
+   { name: 'ShowCase2026', index: 1, icon: 'textures/blocks/custom_paintings/1' },
+   { name: 'UHCRUN2026', index: 2, icon: 'textures/blocks/custom_paintings/2' },
+   { name: 'SleepliteJr(1)', index: 3, icon: 'textures/blocks/custom_paintings/3' },
+   { name: 'SleepliteJr(2)', index: 4, icon: 'textures/blocks/custom_paintings/4' },
+   { name: 'SleepliteJr(3)', index: 5, icon: 'textures/blocks/custom_paintings/5' },
+   { name: 'SleepliteJr(4)', index: 6, icon: 'textures/blocks/custom_paintings/6' },
+   { name: 'SleepliteJr(7)', index: 7, icon: 'textures/blocks/custom_paintings/7' },
+   { name: 'SleepliteJr(8)', index: 8, icon: 'textures/blocks/custom_paintings/8' },
+   { name: 'SleepliteJr(9)', index: 9, icon: 'textures/blocks/custom_paintings/9' },
+   { name: 'SleepliteJr(10)', index: 10, icon: 'textures/blocks/custom_paintings/10' },
+   { name: 'Sleeplite Junior', index: 11, icon: 'textures/blocks/custom_paintings/sljr' },
+   { name: 'Sleeplite', index: 12, icon: 'textures/blocks/custom_paintings/sl' },
 ];
 
-const TEXTURE_OPTIONS_CACHE = TEXTURE_OPTIONS.map(opt => ({
-    ...opt,
-    nameLower: opt.name.toLowerCase()
+const TEXTURE_OPTIONS_CACHE = TEXTURE_OPTIONS.map((opt) => ({
+   ...opt,
+   nameLower: opt.name.toLowerCase(),
 }));
 
 const SIZES = [
-    { name: '1x1', w: 1, h: 1 },
-    { name: '1x2', w: 1, h: 2 },
-    { name: '2x1', w: 2, h: 1 },
-    { name: '2x2', w: 2, h: 2 },
+   { name: '1x1', w: 1, h: 1 },
+   { name: '1x2', w: 1, h: 2 },
+   { name: '2x1', w: 2, h: 1 },
+   { name: '2x2', w: 2, h: 2 },
 ];
 
 world.beforeEvents.worldInitialize.subscribe((initEvent) => {
-    initEvent.blockComponentRegistry.registerCustomComponent('custom:frame_interact', {
-        onPlayerInteract: (e) => {
-            const player = e.player;
-            const block = e.block;
+   initEvent.blockComponentRegistry.registerCustomComponent('custom:frame_interact', {
+      onPlayerInteract: (e) => {
+         const player = e.player;
+         const block = e.block;
 
-            if (!player?.isValid) return;
+         if (!player?.isValid) return;
 
-            const equipment = player.getComponent('equippable');
-            const mainHand = equipment?.getEquipment(EquipmentSlot.Mainhand);
+         const equipment = player.getComponent('equippable');
+         const mainHand = equipment?.getEquipment(EquipmentSlot.Mainhand);
 
-            if (mainHand?.typeId === 'custom:brush') {
-                system.run(() => showMainMenu(player, block));
-            } else if (mainHand?.typeId === 'minecraft:brush') {
-                system.run(() => {
-                    if (player.isValid) {
-                        player.sendMessage('§cคุณต้องใช้ Custom Brush (ไม่ใช่ Brush ปกติ) ในการปรับแต่งเฟรม');
-                    }
-                });
-            }
-        },
-    });
+         if (mainHand?.typeId === 'custom:brush') {
+            system.run(() => showMainMenu(player, block));
+         } else if (mainHand?.typeId === 'minecraft:brush') {
+            system.run(() => {
+               if (player.isValid) {
+                  player.sendMessage('§cคุณต้องใช้ Custom Brush (ไม่ใช่ Brush ปกติ) ในการปรับแต่งเฟรม');
+               }
+            });
+         }
+      },
+   });
 });
 
 function showMainMenu(player, block) {
-    new ActionFormData()
-        .title('Frame Settings')
-        .body('Choose what to customize:')
-        .button('Change Size')
-        .button('Change Texture')
-        .show(player)
-        .then((response) => {
-            if (!player?.isValid) return;
-            if (response.canceled) return;
-            if (response.selection === 0) showSizeForm(player, block);
-            else if (response.selection === 1) showTextureForm(player, block);
-        })
-        .catch((err) => {
-            console.error('[CustomFrames] showMainMenu error: ' + err);
-        });
+   new ActionFormData()
+      .title('Frame Settings')
+      .body('Choose what to customize:')
+      .button('Change Size')
+      .button('Change Texture')
+      .show(player)
+      .then((response) => {
+         if (!player?.isValid) return;
+         if (response.canceled) return;
+         if (response.selection === 0) showSizeForm(player, block);
+         else if (response.selection === 1) showTextureForm(player, block);
+      })
+      .catch((err) => {
+         console.error('[CustomFrames] showMainMenu error: ' + err);
+      });
 }
 
 function showSizeForm(player, block) {
-    const form = new ActionFormData().title('Select Size').body('Choose a preset or enter a custom size.').button('Custom Size Input');
+   const form = new ActionFormData().title('Select Size').body('Choose a preset or enter a custom size.').button('Custom Size Input');
 
-    SIZES.forEach((size) => form.button(size.name));
+   SIZES.forEach((size) => form.button(size.name));
 
-    form.show(player)
-        .then((response) => {
-            if (!player?.isValid) return;
-            if (response.canceled) return;
-            if (response.selection === 0) {
-                showCustomSizeForm(player, block);
-            } else {
-                const size = SIZES[response.selection - 1];
-                if (size) {
-                    applySize(block, size.w, size.h, player);
-                }
+   form
+      .show(player)
+      .then((response) => {
+         if (!player?.isValid) return;
+         if (response.canceled) return;
+         if (response.selection === 0) {
+            showCustomSizeForm(player, block);
+         } else {
+            const size = SIZES[response.selection - 1];
+            if (size) {
+               applySize(block, size.w, size.h, player);
             }
-        })
-        .catch((err) => {
-            console.error('[CustomFrames] showSizeForm error: ' + err);
-        });
+         }
+      })
+      .catch((err) => {
+         console.error('[CustomFrames] showSizeForm error: ' + err);
+      });
 }
 
 function showCustomSizeForm(player, block) {
-    try {
-        if (block.typeId !== 'custom:paintings') {
-            if (player?.isValid) player.sendMessage('§cเกิดข้อผิดพลาด: บล็อกเฟรมถูกทำลายหรือถูกเปลี่ยนเป็นอย่างอื่นแล้ว');
-            return;
-        }
+   try {
+      if (block.typeId !== 'custom:paintings') {
+         if (player?.isValid) player.sendMessage('§cเกิดข้อผิดพลาด: บล็อกเฟรมถูกทำลายหรือถูกเปลี่ยนเป็นอย่างอื่นแล้ว');
+         return;
+      }
 
-        const perm = block.permutation;
-        const currentW = perm.getState('custom:width') ?? 1;
-        const currentH = perm.getState('custom:height') ?? 1;
+      const perm = block.permutation;
+      const currentW = perm.getState('custom:width') ?? 1;
+      const currentH = perm.getState('custom:height') ?? 1;
 
-        new ModalFormData()
-            .title('Custom Size Input')
-            .slider('Width (Blocks)', 1, 8, 1, currentW)
-            .slider('Height (Blocks)', 1, 8, 1, currentH)
-            .show(player)
-            .then((response) => {
-                if (!player?.isValid) return;
-                if (response.canceled) return;
-                const [width, height] = response.formValues;
-                applySize(block, Math.floor(width), Math.floor(height), player);
-            })
-            .catch((err) => {
-                console.error('[CustomFrames] showCustomSizeForm submit error: ' + err);
-            });
-    } catch (error) {
-        if (player?.isValid) player.sendMessage(`§cเกิดข้อผิดพลาดขณะเปิดเครื่องมือกำหนดขนาด: ${error}`);
-        console.error('[CustomFrames] showCustomSizeForm error: ' + error);
-    }
+      new ModalFormData()
+         .title('Custom Size Input')
+         .slider('Width (Blocks)', 1, 8, 1, currentW)
+         .slider('Height (Blocks)', 1, 8, 1, currentH)
+         .show(player)
+         .then((response) => {
+            if (!player?.isValid) return;
+            if (response.canceled) return;
+            const [width, height] = response.formValues;
+            applySize(block, Math.floor(width), Math.floor(height), player);
+         })
+         .catch((err) => {
+            console.error('[CustomFrames] showCustomSizeForm submit error: ' + err);
+         });
+   } catch (error) {
+      if (player?.isValid) player.sendMessage(`§cเกิดข้อผิดพลาดขณะเปิดเครื่องมือกำหนดขนาด: ${error}`);
+      console.error('[CustomFrames] showCustomSizeForm error: ' + error);
+   }
 }
 
 function applySize(block, w, h, player = null) {
-    try {
-        if (block.typeId !== 'custom:paintings') {
-            if (player?.isValid) player.sendMessage('§cเกิดข้อผิดพลาด: บล็อกเฟรมถูกทำลายหรือถูกเปลี่ยนเป็นอย่างอื่นแล้ว');
-            return;
-        }
-        const perm = block.permutation;
-        const currentW = perm.getState('custom:width');
-        const currentH = perm.getState('custom:height');
-        if (currentW === w && currentH === h) {
-            return;
-        }
-        let newPerm = perm.withState('custom:width', w).withState('custom:height', h);
-        block.setPermutation(newPerm);
-    } catch (error) {
-        if (player?.isValid) player.sendMessage(`§cเกิดข้อผิดพลาดในการเปลี่ยนขนาดบล็อก: ${error}`);
-        console.error('[CustomFrames] applySize error: ' + error);
-    }
+   try {
+      if (block.typeId !== 'custom:paintings') {
+         if (player?.isValid) player.sendMessage('§cเกิดข้อผิดพลาด: บล็อกเฟรมถูกทำลายหรือถูกเปลี่ยนเป็นอย่างอื่นแล้ว');
+         return;
+      }
+      const perm = block.permutation;
+      const currentW = perm.getState('custom:width');
+      const currentH = perm.getState('custom:height');
+      if (currentW === w && currentH === h) {
+         return;
+      }
+      let newPerm = perm.withState('custom:width', w).withState('custom:height', h);
+      block.setPermutation(newPerm);
+   } catch (error) {
+      if (player?.isValid) player.sendMessage(`§cเกิดข้อผิดพลาดในการเปลี่ยนขนาดบล็อก: ${error}`);
+      console.error('[CustomFrames] applySize error: ' + error);
+   }
 }
 
 function showTextureForm(player, block, filter = '') {
-    const query = filter.toLowerCase();
-    const filtered = filter ? TEXTURE_OPTIONS_CACHE.filter((opt) => opt.nameLower.includes(query)) : TEXTURE_OPTIONS;
+   const query = filter.toLowerCase();
+   const filtered = filter ? TEXTURE_OPTIONS_CACHE.filter((opt) => opt.nameLower.includes(query)) : TEXTURE_OPTIONS;
 
-    if (filtered.length === 0) {
-        if (player?.isValid) {
-            player.sendMessage(`§cไม่พบพื้นผิวหรือรูปภาพที่ตรงกับค้นหา: "${filter}"`);
+   if (filtered.length === 0) {
+      if (player?.isValid) {
+         player.sendMessage(`§cไม่พบพื้นผิวหรือรูปภาพที่ตรงกับค้นหา: "${filter}"`);
+         showTextureForm(player, block, '');
+      }
+      return;
+   }
+
+   const form = new ActionFormData().title(filter ? `Filter: ${filter}` : 'Change Texture').button('§9Search / Filter\n§8Type a name to search...', 'textures/items/brushFrame');
+
+   if (filter) {
+      form.button('§cReset Filter\n§8Show all textures');
+   }
+
+   filtered.forEach((opt) => form.button(opt.name, opt.icon));
+
+   const textureStartIndex = filter ? 2 : 1;
+
+   form
+      .show(player)
+      .then((response) => {
+         if (!player?.isValid) return;
+         if (response.canceled) return;
+
+         const sel = response.selection;
+
+         if (sel === 0) {
+            new ModalFormData()
+               .title('Search Texture')
+               .textField('Search by name:', 'e.g. wall, wood...', filter)
+               .show(player)
+               .then((sr) => {
+                  if (!player?.isValid) return;
+                  if (sr.canceled) {
+                     showTextureForm(player, block, filter);
+                     return;
+                  }
+                  showTextureForm(player, block, sr.formValues[0] ?? '');
+               })
+               .catch((err) => {
+                  console.error('[CustomFrames] Search input error: ' + err);
+               });
+            return;
+         }
+
+         if (filter && sel === 1) {
             showTextureForm(player, block, '');
-        }
-        return;
-    }
+            return;
+         }
 
-    const form = new ActionFormData().title(filter ? `Filter: ${filter}` : 'Change Texture').button('§9Search / Filter\n§8Type a name to search...', 'textures/items/brushFrame');
+         const selected = filtered[sel - textureStartIndex];
+         if (!selected) return;
 
-    if (filter) {
-        form.button('§cReset Filter\n§8Show all textures');
-    }
-
-    filtered.forEach((opt) => form.button(opt.name, opt.icon));
-
-    const textureStartIndex = filter ? 2 : 1;
-
-    form.show(player)
-        .then((response) => {
-            if (!player?.isValid) return;
-            if (response.canceled) return;
-
-            const sel = response.selection;
-
-            if (sel === 0) {
-                new ModalFormData()
-                    .title('Search Texture')
-                    .textField('Search by name:', 'e.g. wall, wood...', filter)
-                    .show(player)
-                    .then((sr) => {
-                        if (!player?.isValid) return;
-                        if (sr.canceled) {
-                            showTextureForm(player, block, filter);
-                            return;
-                        }
-                        showTextureForm(player, block, sr.formValues[0] ?? '');
-                    })
-                    .catch((err) => {
-                        console.error('[CustomFrames] Search input error: ' + err);
-                    });
-                return;
-            }
-
-            if (filter && sel === 1) {
-                showTextureForm(player, block, '');
-                return;
-            }
-
-            const selected = filtered[sel - textureStartIndex];
-            if (!selected) return;
-
-            applyTexture(block, selected.index, player);
-        })
-        .catch((err) => {
-            console.error('[CustomFrames] showTextureForm error: ' + err);
-        });
+         applyTexture(block, selected.index, player);
+      })
+      .catch((err) => {
+         console.error('[CustomFrames] showTextureForm error: ' + err);
+      });
 }
 
 function applyTexture(block, textureIndex, player = null) {
-    const variantPage = Math.floor(textureIndex / 16);
-    const variantSlot = textureIndex % 16;
+   const variantPage = Math.floor(textureIndex / 16);
+   const variantSlot = textureIndex % 16;
 
-    try {
-        if (block.typeId !== 'custom:paintings') {
-            if (player?.isValid) player.sendMessage('§cเกิดข้อผิดพลาด: บล็อกเฟรมถูกทำลายหรือถูกเปลี่ยนเป็นอย่างอื่นแล้ว');
-            return;
-        }
-        const perm = block.permutation;
-        const currentPage = perm.getState('custom:variant_page');
-        const currentSlot = perm.getState('custom:variant_slot');
-        if (currentPage === variantPage && currentSlot === variantSlot) {
-            return;
-        }
-        let newPerm = perm;
-        if (currentPage !== undefined) newPerm = newPerm.withState('custom:variant_page', variantPage);
-        if (currentSlot !== undefined) newPerm = newPerm.withState('custom:variant_slot', variantSlot);
-        block.setPermutation(newPerm);
-    } catch (error) {
-        if (player?.isValid) player.sendMessage(`§cเกิดข้อผิดพลาดในการเปลี่ยนพื้นผิวบล็อก: ${error}`);
-        console.error('[CustomFrames] applyTexture error: ' + error);
-    }
+   try {
+      if (block.typeId !== 'custom:paintings') {
+         if (player?.isValid) player.sendMessage('§cเกิดข้อผิดพลาด: บล็อกเฟรมถูกทำลายหรือถูกเปลี่ยนเป็นอย่างอื่นแล้ว');
+         return;
+      }
+      const perm = block.permutation;
+      const currentPage = perm.getState('custom:variant_page');
+      const currentSlot = perm.getState('custom:variant_slot');
+      if (currentPage === variantPage && currentSlot === variantSlot) {
+         return;
+      }
+      let newPerm = perm;
+      if (currentPage !== undefined) newPerm = newPerm.withState('custom:variant_page', variantPage);
+      if (currentSlot !== undefined) newPerm = newPerm.withState('custom:variant_slot', variantSlot);
+      block.setPermutation(newPerm);
+   } catch (error) {
+      if (player?.isValid) player.sendMessage(`§cเกิดข้อผิดพลาดในการเปลี่ยนพื้นผิวบล็อก: ${error}`);
+      console.error('[CustomFrames] applyTexture error: ' + error);
+   }
 }

@@ -9,7 +9,7 @@ import { processActiveAnimations } from '../plugin/title.js';
 import { checkSeats } from '../module/simpleSit/core/seat-checker.js';
 import { renderBorderParticles } from '../module/protection/core/borders.js';
 import { magnetTick } from '../module/magNet/core/loop.js';
-import { Interval } from './core/interval.js';
+import { Interval } from '../events/interval.js';
 
 Interval.register(FlashlightRunInterval, 2);
 Interval.register(handleIdlePoller, 20);

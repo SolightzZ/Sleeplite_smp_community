@@ -2,23 +2,23 @@ import { system, world } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../plugin/utils.js';
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { emoteList, setting } from './database.js';
 
 function playEmote(player, animName, emoteName) {
    if (!player.isValid) return;
 
    const cmd = `playanimation "${player.name}" animation.${animName} animation.${animName}`;
-   try {
-      system.run(() => {
-         if (player.isValid) {
-            world.getDimension(player.dimension.id)?.runCommand(cmd);
-         }
-      });
-   } catch (error) {
-      logError('Emote', 'play command failed', error);
-      return;
-   }
+   system.run(() => {
+      if (player.isValid) {
+         world
+            .getDimension(player.dimension.id)
+            ?.runCommand(cmd)
+            .catch((error) => {
+               logError('Emote', 'play command failed', error);
+            });
+      }
+   });
 
    player.onScreenDisplay?.setActionBar(`§aEmote: §f${emoteName}`);
    addSound(player, setting.soundClick);
@@ -28,16 +28,16 @@ function stopEmote(player, animName) {
    if (!player.isValid) return;
 
    const cmd = `playanimation "${player.name}" animation.${animName}`;
-   try {
-      system.run(() => {
-         if (player.isValid) {
-            world.getDimension(player.dimension.id)?.runCommand(cmd);
-         }
-      });
-   } catch (error) {
-      logError('Emote', 'stop command failed', error);
-      return;
-   }
+   system.run(() => {
+      if (player.isValid) {
+         world
+            .getDimension(player.dimension.id)
+            ?.runCommand(cmd)
+            .catch((error) => {
+               logError('Emote', 'stop command failed', error);
+            });
+      }
+   });
 
    player.onScreenDisplay?.setActionBar('§cEmote: §fSTOPPED');
    addSound(player, setting.soundClick);

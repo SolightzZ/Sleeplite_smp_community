@@ -1,4 +1,4 @@
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { SEAT_ENTITY_ID, SEAT_NEAR_RADIUS } from '../config.js';
 import { isBreathableBlock } from '../utils/block.js';
 import { weirdoToRotation } from '../utils/rotation.js';

@@ -1,6 +1,6 @@
 import { world } from '@minecraft/server';
 import { Config } from '../config.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 
 
 const KEY = 'SPAWN_PROTECT_DATA';

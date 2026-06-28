@@ -1,4 +1,4 @@
-import { logError } from '../router/core/logger.js';
+import { logError } from '../events/logger.js';
 
 const DOOR_SUFFIX = '_door';
 const TRAP_KEYWORD = 'trap';

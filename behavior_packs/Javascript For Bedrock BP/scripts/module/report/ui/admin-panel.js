@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../../plugin/utils.js';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
 import { showForm, sure } from '../utils/ui.js';

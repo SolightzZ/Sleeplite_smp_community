@@ -1,6 +1,6 @@
 import { EntityComponentTypes } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { CENTER_OFFSET, DIMENSION_HEIGHT_RULE, GRAVESTONE_ENTITY, INVENTORY_COMPONENT } from '../config.js';
 import { floorPosition, getGraveY } from '../utils/location.js';
 import { findNearbyItems, safeAddItem } from './container.js';

@@ -1,4 +1,4 @@
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { biomeIdList, EXCLUDED_BIOMES } from './database.js';
 
 const formatIdName = (id) => {

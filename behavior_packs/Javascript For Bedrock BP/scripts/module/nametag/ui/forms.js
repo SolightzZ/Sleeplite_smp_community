@@ -1,4 +1,4 @@
-import { Registry } from '../../../router/core/registry.js';
+import { Registry } from '../../../events/registry.js';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 import { PREDEFINED_RANKS } from '../constants/constants.js';
 import { refreshNameTag } from '../core/nametag.js';

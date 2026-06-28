@@ -1,4 +1,4 @@
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { Config } from '../config.js';
 import { getConfigSpawnProtec } from './database.js';
 

@@ -1,7 +1,7 @@
 import { system, world } from '@minecraft/server';
 import { kickPlayer } from '@minecraft/server-admin';
-import { logError } from '../../../router/core/logger.js';
-import { Registry } from '../../../router/core/registry.js';
+import { logError } from '../../../events/logger.js';
+import { Registry } from '../../../events/registry.js';
 import { Config } from '../config.js';
 import { formatDate, formatDuration, formatRemaining } from '../utils/format.js';
 import { BanDatabase } from './database.js';

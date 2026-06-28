@@ -1,4 +1,4 @@
-import { Registry } from '../../../router/core/registry.js';
+import { Registry } from '../../../events/registry.js';
 import { TICK_RECONCILE, TICK_TARGET_LATENCY, BATCH_MIN_SIZE, BATCH_MAX_SIZE } from '../config.js';
 import { processQueue, queueCursor } from './queue.js';
 import { playerLights, activeHolders } from './state.js';

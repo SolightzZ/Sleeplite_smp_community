@@ -1,8 +1,8 @@
 import { world } from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 import { addSound } from '../../../plugin/utils.js';
-import { logError } from '../../../router/core/logger.js';
-import { Registry } from '../../../router/core/registry.js';
+import { logError } from '../../../events/logger.js';
+import { Registry } from '../../../events/registry.js';
 import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';
 import { banReasons, kickReasons } from '../data/messages.js';
 import { formatDate, formatRemaining } from '../utils/format.js';

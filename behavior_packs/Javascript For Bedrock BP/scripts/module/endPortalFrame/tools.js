@@ -1,4 +1,4 @@
-import { Registry } from '../../router/core/registry.js';
+import { Registry } from '../../events/registry.js';
 import { zone } from './rules.js';
 
 export const count = (block) => {

@@ -2,8 +2,8 @@ import { world } from '@minecraft/server';
 
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { addSound } from '../../../plugin/utils.js';
-import { logError } from '../../../router/core/logger.js';
-import { Registry } from '../../../router/core/registry.js';
+import { logError } from '../../../events/logger.js';
+import { Registry } from '../../../events/registry.js';
 import { Colors, Config, halfZoneSize } from '../config.js';
 import { consumeBlock, isFormValid } from '../utils/helpers.js';
 import { buildZone, isZoneOverlap, validateZoneCreate } from '../utils/validation.js';

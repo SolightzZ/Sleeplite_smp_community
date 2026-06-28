@@ -1,5 +1,5 @@
 // System
-import './router/core/index.js';
+import './events/index.js';
 import './router/Startup.js';
 import './router/System.RunInterval.js';
 

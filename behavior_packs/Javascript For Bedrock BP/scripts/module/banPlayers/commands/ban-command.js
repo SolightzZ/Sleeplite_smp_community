@@ -4,7 +4,7 @@ import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.j
 import { defaultBanReason, defaultKickReason } from '../data/messages.js';
 import { formatRemaining } from '../utils/format.js';
 import { cmdResult, getOrValidateDuration, requireAdmin, validateCommandTargets } from '../utils/validation.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 
 const iterateTargets = (targets, fn) => {
    for (const target of targets) {

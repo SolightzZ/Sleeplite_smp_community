@@ -1,6 +1,6 @@
 import { EntityComponentTypes, ItemStack } from '@minecraft/server';
 
-import { logError } from '../../router/core/logger.js';
+import { logError } from '../../events/logger.js';
 import { config } from './constants.js';
 
 function time() {

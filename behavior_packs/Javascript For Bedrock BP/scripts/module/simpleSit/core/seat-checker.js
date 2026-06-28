@@ -1,6 +1,6 @@
 import { EntityComponentTypes } from '@minecraft/server';
 
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { isRemovedBlock } from '../utils/block.js';
 import { seatHasMoved } from '../utils/location.js';
 import { activeSeats } from './seat-manager.js';

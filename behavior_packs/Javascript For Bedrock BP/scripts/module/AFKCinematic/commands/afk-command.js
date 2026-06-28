@@ -1,7 +1,7 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
 
 import { startCinematicNow } from '../core/poller.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 
 function quickCommandAFK(origin) {
    try {

@@ -1,4 +1,4 @@
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 import { inSpawnZoneSpawnProtec, canSpawnProtec } from './protection.js';
 
 export class EventSpawnProtec {

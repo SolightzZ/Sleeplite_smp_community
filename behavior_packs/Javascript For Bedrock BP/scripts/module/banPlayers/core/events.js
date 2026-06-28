@@ -1,6 +1,6 @@
 import { system } from '@minecraft/server';
 import { checkBanOnJoin } from './ban.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 
 export const onPlayerJoinCheckBan = (event) => {
    try {

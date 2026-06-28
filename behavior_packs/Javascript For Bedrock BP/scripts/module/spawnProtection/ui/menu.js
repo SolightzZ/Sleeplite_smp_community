@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { world } from '@minecraft/server';
 import { getConfigSpawnProtec, updateConfigSpawnProtec, resetConfigSpawnProtec } from '../core/database.js';
 import { Config } from '../config.js';
-import { logError } from '../../../router/core/logger.js';
+import { logError } from '../../../events/logger.js';
 
 export function openMenuSpawnProtec(player) {
    if (!player.hasTag(Config.AdminTag)) {
