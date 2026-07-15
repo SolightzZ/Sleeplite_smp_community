@@ -1,15 +1,15 @@
-import { BlockPermutation, EntityComponentTypes } from '@minecraft/server';
+import { BlockPermutation } from '@minecraft/server';
 import { logError } from '../events/logger.js';
+import { cache } from '../shared/cache.js';
+import { pcheck } from './../shared/player.js';
 
 const SPONGE = 'minecraft:sponge';
 const WATER = 'minecraft:water';
 const MAX_DISTANCE = 6;
 
-const findSpongeSlot = (container) => {
-   const size = container.size;
-
-   for (let i = 0; i < size; i++) {
-      const item = container.getItem(i);
+const findSpongeSlot = (items) => {
+   for (let i = 0; i < items.length; i++) {
+      const item = items[i];
       if (item && item.typeId === SPONGE) return i;
    }
 
@@ -17,15 +17,16 @@ const findSpongeSlot = (container) => {
 };
 
 const getSpongeSlot = (player, container) => {
+   const items = cache.getContainerItems(container);
    const selectedSlot = player.selectedSlotIndex;
 
-   if (selectedSlot >= 0 && selectedSlot < container.size) {
-      const selectedItem = container.getItem(selectedSlot);
+   if (selectedSlot >= 0 && selectedSlot < items.length) {
+      const selectedItem = items[selectedSlot];
 
       if (selectedItem && selectedItem.typeId === SPONGE) return selectedSlot;
    }
 
-   return findSpongeSlot(container);
+   return findSpongeSlot(items);
 };
 
 const getTargetWaterBlock = (player) => {
@@ -41,7 +42,7 @@ const getTargetWaterBlock = (player) => {
 };
 
 const consumeSponge = (container, slot) => {
-   const item = container.getItem(slot);
+   const item = cache.getContainerItems(container)[slot];
    if (!item || item.typeId !== SPONGE) return false;
    if (item.amount > 1) {
       item.amount--;
@@ -67,9 +68,9 @@ export const handleSpongeAbsorption = (event) => {
       if (!item || item.typeId !== SPONGE) return;
 
       const player = event.source;
-      if (!player || !player.isValid) return;
+      if (!pcheck(player)) return;
 
-      const container = player.getComponent(EntityComponentTypes.Inventory)?.container;
+      const container = cache.getInventory(player);
       if (!container) return;
 
       const slot = getSpongeSlot(player, container);
@@ -78,7 +79,7 @@ export const handleSpongeAbsorption = (event) => {
       const waterBlock = getTargetWaterBlock(player);
       if (!waterBlock) return;
 
-      if (!player.isValid || !waterBlock.isValid) return;
+      if (!pcheck(player) || !waterBlock.isValid) return;
       absorbWaterWithSponge(container, slot, waterBlock);
    } catch (error) {
       logError('SpongeAbsorption', 'handleSpongeAbsorption', error);

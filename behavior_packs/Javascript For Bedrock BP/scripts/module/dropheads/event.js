@@ -1,12 +1,11 @@
 import { system } from '@minecraft/server';
 import { dropHead } from './drop.js';
 import { addDeath, initBoards } from './score.js';
-
-const PLAYER_TYPE = 'minecraft:player';
+import { playerType } from './config.js';
 
 export const DeathCounter = (event) => {
     const dead = event.deadEntity;
-    if (!dead || dead.typeId !== PLAYER_TYPE) return;
+    if (!dead || dead.typeId !== playerType) return;
 
     const dmg = event.damageSource;
 

@@ -1,12 +1,8 @@
-import {
-  removePendingTree,
-  decrementPlayerJobCount,
-  setPlayerLastJobEnd
-} from "./state.js";
+import { JobQueue } from "../../../shared/jobQueue.js";
 
 export const cleanupJobState = (job) => {
-  removePendingTree(job.treeKey);
-  decrementPlayerJobCount(job.playerId);
-  setPlayerLastJobEnd(job.playerId, Date.now());
+  JobQueue.removePending(job.treeKey);
+  JobQueue.decrementPlayerJobCount(job.playerId);
+  JobQueue.setPlayerLastJobEnd(job.playerId, Date.now());
 };
 

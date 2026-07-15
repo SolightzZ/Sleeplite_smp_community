@@ -6,6 +6,8 @@ import { Config, halfZoneSize } from '../config.js';
 import { showBorder } from '../core/borders.js';
 import { zoneDatabase } from '../core/database.js';
 import { adminDeleteZone, adminTeleport, createZone, deleteZone, manageFlags, manageMembers, uiLockSet } from '../core/protection.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 // สร้างเนื้อหาเมนู
 const buildMenuBody = (player) => {
@@ -55,7 +57,7 @@ const buildMenuButtons = (form, player, isAdmin) => {
       if (zoneCount < Config.MaxZones) {
          addButton(form, 'สร้างโพรเทค', 'textures/ui/sidebar_icons/addon');
          actions.push(() => {
-            addSound(player, 'trial_spawner.charge_activate');
+            cache.playSound(player, 'trial_spawner.charge_activate');
             createZone(player);
          });
       }
@@ -64,11 +66,11 @@ const buildMenuButtons = (form, player, isAdmin) => {
          addButton(form, 'ลบโพรเทค (แอดมิน)', 'textures/ui/sidebar_icons/promotag');
          addButton(form, 'เทเลพอร์ต (แอดมิน)', 'textures/ui/sidebar_icons/my_characters');
          actions.push(() => {
-            addSound(player, 'item.spear.use');
+            cache.playSound(player, 'item.spear.use');
             adminDeleteZone(player);
          });
          actions.push(() => {
-            addSound(player, 'random.anvil_land');
+            cache.playSound(player, 'random.anvil_land');
             adminTeleport(player);
          });
       }
@@ -79,19 +81,19 @@ const buildMenuButtons = (form, player, isAdmin) => {
       addButton(form, 'ลบโพรเทค', 'textures/ui/sidebar_icons/squaredonut');
 
       actions.push(() => {
-         addSound(player, 'block.loom.use');
+         cache.playSound(player, 'block.loom.use');
          manageFlags(player);
       });
       actions.push(() => {
-         addSound(player, 'block.cartography_table.use');
+         cache.playSound(player, 'block.cartography_table.use');
          manageMembers(player);
       });
       actions.push(() => {
-         addSound(player, 'conduit.activate');
+         cache.playSound(player, 'conduit.activate');
          showBorder(player);
       });
       actions.push(() => {
-         addSound(player, 'item.spear.use');
+         cache.playSound(player, 'item.spear.use');
          deleteZone(player);
       });
 
@@ -99,11 +101,11 @@ const buildMenuButtons = (form, player, isAdmin) => {
          addButton(form, 'ลบโพรเทค (แอดมิน)', 'textures/ui/sidebar_icons/promotag');
          addButton(form, 'เทเลพอร์ต (แอดมิน)', 'textures/ui/sidebar_icons/my_characters');
          actions.push(() => {
-            addSound(player, 'item.spear.use');
+            cache.playSound(player, 'item.spear.use');
             adminDeleteZone(player);
          });
          actions.push(() => {
-            addSound(player, 'random.anvil_land');
+            cache.playSound(player, 'random.anvil_land');
             adminTeleport(player);
          });
       }
@@ -113,12 +115,12 @@ const buildMenuButtons = (form, player, isAdmin) => {
 
 // เมนูหลัก
 export const openMenu = async (player) => {
-   if (uiLockSet.has(player.name)) return player.sendMessage(`[x] กรุณารอสักครู่`);
+   if (uiLockSet.has(player.name)) return cache.sendMessage(player, `[x] กรุณารอสักครู่`);
 
    uiLockSet.add(player.name);
 
    try {
-      addSound(player, 'trial_spawner.charge_activate');
+      cache.playSound(player, 'trial_spawner.charge_activate');
       const isAdmin = player.hasTag(Config.AdminTag);
       const form = new ActionFormData();
       form.title('Protect | โพรเทค');
@@ -133,17 +135,17 @@ export const openMenu = async (player) => {
       if (response.canceled) {
          return;
       }
-      if (!player.isValid) return;
+      if (!pcheck(player)) return;
 
       if (response.selection < actions.length) {
          await actions[response.selection]();
       } else {
-         addSound(player, 'block.false_permissions');
-         player.sendMessage(`[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
+         cache.playSound(player, 'block.false_permissions');
+         cache.sendMessage(player, `[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
       }
    } catch (error) {
-      addSound(player, 'block.false_permissions');
-      player.sendMessage(`[x] เมนูผิดพลาด`);
+      cache.playSound(player, 'block.false_permissions');
+      cache.sendMessage(player, `[x] เมนูผิดพลาด`);
       logError('Protection', 'openMenu', error);
    } finally {
       uiLockSet.delete(player.name);

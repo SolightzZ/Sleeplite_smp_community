@@ -5,6 +5,8 @@ import { logError } from '../../../events/logger.js';
 import { MagnetConfig, MagnetIcons, MagnetText } from '../config.js';
 import { countMagnetUsers, hasMagnetUser } from '../core/state.js';
 import { canUseMagnet, toggleMagnet } from '../core/toggle.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 export const showMagnetMenu = (player) => {
    if (!canUseMagnet(player)) return;
@@ -28,13 +30,13 @@ export const showMagnetMenu = (player) => {
    form.button(btnText, btnIcon);
    form.label('               @Sleeplite 2026');
 
-   addSound(player, 'vault.open_shutter');
+   cache.playSound(player, 'vault.open_shutter');
 
    form
       .show(player)
       .then((res) => {
          if (!res || res.canceled || res.selection !== 0) return;
-         if (!player.isValid) return;
+         if (!pcheck(player)) return;
          toggleMagnet(player, !isOn);
       })
       .catch((error) => logError('Magnet', 'UI Error', error));

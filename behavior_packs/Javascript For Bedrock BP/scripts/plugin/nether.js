@@ -1,4 +1,6 @@
 import { CommandPermissionLevel, CustomCommandParamType, CustomCommandStatus, system } from '@minecraft/server';
+import { cache } from '../shared/cache.js';
+import { pcheck } from './../shared/player.js';
 
 const DIM_OVERWORLD = 'minecraft:overworld';
 const DIM_NETHER = 'minecraft:nether';
@@ -7,7 +9,7 @@ const PREFIX = '§7[§l\u00BB§r§7] ';
 const MSG_UNSUPPORTED = '§eไม่สามารถคำนวณได้ในมิตินี้';
 
 const sendCalculated = (player, x, z) => {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
    const dimId = player.dimension.id;
    const rx = Math.round(x);
@@ -26,7 +28,7 @@ const sendCalculated = (player, x, z) => {
       msg = MSG_UNSUPPORTED;
    }
 
-   player.sendMessage(msg);
+   cache.sendMessage(player, msg);
 };
 
 export function RegisterNetherCalc(init) {
@@ -43,10 +45,10 @@ export function RegisterNetherCalc(init) {
       },
       (origin, x, z) => {
          const player = origin.sourceEntity;
-         if (!player?.isValid) return { status: CustomCommandStatus.Failure, message: '§cใช้ได้เฉพาะผู้เล่น' };
+         if (!pcheck(player)) return { status: CustomCommandStatus.Failure, message: '§cใช้ได้เฉพาะผู้เล่น' };
 
          system.run(() => {
-            if (!player.isValid) return;
+            if (!pcheck(player)) return;
             if (x === undefined || z === undefined) {
                const loc = player.location;
                sendCalculated(player, loc.x, loc.z);

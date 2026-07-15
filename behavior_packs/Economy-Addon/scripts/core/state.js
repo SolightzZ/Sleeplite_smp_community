@@ -24,11 +24,6 @@ export function setSnapshot(playerId, detail, playerInv, chestInv) {
    _snapshots.set(playerId, entry);
 }
 
-
-export function getSnapshot(playerId) {
-   return _snapshots.get(playerId)?.detail ?? null;
-}
-
 export function getSnapshotEntry(playerId) {
    return _snapshots.get(playerId) ?? null;
 }

@@ -1,8 +1,7 @@
-import { world } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
-
 import { logError } from '../events/logger.js';
 import { adminDeleteShop, getAdminShopList, getDbInfoData } from '../form/adminPanelLogic.js';
+import { cache } from '../shared/cache.js';
 import { isAdmin } from '../utils/permission.js';
 import { showStepTwo } from './confirmTwoStep.js';
 
@@ -86,7 +85,7 @@ function showAllShops(player, page = 0) {
                   } else {
                      const loc = shop.loc;
                      if (loc) {
-                        const dim = world.getDimension(loc.dim);
+                        const dim = cache.getDimension(loc.dim);
                         dim.runCommandAsync(`tp "${player.name}" ${loc.x} ${loc.y} ${loc.z}`);
                         player.sendMessage(`[/] วาปไปร้านค้า ${itemLabel} แล้ว`);
                      } else {

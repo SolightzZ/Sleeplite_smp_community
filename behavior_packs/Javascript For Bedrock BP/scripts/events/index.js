@@ -1,7 +1,8 @@
 import { world } from '@minecraft/server';
-import { runEventHandlers, runEventHandlersWithCancel } from './utils.js';
-import { Registry } from './registry.js';
+import { pcheck } from './../shared/player.js';
 import { logError, logWarn } from './logger.js';
+import { Registry } from './registry.js';
+import { runEventHandlers, runEventHandlersWithCancel } from './utils.js';
 
 const subscribe = (signal, label, handler) => {
    signal.subscribe((event) => {
@@ -28,11 +29,11 @@ const HANDLERS = {
    beforePlayerBreakBlock: [],
    afterPlayerBreakBlock: [],
    afterPlayerDimensionChange: [],
-    beforePlayerInteractBlock: [],
-    afterPlayerInteractBlock: [],
-    afterPlayerInventoryChange: [],
-    beforePlayerInteractEntity: [],
-    beforePlayerPlaceBlock: [],
+   beforePlayerInteractBlock: [],
+   afterPlayerInteractBlock: [],
+   afterPlayerInventoryChange: [],
+   beforePlayerInteractEntity: [],
+   beforePlayerPlaceBlock: [],
 };
 
 export const router = {
@@ -60,20 +61,19 @@ export const router = {
    },
 };
 
-// ใส่ผู้เล่นที่ออนไลน์อยู่แล้วเข้า Registry หลังจากโหลดโลกเสร็จ
 subscribe(world.afterEvents.worldLoad, 'worldLoad', () => {
    Registry.init();
 });
 
 subscribe(world.beforeEvents.chatSend, 'chatSend', (event) => {
    const sender = event.sender;
-   if (!sender || !sender.isValid) return;
+   if (!pcheck(sender)) return;
    runEventHandlersWithCancel('ChatSend', HANDLERS.beforeChatSend, event);
 });
 
 subscribe(world.afterEvents.itemUse, 'itemUse', (event) => {
    const player = event.source;
-   if (!player || !player.isValid || !event.itemStack) return;
+   if (!pcheck(player) || !event.itemStack) return;
    runEventHandlers('ItemUse', HANDLERS.afterItemUse, event);
 });
 
@@ -93,7 +93,7 @@ subscribe(world.afterEvents.entityDie, 'entityDie', (event) => {
 
 subscribe(world.afterEvents.playerSpawn, 'playerSpawn', (event) => {
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    Registry.add(player);
 
@@ -134,50 +134,50 @@ subscribe(world.beforeEvents.explosion, 'explosion', (event) => {
 
 subscribe(world.beforeEvents.playerBreakBlock, 'playerBreakBlock', (event) => {
    const player = event.player;
-   if (!player || !player.isValid || !event.block) return;
+   if (!pcheck(player) || !event.block) return;
    runEventHandlersWithCancel('PlayerBreakBlock(Before)', HANDLERS.beforePlayerBreakBlock, event);
 });
 
 subscribe(world.afterEvents.playerBreakBlock, 'playerBreakBlock(After)', (event) => {
    const player = event.player;
-   if (!player || !player.isValid || !event.block) return;
+   if (!pcheck(player) || !event.block) return;
    runEventHandlersWithCancel('PlayerBreakBlock(After)', HANDLERS.afterPlayerBreakBlock, event);
 });
 
 subscribe(world.afterEvents.playerDimensionChange, 'playerDimensionChange', (event) => {
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
    runEventHandlers('PlayerDimensionChange', HANDLERS.afterPlayerDimensionChange, event);
 });
 
 subscribe(world.beforeEvents.playerInteractWithBlock, 'playerInteractWithBlock', (event) => {
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
    runEventHandlersWithCancel('PlayerInteractWithBlock(Before)', HANDLERS.beforePlayerInteractBlock, event);
 });
 
 subscribe(world.afterEvents.playerInteractWithBlock, 'playerInteractWithBlock(After)', (event) => {
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
    runEventHandlers('PlayerInteractWithBlock(After)', HANDLERS.afterPlayerInteractBlock, event);
 });
 
 subscribe(world.afterEvents.playerInventoryItemChange, 'playerInventoryItemChange', (event) => {
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
    runEventHandlers('PlayerInventoryItemChange', HANDLERS.afterPlayerInventoryChange, event);
 });
 
 subscribe(world.beforeEvents.playerInteractWithEntity, 'playerInteractWithEntity', (event) => {
    const player = event.player;
    const target = event.target;
-   if (!player || !player.isValid || !target) return;
+   if (!pcheck(player) || !target) return;
    runEventHandlersWithCancel('PlayerInteractWithEntity', HANDLERS.beforePlayerInteractEntity, event);
 });
 
 subscribe(world.beforeEvents.playerPlaceBlock, 'playerPlaceBlock', (event) => {
    const player = event.player;
    const block = event.block;
-   if (!player || !player.isValid || !block) return;
+   if (!pcheck(player) || !block) return;
    runEventHandlersWithCancel('PlayerPlaceBlock', HANDLERS.beforePlayerPlaceBlock, event);
 });

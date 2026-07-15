@@ -1,6 +1,7 @@
-import { ItemStack, world } from '@minecraft/server';
-
+import { ItemStack } from '@minecraft/server';
 import { CONFIG } from '../config.js';
+import { getBlockSafe } from '../shared/block.js';
+import { cache } from '../shared/cache.js';
 
 export function getChestKey(block) {
    const { x, y, z } = block.location;
@@ -31,7 +32,7 @@ export function findDoubleChestPartner(block) {
 }
 
 export function findItemInChest(block) {
-   const inv = block.getComponent('inventory');
+   const inv = cache.getComponent(block, 'inventory');
    if (!inv) return null;
 
    const container = inv.container;
@@ -46,7 +47,7 @@ export function findItemInChest(block) {
       if (existing) {
          existing.amount += item.amount;
       } else {
-         const enchComp = item.getComponent('enchantable');
+         const enchComp = cache.getEnchantable(item);
          const enchantments = [];
          if (enchComp) {
             for (const e of enchComp.getEnchantments()) {
@@ -93,15 +94,14 @@ export function findItemInContainer(container) {
 }
 
 export function getPlayerContainer(player) {
-   return player.getComponent('inventory')?.container ?? null;
+   return cache.getInventory(player);
 }
 
 export function getChestContainer(loc) {
    try {
-      const dim = world.getDimension(loc.dim);
-      const block = dim.getBlock({ x: loc.x, y: loc.y, z: loc.z });
-      const chest = block?.getComponent('inventory');
-      return chest?.container ?? null;
+      const dim = cache.getDimension(loc.dim);
+      const block = getBlockSafe(dim, { x: loc.x, y: loc.y, z: loc.z });
+      return cache.getBlockInventory(block);
    } catch {
       return null;
    }

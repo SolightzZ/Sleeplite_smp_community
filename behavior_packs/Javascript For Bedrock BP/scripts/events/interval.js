@@ -1,6 +1,6 @@
 import { system } from '@minecraft/server';
-import { Queue } from './queue.js';
 import { logError } from './logger.js';
+import { Queue } from './queue.js';
 
 const _intervals = [];
 
@@ -9,8 +9,7 @@ export const Interval = {
       _intervals.push({ fn, ticks, counter: 0 });
    },
 
-    // เรียก callback ที่ครบจำนวน ticks ตามที่ลงทะเบียนไว้
-    tick() {
+   tick() {
       for (let i = 0; i < _intervals.length; i++) {
          const iv = _intervals[i];
          iv.counter++;
@@ -27,7 +26,6 @@ export const Interval = {
    },
 };
 
-// ลูปหลักเพียงลูปเดียว ขับทั้ง Interval callbacks และ task queue
 system.runInterval(() => {
    try {
       Interval.tick();

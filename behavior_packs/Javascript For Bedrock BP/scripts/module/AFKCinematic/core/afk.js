@@ -1,14 +1,14 @@
 import { HudVisibility } from '@minecraft/server';
-
 import { logError } from '../../../events/logger.js';
 import { CONFIG } from '../config.js';
 import { cloneVec3, faceTargetInto, hashString, rotateRelInto } from '../utils/math.js';
+import { pcheck } from './../../../shared/player.js';
 import { pullCamera } from './block.js';
 import { framePool } from './state.js';
 import { buildSequence } from './stateManager.js';
 
 const safeCameraClear = (player) => {
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    try {
       player.camera.clear();
@@ -18,7 +18,7 @@ const safeCameraClear = (player) => {
 };
 
 const safeSetFov = (player, fov) => {
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    try {
       player.camera.setFov({ fov });

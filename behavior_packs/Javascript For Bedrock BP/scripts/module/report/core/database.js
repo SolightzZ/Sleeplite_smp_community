@@ -1,12 +1,11 @@
-import { world } from '@minecraft/server';
-
-import { logError } from '../../../events/logger.js';
+import { logError, logWarn } from '../../../events/logger.js';
 import { CONFIG } from '../config.js';
-import { getTime } from '../utils/date.js';
+import { formatThaiDateTime } from '../../../shared/datetime.js';
+import { Database } from '../../../shared/database.js';
 
 const validate = (value, label) => {
    if (typeof value !== 'string' || value.trim() === '') {
-      console.warn(`[DB] ${label} validation failed: empty or invalid`);
+      logWarn('ReportDB', `${label} validation failed: empty or invalid`);
       return false;
    }
    return true;
@@ -17,24 +16,14 @@ let cachedData = null;
 export class Database {
    static load() {
       if (cachedData !== null) return cachedData;
-      try {
-         const data = world.getDynamicProperty(CONFIG.dbKey);
-         if (!data) {
-            cachedData = {};
-         } else {
-            cachedData = JSON.parse(data);
-         }
-      } catch (error) {
-         logError('DB', 'Load Error', error);
-         cachedData = {};
-      }
+      cachedData = Database.loadGlobal(CONFIG.dbKey, {});
       return cachedData;
    }
 
    static save(data) {
       cachedData = data;
       try {
-         world.setDynamicProperty(CONFIG.dbKey, JSON.stringify(data));
+         Database.saveGlobal(CONFIG.dbKey, data);
       } catch (error) {
          logError('DB', 'Save Error', error);
       }
@@ -46,10 +35,10 @@ export class Database {
          const data = this.load();
          if (!data[name]) data[name] = [];
          if (data[name].length >= CONFIG.maxReports) {
-            console.warn(`[DB] Max reports (${CONFIG.maxReports}) reached for ${name}`);
+            logWarn('ReportDB', `Max reports (${CONFIG.maxReports}) reached for ${name}`);
             return;
          }
-         data[name].push({ t: title.trim(), b: body.trim(), d: getTime(), r: '' });
+         data[name].push({ t: title.trim(), b: body.trim(), d: formatThaiDateTime(), r: '' });
          this.save(data);
       } catch (error) {
          logError('DB', 'Add Error', error);
@@ -63,7 +52,7 @@ export class Database {
          if (data[name] && data[name][index]) {
             data[name][index].t = title.trim();
             data[name][index].b = body.trim();
-            data[name][index].d = getTime() + ' (edit)';
+            data[name][index].d = formatThaiDateTime() + ' (edit)';
             this.save(data);
          }
       } catch (error) {

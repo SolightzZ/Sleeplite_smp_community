@@ -1,5 +1,6 @@
 import { logError } from '../../events/logger.js';
 import { CONFIG_KEY, DEFAULT_CONFIG } from './Config.js';
+import { Database } from '../../shared/database.js';
 
 const configCache = new Map();
 
@@ -9,24 +10,15 @@ export function getPlayerConfig(player) {
 
    let config = { ...DEFAULT_CONFIG };
 
-   try {
-      const rawConfig = player.getDynamicProperty(CONFIG_KEY);
-
-      if (typeof rawConfig === 'string') {
-         const parsedConfig = JSON.parse(rawConfig);
-
-         if (typeof parsedConfig === 'object' && parsedConfig !== null) {
-            if (typeof parsedConfig.playSound === 'boolean') {
-               config.playSound = parsedConfig.playSound;
-            }
-
-            if (typeof parsedConfig.hideHud === 'boolean') {
-               config.hideHud = parsedConfig.hideHud;
-            }
-         }
+   const parsedConfig = Database.loadPlayer(player, CONFIG_KEY, null);
+   if (parsedConfig && typeof parsedConfig === 'object') {
+      if (typeof parsedConfig.playSound === 'boolean') {
+         config.playSound = parsedConfig.playSound;
       }
-   } catch (error) {
-      logError('Zoom', 'Failed to load player config', error);
+
+      if (typeof parsedConfig.hideHud === 'boolean') {
+         config.hideHud = parsedConfig.hideHud;
+      }
    }
 
    configCache.set(player.id, config);

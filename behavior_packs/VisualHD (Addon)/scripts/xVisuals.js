@@ -1,12 +1,9 @@
 import { system, world } from '@minecraft/server';
-import { EFFECT_MAP } from './utils.js';
+import { EFFECT_MAP, ENTITY_IDS, ERROR_DECAY, ERROR_LIMITS, TICK_INTERVAL, WARMUP_TICKS } from './config.js';
+import { XEffectQueue } from './effect-queue.js';
 import { XHealthMonitor } from './health-monitor.js';
 import { XHurtQueue } from './hurt-queue.js';
-import { XEffectQueue } from './effect-queue.js';
-
-const TICK_INTERVAL = 3;
-const MAX_ERROR_RATE = 50;
-const WARMUP_TICKS = 100;
+import { pcheck } from './shared/player.js';
 
 class XVisuals {
    errorCount = 0;
@@ -24,7 +21,7 @@ class XVisuals {
          this.inited = true;
          this.initTick = system.currentTick;
          for (const player of world.getAllPlayers()) {
-            if (player?.isValid) this.playerMap.set(player.id, player);
+            if (pcheck(player)) this.playerMap.set(player.id, player);
          }
          this.interval = system.runInterval(() => this.tick(), TICK_INTERVAL);
       });
@@ -32,7 +29,7 @@ class XVisuals {
 
    registerEvents() {
       world.afterEvents.playerSpawn.subscribe(({ player }) => {
-         if (!player) return;
+         if (!pcheck(player)) return;
          this.playerMap.set(player.id, player);
          this.health.healthSnapshot = null;
       });
@@ -48,7 +45,7 @@ class XVisuals {
          try {
             const entity = event.hurtEntity;
             const dmg = event.damage;
-            if (dmg === 0 || !entity || entity.typeId !== 'minecraft:player') return;
+            if (dmg === 0 || !entity || entity.typeId !== ENTITY_IDS.PLAYER) return;
             this.hurtQueue.push(entity, dmg, event.damageSource.cause);
          } catch (error) {
             this.logError('[xVisuals] entityHurt', error);
@@ -59,7 +56,7 @@ class XVisuals {
          try {
             if (system.currentTick - this.initTick < WARMUP_TICKS) return;
             const entity = event.entity;
-            if (!entity || entity.typeId !== 'minecraft:player') return;
+            if (!entity || entity.typeId !== ENTITY_IDS.PLAYER) return;
             const message = EFFECT_MAP[event.effect.typeId];
             if (!message) return;
             this.effectQueue.push(entity, message);
@@ -70,7 +67,7 @@ class XVisuals {
    }
 
    tick() {
-      if (this.errorCount > 2) this.errorCount -= 2;
+      if (this.errorCount > ERROR_DECAY) this.errorCount -= ERROR_DECAY;
       else if (this.errorCount > 0) this.errorCount--;
 
       try {
@@ -99,7 +96,7 @@ class XVisuals {
    }
 
    logError(tag, error) {
-      if (this.errorCount > MAX_ERROR_RATE) return;
+      if (this.errorCount > ERROR_LIMITS.MAX_ERROR_RATE) return;
       this.errorCount++;
       console.error(tag + ': ', error);
    }

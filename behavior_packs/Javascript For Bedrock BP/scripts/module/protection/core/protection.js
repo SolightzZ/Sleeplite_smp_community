@@ -9,6 +9,7 @@ import { consumeBlock, isFormValid } from '../utils/helpers.js';
 import { buildZone, isZoneOverlap, validateZoneCreate } from '../utils/validation.js';
 import { clearBorderVisuals } from './borders.js';
 import { zoneDatabase } from './database.js';
+import { cache } from '../../../shared/cache.js';
 
 export const uiLockSet = new Set();
 
@@ -22,7 +23,7 @@ const confirmDelete = async (player) => {
 
    const firstResponse = await firstform.show(player);
    if (firstResponse.canceled) {
-      addSound(player, 'block.false_permissions');
+      cache.playSound(player, 'block.false_permissions');
       return false;
    }
    if (firstResponse.selection !== 0) return false;
@@ -35,7 +36,7 @@ const confirmDelete = async (player) => {
 
    const secondResponse = await secondform.show(player);
    if (secondResponse.canceled) {
-      addSound(player, 'block.false_permissions');
+      cache.playSound(player, 'block.false_permissions');
       return false;
    }
    if (secondResponse.selection !== 0) return false;
@@ -48,14 +49,14 @@ export const createZone = async (player) => {
    try {
       const result = validateZoneCreate(player, zoneDatabase.zones);
       if (!result.ok) {
-         addSound(player, 'block.false_permissions');
-         return player.sendMessage(result.reason);
+         cache.playSound(player, 'block.false_permissions');
+         return cache.sendMessage(player, result.reason);
       }
 
       const newZone = buildZone(result.center, result.dimension);
       if (isZoneOverlap(newZone, zoneDatabase.zones)) {
-         addSound(player, 'block.false_permissions');
-         return player.sendMessage(`[x] ตำแหน่งนี้ซ้อนทับกับโพรเทคอื่น`);
+         cache.playSound(player, 'block.false_permissions');
+         return cache.sendMessage(player, `[x] ตำแหน่งนี้ซ้อนทับกับโพรเทคอื่น`);
       }
 
       const confirmForm = new ActionFormData()
@@ -68,17 +69,17 @@ export const createZone = async (player) => {
       if (!isFormValid(player, response) || response.selection !== 0) return;
 
       if (!consumeBlock(player)) {
-         addSound(player, 'block.false_permissions');
-         return player.sendMessage(`[x] คุณต้องมี Diamond Block ในช่องเก็บของ`);
+         cache.playSound(player, 'block.false_permissions');
+         return cache.sendMessage(player, `[x] คุณต้องมี Diamond Block ในช่องเก็บของ`);
       }
 
       newZone.owner = player.name;
       zoneDatabase.zones[player.name] = newZone;
 
-      addSound(player, 'random.levelup');
-      player.sendMessage(`${Colors.Success}[/] สร้างโพรเทค ${Config.ZoneSize}x${Config.ZoneSize} สำเร็จ`);
+      cache.playSound(player, 'random.levelup');
+      cache.sendMessage(player, `${Colors.Success}[/] สร้างโพรเทค ${Config.ZoneSize}x${Config.ZoneSize} สำเร็จ`);
    } catch (error) {
-      player.sendMessage(`[x] ไม่สามารถสร้างโพรเทคได้`);
+      cache.sendMessage(player, `[x] ไม่สามารถสร้างโพรเทคได้`);
       logError('Protection', 'createZone', error);
    }
 };
@@ -86,8 +87,8 @@ export const createZone = async (player) => {
 export const deleteZone = async (player) => {
    try {
       if (!zoneDatabase.zones[player.name]) {
-         addSound(player, 'block.false_permissions');
-         return player.sendMessage(`[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
+         cache.playSound(player, 'block.false_permissions');
+         return cache.sendMessage(player, `[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
       }
 
       const ok = await confirmDelete(player);
@@ -95,10 +96,10 @@ export const deleteZone = async (player) => {
 
       delete zoneDatabase.zones[player.name];
       clearBorderVisuals(player.name);
-      addSound(player, 'mob.pause_growth');
-      player.sendMessage(`${Colors.Success}[/] ลบโพรเทคเรียบร้อย`);
+      cache.playSound(player, 'mob.pause_growth');
+      cache.sendMessage(player, `${Colors.Success}[/] ลบโพรเทคเรียบร้อย`);
    } catch (error) {
-      player.sendMessage(`[x] ไม่สามารถลบโพรเทคได้`);
+      cache.sendMessage(player, `[x] ไม่สามารถลบโพรเทคได้`);
       logError('Protection', 'deleteZone', error);
    }
 };
@@ -108,8 +109,8 @@ export const manageMembers = async (player) => {
    try {
       const zone = zoneDatabase.zones[player.name];
       if (!zone) {
-         addSound(player, 'block.false_permissions');
-         return player.sendMessage(`[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
+         cache.playSound(player, 'block.false_permissions');
+         return cache.sendMessage(player, `[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
       }
 
       const allPlayers = Registry.getPlayers();
@@ -132,29 +133,29 @@ export const manageMembers = async (player) => {
       const playerIndex = response.formValues[1];
 
       if (typeof playerIndex !== 'number' || playerIndex < 0 || playerIndex >= otherPlayerNames.length) {
-         return player.sendMessage(`[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
+         return cache.sendMessage(player, `[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
       }
 
       const targetName = otherPlayerNames[playerIndex];
-      if (!targetName) return player.sendMessage(`[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
+      if (!targetName) return cache.sendMessage(player, `[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
 
       if (actionIndex === 0) {
          if (zone.members.length >= Config.MaxFriends) {
-            return player.sendMessage(`[x] สมาชิกเต็มแล้ว (สูงสุด ${Config.MaxFriends} คน)`);
+            return cache.sendMessage(player, `[x] สมาชิกเต็มแล้ว (สูงสุด ${Config.MaxFriends} คน)`);
          }
          if (zone.members.includes(targetName)) {
-            return player.sendMessage(`[x] ผู้เล่นนี้เป็นสมาชิกอยู่แล้ว`);
+            return cache.sendMessage(player, `[x] ผู้เล่นนี้เป็นสมาชิกอยู่แล้ว`);
          }
          zone.members.push(targetName);
-         player.sendMessage(`${Colors.Success}[/] เพิ่ม ${targetName} เข้าเป็นสมาชิกแล้ว`);
+         cache.sendMessage(player, `${Colors.Success}[/] เพิ่ม ${targetName} เข้าเป็นสมาชิกแล้ว`);
       } else {
          const memberIndex = zone.members.indexOf(targetName);
-         if (memberIndex === -1) return player.sendMessage(`[x] ผู้เล่นนี้ไม่ได้เป็นสมาชิก`);
+         if (memberIndex === -1) return cache.sendMessage(player, `[x] ผู้เล่นนี้ไม่ได้เป็นสมาชิก`);
          zone.members.splice(memberIndex, 1);
-         player.sendMessage(`${Colors.Warning}[/] ลบ ${targetName} ออกจากสมาชิกแล้ว`);
+         cache.sendMessage(player, `${Colors.Warning}[/] ลบ ${targetName} ออกจากสมาชิกแล้ว`);
       }
    } catch (error) {
-      player.sendMessage(`[x] ไม่สามารถจัดการสมาชิกได้`);
+      cache.sendMessage(player, `[x] ไม่สามารถจัดการสมาชิกได้`);
       logError('Protection', 'manageMembers', error);
    }
 };
@@ -163,7 +164,7 @@ export const manageMembers = async (player) => {
 export const manageFlags = async (player) => {
    try {
       const zone = zoneDatabase.zones[player.name];
-      if (!zone) return player.sendMessage(`[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
+      if (!zone) return cache.sendMessage(player, `[x] คุณยังไม่ได้ตั้งค่าโพรเทค`);
 
       const flags = zone.flags ?? Config.DefaultFlags;
       const form = new ModalFormData()
@@ -185,9 +186,9 @@ export const manageFlags = async (player) => {
          container: response.formValues[3],
          damage: response.formValues[4],
       };
-      player.sendMessage(`${Colors.Success}[/] ตั้งค่าสิทธิ์โพรเทคเรียบร้อย`);
+      cache.sendMessage(player, `${Colors.Success}[/] ตั้งค่าสิทธิ์โพรเทคเรียบร้อย`);
    } catch (error) {
-      player.sendMessage(`[x] ไม่สามารถตั้งค่าสิทธิ์ได้`);
+      cache.sendMessage(player, `[x] ไม่สามารถตั้งค่าสิทธิ์ได้`);
       logError('Protection', 'manageFlags', error);
    }
 };
@@ -195,10 +196,10 @@ export const manageFlags = async (player) => {
 // เครื่องมือแอดมิน
 export const adminDeleteZone = async (player) => {
    try {
-      if (!player.hasTag(Config.AdminTag)) return player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
+      if (!player.hasTag(Config.AdminTag)) return cache.sendMessage(player, `[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
 
       const owners = Object.keys(zoneDatabase.zones);
-      if (owners.length === 0) return player.sendMessage(`[x] ยังไม่มีโพรเทคในระบบ`);
+      if (owners.length === 0) return cache.sendMessage(player, `[x] ยังไม่มีโพรเทคในระบบ`);
 
       const form = new ModalFormData();
       form.title('ลบโพรเทค (แอดมิน)');
@@ -209,25 +210,25 @@ export const adminDeleteZone = async (player) => {
 
       const selectedIndex = response.formValues[0];
       if (typeof selectedIndex !== 'number' || selectedIndex < 0 || selectedIndex >= owners.length) {
-         return player.sendMessage(`[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
+         return cache.sendMessage(player, `[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
       }
 
       const owner = owners[selectedIndex];
-      if (!zoneDatabase.zones[owner]) return player.sendMessage(`[x] ไม่พบโพรเทคดังกล่าว`);
+      if (!zoneDatabase.zones[owner]) return cache.sendMessage(player, `[x] ไม่พบโพรเทคดังกล่าว`);
 
       delete zoneDatabase.zones[owner];
       clearBorderVisuals(owner);
-      player.sendMessage(`${Colors.Warning}[/] ลบโพรเทคของ ${owner} แล้ว`);
+      cache.sendMessage(player, `${Colors.Warning}[/] ลบโพรเทคของ ${owner} แล้ว`);
 
       // ค้นหาผู้เล่นออนไลน์เพื่อแจ้งเตือนผ่าน Registry
       for (const onlinePlayer of Registry.getPlayers()) {
          if (onlinePlayer.name === owner) {
-            onlinePlayer.sendMessage(`§cผู้ดูแลระบบลบโพรเทคของคุณแล้ว`);
+            cache.sendMessage(onlinePlayer, `§cผู้ดูแลระบบลบโพรเทคของคุณแล้ว`);
             break;
          }
       }
    } catch (error) {
-      player.sendMessage(`[x] ไม่สามารถลบโพรเทคได้ (แอดมิน)`);
+      cache.sendMessage(player, `[x] ไม่สามารถลบโพรเทคได้ (แอดมิน)`);
       logError('Protection', 'adminDeleteZone', error);
    }
 };
@@ -235,10 +236,10 @@ export const adminDeleteZone = async (player) => {
 // เครื่องมือแอดมิน
 export const adminTeleport = async (player) => {
    try {
-      if (!player.hasTag(Config.AdminTag)) return player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
+      if (!player.hasTag(Config.AdminTag)) return cache.sendMessage(player, `[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
 
       const owners = Object.keys(zoneDatabase.zones);
-      if (owners.length === 0) return player.sendMessage(`[x] ยังไม่มีโพรเทคในระบบ`);
+      if (owners.length === 0) return cache.sendMessage(player, `[x] ยังไม่มีโพรเทคในระบบ`);
 
       const form = new ModalFormData();
       form.title('เทเลพอร์ต (แอดมิน)');
@@ -249,15 +250,15 @@ export const adminTeleport = async (player) => {
 
       const selectedIndex = response.formValues[0];
       if (typeof selectedIndex !== 'number' || selectedIndex < 0 || selectedIndex >= owners.length) {
-         return player.sendMessage(`[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
+         return cache.sendMessage(player, `[x] การเลือกไม่ถูกต้อง กรุณาลองใหม่`);
       }
 
       const owner = owners[selectedIndex];
       const zone = zoneDatabase.zones[owner];
-      if (!zone) return player.sendMessage(`[x] ไม่พบโพรเทคดังกล่าว`);
+      if (!zone) return cache.sendMessage(player, `[x] ไม่พบโพรเทคดังกล่าว`);
 
       if (!zone.dimension) {
-         return player.sendMessage(`[x] โพรเทคไม่มีข้อมูลโลก`);
+         return cache.sendMessage(player, `[x] โพรเทคไม่มีข้อมูลโลก`);
       }
 
       const halfSize = halfZoneSize;
@@ -266,11 +267,11 @@ export const adminTeleport = async (player) => {
          y: zone.start.y + halfSize,
          z: zone.start.z + halfSize,
       };
-      const dimension = world.getDimension(zone.dimension);
+      const dimension = cache.getDimension(zone.dimension);
       player.teleport(center, { dimension });
-      player.sendMessage(`${Colors.Success}[/] เทเลพอร์ตไปยังโพรเทคของ ${owner}`);
+      cache.sendMessage(player, `${Colors.Success}[/] เทเลพอร์ตไปยังโพรเทคของ ${owner}`);
    } catch (error) {
-      player.sendMessage(`[x] ไม่สามารถเทเลพอร์ตได้`);
+      cache.sendMessage(player, `[x] ไม่สามารถเทเลพอร์ตได้`);
       logError('Protection', 'adminTeleport', error);
    }
 };

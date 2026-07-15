@@ -1,7 +1,8 @@
-import { BlockPermutation, EntityComponentTypes, EquipmentSlot, world } from '@minecraft/server';
-
+import { BlockPermutation, EquipmentSlot } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 import { BLOCK_AIR, BLOCK_LIGHT, BLOCK_LIGHT_15, FLASHLIGHT_ITEM, RAYCAST_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, WORLD_Y_MAX, WORLD_Y_MIN } from '../config.js';
+import { pcheck } from './../../../shared/player.js';
 import { playerLastPos, playerLights } from './state.js';
 
 function calcLightPos(headPos, viewDir, dimension) {
@@ -16,7 +17,7 @@ function calcLightPos(headPos, viewDir, dimension) {
 }
 
 export function isFlashlightHeld(player) {
-   const equippable = player.getComponent(EntityComponentTypes.Equippable);
+   const equippable = cache.getEquippable(player);
    if (!equippable) return false;
 
    const main = equippable.getEquipment(EquipmentSlot.Mainhand);
@@ -75,7 +76,7 @@ export function removeLightBlock(playerId, fallbackDim) {
 
    playerLights.delete(playerId);
    playerLastPos.delete(playerId);
-   const dim = world.getDimension(light.dimId) || fallbackDim;
+   const dim = cache.getDimension(light.dimId) || fallbackDim;
 
    if (!dim) return;
    try {
@@ -89,7 +90,7 @@ export function removeLightBlock(playerId, fallbackDim) {
 }
 
 export function placeLightForPlayer(player, skipHeldCheck = false) {
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    const playerId = player.id;
 
@@ -115,7 +116,7 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
 
    if (oldLight) {
       try {
-         const oldDim = oldLight.dimId === currentDim.id ? currentDim : world.getDimension(oldLight.dimId);
+         const oldDim = oldLight.dimId === currentDim.id ? currentDim : cache.getDimension(oldLight.dimId);
          if (oldDim) {
             const oldBlock = oldDim.getBlock(oldLight);
             if (oldBlock && (oldBlock.typeId === BLOCK_LIGHT || oldBlock.typeId === BLOCK_LIGHT_15)) {

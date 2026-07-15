@@ -1,21 +1,22 @@
 import { ActionFormData } from '@minecraft/server-ui';
-
-import { hasBright, toggleBright } from './state.js';
-import { addSound } from '../../plugin/utils.js';
 import { logError } from '../../events/logger.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
+import { btnOff, btnOn, headerDisabled, headerEnabled, iconOff, iconOn, msgOff, msgOn, soundOff, soundOn, soundOpen, title } from './config.js';
+import { hasBright, toggleBright } from './state.js';
 
 export function showMenu(player) {
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    const isOn = hasBright(player);
 
    const form = new ActionFormData();
-   form.title('FullBright | มองในที่มืด');
-   form.header(isOn ? `       §aEnabled` : `        §cDisabled`);
-   form.button(isOn ? 'Turn Off' : 'Turn On', isOn ? 'textures/items/fullbright' : 'textures/ui/icon_none');
+   form.title(title);
+   form.header(isOn ? headerEnabled : headerDisabled);
+   form.button(isOn ? btnOff : btnOn, isOn ? iconOn : iconOff);
    form.label('               @Sleeplite 2026');
 
-   addSound(player, 'mob.reset_growth');
+   cache.playSound(player, soundOpen);
 
    form
       .show(player)
@@ -24,9 +25,9 @@ export function showMenu(player) {
 
          const next = toggleBright(player);
 
-         if (player.isValid) {
-            addSound(player, next ? 'ominous_item_spawner.spawn_item_begin' : 'ominous_item_spawner.spawn_item');
-            player.onScreenDisplay.setActionBar(next ? `§aBright ON §f(${player.name})` : `§cBright OFF §f(${player.name})`);
+         if (pcheck(player)) {
+            cache.playSound(player, next ? soundOn : soundOff);
+            cache.setActionBar(player.onScreenDisplay, next ? `${msgOn} §f(${player.name})` : `${msgOff} §f(${player.name})`);
          }
       })
       .catch((error) => logError('FullBright', 'UI Error', error));

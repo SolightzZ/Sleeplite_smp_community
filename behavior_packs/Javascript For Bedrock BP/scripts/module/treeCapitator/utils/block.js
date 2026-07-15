@@ -1,7 +1,1 @@
-export const getBlockSafe = (dim, loc) => {
-  try {
-    return dim.getBlock(loc);
-  } catch {
-    return undefined;
-  }
-};
+export { getBlockSafe } from '../../../shared/block.js';

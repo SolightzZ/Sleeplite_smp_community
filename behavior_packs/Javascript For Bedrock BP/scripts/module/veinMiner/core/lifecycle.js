@@ -1,13 +1,11 @@
 import { ItemStack } from '@minecraft/server';
-import {
-  removePendingBlock,
-  decrementPlayerJobCount,
-  setPlayerLastJobEnd
-} from "./queue.js";
+import { JobQueue } from "../../../shared/jobQueue.js";
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
-export const finalizeJobDrops = (job) => {
+const finalizeJobDrops = (job) => {
    const dim = job.dimension;
-   const loc = job.player.isValid ? job.player.location : job.locations[0];
+   const loc = pcheck(job.player) ? job.player.location : job.locations[0];
    if (!loc) return;
    const dropId = job.dropTypeId;
    const amt = job.brokenCount;
@@ -18,12 +16,12 @@ export const finalizeJobDrops = (job) => {
 
       while (remaining > 0) {
          const stack = Math.min(remaining, 64);
-         dim.spawnItem(new ItemStack(dropId, stack), loc);
+         dim.spawnItem(cache.createItemStack(dropId, stack), loc);
          remaining -= stack;
       }
    }
 
-   if (xpTotal > 0 && job.player.isValid) {
+   if (xpTotal > 0 && pcheck(job.player)) {
       job.player.addExperience(xpTotal);
       job.player.playSound('random.orb', { pitch: 1.0, volume: 0.5 });
    }
@@ -35,10 +33,10 @@ export const finalizeAndCleanupState = (job) => {
    }
 
    for (const key of job.locationKeys) {
-      removePendingBlock(key);
+      JobQueue.removePending(key);
    }
 
-   decrementPlayerJobCount(job.playerId);
-   setPlayerLastJobEnd(job.playerId, Date.now());
+   JobQueue.decrementPlayerJobCount(job.playerId);
+   JobQueue.setPlayerLastJobEnd(job.playerId, Date.now());
 };
 

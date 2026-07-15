@@ -1,8 +1,9 @@
 import { ItemComponentTypes } from '@minecraft/server';
 import { cloneWithAmountLike, compareItemsByMode } from './item.js';
+import { cache } from '../../../shared/cache.js';
 
 const _getEnchantString = (item) => {
-    const enchants = item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments?.();
+    const enchants = cache.getEnchantable(item)?.getEnchantments?.();
     if (!enchants || enchants.length === 0) return '';
 
     const parts = new Array(enchants.length);
@@ -77,10 +78,10 @@ export const sortAndMergeItems = (items, maxSize) => {
 export const isContainerSorted = (container, mode = 'type', startSlot = 0) => {
     let prev = null;
     let foundEmpty = false;
-    const size = container.size;
+    const items = cache.getContainerItems(container);
 
-    for (let i = startSlot; i < size; i++) {
-        const cur = container.getItem(i);
+    for (let i = startSlot; i < items.length; i++) {
+        const cur = items[i];
         if (!cur) {
             foundEmpty = true;
             continue;
@@ -99,11 +100,12 @@ export const isContainerSorted = (container, mode = 'type', startSlot = 0) => {
 const buildEnchantFingerprint = (item) => _getEnchantString(item);
 
 export const writeContainerDiff = (container, newItems, startSlot = 0) => {
-    const maxWrite = container.size - startSlot;
+    const items = cache.getContainerItems(container);
+    const maxWrite = items.length - startSlot;
     const len = newItems.length < maxWrite ? newItems.length : maxWrite;
 
     for (let i = 0; i < len; i++) {
-        const cur = container.getItem(startSlot + i);
+        const cur = items[startSlot + i];
         const nxt = newItems[i];
 
         if (!cur && !nxt) continue;

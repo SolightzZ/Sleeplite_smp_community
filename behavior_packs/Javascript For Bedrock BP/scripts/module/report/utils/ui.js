@@ -2,10 +2,12 @@ import { MessageFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../../plugin/utils.js';
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 const handleUiError = (player, source, error) => {
-   if (player?.isValid) {
-      player.sendMessage('§c[Report] เกิดข้อผิดพลาดในการเปิดเมนู');
+   if (pcheck(player)) {
+      cache.sendMessage(player, '§c[Report] เกิดข้อผิดพลาดในการเปิดเมนู');
    }
 
    logError('Report', source, error);
@@ -15,7 +17,7 @@ export const showForm = (player, form, source, onSubmit) => {
    return form
       .show(player)
       .then((res) => {
-         if (!player?.isValid) return;
+         if (!pcheck(player)) return;
          onSubmit(res);
       })
       .catch((error) => handleUiError(player, source, error));
@@ -28,7 +30,7 @@ export const sure = (player, onConfirm, onCancel) => {
    ui.button1('Confirm (ยืนยัน)');
    ui.button2('Cancel (ยกเลิก)');
 
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
 
    showForm(player, ui, 'sure', (res) => {
       if (res.canceled) {

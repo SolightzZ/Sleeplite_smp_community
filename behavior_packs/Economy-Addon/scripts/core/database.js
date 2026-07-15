@@ -1,6 +1,7 @@
 import { world } from '@minecraft/server';
-
 import { logError } from '../events/logger.js';
+import { getLocKey } from '../shared/block.js';
+import { cache } from '../shared/cache.js';
 
 // prefix key ใน DynamicProperties
 const DP_PREFIX = 'economy:shop:';
@@ -17,7 +18,7 @@ function _keyToDp(key) {
 }
 
 function _makeLocKey(dimId, x, y, z) {
-   return `${dimId}|${x}|${y}|${z}`;
+   return getLocKey(dimId, x, y, z);
 }
 
 // สร้าง index ใหม่ทุกครั้งหลังโหลดข้อมูล
@@ -47,7 +48,7 @@ function _load() {
    const ids = world.getDynamicPropertyIds();
    for (const id of ids) {
       if (!id.startsWith(DP_PREFIX)) continue;
-      const raw = world.getDynamicProperty(id);
+      const raw = cache.getDynamicProperty(id);
       if (typeof raw !== 'string' || raw.length === 0) continue;
       try {
          const record = JSON.parse(raw);
@@ -172,30 +173,10 @@ export function updateChest(key, patch) {
    return true;
 }
 
-export function clearAll() {
-   const ids = world.getDynamicPropertyIds();
-   for (const id of ids) {
-      if (id.startsWith(DP_PREFIX)) {
-         world.setDynamicProperty(id, undefined);
-      }
-   }
-   _cache = {};
-   _locIndex.clear();
-   _ownerIndex.clear();
-}
-
 export function getDbSizeInfo() {
    _load();
    return {
       bytes: world.getDynamicPropertyTotalByteCount(),
       shopsCount: Object.keys(_cache ?? {}).length,
    };
-}
-
-// บังคับโหลดใหม่จาก DynamicProperties
-export function reloadFromDisk() {
-   _cache = null;
-   _locIndex.clear();
-   _ownerIndex.clear();
-   _load();
 }

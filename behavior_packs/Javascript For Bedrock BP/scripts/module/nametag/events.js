@@ -9,5 +9,5 @@ export const chatRankPlayerJoin = (event) => {
 
 export const chatRankItemUse = (event) => {
     if (!event.source?.hasTag(ADMIN)) return;
-    if (event.source.isValid) showMainMenu(event.source);
+    if (isValidPlayer(event.source)) showMainMenu(event.source);
 };

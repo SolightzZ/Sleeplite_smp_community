@@ -1,7 +1,7 @@
-import { EnchantmentTypes, ItemStack, world } from '@minecraft/server';
-
+import { EnchantmentTypes, ItemStack } from '@minecraft/server';
 import { CONFIG } from '../config.js';
 import { logError } from '../events/logger.js';
+import { cache } from '../shared/cache.js';
 import { findItemInContainer, formatItemName, getChestContainer, getPlayerContainer, giveItemsToPlayer, removeItemsFromContainer } from '../utils/helpers.js';
 import { requireShopRecord } from '../utils/validation.js';
 import { updateChest } from './database.js';
@@ -25,14 +25,14 @@ function _snapshotContainer(container) {
       if (canDestroy.length) snap.canDestroy = [...canDestroy];
       const canPlaceOn = item.getCanPlaceOn();
       if (canPlaceOn.length) snap.canPlaceOn = [...canPlaceOn];
-      const ench = item.getComponent('enchantable');
+      const ench = cache.getEnchantable(item);
       if (ench) {
          const enchants = ench.getEnchantments();
          if (enchants.length) {
             snap.enchantments = enchants.map((e) => ({ id: e.type.id, level: e.level }));
          }
       }
-      const dur = item.getComponent('durability');
+      const dur = cache.getDurability(item);
       if (dur) snap.durabilityDamage = dur.damage;
       data.push(snap);
    }
@@ -53,7 +53,7 @@ function _restoreContainer(container, data) {
       if (data[i].canDestroy) item.setCanDestroy(data[i].canDestroy);
       if (data[i].canPlaceOn) item.setCanPlaceOn(data[i].canPlaceOn);
       if (data[i].enchantments) {
-         const ench = item.getComponent('enchantable');
+         const ench = cache.getEnchantable(item);
          if (ench) {
             for (const e of data[i].enchantments) {
                const enchantType = EnchantmentTypes.get(e.id);
@@ -62,7 +62,7 @@ function _restoreContainer(container, data) {
          }
       }
       if (data[i].durabilityDamage !== undefined) {
-         const dur = item.getComponent('durability');
+         const dur = cache.getDurability(item);
          if (dur) dur.damage = data[i].durabilityDamage;
       }
       container.setItem(i, item);
@@ -197,7 +197,7 @@ export function executeTransaction(buyer, detail) {
       }
    }
 
-   const ownerPlayer = world.getAllPlayers().find((p) => p.name === owner);
+   const ownerPlayer = cache.getPlayers().find((p) => p.name === owner);
    if (ownerPlayer) {
       try {
          ownerPlayer.sendMessage(`[/] ${buyer.name} ซื้อ ${formatItemName(itemId)} x${totalItems} จากร้านของคุณ (+${totalCost} เพชร)`);

@@ -5,7 +5,7 @@ import { logError } from '../../../events/logger.js';
 
 const KEY = 'SPAWN_PROTECT_DATA';
 
-let cache = null;
+let state = null;
 
 function buildCacheFromData(data) {
    const spawn = world.getDefaultSpawnLocation();
@@ -22,10 +22,10 @@ function buildCacheFromData(data) {
 
 function dataFromCache() {
    return {
-      radius: cache.radius,
-      enabled: cache.enabled,
-      flags: { ...cache.flags },
-      exemptList: cache.exemptList,
+      radius: state.radius,
+      enabled: state.enabled,
+      flags: { ...state.flags },
+      exemptList: state.exemptList,
    };
 }
 
@@ -38,11 +38,25 @@ function mergeDefaults(saved) {
    };
 }
 
+function loadGlobal(key, fallback) {
+   const raw = world.getDynamicProperty(key);
+   if (!raw) return fallback;
+   try {
+      return JSON.parse(raw);
+   } catch {
+      return fallback;
+   }
+}
+
+function saveGlobal(key, value) {
+   world.setDynamicProperty(key, JSON.stringify(value));
+}
+
 export function loadSpawnProtec() {
    try {
-      const raw = world.getDynamicProperty(KEY);
-      const merged = mergeDefaults(raw ? JSON.parse(raw) : null);
-      cache = buildCacheFromData(merged);
+      const saved = loadGlobal(KEY, null);
+      const merged = mergeDefaults(saved);
+      state = buildCacheFromData(merged);
    } catch (error) {
       logError('SpawnProtec', 'loadSpawnProtec', error);
    }
@@ -50,8 +64,8 @@ export function loadSpawnProtec() {
 
 export function getConfigSpawnProtec() {
    try {
-      if (!cache) loadSpawnProtec();
-      return cache;
+      if (!state) loadSpawnProtec();
+      return state;
    } catch (error) {
       logError('SpawnProtec', 'getConfigSpawnProtec', error);
       return null;
@@ -69,8 +83,8 @@ export function updateConfigSpawnProtec(partial) {
             : { ...current.flags },
          exemptList: partial.exemptList ?? current.exemptList,
       });
-      cache = buildCacheFromData(merged);
-      world.setDynamicProperty(KEY, JSON.stringify(dataFromCache()));
+      state = buildCacheFromData(merged);
+      saveGlobal(KEY, dataFromCache());
    } catch (error) {
       logError('SpawnProtec', 'updateConfigSpawnProtec', error);
    }
@@ -79,8 +93,8 @@ export function updateConfigSpawnProtec(partial) {
 export function resetConfigSpawnProtec() {
    try {
       const defaults = mergeDefaults(null);
-      cache = buildCacheFromData(defaults);
-      world.setDynamicProperty(KEY, JSON.stringify(dataFromCache()));
+      state = buildCacheFromData(defaults);
+      saveGlobal(KEY, dataFromCache());
    } catch (error) {
       logError('SpawnProtec', 'resetConfigSpawnProtec', error);
    }

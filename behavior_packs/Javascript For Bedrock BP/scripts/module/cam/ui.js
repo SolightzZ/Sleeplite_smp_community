@@ -1,9 +1,10 @@
 import { ActionFormData } from '@minecraft/server-ui';
 import { addSound } from '../../plugin/utils.js';
+import { cache } from '../../shared/cache.js';
 
 export function showCamMenu(event) {
    const player = event.source;
-   addSound(player, 'ui.hardcore_enable');
+   cache.playSound(player, 'ui.hardcore_enable');
 
    const form = new ActionFormData();
    form.title('FreeCam | มุมกล้องอิสระ');

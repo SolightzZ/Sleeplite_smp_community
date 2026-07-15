@@ -1,10 +1,11 @@
 import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
-
 import { logError } from '../../events/logger.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 import { ask, forget } from './brain.js';
+import { boss, door, key, shop, team, zone } from './config.js';
 import { eat, hit, say, see, sound } from './hand.js';
-import { boss, door, key, shop, team, zone } from './rules.js';
 import { count, fix } from './tools.js';
 
 function showiconstest(player, title, message, icon) {
@@ -35,7 +36,7 @@ export const touch = (event) => {
       const block = event.block;
       const item = event.itemStack;
 
-      if (!player || !player.isValid) return;
+      if (!pcheck(player)) return;
       if (!block || !block.isValid) return;
       if (block.typeId !== door) return;
       if (!item || item.typeId !== key) return;
@@ -65,7 +66,7 @@ export const touch = (event) => {
       forget(block);
       sound(player, 'block.end_portal_frame.fill');
 
-      player.sendMessage(`§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`);
+      cache.sendMessage(player, `§d[Portal Success] §7Used: ${name} | Damage: ${gift.hp}`);
    } catch (error) {
       logError('EndPortalFrame', 'touch', error);
    }

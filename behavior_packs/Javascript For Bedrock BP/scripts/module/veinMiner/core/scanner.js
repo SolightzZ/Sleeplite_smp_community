@@ -1,4 +1,4 @@
-import { getLocKey, getBlockSafe } from "../utils/block.js";
+import { getLocKey, getBlockSafe } from "../../../shared/block.js";
 import { DIRECTIONS } from "../constants.js";
 import { CFG } from "../config.js";
 

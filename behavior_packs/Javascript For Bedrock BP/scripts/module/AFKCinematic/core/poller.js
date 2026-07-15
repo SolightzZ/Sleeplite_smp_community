@@ -1,6 +1,8 @@
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
+import { cache } from '../../../shared/cache.js';
 import { cloneVec3 } from '../utils/math.js';
+import { pcheck } from './../../../shared/player.js';
 import { startAfk, stopAfk } from './afk.js';
 import { cinematicScheduler } from './scheduler.js';
 import { playerStates } from './state.js';
@@ -8,11 +10,10 @@ import { ensureState, hasMoved, refreshBaseline } from './stateManager.js';
 
 export function handleIdlePoller() {
    try {
-      // ใช้ข้อมูลรายชื่อผู้เล่นที่แคชไว้เพื่อลดการโอเวอร์เฮดของระบบแบบ O(N)
       const players = Registry.getPlayers();
 
       for (const player of players) {
-         if (!player.isValid) continue;
+         if (!pcheck(player)) continue;
 
          const state = ensureState(player);
 
@@ -44,7 +45,7 @@ export function handleIdlePoller() {
             state.warningShown = true;
          }
          if (state.warningShown && remaining > 0) {
-            player.onScreenDisplay.setActionBar(`§eAFK Cinematic in §c${remainingSeconds}s`);
+            cache.setActionBar(player.onScreenDisplay, `§eAFK Cinematic in §c${remainingSeconds}s`);
          }
 
          if (remaining <= 0) {
@@ -68,10 +69,10 @@ export function playerLeaveAfk(playerId) {
 
 export function startCinematicNow(player) {
    try {
-      if (!player.isValid) return;
+      if (!pcheck(player)) return;
       const state = ensureState(player);
       if (state.isAfk) {
-         player.sendMessage('§7[AFK] Cinematic is already running.');
+         cache.sendMessage(player, '§7[AFK] Cinematic is already running.');
          return;
       }
       refreshBaseline(player, state);

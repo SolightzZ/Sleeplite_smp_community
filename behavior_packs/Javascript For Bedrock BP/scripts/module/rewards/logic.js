@@ -5,6 +5,8 @@ import { logError } from '../../events/logger.js';
 import { list } from './constants.js';
 import { load, save } from './database.js';
 import { give, name, time } from './functions.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 
 const logFormError = (source, error) => {
    logError('rewards', source, error);
@@ -15,7 +17,7 @@ function menu(player) {
    const data = load(player);
 
    if (data.count >= list.length) {
-      player.sendMessage('§a[/] คุณได้รับของรางวัลครบทุกวันแล้ว!');
+      cache.sendMessage(player, '§a[/] คุณได้รับของรางวัลครบทุกวันแล้ว!');
       return;
    }
 
@@ -52,22 +54,22 @@ function menu(player) {
 
    form.label('               @Sleeplite 2026');
 
-   addSound(player, 'vault.open_shutter');
+   cache.playSound(player, 'vault.open_shutter');
 
    form
       .show(player)
       .then((res) => {
-         if (!player.isValid || res.canceled) return;
+         if (!pcheck(player) || res.canceled) return;
 
          if (res.selection !== data.count) {
-            addSound(player, 'random.break');
-            player.onScreenDisplay.setTitle('§cกรุณารับของตามลำดับ');
+            cache.playSound(player, 'random.break');
+            cache.setTitle(player.onScreenDisplay, '§cกรุณารับของตามลำดับ');
             return;
          }
 
          if (data.last === today) {
-            addSound(player, 'random.fizz');
-            player.onScreenDisplay.setTitle('§cคุณรับของวันนี้ไปแล้ว');
+            cache.playSound(player, 'random.fizz');
+            cache.setTitle(player.onScreenDisplay, '§cคุณรับของวันนี้ไปแล้ว');
             return;
          }
 
@@ -98,11 +100,11 @@ function confirm(player, data, today) {
    ui.button1('Cancel');
    ui.button2('Claim');
 
-   addSound(player, 'random.pop2');
+   cache.playSound(player, 'random.pop2');
 
    ui.show(player)
       .then((res) => {
-         if (!player.isValid) return;
+         if (!pcheck(player)) return;
 
          if (res.selection === 1) {
             if (give(player, item.id, item.count)) {
@@ -110,13 +112,13 @@ function confirm(player, data, today) {
                data.count = data.count + 1;
 
                save(player, data);
-               addSound(player, 'random.levelup');
-               player.sendMessage(`§a[/] §aรับของสำเร็จ! ได้รับ ${name(item.id)}`);
-               player.onScreenDisplay.setTitle(`§a${name(item.id)} x${item.count}`);
+               cache.playSound(player, 'random.levelup');
+               cache.sendMessage(player, `§a[/] §aรับของสำเร็จ! ได้รับ ${name(item.id)}`);
+               cache.setTitle(player.onScreenDisplay, `§a${name(item.id)} x${item.count}`);
             } else {
-               addSound(player, 'block.false_permissions');
-               player.sendMessage('§c[x] §cช่องเก็บของเต็ม');
-               player.onScreenDisplay.setTitle('§cช่องเก็บของเต็ม');
+               cache.playSound(player, 'block.false_permissions');
+               cache.sendMessage(player, '§c[x] §cช่องเก็บของเต็ม');
+               cache.setTitle(player.onScreenDisplay, '§cช่องเก็บของเต็ม');
             }
          }
       })

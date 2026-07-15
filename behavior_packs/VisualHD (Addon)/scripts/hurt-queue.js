@@ -1,9 +1,12 @@
 import { system } from '@minecraft/server';
-import { MAX_HURT, HURT_MASK, buildHurtEffect } from './utils.js';
+import { QUEUE, SPAWN_LIMITS, COOLDOWNS, ERROR_LIMITS } from './config.js';
+import { buildHurtEffect, deleteCooldown, isCooldownActive, markCooldown } from './utils.js';
+import { pcheck } from './shared/player.js';
 
-const MAX_HURT_PER_TICK = 8;
-const HURT_COOLDOWN_TICKS = 10;
-const MAX_QUEUE_ERRORS = 10;
+const { MAX_HURT, HURT_MASK } = QUEUE;
+const MAX_HURT_PER_TICK = SPAWN_LIMITS.HURT_PER_TICK;
+const HURT_COOLDOWN_TICKS = COOLDOWNS.HURT;
+const MAX_QUEUE_ERRORS = ERROR_LIMITS.MAX_QUEUE_ERRORS;
 
 class XHurtQueue {
    errorCount = 0;
@@ -24,7 +27,7 @@ class XHurtQueue {
    }
 
    removeCooldown(playerId) {
-      this.cooldowns.delete(playerId);
+      deleteCooldown(this.cooldowns, playerId);
    }
 
    drain() {
@@ -42,11 +45,10 @@ class XHurtQueue {
          players[idx] = null;
          damages[idx] = 0;
          causes[idx] = null;
-         if (!player || !player.isValid) continue;
+         if (!pcheck(player)) continue;
 
          const tick = system.currentTick;
-         const lastTick = this.cooldowns.get(player.id) ?? 0;
-         if (tick - lastTick < HURT_COOLDOWN_TICKS) continue;
+         if (isCooldownActive(this.cooldowns, player.id, tick, HURT_COOLDOWN_TICKS)) continue;
 
          try {
             const effect = buildHurtEffect(damage, cause);
@@ -54,7 +56,7 @@ class XHurtQueue {
             if (effect.bloodParticle) player.dimension.spawnParticle(effect.bloodParticle, loc);
             if (effect.sound) player.playSound(effect.sound.id, { location: loc, volume: effect.sound.volume });
             player.sendMessage(effect.message);
-            this.cooldowns.set(player.id, tick);
+            markCooldown(this.cooldowns, player.id, tick);
          } catch {
             if (this.errorCount < MAX_QUEUE_ERRORS) {
                this.errorCount++;

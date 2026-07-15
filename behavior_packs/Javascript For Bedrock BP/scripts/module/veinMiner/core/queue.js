@@ -1,49 +1,9 @@
-const jobQueue = [];
-const pendingBlocks = new Set();
-const playerJobCount = new Map();
-const playerLastJobEnd = new Map();
-let lastProcessedIndex = 0;
+import { JobQueue } from '../../../shared/jobQueue.js';
 
-export const getJobQueueLength = () => jobQueue.length;
-export const getJob = (idx) => jobQueue[idx];
-export const pushJob = (job) => jobQueue.push(job);
-export const popJob = (idx) => {
-  const last = jobQueue.pop();
-  if (idx < jobQueue.length) {
-    jobQueue[idx] = last;
-  }
-};
-
-export const isBlockPending = (key) => pendingBlocks.has(key);
-export const addPendingBlock = (key) => pendingBlocks.add(key);
-export const removePendingBlock = (key) => pendingBlocks.delete(key);
-
-export const getPlayerJobCount = (playerId) => playerJobCount.get(playerId) || 0;
-export const incrementPlayerJobCount = (playerId) => {
-  const current = playerJobCount.get(playerId) || 0;
-  playerJobCount.set(playerId, current + 1);
-};
-export const decrementPlayerJobCount = (playerId) => {
-  const current = playerJobCount.get(playerId) || 0;
-  if (current <= 1) {
-    playerJobCount.delete(playerId);
-  } else {
-    playerJobCount.set(playerId, current - 1);
-  }
-};
-
-export const getPlayerLastJobEnd = (playerId) => playerLastJobEnd.get(playerId) || 0;
-export const setPlayerLastJobEnd = (playerId, time) => playerLastJobEnd.set(playerId, time);
-export const cleanupPlayerState = (playerId) => {
-  playerLastJobEnd.delete(playerId);
-  playerJobCount.delete(playerId);
-};
-
-export const getLastProcessedIndex = () => lastProcessedIndex;
-export const setLastProcessedIndex = (idx) => {
-  lastProcessedIndex = idx;
-};
-export const incrementLastProcessedIndex = () => {
-  lastProcessedIndex++;
-};
-
+export const getJobQueueLength = () => JobQueue.getJobQueueLength();
+export const getJob = (idx) => JobQueue.getJob(idx);
+export const pushJob = (job) => JobQueue.pushJob(job);
+export const popJob = (idx) => JobQueue.popJob(idx);
+export const getLastProcessedIndex = () => JobQueue.getLastProcessedIndex();
+export const setLastProcessedIndex = (idx) => JobQueue.setLastProcessedIndex(idx);
+export const incrementLastProcessedIndex = () => JobQueue.incrementLastProcessedIndex();

@@ -1,11 +1,10 @@
 import { system, world } from '@minecraft/server';
-
 import { onAdminCommand, onCommand } from '../command.js';
 import { CONFIG } from '../config.js';
 import { isOwner, isProtectedShopChest } from '../core/protection.js';
 import { removeSnapshot } from '../core/state.js';
 import { startBuy } from '../form/buyLogic.js';
-import { logError } from './logger.js';
+import { pcheck } from '../shared/cache.js';
 
 system.beforeEvents.startup.subscribe((init) => {
    onCommand(init);
@@ -48,7 +47,7 @@ world.beforeEvents.playerInteractWithBlock.subscribe((ev) => {
       const chestKey = result.key;
 
       system.run(() => {
-         if (!player.isValid) return;
+         if (!pcheck(player)) return;
          startBuy(player, chestKey);
       });
    } catch (error) {

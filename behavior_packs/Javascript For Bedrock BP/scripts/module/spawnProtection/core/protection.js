@@ -19,7 +19,7 @@ export function inSpawnZoneSpawnProtec(location, dimensionId) {
    }
 }
 
-export function isExemptSpawnProtec(player) {
+function isExemptSpawnProtec(player) {
    try {
       if (player.hasTag(Config.AdminTag)) return true;
       const c = getConfigSpawnProtec();

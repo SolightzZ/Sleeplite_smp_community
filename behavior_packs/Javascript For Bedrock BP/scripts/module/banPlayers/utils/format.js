@@ -1,3 +1,5 @@
+import { nowUnix, formatThaiDateTime } from '../../../shared/datetime.js';
+
 export const formatDuration = (seconds) => {
    if (seconds <= 0) return 'ถาวร';
    const days = Math.floor(seconds / 86400);
@@ -15,13 +17,9 @@ export const formatDuration = (seconds) => {
 };
 
 export const formatRemaining = (expiresAt) => {
-   const remaining = expiresAt - Math.floor(Date.now() / 1000);
+   const remaining = expiresAt - nowUnix();
    if (remaining <= 0) return 'หมดอายุ';
    return formatDuration(remaining);
 };
 
-export const formatDate = (timestamp) => {
-   const d = new Date((timestamp + 7 * 3600) * 1000);
-   const pad = (n) => String(n).padStart(2, '0');
-   return `${pad(d.getUTCDate())}/${pad(d.getUTCMonth() + 1)}/${d.getUTCFullYear()} ${pad(d.getUTCHours())}:${pad(d.getUTCMinutes())}`;
-};
+export const formatDate = (timestamp) => formatThaiDateTime(timestamp);

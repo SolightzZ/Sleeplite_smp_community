@@ -4,9 +4,11 @@ import { addSound } from '../../../plugin/utils.js';
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
 import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';
-import { banReasons, kickReasons } from '../data/messages.js';
+import { banReasons, kickReasons } from '../config.js';
 import { formatDate, formatRemaining } from '../utils/format.js';
 import { isAdmin, validateDuration, validatePlayerName } from '../utils/validation.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 const uiLockSet = new Set();
 
@@ -15,7 +17,7 @@ const formGuard = async (form, player) => {
    const response = await form.show(player);
 
    if (response.canceled) return null;
-   if (!player.isValid) return null;
+   if (!pcheck(player)) return null;
    return response;
 };
 
@@ -42,7 +44,7 @@ const withFormError = (name, handler) => async (player) => {
    try {
       await handler(player);
    } catch (error) {
-      player.sendMessage(`[x] เกิดข้อผิดพลาดในการดำเนินงาน`);
+      cache.sendMessage(player, `[x] เกิดข้อผิดพลาดในการดำเนินงาน`);
       logError('Ban', name + ' error', error);
    }
 };
@@ -61,12 +63,12 @@ const buildBanlistBody = () => {
 
 export const openBanMenu = async (arg) => {
    const player = arg?.source ?? arg;
-   if (!player || !player.isValid) return;
-   if (uiLockSet.has(player.name)) return player.sendMessage(`[x] กรุณารอสักครู่ขณะระบบกำลังประมวลผล`);
+   if (!pcheck(player)) return;
+   if (uiLockSet.has(player.name)) return cache.sendMessage(player, `[x] กรุณารอสักครู่ขณะระบบกำลังประมวลผล`);
    uiLockSet.add(player.name);
 
    try {
-      addSound(player, 'trial_spawner.charge_activate');
+      cache.playSound(player, 'trial_spawner.charge_activate');
       const admin = isAdmin(player);
 
       const form = new ActionFormData();
@@ -91,8 +93,8 @@ export const openBanMenu = async (arg) => {
       else if (admin && selection === 2) await showKickForm(player);
       else await showBanlist(player);
    } catch (error) {
-      addSound(player, 'block.false_permissions');
-      player.sendMessage(`[x] เกิดข้อผิดพลาดในการเปิดเมนู`);
+      cache.playSound(player, 'block.false_permissions');
+      cache.sendMessage(player, `[x] เกิดข้อผิดพลาดในการเปิดเมนู`);
       logError('Ban', 'openMenu error', error);
    } finally {
       uiLockSet.delete(player.name);
@@ -136,16 +138,16 @@ const showBanForm = withFormError('showBanForm', async (adminPlayer) => {
    }
 
    if (!targetName || !validatePlayerName(targetName)) {
-      addSound(adminPlayer, 'block.false_permissions');
-      return adminPlayer.sendMessage(`[x] รูปแบบชื่อผู้เล่นไม่ถูกต้อง`);
+      cache.playSound(adminPlayer, 'block.false_permissions');
+      return cache.sendMessage(adminPlayer, `[x] รูปแบบชื่อผู้เล่นไม่ถูกต้อง`);
    }
 
    const durationStr = String(response.formValues[offset + 1] ?? 'perm');
    const durationResult = validateDuration(durationStr);
 
    if (!durationResult.ok) {
-      addSound(adminPlayer, 'block.false_permissions');
-      return adminPlayer.sendMessage(`[x] รูปแบบเวลาไม่ถูกต้อง กรุณาใช้รูปแบบ เช่น 7d (วัน), 7h (ชั่วโมง), 30m (นาที) หรือ perm (ถาวร)`);
+      cache.playSound(adminPlayer, 'block.false_permissions');
+      return cache.sendMessage(adminPlayer, `[x] รูปแบบเวลาไม่ถูกต้อง กรุณาใช้รูปแบบ เช่น 7d (วัน), 7h (ชั่วโมง), 30m (นาที) หรือ perm (ถาวร)`);
    }
 
    const reason = buildReason(response.formValues, offset + 2, offset + 3, banReasons);
@@ -156,7 +158,7 @@ const showBanForm = withFormError('showBanForm', async (adminPlayer) => {
 const showUnbanForm = withFormError('showUnbanForm', async (adminPlayer) => {
    const bans = getBanList();
    if (bans.length === 0) {
-      return adminPlayer.sendMessage(`[x] ไม่พบรายชื่อผู้เล่นที่ถูกแบนในขณะนี้`);
+      return cache.sendMessage(adminPlayer, `[x] ไม่พบรายชื่อผู้เล่นที่ถูกแบนในขณะนี้`);
    }
    const banNames = bans.map((b) => `${b.name} (${b.reason})`);
 
@@ -181,7 +183,7 @@ const showUnbanForm = withFormError('showUnbanForm', async (adminPlayer) => {
 
    const confirmResponse = await confirm.show(adminPlayer);
    if (confirmResponse.canceled || confirmResponse.selection !== 0) {
-      addSound(adminPlayer, 'random.break');
+      cache.playSound(adminPlayer, 'random.break');
       return;
    }
 
@@ -194,7 +196,7 @@ const showKickForm = withFormError('showKickForm', async (adminPlayer) => {
    const playerNames = otherPlayers.map((p) => p.name);
 
    if (playerNames.length === 0) {
-      return adminPlayer.sendMessage(`[x] ไม่พบผู้เล่นอื่นในเซิร์ฟเวอร์ขณะนี้`);
+      return cache.sendMessage(adminPlayer, `[x] ไม่พบผู้เล่นอื่นในเซิร์ฟเวอร์ขณะนี้`);
    }
 
    const form = new ModalFormData();
@@ -214,14 +216,14 @@ const showKickForm = withFormError('showKickForm', async (adminPlayer) => {
    const targetName = playerNames[playerIndex];
    const reason = buildReason(response.formValues, 1, 2, kickReasons);
 
-   for (const target of world.getPlayers()) {
-      if (target.name === targetName && target.isValid) {
+   for (const target of cache.getPlayers()) {
+      if (target.name === targetName && pcheck(target)) {
          kickAndNotify(target, reason, adminPlayer.name);
          return;
       }
    }
 
-   adminPlayer.sendMessage(`§c[x] ไม่พบผู้เล่นชื่อ ${targetName} ในเซิร์ฟเวอร์`);
+   cache.sendMessage(adminPlayer, `§c[x] ไม่พบผู้เล่นชื่อ ${targetName} ในเซิร์ฟเวอร์`);
 });
 
 const showBanlist = async (player) => {

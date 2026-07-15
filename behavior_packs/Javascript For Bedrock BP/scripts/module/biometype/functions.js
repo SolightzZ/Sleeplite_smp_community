@@ -1,4 +1,5 @@
 import { logError } from '../../events/logger.js';
+import { pcheck } from './../../shared/player.js';
 import { biomeIdList, EXCLUDED_BIOMES } from './database.js';
 
 const formatIdName = (id) => {
@@ -12,7 +13,7 @@ const formatIdName = (id) => {
 };
 
 const getBiomeIdAtLocation = (player) => {
-   if (!player?.isValid) return null;
+   if (!pcheck(player)) return null;
 
    try {
       return player.dimension.getBiome(player.location)?.id ?? null;

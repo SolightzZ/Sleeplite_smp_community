@@ -1,7 +1,8 @@
 import { DisplaySlotId, HudElement, HudVisibility, ObjectiveSortOrder, world } from '@minecraft/server';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { logError } from '../events/logger.js';
-import { addSound } from './utils.js';
+import { cache } from '../shared/cache.js';
+import { pcheck } from '../shared/player.js';
 
 const OBJECTIVE_DEATHS = 'Deaths';
 const OBJECTIVE_DEATHS_PLUS = 'DeathsPlus';
@@ -18,7 +19,7 @@ const HUD_ELEMENT_BY_KEY = new Map([
 ]);
 
 const mainMenu = async (player) => {
-   addSound(player, 'block.loom.use');
+   cache.playSound(player, 'block.loom.use');
 
    const form = new ActionFormData();
    form.title('Settings');
@@ -55,7 +56,7 @@ const getOrCreateObjective = (id, player) => {
       objective = world.scoreboard.addObjective(id);
       return objective;
    } catch (error) {
-      player.sendMessage(`§c[x] ไม่สามารถสร้าง Scoreboard '${id}' ได้`);
+      cache.sendMessage(player, `§c[x] ไม่สามารถสร้าง Scoreboard '${id}' ได้`);
       logError('setting', 'objective_create_error ' + id, error);
       return undefined;
    }
@@ -94,7 +95,7 @@ const serverSettings = async (player) => {
    if (!deathsPlusObjective) return;
 
    try {
-      addSound(player, 'block.smithing_table.use');
+      cache.playSound(player, 'block.smithing_table.use');
 
       const form = new ModalFormData();
       form.title('Server Setting');
@@ -117,7 +118,7 @@ const serverSettings = async (player) => {
          return;
       }
       updateServerSettings(response.formValues, deathsObjective, deathsPlusObjective);
-      addSound(player, 'random.orb');
+      cache.playSound(player, 'random.orb');
    } catch (error) {
       logError('setting', 'server_settings_error', error);
    }
@@ -141,13 +142,13 @@ const setHudElement = (player, element, hideElement) => {
       player.removeTag(getHudTag(element));
    } catch (error) {
       logError('setting', 'hud_command_error ' + element, error);
-      player.sendMessage(`§c[x] ไม่สามารถปรับ HUD ${element} ได้`);
+      cache.sendMessage(player, `§c[x] ไม่สามารถปรับ HUD ${element} ได้`);
    }
 };
 
 const hudSettings = async (player) => {
    try {
-      addSound(player, 'block.cartography_table.use');
+      cache.playSound(player, 'block.cartography_table.use');
 
       const form = new ModalFormData();
       form.title('HUD Setting');
@@ -167,13 +168,13 @@ const hudSettings = async (player) => {
       setHudElement(player, HUD_STATUS_EFFECTS, hideStatusEffects);
       setHudElement(player, HUD_TOOLTIPS, hideTooltips);
       setHudElement(player, HUD_TOUCH_CONTROLS, hideTouchControls);
-      addSound(player, 'random.orb');
+      cache.playSound(player, 'random.orb');
    } catch (error) {
       logError('setting', 'hud_settings_error', error);
    }
 };
 
 export const setting_main = ({ source }) => {
-   if (!source || !source.isValid) return;
+   if (!pcheck(source)) return;
    mainMenu(source);
 };

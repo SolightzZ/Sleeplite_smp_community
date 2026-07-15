@@ -1,9 +1,12 @@
-const HEALTH_BATCH = 15;
-const MAX_HEARTBEATS_PER_TICK = 5;
-const LOW_HEALTH_THRESHOLD = 50;
-const CRITICAL_HEALTH_THRESHOLD = 30;
-const HEARTBEAT_COOLDOWN = 10;
-const MAX_HEALTH_ERRORS = 10;
+import { HEALTH, SPAWN_LIMITS, COOLDOWNS, ERROR_LIMITS, LOW_HEALTH_MSG, FALSE_LOW_HEALTH_MSG, HEARTBEAT_SOUND } from './config.js';
+import { pcheck, getHealthPercent, clearPlayerCache } from './shared/player.js';
+
+const HEALTH_BATCH = HEALTH.BATCH;
+const MAX_HEARTBEATS_PER_TICK = SPAWN_LIMITS.HEARTBEATS_PER_TICK;
+const LOW_HEALTH_THRESHOLD = HEALTH.LOW_THRESHOLD;
+const CRITICAL_HEALTH_THRESHOLD = HEALTH.CRITICAL_THRESHOLD;
+const HEARTBEAT_COOLDOWN = COOLDOWNS.HEARTBEAT;
+const MAX_HEALTH_ERRORS = ERROR_LIMITS.MAX_HEALTH_ERRORS;
 
 class XHealthMonitor {
    errorCount = 0;
@@ -22,17 +25,17 @@ class XHealthMonitor {
    }
 
    updateLowHealth(player, hp) {
-      if (!player?.isValid) return;
+      if (!pcheck(player)) return;
       const isLow = hp <= LOW_HEALTH_THRESHOLD;
       const state = this.getState(player.id);
       if (state.lowHealth === isLow) return;
       state.lowHealth = isLow;
       if (isLow && !state.msgSent) {
          state.msgSent = true;
-         player.sendMessage({ translate: 'xVisLowHealth0Blur' });
+         player.sendMessage({ translate: LOW_HEALTH_MSG });
       } else if (!isLow && state.msgSent) {
          state.msgSent = false;
-         player.sendMessage({ translate: 'xVisFalseLowHealth0Blur' });
+         player.sendMessage({ translate: FALSE_LOW_HEALTH_MSG });
       }
    }
 
@@ -49,17 +52,17 @@ class XHealthMonitor {
 
       for (let i = 0; i < HEALTH_BATCH && cursor + i < total; i++) {
          const [playerId, player] = snapshot[cursor + i];
-         if (!player || !player.isValid) {
+         if (!pcheck(player)) {
             playerMap.delete(playerId);
             this.healthStates.delete(playerId);
             this.heartbeatingPlayers.delete(playerId);
+            clearPlayerCache(playerId);
             continue;
          }
 
          try {
-            const health = player.getComponent('minecraft:health');
-            if (!health) continue;
-            const hp = (health.currentValue / health.effectiveMax) * 100;
+            const hp = getHealthPercent(player);
+            if (hp == null) continue;
             this.updateLowHealth(player, hp);
             if (hp <= CRITICAL_HEALTH_THRESHOLD && !this.heartbeatingPlayers.has(playerId)) {
                this.heartbeatingPlayers.set(playerId, { cooldown: 0 });
@@ -88,12 +91,12 @@ class XHealthMonitor {
          if (data.cooldown > 0) continue;
 
          const player = playerMap.get(playerId);
-         if (!player || !player.isValid) {
+         if (!pcheck(player)) {
             this.heartbeatingPlayers.delete(playerId);
             continue;
          }
          try {
-            player.playSound('mob.warden.heartbeat', { location: player.location, volume: 0.8 });
+            player.playSound(HEARTBEAT_SOUND.id, { location: player.location, volume: HEARTBEAT_SOUND.volume });
             data.cooldown = HEARTBEAT_COOLDOWN;
          } catch {
             if (this.errorCount < MAX_HEALTH_ERRORS) {
@@ -107,6 +110,7 @@ class XHealthMonitor {
    cleanup(playerId) {
       this.healthStates.delete(playerId);
       this.heartbeatingPlayers.delete(playerId);
+      clearPlayerCache(playerId);
       this.healthSnapshot = null;
    }
 }

@@ -1,5 +1,6 @@
 import { HudVisibility } from '@minecraft/server';
 import { ZOOM_CONFIG } from './Config.js';
+import { cache } from '../../shared/cache.js';
 
 export function playZoomSound(player) {
     player.playSound(ZOOM_CONFIG.sound.id, ZOOM_CONFIG.sound.options);
@@ -11,7 +12,7 @@ export function applyZoom(player, config) {
         easeOptions: ZOOM_CONFIG.camera,
     });
 
-    player.addEffect(ZOOM_CONFIG.effect.id, ZOOM_CONFIG.effect.duration, {
+    cache.addEffect(player, ZOOM_CONFIG.effect.id, ZOOM_CONFIG.effect.duration, {
         amplifier: ZOOM_CONFIG.effect.amplifier,
         showParticles: ZOOM_CONFIG.effect.showParticles,
     });

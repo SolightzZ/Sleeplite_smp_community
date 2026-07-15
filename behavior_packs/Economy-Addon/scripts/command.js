@@ -1,21 +1,18 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
-
 import { logError } from './events/logger.js';
+import { isPlayer } from './shared/player.js';
+import { pcheck } from './shared/cache.js';
 import { showAdminPanel } from './ui/adminPanel.js';
 import { showMainMenu } from './ui/menu.js';
 
 function getValidPlayer(origin) {
    const player = origin.sourceEntity;
-   if (!player || player.typeId !== 'minecraft:player' || !player.isValid) {
-      return null;
-   }
-   return player;
+   return isPlayer(player) ? player : null;
 }
 
-// ดีเลย์การทำงานไป tick ถัดไป (ป้องกันการเรียก UI ในระหว่าง before event)
 function execLater(player, fn) {
    system.run(() => {
-      if (!player.isValid) return;
+      if (!pcheck(player)) return;
       fn(player);
    });
 }

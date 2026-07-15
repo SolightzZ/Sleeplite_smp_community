@@ -1,37 +1,31 @@
-import { ItemStack, EntityComponentTypes } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
+import { icons, sounds, stripPrefix } from './config.js';
 import { completeJob } from './CompleteJob.js';
 import { createJob } from './CreateJob.js';
 import { editJobs } from './EditJob.js';
-import {
-   deleteJobData,
-   hasOwnerNotify,
-   ownerNotifyMap,
-   pendingDelivery,
-   playerJobMap,
-   saveData,
-   showUI,
-} from './Job.js';
+import { deleteJobData, hasOwnerNotify, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI } from './Job.js';
 import { viewJobs } from './ViewJob.js';
-import { addSound } from '../../plugin/utils.js';
 
-export const giveItems = (player, items) => {
-   if (!player.isValid) return;
+const giveItems = (player, items) => {
+   if (!pcheck(player)) return;
 
-   const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
+   const inv = cache.getInventory(player);
    if (!inv) return;
 
    const dim = player.dimension;
    const loc = player.location;
 
+   const invItems = cache.getContainerItems(inv);
    const itemsLen = items.length;
    for (let i = 0; i < itemsLen; i++) {
       const item = items[i];
       let remaining = item.amount;
       const typeId = item.id;
 
-      for (let j = 0; j < inv.size && remaining > 0; j++) {
-         const it = inv.getItem(j);
+      for (let j = 0; j < invItems.length && remaining > 0; j++) {
+         const it = invItems[j];
          if (!it || it.typeId !== typeId) continue;
 
          const space = it.maxAmount - it.amount;
@@ -43,10 +37,10 @@ export const giveItems = (player, items) => {
          inv.setItem(j, it);
       }
 
-      for (let j = 0; j < inv.size && remaining > 0; j++) {
-         if (inv.getItem(j)) continue;
+      for (let j = 0; j < invItems.length && remaining > 0; j++) {
+         if (invItems[j]) continue;
 
-         const newItem = new ItemStack(typeId, 1);
+         const newItem = cache.createItemStack(typeId, 1);
          const size = Math.min(newItem.maxAmount, remaining);
          newItem.amount = size;
          inv.setItem(j, newItem);
@@ -54,7 +48,7 @@ export const giveItems = (player, items) => {
       }
 
       while (remaining > 0) {
-         const newItem = new ItemStack(typeId, 1);
+         const newItem = cache.createItemStack(typeId, 1);
          const size = Math.min(newItem.maxAmount, remaining);
          newItem.amount = size;
          dim.spawnItem(newItem, loc);
@@ -63,27 +57,27 @@ export const giveItems = (player, items) => {
    }
 };
 
-export function receiveItems(player) {
-   if (!player.isValid) return;
+function receiveItems(player) {
+   if (!pcheck(player)) return;
 
    const pendingIds = ownerNotifyMap.get(player.id);
 
    if (!pendingIds || pendingIds.size === 0) {
-      player.sendMessage('[Job] ไม่มีไอเท็มให้รับ');
+      cache.sendMessage(player, '[Job] ไม่มีไอเท็มให้รับ');
       const form = new ActionFormData();
       form.title('รับไอเทม');
       form.body('ไม่มีไอเทมให้รับในขณะนี้');
       form.button('ย้อนกลับ');
       showUI(player, form, () => {
-         addSound(player, 'block.barrel.close');
-         showMainMenu(player);
-      });
-      return;
-   }
+          cache.playSound(player, sounds.barrelClose);
+          showMainMenu(player);
+       });
+       return;
+    }
 
-   const form = new ActionFormData();
+    const form = new ActionFormData();
 
-   const allItems = [];
+    const allItems = [];
    for (const jid of pendingIds) {
       const delivery = pendingDelivery.get(jid);
 
@@ -100,18 +94,18 @@ export function receiveItems(player) {
 
    for (let i = 0; i < allItemsLen; i++) {
       const item = allItems[i];
-      body += `- ${item.id.replace('minecraft:', '')} x${item.amount}\n`;
+       body += `- ${stripPrefix(item.id)} x${item.amount}\n`;
    }
    body += '\nกดรับเพื่อรวบรวมไอเทมทั้งหมด';
 
    form.title('รับไอเทม');
    form.body(body);
-   form.button('รับทั้งหมด', 'textures/ui/promo_gift_small_yellow');
-   form.button('ย้อนกลับ');
+    form.button('รับทั้งหมด', icons.gift);
+    form.button('ย้อนกลับ');
 
-   showUI(player, form, (res) => {
-      if (res.selection === 1) {
-         addSound(player, 'block.barrel.close');
+    showUI(player, form, (res) => {
+       if (res.selection === 1) {
+          cache.playSound(player, sounds.barrelClose);
          showMainMenu(player);
          return;
       }
@@ -125,16 +119,16 @@ export function receiveItems(player) {
       ownerNotifyMap.delete(player.id);
       saveData();
 
-      addSound(player, 'random.anvil_use');
-      if (player.isValid) player.sendMessage(`[Job] ได้รับไอเทม ${allItems.length} เรียบร้อยแล้ว`);
+       cache.playSound(player, sounds.anvilUse);
+      if (pcheck(player)) cache.sendMessage(player, `[Job] ได้รับไอเทม ${allItems.length} เรียบร้อยแล้ว`);
       showMainMenu(player);
    });
 }
 
 export const showMainMenu = (player) => {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
-   addSound(player, 'mob.villager.idle');
+    cache.playSound(player, sounds.villagerIdle);
 
    const hasPending = hasOwnerNotify(player.id);
    const activeJobId = playerJobMap.get(player.id);
@@ -143,35 +137,31 @@ export const showMainMenu = (player) => {
    form.title('Job Delivery | ระบบจัดส่งงาน');
    form.body('                 เลือกรายการที่ต้องการ:');
    form.divider();
-   form.button('สร้างคำสั่งจัดส่ง', 'textures/ui/MashupIcon');
-   form.divider();
-   hasPending
-      ? form.button('§e[!] §rรับไอเทมจัดส่ง', 'textures/ui/mute_off')
-      : form.button('รับไอเทมจัดส่ง', 'textures/ui/mute_on');
-   form.button('รายการคำสั่งของฉัน', 'textures/ui/sidebar_icons/my_content');
-   form.button('งานจัดส่งที่พร้อมรับ', 'textures/ui/FriendsDiversity');
-   form.divider();
-   activeJobId
-      ? form.button('งานที่กำลังดำเนินการ', 'textures/ui/Envelope')
-      : form.button('ส่งมอบงาน', 'textures/ui/how_to_play_button_default_light');
-   form.label('                  @Sleeplite 2026');
+    form.button('สร้างคำสั่งจัดส่ง', icons.mashup);
+    form.divider();
+    hasPending ? form.button('§e[!] §rรับไอเทมจัดส่ง', icons.muteOff) : form.button('รับไอเทมจัดส่ง', icons.muteOn);
+    form.button('รายการคำสั่งของฉัน', icons.myContent);
+    form.button('งานจัดส่งที่พร้อมรับ', icons.friends);
+    form.divider();
+    activeJobId ? form.button('งานที่กำลังดำเนินการ', icons.envelope) : form.button('ส่งมอบงาน', icons.howToPlay);
+    form.label('                  @Sleeplite 2026');
 
-   showUI(player, form, (res) => {
-      if (res.selection === 0) {
-         addSound(player, 'block.barrel.open');
-         createJob(player);
-      } else if (res.selection === 1) {
-         addSound(player, 'trial_spawner.eject_item');
-         receiveItems(player);
-      } else if (res.selection === 2) {
-         addSound(player, 'item.book.page_turn');
-         editJobs(player);
-      } else if (res.selection === 3) {
-         addSound(player, 'item.book.page_turn');
-         viewJobs(player);
-      } else if (res.selection === 4) {
-         addSound(player, 'random.orb');
-         completeJob(player);
-      }
-   });
+    showUI(player, form, (res) => {
+       if (res.selection === 0) {
+          cache.playSound(player, sounds.barrelOpen);
+          createJob(player);
+       } else if (res.selection === 1) {
+          cache.playSound(player, sounds.ejectItem);
+          receiveItems(player);
+       } else if (res.selection === 2) {
+          cache.playSound(player, sounds.bookPageTurn);
+          editJobs(player);
+       } else if (res.selection === 3) {
+          cache.playSound(player, sounds.bookPageTurn);
+          viewJobs(player);
+       } else if (res.selection === 4) {
+          cache.playSound(player, sounds.orb);
+          completeJob(player);
+       }
+    });
 };

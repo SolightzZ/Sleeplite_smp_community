@@ -1,5 +1,6 @@
 import { CONFIG } from '../config.js';
 import { getByKey } from '../core/database.js';
+import { cache } from '../shared/cache.js';
 
 export function validateChestBlock(block) {
    if (!block) return { status: 'error', msg: '[x] ไม่พบบล็อก' };
@@ -7,7 +8,7 @@ export function validateChestBlock(block) {
       return { status: 'error', msg: '[x] บล็อกนี้ไม่ใช่หีบ (Chest)' };
    }
 
-   const inv = block.getComponent('inventory');
+   const inv = cache.getComponent(block, 'inventory');
    if (!inv) {
       return { status: 'error', msg: '[x] ไม่สามารถเข้าถึง inventory ของหีบได้' };
    }

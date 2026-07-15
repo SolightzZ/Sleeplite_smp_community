@@ -2,10 +2,13 @@ import { BlockPermutation, ItemStack, system } from '@minecraft/server';
 
 import { logError } from '../../../events/logger.js';
 import { CFG } from '../config.js';
-import { applyDurabilityDamage } from '../utils/durability.js';
+import { Durability } from '../../../shared/durability.js';
+import { getEnchantLevel } from '../../../shared/enchant.js';
 import { getPlayerAxe } from '../utils/inventory.js';
 import { cleanupJobState } from './lifecycle.js';
-import { getJob, getJobQueueLength, getLastProcessedIndex, incrementLastProcessedIndex, popJob, setLastProcessedIndex } from './state.js';
+import { JobQueue } from '../../../shared/jobQueue.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 let _airPermutation;
 
@@ -14,9 +17,9 @@ const TICK_BUDGET_MS = 5;
 export const processJobs = () => {
    const AIR = _airPermutation || (_airPermutation = BlockPermutation.resolve('minecraft:air'));
    try {
-      const totalJobs = getJobQueueLength();
+      const totalJobs = JobQueue.getJobQueueLength();
       if (totalJobs === 0) {
-         setLastProcessedIndex(0);
+         JobQueue.setLastProcessedIndex(0);
          return;
       }
 
@@ -28,28 +31,28 @@ export const processJobs = () => {
       let budgetChecked = 0;
       const maxJobs = Math.min(totalJobs, 4);
 
-      while (jobsDone < maxJobs && getJobQueueLength() > 0) {
+      while (jobsDone < maxJobs && JobQueue.getJobQueueLength() > 0) {
          if (++budgetChecked % 4 === 0 && Date.now() - startTime > TICK_BUDGET_MS) break;
 
-         let lastProcessedIndex = getLastProcessedIndex();
-         if (lastProcessedIndex >= getJobQueueLength()) {
+         let lastProcessedIndex = JobQueue.getLastProcessedIndex();
+         if (lastProcessedIndex >= JobQueue.getJobQueueLength()) {
             lastProcessedIndex = 0;
-            setLastProcessedIndex(0);
+            JobQueue.setLastProcessedIndex(0);
          }
 
-         const job = getJob(lastProcessedIndex);
+         const job = JobQueue.getJob(lastProcessedIndex);
          const curTick = system.currentTick;
 
-         if (!job.player.isValid || curTick - job.startTick > CFG.jobTimeoutTicks) {
+         if (!pcheck(job.player) || curTick - job.startTick > CFG.jobTimeoutTicks) {
             cleanupJobState(job);
-            popJob(lastProcessedIndex);
+            JobQueue.popJob(lastProcessedIndex);
             continue;
          }
 
          const axe = getPlayerAxe(job.player);
          if (!axe) {
             cleanupJobState(job);
-            popJob(lastProcessedIndex);
+            JobQueue.popJob(lastProcessedIndex);
             continue;
          }
 
@@ -68,7 +71,7 @@ export const processJobs = () => {
                   broken++;
 
                   const spawnAt = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
-                  job.dimension.spawnItem(new ItemStack(job.typeId, 1), spawnAt);
+                  job.dimension.spawnItem(cache.createItemStack(job.typeId, 1), spawnAt);
                }
             } catch (error) {
                logError('treeCapitator', 'breakError', error);
@@ -77,14 +80,15 @@ export const processJobs = () => {
 
          // Apply durability damage dynamically per tick
          if (broken > 0) {
-            applyDurabilityDamage(job.player, broken);
+            const unbreakLevel = getEnchantLevel(axe, 'unbreaking');
+            Durability.applyDurabilityDamage(job.player, axe, broken, unbreakLevel);
          }
 
          if (job.index >= job.locations.length) {
             cleanupJobState(job);
-            popJob(lastProcessedIndex);
+            JobQueue.popJob(lastProcessedIndex);
          } else {
-            incrementLastProcessedIndex();
+            JobQueue.incrementLastProcessedIndex();
          }
 
          jobsDone++;

@@ -1,79 +1,18 @@
-export const MSG = { PREFIX: 'xVis', IMPACT_COUNT: 34, FLAME_COUNT: 8, DROWN_COUNT: 17 };
-
-export const IMPACT_MSGS = Array.from({ length: MSG.IMPACT_COUNT }, (_, i) => (i >= 1 && i <= 3 ? `xVisImpactFixed${i}` : `xVisImpact${i}`));
-export const FLAME_MSGS = Array.from({ length: MSG.FLAME_COUNT }, (_, i) => `xVisFlameImpact${i}`);
-export const DROWN_MSGS = Array.from({ length: MSG.DROWN_COUNT }, (_, i) => (i === 1 ? `xVisDrowningFixed${i}` : `xVisDrowning${i}`));
-
-const EXPLOSION_CAUSES = ['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall'];
-
-export const DAMAGE_CAUSE = {
-   IMPACT: new Set([
-      'contact',
-      'entityAttack',
-      'fall',
-      'magic',
-      'projectile',
-      'stalactite',
-      'stalagmite',
-      'entityExplosion',
-      'blockExplosion',
-      'anvil',
-      'maceSmash',
-      'ramAttack',
-      'sonicBoom',
-      'flyIntoWall',
-   ]),
-   EXPLOSION: new Set(EXPLOSION_CAUSES),
-   FLAME: new Set(['fire', 'fireTick', 'fireworks', 'lava', 'lightning', 'magma', 'campfire', 'soulCampfire']),
-};
-
-export const BLOOD_PARTICLES = ['xvisuals:blood_drop0', 'xvisuals:blood_drop1', 'xvisuals:blood_drop2'];
-
-export const EFFECT_MAP = {
-   poison: 'xVisPoison',
-   fire_resistance: 'xVisFireResistance',
-   resistance: 'xVisResistance',
-   regeneration: 'xVisRegeneration',
-   slow_falling: 'xVisSlowFalling',
-   speed: 'xVisSpeed',
-   strength: 'xVisStrength',
-   slowness: 'xVisSlowness',
-   jump_boost: 'xVisJumpBoost',
-   night_vision: 'xVisNightVision',
-   invisibility: 'xVisInvisibility',
-   water_breathing: 'xVisWaterBreathing',
-   weakness: 'xVisWeakness',
-   wither: 'xVisWither',
-   levitation: 'xVisLevitation',
-   wind_charged: 'xVisWindCharged',
-   weaving: 'xVisWeaving',
-   oozing: 'xVisOozing',
-   infested: 'xVisInfested',
-};
-
-export const SEV_MSGS = ['xVisWeakDamage', 'xVisHardDamage', 'xVisStrongDamage'];
-export const EXP_MSGS = ['xVisWeakExplosion', 'xVisHardExplosion', 'xVisStrongExplosion'];
-export const EXP_SOUNDS = [
-   { id: 'x.visuals.ear_ring.0', volume: 0.15 },
-   { id: 'x.visuals.ear_ring.0', volume: 0.35 },
-   { id: 'x.visuals.ear_ring.1', volume: 0.25 },
-];
-
-const EXP_TIER_LOW = 4;
-const EXP_TIER_MED = 9;
-const EXP_TIER_HIGH = 14;
-
-const DMG_SEV_WEAK = 7;
-const DMG_SEV_HARD = 14;
-
-export const getExpTier = (damage) => (damage < EXP_TIER_LOW ? -1 : damage < EXP_TIER_MED ? 0 : damage < EXP_TIER_HIGH ? 1 : 2);
-
-export const MAX_HURT = 128;
-export const HURT_MASK = 127;
-export const MAX_EFF = 64;
-export const EFF_MASK = 63;
+import { BLOOD_PARTICLES, DAMAGE_CAUSE, DROWN_MSGS, DROWN_SOUND, EXP_MSGS, EXP_SOUNDS, FLAME_MSGS, IMPACT_MSGS, SEV_MSGS, THRESHOLDS } from './config.js';
 
 export const randElem = (arr) => arr[(Math.random() * arr.length) | 0];
+
+export const deleteCooldown = (cooldowns, playerId) => cooldowns.delete(playerId);
+
+export const isCooldownActive = (cooldowns, playerId, tick, ticks) =>
+   tick - (cooldowns.get(playerId) ?? 0) < ticks;
+
+export const markCooldown = (cooldowns, playerId, tick) => cooldowns.set(playerId, tick);
+
+export const getExpTier = (damage) => {
+   const { EXP_TIER_LOW, EXP_TIER_MED, EXP_TIER_HIGH } = THRESHOLDS;
+   return damage < EXP_TIER_LOW ? -1 : damage < EXP_TIER_MED ? 0 : damage < EXP_TIER_HIGH ? 1 : 2;
+};
 
 export const buildHurtEffect = (damage, cause) => {
    const { IMPACT, EXPLOSION, FLAME } = DAMAGE_CAUSE;
@@ -83,7 +22,7 @@ export const buildHurtEffect = (damage, cause) => {
       sound = null,
       blood = null;
 
-   parts[partIndex++] = SEV_MSGS[damage < DMG_SEV_WEAK ? 0 : damage < DMG_SEV_HARD ? 1 : 2];
+   parts[partIndex++] = SEV_MSGS[damage < THRESHOLDS.DMG_SEV_WEAK ? 0 : damage < THRESHOLDS.DMG_SEV_HARD ? 1 : 2];
 
    if (IMPACT.has(cause)) {
       blood = randElem(BLOOD_PARTICLES);
@@ -100,9 +39,9 @@ export const buildHurtEffect = (damage, cause) => {
 
    if (FLAME.has(cause)) parts[partIndex++] = randElem(FLAME_MSGS);
 
-   if (cause === 'drowning') {
+   if (cause === DAMAGE_CAUSE.DROWNING) {
       parts[partIndex++] = randElem(DROWN_MSGS);
-      sound = { id: 'mob.drowned.death', volume: 0.8 };
+      sound = DROWN_SOUND;
    }
 
    parts.length = partIndex;

@@ -1,5 +1,6 @@
 import { CommandPermissionLevel, CustomCommandStatus, Player, system } from "@minecraft/server";
 import { toggleZoom } from "./core.js";
+import { pisPlayer, pcheck } from "./../../shared/player.js";
 
 export function ZoomCommand(init) {
   init.customCommandRegistry.registerCommand(
@@ -11,7 +12,7 @@ export function ZoomCommand(init) {
     },
 
     ({ sourceEntity }) => {
-      if (!(sourceEntity instanceof Player) || !sourceEntity.isValid) {
+      if (!pisPlayer(sourceEntity)) {
         return {
           status: CustomCommandStatus.Failure,
           message: "Player only.",
@@ -19,7 +20,7 @@ export function ZoomCommand(init) {
       }
 
       system.run(() => {
-        if (!sourceEntity.isValid) return;
+        if (!pcheck(sourceEntity)) return;
         toggleZoom(sourceEntity);
       });
 

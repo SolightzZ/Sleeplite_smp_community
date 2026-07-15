@@ -1,9 +1,12 @@
 import { system } from '@minecraft/server';
-import { MAX_EFF, EFF_MASK } from './utils.js';
+import { QUEUE, SPAWN_LIMITS, COOLDOWNS, ERROR_LIMITS } from './config.js';
+import { deleteCooldown, isCooldownActive, markCooldown } from './utils.js';
+import { pcheck } from './shared/player.js';
 
-const MAX_EFFECT_PER_TICK = 12;
-const EFFECT_COOLDOWN_TICKS = 20;
-const MAX_QUEUE_ERRORS = 10;
+const { MAX_EFF, EFF_MASK } = QUEUE;
+const MAX_EFFECT_PER_TICK = SPAWN_LIMITS.EFFECT_PER_TICK;
+const EFFECT_COOLDOWN_TICKS = COOLDOWNS.EFFECT;
+const MAX_QUEUE_ERRORS = ERROR_LIMITS.MAX_QUEUE_ERRORS;
 
 class XEffectQueue {
    errorCount = 0;
@@ -22,7 +25,7 @@ class XEffectQueue {
    }
 
    removeCooldown(playerId) {
-      this.cooldowns.delete(playerId);
+      deleteCooldown(this.cooldowns, playerId);
    }
 
    drain() {
@@ -38,15 +41,14 @@ class XEffectQueue {
          const message = messages[idx];
          players[idx] = null;
          messages[idx] = null;
-         if (!player?.isValid) continue;
+         if (!pcheck(player)) continue;
 
          const tick = system.currentTick;
-         const lastTick = this.cooldowns.get(player.id) ?? 0;
-         if (tick - lastTick < EFFECT_COOLDOWN_TICKS) continue;
+         if (isCooldownActive(this.cooldowns, player.id, tick, EFFECT_COOLDOWN_TICKS)) continue;
 
          try {
             player.sendMessage({ translate: message });
-            this.cooldowns.set(player.id, tick);
+            markCooldown(this.cooldowns, player.id, tick);
          } catch {
             if (this.errorCount < MAX_QUEUE_ERRORS) {
                this.errorCount++;

@@ -1,4 +1,6 @@
 import { Registry } from '../events/registry.js';
+import { cache } from '../shared/cache.js';
+import { pcheck } from './../shared/player.js';
 
 const BOSS_IDS = new Set(['minecraft:ender_dragon', 'minecraft:wither']);
 const BOSS_TAG = 'boss';
@@ -24,7 +26,7 @@ const collectPlayersByDimension = (players) => {
    const playersByDimension = new Map();
 
    for (const player of players) {
-      if (!player || !player.isValid) continue;
+      if (!pcheck(player)) continue;
       const dimId = player.dimension.id;
       let bucket = playersByDimension.get(dimId);
 
@@ -67,16 +69,7 @@ const createAnimation = (entity, bossName, subtitle, isDeath) => ({
 });
 
 const playAnimationStep = (animation, playersByDimension, recipients) => {
-   const {
-      entity,
-      bossName,
-      subtitle,
-      spawnLocation,
-      finalSound,
-      finalText,
-      charIndex,
-      maxCharIndex,
-   } = animation;
+   const { entity, bossName, subtitle, spawnLocation, finalSound, finalText, charIndex, maxCharIndex } = animation;
    if (!entity || !entity.isValid || charIndex > maxCharIndex) return false;
 
    const options = {
@@ -98,7 +91,7 @@ const playAnimationStep = (animation, playersByDimension, recipients) => {
    const titleText = isFinal ? finalText : bossName.slice(0, charIndex + 1);
 
    for (const player of recipients) {
-      player.onScreenDisplay.setTitle(titleText, options);
+      cache.setTitle(player.onScreenDisplay, titleText, options);
       if (isFinal) {
          player.playSound(finalSound, { volume: 0.5, pitch: 1 });
       }
@@ -136,8 +129,7 @@ const enqueueBossTitle = (entity, subtitle, isDeath) => {
 
 export const itile_main = (event) => {
    const entity = event.entity;
-   if (!entity || !entity.isValid || !BOSS_IDS.has(entity.typeId) || entity.hasTag(BOSS_TAG))
-      return;
+   if (!entity || !entity.isValid || !BOSS_IDS.has(entity.typeId) || entity.hasTag(BOSS_TAG)) return;
    entity.addTag(BOSS_TAG);
    enqueueBossTitle(entity, 'Spawn', false);
 };

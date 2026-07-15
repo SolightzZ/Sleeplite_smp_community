@@ -1,4 +1,4 @@
-import { getBlockSafe } from '../utils/block.js';
+import { getBlockSafe } from '../../../shared/block.js';
 import { LEAF_OFFSETS } from '../constants.js';
 import { CFG } from '../config.js';
 

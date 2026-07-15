@@ -1,9 +1,11 @@
 import { MagnetConfig, MagnetText } from '../config.js';
 import { addMagnetUser, countMagnetUsers, hasMagnetUser, removeMagnetUser } from './state.js';
 import { addSound } from '../../../plugin/utils.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from '../../../shared/player.js';
 
 export const canUseMagnet = (player) =>
-   player && player.isValid && player.location && player.dimension;
+   pcheck(player) && player.location && player.dimension;
 
 export const toggleMagnet = (player, turnOn) => {
    if (!canUseMagnet(player)) return;
@@ -11,17 +13,17 @@ export const toggleMagnet = (player, turnOn) => {
 
    if (turnOn) {
       if (countMagnetUsers() >= MagnetConfig.MAX_USERS && !hasMagnetUser(id)) {
-         player.onScreenDisplay?.setActionBar(`§c${MagnetText.FULL}`);
-         addSound(player, 'block.false_permissions');
+         cache.setActionBar(player.onScreenDisplay, `§c${MagnetText.FULL}`);
+         cache.playSound(player, 'block.false_permissions');
          return;
       }
 
       addMagnetUser(player);
-      player.onScreenDisplay?.setActionBar(`${MagnetText.ON}`);
-      addSound(player, 'respawn_anchor.set_spawn');
+      cache.setActionBar(player.onScreenDisplay, `${MagnetText.ON}`);
+      cache.playSound(player, 'respawn_anchor.set_spawn');
    } else {
       removeMagnetUser(id);
-      player.onScreenDisplay?.setActionBar(`${MagnetText.OFF}`);
-      addSound(player, 'respawn_anchor.deplete');
+      cache.setActionBar(player.onScreenDisplay, `${MagnetText.OFF}`);
+      cache.playSound(player, 'respawn_anchor.deplete');
    }
 };

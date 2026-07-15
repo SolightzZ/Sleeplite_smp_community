@@ -1,5 +1,7 @@
-import { BlockPermutation, EntityComponentTypes } from '@minecraft/server';
+import { BlockPermutation } from '@minecraft/server';
 import { logError } from '../events/logger.js';
+import { cache } from '../shared/cache.js';
+import { pcheck } from './../shared/player.js';
 
 const CROP_MAP = {
    'minecraft:wheat': 'minecraft:wheat_seeds',
@@ -23,9 +25,9 @@ const getPerm = (id) => {
 };
 
 const consumeSeed = (container, seedId) => {
-   const size = container.size;
-   for (let i = 0; i < size; i++) {
-      const item = container.getItem(i);
+   const items = cache.getContainerItems(container);
+   for (let i = 0; i < items.length; i++) {
+      const item = items[i];
       if (!item || item.typeId !== seedId) continue;
 
       if (item.amount > 1) {
@@ -41,7 +43,7 @@ const consumeSeed = (container, seedId) => {
 
 export const handleAutoReplant = (event) => {
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    const perm = event.brokenBlockPermutation;
    if (!perm) return;
@@ -53,7 +55,7 @@ export const handleAutoReplant = (event) => {
    if (!seedId) return;
    if (perm.getState('growth') !== 7) return;
 
-   const container = player.getComponent(EntityComponentTypes.Inventory)?.container;
+   const container = cache.getInventory(player);
    if (!container) return;
 
    if (consumeSeed(container, seedId)) {

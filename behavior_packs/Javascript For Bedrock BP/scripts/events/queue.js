@@ -15,19 +15,16 @@ export const Queue = {
       }
    },
 
-    // ประมวลผลงานในคิวตามเวลาที่กำหนด (maxMs) ต่อ tick
-    tick(maxMs = 5) {
+   tick(maxMs = 5) {
       const startTime = Date.now();
       let checked = 0;
       let pCount = 0;
 
       while (_pHead < _priority.length || _qHead < _tasks.length) {
-           // เช็คเวลาในทุก 8 งานเพื่อลด overhead ของ Date.now()
-           if (++checked % 8 === 0 && Date.now() - startTime > maxMs) {
-              break; // งานที่เหลือยกยอดไป tick ถัดไป
-           }
+         if (++checked % 8 === 0 && Date.now() - startTime > maxMs) {
+            break;
+         }
 
-           // ป้องกัน starvation: ทำงาน priority 3 งาน ต่อ งานปกติ 1 งาน
          const task = _pHead < _priority.length && pCount++ % 4 !== 3 ? _priority[_pHead++] : _qHead < _tasks.length ? _tasks[_qHead++] : _priority[_pHead++];
 
          if (!task) continue;
@@ -38,7 +35,6 @@ export const Queue = {
          }
       }
 
-        // ลบงานที่ประมวลผลแล้วออกเมื่อ head pointer เกิน 256 เพื่อไม่ให้หน่วยความจำบวม
       if (_pHead > 256) {
          _priority.splice(0, _pHead);
          _pHead = 0;

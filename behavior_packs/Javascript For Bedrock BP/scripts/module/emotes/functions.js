@@ -1,50 +1,44 @@
-import { system, world } from '@minecraft/server';
+import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../plugin/utils.js';
 import { logError } from '../../events/logger.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 import { emoteList, setting } from './database.js';
 
 function playEmote(player, animName, emoteName) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
    const cmd = `playanimation "${player.name}" animation.${animName} animation.${animName}`;
    system.run(() => {
-      if (player.isValid) {
-         world
-            .getDimension(player.dimension.id)
-            ?.runCommand(cmd)
-            .catch((error) => {
-               logError('Emote', 'play command failed', error);
-            });
+      if (pcheck(player)) {
+         cache.runCommand(player.dimension, cmd)?.catch((error) => {
+            logError('Emote', 'play command failed', error);
+         });
       }
    });
 
-   player.onScreenDisplay?.setActionBar(`§aEmote: §f${emoteName}`);
-   addSound(player, setting.soundClick);
+   cache.setActionBar(player.onScreenDisplay, `§aEmote: §f${emoteName}`);
+   cache.playSound(player, setting.soundClick);
 }
 
 function stopEmote(player, animName) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
    const cmd = `playanimation "${player.name}" animation.${animName}`;
    system.run(() => {
-      if (player.isValid) {
-         world
-            .getDimension(player.dimension.id)
-            ?.runCommand(cmd)
-            .catch((error) => {
-               logError('Emote', 'stop command failed', error);
-            });
+      if (pcheck(player)) {
+         cache.runCommand(player.dimension, cmd)?.catch((error) => {
+            logError('Emote', 'stop command failed', error);
+         });
       }
    });
 
-   player.onScreenDisplay?.setActionBar('§cEmote: §fSTOPPED');
-   addSound(player, setting.soundClick);
+   cache.setActionBar(player.onScreenDisplay, '§cEmote: §fSTOPPED');
+   cache.playSound(player, setting.soundClick);
 }
 
 function openSubMenu(player, group) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
    const title = group.title ? `§e§m§o§t§e§f` + '§r§8' + `${group.title}` : 'Emotes';
    const form = new ActionFormData().title(title).body('§7เลือกท่าทาง:');
@@ -66,7 +60,7 @@ function openSubMenu(player, group) {
          const selected = items[index];
          if (selected) {
             system.run(() => {
-               if (player.isValid) playEmote(player, selected.anim, selected.name);
+               if (pcheck(player)) playEmote(player, selected.anim, selected.name);
             });
          }
       })
@@ -75,7 +69,7 @@ function openSubMenu(player, group) {
 
 export function showMenuEmote(event) {
    const player = event.source;
-   if (!player?.isValid) return;
+   if (!pcheck(player)) return;
 
    const form = new ActionFormData().title('Emote Packs | รวมท่าทาง');
    form.body('                     §7เลือกท่าทาง:');
@@ -102,7 +96,7 @@ export function showMenuEmote(event) {
          if (!selected) return;
 
          system.run(() => {
-            if (!player.isValid) return;
+            if (!pcheck(player)) return;
             if (selected.type === 'BUTTON') {
                stopEmote(player, selected.cmd);
             } else if (selected.type === 'GROUP') {

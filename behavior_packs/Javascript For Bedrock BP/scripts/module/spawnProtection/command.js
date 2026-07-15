@@ -1,5 +1,6 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
 import { openMenuSpawnProtec } from './ui/menu.js';
+import { pcheck, pisPlayer } from './../../shared/player.js';
 
 export function RegisterSpawnProtection(init) {
    init.customCommandRegistry.registerCommand(
@@ -11,11 +12,11 @@ export function RegisterSpawnProtection(init) {
       },
       (origin) => {
          const player = origin.sourceEntity;
-         if (!player || player.typeId !== 'minecraft:player' || !player.isValid) {
+         if (!pisPlayer(player)) {
             return { status: CustomCommandStatus.Failure, message: '§cPlayer only.' };
          }
          system.run(() => {
-            if (!player.isValid) return;
+            if (!pcheck(player)) return;
             openMenuSpawnProtec(player);
          });
          return { status: CustomCommandStatus.Success };

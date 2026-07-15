@@ -1,11 +1,13 @@
 import { system } from '@minecraft/server';
 import { logError } from '../../events/logger.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck, pisPlayer } from './../../shared/player.js';
 import { Colors } from './database.js';
 import { getBiomeIdAtLocation, getBiomeName, getDimensionName } from './functions.js';
 
 function handlePlayerDimensionChange(event) {
    const player = event.player;
-   if (!player || player.typeId !== 'minecraft:player' || !player.isValid) return;
+   if (!pisPlayer(player)) return;
 
    const dimensionId = player.dimension.id;
    const dimensionName = getDimensionName(dimensionId);
@@ -13,7 +15,7 @@ function handlePlayerDimensionChange(event) {
    const biomeName = getBiomeName(biomeId) || '';
 
    system.runTimeout(() => {
-      if (!player.isValid) return;
+      if (!pcheck(player)) return;
 
       const options = {
          stayDuration: 150,
@@ -26,7 +28,7 @@ function handlePlayerDimensionChange(event) {
       }
 
       try {
-         player.onScreenDisplay.setTitle(`${Colors.gold}${dimensionName}`, options);
+         cache.setTitle(player.onScreenDisplay, `${Colors.gold}${dimensionName}`, options);
       } catch (error) {
          logError('BiomeType', 'handlePlayerDimensionChange', error);
       }

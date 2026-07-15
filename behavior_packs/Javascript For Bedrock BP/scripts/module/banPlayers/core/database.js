@@ -2,17 +2,17 @@ import { world } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
 import { Config } from '../config.js';
 import { BanState } from './state.js';
+import { nowUnix } from '../../../shared/datetime.js';
 
 export class BanDatabase {
    static load() {
       try {
-         const data = world.getDynamicProperty(Config.dbKey);
-         if (!data) return {};
-         const parsed = JSON.parse(data);
-
+         const raw = world.getDynamicProperty(Config.dbKey);
+         if (!raw) return {};
+         const parsed = JSON.parse(raw);
          if (typeof parsed !== 'object' || parsed === null) return {};
 
-         const now = Math.floor(Date.now() / 1000);
+         const now = nowUnix();
          const cleanData = {};
 
          for (const [name, entry] of Object.entries(parsed)) {
@@ -44,7 +44,7 @@ export class BanDatabase {
 
    static add(name, reason, duration, adminName) {
       const data = this.load();
-      const now = Math.floor(Date.now() / 1000);
+      const now = nowUnix();
       data[name] = {
          reason,
          duration,

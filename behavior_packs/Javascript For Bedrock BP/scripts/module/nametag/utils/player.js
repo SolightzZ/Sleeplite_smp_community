@@ -1,1 +1,1 @@
-export const isValidPlayer = (player) => player?.typeId === 'minecraft:player' && player.isValid;
+export { pisPlayer as isValidPlayer } from '../../../shared/player.js';

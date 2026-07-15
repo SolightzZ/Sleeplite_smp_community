@@ -1,3 +1,5 @@
+import { nowUnix } from '../../../shared/datetime.js';
+
 const _bannedNames = new Set();
 const _banCache = new Map();
 let _cacheDirty = true;
@@ -15,7 +17,7 @@ export const BanState = {
    rebuildCache(data) {
       _bannedNames.clear();
       _banCache.clear();
-      const now = Math.floor(Date.now() / 1000);
+      const now = nowUnix();
       for (const [name, entry] of Object.entries(data)) {
          if (entry.duration === 0 || entry.expiresAt > now) {
             _bannedNames.add(name);

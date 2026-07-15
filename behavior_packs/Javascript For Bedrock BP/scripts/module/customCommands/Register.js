@@ -1,27 +1,29 @@
-import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
+import { system, CustomCommandStatus } from '@minecraft/server';
+import { pcheck, pisPlayer } from './../../shared/player.js';
 import { showServerMenu } from './Transfer.js';
+import { COMMAND } from './config.js';
 
 const quickServersCommand = (origin) => {
-    const player = origin.sourceEntity;
+   const player = origin.sourceEntity;
 
-    if (!player || player.typeId !== 'minecraft:player' || !player.isValid) {
-        return { status: CustomCommandStatus.Failure };
-    }
+   if (!pisPlayer(player)) {
+      return { status: CustomCommandStatus.Failure };
+   }
 
-    system.run(() => {
-        if (player.isValid) showServerMenu(player);
-    });
+   system.run(() => {
+      if (pcheck(player)) showServerMenu(player);
+   });
 
-    return { status: CustomCommandStatus.Success };
+   return { status: CustomCommandStatus.Success };
 };
 
 export function registerCommands(init) {
-    init.customCommandRegistry.registerCommand(
-        {
-            name: 'addon:server',
-            description: '§7Quick Server - เข้าร่วมเซิร์ฟเวอร์อื่นๆ',
-            permissionLevel: CommandPermissionLevel.Any,
-        },
-        quickServersCommand,
-    );
+   init.customCommandRegistry.registerCommand(
+      {
+         name: COMMAND.name,
+         description: COMMAND.description,
+         permissionLevel: COMMAND.permissionLevel,
+      },
+      quickServersCommand,
+   );
 }

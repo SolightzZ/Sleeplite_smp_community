@@ -7,6 +7,7 @@ import { CONFIG, LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
 import { showForm, sure } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
+import { cache } from '../../../shared/cache.js';
 
 const trimValues = (values) => {
    const result = [];
@@ -19,28 +20,28 @@ const trimValues = (values) => {
 const validateFields = (player, fields, limits) => {
    for (let i = 0; i < fields.length; i++) {
       if (!fields[i]) {
-         player.sendMessage('§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน');
+         cache.sendMessage(player, '§c[Report] กรุณากรอกข้อมูลให้ครบถ้วน');
          return false;
       }
       if (limits && fields[i].length > limits[i]) {
-         player.sendMessage(`§c[Report] ข้อความยาวเกิน ${limits[i]} ตัวอักษร`);
+         cache.sendMessage(player, `§c[Report] ข้อความยาวเกิน ${limits[i]} ตัวอักษร`);
          return false;
       }
    }
    return true;
 };
 
-export const sendform = (player) => {
+const sendform = (player) => {
    const name = player.name;
    const list = Database.get(name);
 
    if (list.length >= CONFIG.maxReports) {
-      player.sendMessage(`§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
+      cache.sendMessage(player, `§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
       reportmenu(player);
       return;
    }
 
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
 
    const ui = new ModalFormData();
    ui.title('แจ้งปัญหา / ข้อเสนอแนะ');
@@ -57,17 +58,17 @@ export const sendform = (player) => {
 
          if (!validateFields(player, [title, body], [LIMITS.title, LIMITS.body])) {
             system.runTimeout(() => {
-               if (player.isValid) sendform(player);
+               if (pcheck(player)) sendform(player);
             }, 20);
             return;
          }
 
          Database.add(name, title, body);
-         player.sendMessage('§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
+         cache.sendMessage(player, '§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
          reportmenu(player);
       } catch (innerError) {
          logError('Report', 'Logic Error (SendForm)', innerError);
-         player.sendMessage('§cเกิดข้อผิดพลาดในการบันทึกข้อมูล');
+         cache.sendMessage(player, '§cเกิดข้อผิดพลาดในการบันทึกข้อมูล');
          reportmenu(player);
       }
    }).catch((error) => {
@@ -77,7 +78,7 @@ export const sendform = (player) => {
 };
 
 const editItem = (player, name, list, index) => {
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
    const form = new ModalFormData();
    form.title('แก้ไขรายงาน');
    form.textField('หัวข้อเรื่อง', '', { defaultValue: list[index].t });
@@ -95,7 +96,7 @@ const editItem = (player, name, list, index) => {
             return;
          }
          Database.update(name, index, newTitle, newBody);
-         player.sendMessage('§e[Report] แก้ไขข้อมูลสำเร็จ');
+         cache.sendMessage(player, '§e[Report] แก้ไขข้อมูลสำเร็จ');
          mylist(player, 'edit');
       } catch (error) {
          logError('Report', 'Update Error', error);
@@ -109,20 +110,20 @@ const deleteItem = (player, name, index) => {
       player,
       () => {
          Database.delete(name, index);
-         player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
+         cache.sendMessage(player, '§c[Report] ลบข้อมูลสำเร็จ');
          mylist(player, 'del');
       },
       () => mylist(player, 'del'),
    );
 };
 
-export const mylist = (player, mode) => {
-   addSound(player, 'item.book.page_turn');
+const mylist = (player, mode) => {
+   cache.playSound(player, 'item.book.page_turn');
    const name = player.name;
    const list = Database.get(name);
 
    if (list.length === 0) {
-      player.sendMessage('§c[Report] ไม่พบข้อมูลในระบบ');
+      cache.sendMessage(player, '§c[Report] ไม่พบข้อมูลในระบบ');
       reportmenu(player);
       return;
    }
@@ -159,7 +160,7 @@ export const mylist = (player, mode) => {
 };
 
 export const inbox = (player) => {
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
    const name = player.name;
    const list = Database.get(name);
    const replied = list.filter((item) => item.r !== '');
@@ -192,7 +193,7 @@ export const inbox = (player) => {
       }
 
       const item = replied[res.selection];
-      addSound(player, 'item.book.page_turn');
+      cache.playSound(player, 'item.book.page_turn');
       const show = new MessageFormData();
       show.title('รายละเอียดการตอบกลับ');
       show.body(`หัวข้อ: ${item.t}\nคำถาม: ${item.b}\n\n§eตอบกลับ: ${item.r}`);
@@ -209,7 +210,7 @@ export const inbox = (player) => {
 };
 
 export const reportmenu = (player) => {
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
    const ui = new ActionFormData();
    ui.title('เมนูรายงาน (Report)');
    ui.body('กรุณาเลือกรายการที่ต้องการ');

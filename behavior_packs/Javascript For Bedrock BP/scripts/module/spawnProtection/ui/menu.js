@@ -3,14 +3,15 @@ import { world } from '@minecraft/server';
 import { getConfigSpawnProtec, updateConfigSpawnProtec, resetConfigSpawnProtec } from '../core/database.js';
 import { Config } from '../config.js';
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 
 export function openMenuSpawnProtec(player) {
    if (!player.hasTag(Config.AdminTag)) {
-      player.sendMessage('[SpawnProtect] เฉพาะแอดมินเท่านั้น');
+      cache.sendMessage(player, '[SpawnProtect] เฉพาะแอดมินเท่านั้น');
       return;
    }
    const cfg = getConfigSpawnProtec();
-   const spawn = world.getDefaultSpawnLocation();
+   const spawn = cache.getDefaultSpawnLocation();
 
    const form = new ActionFormData()
       .title(' ป้องกันจุดเกิด | Spawn Protection')
@@ -36,7 +37,7 @@ export function openMenuSpawnProtec(player) {
          switch (r.selection) {
             case 0:
                updateConfigSpawnProtec({ enabled: !cfg.enabled });
-               player.sendMessage(`[SpawnProtect] ${!cfg.enabled ? 'เปิด' : 'ปิด'}ระบบแล้ว`);
+               cache.sendMessage(player, `[SpawnProtect] ${!cfg.enabled ? 'เปิด' : 'ปิด'}ระบบแล้ว`);
                openMenuSpawnProtec(player);
                break;
             case 1:
@@ -74,7 +75,7 @@ function showRadiusSlider(player) {
          }
          const newRadius = r.formValues[0];
          updateConfigSpawnProtec({ radius: newRadius });
-         player.sendMessage(`[SpawnProtect] ตั้งรัศมีเป็น ${newRadius} บล็อก`);
+         cache.sendMessage(player, `[SpawnProtect] ตั้งรัศมีเป็น ${newRadius} บล็อก`);
          openMenuSpawnProtec(player);
       })
       .catch((error) => {
@@ -107,7 +108,7 @@ function showFlagsForm(player) {
             newFlags[flagNames[i]] = r.formValues[i];
          }
          updateConfigSpawnProtec({ flags: newFlags });
-         player.sendMessage('[SpawnProtect] อัปเดตค่าสถานะแล้ว');
+         cache.sendMessage(player, '[SpawnProtect] อัปเดตค่าสถานะแล้ว');
          openMenuSpawnProtec(player);
       })
       .catch((error) => {
@@ -158,13 +159,13 @@ function showAddExempt(player) {
       .map((p) => p.name);
 
    if (candidates.length === 0) {
-      player.sendMessage('[SpawnProtect] ไม่มีผู้เล่นอื่นให้เพิ่ม');
+      cache.sendMessage(player, '[SpawnProtect] ไม่มีผู้เล่นอื่นให้เพิ่ม');
       showExemptMenu(player);
       return;
    }
 
    if (cfg.exemptList.length >= 50) {
-      player.sendMessage('[SpawnProtect] รายชื่อยกเว้นเต็มแล้ว (สูงสุด 50 คน)');
+      cache.sendMessage(player, '[SpawnProtect] รายชื่อยกเว้นเต็มแล้ว (สูงสุด 50 คน)');
       showExemptMenu(player);
       return;
    }
@@ -183,7 +184,7 @@ function showAddExempt(player) {
 
          const newList = [...cfg.exemptList, name];
          updateConfigSpawnProtec({ exemptList: newList });
-         player.sendMessage(`[SpawnProtect] เพิ่ม ${name} เข้ารายชื่อยกเว้นแล้ว`);
+         cache.sendMessage(player, `[SpawnProtect] เพิ่ม ${name} เข้ารายชื่อยกเว้นแล้ว`);
          showExemptMenu(player);
       })
       .catch((error) => {
@@ -194,7 +195,7 @@ function showAddExempt(player) {
 function showRemoveExempt(player) {
    const cfg = getConfigSpawnProtec();
    if (cfg.exemptList.length === 0) {
-      player.sendMessage('[SpawnProtect] ไม่มีรายชื่อในรายชื่อยกเว้น');
+      cache.sendMessage(player, '[SpawnProtect] ไม่มีรายชื่อในรายชื่อยกเว้น');
       showExemptMenu(player);
       return;
    }
@@ -217,7 +218,7 @@ function showRemoveExempt(player) {
          const removedName = cfg.exemptList[r.selection];
          const newList = cfg.exemptList.filter((_, i) => i !== r.selection);
          updateConfigSpawnProtec({ exemptList: newList });
-         player.sendMessage(`[SpawnProtect] ลบ ${removedName} ออกจากรายชื่อยกเว้นแล้ว`);
+         cache.sendMessage(player, `[SpawnProtect] ลบ ${removedName} ออกจากรายชื่อยกเว้นแล้ว`);
          showExemptMenu(player);
       })
       .catch((error) => {
@@ -240,7 +241,7 @@ function showResetConfirm(player) {
             return;
          }
          resetConfigSpawnProtec();
-         player.sendMessage('[SpawnProtect] รีเซ็ตค่าทั้งหมดเป็นค่าเริ่มต้นแล้ว');
+         cache.sendMessage(player, '[SpawnProtect] รีเซ็ตค่าทั้งหมดเป็นค่าเริ่มต้นแล้ว');
          openMenuSpawnProtec(player);
       })
       .catch((error) => {

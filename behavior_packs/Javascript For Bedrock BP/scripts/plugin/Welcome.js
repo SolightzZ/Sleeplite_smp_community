@@ -1,5 +1,7 @@
 import { system, world } from '@minecraft/server';
 import { logError } from '../events/logger.js';
+import { cache } from '../shared/cache.js';
+import { pcheck } from './../shared/player.js';
 
 const OBJECTIVE = 'Deaths';
 const HEAD = '§e[+] Welcome to Sleeplite SMP Community';
@@ -35,8 +37,8 @@ const getPlayerDeaths = (player, objective) => {
 
 const showWelcome = (player, objective) => {
    const deaths = getPlayerDeaths(player, objective);
-   player.sendMessage(`${HEAD}\n§7 Name: ${player.name}\n Deaths: ${deaths}`);
-   player.onScreenDisplay.setTitle(player.name, {
+   cache.sendMessage(player, `${HEAD}\n§7 Name: ${player.name}\n Deaths: ${deaths}`);
+   cache.setTitle(player.onScreenDisplay, player.name, {
       fadeInDuration: 0,
       fadeOutDuration: 50,
       stayDuration: 160,
@@ -57,7 +59,7 @@ export const processWelcomeQueue = () => {
       if (pending.runAtTick > now) continue;
       const player = pending.player;
 
-      if (player && player.isValid) showWelcome(player, objective);
+      if (pcheck(player)) showWelcome(player, objective);
       const lastIndex = pendingWelcomes.length - 1;
       pendingWelcomes[i] = pendingWelcomes[lastIndex];
       pendingWelcomes.pop();
@@ -72,6 +74,6 @@ const enqueueWelcome = (player) => {
 export const playerSpawnWelcome = (event) => {
    if (!event.initialSpawn) return;
    const player = event.player;
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
    enqueueWelcome(player);
 };

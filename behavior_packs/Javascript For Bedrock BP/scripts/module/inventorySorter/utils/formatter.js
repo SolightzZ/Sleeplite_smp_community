@@ -1,4 +1,5 @@
 import { ItemComponentTypes } from '@minecraft/server';
+import { cache } from '../../../shared/cache.js';
 
 const _formatName = (typeId) => {
    const raw = typeId ? typeId.replace('minecraft:', '') : 'unknown';
@@ -24,7 +25,7 @@ export const getItemDisplayName = (item) => {
 
 export const getItemDurability = (item) => {
    if (!item) return 0;
-   const comp = item.getComponent(ItemComponentTypes.Durability);
+   const comp = cache.getDurability(item);
 
    if (!comp) return 100;
    const max = comp.maxDurability;

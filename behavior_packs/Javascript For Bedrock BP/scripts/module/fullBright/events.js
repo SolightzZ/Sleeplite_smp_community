@@ -1,8 +1,9 @@
+import { pcheck } from './../../shared/player.js';
 import { resetBright } from './state.js';
 import { showMenu } from './ui.js';
 
 export function FullBrightUseItem({ source }) {
-   if (source && source.isValid) {
+   if (pcheck(source)) {
       showMenu(source);
    }
 }

@@ -1,4 +1,5 @@
-import { ItemStack, system, EntityComponentTypes } from '@minecraft/server';
+import { system } from '@minecraft/server';
+import { cache } from '../shared/cache.js';
 
 const applyAnvilRepair = (block, permutation, damage, player, item) => {
    system.run(() => {
@@ -15,14 +16,14 @@ const applyAnvilRepair = (block, permutation, damage, player, item) => {
          pitch: 1.0,
       });
 
-      const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
+      const inv = cache.getInventory(player);
       if (!inv) return;
 
       const slot = player.selectedSlotIndex;
       const amount = item.amount;
 
       if (amount > 1) {
-         inv.setItem(slot, new ItemStack(item.typeId, amount - 1));
+         inv.setItem(slot, cache.createItemStack(item.typeId, amount - 1));
       } else {
          inv.setItem(slot, undefined);
       }

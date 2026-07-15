@@ -1,5 +1,6 @@
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
+import { pcheck } from './../../../shared/player.js';
 import { pullItemsToPlayer } from './puller.js';
 import { countMagnetUsers, getMagnetUserIds, removeMagnetUser } from './state.js';
 
@@ -13,7 +14,7 @@ export const magnetTick = () => {
       for (const playerId of ids) {
          const player = Registry.get(playerId)?.player;
 
-         if (player && player.isValid) {
+         if (pcheck(player)) {
             pullItemsToPlayer(player);
          } else {
             toRemove.push(playerId);

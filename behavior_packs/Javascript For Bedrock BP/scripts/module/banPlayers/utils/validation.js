@@ -1,5 +1,6 @@
 import { CustomCommandStatus } from '@minecraft/server';
 import { Config } from '../config.js';
+import { pcheck } from './../../../shared/player.js';
 
 // ตรวจสอบว่าผู้เล่นเป็นผู้ดูแลระบบ (Admin) หรือไม่
 export const isAdmin = (player) => {
@@ -8,7 +9,7 @@ export const isAdmin = (player) => {
 
 const requirePlayer = (origin) => {
    const player = origin?.sourceEntity;
-   return player?.isValid ? player : null;
+   return pcheck(player) ? player : null;
 };
 
 // ตรวจสอบและคืนค่าผู้ดูแลระบบ (Admin)
@@ -20,13 +21,13 @@ export const requireAdmin = (origin) => {
 
 const requireValidTargets = (targetPlayers) => {
    if (!Array.isArray(targetPlayers) || targetPlayers.length === 0) return null;
-   const valid = targetPlayers.filter((p) => p?.isValid);
+   const valid = targetPlayers.filter((p) => pcheck(p));
    return valid.length > 0 ? valid : null;
 };
 
 const findAdminTarget = (targetPlayers) => {
    for (const target of targetPlayers) {
-      if (target?.isValid && isAdmin(target)) return target;
+      if (pcheck(target) && isAdmin(target)) return target;
    }
    return null;
 };

@@ -1,12 +1,12 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
-
-import { startCinematicNow } from '../core/poller.js';
 import { logError } from '../../../events/logger.js';
+import { startCinematicNow } from '../core/poller.js';
+import { pcheck } from './../../../shared/player.js';
 
 function quickCommandAFK(origin) {
    try {
       const player = origin.sourceEntity;
-      if (!player?.isValid) return { status: CustomCommandStatus.Failure };
+      if (!pcheck(player)) return { status: CustomCommandStatus.Failure };
       system.run(() => startCinematicNow(player));
       return { status: CustomCommandStatus.Success };
    } catch (error) {

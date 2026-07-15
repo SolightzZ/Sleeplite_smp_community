@@ -1,10 +1,11 @@
 import { MagnetConfig } from '../config.js';
 import { hasMagnetUser } from './state.js';
+import { pcheck } from './../../../shared/player.js';
 
 const pullableSet = new Set(MagnetConfig.PULLABLE_TYPES);
 
 export const pullItemsToPlayer = (player) => {
-    if (!player.isValid || !hasMagnetUser(player.id)) return;
+    if (!pcheck(player) || !hasMagnetUser(player.id)) return;
 
     const loc = player.location;
     const target = { x: loc.x, y: loc.y + 0.8, z: loc.z };

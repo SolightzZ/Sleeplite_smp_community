@@ -1,67 +1,68 @@
 import { system } from '@minecraft/server';
-import { inventorys } from './rules.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 
 export const see = (player, thing) => {
-    if (!player || !player.isValid) return false;
+   if (!pcheck(player)) return false;
 
-    const bag = player.getComponent(inventorys)?.container;
-    if (!bag) return false;
+   const bag = cache.getInventory(player);
+   if (!bag) return false;
 
-    const size = bag.size;
-    for (let i = 0; i < size; i++) {
-        const item = bag.getItem(i);
-        if (item && item.typeId === thing) return true;
-    }
+   const items = cache.getContainerItems(bag);
+   for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      if (item && item.typeId === thing) return true;
+   }
 
-    return false;
+   return false;
 };
 
 export const eat = (player, thing) => {
-    if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
-    system.run(() => {
-        if (!player.isValid) return;
+   system.run(() => {
+      if (!pcheck(player)) return;
 
-        const bag = player.getComponent(inventorys)?.container;
-        if (!bag) return;
+      const bag = cache.getInventory(player);
+      if (!bag) return;
 
-        const size = bag.size;
-        for (let i = 0; i < size; i++) {
-            const item = bag.getItem(i);
-            if (item && item.typeId === thing) {
-                if (item.amount > 1) {
-                    item.amount--;
-                    bag.setItem(i, item);
-                } else {
-                    bag.setItem(i, undefined);
-                }
-                break;
+      const items = cache.getContainerItems(bag);
+      for (let i = 0; i < items.length; i++) {
+         const item = items[i];
+         if (item && item.typeId === thing) {
+            if (item.amount > 1) {
+               item.amount--;
+               bag.setItem(i, item);
+            } else {
+               bag.setItem(i, undefined);
             }
-        }
-    });
+            break;
+         }
+      }
+   });
 };
 
 export const hit = (player, pain) => {
-    if (!player || !player.isValid || pain <= 0) return;
+   if (!pcheck(player) || pain <= 0) return;
 
-    system.run(() => {
-        if (player.isValid) player.applyDamage(pain);
-    });
+   system.run(() => {
+      if (pcheck(player)) player.applyDamage(pain);
+   });
 };
 
 export const say = (player, message) => {
-    if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
-    system.run(() => {
-        if (!player.isValid) return;
-        player.onScreenDisplay?.setActionBar(message);
-    });
+   system.run(() => {
+      if (!pcheck(player)) return;
+      cache.setActionBar(player.onScreenDisplay, message);
+   });
 };
 
 export const sound = (player, soundId, options) => {
-    if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
-    system.run(() => {
-        if (player.isValid) player.playSound(soundId, options);
-    });
+   system.run(() => {
+      if (pcheck(player)) player.playSound(soundId, options);
+   });
 };

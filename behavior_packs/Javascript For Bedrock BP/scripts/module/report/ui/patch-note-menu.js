@@ -5,12 +5,13 @@ import { logError } from '../../../events/logger.js';
 import { patchNotesData } from '../data/patch-notes.js';
 import { showForm } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
+import { cache } from '../../../shared/cache.js';
 
 export const note = (player) => {
    const form = new ActionFormData();
    form.title('บันทึกการอัปเดตระบบ');
 
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
 
    let bodyText = '§6[ รายละเอียดระบบ ]§r\n§7รายการฟีเจอร์ ไอเทม และสิ่งก่อสร้างทั้งหมด\n\n';
 

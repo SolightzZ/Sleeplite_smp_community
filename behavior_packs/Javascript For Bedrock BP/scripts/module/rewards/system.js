@@ -1,10 +1,12 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
 
-import { logError } from '../../events/logger.js';
+import { logError, logWarn } from '../../events/logger.js';
 import { Registry } from '../../events/registry.js';
 import { config } from './constants.js';
 import { load, reset } from './database.js';
 import { menu } from './logic.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 
 function RewarditemUse(event) {
    const player = event.source || event;
@@ -23,7 +25,7 @@ function RegisterRewards(init) {
          (origin) => {
             const player = origin.sourceEntity;
 
-            if (!player || !player.isValid) {
+            if (!pcheck(player)) {
                return {
                   status: CustomCommandStatus.Failure,
                   message: '§cThis command can only be used by players!',
@@ -44,12 +46,12 @@ function RewardchatSend(event) {
    const player = event.sender;
    const message = event.message;
 
-   if (!player || !player.isValid || !player.hasTag(config.adminTag)) return;
+   if (!pcheck(player) || !player.hasTag(config.adminTag)) return;
 
    if (message === '!reset-login') {
       event.cancel = true;
       reset(player);
-      player.sendMessage('§e[Admin] Data Reset!');
+      cache.sendMessage(player, '§e[Admin] Data Reset!');
    } else if (message === '!check-reward') {
       event.cancel = true;
       let statusText = '=== Player Status ===\n';
@@ -58,8 +60,8 @@ function RewardchatSend(event) {
          const data = load(target);
          statusText += `§7${target.name}: Count=${data.count}, Last=${data.last || 'Never'}\n`;
       }
-      console.warn(statusText);
-      player.sendMessage(statusText);
+      logWarn('Rewards', statusText);
+      cache.sendMessage(player, statusText);
    }
 }
 

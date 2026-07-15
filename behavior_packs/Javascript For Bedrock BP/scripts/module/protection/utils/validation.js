@@ -26,7 +26,7 @@ export const validateZoneCreate = (player, zones) => {
 };
 
 // เรขาคณิตโซน
-export const isOverlapping = (zoneA, zoneB) => {
+const isOverlapping = (zoneA, zoneB) => {
     return zoneA.start.x <= zoneB.end.x && zoneA.end.x >= zoneB.start.x && zoneA.start.y <= zoneB.end.y && zoneA.end.y >= zoneB.start.y && zoneA.start.z <= zoneB.end.z && zoneA.end.z >= zoneB.start.z;
 };
 

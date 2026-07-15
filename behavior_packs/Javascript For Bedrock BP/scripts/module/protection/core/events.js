@@ -5,6 +5,9 @@ import { isContainerBlock, isPlayer } from '../utils/helpers.js';
 import { zoneDatabase } from './database.js';
 import { clearBorderVisuals } from './borders.js';
 import { uiLockSet } from './protection.js';
+import { cache } from '../../../shared/cache.js';
+import { logWarn } from '../../../events/logger.js';
+import { pcheck } from './../../../shared/player.js';
 
 // ตรวจสอบสิทธิ์
 const hasPermission = (player, zone, flag) => {
@@ -20,7 +23,7 @@ const hasPermission = (player, zone, flag) => {
 export const onBlockEdit = (event) => {
     const player = event.player;
     const block = event.block;
-    if (!player || !player.isValid || !block || !block.isValid) return;
+    if (!pcheck(player) || !block || !block.isValid) return;
 
     const zone = zoneDatabase.findByLocation(block.location, block.dimension.id);
     if (!zone) return;
@@ -41,7 +44,7 @@ export const onBlockEdit = (event) => {
 export const onEntityInteract = (event) => {
     const player = event.player;
     const target = event.target;
-    if (!player || !player.isValid || !target || !target.isValid) return;
+    if (!pcheck(player) || !target || !target.isValid) return;
     if (!isPlayer(target)) return;
 
     const zone = zoneDatabase.findByLocation(target.location, target.dimension.id);
@@ -55,14 +58,14 @@ export const onEntityInteract = (event) => {
 // จัดการ PvP
 export const onEntityHurt = (event) => {
     const target = event.hurtEntity;
-    if (!target || !target.isValid) return;
+    if (!pcheck(target)) return;
 
     const zone = zoneDatabase.findByLocation(target.location, target.dimension.id);
     if (!zone) return;
 
     const attacker = event.damageSource?.damagingEntity;
 
-    if (attacker && attacker.isValid && isPlayer(attacker) && isPlayer(target)) {
+    if (pcheck(attacker) && isPlayer(attacker) && isPlayer(target)) {
         const damageEnabled = zone.flags?.damage ?? Config.DefaultFlags.damage;
         if (!damageEnabled) {
             event.cancel = true;
@@ -114,7 +117,7 @@ export const onExplosion = (event) => {
 // เรียกเมนู
 export const onItemUse = (event) => {
     const source = event.source;
-    if (source && source.isValid) {
+    if (pcheck(source)) {
         openMenu(source);
     }
 };
@@ -127,16 +130,16 @@ export const onChat = (event) => {
 
     event.cancel = true;
     system.run(() => {
-        if (!player.isValid) return;
+        if (!pcheck(player)) return;
         if (!player.hasTag(Config.AdminTag)) {
-            player.sendMessage(`[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
+            cache.sendMessage(player, `[x] เฉพาะผู้ดูแลระบบเท่านั้น`);
             return;
         }
 
         const zones = zoneDatabase.zones;
         const ownerKeys = Object.keys(zones);
         if (ownerKeys.length === 0) {
-            player.sendMessage(`[x] ไม่มีโพรเทคในระบบ`);
+            cache.sendMessage(player, `[x] ไม่มีโพรเทคในระบบ`);
             return;
         }
 
@@ -154,14 +157,14 @@ export const onChat = (event) => {
             });
         }
 
-        console.warn(`[/] Zones: ${JSON.stringify(data, null, 2)}`);
+        logWarn('Protection', `/ Zones: ${JSON.stringify(data, null, 2)}`);
     });
 };
 
 // ล้างข้อมูลเมื่อผู้เล่นออก
 export const onPlayerLeave = (event) => {
     const player = event.player;
-    if (!player?.isValid) return;
+    if (!pcheck(player)) return;
     clearBorderVisuals(player.name);
     uiLockSet.delete(player.name);
 };

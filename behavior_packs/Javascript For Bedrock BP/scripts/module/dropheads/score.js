@@ -1,6 +1,7 @@
 import { world } from '@minecraft/server';
 import { logError } from '../../events/logger.js';
-import { boardA, boardB } from './data.js';
+import { pcheck } from './../../shared/player.js';
+import { boardA, boardB } from './config.js';
 
 let objA, objB;
 
@@ -9,7 +10,7 @@ const getBoard = (name) => {
 };
 
 export const addDeath = (player) => {
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
    if (!objA || !objB) initBoards();
    if (!objA || !objB) return;
 

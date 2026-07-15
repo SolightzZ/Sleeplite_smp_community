@@ -1,5 +1,6 @@
 import { ItemStack, EntityComponentTypes } from '@minecraft/server';
 import { Config, edgeOffsets } from '../config.js';
+import { cache } from '../../../shared/cache.js';
 
 const BORDER_CACHE_MAX = 100;
 const borderPointCache = new Map();
@@ -54,16 +55,16 @@ const CONTAINER_BLOCK_TYPES = new Set([
 export const isContainerBlock = (typeId) => CONTAINER_BLOCK_TYPES.has(typeId);
 
 export const consumeBlock = (player) => {
-    const container = player.getComponent(EntityComponentTypes.Inventory)?.container;
+    const container = cache.getInventory(player);
     if (!container) return false;
 
-    const slotCount = container.size;
-    for (let slotIndex = 0; slotIndex < slotCount; slotIndex++) {
-        const item = container.getItem(slotIndex);
+    const items = cache.getContainerItems(container);
+    for (let slotIndex = 0; slotIndex < items.length; slotIndex++) {
+        const item = items[slotIndex];
 
         if (item && item.typeId === Config.RequiredBlock) {
             if (item.amount > 1) {
-                container.setItem(slotIndex, new ItemStack(Config.RequiredBlock, item.amount - 1));
+                container.setItem(slotIndex, cache.createItemStack(Config.RequiredBlock, item.amount - 1));
             } else {
                 container.setItem(slotIndex, undefined);
             }
@@ -83,7 +84,7 @@ export const isFormValid = (player, response) => {
     const hasFormValues = 'formValues' in response;
     const formValuesAreValid = response.formValues && Array.isArray(response.formValues);
     if (hasFormValues && !formValuesAreValid) {
-        player.sendMessage(`[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
+        cache.sendMessage(player, `[x] ฟอร์มไม่ถูกต้อง กรุณาลองใหม่`);
         return false;
     }
     return true;

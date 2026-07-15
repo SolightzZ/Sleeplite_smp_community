@@ -1,14 +1,15 @@
 import { CommandPermissionLevel, CustomCommandParamType } from '@minecraft/server';
+import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 import { Config } from '../config.js';
 import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';
-import { defaultBanReason, defaultKickReason } from '../data/messages.js';
 import { formatRemaining } from '../utils/format.js';
 import { cmdResult, getOrValidateDuration, requireAdmin, validateCommandTargets } from '../utils/validation.js';
-import { logError } from '../../../events/logger.js';
+import { pcheck } from './../../../shared/player.js';
 
 const iterateTargets = (targets, fn) => {
    for (const target of targets) {
-      if (target?.isValid) fn(target);
+      if (pcheck(target)) fn(target);
    }
 };
 
@@ -27,7 +28,7 @@ const registerAdminCommand = (init, options, handler) => {
          }
       });
    } catch (error) {
-      console.warn(`[BanCommand] ไม่สามารถลงทะเบียนคำสั่ง ${options.name} ได้: ${error instanceof Error ? error.message : String(error)}`);
+       logError('BanCommand', `Failed to register command ${options.name}: ${error instanceof Error ? error.message : String(error)}`);
    }
 };
 
@@ -50,7 +51,7 @@ export const registerBanCommands = (init) => {
          const validation = validateCommandTargets(targetPlayers, 'แบน');
          if (!validation.ok) return cmdResult.failure(validation.error);
 
-         const finalReason = reason && String(reason).trim() !== '' ? String(reason) : defaultBanReason;
+         const finalReason = reason && String(reason).trim() !== '' ? String(reason) : 'ฝ่าฝืนกฎระเบียบของเซิร์ฟเวอร์';
          const durationResult = getOrValidateDuration(durationStr, Config.defaultDuration);
 
          if (!durationResult.ok) {
@@ -100,7 +101,7 @@ export const registerBanCommands = (init) => {
          const validation = validateCommandTargets(targetPlayers, 'เตะ');
          if (!validation.ok) return cmdResult.failure(validation.error);
 
-         const finalReason = reason && String(reason).trim() !== '' ? String(reason) : defaultKickReason;
+         const finalReason = reason && String(reason).trim() !== '' ? String(reason) : 'ถูกดำเนินการให้ออกจากเซิร์ฟเวอร์โดยผู้ดูแลระบบ';
 
          iterateTargets(validation.targets, (target) => {
             kickAndNotify(target, String(finalReason), player.name);
@@ -121,17 +122,17 @@ export const registerBanCommands = (init) => {
          cheatsRequired: false,
       },
       (player) => {
-         if (!player.isValid) return cmdResult.success;
+         if (!pcheck(player)) return cmdResult.success;
          const bans = getBanList();
          if (bans.length === 0) {
-            player.sendMessage(`${'§7'}[!] ไม่พบข้อมูลผู้เล่นที่ถูกแบน`);
+            cache.sendMessage(player, `${'§7'}[!] ไม่พบข้อมูลผู้เล่นที่ถูกแบน`);
             return cmdResult.success;
          }
 
-         player.sendMessage(`§6===== รายชื่อผู้ถูกแบน (${bans.length}) =====`);
+         cache.sendMessage(player, `§6===== รายชื่อผู้ถูกแบน (${bans.length}) =====`);
          for (const ban of bans) {
             const remaining = ban.duration === 0 ? '§cถาวร' : `§e${formatRemaining(ban.expiresAt)}`;
-            player.sendMessage(`§7- §f${ban.name} §7| สาเหตุ: §f${ban.reason} §7| ระยะเวลาที่เหลือ: ${remaining} §7| ดำเนินการโดย: §f${ban.bannedBy}`);
+            cache.sendMessage(player, `§7- §f${ban.name} §7| สาเหตุ: §f${ban.reason} §7| ระยะเวลาที่เหลือ: ${remaining} §7| ดำเนินการโดย: §f${ban.bannedBy}`);
          }
 
          return cmdResult.success;

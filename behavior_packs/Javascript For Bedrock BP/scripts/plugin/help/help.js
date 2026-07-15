@@ -4,6 +4,8 @@ import {
    system,
 } from '@minecraft/server';
 import { dy } from './help_Durability.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 
 const HELP_TEXT = `§8--------- §eHelper §8---------
 §7[§a/§7] /addon:help - คําสั่งต่างๆ
@@ -42,20 +44,20 @@ const VOTE_TEXT = `§8--------- §eVote §8---------
 
 
 const showHelp = (player) => {
-   player.sendMessage(HELP_TEXT);
-   if (player.hasTag('admin')) player.sendMessage(ADMIN_HELP_TEXT);
+   cache.sendMessage(player, HELP_TEXT);
+   if (player.hasTag('admin')) cache.sendMessage(player, ADMIN_HELP_TEXT);
 };
 
 const showRule = (player) => {
-   player.sendMessage(RULE_TEXT);
+   cache.sendMessage(player, RULE_TEXT);
 }
 
 const showWebsites = (player) => {
-   player.sendMessage(WEBSITES_TEXT);
+   cache.sendMessage(player, WEBSITES_TEXT);
 }
 
 const showVote = (player) => {
-   player.sendMessage(VOTE_TEXT);
+   cache.sendMessage(player, VOTE_TEXT);
 }
 
 
@@ -71,7 +73,7 @@ export const helpmain = (event) => {
    if (command === '!help') {
       event.cancel = true;
       const player = event.sender;
-      if (player?.isValid) showHelp(player);
+      if (pcheck(player)) showHelp(player);
       return;
    }
 };
@@ -86,8 +88,7 @@ export const RegisterDurability = (init) => {
       },
       (origin) => {
          const player = origin.sourceEntity;
-         if (!player?.isValid)
-            return {
+         if (!pcheck(player)) return {
                status: CustomCommandStatus.Failure,
                message: '§cใช้ได้เฉพาะผู้เล่น',
             };
@@ -107,7 +108,7 @@ export const RegisterHelp = (init) => {
       },
       (origin) => {
          const player = origin.sourceEntity;
-         if (!player?.isValid) {
+         if (!pcheck(player)) {
             return {
                status: CustomCommandStatus.Failure,
                message: '§cใช้ได้เฉพาะผู้เล่น',
@@ -130,7 +131,7 @@ export const RegisterRule = (init) =>{
       },
       (origin) => {
          const player = origin.sourceEntity;
-         if (!player?.isValid) {
+         if (!pcheck(player)) {
             return {
                status: CustomCommandStatus.Failure,
                message: '§cใช้ได้เฉพาะผู้เล่น',
@@ -153,7 +154,7 @@ export const RegisterVote = (init) => {
       },
       (origin) => {
          const player = origin.sourceEntity;
-         if (!player?.isValid) {
+         if (!pcheck(player)) {
             return {
                status: CustomCommandStatus.Failure,
                message: '§cใช้ได้เฉพาะผู้เล่น',
@@ -176,7 +177,7 @@ export const RegisterWebsites = (init) => {
       },
       (origin) => {
          const player = origin.sourceEntity;
-         if (!player?.isValid) {
+         if (!pcheck(player)) {
             return {
                status: CustomCommandStatus.Failure,
                message: '§cใช้ได้เฉพาะผู้เล่น',

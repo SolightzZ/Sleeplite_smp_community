@@ -13,6 +13,8 @@ import {
 } from '../core/tagManager.js';
 import { isValidPlayer } from '../utils/player.js';
 import { addSound } from '../../../plugin/utils.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 const getPredefinedRankList = () => {
    const entries = Object.entries(PREDEFINED_RANKS);
@@ -26,7 +28,7 @@ const getPredefinedRankList = () => {
 const showMenuAdd = (admin, target) => {
    if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
-   addSound(admin, 'block.smithing_table.use');
+   cache.playSound(admin, 'block.smithing_table.use');
 
    const predefined = getPredefinedRankList();
    const predefinedLabels = predefined.map((p) => p.label);
@@ -58,8 +60,8 @@ const showMenuAdd = (admin, target) => {
       if (rank) {
          addRank(target, rank);
          refreshNameTag(target);
-         addSound(admin, 'random.levelup');
-         admin.sendMessage(`§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
+         cache.playSound(admin, 'random.levelup');
+         cache.sendMessage(admin, `§a[RANK] ตั้งยศ '${rank}' เรียบร้อย`);
       }
    });
 };
@@ -69,11 +71,11 @@ const showMenuEdit = (admin, target) => {
 
    const owned = getOwnedRanks(target);
    if (!owned.length) {
-      addSound(admin, 'block.false_permissions');
-      return admin.sendMessage('§c[RANK] ไม่มียศ');
+      cache.playSound(admin, 'block.false_permissions');
+      return cache.sendMessage(admin, '§c[RANK] ไม่มียศ');
    }
 
-   addSound(admin, 'block.grindstone.use');
+   cache.playSound(admin, 'block.grindstone.use');
 
    const activeRank = getActiveRank(target);
    const defaultIndex = activeRank ? owned.indexOf(activeRank) : 0;
@@ -101,7 +103,7 @@ const showMenuEdit = (admin, target) => {
             setActiveRank(target, oldName);
          }
          refreshNameTag(target);
-         addSound(admin, 'random.orb');
+         cache.playSound(admin, 'random.orb');
       });
    });
 };
@@ -119,7 +121,7 @@ const showConfirmDelete = (admin, target, ranks) => {
       if (res.selection === 0) {
          removeRanks(target, ranks);
          refreshNameTag(target);
-         addSound(admin, 'random.anvil_break');
+         cache.playSound(admin, 'random.anvil_break');
       }
    });
 };
@@ -129,11 +131,11 @@ const showMenuRemove = (admin, target) => {
 
    const owned = getOwnedRanks(target);
    if (!owned.length) {
-      addSound(admin, 'block.false_permissions');
+      cache.playSound(admin, 'block.false_permissions');
       return;
    }
 
-   addSound(admin, 'block.loom.use');
+   cache.playSound(admin, 'block.loom.use');
 
    const form = new ModalFormData().title('ลบยศ');
    for (let i = 0; i < owned.length; i++) {
@@ -157,7 +159,7 @@ const showMenuRemove = (admin, target) => {
 const showActions = (admin, target) => {
    if (!isValidPlayer(admin) || !isValidPlayer(target)) return;
 
-   addSound(admin, 'block.cartography_table.use');
+   cache.playSound(admin, 'block.cartography_table.use');
 
    const current = getActiveRank(target) || '(ไม่มี)';
    const count = getOwnedRanks(target).length;
@@ -185,7 +187,7 @@ const showActions = (admin, target) => {
 export const showMainMenu = (admin) => {
    if (!isValidPlayer(admin)) return;
 
-   addSound(admin, 'block.loom.use');
+   cache.playSound(admin, 'block.loom.use');
 
    const players = [...Registry.getPlayers()];
    const form = new ActionFormData();
@@ -200,7 +202,7 @@ export const showMainMenu = (admin) => {
       if (res.canceled) return;
 
       const target = players[res.selection];
-      if (target?.isValid) showActions(admin, target);
+      if (pcheck(target)) showActions(admin, target);
    });
 };
 

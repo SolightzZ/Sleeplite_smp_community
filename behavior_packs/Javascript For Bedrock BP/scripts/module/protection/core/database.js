@@ -2,6 +2,7 @@ import { system, world } from '@minecraft/server';
 
 import { logError } from '../../../events/logger.js';
 import { Config } from '../config.js';
+import { cache } from '../../../shared/cache.js';
 
 // ค่าคงที่
 const STORAGE_KEY = 'ZONE_DATA';
@@ -95,7 +96,7 @@ const buildZonesProxy = (data, saveFn) =>
    });
 
 // คลาส ZoneDatabase
-export class ZoneDatabase {
+class ZoneDatabase {
    constructor() {
       this._data = {};
       this.cache = new Map();
@@ -120,7 +121,7 @@ export class ZoneDatabase {
          const payload = { version: 2, zones };
          const json = JSON.stringify(payload);
          if (json.length > MAX_STORAGE_SIZE) throw new Error('Data exceeds 32KB');
-         world.setDynamicProperty(STORAGE_KEY, json);
+         cache.setDynamicProperty(STORAGE_KEY, json);
       } catch (error) {
          logError('Protection', 'Save failed', error);
       }
@@ -132,7 +133,7 @@ export class ZoneDatabase {
          this.zones = buildZonesProxy(this._data, () => this.scheduleSave());
          this.cache.clear();
 
-         const json = world.getDynamicProperty(STORAGE_KEY);
+         const json = cache.getDynamicProperty(STORAGE_KEY);
          if (!json || typeof json !== 'string') return;
 
          const zonesData = parseStorageFormat(JSON.parse(json));

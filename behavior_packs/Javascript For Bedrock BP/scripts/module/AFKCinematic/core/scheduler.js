@@ -6,9 +6,10 @@ import { tickBlockCache } from './block.js';
 import { playerStates } from './state.js';
 import { hasMoved, refreshBaseline } from './stateManager.js';
 import { logError } from '../../../events/logger.js';
+import { pcheck } from './../../../shared/player.js';
+
 function getPlayerById(playerId) {
    try {
-      // ค้นหาผู้เล่นด้วย ID แบบ O(1) จากระบบลงทะเบียน เพื่อหลีกเลี่ยงการสแกนหาแบบ O(N)
       return Registry.get(playerId)?.player;
    } catch {
       return undefined;
@@ -61,7 +62,7 @@ class CinematicScheduler {
          const playerId = this._ids[this._cursor++];
          const player = getPlayerById(playerId);
 
-         if (!player?.isValid) {
+         if (!pcheck(player)) {
             toRemove.push(playerId);
             continue;
          }

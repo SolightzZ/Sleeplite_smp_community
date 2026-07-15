@@ -2,14 +2,15 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 
 import { addSound } from '../../../plugin/utils.js';
 
-import { logError } from '../../../events/logger.js';
+import { logError, logWarn } from '../../../events/logger.js';
 import { LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
 import { showForm, sure } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
+import { cache } from '../../../shared/cache.js';
 
 const showDetail = (player, item, targetName, index) => {
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
    const form = new ModalFormData();
    form.title('รายละเอียดรายงาน');
    form.textField('ผู้ส่ง', '', { defaultValue: targetName });
@@ -21,7 +22,7 @@ const showDetail = (player, item, targetName, index) => {
 };
 
 const showReplyForm = (player, item, targetName, index) => {
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
    const form = new ModalFormData();
    form.title('ตอบกลับผู้ใช้งาน');
    form.textField('ข้อความตอบกลับ', '', { defaultValue: item.r });
@@ -33,24 +34,24 @@ const showReplyForm = (player, item, targetName, index) => {
       }
       const text = result.formValues[0];
       if (!text || text.trim() === '') {
-         player.sendMessage('§c[Report] กรุณากรอกข้อความตอบกลับ');
+         cache.sendMessage(player, '§c[Report] กรุณากรอกข้อความตอบกลับ');
          adminact(player, targetName, index);
          return;
       }
       const trimmed = text.trim();
       if (trimmed.length > LIMITS.reply) {
-         player.sendMessage(`§c[Report] ข้อความยาวเกิน ${LIMITS.reply} ตัวอักษร`);
+         cache.sendMessage(player, `§c[Report] ข้อความยาวเกิน ${LIMITS.reply} ตัวอักษร`);
          adminact(player, targetName, index);
          return;
       }
       Database.reply(targetName, index, trimmed);
-      player.sendMessage('§a[Report] บันทึกการตอบกลับสำเร็จ');
+      cache.sendMessage(player, '§a[Report] บันทึกการตอบกลับสำเร็จ');
       adminact(player, targetName, index);
    });
 };
 
 const dumpToConsole = (player, item, targetName, index) => {
-   console.warn(JSON.stringify(item, null, 2));
+   logWarn('Debug', JSON.stringify(item, null, 2));
    adminact(player, targetName, index);
 };
 
@@ -59,20 +60,20 @@ const confirmDelete = (player, targetName, index) => {
       player,
       () => {
          Database.delete(targetName, index);
-         player.sendMessage('§c[Report] ลบข้อมูลสำเร็จ');
+         cache.sendMessage(player, '§c[Report] ลบข้อมูลสำเร็จ');
          adminmsg(player, targetName);
       },
       () => adminact(player, targetName, index),
    );
 };
 
-export const adminact = (player, targetName, index) => {
+const adminact = (player, targetName, index) => {
    try {
-      addSound(player, 'item.book.page_turn');
+      cache.playSound(player, 'item.book.page_turn');
       const list = Database.get(targetName);
 
       if (!list || !list[index]) {
-         player.sendMessage('§c[Report] ข้อมูลถูกเปลี่ยนแปลงหรือลบแล้ว');
+         cache.sendMessage(player, '§c[Report] ข้อมูลถูกเปลี่ยนแปลงหรือลบแล้ว');
          adminmsg(player, targetName);
          return;
       }
@@ -114,9 +115,9 @@ export const adminact = (player, targetName, index) => {
    }
 };
 
-export const adminmsg = (player, targetName) => {
+const adminmsg = (player, targetName) => {
    try {
-      addSound(player, 'item.book.page_turn');
+      cache.playSound(player, 'item.book.page_turn');
       const list = Database.get(targetName);
       if (!list || list.length === 0) {
          adminpanel(player);
@@ -150,7 +151,7 @@ export const adminmsg = (player, targetName) => {
 
 export const adminpanel = (player) => {
    try {
-      addSound(player, 'item.book.page_turn');
+      cache.playSound(player, 'item.book.page_turn');
       const db = Database.getAll();
       const names = Object.keys(db);
 
@@ -172,9 +173,9 @@ export const adminpanel = (player) => {
          if (res.canceled) return;
 
          if (res.selection === 0) {
-            console.warn('***** Server Dump *****');
-            console.warn(JSON.stringify(db, null, 2));
-            player.sendMessage('§e[System] Dump ข้อมูลลง Console แล้ว');
+            logWarn('Debug', '***** Server Dump *****');
+            logWarn('Debug', JSON.stringify(db, null, 2));
+            cache.sendMessage(player, '§e[System] Dump ข้อมูลลง Console แล้ว');
             adminpanel(player);
          } else if (res.selection === names.length + 1) {
             showMenuReport(player);

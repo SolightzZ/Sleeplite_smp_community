@@ -2,18 +2,28 @@ import { system } from '@minecraft/server';
 import { transferPlayer } from '@minecraft/server-admin';
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { logError } from '../../events/logger.js';
-import { MESSAGES, SERVER_LIST } from './Source.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
+import { SERVER_LIST } from './Source.js';
+import {
+   UI_TITLES,
+   UI_BUTTONS,
+   UI_TEXT,
+   DEFAULT_ICON,
+   LOG_TAG,
+   MESSAGES,
+} from './config.js';
 
 export function showServerMenu(player) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
-   const form = new ActionFormData().title('เลือกเซิร์ฟเวอร์');
+   const form = new ActionFormData().title(UI_TITLES.serverMenu);
 
    for (const server of SERVER_LIST) {
-      form.button(server.displayName, server.iconTexture || 'textures/items/xbox4');
+      form.button(server.displayName, server.iconTexture || DEFAULT_ICON);
    }
 
-   form.button('กรอก IP ด้วยตัวเอง');
+   form.button(UI_BUTTONS.customIp);
    form
       .show(player)
       .then((response) => {
@@ -24,32 +34,32 @@ export function showServerMenu(player) {
 
          if (idx >= SERVER_LIST.length) {
             system.run(() => {
-               if (player.isValid) showCustomServerInput(player);
+               if (pcheck(player)) showCustomServerInput(player);
             });
             return;
          }
 
          const server = SERVER_LIST[idx];
          system.run(() => {
-            if (player.isValid) showConfirmationMenu(player, server.displayName, server.ipAddress, server.portNumber);
+            if (pcheck(player)) showConfirmationMenu(player, server.displayName, server.ipAddress, server.portNumber);
          });
       })
       .catch((error) => {
-         logError('CustomCommands', 'showServerMenu', error);
+         logError(LOG_TAG, 'showServerMenu', error);
          system.run(() => {
-            if (player.isValid) showCustomServerInput(player);
+            if (pcheck(player)) showCustomServerInput(player);
          });
          return;
       });
 }
 
 function showCustomServerInput(player) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
    const form = new ModalFormData();
-   form.title('กรอกเซิร์ฟเวอร์');
-   form.textField('IP Address:', 'เช่น 192.168.0.1 หรือ zeqa.net');
-   form.textField('Port Number:', 'เช่น 19132');
+   form.title(UI_TITLES.customInput);
+   form.textField(UI_TEXT.ipLabel, UI_TEXT.ipPlaceholder);
+   form.textField(UI_TEXT.portLabel, UI_TEXT.portPlaceholder);
 
    form
       .show(player)
@@ -63,31 +73,31 @@ function showCustomServerInput(player) {
          const portNumber = Number(values[1]);
 
          if (!ipAddress || !Number.isInteger(portNumber)) {
-            player.sendMessage(MESSAGES.INVALID_IP);
+            cache.sendMessage(player, MESSAGES.INVALID_IP);
             return;
          }
 
          system.run(() => {
-            if (player.isValid) showConfirmationMenu(player, 'เซิร์ฟเวอร์ที่กำหนดเอง', ipAddress, portNumber);
+            if (pcheck(player)) showConfirmationMenu(player, UI_TEXT.customServerLabel, ipAddress, portNumber);
          });
       })
       .catch((error) => {
-         logError('CustomCommands', 'showCustomServerInput', error);
+         logError(LOG_TAG, 'showCustomServerInput', error);
          system.run(() => {
-            if (player.isValid) showServerMenu(player);
+            if (pcheck(player)) showServerMenu(player);
          });
          return;
       });
 }
 
 function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
 
    const form = new ActionFormData();
-   form.title('ยืนยันการเชื่อมต่อ');
-   form.body(`§7ชื่อเซิร์ฟเวอร์: ${serverName}\nIP Address: ${ipAddress}\n§7Port Number: ${portNumber}`);
-   form.button('ตกลง');
-   form.button('กลับ');
+   form.title(UI_TITLES.confirm);
+   form.body(UI_TEXT.confirmBody(serverName, ipAddress, portNumber));
+   form.button(UI_BUTTONS.confirm);
+   form.button(UI_BUTTONS.back);
 
    form
       .show(player)
@@ -96,7 +106,7 @@ function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
 
          if (response.selection !== 0) {
             system.run(() => {
-               if (player.isValid) showServerMenu(player);
+               if (pcheck(player)) showServerMenu(player);
             });
             return;
          }
@@ -104,21 +114,21 @@ function showConfirmationMenu(player, serverName, ipAddress, portNumber) {
          transferPlayerToServer(player, ipAddress, portNumber);
       })
       .catch((error) => {
-         logError('CustomCommands', 'showConfirmationMenu', error);
+         logError(LOG_TAG, 'showConfirmationMenu', error);
          system.run(() => {
-            if (player.isValid) showServerMenu(player);
+            if (pcheck(player)) showServerMenu(player);
          });
          return;
       });
 }
 
 function transferPlayerToServer(player, ipAddress, portNumber) {
-   if (!player.isValid) return;
+   if (!pcheck(player)) return;
    try {
       transferPlayer(player, { hostname: ipAddress, port: portNumber });
-      player.sendMessage(MESSAGES.TRANSFER_START(ipAddress, portNumber));
+      cache.sendMessage(player, MESSAGES.TRANSFER_START(ipAddress, portNumber));
    } catch (error) {
-      logError('CustomCommands', 'transferPlayerToServer', error);
-      player.sendMessage(MESSAGES.TRANSFER_FAIL);
+      logError(LOG_TAG, 'transferPlayerToServer', error);
+      cache.sendMessage(player, MESSAGES.TRANSFER_FAIL);
    }
 }

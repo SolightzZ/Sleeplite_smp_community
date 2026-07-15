@@ -1,15 +1,18 @@
 import { BlockComponentTypes, EntityComponentTypes } from '@minecraft/server';
-import { ColorCodes, INVENTORY_SLOTS } from '../config.js';
+import { ColorCodes, INVENTORY_SLOTS, msgContainerEmpty, msgLookAtChest, msgNoInventory, msgNotContainer, msgPlayerInvalid, msgSortResult, msgSorted } from '../config.js';
 import { applyChessPattern, applyColumnPattern, applyLinePattern } from '../patterns/patterns.js';
 import { isContainerSorted, sortAndMergeItems, writeContainerDiff } from '../utils/container.js';
 import { formatBlockName } from '../utils/formatter.js';
 import { compareItemsByMode } from '../utils/item.js';
 import { normalizeMode } from '../utils/mode.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 const readContainerSlice = (container, start, length) => {
+    const items = cache.getContainerItems(container);
     const arr = new Array(length);
     for (let i = 0; i < length; i++) {
-        arr[i] = container.getItem(start + i);
+        arr[i] = items[start + i];
     }
     return arr;
 };
@@ -37,13 +40,13 @@ const _sortByMode = (rawItems, sortMode, size, container, startSlot = 0) => {
 };
 
 export function sortPlayerInventory(player, mode) {
-    if (!player?.isValid) {
-        return { ok: false, msg: `${ColorCodes.red}[x] ผู้เล่นไม่ถูกต้องแล้ว` };
+    if (!pcheck(player)) {
+        return { ok: false, msg: msgPlayerInvalid };
     }
 
-    const inv = player.getComponent(EntityComponentTypes.Inventory)?.container;
+    const inv = cache.getInventory(player);
     if (!inv) {
-        return { ok: false, msg: `${ColorCodes.red}[x] ไม่พบช่องเก็บของ` };
+        return { ok: false, msg: msgNoInventory };
     }
 
     const invSize = inv.size;
@@ -58,47 +61,47 @@ export function sortPlayerInventory(player, mode) {
     }
 
     if (rawItems.length === 0) {
-        return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
+        return { ok: true, msg: msgSorted };
     }
 
     const merged = _sortByMode(rawItems, sortMode, mainLen, inv, hotbarEnd);
     if (merged === null) {
-        return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
+        return { ok: true, msg: msgSorted };
     }
 
     writeContainerDiff(inv, merged, hotbarEnd);
 
     return {
         ok: true,
-        msg: `${ColorCodes.yellow}[inventory] ${ColorCodes.white}จัดเรียงเรียบร้อยแล้ว`,
+        msg: msgSortResult,
     };
 }
 
 export function sortBlockContainer(player, mode) {
-    if (!player?.isValid) {
-        return { ok: false, msg: `${ColorCodes.red}[x] ผู้เล่นไม่ถูกต้องแล้ว` };
+    if (!pcheck(player)) {
+        return { ok: false, msg: msgPlayerInvalid };
     }
 
     const bv = player.getBlockFromViewDirection?.();
     if (!bv?.block) {
         return {
             ok: false,
-            msg: `${ColorCodes.red}[!] กรุณามองไปที่หีบที่ต้องการจัดเรียง`,
+                msg: msgLookAtChest,
         };
     }
 
     const block = bv.block;
-    const container = block.getComponent(BlockComponentTypes.Inventory)?.container;
+    const container = cache.getBlockInventory(block);
     if (!container) {
-        return { ok: false, msg: `${ColorCodes.red}[!] บล็อกนี้ไม่มีที่เก็บของ` };
+        return { ok: false, msg: msgNotContainer };
     }
 
     const sortMode = normalizeMode(mode);
-    const size = container.size;
+    const items = cache.getContainerItems(container);
     const rawItems = [];
 
-    for (let i = 0; i < size; i++) {
-        const it = container.getItem(i);
+    for (let i = 0; i < items.length; i++) {
+        const it = items[i];
         if (it) rawItems.push(it);
     }
 
@@ -106,12 +109,12 @@ export function sortBlockContainer(player, mode) {
     const emptySlots = size - itemCount;
 
     if (itemCount === 0) {
-        return { ok: true, msg: `${ColorCodes.green}[/] ที่เก็บของว่างเปล่า` };
+        return { ok: true, msg: msgContainerEmpty };
     }
 
     const merged = _sortByMode(rawItems, sortMode, size, container, 0);
     if (merged === null) {
-        return { ok: true, msg: `${ColorCodes.green}[/] จัดเรียงเรียบร้อยแล้ว` };
+        return { ok: true, msg: msgSorted };
     }
 
     writeContainerDiff(container, merged);

@@ -3,19 +3,20 @@ import { BlockPermutation, system } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
 import { CFG } from '../config.js';
 import { ORE_XP } from '../data/ores.js';
-import { getBlockSafe } from '../utils/block.js';
-import { applyDurabilityDamage } from '../utils/durability.js';
+import { getBlockSafe } from '../../../shared/block.js';
+import { Durability } from '../../../shared/durability.js';
 import { getPlayerPickaxe } from '../utils/player.js';
 import { finalizeAndCleanupState } from './lifecycle.js';
-import { getJob, getJobQueueLength, getLastProcessedIndex, incrementLastProcessedIndex, popJob, setLastProcessedIndex } from './queue.js';
+import { pcheck } from './../../../shared/player.js';
+import { JobQueue } from '../../../shared/jobQueue.js';
 
 let _airPermutation;
 
 export const processVeinJobs = () => {
    const AIR = _airPermutation || (_airPermutation = BlockPermutation.resolve('minecraft:air'));
-   const totalJobs = getJobQueueLength();
+   const totalJobs = JobQueue.getJobQueueLength();
    if (totalJobs === 0) {
-      setLastProcessedIndex(0);
+      JobQueue.setLastProcessedIndex(0);
       return;
    }
 
@@ -27,27 +28,27 @@ export const processVeinJobs = () => {
    let budgetChecked = 0;
    const maxJobs = Math.min(totalJobs, 4);
 
-   while (jobsDone < maxJobs && getJobQueueLength() > 0) {
+   while (jobsDone < maxJobs && JobQueue.getJobQueueLength() > 0) {
       if (++budgetChecked % 4 === 0 && Date.now() - startTime > 5) break;
-      let lastProcessedIndex = getLastProcessedIndex();
-      if (lastProcessedIndex >= getJobQueueLength()) {
+      let lastProcessedIndex = JobQueue.getLastProcessedIndex();
+      if (lastProcessedIndex >= JobQueue.getJobQueueLength()) {
          lastProcessedIndex = 0;
-         setLastProcessedIndex(0);
+         JobQueue.setLastProcessedIndex(0);
       }
 
-      const job = getJob(lastProcessedIndex);
+      const job = JobQueue.getJob(lastProcessedIndex);
       const curTick = system.currentTick;
 
-      if (!job.player.isValid || curTick - job.startTick > CFG.jobTimeoutTicks) {
+      if (!pcheck(job.player) || curTick - job.startTick > CFG.jobTimeoutTicks) {
          finalizeAndCleanupState(job);
-         popJob(lastProcessedIndex);
+         JobQueue.popJob(lastProcessedIndex);
          continue;
       }
 
       const item = getPlayerPickaxe(job.player);
       if (!item) {
          finalizeAndCleanupState(job);
-         popJob(lastProcessedIndex);
+         JobQueue.popJob(lastProcessedIndex);
          continue;
       }
 
@@ -78,14 +79,14 @@ export const processVeinJobs = () => {
 
       // Apply durability damage dynamically per tick based on actual blocks broken
       if (tickBlocksBroken > 0) {
-         applyDurabilityDamage(job.player, item, tickBlocksBroken, job.unbreakingLevel);
+         Durability.applyDurabilityDamage(job.player, item, tickBlocksBroken, job.unbreakingLevel);
       }
 
       if (job.index >= job.locations.length) {
          finalizeAndCleanupState(job);
-         popJob(lastProcessedIndex);
+         JobQueue.popJob(lastProcessedIndex);
       } else {
-         incrementLastProcessedIndex();
+         JobQueue.incrementLastProcessedIndex();
       }
 
       jobsDone++;

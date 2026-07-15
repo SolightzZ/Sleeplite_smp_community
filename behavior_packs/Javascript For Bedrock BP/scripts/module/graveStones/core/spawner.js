@@ -1,12 +1,13 @@
 import { EntityComponentTypes } from '@minecraft/server';
-
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
+import { pisPlayer } from './../../../shared/player.js';
 import { CENTER_OFFSET, DIMENSION_HEIGHT_RULE, GRAVESTONE_ENTITY, INVENTORY_COMPONENT } from '../config.js';
 import { floorPosition, getGraveY } from '../utils/location.js';
 import { findNearbyItems, safeAddItem } from './container.js';
 
 export function gravestone_main({ deadEntity: deadPlayer }) {
-   if (!deadPlayer || !deadPlayer.isValid || deadPlayer.typeId !== 'minecraft:player') return;
+   if (!pisPlayer(deadPlayer)) return;
 
    const dimension = deadPlayer.dimension;
    const pos = floorPosition(deadPlayer.location);
@@ -24,14 +25,14 @@ export function gravestone_main({ deadEntity: deadPlayer }) {
 
    grave.nameTag = `§cGraveStone\n${deadPlayer.nameTag || deadPlayer.name || deadPlayer.id}`;
 
-   const inventory = grave.getComponent(INVENTORY_COMPONENT);
+   const inventory = cache.getComponent(grave, INVENTORY_COMPONENT);
    const container = inventory?.container;
    if (!container) return;
 
    for (const drop of items) {
       if (!drop.isValid) continue;
 
-      const itemData = drop.getComponent(EntityComponentTypes.Item)?.itemStack;
+      const itemData = cache.getComponent(drop, EntityComponentTypes.Item)?.itemStack;
       if (!itemData) continue;
 
       const added = safeAddItem(container, itemData);

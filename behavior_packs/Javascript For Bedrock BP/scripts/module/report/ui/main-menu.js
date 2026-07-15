@@ -7,13 +7,15 @@ import { showForm } from '../utils/ui.js';
 import { adminpanel } from './admin-panel.js';
 import { note } from './patch-note-menu.js';
 import { inbox, reportmenu } from './report-menu.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
 
 export const showMenuReport = (arg) => {
    const player = arg?.source ?? arg;
 
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
-   addSound(player, 'item.book.page_turn');
+   cache.playSound(player, 'item.book.page_turn');
 
    const form = new ActionFormData();
    form.title('Report | แจ้งปัญหา');

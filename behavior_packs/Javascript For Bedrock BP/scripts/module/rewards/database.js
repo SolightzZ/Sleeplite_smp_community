@@ -1,27 +1,21 @@
-import { logError } from '../../events/logger.js';
+import { logError, logWarn } from '../../events/logger.js';
 import { config } from './constants.js';
+import { Database } from '../../shared/database.js';
 
-const cache = new Map();
+const rewardCache = new Map();
 
 function load(player) {
-   const cached = cache.get(player.id);
+   const cached = rewardCache.get(player.id);
    if (cached !== undefined) return cached;
-   try {
-      const rawData = player.getDynamicProperty(config.dbKey);
-      const data = !rawData ? { last: null, count: 0 } : JSON.parse(rawData);
-      cache.set(player.id, data);
-      return data;
-   } catch (error) {
-      logError('Rewards', 'load Error', error);
-      return { last: null, count: 0 };
-   }
+   const data = Database.loadPlayer(player, config.dbKey, { last: null, count: 0 });
+   rewardCache.set(player.id, data);
+   return data;
 }
 
 function save(player, data) {
-   cache.set(player.id, data);
+   rewardCache.set(player.id, data);
    try {
-      const jsonString = JSON.stringify(data);
-      player.setDynamicProperty(config.dbKey, jsonString);
+      Database.savePlayer(player, config.dbKey, data);
       return true;
    } catch (error) {
       logError('Rewards', 'Save Error', error);
@@ -30,9 +24,9 @@ function save(player, data) {
 }
 
 function reset(player) {
-   cache.delete(player.id);
-   console.warn('Reward reset' + config.dbKey);
-   player.setDynamicProperty(config.dbKey, undefined);
+   rewardCache.delete(player.id);
+   logWarn('Rewards', 'Reward reset' + config.dbKey);
+   Database.savePlayer(player, config.dbKey, undefined);
 }
 
 export { load, reset, save };

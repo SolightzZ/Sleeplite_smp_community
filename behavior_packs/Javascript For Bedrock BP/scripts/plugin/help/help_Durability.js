@@ -1,16 +1,18 @@
 import { EntityComponentTypes, EquipmentSlot, ItemComponentTypes } from '@minecraft/server';
 import { armorData } from './help_armorData.js';
 import { getDamageReduction } from './help_function.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 
 const ARMOR_SLOTS = [EquipmentSlot.Head, EquipmentSlot.Chest, EquipmentSlot.Legs, EquipmentSlot.Feet, EquipmentSlot.Offhand];
 
 const getEnchants = (item) => {
-    const comp = item.getComponent(ItemComponentTypes.Enchantable);
+    const comp = cache.getEnchantable(item);
     return comp ? comp.getEnchantments() : null;
 };
 
 const buildLore = (item, playerTag, stats, enchants, damage) => {
-    const durComp = item.getComponent(ItemComponentTypes.Durability);
+    const durComp = cache.getDurability(item);
     const hasDur = !!durComp;
     const curDur = hasDur ? durComp.maxDurability - durComp.damage : 0;
     const maxDur = hasDur ? durComp.maxDurability : 0;
@@ -49,10 +51,10 @@ const buildLore = (item, playerTag, stats, enchants, damage) => {
 };
 
 const updateInventoryLore = (container, playerTag, damage) => {
-    const size = container.size;
+    const items = cache.getContainerItems(container);
 
-    for (let i = 0; i < size; i++) {
-        const item = container.getItem(i);
+    for (let i = 0; i < items.length; i++) {
+        const item = items[i];
         if (!item) continue;
 
         const enchants = getEnchants(item);
@@ -100,13 +102,13 @@ const updateEquipmentLore = (equippable, playerTag, damage) => {
 };
 
 export const dy = (player, damage = 10) => {
-    if (!player?.isValid) return;
+    if (!pcheck(player)) return;
 
-    const inventory = player.getComponent(EntityComponentTypes.Inventory);
+    const inventory = cache.getInventoryComponent(player);
     const container = inventory?.container;
     if (!container) return;
 
-    const equippable = player.getComponent(EntityComponentTypes.Equippable);
+    const equippable = cache.getEquippable(player);
     if (!equippable) return;
 
     const playerTag = `§8@${player.name}§r`;

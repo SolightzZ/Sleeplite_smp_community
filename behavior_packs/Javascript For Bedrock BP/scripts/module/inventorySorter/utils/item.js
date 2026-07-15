@@ -1,78 +1,10 @@
 import { ItemStack, ItemComponentTypes } from '@minecraft/server';
+import { CATEGORY_KEYWORDS, MATERIAL_TIER, maxItemAmount } from '../config.js';
 import { ItemCategories, RarityTiers } from '../data/rarity.js';
 import { getItemDisplayName, getItemDurability } from './formatter.js';
+import { cache } from '../../../shared/cache.js';
 
-const CATEGORY_KEYWORDS = [
-    ['sword', ItemCategories.weapon],
-    ['bow', ItemCategories.weapon],
-    ['crossbow', ItemCategories.weapon],
-    ['trident', ItemCategories.weapon],
-    ['axe', ItemCategories.tool],
-    ['pickaxe', ItemCategories.tool],
-    ['shovel', ItemCategories.tool],
-    ['hoe', ItemCategories.tool],
-    ['shears', ItemCategories.tool],
-    ['flint_and_steel', ItemCategories.tool],
-    ['fishing_rod', ItemCategories.tool],
-    ['compass', ItemCategories.tool],
-    ['clock', ItemCategories.tool],
-    ['helmet', ItemCategories.armor],
-    ['chestplate', ItemCategories.armor],
-    ['leggings', ItemCategories.armor],
-    ['boots', ItemCategories.armor],
-    ['elytra', ItemCategories.armor],
-    ['apple', ItemCategories.food],
-    ['bread', ItemCategories.food],
-    ['meat', ItemCategories.food],
-    ['cooked', ItemCategories.food],
-    ['golden_carrot', ItemCategories.food],
-    ['stew', ItemCategories.food],
-    ['soup', ItemCategories.food],
-    ['cake', ItemCategories.food],
-    ['cookie', ItemCategories.food],
-    ['beetroot', ItemCategories.food],
-    ['melon', ItemCategories.food],
-    ['carrot', ItemCategories.food],
-    ['potato', ItemCategories.food],
-    ['fish', ItemCategories.food],
-    ['salmon', ItemCategories.food],
-    ['_block', ItemCategories.block],
-    ['stone', ItemCategories.block],
-    ['wood', ItemCategories.block],
-    ['plank', ItemCategories.block],
-    ['brick', ItemCategories.block],
-    ['concrete', ItemCategories.block],
-    ['sand', ItemCategories.block],
-    ['gravel', ItemCategories.block],
-    ['dirt', ItemCategories.block],
-    ['grass', ItemCategories.block],
-    ['log', ItemCategories.block],
-    ['leaves', ItemCategories.block],
-    ['glass', ItemCategories.block],
-    ['wool', ItemCategories.block],
-    ['ingot', ItemCategories.material],
-    ['gem', ItemCategories.material],
-    ['dust', ItemCategories.material],
-    ['nugget', ItemCategories.material],
-    ['shard', ItemCategories.material],
-    ['crystal', ItemCategories.material],
-    ['scrap', ItemCategories.material],
-];
-
-const MATERIAL_TIER = [
-    ['demon', 0],
-    ['wolf', 1],
-    ['netherite', 2],
-    ['diamond', 3],
-    ['iron', 4],
-    ['gold', 5],
-    ['copper', 6],
-    ['stone', 7],
-    ['wood', 8],
-    ['leather', 9],
-];
-
-export const getItemCategory = (item) => {
+const getItemCategory = (item) => {
     if (!item?.typeId) return ItemCategories.misc;
 
     const id = item.typeId.toLowerCase();
@@ -84,7 +16,7 @@ export const getItemCategory = (item) => {
     return ItemCategories.misc;
 };
 
-export const getItemMaterialTier = (item) => {
+const getItemMaterialTier = (item) => {
     if (!item?.typeId) return 99;
 
     const id = item.typeId.toLowerCase();
@@ -95,10 +27,10 @@ export const getItemMaterialTier = (item) => {
     return 99;
 };
 
-export const getItemRarity = (item) => {
+const getItemRarity = (item) => {
     if (!item) return 999;
 
-    const enchants = item.getComponent(ItemComponentTypes.Enchantable);
+    const enchants = cache.getEnchantable(item);
     if (enchants?.getEnchantments?.()?.length > 0) return 4;
 
     return RarityTiers[item.typeId] ?? 5;
@@ -107,7 +39,7 @@ export const getItemRarity = (item) => {
 const getEnchantCount = (item) => {
     if (!item) return 0;
 
-    return item.getComponent(ItemComponentTypes.Enchantable)?.getEnchantments?.()?.length ?? 0;
+    return cache.getEnchantable(item)?.getEnchantments?.()?.length ?? 0;
 };
 
 export const compareItemsByMode = (a, b, mode) => {
@@ -173,8 +105,8 @@ export const compareItemsByMode = (a, b, mode) => {
     }
 
     if (mode === 'durability') {
-        const hasDurA = !!a.getComponent(ItemComponentTypes.Durability);
-        const hasDurB = !!b.getComponent(ItemComponentTypes.Durability);
+        const hasDurA = !!cache.getComponent(a, ItemComponentTypes.Durability);
+        const hasDurB = !!cache.getComponent(b, ItemComponentTypes.Durability);
         if (hasDurA !== hasDurB) return hasDurA ? -1 : 1;
         if (hasDurA && hasDurB) {
             const da = getItemDurability(a);
@@ -191,7 +123,7 @@ export const compareItemsByMode = (a, b, mode) => {
 };
 
 export const cloneWithAmountLike = (ref, amount) => {
-    const safeAmount = amount < 1 ? 1 : amount > 255 ? 255 : amount;
+    const safeAmount = amount < 1 ? 1 : amount > maxItemAmount ? maxItemAmount : amount;
 
     if (typeof ref.clone === 'function') {
         const c = ref.clone();
@@ -199,5 +131,5 @@ export const cloneWithAmountLike = (ref, amount) => {
         return c;
     }
 
-    return new ItemStack(ref.typeId, safeAmount);
+    return cache.createItemStack(ref.typeId, safeAmount);
 };

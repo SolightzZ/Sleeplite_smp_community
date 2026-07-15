@@ -1,6 +1,7 @@
 import { CONFIG } from '../config.js';
 import { addChest, countByPlayer, getByKey, getByLocation } from '../core/database.js';
 import { logError } from '../events/logger.js';
+import { cache } from '../shared/cache.js';
 import { showAddChestForm } from '../ui/addChest.js';
 import { findDoubleChestPartner, findItemInChest, formatItemName, getChestKey } from '../utils/helpers.js';
 import { validateChestBlock } from '../utils/validation.js';
@@ -94,7 +95,7 @@ export function startAddChest(player) {
          };
          addChest(key, data);
          if (pairedBlock) {
-            const dpComp = pairedBlock.getComponent('minecraft:dynamic_properties');
+            const dpComp = cache.getComponent(pairedBlock, 'minecraft:dynamic_properties');
             if (dpComp) {
                dpComp.set('economy:shopKey', key);
             }

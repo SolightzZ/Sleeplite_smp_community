@@ -1,7 +1,9 @@
 import { EntityComponentTypes, ItemStack } from '@minecraft/server';
 
-import { logError } from '../../events/logger.js';
+import { logError, logWarn } from '../../events/logger.js';
 import { config } from './constants.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 
 function time() {
    const now = new Date();
@@ -18,41 +20,42 @@ function name(id) {
 
 function give(player, id, count) {
    try {
-      if (!player || !player.isValid) return false;
+      if (!pcheck(player)) return false;
 
-      const inventory = player.getComponent(EntityComponentTypes.Inventory);
+      const inventory = cache.getInventoryComponent(player);
       if (!inventory?.container) return false;
 
-      const container = inventory.container;
-      const slotIndices = Array.from({ length: container.size }, (_, i) => i);
-      const amountToAdd = player.hasTag(config.vipTag) ? count * config.vipMul : count;
-      const maxStack = new ItemStack(id, 1).maxAmount;
+        const container = inventory.container;
+        const items = cache.getContainerItems(container);
+        const slotIndices = items.map((_, i) => i);
+        const amountToAdd = player.hasTag(config.vipTag) ? count * config.vipMul : count;
+        const maxStack = cache.createItemStack(id, 1).maxAmount;
 
-      let remaining = amountToAdd;
+        let remaining = amountToAdd;
 
-      for (const index of slotIndices) {
-         if (remaining <= 0) break;
-         const slotItem = container.getItem(index);
-         if (slotItem?.typeId === id && slotItem.amount < maxStack) {
-            const toAdd = Math.min(remaining, maxStack - slotItem.amount);
-            slotItem.amount += toAdd;
-            container.setItem(index, slotItem);
-            remaining -= toAdd;
-         }
-      }
+        for (const index of slotIndices) {
+            if (remaining <= 0) break;
+            const slotItem = items[index];
+            if (slotItem?.typeId === id && slotItem.amount < maxStack) {
+                const toAdd = Math.min(remaining, maxStack - slotItem.amount);
+                slotItem.amount += toAdd;
+                container.setItem(index, slotItem);
+                remaining -= toAdd;
+            }
+        }
 
-      for (const index of slotIndices) {
-         if (remaining <= 0) break;
-         const slotItem = container.getItem(index);
-         if (!slotItem) {
+        for (const index of slotIndices) {
+            if (remaining <= 0) break;
+            const slotItem = items[index];
+            if (!slotItem) {
             const toAdd = Math.min(remaining, maxStack);
-            container.setItem(index, new ItemStack(id, toAdd));
+            container.setItem(index, cache.createItemStack(id, toAdd));
             remaining -= toAdd;
          }
       }
 
       if (remaining > 0) {
-         console.warn(`[Give] Not enough space. ${remaining} items could not be given.`);
+         logWarn('Rewards', `[Give] Not enough space. ${remaining} items could not be given.`);
       }
 
       return remaining < amountToAdd;

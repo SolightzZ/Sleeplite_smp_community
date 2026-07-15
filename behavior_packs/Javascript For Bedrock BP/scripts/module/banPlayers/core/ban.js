@@ -5,14 +5,17 @@ import { Registry } from '../../../events/registry.js';
 import { Config } from '../config.js';
 import { formatDate, formatDuration, formatRemaining } from '../utils/format.js';
 import { BanDatabase } from './database.js';
+import { cache } from '../../../shared/cache.js';
+import { pcheck } from './../../../shared/player.js';
+import { nowUnix } from '../../../shared/datetime.js';
 
 // ส่งเตะผู้เล่น
 const execKick = (player, reason) => {
    try {
-      if (!player?.isValid) return false;
+      if (!pcheck(player)) return false;
 
       system.run(() => {
-         if (!player.isValid) return;
+         if (!pcheck(player)) return;
          kickPlayer(player, reason);
       });
       return true;
@@ -40,11 +43,11 @@ const buildBanMessage = (entry) => {
 
 export const kickAndNotify = (player, reason, adminName) => {
    try {
-      if (!player?.isValid) return false;
+      if (!pcheck(player)) return false;
 
-      player.sendMessage(`§4คุณถูกเชิญออกจากเซิร์ฟเวอร์`);
-      player.sendMessage(`§cสาเหตุ: §f${reason}`);
-      player.sendMessage(`§cดำเนินการโดย: §f${adminName}`);
+      cache.sendMessage(player, `§4คุณถูกเชิญออกจากเซิร์ฟเวอร์`);
+      cache.sendMessage(player, `§cสาเหตุ: §f${reason}`);
+      cache.sendMessage(player, `§cดำเนินการโดย: §f${adminName}`);
 
       return execKick(player, reason);
    } catch (error) {
@@ -55,7 +58,7 @@ export const kickAndNotify = (player, reason, adminName) => {
 
 export const banPlayer = (name, reason, duration, adminPlayer) => {
    try {
-      if (!adminPlayer || !adminPlayer.isValid) return { ok: false, message: 'Invalid admin' };
+      if (!pcheck(adminPlayer)) return { ok: false, message: 'Invalid admin' };
 
       if (adminPlayer.name === name) {
          return {
@@ -75,7 +78,7 @@ export const banPlayer = (name, reason, duration, adminPlayer) => {
 
       const existing = BanDatabase.get(name);
       if (existing) {
-         const stillBanned = existing.duration === 0 || existing.expiresAt > Math.floor(Date.now() / 1000);
+         const stillBanned = existing.duration === 0 || existing.expiresAt > nowUnix();
          if (stillBanned) {
             return {
                ok: false,
@@ -85,12 +88,12 @@ export const banPlayer = (name, reason, duration, adminPlayer) => {
       }
 
       BanDatabase.add(name, reason, duration, adminPlayer.name);
-      adminPlayer.sendMessage(`${'§a'}[/] แบนผู้เล่น ${name} เสร็จสิ้น`);
+      cache.sendMessage(adminPlayer, `${'§a'}[/] แบนผู้เล่น ${name} เสร็จสิ้น`);
 
-      for (const target of world.getPlayers()) {
-         if (target.name === name && target.isValid) {
+      for (const target of cache.getPlayers()) {
+         if (target.name === name && pcheck(target)) {
             const entry = BanDatabase.get(name);
-            target.sendMessage(buildBanMessage(entry));
+            cache.sendMessage(target, buildBanMessage(entry));
             execKick(target, reason);
             break;
          }
@@ -108,7 +111,7 @@ export const banPlayer = (name, reason, duration, adminPlayer) => {
 
 export const unbanPlayer = (name, adminPlayer) => {
    try {
-      if (!adminPlayer || !adminPlayer.isValid) return { ok: false, message: 'Invalid admin' };
+      if (!pcheck(adminPlayer)) return { ok: false, message: 'Invalid admin' };
 
       const existing = BanDatabase.get(name);
       if (!existing) {
@@ -119,7 +122,7 @@ export const unbanPlayer = (name, adminPlayer) => {
       }
 
       BanDatabase.remove(name);
-      adminPlayer.sendMessage(`§a[/] ปลดแบนผู้เล่น ${name} เสร็จสิ้น`);
+      cache.sendMessage(adminPlayer, `§a[/] ปลดแบนผู้เล่น ${name} เสร็จสิ้น`);
       return { ok: true };
    } catch (error) {
       logError('Ban', 'unbanPlayer error', error);
@@ -135,13 +138,13 @@ export const checkBanOnJoin = (player) => {
       const entry = BanDatabase.get(player.name);
       if (!entry) return false;
 
-      const now = Math.floor(Date.now() / 1000);
+      const now = nowUnix();
       if (entry.duration !== 0 && entry.expiresAt <= now) {
          BanDatabase.remove(player.name);
          return false;
       }
 
-      player.sendMessage(buildBanMessage(entry));
+      cache.sendMessage(player, buildBanMessage(entry));
       execKick(player, entry.reason);
       return true;
    } catch (error) {

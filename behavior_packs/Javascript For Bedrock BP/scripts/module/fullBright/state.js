@@ -1,19 +1,15 @@
-import { system } from '@minecraft/server';
-
-import { Registry } from '../../events/registry.js';
 import { logError } from '../../events/logger.js';
-
-const tag = 'bright';
-const effect = 'night_vision';
-const REFRESH_TICKS = 6000;
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
+import { effect, refreshTicks, tag } from './config.js';
 
 export const hasBright = (player) => {
-   if (!player || !player.isValid) return false;
+   if (!pcheck(player)) return false;
    return player.hasTag(tag);
 };
 
 const apply = (player) => {
-   if (!player || !player.isValid || player.hasTag(tag)) return false;
+   if (!pcheck(player) || player.hasTag(tag)) return false;
 
    try {
       player.addTag(tag);
@@ -22,7 +18,7 @@ const apply = (player) => {
    }
 
    try {
-      player.addEffect(effect, REFRESH_TICKS + 200, {
+      cache.addEffect(player, effect, refreshTicks + 200, {
          amplifier: 0,
          showParticles: false,
       });
@@ -34,7 +30,7 @@ const apply = (player) => {
 };
 
 const remove = (player) => {
-   if (!player || !player.isValid || !player.hasTag(tag)) return false;
+   if (!pcheck(player) || !player.hasTag(tag)) return false;
 
    try {
       player.removeTag(tag);
@@ -54,12 +50,12 @@ const remove = (player) => {
 };
 
 export const toggleBright = (player) => {
-   if (!player || !player.isValid) return false;
+   if (!pcheck(player)) return false;
    return player.hasTag(tag) ? !remove(player) : apply(player);
 };
 
 export const resetBright = (player) => {
-   if (!player || !player.isValid) return;
+   if (!pcheck(player)) return;
 
    try {
       player.removeTag(tag);
