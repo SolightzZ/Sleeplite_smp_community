@@ -50,43 +50,43 @@
 
 ## 📦 Behavior Packs
 
-> **22 Behavior Packs** — **2,695 ไฟล์** ( JSON: 2,504 | JS: 191)
+> **22 Behavior Packs** — **3,452 ไฟล์** ( JSON: 2,799 | JS: 238)
 
 | # | Pack Name | Path |
 |---|-----------|------|
 | 1 | [Armored Elytras (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/ArmoredElytras%20%28Addon%29) | `behavior_packs/ArmoredElytras (Addon)` |
-| 2 | [Armor Plus BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/ArmorPlus%20BP) | `behavior_packs/ArmorPlus BP` |
+| 2 | [Armor Plus (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/ArmorPlus%20%28Addon%29) | `behavior_packs/ArmorPlus (Addon)` |
 | 3 | [Campfire Creations (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/CampfireCreations%20%28Addon%29) | `behavior_packs/CampfireCreations (Addon)` |
 | 4 | [Craft and Recipes BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/CraftRecipes%20BP) | `behavior_packs/CraftRecipes BP` |
 | 5 | [Custom Paintings (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/CustomFrames%20%28Addon%29) | `behavior_packs/CustomFrames (Addon)` |
-| 6 | [Sleeplite Entitie Packs BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/EntitiePacks%20BP) | `behavior_packs/EntitiePacks BP` |
-| 7 | [Food Expanded BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/FoodExpanded%20%28Addon%29) | `behavior_packs/FoodExpanded (Addon)` |
-| 8 | [Goblin Traders (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Goblintraders%20%28Addon%29) | `behavior_packs/Goblintraders (Addon)` |
-| 9 | [Pack Items BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Items%20BP) | `behavior_packs/Items BP` |
-| 10 | [JavaScript API For Bedrock BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Javascript%20For%20Bedrock%20BP) | `behavior_packs/Javascript For Bedrock BP` |
-| 11 | [Meme Packs (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/MemePack%20%28Addon%29) | `behavior_packs/MemePack (Addon)` |
-| 12 | [Peter (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Peter%20%28Addon%29) | `behavior_packs/Peter (Addon)` |
-| 13 | [Player Heads BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/PlayerHeads%20%28Addon%29) | `behavior_packs/PlayerHeads (Addon)` |
-| 14 | [Rubies Reborn (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Ruby%20%28Addon%29) | `behavior_packs/Ruby (Addon)` |
-| 15 | [Silent Hill (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/SilentHill%20%28Addon%29) | `behavior_packs/SilentHill (Addon)` |
-| 16 | [Nics Castles and Dungeons BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20%20Nics%20Castles%20%26%20Dungeons%20BP) | `behavior_packs/Structures  Nics Castles & Dungeons BP` |
-| 17 | [Ancient Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Ancient%20Ruins%20BP) | `behavior_packs/Structures Ancient Ruins BP` |
-| 18 | [Better Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Better%20BP) | `behavior_packs/Structures Better BP` |
-| 19 | [Immersive Flora (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Immersive%20Flora%20%28Addon%29) | `behavior_packs/Structures Immersive Flora (Addon)` |
-| 20 | [Reds More Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Reds%20More%20BP) | `behavior_packs/Structures Reds More BP` |
-| 21 | [Visual Damage Tint (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/VisualHD%20%28Addon%29) | `behavior_packs/VisualHD (Addon)` |
-| 22 | [Structure Mayhem](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structure%20Mayhem) | `behavior_packs/Structure Mayhem` |
+| 6 | [Economy Addon](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Economy-Addon) | `behavior_packs/Economy-Addon` |
+| 7 | [Sleeplite Entitie Packs BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/EntitiePacks%20BP) | `behavior_packs/EntitiePacks BP` |
+| 8 | [Food Expanded BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/FoodExpanded%20%28Addon%29) | `behavior_packs/FoodExpanded (Addon)` |
+| 9 | [Goblin Traders (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Goblintraders%20%28Addon%29) | `behavior_packs/Goblintraders (Addon)` |
+| 10 | [Pack Items BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Items%20BP) | `behavior_packs/Items BP` |
+| 11 | [JavaScript API For Bedrock BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Javascript%20For%20Bedrock%20BP) | `behavior_packs/Javascript For Bedrock BP` |
+| 12 | [Meme Packs (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/MemePack%20%28Addon%29) | `behavior_packs/MemePack (Addon)` |
+| 13 | [Peter (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Peter%20%28Addon%29) | `behavior_packs/Peter (Addon)` |
+| 14 | [Player Heads BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/PlayerHeads%20%28Addon%29) | `behavior_packs/PlayerHeads (Addon)` |
+| 15 | [Rubies Reborn (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Ruby%20%28Addon%29) | `behavior_packs/Ruby (Addon)` |
+| 16 | [Silent Hill (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/SilentHill%20%28Addon%29) | `behavior_packs/SilentHill (Addon)` |
+| 17 | [Structure Mayhem](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structure%20Mayhem) | `behavior_packs/Structure Mayhem` |
+| 18 | [Ancient Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Ancient%20Ruins%20BP) | `behavior_packs/Structures Ancient Ruins BP` |
+| 19 | [Better Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Better%20BP) | `behavior_packs/Structures Better BP` |
+| 20 | [Nics Castles and Dungeons BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20%20Nics%20Castles%20%26%20Dungeons%20BP) | `behavior_packs/Structures  Nics Castles & Dungeons BP` |
+| 21 | [Reds More Structures BP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/Structures%20Reds%20More%20BP) | `behavior_packs/Structures Reds More BP` |
+| 22 | [Visual Damage Tint (Addon)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/behavior_packs/VisualHD%20%28Addon%29) | `behavior_packs/VisualHD (Addon)` |
 
 ---
 
 ## 🗂️ Resource Packs
 
-> **20 Resource Packs**
+> **19 Resource Packs**
 
 | # | Pack Name | Path |
 |---|-----------|------|
 | 1 | [Armored Elytras (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/ArmoredElytras%20%28Texture%29) | `resource_packs/ArmoredElytras (Texture)` |
-| 2 | [Armor Plus RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Armorplus%20RP) | `resource_packs/Armorplus RP` |
+| 2 | [Armor Plus RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Armorplus%20%28Texture%29) | `resource_packs/Armorplus (Texture)` |
 | 3 | [Blocks Gravestone RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Blocks%20RP) | `resource_packs/Blocks RP` |
 | 4 | [Custom Paintings (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/CustomFrames%20%28Texture%29) | `resource_packs/CustomFrames (Texture)` |
 | 5 | [Custom NPC (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/CustomNPC%20%28Texture%29) | `resource_packs/CustomNPC (Texture)` |
@@ -95,16 +95,15 @@
 | 8 | [Food Expanded (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/FoodExpanded%20%28Texture%29) | `resource_packs/FoodExpanded (Texture)` |
 | 9 | [Fused Birds (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/FusedsBirds%20%28Texture%29) | `resource_packs/FusedsBirds (Texture)` |
 | 10 | [Goblin Traders (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/GoblinTraders%20%28Texture%29) | `resource_packs/GoblinTraders (Texture)` |
-| 11 | [Immersive Flora (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/ImmersiveFlora%20%28Texture%29) | `resource_packs/ImmersiveFlora (Texture)` |
-| 12 | [Items RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Items%20RP) | `resource_packs/Items RP` |
-| 13 | [MemePack (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/MemePack%20%28Texture%29) | `resource_packs/MemePack (Texture)` |
-| 14 | [Peter (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Peter%20%28Texture%29) | `resource_packs/Peter (Texture)` |
-| 15 | [PlayerHeads (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/PlayerHeads%20%28Texture%29) | `resource_packs/PlayerHeads (Texture)` |
-| 16 | [RainParticle (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/RainParticle%20%28Texture%29) | `resource_packs/RainParticle (Texture)` |
-| 17 | [Ruby (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Ruby%20%28Texture%29) | `resource_packs/Ruby (Texture)` |
-| 18 | [ServerPacks RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/ServerPacks%20RP) | `resource_packs/ServerPacks RP` |
-| 19 | [SilentHill (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/SilentHill%20%28Texture%29) | `resource_packs/SilentHill (Texture)` |
-| 20 | [VisualHD (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/VisualHD%20%20%28Texture%29) | `resource_packs/VisualHD  (Texture)` |
+| 11 | [Items RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Items%20RP) | `resource_packs/Items RP` |
+| 12 | [MemePack (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/MemePack%20%28Texture%29) | `resource_packs/MemePack (Texture)` |
+| 13 | [Peter (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Peter%20%28Texture%29) | `resource_packs/Peter (Texture)` |
+| 14 | [PlayerHeads (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/PlayerHeads%20%28Texture%29) | `resource_packs/PlayerHeads (Texture)` |
+| 15 | [RainParticle (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/RainParticle%20%28Texture%29) | `resource_packs/RainParticle (Texture)` |
+| 16 | [Ruby (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/Ruby%20%28Texture%29) | `resource_packs/Ruby (Texture)` |
+| 17 | [ServerPacks RP](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/ServerPacks%20RP) | `resource_packs/ServerPacks RP` |
+| 18 | [SilentHill (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/SilentHill%20%28Texture%29) | `resource_packs/SilentHill (Texture)` |
+| 19 | [VisualHD (Texture)](https://github.com/SolightzZ/Sleeplite_smp_community/tree/dev/resource_packs/VisualHD%20%20%28Texture%29) | `resource_packs/VisualHD  (Texture)` |
 
 
 ### 1. 👾 สัตว์ / ม็อบ / NPC
@@ -265,21 +264,6 @@
 ### 4. 🌿 บล็อกตกแต่ง / พืชพรรณ
 
 <details open>
-<summary><b>Immersive Flora</b></summary>
-
-| ระบบ | รายละเอียด |
-|------|------------|
-| Caladium | 5 สี (เขียว, แดง, ชมพู, ขาว, มะนาว) — เฉพาะ grande 2 สี |
-| Alocasia | อะโลเซียา 3 สี ขนาดเล็ก เท่านั้น |
-| เฟิร์น, Snake Plant, Bird of Paradise | พืชพื้น |
-| เห็ด | Red, Brown, Crimson, Warped |
-| ติ่งห้อย 2 แบบ | Hanging vines |
-| เห็ดมีขน 4 แบบ | Fuzzy mushroom |
-| การเกิดตามธรรมชาติ | jungle, birch forest, cherry grove, swamp, crimson forest, warped forest, mushroom islands |
-
-</details>
-
-<details open>
 <summary><b>CustomFrames</b></summary>
 
 | ระบบ | รายละเอียด |
@@ -396,6 +380,18 @@
 |------|------------|
 | 7 Goblin ตามไบโอม | ปกติ, Badlands, Desert, End(×2), Nether(×2) |
 | ต้องใช้ Wither Skeleton Skull | เพื่อปลดล็อค Legendary trade |
+
+</details>
+
+<details open>
+<summary><b>Economy Addon</b></summary>
+
+| ระบบ | รายละเอียด |
+|------|------------|
+| Chest Shop | ร้านค้าหีบ — เปิดร้าน, ซื้อ, ปรับราคา, ลบร้านผ่าน UI |
+| Admin Panel | จัดการร้านค้าและผู้เล่น |
+| Protection | ป้องกันพื้นที่ร้านค้า |
+| Transaction / Database | บันทึกการซื้อขายลงฐานข้อมูล |
 
 </details>
 
