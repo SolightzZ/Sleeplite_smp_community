@@ -55,7 +55,7 @@ export const ERROR_DECAY = 2;
 export const COOLDOWNS = {
    EFFECT: 20,
    HURT: 10,
-   HEARTBEAT: 10,
+   HEARTBEAT: 400,
 };
 
 export const SPAWN_LIMITS = {

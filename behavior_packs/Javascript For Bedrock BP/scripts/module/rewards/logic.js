@@ -1,12 +1,10 @@
 import { ActionFormData, MessageFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../plugin/utils.js';
 import { logError } from '../../events/logger.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 import { list } from './constants.js';
 import { load, save } from './database.js';
 import { give, name, time } from './functions.js';
-import { cache } from '../../shared/cache.js';
-import { pcheck } from './../../shared/player.js';
 
 const logFormError = (source, error) => {
    logError('rewards', source, error);
@@ -52,30 +50,30 @@ function menu(player) {
       form.button(buttonText, icon);
    });
 
-   form.label('               @Sleeplite 2026');
+    form.label('               @Sleeplite 2026');
 
-   cache.playSound(player, 'vault.open_shutter');
+    cache.playSound?.(player, 'vault.open_shutter');
 
-   form
-      .show(player)
-      .then((res) => {
-         if (!pcheck(player) || res.canceled) return;
+    form
+       .show(player)
+       .then((res) => {
+          if (!pcheck(player) || res.canceled) return;
 
-         if (res.selection !== data.count) {
-            cache.playSound(player, 'random.break');
-            cache.setTitle(player.onScreenDisplay, '§cกรุณารับของตามลำดับ');
-            return;
-         }
+          if (res.selection !== data.count) {
+             cache.playSound?.(player, 'random.break');
+             cache.setTitle(player.onScreenDisplay, '§cกรุณารับของตามลำดับ');
+             return;
+          }
 
-         if (data.last === today) {
-            cache.playSound(player, 'random.fizz');
-            cache.setTitle(player.onScreenDisplay, '§cคุณรับของวันนี้ไปแล้ว');
-            return;
-         }
+          if (data.last === today) {
+             cache.playSound?.(player, 'random.fizz');
+             cache.setTitle(player.onScreenDisplay, '§cคุณรับของวันนี้ไปแล้ว');
+             return;
+          }
 
-         confirm(player, data, today);
-      })
-      .catch((error) => logFormError('menu', error));
+          confirm(player, data, today);
+       })
+       .catch((error) => logFormError('menu', error));
 }
 
 export { menu };
@@ -100,7 +98,7 @@ function confirm(player, data, today) {
    ui.button1('Cancel');
    ui.button2('Claim');
 
-   cache.playSound(player, 'random.pop2');
+   cache.playSound?.(player, 'random.pop2');
 
    ui.show(player)
       .then((res) => {
@@ -112,11 +110,11 @@ function confirm(player, data, today) {
                data.count = data.count + 1;
 
                save(player, data);
-               cache.playSound(player, 'random.levelup');
+               cache.playSound?.(player, 'random.levelup');
                cache.sendMessage(player, `§a[/] §aรับของสำเร็จ! ได้รับ ${name(item.id)}`);
                cache.setTitle(player.onScreenDisplay, `§a${name(item.id)} x${item.count}`);
             } else {
-               cache.playSound(player, 'block.false_permissions');
+               cache.playSound?.(player, 'block.false_permissions');
                cache.sendMessage(player, '§c[x] §cช่องเก็บของเต็ม');
                cache.setTitle(player.onScreenDisplay, '§cช่องเก็บของเต็ม');
             }

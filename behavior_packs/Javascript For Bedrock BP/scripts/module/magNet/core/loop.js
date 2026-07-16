@@ -8,15 +8,17 @@ export const magnetTick = () => {
    try {
       if (countMagnetUsers() === 0) return;
 
-      const ids = getMagnetUserIds();
+      const ids = [...getMagnetUserIds()];
       const toRemove = [];
 
-      for (const playerId of ids) {
-         const player = Registry.get(playerId)?.player;
+      for (let i = 0; i < ids.length; i++) {
+         const playerId = ids[i];
+         const entry = Registry.get(playerId);
+         const player = entry?.player;
 
-         if (pcheck(player)) {
+         if (player && pcheck(player)) {
             pullItemsToPlayer(player);
-         } else {
+         } else if (entry) {
             toRemove.push(playerId);
          }
       }

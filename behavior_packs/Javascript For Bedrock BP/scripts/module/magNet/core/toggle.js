@@ -1,6 +1,5 @@
 import { MagnetConfig, MagnetText } from '../config.js';
 import { addMagnetUser, countMagnetUsers, hasMagnetUser, removeMagnetUser } from './state.js';
-import { addSound } from '../../../plugin/utils.js';
 import { cache } from '../../../shared/cache.js';
 import { pcheck } from '../../../shared/player.js';
 

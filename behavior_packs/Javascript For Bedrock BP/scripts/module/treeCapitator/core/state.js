@@ -1,18 +1,23 @@
-import { JobQueue } from '../../../shared/jobQueue.js';
+import { JobQueue as JobQueueBase } from '../../../shared/jobQueue.js';
 
-export const getJobQueueLength = () => JobQueue.getJobQueueLength();
-export const getJob = (idx) => JobQueue.getJob(idx);
-export const pushJob = (job) => JobQueue.pushJob(job);
-export const popJob = (idx) => JobQueue.popJob(idx);
-export const isTreePending = (key) => JobQueue.isPending(key);
-export const addPendingTree = (key) => JobQueue.addPending(key);
-export const removePendingTree = (key) => JobQueue.removePending(key);
-export const getPlayerJobCount = (playerId) => JobQueue.getPlayerJobCount(playerId);
-export const incrementPlayerJobCount = (playerId) => JobQueue.incrementPlayerJobCount(playerId);
-export const decrementPlayerJobCount = (playerId) => JobQueue.decrementPlayerJobCount(playerId);
-export const getPlayerLastJobEnd = (playerId) => JobQueue.getPlayerLastJobEnd(playerId);
-export const setPlayerLastJobEnd = (playerId, time) => JobQueue.setPlayerLastJobEnd(playerId, time);
-export const cleanupPlayerState = (playerId) => JobQueue.cleanupPlayerState(playerId);
-export const getLastProcessedIndex = () => JobQueue.getLastProcessedIndex();
-export const setLastProcessedIndex = (idx) => JobQueue.setLastProcessedIndex(idx);
-export const incrementLastProcessedIndex = () => JobQueue.incrementLastProcessedIndex();
+const _queue = new JobQueueBase();
+
+export const JobQueue = {
+   pushJob: (job) => _queue.pushJob(job),
+   popJob: (idx) => _queue.popJob(idx),
+   getJob: (idx) => _queue.getJob(idx),
+   getJobQueueLength: () => _queue.getJobQueueLength(),
+   getLastProcessedIndex: () => _queue.getLastProcessedIndex(),
+   setLastProcessedIndex: (idx) => _queue.setLastProcessedIndex(idx),
+   incrementLastProcessedIndex: () => _queue.incrementLastProcessedIndex(),
+
+   isPending: JobQueueBase.isPending,
+   addPending: JobQueueBase.addPending,
+   removePending: JobQueueBase.removePending,
+   getPlayerJobCount: JobQueueBase.getPlayerJobCount,
+   incrementPlayerJobCount: JobQueueBase.incrementPlayerJobCount,
+   decrementPlayerJobCount: JobQueueBase.decrementPlayerJobCount,
+   getPlayerLastJobEnd: JobQueueBase.getPlayerLastJobEnd,
+   setPlayerLastJobEnd: JobQueueBase.setPlayerLastJobEnd,
+   cleanupPlayerState: JobQueueBase.cleanupPlayerState,
+};

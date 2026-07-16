@@ -2,37 +2,47 @@ import { getBlockSafe } from '../../../shared/block.js';
 import { LEAF_OFFSETS } from '../constants.js';
 import { CFG } from '../config.js';
 
+const HALF = CFG.maxBlocksPerTree + 2;
+const STRIDE = HALF * 2;
+const pack = (dx, dy, dz) => ((dx + HALF) * STRIDE + (dy + HALF)) * STRIDE + (dz + HALF);
+
 const DIRS = [
    { x: 0, y: 1, z: 0 },
    { x: 0, y: -1, z: 0 },
 ];
 
-const makeKey = (x, y, z) => `${x},${y},${z}`;
-
 export const detectTree = (startBlock, logId, leafId) => {
    const dim = startBlock.dimension;
+   const startLoc = startBlock.location;
+   const originX = startLoc.x;
+   const originY = startLoc.y;
+   const originZ = startLoc.z;
+
    const locations = [];
    const visited = new Set();
-   const queue = [startBlock.location];
+   const queue = [startLoc];
    const cache = new Map();
+
+   const probe = { x: 0, y: 0, z: 0 };
 
    let head = 0;
    let foundLeaf = false;
 
    const getBlockCached = (loc) => {
-      const key = makeKey(loc.x, loc.y, loc.z);
+      const key = pack(loc.x - originX, loc.y - originY, loc.z - originZ);
       if (cache.has(key)) return cache.get(key);
       const block = getBlockSafe(dim, loc);
       cache.set(key, block);
       return block;
    };
 
-   const startLoc = startBlock.location;
-   visited.add(makeKey(startLoc.x, startLoc.y, startLoc.z));
+   visited.add(pack(0, 0, 0));
 
    while (head < queue.length && locations.length < CFG.maxBlocksPerTree) {
       const curLoc = queue[head++];
-      const cx = curLoc.x, cy = curLoc.y, cz = curLoc.z;
+      const cx = curLoc.x,
+         cy = curLoc.y,
+         cz = curLoc.z;
 
       const block = getBlockCached(curLoc);
       if (!block || block.typeId !== logId) continue;
@@ -41,8 +51,10 @@ export const detectTree = (startBlock, logId, leafId) => {
 
       if (!foundLeaf) {
          for (const offset of LEAF_OFFSETS) {
-            const checkLoc = { x: cx + offset.x, y: cy + offset.y, z: cz + offset.z };
-            const checkBlock = getBlockCached(checkLoc);
+            probe.x = cx + offset.x;
+            probe.y = cy + offset.y;
+            probe.z = cz + offset.z;
+            const checkBlock = getBlockCached(probe);
             if (checkBlock && checkBlock.typeId === leafId) {
                foundLeaf = true;
                break;
@@ -51,8 +63,10 @@ export const detectTree = (startBlock, logId, leafId) => {
       }
 
       for (const d of DIRS) {
-         const nx = cx + d.x, ny = cy + d.y, nz = cz + d.z;
-         const nKey = makeKey(nx, ny, nz);
+         const nx = cx + d.x,
+            ny = cy + d.y,
+            nz = cz + d.z;
+         const nKey = pack(nx - originX, ny - originY, nz - originZ);
          if (!visited.has(nKey)) {
             visited.add(nKey);
             queue.push({ x: nx, y: ny, z: nz });

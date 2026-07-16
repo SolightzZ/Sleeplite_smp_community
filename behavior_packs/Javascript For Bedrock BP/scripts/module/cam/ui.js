@@ -1,5 +1,5 @@
 import { ActionFormData } from '@minecraft/server-ui';
-import { addSound } from '../../plugin/utils.js';
+import { addSound } from '../../shared/utils.js';
 import { cache } from '../../shared/cache.js';
 
 export function showCamMenu(event) {

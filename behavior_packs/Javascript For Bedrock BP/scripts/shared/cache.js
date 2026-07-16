@@ -145,13 +145,22 @@ class ApiCache {
       return v;
    }
 
-   playSound(player, soundId, soundOptions) {
-      if (!player || !player.isValid) return;
-      const loc = player.location;
-      const dir = player.getViewDirection();
-      const front = { x: loc.x + dir.x, y: loc.y + dir.y, z: loc.z + dir.z };
-      player.dimension.playSound(soundId, front, soundOptions);
-   }
+    playSound(player, soundId, soundOptions) {
+       if (!player || !player.isValid || !player.dimension) return;
+       const loc = player.location;
+       let front = loc;
+       try {
+          const dir = player.getViewDirection();
+          front = { x: loc.x + dir.x, y: loc.y + dir.y, z: loc.z + dir.z };
+       } catch {
+          front = loc;
+       }
+       try {
+          player.dimension.playSound(soundId, front, soundOptions);
+       } catch {
+          // swallow: sound playback must never break caller logic
+       }
+    }
 
    sendMessage(entity, message) {
       if (!entity) return;
@@ -163,15 +172,22 @@ class ApiCache {
       display.setTitle(title, options);
    }
 
-   setActionBar(display, text, options) {
-      if (!display) return;
-      display.setActionBar(text, options);
-   }
+    setActionBar(display, text, options) {
+       if (!display) return;
+       // Native ScreenDisplay.setActionBar accepts exactly one argument.
+       // Forard `options` only when a caller actually supplies it; passing
+       // `undefined` as a second argument throws "Expected 1, received 2".
+       if (options !== undefined) {
+          display.setActionBar(text, options);
+       } else {
+          display.setActionBar(text);
+       }
+    }
 
-   addEffect(entity, effect, duration, amplifier, showParticles) {
-      if (!entity) return;
-      entity.addEffect(effect, duration, amplifier, showParticles);
-   }
+    addEffect(entity, effect, duration, options) {
+       if (!entity) return;
+       entity.addEffect(effect, duration, options);
+    }
 
    createItemStack(typeId, amount = 1) {
       return new ItemStack(typeId, amount);

@@ -1,6 +1,6 @@
 import { world } from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
-import { addSound } from '../../../plugin/utils.js';
+import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
 import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';

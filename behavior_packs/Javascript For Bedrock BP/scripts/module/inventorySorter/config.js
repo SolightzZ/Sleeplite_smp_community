@@ -34,6 +34,7 @@ export const SortModes = {
    durability: { value: 'durability', description: 'เรียงตามความทนทาน' },
    enchant: { value: 'enchant', description: 'เรียงตามจำนวนการเสริมพลัง' },
    material: { value: 'material', description: 'เรียงตามระดับวัสดุ' },
+   group: { value: 'group', description: 'เรียงตามกลุ่มวัสดุ (ไม้/หิน/โลหะ)' },
    chess: { value: 'chess', description: 'รูปแบบตารางหมากรุก' },
    line: { value: 'line', description: 'รูปแบบแถวแนวนอน' },
    column: { value: 'column', description: 'รูปแบบแถวแนวตั้ง' },
@@ -107,6 +108,29 @@ export const MATERIAL_TIER = [
    ['stone', 7],
    ['wood', 8],
    ['leather', 9],
+];
+
+export const MATERIAL_GROUP = [
+   ['wood', 0],
+   ['log', 0],
+   ['plank', 0],
+   ['bamboo', 0],
+   ['stick', 0],
+   ['stone', 1],
+   ['cobble', 1],
+   ['andesite', 1],
+   ['diorite', 1],
+   ['granite', 1],
+   ['deepslate', 1],
+   ['blackstone', 1],
+   ['basalt', 1],
+   ['sandstone', 1],
+   ['quartz', 1],
+   ['iron', 2],
+   ['gold', 2],
+   ['copper', 2],
+   ['diamond', 2],
+   ['netherite', 2],
 ];
 
 export const msgPlayerInvalid = '§c[x] ผู้เล่นไม่ถูกต้องแล้ว';

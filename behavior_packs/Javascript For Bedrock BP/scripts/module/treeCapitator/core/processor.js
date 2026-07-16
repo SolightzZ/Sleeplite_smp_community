@@ -1,18 +1,20 @@
-import { BlockPermutation, ItemStack, system } from '@minecraft/server';
-
+import { BlockPermutation, system } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
-import { CFG } from '../config.js';
+import { cache } from '../../../shared/cache.js';
 import { Durability } from '../../../shared/durability.js';
 import { getEnchantLevel } from '../../../shared/enchant.js';
+import { getBlockSafe } from '../../../shared/block.js';
+import { CFG } from '../config.js';
+import { JobQueue } from './state.js';
 import { getPlayerAxe } from '../utils/inventory.js';
-import { cleanupJobState } from './lifecycle.js';
-import { JobQueue } from '../../../shared/jobQueue.js';
-import { cache } from '../../../shared/cache.js';
 import { pcheck } from './../../../shared/player.js';
+import { cleanupJobState } from './lifecycle.js';
 
 let _airPermutation;
 
-const TICK_BUDGET_MS = 5;
+const TICK_BUDGET_MS = CFG.tickBudgetMs ?? 5;
+
+const _spawnAt = { x: 0, y: 0, z: 0 };
 
 export const processJobs = () => {
    const AIR = _airPermutation || (_airPermutation = BlockPermutation.resolve('minecraft:air'));
@@ -62,23 +64,25 @@ export const processJobs = () => {
             if (++blockBudgetChecked % 4 === 0 && Date.now() - startTime > TICK_BUDGET_MS) break;
 
             const loc = job.locations[job.index++];
+            if (!loc || typeof loc.x !== 'number') continue;
 
             try {
-               const block = job.dimension.getBlock(loc);
+               const block = getBlockSafe(job.dimension, loc);
                if (block && block.typeId === job.typeId) {
                   block.setPermutation(AIR);
                   job.brokenCount++;
                   broken++;
 
-                  const spawnAt = { x: loc.x + 0.5, y: loc.y + 0.5, z: loc.z + 0.5 };
-                  job.dimension.spawnItem(cache.createItemStack(job.typeId, 1), spawnAt);
+                  _spawnAt.x = loc.x + 0.5;
+                  _spawnAt.y = loc.y + 0.5;
+                  _spawnAt.z = loc.z + 0.5;
+                  job.dimension.spawnItem(cache.createItemStack(job.typeId, 1), _spawnAt);
                }
             } catch (error) {
                logError('treeCapitator', 'breakError', error);
             }
          }
 
-         // Apply durability damage dynamically per tick
          if (broken > 0) {
             const unbreakLevel = getEnchantLevel(axe, 'unbreaking');
             Durability.applyDurabilityDamage(job.player, axe, broken, unbreakLevel);

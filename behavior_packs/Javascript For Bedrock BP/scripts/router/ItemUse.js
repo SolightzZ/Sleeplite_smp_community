@@ -1,3 +1,5 @@
+import { router } from '../events/index.js';
+import { logError } from '../events/logger.js';
 import { openBanMenu } from '../module/banPlayers/ui/menu.js';
 import { showCamMenu } from '../module/cam/ui.js';
 import { showMenuEmote } from '../module/emotes/functions.js';
@@ -10,7 +12,6 @@ import { showMenuReport } from '../module/report/ui/main-menu.js';
 import { RewarditemUse } from '../module/rewards/system.js';
 import { setting_main } from '../plugin/setting.js';
 import { handleSpongeAbsorption } from '../plugin/SpongeAbsorption.js';
-import { router } from '../events/index.js';
 
 const itemHandlers = [
    { prefix: 'addon:magnet_', run: onMagnetUse },
@@ -31,9 +32,14 @@ router.on('afterItemUse', (event) => {
    const stack = event.itemStack;
    if (!stack) return;
 
-   for (const { prefix, run } of itemHandlers) {
+   for (let i = 0; i < itemHandlers.length; i++) {
+      const { prefix, run } = itemHandlers[i];
       if (stack.typeId.startsWith(prefix)) {
-         run(event);
+         try {
+            run(event);
+         } catch (error) {
+            logError('ItemUse', `${prefix} handler error`, error);
+         }
          return;
       }
    }

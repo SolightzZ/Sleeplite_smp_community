@@ -1,15 +1,15 @@
 import { CommandPermissionLevel, CustomCommandStatus, system } from '@minecraft/server';
-
 import { logError, logWarn } from '../../events/logger.js';
 import { Registry } from '../../events/registry.js';
+import { cache } from '../../shared/cache.js';
+import { pcheck } from './../../shared/player.js';
 import { config } from './constants.js';
 import { load, reset } from './database.js';
 import { menu } from './logic.js';
-import { cache } from '../../shared/cache.js';
-import { pcheck } from './../../shared/player.js';
 
 function RewarditemUse(event) {
-   const player = event.source || event;
+   const player = event?.source || event;
+   if (!pcheck(player)) return;
    menu(player);
 }
 

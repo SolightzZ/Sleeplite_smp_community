@@ -1,9 +1,10 @@
 import { HudVisibility } from '@minecraft/server';
 import { ZOOM_CONFIG } from './Config.js';
 import { cache } from '../../shared/cache.js';
+import { addSound } from '../../shared/utils.js';
 
 export function playZoomSound(player) {
-    player.playSound(ZOOM_CONFIG.sound.id, ZOOM_CONFIG.sound.options);
+    addSound(player, ZOOM_CONFIG.sound.id, ZOOM_CONFIG.sound.options);
 }
 
 export function applyZoom(player, config) {

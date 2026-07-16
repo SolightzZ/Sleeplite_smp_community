@@ -1,6 +1,7 @@
 import { system } from '@minecraft/server';
 import { cache } from '../../shared/cache.js';
 import { pcheck } from './../../shared/player.js';
+import { addSound } from '../../shared/utils.js';
 
 export const see = (player, thing) => {
    if (!pcheck(player)) return false;
@@ -63,6 +64,6 @@ export const sound = (player, soundId, options) => {
    if (!pcheck(player)) return;
 
    system.run(() => {
-      if (pcheck(player)) player.playSound(soundId, options);
+      if (pcheck(player)) addSound(player, soundId, options);
    });
 };

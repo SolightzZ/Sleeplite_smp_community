@@ -1,15 +1,12 @@
-import { world } from '@minecraft/server';
-
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
-import { addSound } from '../../../plugin/utils.js';
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
+import { cache } from '../../../shared/cache.js';
 import { Colors, Config, halfZoneSize } from '../config.js';
 import { consumeBlock, isFormValid } from '../utils/helpers.js';
 import { buildZone, isZoneOverlap, validateZoneCreate } from '../utils/validation.js';
 import { clearBorderVisuals } from './borders.js';
 import { zoneDatabase } from './database.js';
-import { cache } from '../../../shared/cache.js';
 
 export const uiLockSet = new Set();
 

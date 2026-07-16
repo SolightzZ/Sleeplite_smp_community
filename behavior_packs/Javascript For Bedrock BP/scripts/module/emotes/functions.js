@@ -3,6 +3,7 @@ import { ActionFormData } from '@minecraft/server-ui';
 import { logError } from '../../events/logger.js';
 import { cache } from '../../shared/cache.js';
 import { pcheck } from './../../shared/player.js';
+import { addSound } from '../../shared/utils.js';
 import { emoteList, setting } from './database.js';
 
 function playEmote(player, animName, emoteName) {
@@ -11,9 +12,11 @@ function playEmote(player, animName, emoteName) {
    const cmd = `playanimation "${player.name}" animation.${animName} animation.${animName}`;
    system.run(() => {
       if (pcheck(player)) {
-         cache.runCommand(player.dimension, cmd)?.catch((error) => {
+         try {
+            cache.runCommand(player.dimension, cmd);
+         } catch (error) {
             logError('Emote', 'play command failed', error);
-         });
+         }
       }
    });
 
@@ -27,9 +30,11 @@ function stopEmote(player, animName) {
    const cmd = `playanimation "${player.name}" animation.${animName}`;
    system.run(() => {
       if (pcheck(player)) {
-         cache.runCommand(player.dimension, cmd)?.catch((error) => {
+         try {
+            cache.runCommand(player.dimension, cmd);
+         } catch (error) {
             logError('Emote', 'stop command failed', error);
-         });
+         }
       }
    });
 
@@ -81,7 +86,7 @@ export function showMenuEmote(event) {
    form.label('               @Sleeplite 2026');
 
    if (setting.soundOpen) {
-      player.playSound(setting.soundOpen);
+      addSound(player, setting.soundOpen);
    }
 
    form

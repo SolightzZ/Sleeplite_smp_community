@@ -1,5 +1,5 @@
 import { system } from '@minecraft/server';
-import { logError } from '../events/logger.js';
+import { logWarn } from '../events/logger.js';
 import { runEventHandlers } from '../events/utils.js';
 import { registerCommandAFK } from '../module/AFKCinematic/commands/afk-command.js';
 import { registerBanCommands } from '../module/banPlayers/commands/ban-command.js';
@@ -41,6 +41,6 @@ system.beforeEvents.startup.subscribe((event) => {
    try {
       runEventHandlers('Startup', startupHandlers, event);
    } catch (error) {
-      logError('Startup', 'register error', error);
+      logWarn('Startup', 'register error', error);
    }
 });

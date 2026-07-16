@@ -1,4 +1,4 @@
-import { JobQueue } from "../../../shared/jobQueue.js";
+import { JobQueue } from "./state.js";
 
 export const cleanupJobState = (job) => {
   JobQueue.removePending(job.treeKey);

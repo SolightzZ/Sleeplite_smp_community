@@ -4,7 +4,6 @@ import { logError } from '../../../events/logger.js';
 import { Config } from '../config.js';
 import { cache } from '../../../shared/cache.js';
 
-// ค่าคงที่
 const STORAGE_KEY = 'ZONE_DATA';
 const MAX_STORAGE_SIZE = 32768;
 

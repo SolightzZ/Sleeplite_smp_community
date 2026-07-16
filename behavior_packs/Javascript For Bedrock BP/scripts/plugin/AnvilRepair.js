@@ -1,5 +1,6 @@
 import { system } from '@minecraft/server';
 import { cache } from '../shared/cache.js';
+import { addSound } from '../shared/utils.js';
 
 const applyAnvilRepair = (block, permutation, damage, player, item) => {
    system.run(() => {
@@ -11,7 +12,7 @@ const applyAnvilRepair = (block, permutation, damage, player, item) => {
 
       block.setPermutation(permutation.withState('damage', newDamage));
 
-      player.playSound('random.anvil_use', {
+      addSound(player, 'random.anvil_use', {
          volume: 1.0,
          pitch: 1.0,
       });

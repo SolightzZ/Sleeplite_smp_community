@@ -1,7 +1,7 @@
 import { system } from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
 
-import { addSound } from '../../../plugin/utils.js';
+import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
 import { CONFIG, LIMITS } from '../config.js';
 import { Database } from '../core/database.js';

@@ -1,65 +1,66 @@
-import { system } from "@minecraft/server";
-import { CFG } from "../config.js";
-import { JobQueue } from "../../../shared/jobQueue.js";
-import { getLocKey } from "../../../shared/block.js";
-import { PICKAXE_BREAKS, ORE_DROP } from "../data/ores.js";
-import { scanVein } from "./scanner.js";
-import { getEnchantData } from "../../../shared/enchant.js";
+import { system } from '@minecraft/server';
+import { getDimLocKey } from '../../../shared/block.js';
+import { getEnchantData } from '../../../shared/enchant.js';
+import { CFG } from '../config.js';
+import { ORE_DROP, PICKAXE_BREAKS } from '../data/ores.js';
+import { JobQueue } from './queue.js';
 import { pcheck } from './../../../shared/player.js';
+import { scanVein } from './scanner.js';
 
 export const VeinMiner = (event) => {
-  const player = event.player;
-  const block = event.block;
-  const stack = event.itemStack;
+   const player = event.player;
+   const block = event.block;
+   const stack = event.itemStack;
 
-  if (!pcheck(player)) return;
-  if (!block || !block.isValid) return;
-  if (!player.isSneaking) return;
-  if (JobQueue.getJobQueueLength() >= CFG.maxGlobalJobs) return;
+   if (!pcheck(player)) return;
+   if (!block || !block.isValid) return;
+   if (!player.isSneaking) return;
+   if (JobQueue.getJobQueueLength() >= CFG.maxGlobalJobs) return;
 
-  const pCount = JobQueue.getPlayerJobCount(player.id);
-  if (pCount >= CFG.maxJobsPerPlayer) return;
+   const pCount = JobQueue.getPlayerJobCount(player.id);
+   if (pCount >= CFG.maxJobsPerPlayer) return;
 
-  const lastEnd = JobQueue.getPlayerLastJobEnd(player.id);
-  if (Date.now() - lastEnd < CFG.playerCooldownMs) return;
+   const lastEnd = JobQueue.getPlayerLastJobEnd(player.id);
+   if (Date.now() - lastEnd < CFG.playerCooldownMs) return;
 
-  const targetId = block.typeId;
-  const validOres = PICKAXE_BREAKS[stack?.typeId];
-  if (!validOres || !validOres.has(targetId)) return;
+   const targetId = block.typeId;
+   const pickaxeId = stack?.typeId;
+   const validOres = PICKAXE_BREAKS[pickaxeId];
+   if (!validOres || !validOres.has(targetId)) return;
 
-  const loc = block.location;
-  const startKey = getLocKey(loc.x, loc.y, loc.z);
-  if (JobQueue.isPending(startKey)) return;
+   const loc = block.location;
+   const dimId = player.dimension.id;
+   const startKey = getDimLocKey(dimId, loc.x, loc.y, loc.z);
+   if (JobQueue.isPending(startKey)) return;
 
-  const res = scanVein(block, targetId);
-  if (res.locations.length <= 1) return;
+   const res = scanVein(block, targetId);
+   const locations = res.locations;
+   const count = locations.length;
+   if (count <= 1) return;
 
-  const locationKeys = res.locations.map(l => getLocKey(l.x, l.y, l.z));
-  for (const key of locationKeys) {
-    JobQueue.addPending(key);
-  }
+   for (let i = 0; i < count; i++) {
+      const l = locations[i];
+      JobQueue.addPending(getDimLocKey(dimId, l.x, l.y, l.z));
+   }
 
-  const enc = getEnchantData(stack);
-  const dropId = enc.silk ? targetId : ORE_DROP[targetId];
+   const enc = getEnchantData(stack);
+   const dropId = enc.silk ? targetId : ORE_DROP[targetId];
 
-  JobQueue.incrementPlayerJobCount(player.id);
+   JobQueue.incrementPlayerJobCount(player.id);
 
-  const dim = player.dimension;
-
-  JobQueue.pushJob({
-    player: player,
-    playerId: player.id,
-    dimension: dim,
-    targetId: targetId,
-    dropTypeId: dropId,
-    locations: res.locations,
-    index: 1,
-    startTick: system.currentTick,
-    fortuneLevel: enc.fortune,
-    unbreakingLevel: enc.unbreaking,
-    brokenCount: 0,
-    xpAccumulated: 0,
-    locationKeys: locationKeys,
-  });
+   JobQueue.pushJob({
+      player: player,
+      playerId: player.id,
+      dimension: player.dimension,
+      targetId: targetId,
+      dropTypeId: dropId,
+      pickaxeTypeId: pickaxeId,
+      locations: locations,
+      index: 1,
+      startTick: system.currentTick,
+      fortuneLevel: enc.fortune,
+      unbreakingLevel: enc.unbreaking,
+      brokenCount: 0,
+      xpAccumulated: 0,
+   });
 };
-

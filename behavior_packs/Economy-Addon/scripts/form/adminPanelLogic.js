@@ -1,7 +1,6 @@
 import { CONFIG } from '../config.js';
 import { getAll, getDbSizeInfo, removeChest } from '../core/database.js';
 
-// ดึงรายชื่อร้านค้าแบบแบ่งหน้า (page ละ ADMIN_PAGE_SIZE รายการ)
 export function getAdminShopList(page = 0) {
    const all = Object.entries(getAll());
 

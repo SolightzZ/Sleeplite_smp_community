@@ -2,7 +2,6 @@ import { world } from '@minecraft/server';
 import { Config } from '../config.js';
 import { logError } from '../../../events/logger.js';
 
-
 const KEY = 'SPAWN_PROTECT_DATA';
 
 let state = null;
@@ -78,9 +77,7 @@ export function updateConfigSpawnProtec(partial) {
       const merged = mergeDefaults({
          radius: partial.radius ?? current.radius,
          enabled: partial.enabled ?? current.enabled,
-         flags: partial.flags
-            ? { ...current.flags, ...partial.flags }
-            : { ...current.flags },
+         flags: partial.flags ? { ...current.flags, ...partial.flags } : { ...current.flags },
          exemptList: partial.exemptList ?? current.exemptList,
       });
       state = buildCacheFromData(merged);

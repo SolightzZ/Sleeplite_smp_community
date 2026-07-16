@@ -1,13 +1,10 @@
 import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../../plugin/utils.js';
-
 import { logError, logWarn } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 import { LIMITS } from '../config.js';
 import { Database } from '../core/database.js';
 import { showForm, sure } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
-import { cache } from '../../../shared/cache.js';
 
 const showDetail = (player, item, targetName, index) => {
    cache.playSound(player, 'item.book.page_turn');

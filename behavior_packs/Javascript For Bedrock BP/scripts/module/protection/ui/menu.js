@@ -1,6 +1,6 @@
 import { ActionFormData } from '@minecraft/server-ui';
 
-import { addSound } from '../../../plugin/utils.js';
+import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
 import { Config, halfZoneSize } from '../config.js';
 import { showBorder } from '../core/borders.js';

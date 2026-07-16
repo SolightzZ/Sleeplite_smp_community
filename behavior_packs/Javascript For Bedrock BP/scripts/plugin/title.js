@@ -1,6 +1,7 @@
 import { Registry } from '../events/registry.js';
 import { cache } from '../shared/cache.js';
 import { pcheck } from './../shared/player.js';
+import { addSound } from '../shared/utils.js';
 
 const BOSS_IDS = new Set(['minecraft:ender_dragon', 'minecraft:wither']);
 const BOSS_TAG = 'boss';
@@ -93,7 +94,7 @@ const playAnimationStep = (animation, playersByDimension, recipients) => {
    for (const player of recipients) {
       cache.setTitle(player.onScreenDisplay, titleText, options);
       if (isFinal) {
-         player.playSound(finalSound, { volume: 0.5, pitch: 1 });
+         addSound(player, finalSound, { volume: 0.5, pitch: 1 });
       }
    }
 

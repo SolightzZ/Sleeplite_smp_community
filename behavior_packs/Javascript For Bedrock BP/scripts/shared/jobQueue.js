@@ -1,40 +1,54 @@
-const jobQueue = [];
 const pending = new Set();
 const playerJobCount = new Map();
 const playerLastJobEnd = new Map();
 
-let lastProcessedIndex = 0;
-
 export class JobQueue {
-   static pushJob(job) {
-      jobQueue.push(job);
+   constructor() {
+      this.jobQueue = [];
+      this.lastProcessedIndex = 0;
    }
 
-   static popJob(idx) {
-      const last = jobQueue.pop();
-      if (idx < jobQueue.length) {
-         jobQueue[idx] = last;
+   pushJob(job) {
+      this.jobQueue.push(job);
+   }
+
+   popJob(idx) {
+      const last = this.jobQueue.pop();
+      if (idx < this.jobQueue.length) {
+         this.jobQueue[idx] = last;
       }
    }
 
-   static getJob(idx) {
-      return jobQueue[idx];
+   getJob(idx) {
+      return this.jobQueue[idx];
    }
 
-   static getJobQueueLength() {
-      return jobQueue.length;
+   getJobQueueLength() {
+      return this.jobQueue.length;
    }
 
-   static getLastProcessedIndex() {
-      return lastProcessedIndex;
+   getLastProcessedIndex() {
+      return this.lastProcessedIndex;
    }
 
-   static setLastProcessedIndex(idx) {
-      lastProcessedIndex = idx;
+   setLastProcessedIndex(idx) {
+      this.lastProcessedIndex = idx;
    }
 
-   static incrementLastProcessedIndex() {
-      lastProcessedIndex++;
+   incrementLastProcessedIndex() {
+      this.lastProcessedIndex++;
+   }
+
+   static isPending(key) {
+      return pending.has(key);
+   }
+
+   static addPending(key) {
+      pending.add(key);
+   }
+
+   static removePending(key) {
+      pending.delete(key);
    }
 
    static getPlayerJobCount(playerId) {
@@ -66,17 +80,5 @@ export class JobQueue {
    static cleanupPlayerState(playerId) {
       playerLastJobEnd.delete(playerId);
       playerJobCount.delete(playerId);
-   }
-
-   static isPending(key) {
-      return pending.has(key);
-   }
-
-   static addPending(key) {
-      pending.add(key);
-   }
-
-   static removePending(key) {
-      pending.delete(key);
    }
 }

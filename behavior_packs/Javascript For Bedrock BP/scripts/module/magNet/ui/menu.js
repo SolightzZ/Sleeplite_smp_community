@@ -1,11 +1,9 @@
 import { ActionFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../../plugin/utils.js';
 import { logError } from '../../../events/logger.js';
-import { MagnetConfig, MagnetIcons, MagnetText } from '../config.js';
+import { cache } from '../../../shared/cache.js';
+import { MagnetConfig, MagnetText, MagnetIcons } from '../config.js';
 import { countMagnetUsers, hasMagnetUser } from '../core/state.js';
 import { canUseMagnet, toggleMagnet } from '../core/toggle.js';
-import { cache } from '../../../shared/cache.js';
 import { pcheck } from './../../../shared/player.js';
 
 export const showMagnetMenu = (player) => {
@@ -15,12 +13,12 @@ export const showMagnetMenu = (player) => {
    const current = countMagnetUsers();
    const isFull = current >= MagnetConfig.MAX_USERS;
    let btnText = isOn ? `§a${MagnetText.ON}` : `§c${MagnetText.OFF}`;
-   let btnIcon = isOn ? MagnetIcons.ON : MagnetIcons.OFF;
 
    if (!isOn && isFull) {
       btnText = `§c${MagnetText.FULL} (${current}/${MagnetConfig.MAX_USERS})`;
-      btnIcon = MagnetIcons.FULL;
    }
+
+   const btnIcon = isOn ? MagnetIcons.ON : isFull ? MagnetIcons.FULL : MagnetIcons.OFF;
 
    const form = new ActionFormData();
    form.title('Magnet | แม่เหล็ก');
@@ -34,10 +32,10 @@ export const showMagnetMenu = (player) => {
 
    form
       .show(player)
-      .then((res) => {
-         if (!res || res.canceled || res.selection !== 0) return;
-         if (!pcheck(player)) return;
-         toggleMagnet(player, !isOn);
-      })
+   .then((res) => {
+      if (!res || res.canceled || res.selection !== 0) return;
+      if (!pcheck(player)) return;
+      toggleMagnet(player, !hasMagnetUser(player.id));
+   })
       .catch((error) => logError('Magnet', 'UI Error', error));
 };
