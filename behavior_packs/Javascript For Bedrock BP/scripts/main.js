@@ -2,6 +2,7 @@
 import './events/index.js';
 import './router/Startup.js';
 import './router/System.RunInterval.js';
+import './shared/vanillaItems.js';
 
 // World Events
 import './router/Explosion.js';

@@ -1,28 +1,43 @@
 import { BlockPermutation, EquipmentSlot } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
 import { cache } from '../../../shared/cache.js';
-import { BLOCK_AIR, BLOCK_LIGHT, BLOCK_LIGHT_15, FLASHLIGHT_ITEM, RAYCAST_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, WORLD_Y_MAX, WORLD_Y_MIN } from '../config.js';
+import { BLOCK_AIR, BLOCK_LIGHT, FLASHLIGHT_ITEM, LIGHT_DISTANCE, THRESHOLD_HEAD_MOVE, THRESHOLD_VIEW_DIR, WORLD_Y_MAX, WORLD_Y_MIN } from '../config.js';
 import { pcheck } from './../../../shared/player.js';
 import { playerLastPos, playerLights } from './state.js';
 
-function calcLightPos(headPos, viewDir, dimension) {
-   const x = Math.floor(headPos.x + viewDir.x * RAYCAST_DISTANCE);
-   const y = Math.floor(headPos.y + viewDir.y * RAYCAST_DISTANCE);
-   const z = Math.floor(headPos.z + viewDir.z * RAYCAST_DISTANCE);
+const _scratchPos = { x: 0, y: 0, z: 0 };
+
+const _dimBounds = new Map();
+function getDimBounds(dimension) {
+   const cached = _dimBounds.get(dimension.id);
+   if (cached) return cached;
    const range = dimension.heightRange;
-   const min = range ? range.min : WORLD_Y_MIN;
-   const max = range ? range.max : WORLD_Y_MAX;
-   if (y < min || y > max) return null;
-   return { x, y, z };
+   const b = { min: range ? range.min : WORLD_Y_MIN, max: range ? range.max : WORLD_Y_MAX };
+   _dimBounds.set(dimension.id, b);
+   return b;
+}
+
+function calcLightPos(headPos, viewDir, dimension) {
+   const b = getDimBounds(dimension);
+
+   const y = Math.floor(headPos.y + viewDir.y * LIGHT_DISTANCE);
+   if (y < b.min || y > b.max) return null;
+
+   _scratchPos.x = Math.floor(headPos.x + viewDir.x * LIGHT_DISTANCE);
+   _scratchPos.y = y;
+   _scratchPos.z = Math.floor(headPos.z + viewDir.z * LIGHT_DISTANCE);
+   return _scratchPos;
 }
 
 export function isFlashlightHeld(player) {
-   const equippable = cache.getEquippable(player);
-   if (!equippable) return false;
+    const equippable = cache.getEquippable(player);
+    if (!equippable) return false;
 
-   const main = equippable.getEquipment(EquipmentSlot.Mainhand);
-   const off = equippable.getEquipment(EquipmentSlot.Offhand);
-   return (main && main.typeId === FLASHLIGHT_ITEM) || (off && off.typeId === FLASHLIGHT_ITEM);
+    const main = equippable.getEquipment(EquipmentSlot.Mainhand);
+    if (main && main.typeId === FLASHLIGHT_ITEM) return true;
+
+    const off = equippable.getEquipment(EquipmentSlot.Offhand);
+    return !!(off && off.typeId === FLASHLIGHT_ITEM);
 }
 
 function hasPlayerMoved(playerId, headPos, viewDir) {
@@ -64,7 +79,7 @@ let _airPermutation;
 let _light15Permutation;
 
 const getAirPerm = () => _airPermutation || (_airPermutation = BlockPermutation.resolve(BLOCK_AIR));
-const getLight15Perm = () => _light15Permutation || (_light15Permutation = BlockPermutation.resolve(BLOCK_LIGHT_15));
+const getLight15Perm = () => _light15Permutation || (_light15Permutation = BlockPermutation.resolve(BLOCK_LIGHT, { block_light_level: 15 }));
 
 export function removeLightBlock(playerId, fallbackDim) {
    const light = playerLights.get(playerId);
@@ -81,7 +96,7 @@ export function removeLightBlock(playerId, fallbackDim) {
    if (!dim) return;
    try {
       const block = dim.getBlock(light);
-      if (block && (block.typeId === BLOCK_LIGHT || block.typeId === BLOCK_LIGHT_15)) {
+       if (block && block.typeId === BLOCK_LIGHT) {
          block.setPermutation(getAirPerm());
       }
    } catch (error) {
@@ -101,25 +116,26 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
       return;
    }
 
-   const headPos = player.getHeadLocation();
-   const viewDir = player.getViewDirection();
+    const headPos = player.getHeadLocation();
+    const viewDir = player.getViewDirection();
 
-   if (!hasPlayerMoved(playerId, headPos, viewDir)) return;
+    if (!hasPlayerMoved(playerId, headPos, viewDir)) return;
 
-   const currentDim = player.dimension;
+    const currentDim = player.dimension;
+   const dimId = currentDim.id;
    const newPos = calcLightPos(headPos, viewDir, currentDim);
    const oldLight = playerLights.get(playerId);
 
-   if (oldLight && newPos && oldLight.x === newPos.x && oldLight.y === newPos.y && oldLight.z === newPos.z && oldLight.dimId === currentDim.id) {
+   if (oldLight && newPos && oldLight.x === newPos.x && oldLight.y === newPos.y && oldLight.z === newPos.z && oldLight.dimId === dimId) {
       return;
    }
 
    if (oldLight) {
       try {
-         const oldDim = oldLight.dimId === currentDim.id ? currentDim : cache.getDimension(oldLight.dimId);
+         const oldDim = oldLight.dimId === dimId ? currentDim : cache.getDimension(oldLight.dimId);
          if (oldDim) {
             const oldBlock = oldDim.getBlock(oldLight);
-            if (oldBlock && (oldBlock.typeId === BLOCK_LIGHT || oldBlock.typeId === BLOCK_LIGHT_15)) {
+             if (oldBlock && oldBlock.typeId === BLOCK_LIGHT) {
                oldBlock.setPermutation(getAirPerm());
             }
          }
@@ -140,26 +156,26 @@ export function placeLightForPlayer(player, skipHeldCheck = false) {
          return;
       }
 
-      const typeId = targetBlock.typeId;
-      const isReplaceable = typeId === BLOCK_AIR || typeId === BLOCK_LIGHT || typeId === BLOCK_LIGHT_15;
-      if (!isReplaceable) {
-         playerLights.delete(playerId);
-         return;
-      }
+       const typeId = targetBlock.typeId;
+       const isReplaceable = typeId === BLOCK_AIR || typeId === BLOCK_LIGHT;
+       if (!isReplaceable) {
+          playerLights.delete(playerId);
+          return;
+       }
 
-      targetBlock.setPermutation(getLight15Perm());
+       targetBlock.setPermutation(getLight15Perm());
 
       if (oldLight) {
          oldLight.x = newPos.x;
          oldLight.y = newPos.y;
          oldLight.z = newPos.z;
-         oldLight.dimId = currentDim.id;
+         oldLight.dimId = dimId;
       } else {
          playerLights.set(playerId, {
             x: newPos.x,
             y: newPos.y,
             z: newPos.z,
-            dimId: currentDim.id,
+            dimId: dimId,
          });
       }
    } catch (error) {

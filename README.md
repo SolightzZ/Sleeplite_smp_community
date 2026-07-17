@@ -389,6 +389,8 @@
 | ระบบ | รายละเอียด |
 |------|------------|
 | Chest Shop | ร้านค้าหีบ — เปิดร้าน, ซื้อ, ปรับราคา, ลบร้านผ่าน UI |
+| Buy / Sell | ฟอร์มซื้อและขายสินค้า |
+| Adjust Price | ปรับราคาขายในร้าน |
 | Admin Panel | จัดการร้านค้าและผู้เล่น |
 | Protection | ป้องกันพื้นที่ร้านค้า |
 | Transaction / Database | บันทึกการซื้อขายลงฐานข้อมูล |
@@ -400,32 +402,41 @@
 ### 7. 🎮 ระบบ Script
 
 <details open>
-<summary><b>Javascript For Bedrock — 177 JS Files</b></summary>
+<summary><b>Javascript For Bedrock — 189 ไฟล์</b></summary>
 
 | หมวด | ระบบ | รายละเอียด |
 |------|------|------------|
-| Admin | Ban | แบนผู้เล่น, รายชื่อถูกบันทึก |
-| Admin | Report | ผู้เล่นแจ้งผู้เล่นอื่น, ถึง Admin |
-| Admin | Protection | ป้องกันที่อยู่, ป้องกัน PvP ในบางโซน, ตั้งขอบเขต |
-| Player QoL | Magnet | แม่เหล็กดูดของ  |
-| Player QoL | Flashlight | ไฟฉาย |
-| Player QoL | FullBright | ปรับความสว่าง |
-| Player QoL | Zoom | ซูมกล้อง |
-| Player QoL | Inventory Sorter | จัดเรียงช่องเก็บของอัตโนมัติ |
-| Player QoL | Simple Sit | นั่งบนพื้น/บันได |
-| Utility | Tree Capitator | ตัดไม้ทั้งต้น  |
-| Utility | Vein Miner | ขุดแร่ทั้งสาย|
-| Utility | Grave Stones | โลงศพอัตโนมัติ — เมื่อตายของตกใส่โลง |
-| Utility | DropHeads | ดรอปหัวผู็เล่น|
-| Economy | Jobs | งานเสริมต่างๆ|
-| Economy | Rewards | รับของรายวัน |
-| Social | Emotes | 170+ (เต้น, คำนับ, นั่ง ฯลฯ) |
-| Social | Nametag | ชื่อและยศเหนือหัว |
-| Social | Commands | `/afk`, `/sit`, `/rules`, `/vote`, `/websites` |
-| Visual | AFK Cinematic | กล้องหมุนรอบตัวเมื่อ AFK |
-| Visual | Camera Cinematic | กล้องถ่าย |
-| Visual | Biome Detector | แจ้งไบโอมปัจจุบัน |
-| Event | End Portal Frame | สุ่ม 1 ใน 12 ชนิดก่อนเปิดพอร์ทัล" |
+| Admin | Ban Player | แบน/ปลดแบนผู้เล่น (ตั้งเวลาได้) |
+| Admin | Custom Commands | ระบบคำสั่งกำหนดเอง |
+| Admin | Protection | ระบบ claim พื้นที่ส่วนตัว (ป้องกัน PvP/เข้าพื้นที่) |
+| Admin | Report | ผู้เล่นแจ้งปัญหา/อุทธรณ์ ถึง Admin |
+| Player QoL | Magnet | แม่เหล็กดูดไอเทมรอบตัวอัตโนมัติ |
+| Player QoL | Flashlight | ไฟฉายส่องทาง |
+| Player QoL | Full Bright | ปรับการมองเห็นให้สว่างเสมอ |
+| Player QoL | Zoom | ซูมมองระยะไกล |
+| Player QoL | Inventory Sorter | จัดเรียงไอเทม (12 โหมด) |
+| Player QoL | Anvil Repair | ซ่อมทั่งที่เสียด้วยเหล็ก |
+| Player QoL | Sponge Absorption | ฟองน้ำดูดน้ำจากระยะไกล |
+| Player QoL | Durability & Name | แสดงชื่อและความทนทานไอเทม |
+| Player QoL | HUB Setting | เมนูตั้งค่าส่วนตัว |
+| Utility | Tree Capitator | โค่นไม้ทั้งต้น |
+| Utility | Vein Miner | ขุดแร่แบบสาย vein |
+| Utility | Grave Stones | หลุมศพเก็บของเมื่อตาย |
+| Utility | DropHeads | หัวผู้เล่น + แจ้งพิกัดจุดตาย |
+| Economy | Jobs | ภารกิจส่งของระหว่างผู้เล่น |
+| Economy | Daily Reward | รางวัลล็อกอินรายวัน (30 วัน) |
+| Economy | Help Command | คำสั่งช่วยเหลือ (`!help` / `!d`) |
+| Economy | Nether Calculator | คำนวณพิกัดโอเวอร์เวิลด์-เนเธอร์ |
+| Social | Emotes | ท่าทางแสดงอารมณ์ (170+) |
+| Social | Nametag | ระบบแท็กชื่อและยศผู้เล่น |
+| Social | Commands | `/afk`, `/rules`, `/vote`, `/websites` |
+| Visual | AFK Cinematic | กล้องอัตโนมัติเมื่ออยู่นิ่ง |
+| Visual | Free Camera | โหมดกล้องอิสระ (เร็วๆ นี้) |
+| Visual | Biome Title | แสดงชื่อไบโอมเมื่อเดินผ่าน |
+| Visual | Boss Title | เอฟเฟกต์ชื่อบอสแบบ Cinematic |
+| Event | Welcome UI | หน้าจอต้อนรับเมื่อเข้าสู่โลก |
+| Event | Patch Note | สมุดบันทึกการอัปเดต |
+| Event | End Portal Frame | ขุดตาเอนเดอร์ได้ (แลกของรางวัล) |
 
 </details>
 

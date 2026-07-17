@@ -1,9 +1,22 @@
 import { ItemComponentTypes } from '@minecraft/server';
 import { cache } from '../../../shared/cache.js';
+import { VanillaItems } from '../../../shared/vanillaItems.js';
 import { CATEGORY_KEYWORDS, maxItemAmount } from '../config.js';
 import { ItemCategories, RarityTiers } from '../data/rarity.js';
 import { VanillaItemData } from '../data/vanillaItems.js';
 import { getItemDisplayName, getItemDurability } from './formatter.js';
+
+/**
+ * @param {import('@minecraft/server').ItemStack | { typeId?: string } | null | undefined} item
+ * @returns {boolean}
+ */
+export const isVanillaItem = (item) => !!item?.typeId && VanillaItems.isValidItem(item.typeId);
+
+/**
+ * @param {import('@minecraft/server').ItemStack | { typeId?: string } | null | undefined} item
+ * @returns {boolean}
+ */
+export const isVanillaBlock = (item) => !!item?.typeId && VanillaItems.isValidBlock(item.typeId);
 
 const getItemData = (item) => {
    if (!item?.typeId) return null;
@@ -66,13 +79,14 @@ const getItemCategory = (item) => {
    )
       return ItemCategories.block;
    if (/(stew|soup|potato|carrot|cookie|cake|melon|beetroot|fish|salmon|chorus_fruit|berry|apple|meat|bread|golden|potion|honey)$/.test(id)) return ItemCategories.food;
+   if (isVanillaBlock(item)) return ItemCategories.block;
 
    return ItemCategories.misc;
 };
 
 export const getItemMaterialGroup = (item) => {
-    const d = getItemData(item);
-    if (d) return d.grp;
+   const d = getItemData(item);
+   if (d) return d.grp;
 
    if (!item?.typeId) return 99;
 
