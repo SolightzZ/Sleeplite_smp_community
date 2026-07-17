@@ -6,7 +6,7 @@ export const CFG = {
    title: {
       fadeInDuration: 0,
       fadeOutDuration: 50,
-      stayDuration: 160,
+      stayDuration: 50,
    },
    welcomeSound: {
       name: 'random.toast',

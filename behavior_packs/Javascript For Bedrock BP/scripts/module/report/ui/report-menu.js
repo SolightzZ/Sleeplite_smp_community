@@ -1,10 +1,9 @@
 import { system } from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
-
 import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
 import { CONFIG, LIMITS } from '../config.js';
-import { Database } from '../core/database.js';
+import { ReportDatabase } from '../core/database.js';
 import { showForm, sure } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
 import { cache } from '../../../shared/cache.js';
@@ -33,7 +32,7 @@ const validateFields = (player, fields, limits) => {
 
 const sendform = (player) => {
    const name = player.name;
-   const list = Database.get(name);
+   const list = ReportDatabase.get(name);
 
    if (list.length >= CONFIG.maxReports) {
       cache.sendMessage(player, `§c[Report] กล่องข้อความเต็มแล้ว (${CONFIG.maxReports}/${CONFIG.maxReports})`);
@@ -63,7 +62,7 @@ const sendform = (player) => {
             return;
          }
 
-         Database.add(name, title, body);
+         ReportDatabase.add(name, title, body);
          cache.sendMessage(player, '§a[Report] บันทึกข้อมูลเรียบร้อยแล้ว');
          reportmenu(player);
       } catch (innerError) {
@@ -95,7 +94,7 @@ const editItem = (player, name, list, index) => {
             mylist(player, 'edit');
             return;
          }
-         Database.update(name, index, newTitle, newBody);
+         ReportDatabase.update(name, index, newTitle, newBody);
          cache.sendMessage(player, '§e[Report] แก้ไขข้อมูลสำเร็จ');
          mylist(player, 'edit');
       } catch (error) {
@@ -109,7 +108,7 @@ const deleteItem = (player, name, index) => {
    sure(
       player,
       () => {
-         Database.delete(name, index);
+         ReportDatabase.delete(name, index);
          cache.sendMessage(player, '§c[Report] ลบข้อมูลสำเร็จ');
          mylist(player, 'del');
       },
@@ -120,7 +119,7 @@ const deleteItem = (player, name, index) => {
 const mylist = (player, mode) => {
    cache.playSound(player, 'item.book.page_turn');
    const name = player.name;
-   const list = Database.get(name);
+   const list = ReportDatabase.get(name);
 
    if (list.length === 0) {
       cache.sendMessage(player, '§c[Report] ไม่พบข้อมูลในระบบ');
@@ -162,7 +161,7 @@ const mylist = (player, mode) => {
 export const inbox = (player) => {
    cache.playSound(player, 'item.book.page_turn');
    const name = player.name;
-   const list = Database.get(name);
+   const list = ReportDatabase.get(name);
    const replied = list.filter((item) => item.r !== '');
 
    if (replied.length === 0) {

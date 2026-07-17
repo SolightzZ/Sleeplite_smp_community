@@ -4,7 +4,7 @@
       "description": {
          "identifier": "addon:8_report"
       },
-      "tags": ["crafting_table"],
+      "tags": ["crafting_table", "avanced"],
       "pattern": ["##", "##"],
       "key": {
          "#": {

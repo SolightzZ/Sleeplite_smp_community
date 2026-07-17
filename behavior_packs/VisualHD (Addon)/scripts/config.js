@@ -73,7 +73,7 @@ export const QUEUE = {
 
 export const HEALTH = {
    BATCH: 15,
-   LOW_THRESHOLD: 50,
+   LOW_THRESHOLD: 30,
    CRITICAL_THRESHOLD: 30,
 };
 

@@ -40,7 +40,7 @@
          "textures": "textures/items/co"
       },
       "gif": {
-         "textures": "textures/ui/gift_square"
+         "textures": "textures/items/gif"
       },
       "festival": {
          "textures": "textures/items/festival"

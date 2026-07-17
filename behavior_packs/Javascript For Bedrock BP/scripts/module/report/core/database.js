@@ -13,7 +13,7 @@ const validate = (value, label) => {
 
 let cachedData = null;
 
-export class Database {
+export class ReportDatabase {
    static load() {
       if (cachedData !== null) return cachedData;
       cachedData = Database.loadGlobal(CONFIG.dbKey, {});

@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { logError, logWarn } from '../../../events/logger.js';
 import { cache } from '../../../shared/cache.js';
 import { LIMITS } from '../config.js';
-import { Database } from '../core/database.js';
+import { ReportDatabase } from '../core/database.js';
 import { showForm, sure } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
 
@@ -41,7 +41,7 @@ const showReplyForm = (player, item, targetName, index) => {
          adminact(player, targetName, index);
          return;
       }
-      Database.reply(targetName, index, trimmed);
+      ReportDatabase.reply(targetName, index, trimmed);
       cache.sendMessage(player, '§a[Report] บันทึกการตอบกลับสำเร็จ');
       adminact(player, targetName, index);
    });
@@ -56,7 +56,7 @@ const confirmDelete = (player, targetName, index) => {
    sure(
       player,
       () => {
-         Database.delete(targetName, index);
+         ReportDatabase.delete(targetName, index);
          cache.sendMessage(player, '§c[Report] ลบข้อมูลสำเร็จ');
          adminmsg(player, targetName);
       },
@@ -67,7 +67,7 @@ const confirmDelete = (player, targetName, index) => {
 const adminact = (player, targetName, index) => {
    try {
       cache.playSound(player, 'item.book.page_turn');
-      const list = Database.get(targetName);
+      const list = ReportDatabase.get(targetName);
 
       if (!list || !list[index]) {
          cache.sendMessage(player, '§c[Report] ข้อมูลถูกเปลี่ยนแปลงหรือลบแล้ว');
@@ -115,7 +115,7 @@ const adminact = (player, targetName, index) => {
 const adminmsg = (player, targetName) => {
    try {
       cache.playSound(player, 'item.book.page_turn');
-      const list = Database.get(targetName);
+      const list = ReportDatabase.get(targetName);
       if (!list || list.length === 0) {
          adminpanel(player);
          return;
@@ -149,7 +149,7 @@ const adminmsg = (player, targetName) => {
 export const adminpanel = (player) => {
    try {
       cache.playSound(player, 'item.book.page_turn');
-      const db = Database.getAll();
+      const db = ReportDatabase.getAll();
       const names = Object.keys(db);
 
       const ui = new ActionFormData();
