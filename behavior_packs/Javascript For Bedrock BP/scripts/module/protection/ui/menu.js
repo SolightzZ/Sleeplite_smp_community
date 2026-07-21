@@ -1,12 +1,10 @@
 import { ActionFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 import { Config, halfZoneSize } from '../config.js';
 import { showBorder } from '../core/borders.js';
 import { zoneDatabase } from '../core/database.js';
 import { adminDeleteZone, adminTeleport, createZone, deleteZone, manageFlags, manageMembers, uiLockSet } from '../core/protection.js';
-import { cache } from '../../../shared/cache.js';
 import { pcheck } from './../../../shared/player.js';
 
 // สร้างเนื้อหาเมนู
@@ -129,8 +127,7 @@ export const openMenu = async (player) => {
       form.divider();
 
       const actions = buildMenuButtons(form, player, isAdmin);
-      form.label('             @Sleeplite 2026');
-
+      form.label('                @Sleeplite 2026');
       const response = await form.show(player);
       if (response.canceled) {
          return;

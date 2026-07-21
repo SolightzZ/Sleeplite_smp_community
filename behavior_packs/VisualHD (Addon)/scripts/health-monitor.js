@@ -1,10 +1,10 @@
-import { HEALTH, SPAWN_LIMITS, COOLDOWNS, ERROR_LIMITS, LOW_HEALTH_MSG, FALSE_LOW_HEALTH_MSG, HEARTBEAT_SOUND } from './config.js';
-import { pcheck, getHealthPercent, clearPlayerCache } from './shared/player.js';
+import { COOLDOWNS, ERROR_LIMITS, FALSE_LOW_HEALTH_MSG, HEARTBEAT_SOUND, LOW_HEALTH_MSG, SPAWN_LIMITS, TICK_INTERVAL } from './config.js';
+import { clearPlayerCache, getHealthPercent, getValid } from './shared/player.js';
 
-const HEALTH_BATCH = HEALTH.BATCH;
+const HEALTH_BATCH_BASE = 15;
 const MAX_HEARTBEATS_PER_TICK = SPAWN_LIMITS.HEARTBEATS_PER_TICK;
-const LOW_HEALTH_THRESHOLD = HEALTH.LOW_THRESHOLD;
-const CRITICAL_HEALTH_THRESHOLD = HEALTH.CRITICAL_THRESHOLD;
+const LOW_HEALTH_THRESHOLD = 30;
+const CRITICAL_HEALTH_THRESHOLD = 30;
 const HEARTBEAT_COOLDOWN = COOLDOWNS.HEARTBEAT;
 const MAX_HEALTH_ERRORS = ERROR_LIMITS.MAX_HEALTH_ERRORS;
 
@@ -14,6 +14,10 @@ class XHealthMonitor {
    heartbeatingPlayers = new Map();
    healthCursor = 0;
    healthSnapshot = null;
+   snapshotLen = 0;
+   get _batchSize() {
+      return this.snapshotLen > 0 ? Math.max(HEALTH_BATCH_BASE, Math.ceil(this.snapshotLen / TICK_INTERVAL)) : HEALTH_BATCH_BASE;
+   }
 
    getState(playerId) {
       let state = this.healthStates.get(playerId);
@@ -25,7 +29,6 @@ class XHealthMonitor {
    }
 
    updateLowHealth(player, hp) {
-      if (!pcheck(player)) return;
       const isLow = hp <= LOW_HEALTH_THRESHOLD;
       const state = this.getState(player.id);
       if (state.lowHealth === isLow) return;
@@ -43,20 +46,33 @@ class XHealthMonitor {
       const total = playerMap.size;
       if (total === 0) return;
 
-      if (this.healthCursor === 0 || !this.healthSnapshot || this.healthSnapshot.length !== total) {
-         this.healthSnapshot = [...playerMap.entries()];
+      if (this.healthCursor === 0 || !this.healthSnapshot || this.snapshotLen !== total) {
+         if (!this.healthSnapshot || this.healthSnapshot.length < total) {
+            this.healthSnapshot = new Array(total);
+         }
+         let i = 0;
+         for (const entry of playerMap) {
+            this.healthSnapshot[i++] = entry;
+         }
+         this.snapshotLen = total;
       }
       const snapshot = this.healthSnapshot;
+      const batch = this._batchSize;
 
       const cursor = this.healthCursor;
+      const limit = Math.min(cursor + batch, total);
 
-      for (let i = 0; i < HEALTH_BATCH && cursor + i < total; i++) {
-         const [playerId, player] = snapshot[cursor + i];
-         if (!pcheck(player)) {
+      for (let i = cursor; i < limit; i++) {
+         const entry = snapshot[i];
+         if (!entry) continue;
+         const playerId = entry[0];
+         const player = entry[1];
+         if (!getValid(player)) {
             playerMap.delete(playerId);
             this.healthStates.delete(playerId);
             this.heartbeatingPlayers.delete(playerId);
             clearPlayerCache(playerId);
+            snapshot[i] = null;
             continue;
          }
 
@@ -69,15 +85,21 @@ class XHealthMonitor {
             } else if (hp > CRITICAL_HEALTH_THRESHOLD && this.heartbeatingPlayers.has(playerId)) {
                this.heartbeatingPlayers.delete(playerId);
             }
-         } catch {
+         } catch (error) {
             this.healthSnapshot = null;
+            this.snapshotLen = 0;
+            if (this.errorCount < MAX_HEALTH_ERRORS) {
+               this.errorCount++;
+               console.warn('[xVisuals] health tick:', error);
+            }
          }
       }
 
-      this.healthCursor = cursor + HEALTH_BATCH;
+      this.healthCursor = limit;
       if (this.healthCursor >= total) {
          this.healthCursor = 0;
          this.healthSnapshot = null;
+         this.snapshotLen = 0;
       }
    }
 
@@ -91,17 +113,17 @@ class XHealthMonitor {
          if (data.cooldown > 0) continue;
 
          const player = playerMap.get(playerId);
-         if (!pcheck(player)) {
+         if (!getValid(player)) {
             this.heartbeatingPlayers.delete(playerId);
             continue;
          }
          try {
             player.playSound(HEARTBEAT_SOUND.id, { location: player.location, volume: HEARTBEAT_SOUND.volume });
             data.cooldown = HEARTBEAT_COOLDOWN;
-         } catch {
+         } catch (error) {
             if (this.errorCount < MAX_HEALTH_ERRORS) {
                this.errorCount++;
-               console.warn('[xVisuals] heartbeat drain');
+               console.warn('[xVisuals] heartbeat drain:', error);
             }
          }
       }
@@ -112,6 +134,7 @@ class XHealthMonitor {
       this.heartbeatingPlayers.delete(playerId);
       clearPlayerCache(playerId);
       this.healthSnapshot = null;
+      this.snapshotLen = 0;
    }
 }
 

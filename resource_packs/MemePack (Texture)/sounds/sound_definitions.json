@@ -22,7 +22,7 @@
    "mob.girl.attack": {
       "__use_legacy_max_distance": "true",
       "category": "neutral",
-      "sounds": ["sounds/mob/human/hit"],
+      "sounds": ["sounds/mob/human/idle"],
       "subtitle": "subtitles.entity.girl.attack"
    },
    "mob.human.hit": {

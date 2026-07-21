@@ -1,19 +1,10 @@
-import { Registry } from '../../../events/registry.js';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
+import { Registry } from '../../../events/registry.js';
+import { cache } from '../../../shared/cache.js';
 import { PREDEFINED_RANKS } from '../constants/constants.js';
 import { refreshNameTag } from '../core/nametag.js';
-import {
-   addRank,
-   getActiveRank,
-   getAllServerRanks,
-   getOwnedRanks,
-   removeRanks,
-   renameRank,
-   setActiveRank,
-} from '../core/tagManager.js';
+import { addRank, getActiveRank, getAllServerRanks, getOwnedRanks, removeRanks, renameRank, setActiveRank } from '../core/tagManager.js';
 import { isValidPlayer } from '../utils/player.js';
-import { addSound } from '../../../shared/utils.js';
-import { cache } from '../../../shared/cache.js';
 import { pcheck } from './../../../shared/player.js';
 
 const getPredefinedRankList = () => {
@@ -197,7 +188,7 @@ export const showMainMenu = (admin) => {
    for (let i = 0; i < players.length; i++) {
       form.button(players[i].nameTag);
    }
-
+   form.label('                @Sleeplite 2026');
    form.show(admin).then((res) => {
       if (res.canceled) return;
 
@@ -205,4 +196,3 @@ export const showMainMenu = (admin) => {
       if (pcheck(target)) showActions(admin, target);
    });
 };
-

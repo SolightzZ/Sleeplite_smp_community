@@ -1,8 +1,8 @@
 import { ActionFormData } from '@minecraft/server-ui';
 import { cache } from '../../shared/cache.js';
 import { pcheck } from './../../shared/player.js';
-import { icons, sounds, stripPrefix } from './config.js';
 import { completeJob } from './CompleteJob.js';
+import { icons, sounds, stripPrefix } from './config.js';
 import { createJob } from './CreateJob.js';
 import { editJobs } from './EditJob.js';
 import { deleteJobData, hasOwnerNotify, ownerNotifyMap, pendingDelivery, playerJobMap, saveData, showUI } from './Job.js';
@@ -69,15 +69,15 @@ function receiveItems(player) {
       form.body('ไม่มีไอเทมให้รับในขณะนี้');
       form.button('ย้อนกลับ');
       showUI(player, form, () => {
-          cache.playSound(player, sounds.barrelClose);
-          showMainMenu(player);
-       });
-       return;
-    }
+         cache.playSound(player, sounds.barrelClose);
+         showMainMenu(player);
+      });
+      return;
+   }
 
-    const form = new ActionFormData();
+   const form = new ActionFormData();
 
-    const allItems = [];
+   const allItems = [];
    for (const jid of pendingIds) {
       const delivery = pendingDelivery.get(jid);
 
@@ -94,18 +94,18 @@ function receiveItems(player) {
 
    for (let i = 0; i < allItemsLen; i++) {
       const item = allItems[i];
-       body += `- ${stripPrefix(item.id)} x${item.amount}\n`;
+      body += `- ${stripPrefix(item.id)} x${item.amount}\n`;
    }
    body += '\nกดรับเพื่อรวบรวมไอเทมทั้งหมด';
 
    form.title('รับไอเทม');
    form.body(body);
-    form.button('รับทั้งหมด', icons.gift);
-    form.button('ย้อนกลับ');
+   form.button('รับทั้งหมด', icons.gift);
+   form.button('ย้อนกลับ');
 
-    showUI(player, form, (res) => {
-       if (res.selection === 1) {
-          cache.playSound(player, sounds.barrelClose);
+   showUI(player, form, (res) => {
+      if (res.selection === 1) {
+         cache.playSound(player, sounds.barrelClose);
          showMainMenu(player);
          return;
       }
@@ -119,7 +119,7 @@ function receiveItems(player) {
       ownerNotifyMap.delete(player.id);
       saveData();
 
-       cache.playSound(player, sounds.anvilUse);
+      cache.playSound(player, sounds.anvilUse);
       if (pcheck(player)) cache.sendMessage(player, `[Job] ได้รับไอเทม ${allItems.length} เรียบร้อยแล้ว`);
       showMainMenu(player);
    });
@@ -128,7 +128,7 @@ function receiveItems(player) {
 export const showMainMenu = (player) => {
    if (!pcheck(player)) return;
 
-    cache.playSound(player, sounds.villagerIdle);
+   cache.playSound(player, sounds.villagerIdle);
 
    const hasPending = hasOwnerNotify(player.id);
    const activeJobId = playerJobMap.get(player.id);
@@ -137,31 +137,30 @@ export const showMainMenu = (player) => {
    form.title('Job Delivery | ระบบจัดส่งงาน');
    form.body('                 เลือกรายการที่ต้องการ:');
    form.divider();
-    form.button('สร้างคำสั่งจัดส่ง', icons.mashup);
-    form.divider();
-    hasPending ? form.button('§e[!] §rรับไอเทมจัดส่ง', icons.muteOff) : form.button('รับไอเทมจัดส่ง', icons.muteOn);
-    form.button('รายการคำสั่งของฉัน', icons.myContent);
-    form.button('งานจัดส่งที่พร้อมรับ', icons.friends);
-    form.divider();
-    activeJobId ? form.button('งานที่กำลังดำเนินการ', icons.envelope) : form.button('ส่งมอบงาน', icons.howToPlay);
-    form.label('                  @Sleeplite 2026');
-
-    showUI(player, form, (res) => {
-       if (res.selection === 0) {
-          cache.playSound(player, sounds.barrelOpen);
-          createJob(player);
-       } else if (res.selection === 1) {
-          cache.playSound(player, sounds.ejectItem);
-          receiveItems(player);
-       } else if (res.selection === 2) {
-          cache.playSound(player, sounds.bookPageTurn);
-          editJobs(player);
-       } else if (res.selection === 3) {
-          cache.playSound(player, sounds.bookPageTurn);
-          viewJobs(player);
-       } else if (res.selection === 4) {
-          cache.playSound(player, sounds.orb);
-          completeJob(player);
-       }
-    });
+   form.button('สร้างคำสั่งจัดส่ง', icons.mashup);
+   form.divider();
+   hasPending ? form.button('§e[!] §rรับไอเทมจัดส่ง', icons.muteOff) : form.button('รับไอเทมจัดส่ง', icons.muteOn);
+   form.button('รายการคำสั่งของฉัน', icons.myContent);
+   form.button('งานจัดส่งที่พร้อมรับ', icons.friends);
+   form.divider();
+   activeJobId ? form.button('งานที่กำลังดำเนินการ', icons.envelope) : form.button('ส่งมอบงาน', icons.howToPlay);
+   form.label('                @Sleeplite 2026');
+   showUI(player, form, (res) => {
+      if (res.selection === 0) {
+         cache.playSound(player, sounds.barrelOpen);
+         createJob(player);
+      } else if (res.selection === 1) {
+         cache.playSound(player, sounds.ejectItem);
+         receiveItems(player);
+      } else if (res.selection === 2) {
+         cache.playSound(player, sounds.bookPageTurn);
+         editJobs(player);
+      } else if (res.selection === 3) {
+         cache.playSound(player, sounds.bookPageTurn);
+         viewJobs(player);
+      } else if (res.selection === 4) {
+         cache.playSound(player, sounds.orb);
+         completeJob(player);
+      }
+   });
 };

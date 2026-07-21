@@ -25,7 +25,7 @@ const mainMenu = async (player) => {
    form.title('Settings');
    form.button('Server Settings', 'textures/ui/sidebar_icons/categories');
    form.button('HUD Settings', 'textures/ui/sidebar_icons/my_characters');
-
+   form.label('                @Sleeplite 2026');
    const response = await form.show(player);
    if (response.canceled) {
       return;

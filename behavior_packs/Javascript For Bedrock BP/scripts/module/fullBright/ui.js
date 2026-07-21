@@ -14,8 +14,7 @@ export function showMenu(player) {
    form.title(title);
    form.header(isOn ? headerEnabled : headerDisabled);
    form.button(isOn ? btnOff : btnOn, isOn ? iconOn : iconOff);
-   form.label('               @Sleeplite 2026');
-
+   form.label('                @Sleeplite 2026');
    cache.playSound(player, soundOpen);
 
    form

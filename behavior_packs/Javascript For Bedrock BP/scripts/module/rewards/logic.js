@@ -50,30 +50,29 @@ function menu(player) {
       form.button(buttonText, icon);
    });
 
-    form.label('               @Sleeplite 2026');
+   form.label('                @Sleeplite 2026');
+   cache.playSound?.(player, 'vault.open_shutter');
 
-    cache.playSound?.(player, 'vault.open_shutter');
+   form
+      .show(player)
+      .then((res) => {
+         if (!pcheck(player) || res.canceled) return;
 
-    form
-       .show(player)
-       .then((res) => {
-          if (!pcheck(player) || res.canceled) return;
+         if (res.selection !== data.count) {
+            cache.playSound?.(player, 'random.break');
+            cache.setTitle(player.onScreenDisplay, '§cกรุณารับของตามลำดับ');
+            return;
+         }
 
-          if (res.selection !== data.count) {
-             cache.playSound?.(player, 'random.break');
-             cache.setTitle(player.onScreenDisplay, '§cกรุณารับของตามลำดับ');
-             return;
-          }
+         if (data.last === today) {
+            cache.playSound?.(player, 'random.fizz');
+            cache.setTitle(player.onScreenDisplay, '§cคุณรับของวันนี้ไปแล้ว');
+            return;
+         }
 
-          if (data.last === today) {
-             cache.playSound?.(player, 'random.fizz');
-             cache.setTitle(player.onScreenDisplay, '§cคุณรับของวันนี้ไปแล้ว');
-             return;
-          }
-
-          confirm(player, data, today);
-       })
-       .catch((error) => logFormError('menu', error));
+         confirm(player, data, today);
+      })
+      .catch((error) => logFormError('menu', error));
 }
 
 export { menu };

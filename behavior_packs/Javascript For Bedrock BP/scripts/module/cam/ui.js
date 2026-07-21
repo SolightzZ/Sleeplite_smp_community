@@ -1,5 +1,4 @@
 import { ActionFormData } from '@minecraft/server-ui';
-import { addSound } from '../../shared/utils.js';
 import { cache } from '../../shared/cache.js';
 
 export function showCamMenu(event) {
@@ -11,6 +10,6 @@ export function showCamMenu(event) {
    form.header('     Camera Mode');
    form.header('     Coming soon');
    form.divider();
-   form.label('               @Sleeplite 2026');
+   form.label('                @Sleeplite 2026');
    form.show(player);
 }

@@ -1,13 +1,11 @@
-import { world } from '@minecraft/server';
 import { ActionFormData, MessageFormData, ModalFormData } from '@minecraft/server-ui';
-import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
-import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';
+import { cache } from '../../../shared/cache.js';
 import { banReasons, kickReasons } from '../config.js';
+import { banPlayer, getBanList, kickAndNotify, unbanPlayer } from '../core/ban.js';
 import { formatDate, formatRemaining } from '../utils/format.js';
 import { isAdmin, validateDuration, validatePlayerName } from '../utils/validation.js';
-import { cache } from '../../../shared/cache.js';
 import { pcheck } from './../../../shared/player.js';
 
 const uiLockSet = new Set();
@@ -82,8 +80,7 @@ export const openBanMenu = async (arg) => {
          form.button('เตะผู้เล่น', 'textures/ui/icons/icon_multiplayer');
       }
       form.button('รายชื่อผู้เล่นที่ถูกแบน', 'textures/ui/sidebar_icons/wish_list');
-      form.label('               @Sleeplite 2026');
-
+      form.label('                @Sleeplite 2026');
       const response = await formGuard(form, player);
       if (!response) return;
       const selection = response.selection;

@@ -22,6 +22,7 @@ export function inSpawnZoneSpawnProtec(location, dimensionId) {
 function isExemptSpawnProtec(player) {
    try {
       if (player.hasTag(Config.AdminTag)) return true;
+      if (player.hasTag(Config.PlayerTag)) return true;
       const c = getConfigSpawnProtec();
       if (!c) return false;
       return c.exemptSet.has(player.name.toLowerCase());

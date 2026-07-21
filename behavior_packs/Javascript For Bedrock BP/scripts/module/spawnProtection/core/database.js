@@ -1,21 +1,30 @@
 import { world } from '@minecraft/server';
-import { Config } from '../config.js';
 import { logError } from '../../../events/logger.js';
+import { Config } from '../config.js';
 
 const KEY = 'SPAWN_PROTECT_DATA';
 
 let state = null;
+let spawnCenter = null;
+
+function getSpawnCenter() {
+   if (!spawnCenter) {
+      const s = world.getDefaultSpawnLocation();
+      spawnCenter = { x: s.x, z: s.z };
+   }
+   return spawnCenter;
+}
 
 function buildCacheFromData(data) {
-   const spawn = world.getDefaultSpawnLocation();
+   const c = getSpawnCenter();
    return {
       radius: data.radius,
       enabled: data.enabled,
       flags: { ...data.flags },
       exemptList: data.exemptList,
       exemptSet: new Set(data.exemptList.map((n) => n.toLowerCase())),
-      centerX: spawn.x,
-      centerZ: spawn.z,
+      centerX: c.x,
+      centerZ: c.z,
    };
 }
 

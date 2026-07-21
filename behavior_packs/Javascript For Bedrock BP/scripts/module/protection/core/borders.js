@@ -1,13 +1,10 @@
-import { world } from '@minecraft/server';
-
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';
+import { cache } from '../../../shared/cache.js';
 import { Config } from '../config.js';
 import { buildBorderPoints } from '../utils/helpers.js';
 import { zoneDatabase } from './database.js';
-import { cache } from '../../../shared/cache.js';
 
-// สถานะ
 const activeBorders = new Map();
 
 // วนเรนเดอร์ขอบเขต (ทุก 40 ticks)
@@ -48,7 +45,6 @@ export const renderBorderParticles = () => {
    }
 };
 
-// API สาธารณะ
 export const showBorder = async (player) => {
    try {
       const zone = zoneDatabase.zones[player.name];

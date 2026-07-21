@@ -20,8 +20,7 @@ function showiconstest(player, title, message, icon) {
    }
 
    form.button('Close');
-   form.label('               @Sleeplite 2026');
-
+   form.label('                @Sleeplite 2026');
    system.run(() => {
       form
          .show(player)

@@ -1,14 +1,12 @@
 import { ActionFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 import { isAdmin } from '../utils/permission.js';
 import { showForm } from '../utils/ui.js';
+import { pcheck } from './../../../shared/player.js';
 import { adminpanel } from './admin-panel.js';
 import { note } from './patch-note-menu.js';
 import { inbox, reportmenu } from './report-menu.js';
-import { cache } from '../../../shared/cache.js';
-import { pcheck } from './../../../shared/player.js';
 
 export const showMenuReport = (arg) => {
    const player = arg?.source ?? arg;
@@ -27,7 +25,7 @@ export const showMenuReport = (arg) => {
    if (isAdmin(player)) {
       form.button('แผงควบคุม (Admin)');
    }
-
+   form.label('                @Sleeplite 2026');
    showForm(player, form, 'menu', (res) => {
       if (res.canceled) return;
       if (res.selection === 0) note(player);

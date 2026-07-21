@@ -2,8 +2,8 @@ import { system } from '@minecraft/server';
 import { ActionFormData } from '@minecraft/server-ui';
 import { logError } from '../../events/logger.js';
 import { cache } from '../../shared/cache.js';
-import { pcheck } from './../../shared/player.js';
 import { addSound } from '../../shared/utils.js';
+import { pcheck } from './../../shared/player.js';
 import { emoteList, setting } from './database.js';
 
 function playEmote(player, animName, emoteName) {
@@ -83,8 +83,7 @@ export function showMenuEmote(event) {
       form.button(group.name, group.icon || setting.iconDefault);
    }
 
-   form.label('               @Sleeplite 2026');
-
+   form.label('                @Sleeplite 2026');
    if (setting.soundOpen) {
       addSound(player, setting.soundOpen);
    }

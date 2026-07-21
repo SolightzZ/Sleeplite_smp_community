@@ -1,13 +1,12 @@
-import { system, world } from '@minecraft/server';
-
+import { system } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
-import { Config } from '../config.js';
 import { cache } from '../../../shared/cache.js';
+import { Config } from '../config.js';
 
 const STORAGE_KEY = 'ZONE_DATA';
 const MAX_STORAGE_SIZE = 32768;
 
-// ตัวช่วยรูปแบบข้อมูลจัดเก็บ
+// รูปแบบข้อมูลจัดเก็บ
 const parseStorageFormat = (raw) => {
    if (Array.isArray(raw)) return raw;
    if (raw && typeof raw === 'object') {
@@ -54,7 +53,7 @@ const normalizeZoneEntry = (entry) => ({
    flags: entry.flags ? { ...Config.DefaultFlags, ...entry.flags } : { ...Config.DefaultFlags },
 });
 
-// ตัวช่วยบันทึกอัตโนมัติ Proxy
+// บันทึกอัตโนมัติ Proxy
 const wrapArray = (arr, saveFn) =>
    new Proxy(arr, {
       set(target, prop, value) {
@@ -94,7 +93,7 @@ const buildZonesProxy = (data, saveFn) =>
       },
    });
 
-// คลาส ZoneDatabase
+// ฐานข้อมูล
 class ZoneDatabase {
    constructor() {
       this._data = {};

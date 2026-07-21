@@ -44,10 +44,6 @@ export const EXP_SOUNDS = [
 export const DROWN_SOUND = { id: 'mob.drowned.death', volume: 0.8 };
 export const HEARTBEAT_SOUND = { id: 'mob.warden.heartbeat', volume: 0.8 };
 
-export const COMPONENT_IDS = {
-   HEALTH: 'minecraft:health',
-};
-
 export const TICK_INTERVAL = 3;
 export const WARMUP_TICKS = 100;
 export const ERROR_DECAY = 2;
@@ -71,12 +67,6 @@ export const QUEUE = {
    EFF_MASK: 63,
 };
 
-export const HEALTH = {
-   BATCH: 15,
-   LOW_THRESHOLD: 30,
-   CRITICAL_THRESHOLD: 30,
-};
-
 export const THRESHOLDS = {
    EXP_TIER_LOW: 4,
    EXP_TIER_MED: 9,
@@ -91,7 +81,7 @@ export const ERROR_LIMITS = {
    MAX_HEALTH_ERRORS: 10,
 };
 
-export const EXPLOSION_CAUSES = ['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall'];
+const EXPLOSION_CAUSES = ['entityExplosion', 'blockExplosion', 'anvil', 'maceSmash', 'ramAttack', 'sonicBoom', 'flyIntoWall'];
 
 export const DAMAGE_CAUSE = {
    IMPACT: new Set([
