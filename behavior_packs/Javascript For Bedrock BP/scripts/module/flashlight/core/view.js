@@ -14,7 +14,7 @@ function getDimBounds(dimension) {
 
 export function calcLightPos(pos, dimension) {
    const b = getDimBounds(dimension);
-   const y = Math.floor(pos.y);
+   const y = Math.floor(pos.y) + 1;
    if (y < b.min || y > b.max) return null;
    return {
       x: Math.floor(pos.x),
