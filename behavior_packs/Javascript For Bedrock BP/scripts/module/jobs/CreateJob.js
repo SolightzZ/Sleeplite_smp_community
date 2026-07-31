@@ -2,7 +2,7 @@ import { ActionFormData, ModalFormData } from '@minecraft/server-ui';
 import { cache } from '../../shared/cache.js';
 import { pcheck } from './../../shared/player.js';
 import { diamondId, getIconForItem, icons, maxDiamondReward, maxItemAmount, maxJobItems, maxPlayerJobs, sounds, stripPrefix } from './config.js';
-import { amountMap, buildInventoryMap, countItem, createJobData, ITEM_IDS, jobs, selectedMap, showUI } from './Job.js';
+import { amountMap, buildInventoryMap, countItem, createJobData, jobs, selectedMap, showUI } from './Job.js';
 import { showMainMenu } from './Menu.js';
 
 const getIcon = (typeId) => getIconForItem(typeId);

@@ -1,8 +1,7 @@
-import { ItemTypes, BlockTypes, system } from '@minecraft/server';
+import { BlockTypes, system } from '@minecraft/server';
 
 const DEFAULT_NAMESPACE = 'minecraft:';
 
-let _itemIds = null;
 let _blockIds = null;
 
 /**
@@ -31,13 +30,6 @@ function buildIdSet(getAll) {
    return set;
 }
 
-// สร้างแคช item id แบบ lazy (ครั้งเดียว)
-function itemIdSet() {
-   if (_itemIds === null) _itemIds = buildIdSet(() => ItemTypes.getAll());
-
-   return _itemIds;
-}
-
 // สร้างแคช block id แบบ lazy (ครั้งเดียว)
 function blockIdSet() {
    if (_blockIds === null) _blockIds = buildIdSet(() => BlockTypes.getAll());
@@ -52,36 +44,6 @@ class VanillaItems {
    }
 
    /**
-    * ดึง ItemType วานิลลาจาก id (จะใส่ namespace มาหรือไม่ก็ได้)
-    * @param {string} id เช่น "diamond" หรือ "minecraft:diamond"
-    * @returns {import('@minecraft/server').ItemType | undefined}
-    */
-   static getItemType(id) {
-      const key = withNamespace(id);
-      return key ? ItemTypes.get(key) : undefined;
-   }
-
-   /**
-    * ดึง BlockType วานิลลาจาก id (จะใส่ namespace มาหรือไม่ก็ได้)
-    * @param {string} id เช่น "stone" หรือ "minecraft:stone"
-    * @returns {import('@minecraft/server').BlockType | undefined}
-    */
-   static getBlockType(id) {
-      const key = withNamespace(id);
-      return key ? BlockTypes.get(key) : undefined;
-   }
-
-   /**
-    * เช็คว่า id เป็น item วานิลลาที่มีจริงไหม
-    * @param {string} id
-    * @returns {boolean}
-    */
-   static isValidItem(id) {
-      const key = withNamespace(id);
-      return key ? itemIdSet().has(key) : false;
-   }
-
-   /**
     * เช็คว่า id เป็น block วานิลลาที่มีจริงไหม
     * @param {string} id
     * @returns {boolean}
@@ -90,20 +52,9 @@ class VanillaItems {
       const key = withNamespace(id);
       return key ? blockIdSet().has(key) : false;
    }
-
-   /** @returns {string[]} array ก้อนใหม่ของ item id ทั้งหมด */
-   static getAllItemIds() {
-      return [...itemIdSet()];
-   }
-
-   /** @returns {string[]} array ก้อนใหม่ของ block id ทั้งหมด */
-   static getAllBlockIds() {
-      return [...blockIdSet()];
-   }
 }
 
 system.run(() => {
-   itemIdSet();
    blockIdSet();
 });
 

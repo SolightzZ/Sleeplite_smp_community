@@ -1,4 +1,3 @@
-import { logError } from '../../events/logger.js';
 import { CONFIG_KEY, DEFAULT_CONFIG } from './Config.js';
 import { Database } from '../../shared/database.js';
 

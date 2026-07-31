@@ -21,8 +21,4 @@ export class Database {
    static loadPlayer(player, key, fallback = {}) {
       return _parse(cache.getPlayerDynamicProperty(player, key), fallback);
    }
-
-   static savePlayer(player, key, value) {
-      return cache.setPlayerDynamicProperty(player, key, JSON.stringify(value));
-   }
 }

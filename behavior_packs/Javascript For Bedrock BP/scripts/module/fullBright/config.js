@@ -1,7 +1,6 @@
 export const tag = 'bright';
 export const effect = 'night_vision';
 export const refreshTicks = 6000;
-export const effectDuration = 6200;
 
 export const title = 'FullBright | มองในที่มืด';
 export const headerEnabled = '       §aEnabled';

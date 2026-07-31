@@ -3,12 +3,10 @@ export const setting = {
    iconDefault: 'textures/ui/sidebar_icons/character_creator',
    soundOpen: 'note.hat',
    soundClick: 'random.pop',
-   soundError: 'note.bass',
 };
 
 export const emoteList = [
    {
-      id: 'rieeMote',
       type: 'GROUP',
       name: 'Emote RieeMote',
       title: 'Emote RieeMote List',
@@ -85,7 +83,6 @@ export const emoteList = [
       ],
    },
    {
-      id: 'dexten',
       type: 'GROUP',
       name: 'Emote Dexten',
       title: 'Emote Dexten List',
@@ -152,7 +149,6 @@ export const emoteList = [
       ],
    },
    {
-      id: 'euforia',
       type: 'GROUP',
       name: 'Emote Euforia',
       title: 'Emote Euforia List',
@@ -211,7 +207,6 @@ export const emoteList = [
       ],
    },
    {
-      id: 'special',
       type: 'GROUP',
       name: 'Emote Special',
       title: 'Special Emotes',
@@ -236,7 +231,6 @@ export const emoteList = [
       ],
    },
    {
-      id: 'general',
       type: 'GROUP',
       name: 'Emote General',
       title: 'General Emotes',
@@ -263,7 +257,6 @@ export const emoteList = [
       ],
    },
    {
-      id: 'post',
       type: 'GROUP',
       name: 'Emote Post',
       title: 'Post Emotes',
@@ -291,10 +284,8 @@ export const emoteList = [
       ],
    },
    {
-      id: 'stop',
       type: 'BUTTON',
       name: '[STOP]',
-      title: null,
       icon: 'textures/emotes/ClearC',
       cmd: setting.stopCmd,
    },

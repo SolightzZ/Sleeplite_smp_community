@@ -1,6 +1,4 @@
 import { MessageFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
 import { cache } from '../../../shared/cache.js';
 import { pcheck } from './../../../shared/player.js';

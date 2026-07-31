@@ -1,10 +1,8 @@
-export const namespace = 'jobs';
 export const moduleTag = 'Job';
 export const vanillaPrefix = 'minecraft:';
 
 export const diamondId = 'minecraft:diamond';
 
-export const maxJobs = 500;
 export const maxPlayerJobs = 5;
 export const maxJobItems = 5;
 export const maxItemAmount = 420;

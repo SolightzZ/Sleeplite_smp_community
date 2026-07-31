@@ -7,7 +7,6 @@ const _playerDynCache = new Map();
 
 let _tick = -1;
 let _playersCache = null;
-let _validCache = new WeakMap();
 let _spawnCache = null;
 
 const _ensureTick = () => {
@@ -18,7 +17,6 @@ const _ensureTick = () => {
       _spawnCache = null;
       _dynCache.clear();
       _playerDynCache.clear();
-      _validCache = new WeakMap();
    }
 };
 
@@ -94,14 +92,6 @@ class ApiCache {
       return world.setDynamicProperty(key, value);
    }
 
-   invalidateDynamicProperty(key) {
-      _dynCache.delete(key);
-   }
-
-   invalidateAllDynamicProperties() {
-      _dynCache.clear();
-   }
-
    getPlayerDynamicProperty(player, key) {
       _ensureTick();
       const k = `${player.id} ${key}`;
@@ -115,10 +105,6 @@ class ApiCache {
       const k = `${player.id} ${key}`;
       _playerDynCache.set(k, value);
       return player.setDynamicProperty(key, value);
-   }
-
-   invalidatePlayerDynamicProperty(player, key) {
-      _playerDynCache.delete(`${player.id} ${key}`);
    }
 
    getPlayers() {
@@ -135,14 +121,6 @@ class ApiCache {
       _ensureTick();
       if (_spawnCache === null) _spawnCache = world.getDefaultSpawnLocation();
       return _spawnCache;
-   }
-
-   isValid(entity) {
-      _ensureTick();
-      if (_validCache.has(entity)) return _validCache.get(entity);
-      const v = entity.isValid;
-      _validCache.set(entity, v);
-      return v;
    }
 
     playSound(player, soundId, soundOptions) {

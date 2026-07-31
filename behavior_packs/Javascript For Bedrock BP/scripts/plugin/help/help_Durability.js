@@ -1,4 +1,4 @@
-import { EntityComponentTypes, EquipmentSlot, ItemComponentTypes } from '@minecraft/server';
+import { EquipmentSlot } from '@minecraft/server';
 import { armorData } from './help_armorData.js';
 import { getDamageReduction } from './help_function.js';
 import { cache } from '../../shared/cache.js';

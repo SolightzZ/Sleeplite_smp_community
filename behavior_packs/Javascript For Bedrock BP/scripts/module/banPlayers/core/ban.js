@@ -1,4 +1,4 @@
-import { system, world } from '@minecraft/server';
+import { system } from '@minecraft/server';
 import { kickPlayer } from '@minecraft/server-admin';
 import { logError } from '../../../events/logger.js';
 import { Registry } from '../../../events/registry.js';

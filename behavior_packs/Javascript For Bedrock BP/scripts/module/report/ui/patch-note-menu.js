@@ -1,11 +1,9 @@
 import { ActionFormData } from '@minecraft/server-ui';
-
-import { addSound } from '../../../shared/utils.js';
 import { logError } from '../../../events/logger.js';
+import { cache } from '../../../shared/cache.js';
 import { patchNotesData } from '../data/patch-notes.js';
 import { showForm } from '../utils/ui.js';
 import { showMenuReport } from './main-menu.js';
-import { cache } from '../../../shared/cache.js';
 
 export const note = (player) => {
    const form = new ActionFormData();

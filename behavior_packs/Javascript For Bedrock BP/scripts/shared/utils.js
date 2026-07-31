@@ -1,5 +1,3 @@
-import { cache } from './cache.js';
-
 export function addSound(player, soundId, soundOptions) {
    const loc = player.location;
    const dir = player.getViewDirection();

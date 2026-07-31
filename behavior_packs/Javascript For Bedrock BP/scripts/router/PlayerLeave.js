@@ -1,6 +1,6 @@
 import { router } from '../events/index.js';
 import { playerLeaveAfk } from '../module/AFKCinematic/core/poller.js';
-import { flashLeave } from '../module/flashlight/core/engine.js';
+import { flashLeave } from '../module/flashlight/core/events.js';
 import { onLeaveFullBright } from '../module/fullBright/events.js';
 import { onJobPlayerLeave } from '../module/jobs/Job.js';
 import { onMagnetPlayerLeave } from '../module/magNet/core/events.js';

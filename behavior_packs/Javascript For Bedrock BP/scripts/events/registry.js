@@ -25,14 +25,6 @@ export const Registry = {
       return _registry.get(id) ?? null;
    },
 
-   getData(id) {
-      return _registry.get(id)?.data ?? null;
-   },
-
-   getAll() {
-      return _registry;
-   },
-
    getEntries() {
       _entriesBuf.length = 0;
       for (const entry of _registry.values()) {
@@ -59,10 +51,6 @@ export const Registry = {
             _registry.delete(id);
          }
       }
-   },
-
-   get size() {
-      return _registry.size;
    },
 
    init() {

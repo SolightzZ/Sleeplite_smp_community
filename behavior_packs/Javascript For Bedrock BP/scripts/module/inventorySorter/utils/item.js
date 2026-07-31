@@ -10,12 +10,6 @@ import { getItemDisplayName, getItemDurability } from './formatter.js';
  * @param {import('@minecraft/server').ItemStack | { typeId?: string } | null | undefined} item
  * @returns {boolean}
  */
-export const isVanillaItem = (item) => !!item?.typeId && VanillaItems.isValidItem(item.typeId);
-
-/**
- * @param {import('@minecraft/server').ItemStack | { typeId?: string } | null | undefined} item
- * @returns {boolean}
- */
 export const isVanillaBlock = (item) => !!item?.typeId && VanillaItems.isValidBlock(item.typeId);
 
 const getItemData = (item) => {

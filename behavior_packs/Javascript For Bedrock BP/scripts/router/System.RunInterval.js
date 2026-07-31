@@ -1,5 +1,5 @@
 import { handleIdlePoller } from '../module/AFKCinematic/core/poller.js';
-import { FlashlightRunInterval } from '../module/flashlight/core/engine.js';
+import { FlashlightRunInterval } from '../module/flashlight/core/runner.js';
 import { processJobs } from '../module/treeCapitator/core/processor.js';
 import { processVeinJobs } from '../module/veinMiner/core/processor.js';
 import { cinematicScheduler } from '../module/AFKCinematic/core/scheduler.js';

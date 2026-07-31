@@ -24,7 +24,6 @@ function showiconstest(player, title, message, icon) {
    system.run(() => {
       form
          .show(player)
-         .then(() => {})
          .catch((error) => logError('EndPortalFrame', 'showiconstest', error));
    });
 }

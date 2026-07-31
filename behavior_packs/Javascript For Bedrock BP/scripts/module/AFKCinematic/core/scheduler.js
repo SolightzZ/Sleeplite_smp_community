@@ -29,10 +29,6 @@ class CinematicScheduler {
       this._cursor = 0;
    }
 
-   get size() {
-      return this._ids.length;
-   }
-
    enqueue(playerId) {
       if (!this._ids.includes(playerId)) {
          this._ids.push(playerId);
@@ -110,10 +106,6 @@ class CinematicScheduler {
       }
    }
 
-   stop() {
-      this._ids.length = 0;
-      this._cursor = 0;
-   }
 }
 
 export const cinematicScheduler = new CinematicScheduler();

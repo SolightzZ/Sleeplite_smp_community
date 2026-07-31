@@ -95,7 +95,6 @@ const EXCLUDED_BIOMES = new Set(["minecraft:the_end"]);
 const Colors = {
   gold: "§6",
   white: "§f",
-  gray: "§7",
 };
 
 export { biomeIdList, EXCLUDED_BIOMES, Colors };

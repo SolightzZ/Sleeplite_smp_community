@@ -17,7 +17,6 @@ const subscribe = (signal, label, handler) => {
 const HANDLERS = {
    beforeChatSend: [],
    afterItemUse: [],
-   afterEntityDiePlayer: [],
    afterPlayerSpawn: [],
    afterPlayerJoin: [],
    beforePlayerLeave: [],
@@ -31,7 +30,6 @@ const HANDLERS = {
    afterPlayerDimensionChange: [],
    beforePlayerInteractBlock: [],
    afterPlayerInteractBlock: [],
-   afterPlayerInventoryChange: [],
    beforePlayerInteractEntity: [],
    beforePlayerPlaceBlock: [],
 };
@@ -86,9 +84,6 @@ subscribe(world.afterEvents.entityDie, 'entityDie', (event) => {
       runEventHandlers('EntityDieByType', typeHandlers, event);
    }
 
-   if (deadEntity.typeId === 'minecraft:player') {
-      runEventHandlers('EntityDie(Player)', HANDLERS.afterEntityDiePlayer, event);
-   }
 });
 
 subscribe(world.afterEvents.playerSpawn, 'playerSpawn', (event) => {
@@ -160,12 +155,6 @@ subscribe(world.afterEvents.playerInteractWithBlock, 'playerInteractWithBlock(Af
    const player = event.player;
    if (!pcheck(player)) return;
    runEventHandlers('PlayerInteractWithBlock(After)', HANDLERS.afterPlayerInteractBlock, event);
-});
-
-subscribe(world.afterEvents.playerInventoryItemChange, 'playerInventoryItemChange', (event) => {
-   const player = event.player;
-   if (!pcheck(player)) return;
-   runEventHandlers('PlayerInventoryItemChange', HANDLERS.afterPlayerInventoryChange, event);
 });
 
 subscribe(world.beforeEvents.playerInteractWithEntity, 'playerInteractWithEntity', (event) => {

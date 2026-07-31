@@ -1,4 +1,4 @@
-import { flashSpawn } from "../module/flashlight/core/engine.js";
+import { flashSpawn } from "../module/flashlight/core/events.js";
 import { onPlayerSpawnFullBright } from "../module/fullBright/events.js";
 import { playerSpawnWelcome } from "../module/welcome/index.js";
 import { router } from "../events/index.js";

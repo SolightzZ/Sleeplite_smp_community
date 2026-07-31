@@ -1,8 +1,5 @@
 import { CommandPermissionLevel } from '@minecraft/server';
 
-export const NAMESPACE = 'addon';
-export const ADDON_VERSION = '1.0.0';
-
 export const LOG_TAG = 'CustomCommands';
 
 export const COMMAND = {

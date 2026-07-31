@@ -1,8 +1,8 @@
 import { world } from '@minecraft/server';
 import { logError } from '../../../events/logger.js';
+import { nowUnix } from '../../../shared/datetime.js';
 import { Config } from '../config.js';
 import { BanState } from './state.js';
-import { nowUnix } from '../../../shared/datetime.js';
 
 export class BanDatabase {
    static load() {
@@ -36,7 +36,6 @@ export class BanDatabase {
    static save(data) {
       try {
          world.setDynamicProperty(Config.dbKey, JSON.stringify(data));
-         BanState.markDirty();
       } catch (error) {
          logError('BanDB', 'Save error', error);
       }
@@ -73,10 +72,5 @@ export class BanDatabase {
    static getAll() {
       this.load();
       return BanState.getAllBans();
-   }
-
-   static isBanned(name) {
-      if (BanState.isDirty()) this.load();
-      return BanState.isBanned(name);
    }
 }

@@ -1,4 +1,4 @@
-import { ItemTypes, system } from '@minecraft/server';
+import { system } from '@minecraft/server';
 import { logError } from '../../events/logger.js';
 import { Registry } from '../../events/registry.js';
 import { cache } from '../../shared/cache.js';
@@ -8,7 +8,6 @@ import { showMainMenu } from './Menu.js';
 
 export const jobs = [];
 let nextJobId = 0;
-export const ITEM_IDS = new Set();
 
 export const amountMap = new Map();
 export const selectedMap = new Map();
@@ -174,9 +173,5 @@ export const onJobPlayerLeave = (playerId) => {
 };
 
 system.run(() => {
-   const types = ItemTypes.getAll();
-   for (const type of types) {
-      ITEM_IDS.add(type.id);
-   }
    loadJobData();
 });

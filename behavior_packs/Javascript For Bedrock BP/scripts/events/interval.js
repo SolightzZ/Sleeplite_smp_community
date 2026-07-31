@@ -1,6 +1,5 @@
 import { system } from '@minecraft/server';
 import { logError } from './logger.js';
-import { Queue } from './queue.js';
 
 const _intervals = [];
 
@@ -29,7 +28,6 @@ export const Interval = {
 system.runInterval(() => {
    try {
       Interval.tick();
-      Queue.tick();
    } catch (error) {
       logError('Tick', 'main loop error', error);
    }

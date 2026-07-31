@@ -1,4 +1,4 @@
-import { CommandPermissionLevel, CustomCommandStatus, Player, system } from "@minecraft/server";
+import { CommandPermissionLevel, CustomCommandStatus, system } from "@minecraft/server";
 import { toggleZoom } from "./core.js";
 import { pisPlayer, pcheck } from "./../../shared/player.js";
 

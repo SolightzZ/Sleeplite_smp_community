@@ -1,4 +1,3 @@
-import { world } from "@minecraft/server";
 import { applyZoom, clearZoom, playZoomSound } from "./Effect.js";
 import { getPlayerConfig } from "./Storage.js";
 import { pcheck } from './../../shared/player.js';
