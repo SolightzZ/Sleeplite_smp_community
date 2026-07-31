@@ -4,12 +4,14 @@ import { flashLeave } from '../module/flashlight/core/events.js';
 import { onLeaveFullBright } from '../module/fullBright/events.js';
 import { onJobPlayerLeave } from '../module/jobs/Job.js';
 import { onMagnetPlayerLeave } from '../module/magNet/core/events.js';
+import { playerTimeLeave } from '../module/playerTime/index.js';
 import { onPlayerLeave } from '../module/protection/core/events.js';
 import { zoomPlayerLeave } from '../module/zoom/core.js';
 import { JobQueue } from '../shared/jobQueue.js';
 
 router.on('beforePlayerLeave', onLeaveFullBright);
 router.on('beforePlayerLeave', onPlayerLeave);
+router.on('beforePlayerLeave', playerTimeLeave);
 router.on('afterPlayerLeave', onMagnetPlayerLeave);
 router.on('afterPlayerLeave', playerLeaveAfk);
 router.on('afterPlayerLeave', flashLeave);

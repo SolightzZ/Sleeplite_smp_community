@@ -3,6 +3,7 @@ import { pcheck } from './../shared/player.js';
 import { logError, logWarn } from './logger.js';
 import { Registry } from './registry.js';
 import { runEventHandlers, runEventHandlersWithCancel } from './utils.js';
+import { playerTimeInit } from '../module/playerTime/index.js';
 
 const subscribe = (signal, label, handler) => {
    signal.subscribe((event) => {
@@ -61,6 +62,7 @@ export const router = {
 
 subscribe(world.afterEvents.worldLoad, 'worldLoad', () => {
    Registry.init();
+   playerTimeInit();
 });
 
 subscribe(world.beforeEvents.chatSend, 'chatSend', (event) => {

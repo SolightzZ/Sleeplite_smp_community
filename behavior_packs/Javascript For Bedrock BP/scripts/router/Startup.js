@@ -6,6 +6,7 @@ import { registerBanCommands } from '../module/banPlayers/commands/ban-command.j
 import { BanDatabase } from '../module/banPlayers/core/database.js';
 import { registerCommands } from '../module/customCommands/Register.js';
 import { registerSortCommands } from '../module/inventorySorter/commands/sort-command.js';
+import { registerPlayTimeCommand } from '../module/playerTime/commands/playtime-command.js';
 import { zoneDatabase } from '../module/protection/core/database.js';
 import { RegisterRewards } from '../module/rewards/system.js';
 import { RegisterSpawnProtection } from '../module/spawnProtection/command.js';
@@ -35,6 +36,7 @@ const startupHandlers = [
    ZoomCommand, // addon:zoom
    RegisterSpawnProtection, // addon:spawnprotec
    registerBanCommands, // addon:ban, addon:unban, addon:kick, addon:banlist
+   registerPlayTimeCommand, // addon:playtime
 ];
 
 system.beforeEvents.startup.subscribe((event) => {
