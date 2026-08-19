@@ -273,10 +273,6 @@
             "sounds/mob/pa_creakingkanother/ambient/idle1",
             "sounds/mob/pa_creakingkanother/ambient/idle2",
             "sounds/mob/pa_creakingkanother/ambient/idle3",
-            "sounds/mob/pa_creakingk/ambient/idle4",
-            "sounds/mob/pa_creakingk/ambient/idle5",
-            "sounds/mob/pa_creakingk/ambient/idle6",
-            "sounds/mob/pa_creakingk/ambient/idle7",
             "sounds/mob/pa_creakingk/ambient/idle8"
         ]
     },
@@ -336,10 +332,6 @@
             "sounds/mob/pa_creakingk2/ambient/idle1",
             "sounds/mob/pa_creakingk2/ambient/idle2",
             "sounds/mob/pa_creakingk2/ambient/idle3",
-            "sounds/mob/pa_creakingk/ambient/idle4",
-            "sounds/mob/pa_creakingk/ambient/idle5",
-            "sounds/mob/pa_creakingk/ambient/idle6",
-            "sounds/mob/pa_creakingk/ambient/idle7",
             "sounds/mob/pa_creakingk/ambient/idle8"
         ]
     },
@@ -357,10 +349,6 @@
             "sounds/mob/pa_creakingk/ambient/idle1",
             "sounds/mob/pa_creakingk/ambient/idle2",
             "sounds/mob/pa_creakingk/ambient/idle3",
-            "sounds/mob/pa_creakingk/ambient/idle4",
-            "sounds/mob/pa_creakingk/ambient/idle5",
-            "sounds/mob/pa_creakingk/ambient/idle6",
-            "sounds/mob/pa_creakingk/ambient/idle7",
             "sounds/mob/pa_creakingk/ambient/idle8"
         ]
     },
@@ -470,16 +458,12 @@
             "sounds/mob/jsart_victism16/ambient/idle1",
             "sounds/mob/jsart_victism16/ambient/idle2",
             "sounds/mob/jsart_victism16/ambient/idle3",
-            "sounds/mob/pa_creakingk/ambient/idle4",
-            "sounds/mob/pa_creakingk/ambient/idle5",
-            "sounds/mob/pa_creakingk/ambient/idle6",
-            "sounds/mob/pa_creakingk/ambient/idle7",
             "sounds/mob/pa_creakingk/ambient/idle8"
         ]
     },
     "mob.jsart_splitworm.say": {
         "category": "neutral",
-        "sounds": ["sounds/mob/jsart_splitworm/say/say1", "sounds/mob/jsart_splitworm/say/say2", "sounds/ambient/cave", "sounds/ambient/cave"]
+        "sounds": ["sounds/mob/jsart_splitworm/say/say1", "sounds/mob/jsart_splitworm/say/say2", "sounds/custom_sound/silenthill_radio"]
     },
     "mob.jsart_splitworm.kill": {
         "category": "neutral",

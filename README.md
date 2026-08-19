@@ -501,7 +501,7 @@
 | Category | Technology |
 |----------|------------|
 | **Language** | Bedrock Script API, mcfunction |
-| **Framework** | `@minecraft/server` 2.9.0-beta, `@minecraft/server-ui` 2.2.0-beta |
+| **Framework** | `@minecraft/server` 2.10.0-beta, `@minecraft/server-ui` 2.2.0-beta |
 | **Runtime** | Minecraft Bedrock 1.26.30 |
 
 ---
