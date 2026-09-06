@@ -3,11 +3,11 @@
 
 # Sleeplite SMP Community
 
-**Minecraft Bedrock 1.26.30** — Add-on Development
+**Minecraft Bedrock 1.26.40** — Add-on Development
 
   <br>
 
-[![Minecraft](https://img.shields.io/badge/Minecraft-Bedrock_1.26.30-00AA00?style=for-the-badge&logo=minecraft&logoColor=white)](https://minecraft.net/)
+[![Minecraft](https://img.shields.io/badge/Minecraft-Bedrock_1.26.40-00AA00?style=for-the-badge&logo=minecraft&logoColor=white)](https://minecraft.net/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![mcfunction](https://img.shields.io/badge/mcfunction-FF6F00?style=for-the-badge&logo=minetest&logoColor=white)](https://wiki.bedrock.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow?style=for-the-badge)](./LICENSE)
@@ -502,7 +502,7 @@
 |----------|------------|
 | **Language** | Bedrock Script API, mcfunction |
 | **Framework** | `@minecraft/server` 2.10.0-beta, `@minecraft/server-ui` 2.2.0-beta |
-| **Runtime** | Minecraft Bedrock 1.26.30 |
+| **Runtime** | Minecraft Bedrock 1.26.40 |
 
 ---
 

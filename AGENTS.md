@@ -2,13 +2,13 @@
 
 ## What This Is
 
-Minecraft Bedrock 1.26.30 SMP addon project. **22 behavior packs** under `behavior_packs/`.
+Minecraft Bedrock 1.26.40 SMP addon project. **22 behavior packs** under `behavior_packs/`.
 Primary code: `Javascript For Bedrock BP` — the main script pack with ~189 JS files.
 No build step, no tests, no bundler. Edit JSON/JS → reload in Minecraft.
 
 ## Tech Stack
 
-- **Runtime**: Minecraft Bedrock 1.26.30
+- **Runtime**: Minecraft Bedrock 1.26.40
 - **API**: `@minecraft/server` 2.10.0-beta, `@minecraft/server-ui` 2.2.0-beta, `@minecraft/server-admin` 1.0.0-beta
 - **Language**: JavaScript (ES modules), mcfunction, JSON
 - **No toolchain**: No npm, no bundler, no linter configured in this repo
